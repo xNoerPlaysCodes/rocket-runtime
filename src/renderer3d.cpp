@@ -42,7 +42,7 @@ namespace rocket {
 
             // Must make sure OpenGL context is current before glewInit
             if (!window || !window->glfw_window) {
-                std::cerr << "[ERROR] Invalid window pointer or not initialized!\n";
+                std::cout << util::format_error("Invalid window pointer or not initialized", -1, "RocketRuntime", "fatal");
                 std::exit(1);
             }
             glfwMakeContextCurrent(window->glfw_window);
