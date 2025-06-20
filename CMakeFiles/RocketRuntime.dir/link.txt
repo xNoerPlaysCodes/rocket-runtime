@@ -1,0 +1,2 @@
+/usr/bin/ar qc bin/libRocketRuntime.a CMakeFiles/RocketRuntime.dir/src/window.cpp.o CMakeFiles/RocketRuntime.dir/src/util.cpp.o CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o CMakeFiles/RocketRuntime.dir/src/io.cpp.o CMakeFiles/RocketRuntime.dir/src/asset.cpp.o
+/usr/bin/ranlib bin/libRocketRuntime.a
