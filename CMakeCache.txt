@@ -122,7 +122,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=RocketRuntime_test
+CMAKE_PROJECT_NAME:STATIC=initializer_test
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -206,6 +206,24 @@ RocketRuntime_test_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 RocketRuntime_test_SOURCE_DIR:STATIC=/home/noerlol/C-Projects/RocketGE
+
+//Value Computed by CMake
+initializer_test_BINARY_DIR:STATIC=/home/noerlol/C-Projects/RocketGE
+
+//Value Computed by CMake
+initializer_test_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+initializer_test_SOURCE_DIR:STATIC=/home/noerlol/C-Projects/RocketGE
+
+//Value Computed by CMake
+rectangle_test_BINARY_DIR:STATIC=/home/noerlol/C-Projects/RocketGE
+
+//Value Computed by CMake
+rectangle_test_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+rectangle_test_SOURCE_DIR:STATIC=/home/noerlol/C-Projects/RocketGE
 
 
 ########################

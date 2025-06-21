@@ -1,5 +1,5 @@
 #include <GL/glew.h>
-#include "../include/renderer.hpp"
+#include "../include/rocket/renderer.hpp"
 #include "util.hpp"
 #include <GLFW/glfw3.h>
 #include <glm/detail/qualifier.hpp>

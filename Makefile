@@ -130,17 +130,30 @@ RocketRuntime/fast:
 .PHONY : RocketRuntime/fast
 
 #=============================================================================
-# Target rules for targets named RocketRuntime_test
+# Target rules for targets named rectangle_test
 
 # Build rule for target.
-RocketRuntime_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RocketRuntime_test
-.PHONY : RocketRuntime_test
+rectangle_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 rectangle_test
+.PHONY : rectangle_test
 
 # fast build rule for target.
-RocketRuntime_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime_test.dir/build.make CMakeFiles/RocketRuntime_test.dir/build
-.PHONY : RocketRuntime_test/fast
+rectangle_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rectangle_test.dir/build.make CMakeFiles/rectangle_test.dir/build
+.PHONY : rectangle_test/fast
+
+#=============================================================================
+# Target rules for targets named initializer_test
+
+# Build rule for target.
+initializer_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 initializer_test
+.PHONY : initializer_test
+
+# fast build rule for target.
+initializer_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/initializer_test.dir/build.make CMakeFiles/initializer_test.dir/build
+.PHONY : initializer_test/fast
 
 src/asset.o: src/asset.cpp.o
 .PHONY : src/asset.o
@@ -310,29 +323,53 @@ src/window.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/window.cpp.s
 .PHONY : src/window.cpp.s
 
-tests/RocketRuntime_test.o: tests/RocketRuntime_test.cpp.o
-.PHONY : tests/RocketRuntime_test.o
+tests/initializer_test.o: tests/initializer_test.cpp.o
+.PHONY : tests/initializer_test.o
 
 # target to build an object file
-tests/RocketRuntime_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime_test.dir/build.make CMakeFiles/RocketRuntime_test.dir/tests/RocketRuntime_test.cpp.o
-.PHONY : tests/RocketRuntime_test.cpp.o
+tests/initializer_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/initializer_test.dir/build.make CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o
+.PHONY : tests/initializer_test.cpp.o
 
-tests/RocketRuntime_test.i: tests/RocketRuntime_test.cpp.i
-.PHONY : tests/RocketRuntime_test.i
+tests/initializer_test.i: tests/initializer_test.cpp.i
+.PHONY : tests/initializer_test.i
 
 # target to preprocess a source file
-tests/RocketRuntime_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime_test.dir/build.make CMakeFiles/RocketRuntime_test.dir/tests/RocketRuntime_test.cpp.i
-.PHONY : tests/RocketRuntime_test.cpp.i
+tests/initializer_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/initializer_test.dir/build.make CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.i
+.PHONY : tests/initializer_test.cpp.i
 
-tests/RocketRuntime_test.s: tests/RocketRuntime_test.cpp.s
-.PHONY : tests/RocketRuntime_test.s
+tests/initializer_test.s: tests/initializer_test.cpp.s
+.PHONY : tests/initializer_test.s
 
 # target to generate assembly for a file
-tests/RocketRuntime_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime_test.dir/build.make CMakeFiles/RocketRuntime_test.dir/tests/RocketRuntime_test.cpp.s
-.PHONY : tests/RocketRuntime_test.cpp.s
+tests/initializer_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/initializer_test.dir/build.make CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.s
+.PHONY : tests/initializer_test.cpp.s
+
+tests/rectangle_test.o: tests/rectangle_test.cpp.o
+.PHONY : tests/rectangle_test.o
+
+# target to build an object file
+tests/rectangle_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rectangle_test.dir/build.make CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
+.PHONY : tests/rectangle_test.cpp.o
+
+tests/rectangle_test.i: tests/rectangle_test.cpp.i
+.PHONY : tests/rectangle_test.i
+
+# target to preprocess a source file
+tests/rectangle_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rectangle_test.dir/build.make CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.i
+.PHONY : tests/rectangle_test.cpp.i
+
+tests/rectangle_test.s: tests/rectangle_test.cpp.s
+.PHONY : tests/rectangle_test.s
+
+# target to generate assembly for a file
+tests/rectangle_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rectangle_test.dir/build.make CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.s
+.PHONY : tests/rectangle_test.cpp.s
 
 # Help Target
 help:
@@ -343,7 +380,8 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... RocketRuntime"
-	@echo "... RocketRuntime_test"
+	@echo "... initializer_test"
+	@echo "... rectangle_test"
 	@echo "... src/asset.o"
 	@echo "... src/asset.i"
 	@echo "... src/asset.s"
@@ -365,9 +403,12 @@ help:
 	@echo "... src/window.o"
 	@echo "... src/window.i"
 	@echo "... src/window.s"
-	@echo "... tests/RocketRuntime_test.o"
-	@echo "... tests/RocketRuntime_test.i"
-	@echo "... tests/RocketRuntime_test.s"
+	@echo "... tests/initializer_test.o"
+	@echo "... tests/initializer_test.i"
+	@echo "... tests/initializer_test.s"
+	@echo "... tests/rectangle_test.o"
+	@echo "... tests/rectangle_test.i"
+	@echo "... tests/rectangle_test.s"
 .PHONY : help
 
 

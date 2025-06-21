@@ -1,8 +1,8 @@
 #ifndef ROCKETGE__IMPL__UTIL_HPP
 #define ROCKETGE__IMPL__UTIL_HPP
 
-#include "../include/types.hpp"
-#include "../include/io.hpp"
+#include "../include/rocket/types.hpp"
+#include "../include/rocket/io.hpp"
 #include <GLFW/glfw3.h>
 #include <functional>
 #include <sstream>

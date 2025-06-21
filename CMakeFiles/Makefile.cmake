@@ -48,5 +48,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/RocketRuntime.dir/DependInfo.cmake"
-  "CMakeFiles/RocketRuntime_test.dir/DependInfo.cmake"
+  "CMakeFiles/rectangle_test.dir/DependInfo.cmake"
+  "CMakeFiles/initializer_test.dir/DependInfo.cmake"
   )

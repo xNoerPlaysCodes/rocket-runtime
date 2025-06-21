@@ -1,4 +1,4 @@
-#include "../include/types.hpp"
+#include "../include/rocket/types.hpp"
 
 namespace rocket {
     bool ibounding_box::intersects(const ibounding_box& other) const {
