@@ -35,7 +35,18 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 # Debug
-project(${PROJECT_NAME}_test CXX)
+project(rectangle_test CXX)
+add_executable(${PROJECT_NAME} tests/${PROJECT_NAME}.cpp)
+
+target_link_directories(${PROJECT_NAME} PRIVATE bin)
+target_include_directories(${PROJECT_NAME} PRIVATE include)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE RocketRuntime)
+
+add_compile_options(-Wall -Wextra -Wpedantic -O3 -flto)
+
+# Debug
+project(initializer_test CXX)
 add_executable(${PROJECT_NAME} tests/${PROJECT_NAME}.cpp)
 
 target_link_directories(${PROJECT_NAME} PRIVATE bin)
