@@ -18,10 +18,11 @@ namespace rocket {
     private:
         std::vector<uint8_t> data;
         int channels;
-
+    public:
         GLuint glid = 0;
         friend class asset_manager_t;
         friend class renderer_2d;
+        friend class renderer_3d;
     public:
         vec2i_t size;
         assetid_t id;

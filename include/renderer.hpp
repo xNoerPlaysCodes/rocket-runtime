@@ -124,8 +124,8 @@ namespace rocket {
         void begin_frame();
         void clear(rocket::rgba_color color = { 255, 255, 255, 255 });
         void draw_camera();
-        void draw_rectangle(rocket::vec3f_t pos, rocket::vec3f_t size, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f);
-        void RocketRuntime_Debug_testdraw();
+        void draw_rectangle(rocket::fbounding_box_3d fbox, rocket::rgba_color color = { 0, 0, 0, 255 });
+        void draw_texture(rocket::fbounding_box_3d fbox, std::shared_ptr<rocket::texture_t> textures[6]);
         void end_frame();
     public:
         void set_fps(int);

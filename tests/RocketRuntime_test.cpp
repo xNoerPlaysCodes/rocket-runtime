@@ -4,6 +4,7 @@
 #include "../include/asset.hpp"
 #include <cstdint>
 #include <functional>
+#include <iomanip>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -16,7 +17,7 @@ int main() {
     };
     rocket::window_t w({ 1920, 1080 }, "RocketGE - Test", flags);
     rocket::camera3d_t cam = {
-        .fov = 45.f,
+        .fov = 90.f,
         .render_distance = 100.f,
         .pos = { 0, 0, 5 },
         .up = { 0, 1, 0 },
@@ -28,8 +29,8 @@ int main() {
 
     bool dcam = true;
 
-    float width = 2;
-    float height = 3;
+    float width = 1;
+    float height = 1;
     float length = 1;
 
     float *ref = &width;
@@ -72,21 +73,67 @@ int main() {
         }
     });
 
+    rocket::asset_manager_t aman(1500s);
+
+    std::shared_ptr<rocket::texture_t> textures[6] = {};
+
+    for (auto &tx : textures) {
+        tx = aman.get_texture(aman.load_texture("/home/noerlol/C-Projects/TopDownGame/assets/barrel.png"));
+    }
+
+    rocket::fbounding_box_3d fbox = { .pos = { 0, 0, 0 }, .size = { width, height, length } };
+    rocket::fbounding_box_3d pbox = {
+        .pos = cam.pos,
+        .size = { 0.1, 0.1, 0.1 },
+    };
+
+    rocket::vec3f_t old_campos = cam.pos;
     while (w.is_running()) {
         r.begin_frame();
         r.clear();
         {
-            r.draw_rectangle({ 0, 0, 0 }, { width, height, length }, { 255, 0, 0, 255 });
-            r.draw_camera();
+            // r.draw_texture(fbox, textures);
+            r.draw_texture(fbox, textures);
         }
         {
-            std::cout << "x:" << cam.pos.x << " y:" << cam.pos.y << " z:" << cam.pos.z << '\n';
+            std::cout << "x:" << std::fixed << std::setprecision(10) << cam.pos.x << " y:" << cam.pos.y << " z:" << cam.pos.z << '\n';
         }
         r.end_frame();
         w.poll_events();
         {
             r.mouse_move(10);
         }
+        {
+            rocket::vec3f_t attempted_pos = cam.pos;
+
+            std::cout << "[WARN] FIX COLLISION [WARN]\n";
+
+            // // Check X
+            // pbox.pos.x = attempted_pos.x;
+            // if (pbox.intersects(fbox)) {
+            //     pbox.pos.x = old_campos.x;
+            //     cam.pos.x = old_campos.x;
+            // }
+            //
+            // // Check Y
+            // pbox.pos.y = attempted_pos.y;
+            // if (pbox.intersects(fbox)) {
+            //     pbox.pos.y = old_campos.y;
+            //     cam.pos.y = old_campos.y;
+            // }
+            //
+            // // Check Z
+            // pbox.pos.z = attempted_pos.z;
+            // if (pbox.intersects(fbox)) {
+            //     pbox.pos.z = old_campos.z;
+            //     cam.pos.z = old_campos.z;
+            // }
+        }
+        {
+            pbox.pos = cam.pos;
+            old_campos = cam.pos;
+        }
+        fbox.size = { width, height, length };
     }
 
     r.close();

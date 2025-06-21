@@ -25,6 +25,7 @@ add_library(${PROJECT_NAME} STATIC
     src/renderer3d.cpp
     src/io.cpp
     src/asset.cpp
+    src/types.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal)

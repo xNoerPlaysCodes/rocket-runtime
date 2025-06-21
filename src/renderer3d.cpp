@@ -58,7 +58,7 @@ namespace rocket {
             while (glGetError() != GL_NO_ERROR) {};
 
             // Set viewport
-            glViewport(0, 0, window->size.x, window->size.y);
+            DEBUG_GL_CHECK_ERROR(glViewport(0, 0, window->size.x, window->size.y));
             util::gl_setup_perspective({
                 (float) window->size.x,
                 (float) window->size.y,
@@ -66,16 +66,16 @@ namespace rocket {
             }, cam->fov);
 
             // Blending (alpha support)
-            glEnable(GL_BLEND);
-            glEnable(GL_MULTISAMPLE);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            DEBUG_GL_CHECK_ERROR(glEnable(GL_BLEND));
+            DEBUG_GL_CHECK_ERROR(glEnable(GL_MULTISAMPLE));
+            DEBUG_GL_CHECK_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
             // Enable SRGB framebuffer if needed
-            glEnable(GL_FRAMEBUFFER_SRGB);
+            DEBUG_GL_CHECK_ERROR(glEnable(GL_FRAMEBUFFER_SRGB));
 
             // 3D Bits
-            glEnable(GL_DEPTH_TEST);
-            glDepthFunc(GL_LESS);
+            DEBUG_GL_CHECK_ERROR(glEnable(GL_DEPTH_TEST));
+            DEBUG_GL_CHECK_ERROR(glDepthFunc(GL_LESS));
         }
     }
 
@@ -86,12 +86,12 @@ namespace rocket {
         last_time = frame_start_time;
     }
     void renderer_3d::clear(rocket::rgba_color color) {
-        glGetError();
+        DEBUG_GL_CHECK_ERROR(glGetError());
 
         vec4<float> clr = util::glify_a(color);
-        glClearColor(clr.x, clr.y, clr.z, clr.w);
+        DEBUG_GL_CHECK_ERROR(glClearColor(clr.x, clr.y, clr.z, clr.w));
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        DEBUG_GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
     }
 
     // The ting
@@ -199,23 +199,18 @@ namespace rocket {
 
     void renderer_3d::draw_camera() {
         static glm::vec3 position;
-        static bool posinitialized = false;
-        if (!posinitialized) {
-            position = glm::vec3(cam->pos.x, cam->pos.y, cam->pos.z);
-            posinitialized = true;
-        }
         position = glm::vec3(cam->pos.x, cam->pos.y, cam->pos.z);
-
-        glm::vec3 front = glm::vec3(cam->front.x, cam->front.y, cam->front.z);
-        glm::vec3 up = glm::vec3(cam->up.x, cam->up.y, cam->up.z);
-
-        // TODO RemoveKeybind
- 
+        glm::vec3 front;
         front.x = cos(glm::radians(cam->yaw)) * cos(glm::radians(cam->pitch));
         front.y = sin(glm::radians(cam->pitch));
         front.z = sin(glm::radians(cam->yaw)) * cos(glm::radians(cam->pitch));
         front = glm::normalize(front);
-        
+
+        // compute corrected up vector
+        glm::vec3 world_up = glm::vec3(0, 1, 0);
+        glm::vec3 right = glm::normalize(glm::cross(front, world_up));
+        glm::vec3 camera_up = glm::normalize(glm::cross(right, front));
+
         this->projection = glm::perspective<float>(
             glm::radians(cam->fov),
             (float) window->size.x / window->size.y,
@@ -223,129 +218,164 @@ namespace rocket {
             cam->render_distance
         );
 
-        this->view = glm::lookAt(position, position + front, up);
+        this->view = glm::lookAt(position, position + front, camera_up);
     }
 
-    void renderer_3d::draw_rectangle(rocket::vec3f_t pos, rocket::vec3f_t size, rocket::rgba_color color, float rotation) {
-        const char* vertex_src = R"(
+    GLuint color_shader = 0;
+    GLuint texture_shader = 0;
+
+    GLuint color_VAO = 0, color_VBO = 0, color_EBO = 0;
+    GLuint texture_VAO[6], texture_VBO[6], texture_EBO = 0;
+
+    void __compile_shaders() {
+        // ---- Color Shader ----
+        const char* color_vertex_src = R"(
             #version 330 core
-        layout(location = 0) in vec3 aPos;
+            layout(location = 0) in vec3 aPos;
 
-        uniform mat4 u_model;
-        uniform mat4 u_view;
-        uniform mat4 u_proj;
+            uniform mat4 u_model;
+            uniform mat4 u_view;
+            uniform mat4 u_proj;
 
-        void main() {
-            gl_Position = u_proj * u_view * u_model * vec4(aPos, 1.0);
-        }
+            void main() {
+                gl_Position = u_proj * u_view * u_model * vec4(aPos, 1.0);
+            }
         )";
 
-        const char* fragment_src = R"(
-        #version 330 core
-        out vec4 FragColor;
-        uniform vec4 u_color;
-        void main() {
-            FragColor = u_color;
-        }
+        const char* color_fragment_src = R"(
+            #version 330 core
+            out vec4 FragColor;
+            uniform vec4 u_color;
+            void main() {
+                FragColor = u_color;
+            }
         )";
 
-        static GLuint VAO, VBO, EBO, shader;
-
-        static float cuboid[] = {
-            // front face
-            -1.0f, -0.5f,  0.5f,
-             1.0f, -0.5f,  0.5f,
-             1.0f,  0.5f,  0.5f,
-            -1.0f,  0.5f,  0.5f,
-            // back face
-            -1.0f, -0.5f, -0.5f,
-             1.0f, -0.5f, -0.5f,
-             1.0f,  0.5f, -0.5f,
-            -1.0f,  0.5f, -0.5f,
+        float cuboid[] = {
+            0.0f, 0.0f, 1.0f,  // Front-bottom-left
+            1.0f, 0.0f, 1.0f,  // Front-bottom-right
+            1.0f, 1.0f, 1.0f,  // Front-top-right
+            0.0f, 1.0f, 1.0f,  // Front-top-left
+            0.0f, 0.0f, 0.0f,  // Back-bottom-left
+            1.0f, 0.0f, 0.0f,  // Back-bottom-right
+            1.0f, 1.0f, 0.0f,  // Back-top-right
+            0.0f, 1.0f, 0.0f   // Back-top-left
         };
 
-        static unsigned int indices[] = {
-            // front
+        unsigned int indices[] = {
             0, 1, 2, 2, 3, 0,
-            // right
             1, 5, 6, 6, 2, 1,
-            // back
             7, 6, 5, 5, 4, 7,
-            // left
             4, 0, 3, 3, 7, 4,
-            // top
             3, 2, 6, 6, 7, 3,
-            // bottom
             4, 5, 1, 1, 0, 4
         };
 
-        // --glm--
+        glGenVertexArrays(1, &color_VAO);
+        glGenBuffers(1, &color_VBO);
+        glGenBuffers(1, &color_EBO);
 
-        // Needs 'view', 'projection', 'position' 
-        
-        // No camera
+        glBindVertexArray(color_VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, color_VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(cuboid), cuboid, GL_STATIC_DRAW);
 
-        // --glm--
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, color_EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-        if (VAO == 0) {
-            // --- Setup once ---
-            glGenVertexArrays(1, &VAO);
-            glGenBuffers(1, &VBO);
-            glGenBuffers(1, &EBO);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
 
-            glBindVertexArray(VAO);
-            glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(cuboid), cuboid, GL_STATIC_DRAW);
+        GLuint vs = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vs, 1, &color_vertex_src, nullptr);
+        glCompileShader(vs);
 
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fs, 1, &color_fragment_src, nullptr);
+        glCompileShader(fs);
 
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-            glEnableVertexAttribArray(0);
+        color_shader = glCreateProgram();
+        glAttachShader(color_shader, vs);
+        glAttachShader(color_shader, fs);
+        glLinkProgram(color_shader);
+        glDeleteShader(vs);
+        glDeleteShader(fs);
 
-            // Compile shader
-            GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vs, 1, &vertex_src, nullptr);
-            glCompileShader(vs);
+        // ---- Texture Shader ----
+        const char* tex_vertex_src = R"(
+            #version 330 core
+            layout(location = 0) in vec3 aPos;
+            layout(location = 1) in vec2 aTexCoord;
 
-            GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(fs, 1, &fragment_src, nullptr);
-            glCompileShader(fs);
+            out vec2 TexCoord;
 
-            shader = glCreateProgram();
-            glAttachShader(shader, vs);
-            glAttachShader(shader, fs);
-            glLinkProgram(shader);
+            uniform mat4 u_model;
+            uniform mat4 u_view;
+            uniform mat4 u_proj;
 
-            glDeleteShader(vs);
-            glDeleteShader(fs);
-        }
+            void main() {
+                gl_Position = u_proj * u_view * u_model * vec4(aPos, 1.0);
+                TexCoord = aTexCoord;
+            }
+        )";
 
-        glUseProgram(shader);
+        const char* tex_fragment_src = R"(
+            #version 330 core
+            in vec2 TexCoord;
+            out vec4 FragColor;
 
-        // Color
+            uniform sampler2D u_texture;
+
+            void main() {
+                FragColor = texture(u_texture, TexCoord);
+            }
+        )";
+
+        GLuint vs2 = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vs2, 1, &tex_vertex_src, nullptr);
+        glCompileShader(vs2);
+
+        GLuint fs2 = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fs2, 1, &tex_fragment_src, nullptr);
+        glCompileShader(fs2);
+
+        texture_shader = glCreateProgram();
+        glAttachShader(texture_shader, vs2);
+        glAttachShader(texture_shader, fs2);
+        glLinkProgram(texture_shader);
+        glDeleteShader(vs2);
+        glDeleteShader(fs2);
+    }
+ 
+    void renderer_3d::draw_rectangle(rocket::fbounding_box_3d fbox, rocket::rgba_color color) {
+        rocket::vec3 pos = fbox.pos;
+        rocket::vec3 size = fbox.size;
+        __compile_shaders();
+        glUseProgram(color_shader);
+
         glm::vec4 gl_color(
             color.x / 255.0f,
             color.y / 255.0f,
             color.z / 255.0f,
             color.w / 255.0f
         );
-        glUniform4fv(glGetUniformLocation(shader, "u_color"), 1, &gl_color[0]);
+        glUniform4fv(glGetUniformLocation(color_shader, "u_color"), 1, &gl_color[0]);
 
-        // Model
         glm::mat4 model = glm::mat4(1.0f);
+        // TODO FOR TEXRECT TOO
+        model = glm::translate(model, glm::vec3{
+            pos.x,
+            pos.y - size.y,
+            pos.z - size.z,
+        });
+        model = glm::scale(model, glm::vec3(size.x, size.y, size.z));
+        glUniformMatrix4fv(glGetUniformLocation(color_shader, "u_model"), 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(glGetUniformLocation(color_shader, "u_view"), 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(glGetUniformLocation(color_shader, "u_proj"), 1, GL_FALSE, glm::value_ptr(projection));
 
-        model = glm::translate(model, glm::vec3(pos.x, pos.y, pos.z));
-
-        model = glm::scale(model, glm::vec3(size.x, size.y, size.z)); // Width, Height, Depth
-
-        glUniformMatrix4fv(glGetUniformLocation(shader, "u_model"), 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(glGetUniformLocation(shader, "u_view"), 1, GL_FALSE, glm::value_ptr(view));
-        glUniformMatrix4fv(glGetUniformLocation(shader, "u_proj"), 1, GL_FALSE, glm::value_ptr(projection));
-
-        glBindVertexArray(VAO);
+        glBindVertexArray(color_VAO);
         glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
     }
+
     void renderer_3d::end_frame() {
         glfwSwapBuffers(this->window->glfw_window);
 
@@ -361,13 +391,13 @@ namespace rocket {
         double frame_end_time = glfwGetTime();
         double frame_duration = frame_end_time - frame_start_time;
 
-        auto err = glGetError();
+        auto err = DEBUG_GL_CHECK_ERROR(glGetError());
         if (err != GL_NO_ERROR) {
             std::cout << util::format_error(reinterpret_cast<const char *>(glewGetErrorString(err)), err, "OpenGL", "fatal");
             this->window->close();
             std::exit(1);
         }
-        glFlush();
+        DEBUG_GL_CHECK_ERROR(glFlush());
 
         if (frame_duration < frametime_limit) {
             double sleep_time = frametime_limit - frame_duration;
@@ -375,10 +405,110 @@ namespace rocket {
         }
     }
 
-    void renderer_3d::RocketRuntime_Debug_testdraw() {
-        
-    }
+    struct textured_vertex_t {
+    glm::vec3 pos;
+    glm::vec2 uv;
+};
 
+    unsigned int indices[6] = { 0, 1, 2, 2, 3, 0 };
+
+    void renderer_3d::draw_texture(rocket::fbounding_box_3d fbox, std::shared_ptr<rocket::texture_t> textures[6]) {
+        rocket::vec3f_t pos = fbox.pos;
+        rocket::vec3f_t size = fbox.size;
+        __compile_shaders();
+        struct textured_vertex_t {
+            glm::vec3 pos;
+            glm::vec2 uv;
+        };
+
+        textured_vertex_t vertices[6][4] = {
+            // Front face (z = 1)
+            { {{0, 0, 1}, {0, 0}}, {{1, 0, 1}, {1, 0}}, {{1, 1, 1}, {1, 1}}, {{0, 1, 1}, {0, 1}} },
+
+            // Right face (x = 1)
+            { {{1, 0, 1}, {0, 0}}, {{1, 0, 0}, {1, 0}}, {{1, 1, 0}, {1, 1}}, {{1, 1, 1}, {0, 1}} },
+
+            // Back face (z = 0)
+            { {{1, 0, 0}, {0, 0}}, {{0, 0, 0}, {1, 0}}, {{0, 1, 0}, {1, 1}}, {{1, 1, 0}, {0, 1}} },
+
+            // Left face (x = 0)
+            { {{0, 0, 0}, {0, 0}}, {{0, 0, 1}, {1, 0}}, {{0, 1, 1}, {1, 1}}, {{0, 1, 0}, {0, 1}} },
+
+            // Top face (y = 1)
+            { {{0, 1, 1}, {0, 0}}, {{1, 1, 1}, {1, 0}}, {{1, 1, 0}, {1, 1}}, {{0, 1, 0}, {0, 1}} },
+
+            // Bottom face (y = 0)
+            { {{0, 0, 0}, {0, 0}}, {{1, 0, 0}, {1, 0}}, {{1, 0, 1}, {1, 1}}, {{0, 0, 1}, {0, 1}} }
+        };
+
+        static GLuint vao[6], vbo[6], ebo;
+        static bool initialized = false;
+
+        if (!initialized) {
+            DEBUG_GL_CHECK_ERROR(glGenBuffers(1, &ebo)); // FIRST!
+
+            for (int i = 0; i < 6; i++) {
+                DEBUG_GL_CHECK_ERROR(glGenVertexArrays(1, &vao[i]));
+                DEBUG_GL_CHECK_ERROR(glGenBuffers(1, &vbo[i]));
+
+                DEBUG_GL_CHECK_ERROR(glBindVertexArray(vao[i]));
+                DEBUG_GL_CHECK_ERROR(glBindBuffer(GL_ARRAY_BUFFER, vbo[i]));
+                DEBUG_GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(textured_vertex_t) * 4, vertices[i], GL_STATIC_DRAW));
+
+                DEBUG_GL_CHECK_ERROR(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo));
+                DEBUG_GL_CHECK_ERROR(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW));
+
+                DEBUG_GL_CHECK_ERROR(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(textured_vertex_t), (void*)0));
+                DEBUG_GL_CHECK_ERROR(glEnableVertexAttribArray(0));
+                DEBUG_GL_CHECK_ERROR(glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(textured_vertex_t), (void*)(sizeof(glm::vec3))));
+                DEBUG_GL_CHECK_ERROR(glEnableVertexAttribArray(1));
+            }
+
+            initialized = true;
+        }
+
+        DEBUG_GL_CHECK_ERROR(glUseProgram(texture_shader));
+
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3{
+            pos.x,
+            pos.y - size.y,
+            pos.z - size.z,
+        });
+        model = glm::scale(model, glm::vec3(size.x, size.y, size.z));
+
+        DEBUG_GL_CHECK_ERROR(glUniformMatrix4fv(glGetUniformLocation(texture_shader, "u_model"), 1, GL_FALSE, glm::value_ptr(model)));
+        DEBUG_GL_CHECK_ERROR(glUniformMatrix4fv(glGetUniformLocation(texture_shader, "u_view"), 1, GL_FALSE, glm::value_ptr(view)));
+        DEBUG_GL_CHECK_ERROR(glUniformMatrix4fv(glGetUniformLocation(texture_shader, "u_proj"), 1, GL_FALSE, glm::value_ptr(projection)));
+
+        for (int i = 0; i < 6; i++) {
+            if (!textures[i]) continue;
+
+            if (textures[i]->glid == 0) {
+                DEBUG_GL_CHECK_ERROR(glGenTextures(1, &textures[i]->glid));
+                DEBUG_GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, textures[i]->glid));
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, textures[i]->size.x, textures[i]->size.y, 0,
+                             textures[i]->channels == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, textures[i]->data.data());
+
+                DEBUG_GL_CHECK_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+                DEBUG_GL_CHECK_ERROR(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+
+                textures[i]->data.clear();
+                textures[i]->data.shrink_to_fit();
+            }
+
+            DEBUG_GL_CHECK_ERROR(glActiveTexture(GL_TEXTURE0));
+            DEBUG_GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, textures[i]->glid));
+            glUseProgram(texture_shader);
+            GLint loc = DEBUG_GL_CHECK_ERROR(glGetUniformLocation(texture_shader, "u_texture"));
+            if (loc >= 0) {
+                DEBUG_GL_CHECK_ERROR(glUniform1i(loc, 0));
+            }
+
+            DEBUG_GL_CHECK_ERROR(glBindVertexArray(vao[i]));
+            DEBUG_GL_CHECK_ERROR(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
+        }
+    }
     void renderer_3d::set_fps(int fps) { this->fps = fps; }
     void renderer_3d::set_wireframe(bool wireframe) { this->wireframe = wireframe; }
     void renderer_3d::set_vsync(bool vsync) { this->vsync = vsync; }

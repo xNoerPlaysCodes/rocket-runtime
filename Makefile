@@ -238,6 +238,30 @@ src/renderer3d.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.s
 .PHONY : src/renderer3d.cpp.s
 
+src/types.o: src/types.cpp.o
+.PHONY : src/types.o
+
+# target to build an object file
+src/types.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/types.cpp.o
+.PHONY : src/types.cpp.o
+
+src/types.i: src/types.cpp.i
+.PHONY : src/types.i
+
+# target to preprocess a source file
+src/types.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/types.cpp.i
+.PHONY : src/types.cpp.i
+
+src/types.s: src/types.cpp.s
+.PHONY : src/types.s
+
+# target to generate assembly for a file
+src/types.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/types.cpp.s
+.PHONY : src/types.cpp.s
+
 src/util.o: src/util.cpp.o
 .PHONY : src/util.o
 
@@ -332,6 +356,9 @@ help:
 	@echo "... src/renderer3d.o"
 	@echo "... src/renderer3d.i"
 	@echo "... src/renderer3d.s"
+	@echo "... src/types.o"
+	@echo "... src/types.i"
+	@echo "... src/types.s"
 	@echo "... src/util.o"
 	@echo "... src/util.i"
 	@echo "... src/util.s"
