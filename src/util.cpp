@@ -13,6 +13,7 @@ std::vector<std::function<void(rocket::io::mouse_move_event_t)>> _mouse_move_lis
 namespace util {
 
     bool is_glinit = false;
+    rocket::log_level_t log_level = rocket::log_level_t::fatal;
 
     bool is_wayland() {
 #ifdef __linux__
@@ -26,6 +27,17 @@ namespace util {
     }
 
     std::string format_error(std::string error, int error_id, std::string error_source, std::string level) {
+        rocket::log_level_t elevel = rocket::log_level_t::fatal;
+        if (level == "warn") {
+            elevel = rocket::log_level_t::warn;
+        } else if (level == "fatal") {
+            elevel = rocket::log_level_t::fatal;
+        } else if (level == "fatal_to_function" || level == "fatal-to-function") {
+            elevel = rocket::log_level_t::fatal_to_function;
+        }
+        if (elevel > log_level) {
+            return "";
+        }
         std::stringstream sstream;
         sstream << "---\n";
         sstream << "[" << level << "]" << " " << "(" << error_source << ") " << "(" << "ID = " << error_id << ")";
@@ -112,5 +124,9 @@ namespace util {
 
     void glinit(bool x) {
         is_glinit = x;
+    }
+
+    void set_log_level(rocket::log_level_t level) {
+        log_level = level;
     }
 }

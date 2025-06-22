@@ -3,12 +3,12 @@
 
 CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /home/noerlol/C-Projects/RocketGE/tests/rectangle_test.cpp
- /home/noerlol/C-Projects/RocketGE/include/asset.hpp
- /home/noerlol/C-Projects/RocketGE/include/io.hpp
- /home/noerlol/C-Projects/RocketGE/include/renderer.hpp
- /home/noerlol/C-Projects/RocketGE/include/runtime.hpp
- /home/noerlol/C-Projects/RocketGE/include/types.hpp
- /home/noerlol/C-Projects/RocketGE/include/window.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
  /usr/include/AL/al.h
  /usr/include/GL/gl.h
  /usr/include/GL/glext.h

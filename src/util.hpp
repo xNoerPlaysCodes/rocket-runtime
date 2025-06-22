@@ -3,6 +3,7 @@
 
 #include "../include/rocket/types.hpp"
 #include "../include/rocket/io.hpp"
+#include "../include/rocket/runtime.hpp"
 #include <GLFW/glfw3.h>
 #include <functional>
 #include <sstream>
@@ -33,6 +34,8 @@ namespace util {
     void glinit(bool);
 
     bool is_wayland();
+
+    void set_log_level(rocket::log_level_t level);
 }
 
 #endif

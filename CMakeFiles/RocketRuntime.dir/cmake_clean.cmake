@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o.d"
   "CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o"
   "CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o.d"
+  "CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o"
+  "CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o.d"
   "CMakeFiles/RocketRuntime.dir/src/types.cpp.o"
   "CMakeFiles/RocketRuntime.dir/src/types.cpp.o.d"
   "CMakeFiles/RocketRuntime.dir/src/util.cpp.o"

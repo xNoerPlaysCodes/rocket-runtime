@@ -26,6 +26,7 @@ add_library(${PROJECT_NAME} STATIC
     src/io.cpp
     src/asset.cpp
     src/types.cpp
+    src/runtime.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal)

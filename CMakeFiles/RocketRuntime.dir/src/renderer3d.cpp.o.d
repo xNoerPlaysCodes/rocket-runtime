@@ -19,9 +19,9 @@ CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o: \
  /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
  /usr/include/bits/stdint-least.h /usr/include/GL/glu.h \
  /usr/include/GL/gl.h \
- /home/noerlol/C-Projects/RocketGE/src/../include/renderer.hpp \
- /home/noerlol/C-Projects/RocketGE/src/../include/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/src/../include/types.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/../include/rocket/renderer.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/../include/rocket/asset.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/../include/rocket/types.hpp \
  /usr/include/AL/al.h /usr/include/c++/15.1.1/chrono \
  /usr/include/c++/15.1.1/bits/chrono.h /usr/include/c++/15.1.1/ratio \
  /usr/include/c++/15.1.1/type_traits /usr/include/c++/15.1.1/limits \
@@ -241,8 +241,7 @@ CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o: \
  /usr/include/c++/15.1.1/bits/out_ptr.h \
  /usr/include/c++/15.1.1/pstl/glue_memory_defs.h \
  /usr/include/c++/15.1.1/pstl/execution_defs.h /usr/include/GLFW/glfw3.h \
- /home/noerlol/C-Projects/RocketGE/src/../include/window.hpp \
- /home/noerlol/C-Projects/RocketGE/src/../include/runtime.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/../include/rocket/window.hpp \
  /usr/include/glm/ext/matrix_float4x4.hpp \
  /usr/include/glm/detail/type_mat4x4.hpp \
  /usr/include/glm/detail/type_vec4.hpp \
@@ -370,8 +369,11 @@ CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o: \
  /usr/include/glm/detail/func_common.inl \
  /usr/include/glm/detail/compute_common.hpp \
  /home/noerlol/C-Projects/RocketGE/src/util.hpp \
- /home/noerlol/C-Projects/RocketGE/src/../include/types.hpp \
- /home/noerlol/C-Projects/RocketGE/src/../include/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/../include/rocket/types.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/../include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/../include/rocket/runtime.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/../include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/../include/rocket/renderer.hpp \
  /usr/include/glm/ext/matrix_clip_space.hpp \
  /usr/include/glm/ext/scalar_constants.hpp \
  /usr/include/glm/ext/scalar_constants.inl \

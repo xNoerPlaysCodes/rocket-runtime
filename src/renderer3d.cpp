@@ -28,9 +28,7 @@
     }
 
 namespace rocket {
-    std::vector<shader_t> shader_cache;
-
-    renderer_3d::renderer_3d(window_t *window, camera3d_t *cam, int fps) {
+    renderer_3d::renderer_3d(window_t *window, camera3d_t *cam, int fps) : window(window), r2d(window), shellr2d(&r2d) {
         this->window = window;
         this->cam = cam;
         this->fps = fps;
@@ -45,7 +43,6 @@ namespace rocket {
                 std::cout << util::format_error("Invalid window pointer or not initialized", -1, "RocketRuntime", "fatal");
                 std::exit(1);
             }
-            glfwMakeContextCurrent(window->glfw_window);
 
             GLenum err = glewInit();
             if (err != GLEW_OK) {
@@ -59,11 +56,6 @@ namespace rocket {
 
             // Set viewport
             DEBUG_GL_CHECK_ERROR(glViewport(0, 0, window->size.x, window->size.y));
-            util::gl_setup_perspective({
-                (float) window->size.x,
-                (float) window->size.y,
-                cam->render_distance
-            }, cam->fov);
 
             // Blending (alpha support)
             DEBUG_GL_CHECK_ERROR(glEnable(GL_BLEND));
@@ -76,7 +68,16 @@ namespace rocket {
             // 3D Bits
             DEBUG_GL_CHECK_ERROR(glEnable(GL_DEPTH_TEST));
             DEBUG_GL_CHECK_ERROR(glDepthFunc(GL_LESS));
+
+            GLuint dummyVAO;
+            glGenVertexArrays(1, &dummyVAO);
+            glBindVertexArray(dummyVAO);
         }
+        util::gl_setup_perspective({
+            (float) window->size.x,
+            (float) window->size.y,
+            cam->render_distance
+        }, cam->fov);
     }
 
     void renderer_3d::begin_frame() {
@@ -378,6 +379,7 @@ namespace rocket {
 
     void renderer_3d::end_frame() {
         glfwSwapBuffers(this->window->glfw_window);
+        glFlush();
 
         if (this->vsync) {
             return; // We're done here
@@ -509,6 +511,29 @@ namespace rocket {
             DEBUG_GL_CHECK_ERROR(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
         }
     }
+
+    void renderer_3d::begin_2d() {
+        glDisable(GL_DEPTH_TEST);
+    }
+
+    shell_renderer_2d &renderer_3d::get_r2d() {
+        return this->shellr2d;
+    }
+
+    void shell_renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation) {
+        this->r->draw_rectangle(rect, color, rotation);
+    }
+    void shell_renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color) {
+        this->r->draw_circle(pos, radius, color);
+    }
+    void shell_renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation, float brightness) {
+        this->r->draw_texture(texture, rect, rotation, brightness);
+    }
+
+    void renderer_3d::end_2d() {
+        glEnable(GL_DEPTH_TEST);
+    }
+
     void renderer_3d::set_fps(int fps) { this->fps = fps; }
     void renderer_3d::set_wireframe(bool wireframe) { this->wireframe = wireframe; }
     void renderer_3d::set_vsync(bool vsync) { this->vsync = vsync; }
@@ -522,10 +547,16 @@ namespace rocket {
             std::exit(0);
         }
         window->close();
+        this->r2d.close();
         window = nullptr;
     }
 
     renderer_3d::~renderer_3d() {
         close();
     }
+
+    shell_renderer_2d::shell_renderer_2d(renderer_2d *r) {
+        this->r = r;
+    }
+    shell_renderer_2d::~shell_renderer_2d() {}
 }

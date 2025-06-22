@@ -1,10 +1,10 @@
+#include <iostream>
 #include <GL/glew.h>
 #include "../include/rocket/renderer.hpp"
 #include "util.hpp"
 #include <GLFW/glfw3.h>
 #include <glm/detail/qualifier.hpp>
 #include <glm/ext/vector_float3.hpp>
-#include <iostream>
 #include <string>
 #include <thread>
 #include <vector>
@@ -54,15 +54,14 @@ namespace rocket {
             while (glGetError() != GL_NO_ERROR) {};
 
             // Set viewport
-            glViewport(0, 0, window->size.x, window->size.y);
-            util::gl_setup_ortho(window->size);
+            DEBUG_GL_CHECK_ERROR(glViewport(0, 0, window->size.x, window->size.y));
 
             // Generate and bind VAO/VBO
-            glGenVertexArrays(1, &rectVAO);
-            glGenBuffers(1, &rectVBO);
+            DEBUG_GL_CHECK_ERROR(glGenVertexArrays(1, &rectVAO));
+            DEBUG_GL_CHECK_ERROR(glGenBuffers(1, &rectVBO));
 
-            glBindVertexArray(rectVAO);
-            glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
+            DEBUG_GL_CHECK_ERROR(glBindVertexArray(rectVAO));
+            DEBUG_GL_CHECK_ERROR(glBindBuffer(GL_ARRAY_BUFFER, rectVBO));
 
             float square_vertices[] = {
                 0.0f, 0.0f,
@@ -73,23 +72,27 @@ namespace rocket {
                 0.0f, 1.0f
             };
 
-            glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices, GL_STATIC_DRAW);
-            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-            glEnableVertexAttribArray(0);
+            DEBUG_GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices, GL_STATIC_DRAW));
+            DEBUG_GL_CHECK_ERROR(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0));
+            DEBUG_GL_CHECK_ERROR(glEnableVertexAttribArray(0));
 
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
+            DEBUG_GL_CHECK_ERROR(glBindBuffer(GL_ARRAY_BUFFER, 0));
+            DEBUG_GL_CHECK_ERROR(glBindVertexArray(0));
 
             // Blending (alpha support)
-            glEnable(GL_BLEND);
-            glEnable(GL_MULTISAMPLE);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            DEBUG_GL_CHECK_ERROR(glEnable(GL_BLEND));
+            DEBUG_GL_CHECK_ERROR(glEnable(GL_MULTISAMPLE));
+            DEBUG_GL_CHECK_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
             // Enable SRGB framebuffer if needed
-            glEnable(GL_FRAMEBUFFER_SRGB);
+            DEBUG_GL_CHECK_ERROR(glEnable(GL_FRAMEBUFFER_SRGB));
         }
+        util::gl_setup_ortho(window->size);
     }
 
+    void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color) {
+        std::cout << util::format_error("Function not implemented", -1, "RocketRuntime", "fatal-to-function");
+    }
 
     void renderer_2d::begin_frame() {
         start_time = std::chrono::high_resolution_clock::now();

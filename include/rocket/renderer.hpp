@@ -4,7 +4,6 @@
 #include "asset.hpp"
 #include "types.hpp"
 #include "window.hpp"
-#include "runtime.hpp"
 #include <chrono>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <string>
@@ -49,6 +48,8 @@ namespace rocket {
         double delta_time;
 
         uint64_t frame_counter;
+
+        friend class renderer_3d;
     private:
         void glinit();
     public:
@@ -60,7 +61,7 @@ namespace rocket {
         void draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f);
         void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 });
 
-        void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f);
+        void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f, float brightness = 0.5f);
 
         void set_wireframe(bool);
         void set_vsync(bool);
@@ -100,6 +101,18 @@ namespace rocket {
         vec3f_t front = { 0, 0, -1 };
     };
 
+    class shell_renderer_2d {
+    private:
+        renderer_2d *r;
+    public:
+        void draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f);
+        void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 });
+        void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f, float brightness = 0.5f);
+    public:
+        shell_renderer_2d(renderer_2d *r);
+        ~shell_renderer_2d();
+    };
+
     class renderer_3d {
     private:
         window_t *window;
@@ -118,6 +131,9 @@ namespace rocket {
         uint64_t frame_counter;
 
         camera3d_t *cam;
+
+        renderer_2d r2d;
+        shell_renderer_2d shellr2d;
     private:
         void glinit();
     public:
@@ -126,6 +142,15 @@ namespace rocket {
         void draw_camera();
         void draw_rectangle(rocket::fbounding_box_3d fbox, rocket::rgba_color color = { 0, 0, 0, 255 });
         void draw_texture(rocket::fbounding_box_3d fbox, std::shared_ptr<rocket::texture_t> textures[6]);
+
+        /// @brief Call AFTER doing ALL your 3D work
+        void begin_2d();
+
+        shell_renderer_2d &get_r2d();
+        
+        /// @brief Call BEFORE ending frame
+        void end_2d();
+
         void end_frame();
     public:
         void set_fps(int);
