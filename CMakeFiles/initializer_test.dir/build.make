@@ -44,10 +44,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /bin/cmake -E rm -f
+RM = /usr/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -96,7 +96,7 @@ initializer_test_EXTERNAL_OBJECTS =
 bin/initializer_test: CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o
 bin/initializer_test: CMakeFiles/initializer_test.dir/build.make
 bin/initializer_test: CMakeFiles/initializer_test.dir/compiler_depend.ts
-bin/initializer_test: bin/libRocketRuntime.a
+bin/initializer_test: bin/libRocketRuntime.so
 bin/initializer_test: CMakeFiles/initializer_test.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable bin/initializer_test"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/initializer_test.dir/link.txt --verbose=$(VERBOSE)

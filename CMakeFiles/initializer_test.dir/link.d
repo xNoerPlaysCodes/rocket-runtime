@@ -3,12 +3,7 @@ bin/initializer_test: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/crti.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtbeginS.o \
   CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o \
-  bin/libRocketRuntime.a \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGL.so \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libglfw.so \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGLU.so \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGLEW.so \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libopenal.so \
+  bin/libRocketRuntime.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libm.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libm.so \
@@ -35,13 +30,29 @@ bin/initializer_test: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/libgcc.a \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtendS.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/crtn.o \
+  /usr/lib/libGL.so.1 \
+  /usr/lib/libglfw.so.3 \
+  /usr/lib/libGLU.so.1 \
+  /usr/lib/libGLEW.so.2.2 \
+  /usr/lib/libGLEW.so.2.2 \
+  /usr/lib/libopenal.so.1 \
+  /usr/lib/libfreetype.so.6 \
+  /usr/lib/ld-linux-x86-64.so.2 \
   /usr/lib/libGLdispatch.so.0 \
   /usr/lib/libGLX.so.0 \
   /usr/lib/libOpenGL.so.0 \
   /usr/lib/libEGL.so.1 \
-  /usr/lib/ld-linux-x86-64.so.2 \
+  /usr/lib/libz.so.1 \
+  /usr/lib/libbz2.so.1.0 \
+  /usr/lib/libpng16.so.16 \
+  /usr/lib/libharfbuzz.so.0 \
+  /usr/lib/libbrotlidec.so.1 \
   /usr/lib/libX11.so.6 \
+  /usr/lib/libglib-2.0.so.0 \
+  /usr/lib/libgraphite2.so.3 \
+  /usr/lib/libbrotlicommon.so.1 \
   /usr/lib/libxcb.so.1 \
+  /usr/lib/libpcre2-8.so.0 \
   /usr/lib/libXau.so.6 \
   /usr/lib/libXdmcp.so.6
 
@@ -53,17 +64,7 @@ bin/initializer_test: \
 
 CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o:
 
-bin/libRocketRuntime.a:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGL.so:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libglfw.so:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGLU.so:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGLEW.so:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libopenal.so:
+bin/libRocketRuntime.so:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libstdc++.so:
 
@@ -117,6 +118,22 @@ bin/libRocketRuntime.a:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/crtn.o:
 
+/usr/lib/libGL.so.1:
+
+/usr/lib/libglfw.so.3:
+
+/usr/lib/libGLU.so.1:
+
+/usr/lib/libGLEW.so.2.2:
+
+/usr/lib/libGLEW.so.2.2:
+
+/usr/lib/libopenal.so.1:
+
+/usr/lib/libfreetype.so.6:
+
+/usr/lib/ld-linux-x86-64.so.2:
+
 /usr/lib/libGLdispatch.so.0:
 
 /usr/lib/libGLX.so.0:
@@ -125,11 +142,27 @@ bin/libRocketRuntime.a:
 
 /usr/lib/libEGL.so.1:
 
-/usr/lib/ld-linux-x86-64.so.2:
+/usr/lib/libz.so.1:
+
+/usr/lib/libbz2.so.1.0:
+
+/usr/lib/libpng16.so.16:
+
+/usr/lib/libharfbuzz.so.0:
+
+/usr/lib/libbrotlidec.so.1:
 
 /usr/lib/libX11.so.6:
 
+/usr/lib/libglib-2.0.so.0:
+
+/usr/lib/libgraphite2.so.3:
+
+/usr/lib/libbrotlicommon.so.1:
+
 /usr/lib/libxcb.so.1:
+
+/usr/lib/libpcre2-8.so.0:
 
 /usr/lib/libXau.so.6:
 

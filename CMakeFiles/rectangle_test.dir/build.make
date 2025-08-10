@@ -44,10 +44,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /bin/cmake -E rm -f
+RM = /usr/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -96,7 +96,7 @@ rectangle_test_EXTERNAL_OBJECTS =
 bin/rectangle_test: CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
 bin/rectangle_test: CMakeFiles/rectangle_test.dir/build.make
 bin/rectangle_test: CMakeFiles/rectangle_test.dir/compiler_depend.ts
-bin/rectangle_test: bin/libRocketRuntime.a
+bin/rectangle_test: bin/libRocketRuntime.so
 bin/rectangle_test: CMakeFiles/rectangle_test.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable bin/rectangle_test"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rectangle_test.dir/link.txt --verbose=$(VERBOSE)

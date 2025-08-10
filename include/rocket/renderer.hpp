@@ -1,40 +1,21 @@
 #ifndef ROCKETGE__RENDERER_HPP
 #define ROCKETGE__RENDERER_HPP
 
+#include <glm/detail/qualifier.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/quaternion_geometric.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/geometric.hpp>
 #include "asset.hpp"
 #include "types.hpp"
 #include "window.hpp"
+#include "shader.hpp"
 #include <chrono>
-#include <glm/ext/matrix_float4x4.hpp>
 #include <string>
 #include <vector>
 
 namespace rocket {
-    enum class shader_type {
-        vertex,
-        fragment,
-        geometry,
-        tessellation_control,
-        tesselation_compute,
-#ifdef ROCKETGE_OpenGL_SupportComputeShader
-        compute
-#endif
-    };
-
-    struct shader_t {
-    private:
-        GLuint glshader = 0;
-        GLuint glprogram = 0;
-        friend class renderer_2d;
-    public:
-        shader_type type;
-        std::string code;
-
-        bool operator==(const shader_t &other) const {
-            return type == other.type && code == other.code;
-        }
-    };
-
     class renderer_2d {
     private:
         window_t *window;
@@ -50,22 +31,31 @@ namespace rocket {
         uint64_t frame_counter;
 
         friend class renderer_3d;
+        friend class font_t;
     private:
         void glinit();
     public:
         void begin_frame();
+        void begin_scissor_mode(rocket::fbounding_box rect);
+        void begin_scissor_mode(rocket::vec2f_t pos, rocket::vec2f_t size);
+        void begin_scissor_mode(float x, float y, float sx, float sy);
         void clear(rocket::rgba_color color = { 255, 255, 255, 255 });
 
-        void draw_shader(shader_t &shader);
+        void draw_shader(shader_t shader, rocket::fbounding_box box);
 
-        void draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f);
+        void draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f, float roundedness = 0.f);
         void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 });
 
-        void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f, float brightness = 0.5f);
+        void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f);
 
+        void draw_text(rocket::text_t &text, vec2f_t position);
+    public:
+        void draw_fps(vec2f_t pos = { 10, 10 });
+    public:
         void set_wireframe(bool);
         void set_vsync(bool);
         void set_fps(int fps = 60);
+        void end_scissor_mode();
         void end_frame();
         void close();
     public:
@@ -73,6 +63,8 @@ namespace rocket {
         bool get_vsync();
         int get_fps();
         double get_delta_time();
+    public:
+        int get_current_fps();
     public:
         renderer_2d(window_t *window, int fps = 60);
     public:
@@ -107,7 +99,7 @@ namespace rocket {
     public:
         void draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f);
         void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 });
-        void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f, float brightness = 0.5f);
+        void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f);
     public:
         shell_renderer_2d(renderer_2d *r);
         ~shell_renderer_2d();
@@ -134,12 +126,15 @@ namespace rocket {
 
         renderer_2d r2d;
         shell_renderer_2d shellr2d;
+
+        bool culling = false;
     private:
         void glinit();
     public:
         void begin_frame();
         void clear(rocket::rgba_color color = { 255, 255, 255, 255 });
-        void draw_camera();
+        /// @brief Returns the camera frustum's normal
+        std::vector<vec3f_t> draw_camera();
         void draw_rectangle(rocket::fbounding_box_3d fbox, rocket::rgba_color color = { 0, 0, 0, 255 });
         void draw_texture(rocket::fbounding_box_3d fbox, std::shared_ptr<rocket::texture_t> textures[6]);
 
@@ -156,9 +151,11 @@ namespace rocket {
         void set_fps(int);
         void set_wireframe(bool);
         void set_vsync(bool);
+        void set_culling(bool);
     public:
         bool get_wireframe();
         bool get_vsync();
+        bool get_culling();
         int get_fps();
     public:
         /// @brief Side-to-side utility moving

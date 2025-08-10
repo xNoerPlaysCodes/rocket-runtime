@@ -44,10 +44,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /bin/cmake -E rm -f
+RM = /usr/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -72,148 +72,212 @@ include CMakeFiles/RocketRuntime.dir/flags.make
 CMakeFiles/RocketRuntime.dir/codegen:
 .PHONY : CMakeFiles/RocketRuntime.dir/codegen
 
-CMakeFiles/RocketRuntime.dir/src/window.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
-CMakeFiles/RocketRuntime.dir/src/window.cpp.o: src/window.cpp
-CMakeFiles/RocketRuntime.dir/src/window.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/RocketRuntime.dir/src/window.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/window.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/window.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/window.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/window.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: src/rocket/window.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/window.cpp
 
-CMakeFiles/RocketRuntime.dir/src/window.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/window.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/window.cpp > CMakeFiles/RocketRuntime.dir/src/window.cpp.i
+CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/window.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.i
 
-CMakeFiles/RocketRuntime.dir/src/window.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/window.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/window.cpp -o CMakeFiles/RocketRuntime.dir/src/window.cpp.s
+CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/window.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.s
 
-CMakeFiles/RocketRuntime.dir/src/util.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
-CMakeFiles/RocketRuntime.dir/src/util.cpp.o: src/util.cpp
-CMakeFiles/RocketRuntime.dir/src/util.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/RocketRuntime.dir/src/util.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/util.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/util.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/util.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/util.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o: src/rocket/util.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/util.cpp
 
-CMakeFiles/RocketRuntime.dir/src/util.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/util.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/util.cpp > CMakeFiles/RocketRuntime.dir/src/util.cpp.i
+CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/util.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.i
 
-CMakeFiles/RocketRuntime.dir/src/util.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/util.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/util.cpp -o CMakeFiles/RocketRuntime.dir/src/util.cpp.s
+CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/util.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.s
 
-CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
-CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o: src/renderer.cpp
-CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/renderer.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: src/rocket/renderer.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/renderer.cpp
 
-CMakeFiles/RocketRuntime.dir/src/renderer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/renderer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/renderer.cpp > CMakeFiles/RocketRuntime.dir/src/renderer.cpp.i
+CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/renderer.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.i
 
-CMakeFiles/RocketRuntime.dir/src/renderer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/renderer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/renderer.cpp -o CMakeFiles/RocketRuntime.dir/src/renderer.cpp.s
+CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/renderer.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.s
 
-CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
-CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o: src/renderer3d.cpp
-CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/renderer3d.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o: src/rocket/renderer3d.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/renderer3d.cpp
 
-CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/renderer3d.cpp > CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.i
+CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/renderer3d.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.i
 
-CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/renderer3d.cpp -o CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.s
+CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/renderer3d.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.s
 
-CMakeFiles/RocketRuntime.dir/src/io.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
-CMakeFiles/RocketRuntime.dir/src/io.cpp.o: src/io.cpp
-CMakeFiles/RocketRuntime.dir/src/io.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/RocketRuntime.dir/src/io.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/io.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/io.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/io.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/io.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: src/rocket/io.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/io.cpp
 
-CMakeFiles/RocketRuntime.dir/src/io.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/io.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/io.cpp > CMakeFiles/RocketRuntime.dir/src/io.cpp.i
+CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/io.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.i
 
-CMakeFiles/RocketRuntime.dir/src/io.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/io.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/io.cpp -o CMakeFiles/RocketRuntime.dir/src/io.cpp.s
+CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/io.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.s
 
-CMakeFiles/RocketRuntime.dir/src/asset.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
-CMakeFiles/RocketRuntime.dir/src/asset.cpp.o: src/asset.cpp
-CMakeFiles/RocketRuntime.dir/src/asset.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/RocketRuntime.dir/src/asset.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/asset.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/asset.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/asset.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/asset.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: src/rocket/asset.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/asset.cpp
 
-CMakeFiles/RocketRuntime.dir/src/asset.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/asset.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/asset.cpp > CMakeFiles/RocketRuntime.dir/src/asset.cpp.i
+CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/asset.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.i
 
-CMakeFiles/RocketRuntime.dir/src/asset.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/asset.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/asset.cpp -o CMakeFiles/RocketRuntime.dir/src/asset.cpp.s
+CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/asset.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.s
 
-CMakeFiles/RocketRuntime.dir/src/types.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
-CMakeFiles/RocketRuntime.dir/src/types.cpp.o: src/types.cpp
-CMakeFiles/RocketRuntime.dir/src/types.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/RocketRuntime.dir/src/types.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/types.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/types.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/types.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/types.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o: src/rocket/types.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/types.cpp
 
-CMakeFiles/RocketRuntime.dir/src/types.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/types.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/types.cpp > CMakeFiles/RocketRuntime.dir/src/types.cpp.i
+CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/types.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.i
 
-CMakeFiles/RocketRuntime.dir/src/types.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/types.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/types.cpp -o CMakeFiles/RocketRuntime.dir/src/types.cpp.s
+CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/types.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.s
 
-CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
-CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o: src/runtime.cpp
-CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/runtime.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o: src/rocket/runtime.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/runtime.cpp
 
-CMakeFiles/RocketRuntime.dir/src/runtime.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/runtime.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/runtime.cpp > CMakeFiles/RocketRuntime.dir/src/runtime.cpp.i
+CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/runtime.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.i
 
-CMakeFiles/RocketRuntime.dir/src/runtime.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/runtime.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/runtime.cpp -o CMakeFiles/RocketRuntime.dir/src/runtime.cpp.s
+CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/runtime.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.s
+
+CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: src/rocket/font.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/font.cpp
+
+CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/font.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.i
+
+CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/font.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.s
+
+CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o: src/rocket/text.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/text.cpp
+
+CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/text.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.i
+
+CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/text.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.s
+
+CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: src/rocket/shader.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/shader.cpp
+
+CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/shader.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.i
+
+CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/shader.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.s
+
+CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: src/astro/astroui.cpp
+CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/astro/astroui.cpp
+
+CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/astro/astroui.cpp > CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.i
+
+CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/astro/astroui.cpp -o CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.s
 
 # Object files for target RocketRuntime
 RocketRuntime_OBJECTS = \
-"CMakeFiles/RocketRuntime.dir/src/window.cpp.o" \
-"CMakeFiles/RocketRuntime.dir/src/util.cpp.o" \
-"CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o" \
-"CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o" \
-"CMakeFiles/RocketRuntime.dir/src/io.cpp.o" \
-"CMakeFiles/RocketRuntime.dir/src/asset.cpp.o" \
-"CMakeFiles/RocketRuntime.dir/src/types.cpp.o" \
-"CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o"
+"CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o"
 
 # External object files for target RocketRuntime
 RocketRuntime_EXTERNAL_OBJECTS =
 
-bin/libRocketRuntime.a: CMakeFiles/RocketRuntime.dir/src/window.cpp.o
-bin/libRocketRuntime.a: CMakeFiles/RocketRuntime.dir/src/util.cpp.o
-bin/libRocketRuntime.a: CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o
-bin/libRocketRuntime.a: CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o
-bin/libRocketRuntime.a: CMakeFiles/RocketRuntime.dir/src/io.cpp.o
-bin/libRocketRuntime.a: CMakeFiles/RocketRuntime.dir/src/asset.cpp.o
-bin/libRocketRuntime.a: CMakeFiles/RocketRuntime.dir/src/types.cpp.o
-bin/libRocketRuntime.a: CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o
-bin/libRocketRuntime.a: CMakeFiles/RocketRuntime.dir/build.make
-bin/libRocketRuntime.a: CMakeFiles/RocketRuntime.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX static library bin/libRocketRuntime.a"
-	$(CMAKE_COMMAND) -P CMakeFiles/RocketRuntime.dir/cmake_clean_target.cmake
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/build.make
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX shared library bin/libRocketRuntime.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/RocketRuntime.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/RocketRuntime.dir/build: bin/libRocketRuntime.a
+CMakeFiles/RocketRuntime.dir/build: bin/libRocketRuntime.so
 .PHONY : CMakeFiles/RocketRuntime.dir/build
 
 CMakeFiles/RocketRuntime.dir/clean:

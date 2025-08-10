@@ -15,7 +15,7 @@ int main() {
     rocket::windowflags_t flags = {
         .msaa_samples = 4,
     };
-    rocket::window_t w({ 1920, 1080 }, "RocketGE - Test", flags);
+    rocket::window_t w({ 1920, 1080 }, "RocketGE - Rectangle", flags);
     rocket::camera3d_t cam = {
         .fov = 90.f,
         .render_distance = 100.f,

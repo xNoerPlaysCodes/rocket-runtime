@@ -7,6 +7,8 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
  /usr/include/AL/al.h
@@ -68,7 +70,9 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /usr/include/bits/stdint-intn.h
  /usr/include/bits/stdint-least.h
  /usr/include/bits/stdint-uintn.h
+ /usr/include/bits/stdio.h
  /usr/include/bits/stdio_lim.h
+ /usr/include/bits/stdlib-bsearch.h
  /usr/include/bits/stdlib-float.h
  /usr/include/bits/struct_mutex.h
  /usr/include/bits/struct_rwlock.h
@@ -209,9 +213,12 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /usr/include/c++/15.1.1/bits/stl_iterator.h
  /usr/include/c++/15.1.1/bits/stl_iterator_base_funcs.h
  /usr/include/c++/15.1.1/bits/stl_iterator_base_types.h
+ /usr/include/c++/15.1.1/bits/stl_map.h
+ /usr/include/c++/15.1.1/bits/stl_multimap.h
  /usr/include/c++/15.1.1/bits/stl_pair.h
  /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h
+ /usr/include/c++/15.1.1/bits/stl_tree.h
  /usr/include/c++/15.1.1/bits/stl_uninitialized.h
  /usr/include/c++/15.1.1/bits/stl_vector.h
  /usr/include/c++/15.1.1/bits/streambuf.tcc
@@ -267,6 +274,7 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /usr/include/c++/15.1.1/istream
  /usr/include/c++/15.1.1/limits
  /usr/include/c++/15.1.1/locale
+ /usr/include/c++/15.1.1/map
  /usr/include/c++/15.1.1/memory
  /usr/include/c++/15.1.1/mutex
  /usr/include/c++/15.1.1/new
@@ -331,9 +339,11 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /usr/include/glm/detail/func_exponential.inl
  /usr/include/glm/detail/func_geometric.inl
  /usr/include/glm/detail/func_matrix.inl
+ /usr/include/glm/detail/func_trigonometric.inl
  /usr/include/glm/detail/func_vector_relational.inl
  /usr/include/glm/detail/qualifier.hpp
  /usr/include/glm/detail/setup.hpp
+ /usr/include/glm/detail/type_float.hpp
  /usr/include/glm/detail/type_mat2x2.hpp
  /usr/include/glm/detail/type_mat2x2.inl
  /usr/include/glm/detail/type_mat2x3.hpp
@@ -361,6 +371,8 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /usr/include/glm/detail/type_vec4.hpp
  /usr/include/glm/detail/type_vec4.inl
  /usr/include/glm/exponential.hpp
+ /usr/include/glm/ext/matrix_clip_space.hpp
+ /usr/include/glm/ext/matrix_clip_space.inl
  /usr/include/glm/ext/matrix_double2x2.hpp
  /usr/include/glm/ext/matrix_double2x2_precision.hpp
  /usr/include/glm/ext/matrix_double2x3.hpp
@@ -397,6 +409,12 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /usr/include/glm/ext/matrix_float4x3_precision.hpp
  /usr/include/glm/ext/matrix_float4x4.hpp
  /usr/include/glm/ext/matrix_float4x4_precision.hpp
+ /usr/include/glm/ext/matrix_transform.hpp
+ /usr/include/glm/ext/matrix_transform.inl
+ /usr/include/glm/ext/quaternion_geometric.hpp
+ /usr/include/glm/ext/quaternion_geometric.inl
+ /usr/include/glm/ext/scalar_constants.hpp
+ /usr/include/glm/ext/scalar_constants.inl
  /usr/include/glm/ext/scalar_int_sized.hpp
  /usr/include/glm/ext/scalar_uint_sized.hpp
  /usr/include/glm/ext/vector_bool2.hpp
@@ -423,6 +441,8 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /usr/include/glm/ext/vector_int3_sized.hpp
  /usr/include/glm/ext/vector_int4.hpp
  /usr/include/glm/ext/vector_int4_sized.hpp
+ /usr/include/glm/ext/vector_relational.hpp
+ /usr/include/glm/ext/vector_relational.inl
  /usr/include/glm/ext/vector_uint2.hpp
  /usr/include/glm/ext/vector_uint2_sized.hpp
  /usr/include/glm/ext/vector_uint3.hpp
@@ -430,6 +450,8 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /usr/include/glm/ext/vector_uint4.hpp
  /usr/include/glm/ext/vector_uint4_sized.hpp
  /usr/include/glm/geometric.hpp
+ /usr/include/glm/gtc/constants.hpp
+ /usr/include/glm/gtc/constants.inl
  /usr/include/glm/mat2x2.hpp
  /usr/include/glm/mat2x3.hpp
  /usr/include/glm/mat2x4.hpp
@@ -441,6 +463,7 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
  /usr/include/glm/mat4x4.hpp
  /usr/include/glm/matrix.hpp
  /usr/include/glm/simd/platform.h
+ /usr/include/glm/trigonometric.hpp
  /usr/include/glm/vec2.hpp
  /usr/include/glm/vec3.hpp
  /usr/include/glm/vec4.hpp
@@ -486,32 +509,42 @@ bin/rectangle_test
  /usr/lib/Scrt1.o
  /usr/lib/crti.o
  /usr/lib/crtn.o
- /usr/lib/libGL.so
- /usr/lib/libGLEW.so
- /usr/lib/libGLU.so
  /usr/lib/libc.so
  /usr/lib/libgcc_s.so
  /usr/lib/libgcc_s.so.1
- /usr/lib/libglfw.so
  /usr/lib/libm.so
- /usr/lib/libopenal.so
  /usr/lib/libstdc++.so
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtbeginS.o
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtendS.o
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/libgcc.a
  /usr/lib/ld-linux-x86-64.so.2
  /usr/lib/libEGL.so.1
+ /usr/lib/libGL.so.1
+ /usr/lib/libGLEW.so.2.2
+ /usr/lib/libGLU.so.1
  /usr/lib/libGLX.so.0
  /usr/lib/libGLdispatch.so.0
  /usr/lib/libOpenGL.so.0
  /usr/lib/libX11.so.6
  /usr/lib/libXau.so.6
  /usr/lib/libXdmcp.so.6
+ /usr/lib/libbrotlicommon.so.1
+ /usr/lib/libbrotlidec.so.1
+ /usr/lib/libbz2.so.1.0
  /usr/lib/libc.so.6
  /usr/lib/libc_nonshared.a
+ /usr/lib/libfreetype.so.6
+ /usr/lib/libglfw.so.3
+ /usr/lib/libglib-2.0.so.0
+ /usr/lib/libgraphite2.so.3
+ /usr/lib/libharfbuzz.so.0
  /usr/lib/libm.so.6
  /usr/lib/libmvec.so.1
+ /usr/lib/libopenal.so.1
+ /usr/lib/libpcre2-8.so.0
+ /usr/lib/libpng16.so.16
  /usr/lib/libxcb.so.1
+ /usr/lib/libz.so.1
  /home/noerlol/C-Projects/RocketGE/CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
- /home/noerlol/C-Projects/RocketGE/bin/libRocketRuntime.a
+ /home/noerlol/C-Projects/RocketGE/bin/libRocketRuntime.so
 

@@ -78,6 +78,21 @@ namespace rocket {
         void add_listener(std::function<void(key_event_t)>);
         void add_listener(std::function<void(mouse_event_t)>);
         void add_listener(std::function<void(mouse_move_event_t)>);
+
+        // IMMD IO
+
+        bool key_down(keyboard_key key);
+        bool key_pressed(keyboard_key key);
+        bool key_released(keyboard_key key);
+
+        rocket::vec2d_t mouse_pos();
+        rocket::vec2f_t mouse_pos_f();
+
+        bool mouse_down(mouse_button button);
+        bool mouse_pressed(mouse_button button);
+        bool mouse_released(mouse_button button);
+
+        char get_formatted_char_typed();
     }
 }
 

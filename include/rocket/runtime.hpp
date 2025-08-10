@@ -17,12 +17,33 @@ namespace rocket {
 
 namespace rocket {
     enum class log_level_t : int {
-        warn = 1,
-        fatal_to_function = 2,
-        fatal = 3,
+        trace = 0,
+        debug = 1,
+        info = 2,
+        warn = 3,
+        fatal_to_function = 4,
+        fatal = 5,
     };
 
     void set_log_level(log_level_t level);
+    using log_error_callback_t = std::function<void(
+            std::string error, 
+            int error_id, 
+            std::string error_source, 
+            std::string level)>;
+
+    std::string log_level_to_str(log_level_t level);
+    void set_log_error_callback(log_error_callback_t);
+
+    using log_callback_t = std::function<void(
+            std::string log, 
+            std::string class_file_library_source, 
+            std::string function_source,
+            std::string level)>;
+    void set_log_callback(log_callback_t);
+
+    void log_error(std::string error, int error_id, std::string error_source, std::string level);
+    void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);
 }
 
 #endif

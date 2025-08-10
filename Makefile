@@ -48,10 +48,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /bin/cmake -E rm -f
+RM = /usr/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -78,7 +78,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake to regenerate build system..."
-	/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -155,197 +155,332 @@ initializer_test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/initializer_test.dir/build.make CMakeFiles/initializer_test.dir/build
 .PHONY : initializer_test/fast
 
-src/asset.o: src/asset.cpp.o
-.PHONY : src/asset.o
+#=============================================================================
+# Target rules for targets named text_test
+
+# Build rule for target.
+text_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 text_test
+.PHONY : text_test
+
+# fast build rule for target.
+text_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/text_test.dir/build.make CMakeFiles/text_test.dir/build
+.PHONY : text_test/fast
+
+#=============================================================================
+# Target rules for targets named ui_init_test
+
+# Build rule for target.
+ui_init_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ui_init_test
+.PHONY : ui_init_test
+
+# fast build rule for target.
+ui_init_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui_init_test.dir/build.make CMakeFiles/ui_init_test.dir/build
+.PHONY : ui_init_test/fast
+
+#=============================================================================
+# Target rules for targets named shader_test
+
+# Build rule for target.
+shader_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 shader_test
+.PHONY : shader_test
+
+# fast build rule for target.
+shader_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/build
+.PHONY : shader_test/fast
+
+src/astro/astroui.o: src/astro/astroui.cpp.o
+.PHONY : src/astro/astroui.o
 
 # target to build an object file
-src/asset.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/asset.cpp.o
-.PHONY : src/asset.cpp.o
+src/astro/astroui.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o
+.PHONY : src/astro/astroui.cpp.o
 
-src/asset.i: src/asset.cpp.i
-.PHONY : src/asset.i
+src/astro/astroui.i: src/astro/astroui.cpp.i
+.PHONY : src/astro/astroui.i
 
 # target to preprocess a source file
-src/asset.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/asset.cpp.i
-.PHONY : src/asset.cpp.i
+src/astro/astroui.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.i
+.PHONY : src/astro/astroui.cpp.i
 
-src/asset.s: src/asset.cpp.s
-.PHONY : src/asset.s
+src/astro/astroui.s: src/astro/astroui.cpp.s
+.PHONY : src/astro/astroui.s
 
 # target to generate assembly for a file
-src/asset.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/asset.cpp.s
-.PHONY : src/asset.cpp.s
+src/astro/astroui.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.s
+.PHONY : src/astro/astroui.cpp.s
 
-src/io.o: src/io.cpp.o
-.PHONY : src/io.o
+src/rocket/asset.o: src/rocket/asset.cpp.o
+.PHONY : src/rocket/asset.o
 
 # target to build an object file
-src/io.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/io.cpp.o
-.PHONY : src/io.cpp.o
+src/rocket/asset.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o
+.PHONY : src/rocket/asset.cpp.o
 
-src/io.i: src/io.cpp.i
-.PHONY : src/io.i
+src/rocket/asset.i: src/rocket/asset.cpp.i
+.PHONY : src/rocket/asset.i
 
 # target to preprocess a source file
-src/io.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/io.cpp.i
-.PHONY : src/io.cpp.i
+src/rocket/asset.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.i
+.PHONY : src/rocket/asset.cpp.i
 
-src/io.s: src/io.cpp.s
-.PHONY : src/io.s
+src/rocket/asset.s: src/rocket/asset.cpp.s
+.PHONY : src/rocket/asset.s
 
 # target to generate assembly for a file
-src/io.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/io.cpp.s
-.PHONY : src/io.cpp.s
+src/rocket/asset.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.s
+.PHONY : src/rocket/asset.cpp.s
 
-src/renderer.o: src/renderer.cpp.o
-.PHONY : src/renderer.o
+src/rocket/font.o: src/rocket/font.cpp.o
+.PHONY : src/rocket/font.o
 
 # target to build an object file
-src/renderer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/renderer.cpp.o
-.PHONY : src/renderer.cpp.o
+src/rocket/font.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o
+.PHONY : src/rocket/font.cpp.o
 
-src/renderer.i: src/renderer.cpp.i
-.PHONY : src/renderer.i
+src/rocket/font.i: src/rocket/font.cpp.i
+.PHONY : src/rocket/font.i
 
 # target to preprocess a source file
-src/renderer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/renderer.cpp.i
-.PHONY : src/renderer.cpp.i
+src/rocket/font.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.i
+.PHONY : src/rocket/font.cpp.i
 
-src/renderer.s: src/renderer.cpp.s
-.PHONY : src/renderer.s
+src/rocket/font.s: src/rocket/font.cpp.s
+.PHONY : src/rocket/font.s
 
 # target to generate assembly for a file
-src/renderer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/renderer.cpp.s
-.PHONY : src/renderer.cpp.s
+src/rocket/font.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.s
+.PHONY : src/rocket/font.cpp.s
 
-src/renderer3d.o: src/renderer3d.cpp.o
-.PHONY : src/renderer3d.o
+src/rocket/io.o: src/rocket/io.cpp.o
+.PHONY : src/rocket/io.o
 
 # target to build an object file
-src/renderer3d.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.o
-.PHONY : src/renderer3d.cpp.o
+src/rocket/io.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o
+.PHONY : src/rocket/io.cpp.o
 
-src/renderer3d.i: src/renderer3d.cpp.i
-.PHONY : src/renderer3d.i
+src/rocket/io.i: src/rocket/io.cpp.i
+.PHONY : src/rocket/io.i
 
 # target to preprocess a source file
-src/renderer3d.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.i
-.PHONY : src/renderer3d.cpp.i
+src/rocket/io.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.i
+.PHONY : src/rocket/io.cpp.i
 
-src/renderer3d.s: src/renderer3d.cpp.s
-.PHONY : src/renderer3d.s
+src/rocket/io.s: src/rocket/io.cpp.s
+.PHONY : src/rocket/io.s
 
 # target to generate assembly for a file
-src/renderer3d.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/renderer3d.cpp.s
-.PHONY : src/renderer3d.cpp.s
+src/rocket/io.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.s
+.PHONY : src/rocket/io.cpp.s
 
-src/runtime.o: src/runtime.cpp.o
-.PHONY : src/runtime.o
+src/rocket/renderer.o: src/rocket/renderer.cpp.o
+.PHONY : src/rocket/renderer.o
 
 # target to build an object file
-src/runtime.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/runtime.cpp.o
-.PHONY : src/runtime.cpp.o
+src/rocket/renderer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o
+.PHONY : src/rocket/renderer.cpp.o
 
-src/runtime.i: src/runtime.cpp.i
-.PHONY : src/runtime.i
+src/rocket/renderer.i: src/rocket/renderer.cpp.i
+.PHONY : src/rocket/renderer.i
 
 # target to preprocess a source file
-src/runtime.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/runtime.cpp.i
-.PHONY : src/runtime.cpp.i
+src/rocket/renderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.i
+.PHONY : src/rocket/renderer.cpp.i
 
-src/runtime.s: src/runtime.cpp.s
-.PHONY : src/runtime.s
+src/rocket/renderer.s: src/rocket/renderer.cpp.s
+.PHONY : src/rocket/renderer.s
 
 # target to generate assembly for a file
-src/runtime.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/runtime.cpp.s
-.PHONY : src/runtime.cpp.s
+src/rocket/renderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.s
+.PHONY : src/rocket/renderer.cpp.s
 
-src/types.o: src/types.cpp.o
-.PHONY : src/types.o
+src/rocket/renderer3d.o: src/rocket/renderer3d.cpp.o
+.PHONY : src/rocket/renderer3d.o
 
 # target to build an object file
-src/types.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/types.cpp.o
-.PHONY : src/types.cpp.o
+src/rocket/renderer3d.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o
+.PHONY : src/rocket/renderer3d.cpp.o
 
-src/types.i: src/types.cpp.i
-.PHONY : src/types.i
+src/rocket/renderer3d.i: src/rocket/renderer3d.cpp.i
+.PHONY : src/rocket/renderer3d.i
 
 # target to preprocess a source file
-src/types.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/types.cpp.i
-.PHONY : src/types.cpp.i
+src/rocket/renderer3d.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.i
+.PHONY : src/rocket/renderer3d.cpp.i
 
-src/types.s: src/types.cpp.s
-.PHONY : src/types.s
+src/rocket/renderer3d.s: src/rocket/renderer3d.cpp.s
+.PHONY : src/rocket/renderer3d.s
 
 # target to generate assembly for a file
-src/types.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/types.cpp.s
-.PHONY : src/types.cpp.s
+src/rocket/renderer3d.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.s
+.PHONY : src/rocket/renderer3d.cpp.s
 
-src/util.o: src/util.cpp.o
-.PHONY : src/util.o
+src/rocket/runtime.o: src/rocket/runtime.cpp.o
+.PHONY : src/rocket/runtime.o
 
 # target to build an object file
-src/util.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/util.cpp.o
-.PHONY : src/util.cpp.o
+src/rocket/runtime.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o
+.PHONY : src/rocket/runtime.cpp.o
 
-src/util.i: src/util.cpp.i
-.PHONY : src/util.i
+src/rocket/runtime.i: src/rocket/runtime.cpp.i
+.PHONY : src/rocket/runtime.i
 
 # target to preprocess a source file
-src/util.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/util.cpp.i
-.PHONY : src/util.cpp.i
+src/rocket/runtime.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.i
+.PHONY : src/rocket/runtime.cpp.i
 
-src/util.s: src/util.cpp.s
-.PHONY : src/util.s
+src/rocket/runtime.s: src/rocket/runtime.cpp.s
+.PHONY : src/rocket/runtime.s
 
 # target to generate assembly for a file
-src/util.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/util.cpp.s
-.PHONY : src/util.cpp.s
+src/rocket/runtime.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.s
+.PHONY : src/rocket/runtime.cpp.s
 
-src/window.o: src/window.cpp.o
-.PHONY : src/window.o
+src/rocket/shader.o: src/rocket/shader.cpp.o
+.PHONY : src/rocket/shader.o
 
 # target to build an object file
-src/window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/window.cpp.o
-.PHONY : src/window.cpp.o
+src/rocket/shader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o
+.PHONY : src/rocket/shader.cpp.o
 
-src/window.i: src/window.cpp.i
-.PHONY : src/window.i
+src/rocket/shader.i: src/rocket/shader.cpp.i
+.PHONY : src/rocket/shader.i
 
 # target to preprocess a source file
-src/window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/window.cpp.i
-.PHONY : src/window.cpp.i
+src/rocket/shader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.i
+.PHONY : src/rocket/shader.cpp.i
 
-src/window.s: src/window.cpp.s
-.PHONY : src/window.s
+src/rocket/shader.s: src/rocket/shader.cpp.s
+.PHONY : src/rocket/shader.s
 
 # target to generate assembly for a file
-src/window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/window.cpp.s
-.PHONY : src/window.cpp.s
+src/rocket/shader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.s
+.PHONY : src/rocket/shader.cpp.s
+
+src/rocket/text.o: src/rocket/text.cpp.o
+.PHONY : src/rocket/text.o
+
+# target to build an object file
+src/rocket/text.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o
+.PHONY : src/rocket/text.cpp.o
+
+src/rocket/text.i: src/rocket/text.cpp.i
+.PHONY : src/rocket/text.i
+
+# target to preprocess a source file
+src/rocket/text.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.i
+.PHONY : src/rocket/text.cpp.i
+
+src/rocket/text.s: src/rocket/text.cpp.s
+.PHONY : src/rocket/text.s
+
+# target to generate assembly for a file
+src/rocket/text.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.s
+.PHONY : src/rocket/text.cpp.s
+
+src/rocket/types.o: src/rocket/types.cpp.o
+.PHONY : src/rocket/types.o
+
+# target to build an object file
+src/rocket/types.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o
+.PHONY : src/rocket/types.cpp.o
+
+src/rocket/types.i: src/rocket/types.cpp.i
+.PHONY : src/rocket/types.i
+
+# target to preprocess a source file
+src/rocket/types.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.i
+.PHONY : src/rocket/types.cpp.i
+
+src/rocket/types.s: src/rocket/types.cpp.s
+.PHONY : src/rocket/types.s
+
+# target to generate assembly for a file
+src/rocket/types.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.s
+.PHONY : src/rocket/types.cpp.s
+
+src/rocket/util.o: src/rocket/util.cpp.o
+.PHONY : src/rocket/util.o
+
+# target to build an object file
+src/rocket/util.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o
+.PHONY : src/rocket/util.cpp.o
+
+src/rocket/util.i: src/rocket/util.cpp.i
+.PHONY : src/rocket/util.i
+
+# target to preprocess a source file
+src/rocket/util.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.i
+.PHONY : src/rocket/util.cpp.i
+
+src/rocket/util.s: src/rocket/util.cpp.s
+.PHONY : src/rocket/util.s
+
+# target to generate assembly for a file
+src/rocket/util.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.s
+.PHONY : src/rocket/util.cpp.s
+
+src/rocket/window.o: src/rocket/window.cpp.o
+.PHONY : src/rocket/window.o
+
+# target to build an object file
+src/rocket/window.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o
+.PHONY : src/rocket/window.cpp.o
+
+src/rocket/window.i: src/rocket/window.cpp.i
+.PHONY : src/rocket/window.i
+
+# target to preprocess a source file
+src/rocket/window.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.i
+.PHONY : src/rocket/window.cpp.i
+
+src/rocket/window.s: src/rocket/window.cpp.s
+.PHONY : src/rocket/window.s
+
+# target to generate assembly for a file
+src/rocket/window.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.s
+.PHONY : src/rocket/window.cpp.s
 
 tests/initializer_test.o: tests/initializer_test.cpp.o
 .PHONY : tests/initializer_test.o
@@ -395,6 +530,78 @@ tests/rectangle_test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rectangle_test.dir/build.make CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.s
 .PHONY : tests/rectangle_test.cpp.s
 
+tests/shader_test.o: tests/shader_test.cpp.o
+.PHONY : tests/shader_test.o
+
+# target to build an object file
+tests/shader_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/tests/shader_test.cpp.o
+.PHONY : tests/shader_test.cpp.o
+
+tests/shader_test.i: tests/shader_test.cpp.i
+.PHONY : tests/shader_test.i
+
+# target to preprocess a source file
+tests/shader_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/tests/shader_test.cpp.i
+.PHONY : tests/shader_test.cpp.i
+
+tests/shader_test.s: tests/shader_test.cpp.s
+.PHONY : tests/shader_test.s
+
+# target to generate assembly for a file
+tests/shader_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/tests/shader_test.cpp.s
+.PHONY : tests/shader_test.cpp.s
+
+tests/text_test.o: tests/text_test.cpp.o
+.PHONY : tests/text_test.o
+
+# target to build an object file
+tests/text_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/text_test.dir/build.make CMakeFiles/text_test.dir/tests/text_test.cpp.o
+.PHONY : tests/text_test.cpp.o
+
+tests/text_test.i: tests/text_test.cpp.i
+.PHONY : tests/text_test.i
+
+# target to preprocess a source file
+tests/text_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/text_test.dir/build.make CMakeFiles/text_test.dir/tests/text_test.cpp.i
+.PHONY : tests/text_test.cpp.i
+
+tests/text_test.s: tests/text_test.cpp.s
+.PHONY : tests/text_test.s
+
+# target to generate assembly for a file
+tests/text_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/text_test.dir/build.make CMakeFiles/text_test.dir/tests/text_test.cpp.s
+.PHONY : tests/text_test.cpp.s
+
+tests/ui_init_test.o: tests/ui_init_test.cpp.o
+.PHONY : tests/ui_init_test.o
+
+# target to build an object file
+tests/ui_init_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui_init_test.dir/build.make CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o
+.PHONY : tests/ui_init_test.cpp.o
+
+tests/ui_init_test.i: tests/ui_init_test.cpp.i
+.PHONY : tests/ui_init_test.i
+
+# target to preprocess a source file
+tests/ui_init_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui_init_test.dir/build.make CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.i
+.PHONY : tests/ui_init_test.cpp.i
+
+tests/ui_init_test.s: tests/ui_init_test.cpp.s
+.PHONY : tests/ui_init_test.s
+
+# target to generate assembly for a file
+tests/ui_init_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui_init_test.dir/build.make CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.s
+.PHONY : tests/ui_init_test.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -406,36 +613,60 @@ help:
 	@echo "... RocketRuntime"
 	@echo "... initializer_test"
 	@echo "... rectangle_test"
-	@echo "... src/asset.o"
-	@echo "... src/asset.i"
-	@echo "... src/asset.s"
-	@echo "... src/io.o"
-	@echo "... src/io.i"
-	@echo "... src/io.s"
-	@echo "... src/renderer.o"
-	@echo "... src/renderer.i"
-	@echo "... src/renderer.s"
-	@echo "... src/renderer3d.o"
-	@echo "... src/renderer3d.i"
-	@echo "... src/renderer3d.s"
-	@echo "... src/runtime.o"
-	@echo "... src/runtime.i"
-	@echo "... src/runtime.s"
-	@echo "... src/types.o"
-	@echo "... src/types.i"
-	@echo "... src/types.s"
-	@echo "... src/util.o"
-	@echo "... src/util.i"
-	@echo "... src/util.s"
-	@echo "... src/window.o"
-	@echo "... src/window.i"
-	@echo "... src/window.s"
+	@echo "... shader_test"
+	@echo "... text_test"
+	@echo "... ui_init_test"
+	@echo "... src/astro/astroui.o"
+	@echo "... src/astro/astroui.i"
+	@echo "... src/astro/astroui.s"
+	@echo "... src/rocket/asset.o"
+	@echo "... src/rocket/asset.i"
+	@echo "... src/rocket/asset.s"
+	@echo "... src/rocket/font.o"
+	@echo "... src/rocket/font.i"
+	@echo "... src/rocket/font.s"
+	@echo "... src/rocket/io.o"
+	@echo "... src/rocket/io.i"
+	@echo "... src/rocket/io.s"
+	@echo "... src/rocket/renderer.o"
+	@echo "... src/rocket/renderer.i"
+	@echo "... src/rocket/renderer.s"
+	@echo "... src/rocket/renderer3d.o"
+	@echo "... src/rocket/renderer3d.i"
+	@echo "... src/rocket/renderer3d.s"
+	@echo "... src/rocket/runtime.o"
+	@echo "... src/rocket/runtime.i"
+	@echo "... src/rocket/runtime.s"
+	@echo "... src/rocket/shader.o"
+	@echo "... src/rocket/shader.i"
+	@echo "... src/rocket/shader.s"
+	@echo "... src/rocket/text.o"
+	@echo "... src/rocket/text.i"
+	@echo "... src/rocket/text.s"
+	@echo "... src/rocket/types.o"
+	@echo "... src/rocket/types.i"
+	@echo "... src/rocket/types.s"
+	@echo "... src/rocket/util.o"
+	@echo "... src/rocket/util.i"
+	@echo "... src/rocket/util.s"
+	@echo "... src/rocket/window.o"
+	@echo "... src/rocket/window.i"
+	@echo "... src/rocket/window.s"
 	@echo "... tests/initializer_test.o"
 	@echo "... tests/initializer_test.i"
 	@echo "... tests/initializer_test.s"
 	@echo "... tests/rectangle_test.o"
 	@echo "... tests/rectangle_test.i"
 	@echo "... tests/rectangle_test.s"
+	@echo "... tests/shader_test.o"
+	@echo "... tests/shader_test.i"
+	@echo "... tests/shader_test.s"
+	@echo "... tests/text_test.o"
+	@echo "... tests/text_test.i"
+	@echo "... tests/text_test.s"
+	@echo "... tests/ui_init_test.o"
+	@echo "... tests/ui_init_test.i"
+	@echo "... tests/ui_init_test.s"
 .PHONY : help
 
 

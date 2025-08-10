@@ -18,41 +18,81 @@ project(${PROJECT_NAME} CXX)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-add_library(${PROJECT_NAME} STATIC
-    src/window.cpp
-    src/util.cpp
-    src/renderer.cpp
-    src/renderer3d.cpp
-    src/io.cpp
-    src/asset.cpp
-    src/types.cpp
-    src/runtime.cpp
+option(BUILD_SHARED_LIBS "Build Shared" ON)
+option(BUILD_TESTS "Build Tests" ON)
+
+option(BUILD_QUARK "Build Quark [physics]" ON)
+option(BUILD_ASTRO "Build Astro [ui]" ON)
+
+if (BUILD_QUARK)
+    set(QUARK_SOURCES 
+    )
+    add_compile_definitions(ROCKETGE__BUILD_QUARK)
+endif()
+
+if (BUILD_ASTRO)
+    set(ASTRO_SOURCES
+        src/astro/astroui.cpp
+    )
+    add_compile_definitions(ROCKETGE__BUILD_ASTRO)
+endif()
+
+add_library(${PROJECT_NAME}
+    src/rocket/window.cpp
+    src/rocket/util.cpp
+    src/rocket/renderer.cpp
+    src/rocket/renderer3d.cpp
+    src/rocket/io.cpp
+    src/rocket/asset.cpp
+    src/rocket/types.cpp
+    src/rocket/runtime.cpp
+
+    src/rocket/font.cpp
+    src/rocket/text.cpp
+
+    src/rocket/shader.cpp
+
+    # AstroUI
+    ${ASTRO_SOURCES}
+
+    # Quark
+    ${QUARK_SOURCES}
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal)
+include_directories(
+    /usr/include/freetype2
+    /usr/include
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal freetype)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1)
 endif()
 
-# Debug
-project(rectangle_test CXX)
-add_executable(${PROJECT_NAME} tests/${PROJECT_NAME}.cpp)
+if (BUILD_TESTS)
+    set(TEST_NAMES
+        rectangle_test
+        initializer_test
+        text_test
+        ui_init_test
+        shader_test
+    )
 
-target_link_directories(${PROJECT_NAME} PRIVATE bin)
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+    foreach(test_name IN LISTS TEST_NAMES)
+        add_executable(${test_name} tests/${test_name}.cpp)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE RocketRuntime)
+        target_link_directories(${test_name} PRIVATE bin)
+        target_include_directories(${test_name} PRIVATE include)
 
-add_compile_options(-Wall -Wextra -Wpedantic -O3 -flto)
+        target_link_libraries(${test_name} PRIVATE RocketRuntime)
 
-# Debug
-project(initializer_test CXX)
-add_executable(${PROJECT_NAME} tests/${PROJECT_NAME}.cpp)
+        target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic -O3 -flto)
+    endforeach()
+endif()
 
-target_link_directories(${PROJECT_NAME} PRIVATE bin)
-target_include_directories(${PROJECT_NAME} PRIVATE include)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE RocketRuntime)
-
-add_compile_options(-Wall -Wextra -Wpedantic -O3 -flto)
+message("Build Type: ${CMAKE_BUILD_TYPE}")
+message("Build Shared: ${BUILD_SHARED_LIBS}")
+message("Build Tests: ${BUILD_TESTS}")
+message("Build Quark: ${BUILD_QUARK}")
+message("Build Astro: ${BUILD_ASTRO}")

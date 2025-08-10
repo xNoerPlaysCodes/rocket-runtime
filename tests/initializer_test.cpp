@@ -11,7 +11,7 @@ int main() {
     rocket::windowflags_t window_flags = {
         .msaa_samples = 4
     };
-    rocket::window_t window({ 1920, 1080 }, "initializer_test", window_flags);
+    rocket::window_t window({ 1920, 1080 }, "RocketGE - ExampleWindow", window_flags);
     rocket::renderer_2d r2d(&window);
 
     rocket::asset_manager_t asset_manager;

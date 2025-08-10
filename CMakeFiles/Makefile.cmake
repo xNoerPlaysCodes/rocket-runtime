@@ -50,4 +50,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/RocketRuntime.dir/DependInfo.cmake"
   "CMakeFiles/rectangle_test.dir/DependInfo.cmake"
   "CMakeFiles/initializer_test.dir/DependInfo.cmake"
+  "CMakeFiles/text_test.dir/DependInfo.cmake"
+  "CMakeFiles/ui_init_test.dir/DependInfo.cmake"
+  "CMakeFiles/shader_test.dir/DependInfo.cmake"
   )
