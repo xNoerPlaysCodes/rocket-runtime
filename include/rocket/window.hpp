@@ -28,6 +28,7 @@ namespace rocket {
         std::string title = "Null";
 
         cursor_mode_t mode = cursor_mode_t::normal;
+        windowflags_t flags;
 
         friend class renderer_2d;
         friend class renderer_3d;
@@ -53,6 +54,9 @@ namespace rocket {
         bool is_wayland();
 
         bool is_running() const;
+    public:
+        /// @brief GLFW utility function
+        static void glfw_set_platform(const char *platform);
     public:
         /// @brief creates a new window
         window_t(const rocket::vec2i_t& size = { 800, 600 }, 

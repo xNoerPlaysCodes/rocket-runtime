@@ -50,8 +50,7 @@ namespace rocket {
             GLenum err = glewInit();
             if (err != GLEW_OK) {
                 const GLubyte* err_str = glewGetErrorString(err);
-                std::cerr << util::format_error(reinterpret_cast<const char*>(err_str), err, "glew", "fatal");
-                std::exit(1);
+                std::cerr << util::format_error(reinterpret_cast<const char*>(err_str), err, "glew", "warning");
             }
 
             // Clear any errors from glewInit
@@ -131,7 +130,7 @@ namespace rocket {
             DEBUG_GL_CHECK_ERROR(glEnable(GL_MULTISAMPLE));
             bool gl_multisample = true;
             DEBUG_GL_CHECK_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-            bool gl_blendfunc = "GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA";
+            bool gl_blendfunc = "GL_SRC_ALPHA::GL_ONE_MINUS_SRC_ALPHA";
 
             // Enable SRGB framebuffer if needed
             DEBUG_GL_CHECK_ERROR(glEnable(GL_FRAMEBUFFER_SRGB));
@@ -166,7 +165,7 @@ namespace rocket {
                 "- GL GPU-Specific Values:",
                 "   - GL_MAX_TEXTURE_SIZE: " + std::to_string(max_tx_size) + " x " + std::to_string(max_tx_size),
             "Screen Info:",
-                "- Screen Size: " + std::to_string(window->size.x) + " x " + std::to_string(window->size.y)
+                "- Window Size: " + std::to_string(window->size.x) + " x " + std::to_string(window->size.y)
             };
 
             for (auto &l : log_messages) {
@@ -194,7 +193,10 @@ namespace rocket {
         glClearColor(clr.x, clr.y, clr.z, clr.w);
     }
     
-    void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation) {
+    void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture,
+                                    rocket::fbounding_box rect,
+                                    float rotation,
+                                    float roundedness) {
         static GLuint shader_program = 0;
 
         if (shader_program == 0) {
@@ -205,9 +207,8 @@ namespace rocket {
                 uniform mat4 u_transform;
 
                 void main() {
-                    v_uv = aPos;
-                    vec2 pos = aPos; // 0→1 quad
-                    gl_Position = u_transform * vec4(pos, 0.0, 1.0);
+                    v_uv = aPos; // 0→1 quad coords
+                    gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
                 }
             )";
 
@@ -215,71 +216,99 @@ namespace rocket {
                 #version 330 core
                 in vec2 v_uv;
                 out vec4 FragColor;
+
                 uniform sampler2D u_texture;
+                uniform float u_radius; // fraction 0..1 of min size
+                uniform vec2 u_size;    // rect size in pixels
 
                 void main() {
-                    FragColor = texture(u_texture, v_uv);
+                    // Convert UV to local pixel space
+                    vec2 local_px = v_uv * u_size;
+
+                    // Convert fraction to pixel radius
+                    float radius_px = u_radius * 0.5 * min(u_size.x, u_size.y);
+
+                    // Distance from nearest edge
+                    vec2 cornerDist = min(local_px, u_size - local_px);
+
+                // Distance from corner arc
+                float dist = length(cornerDist - vec2(radius_px));
+
+                // Anti-alias edge
+                float edge_thickness = 1.0;
+                float alpha = 1.0;
+
+                if (cornerDist.x < radius_px && cornerDist.y < radius_px) {
+                    alpha = 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist);
                 }
-            )";
 
-            GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vs, 1, &vert_src, nullptr);
-            glCompileShader(vs);
+                vec4 texColor = texture(u_texture, v_uv);
+                FragColor = vec4(texColor.rgb, texColor.a * alpha);
+            }
+        )";
 
-            GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(fs, 1, &frag_src, nullptr);
-            glCompileShader(fs);
+        GLuint vs = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vs, 1, &vert_src, nullptr);
+        glCompileShader(vs);
 
-            shader_program = glCreateProgram();
-            glAttachShader(shader_program, vs);
-            glAttachShader(shader_program, fs);
-            glLinkProgram(shader_program);
+        GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fs, 1, &frag_src, nullptr);
+        glCompileShader(fs);
 
-            glDeleteShader(vs);
-            glDeleteShader(fs);
-        }
+        shader_program = glCreateProgram();
+        glAttachShader(shader_program, vs);
+        glAttachShader(shader_program, fs);
+        glLinkProgram(shader_program);
 
-        glUseProgram(shader_program);
-
-        if (texture->glid == 0) {
-            glGenTextures(1, &texture->glid);
-            glBindTexture(GL_TEXTURE_2D, texture->glid);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, texture->size.x, texture->size.y, 0,
-                         texture->channels == 4 ? GL_RGBA : GL_RGB,
-                         GL_UNSIGNED_BYTE, texture->data.data());
-
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            texture->data.clear();
-            texture->data.shrink_to_fit();
-        }
-
-        // Create transform (from 0-1 quad to pixel-space rectangle)
-        glm::mat4 projection = glm::ortho(
-            0.0f, static_cast<float>(window->size.x),
-            static_cast<float>(window->size.y), 0.0f,
-            -1.0f, 1.0f
-        );
-
-        float cx = rect.pos.x + rect.size.x * 0.5f;
-        float cy = rect.pos.y + rect.size.y * 0.5f;
-
-        glm::mat4 transform = projection
-            * glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
-            * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
-            * glm::translate(glm::mat4(1.0f), glm::vec3(-rect.size.x * 0.5f, -rect.size.y * 0.5f, 0.0f))
-            * glm::scale(glm::mat4(1.0f), glm::vec3(rect.size.x, rect.size.y, 1.0f));
-
-        glUniformMatrix4fv(glGetUniformLocation(shader_program, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture->glid);
-        glUniform1i(glGetUniformLocation(shader_program, "u_texture"), 0);
-
-        glBindVertexArray(txVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDeleteShader(vs);
+        glDeleteShader(fs);
     }
+
+    glUseProgram(shader_program);
+
+    if (texture->glid == 0) {
+        glGenTextures(1, &texture->glid);
+        glBindTexture(GL_TEXTURE_2D, texture->glid);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, texture->size.x, texture->size.y, 0,
+                     texture->channels == 4 ? GL_RGBA : GL_RGB,
+                     GL_UNSIGNED_BYTE, texture->data.data());
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        texture->data.clear();
+        texture->data.shrink_to_fit();
+    }
+
+    // Transform
+    glm::mat4 projection = glm::ortho(
+        0.0f, static_cast<float>(window->size.x),
+        static_cast<float>(window->size.y), 0.0f,
+        -1.0f, 1.0f
+    );
+
+    float cx = rect.pos.x + rect.size.x * 0.5f;
+    float cy = rect.pos.y + rect.size.y * 0.5f;
+
+    glm::mat4 transform = projection
+        * glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
+        * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
+        * glm::translate(glm::mat4(1.0f), glm::vec3(-rect.size.x * 0.5f, -rect.size.y * 0.5f, 0.0f))
+        * glm::scale(glm::mat4(1.0f), glm::vec3(rect.size.x, rect.size.y, 1.0f));
+
+    glUniformMatrix4fv(glGetUniformLocation(shader_program, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
+
+    // Pass uniforms
+    glUniform1f(glGetUniformLocation(shader_program, "u_radius"), roundedness);
+    glUniform2f(glGetUniformLocation(shader_program, "u_size"), rect.size.x, rect.size.y);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture->glid);
+    glUniform1i(glGetUniformLocation(shader_program, "u_texture"), 0);
+
+    glBindVertexArray(txVAO);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+}
   
     void renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness) {
         static GLuint shader_program = 0;

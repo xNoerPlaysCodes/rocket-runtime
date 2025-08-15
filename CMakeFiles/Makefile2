@@ -69,6 +69,7 @@ all: CMakeFiles/initializer_test.dir/all
 all: CMakeFiles/text_test.dir/all
 all: CMakeFiles/ui_init_test.dir/all
 all: CMakeFiles/shader_test.dir/all
+all: CMakeFiles/rounded_texture_rectangle_test.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
@@ -78,6 +79,7 @@ codegen: CMakeFiles/initializer_test.dir/codegen
 codegen: CMakeFiles/text_test.dir/codegen
 codegen: CMakeFiles/ui_init_test.dir/codegen
 codegen: CMakeFiles/shader_test.dir/codegen
+codegen: CMakeFiles/rounded_texture_rectangle_test.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -91,6 +93,7 @@ clean: CMakeFiles/initializer_test.dir/clean
 clean: CMakeFiles/text_test.dir/clean
 clean: CMakeFiles/ui_init_test.dir/clean
 clean: CMakeFiles/shader_test.dir/clean
+clean: CMakeFiles/rounded_texture_rectangle_test.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -196,7 +199,7 @@ CMakeFiles/initializer_test.dir/clean:
 CMakeFiles/text_test.dir/all: CMakeFiles/RocketRuntime.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/text_test.dir/build.make CMakeFiles/text_test.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/text_test.dir/build.make CMakeFiles/text_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=20,21 "Built target text_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=22,23 "Built target text_test"
 .PHONY : CMakeFiles/text_test.dir/all
 
 # Build rule for subdir invocation for target.
@@ -213,7 +216,7 @@ text_test: CMakeFiles/text_test.dir/rule
 # codegen rule for target.
 CMakeFiles/text_test.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/text_test.dir/build.make CMakeFiles/text_test.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=20,21 "Finished codegen for target text_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=22,23 "Finished codegen for target text_test"
 .PHONY : CMakeFiles/text_test.dir/codegen
 
 # clean rule for target.
@@ -228,7 +231,7 @@ CMakeFiles/text_test.dir/clean:
 CMakeFiles/ui_init_test.dir/all: CMakeFiles/RocketRuntime.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui_init_test.dir/build.make CMakeFiles/ui_init_test.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui_init_test.dir/build.make CMakeFiles/ui_init_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=22,23 "Built target ui_init_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=24,25 "Built target ui_init_test"
 .PHONY : CMakeFiles/ui_init_test.dir/all
 
 # Build rule for subdir invocation for target.
@@ -245,7 +248,7 @@ ui_init_test: CMakeFiles/ui_init_test.dir/rule
 # codegen rule for target.
 CMakeFiles/ui_init_test.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ui_init_test.dir/build.make CMakeFiles/ui_init_test.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=22,23 "Finished codegen for target ui_init_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=24,25 "Finished codegen for target ui_init_test"
 .PHONY : CMakeFiles/ui_init_test.dir/codegen
 
 # clean rule for target.
@@ -260,7 +263,7 @@ CMakeFiles/ui_init_test.dir/clean:
 CMakeFiles/shader_test.dir/all: CMakeFiles/RocketRuntime.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=18,19 "Built target shader_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=20,21 "Built target shader_test"
 .PHONY : CMakeFiles/shader_test.dir/all
 
 # Build rule for subdir invocation for target.
@@ -277,13 +280,45 @@ shader_test: CMakeFiles/shader_test.dir/rule
 # codegen rule for target.
 CMakeFiles/shader_test.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=18,19 "Finished codegen for target shader_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=20,21 "Finished codegen for target shader_test"
 .PHONY : CMakeFiles/shader_test.dir/codegen
 
 # clean rule for target.
 CMakeFiles/shader_test.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/clean
 .PHONY : CMakeFiles/shader_test.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/rounded_texture_rectangle_test.dir
+
+# All Build rule for target.
+CMakeFiles/rounded_texture_rectangle_test.dir/all: CMakeFiles/RocketRuntime.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rounded_texture_rectangle_test.dir/build.make CMakeFiles/rounded_texture_rectangle_test.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rounded_texture_rectangle_test.dir/build.make CMakeFiles/rounded_texture_rectangle_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=18,19 "Built target rounded_texture_rectangle_test"
+.PHONY : CMakeFiles/rounded_texture_rectangle_test.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/rounded_texture_rectangle_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/noerlol/C-Projects/RocketGE/CMakeFiles 15
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/rounded_texture_rectangle_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/noerlol/C-Projects/RocketGE/CMakeFiles 0
+.PHONY : CMakeFiles/rounded_texture_rectangle_test.dir/rule
+
+# Convenience name for target.
+rounded_texture_rectangle_test: CMakeFiles/rounded_texture_rectangle_test.dir/rule
+.PHONY : rounded_texture_rectangle_test
+
+# codegen rule for target.
+CMakeFiles/rounded_texture_rectangle_test.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rounded_texture_rectangle_test.dir/build.make CMakeFiles/rounded_texture_rectangle_test.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=18,19 "Finished codegen for target rounded_texture_rectangle_test"
+.PHONY : CMakeFiles/rounded_texture_rectangle_test.dir/codegen
+
+# clean rule for target.
+CMakeFiles/rounded_texture_rectangle_test.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rounded_texture_rectangle_test.dir/build.make CMakeFiles/rounded_texture_rectangle_test.dir/clean
+.PHONY : CMakeFiles/rounded_texture_rectangle_test.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

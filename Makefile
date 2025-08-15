@@ -194,6 +194,19 @@ shader_test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/build
 .PHONY : shader_test/fast
 
+#=============================================================================
+# Target rules for targets named rounded_texture_rectangle_test
+
+# Build rule for target.
+rounded_texture_rectangle_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 rounded_texture_rectangle_test
+.PHONY : rounded_texture_rectangle_test
+
+# fast build rule for target.
+rounded_texture_rectangle_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rounded_texture_rectangle_test.dir/build.make CMakeFiles/rounded_texture_rectangle_test.dir/build
+.PHONY : rounded_texture_rectangle_test/fast
+
 src/astro/astroui.o: src/astro/astroui.cpp.o
 .PHONY : src/astro/astroui.o
 
@@ -530,6 +543,30 @@ tests/rectangle_test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rectangle_test.dir/build.make CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.s
 .PHONY : tests/rectangle_test.cpp.s
 
+tests/rounded_texture_rectangle_test.o: tests/rounded_texture_rectangle_test.cpp.o
+.PHONY : tests/rounded_texture_rectangle_test.o
+
+# target to build an object file
+tests/rounded_texture_rectangle_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rounded_texture_rectangle_test.dir/build.make CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o
+.PHONY : tests/rounded_texture_rectangle_test.cpp.o
+
+tests/rounded_texture_rectangle_test.i: tests/rounded_texture_rectangle_test.cpp.i
+.PHONY : tests/rounded_texture_rectangle_test.i
+
+# target to preprocess a source file
+tests/rounded_texture_rectangle_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rounded_texture_rectangle_test.dir/build.make CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.i
+.PHONY : tests/rounded_texture_rectangle_test.cpp.i
+
+tests/rounded_texture_rectangle_test.s: tests/rounded_texture_rectangle_test.cpp.s
+.PHONY : tests/rounded_texture_rectangle_test.s
+
+# target to generate assembly for a file
+tests/rounded_texture_rectangle_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rounded_texture_rectangle_test.dir/build.make CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.s
+.PHONY : tests/rounded_texture_rectangle_test.cpp.s
+
 tests/shader_test.o: tests/shader_test.cpp.o
 .PHONY : tests/shader_test.o
 
@@ -613,6 +650,7 @@ help:
 	@echo "... RocketRuntime"
 	@echo "... initializer_test"
 	@echo "... rectangle_test"
+	@echo "... rounded_texture_rectangle_test"
 	@echo "... shader_test"
 	@echo "... text_test"
 	@echo "... ui_init_test"
@@ -658,6 +696,9 @@ help:
 	@echo "... tests/rectangle_test.o"
 	@echo "... tests/rectangle_test.i"
 	@echo "... tests/rectangle_test.s"
+	@echo "... tests/rounded_texture_rectangle_test.o"
+	@echo "... tests/rounded_texture_rectangle_test.i"
+	@echo "... tests/rounded_texture_rectangle_test.s"
 	@echo "... tests/shader_test.o"
 	@echo "... tests/shader_test.i"
 	@echo "... tests/shader_test.s"

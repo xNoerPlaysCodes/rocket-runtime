@@ -53,4 +53,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/text_test.dir/DependInfo.cmake"
   "CMakeFiles/ui_init_test.dir/DependInfo.cmake"
   "CMakeFiles/shader_test.dir/DependInfo.cmake"
+  "CMakeFiles/rounded_texture_rectangle_test.dir/DependInfo.cmake"
   )

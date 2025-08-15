@@ -100,5 +100,11 @@
   "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/usr/include/freetype2 -I/home/noerlol/C-Projects/RocketGE/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/shader_test.dir/tests/shader_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/shader_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/shader_test.cpp",
   "output": "CMakeFiles/shader_test.dir/tests/shader_test.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/RocketGE",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/usr/include/freetype2 -I/home/noerlol/C-Projects/RocketGE/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/rounded_texture_rectangle_test.cpp",
+  "file": "/home/noerlol/C-Projects/RocketGE/tests/rounded_texture_rectangle_test.cpp",
+  "output": "CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o"
 }
 ]

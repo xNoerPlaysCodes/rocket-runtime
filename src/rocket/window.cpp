@@ -13,7 +13,7 @@ namespace rocket {
 
     double last_mouse_x, last_mouse_y;
 
-    GLFWmonitor* glfw_glfwAlternative_GetMonitorWithCursor() {
+    GLFWmonitor* glfwaltGetMonitorWithCursor() {
         int count;
         GLFWmonitor** monitors = glfwGetMonitors(&count);
         double cursor_x, cursor_y;
@@ -35,12 +35,17 @@ namespace rocket {
         return glfwGetPrimaryMonitor();
     }
 
+    void window_t::glfw_set_platform(const char *platform) {
+        setenv("GLFW_PLATFORM", platform, 1);
+    }
+
     window_t::window_t(const rocket::vec2i_t& size,
             const std::string& title,
             windowflags_t flags) {
         this->size = size;
         this->title = title;
         if (!glfw_initialized) {
+            glfwSetErrorCallback([](int error, const char* description) { std::cout << util::format_error(description, error, "glfw", "fatal"); std::exit(1); });
             glfwInit();
             glfw_initialized = true;
         }
@@ -50,8 +55,9 @@ namespace rocket {
             std::exit(1);
         }
 
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        int glversion[2] = {4, 3};
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glversion[0]);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glversion[1]);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
         glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
@@ -63,18 +69,18 @@ namespace rocket {
         }
         if (flags.resizable) {
             glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        } else {
+            glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
         }
-        glfwSwapInterval(0);
         if (flags.vsync) {
             glfwSwapInterval(1);
         }
+        this->flags = flags;
         glfwWindowHint(GLFW_SAMPLES, flags.msaa_samples);
         glfw_window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(glfw_window);
 
-        monitor = glfw_glfwAlternative_GetMonitorWithCursor();
-
-        glfwSetErrorCallback([](int error, const char* description) { std::cout << util::format_error(description, error, "glfw", "fatal"); std::exit(1); });
+        monitor = glfwaltGetMonitorWithCursor();
 
         glfwSetFramebufferSizeCallback(this->glfw_window, [](GLFWwindow* window, int width, int height) {
             glViewport(0, 0, width, height);
@@ -83,6 +89,17 @@ namespace rocket {
         glfwSetCharModsCallback(glfw_window, [](GLFWwindow* window, unsigned int codepoint, int mods) {
             char c = static_cast<char>(codepoint);
             ::util::push_formatted_char_typed(c);
+        });
+
+        int sx, sy;
+        auto mode = glfwGetVideoMode(glfwaltGetMonitorWithCursor());
+        sx = mode->width;
+        sy = mode->height;
+        glfwSetWindowPos(glfw_window, (sx - size.x) / 2, (sy - size.y) / 2);
+        glfwSetWindowUserPointer(glfw_window, this);
+        glfwSetWindowSizeCallback(glfw_window, [](GLFWwindow* window, int width, int height) {
+            window_t *w = static_cast<window_t*>(glfwGetWindowUserPointer(window));
+            w->size = { width, height };
         });
 
         std::cerr << ::util::format_log("GLFW window Initialized with size " + std::to_string(size.x) + "x" + std::to_string(size.y) + " and title " + title, "window_t", "constructor", "info");

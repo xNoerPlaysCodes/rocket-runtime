@@ -77,6 +77,7 @@ if (BUILD_TESTS)
         text_test
         ui_init_test
         shader_test
+        rounded_texture_rectangle_test
     )
 
     foreach(test_name IN LISTS TEST_NAMES)
@@ -94,5 +95,11 @@ endif()
 message("Build Type: ${CMAKE_BUILD_TYPE}")
 message("Build Shared: ${BUILD_SHARED_LIBS}")
 message("Build Tests: ${BUILD_TESTS}")
+if (BUILD_TESTS)
+    message("Building Tests:")
+    foreach(test_name IN LISTS TEST_NAMES)
+        message("  ${test_name}")
+    endforeach()
+endif()
 message("Build Quark: ${BUILD_QUARK}")
 message("Build Astro: ${BUILD_ASTRO}")
