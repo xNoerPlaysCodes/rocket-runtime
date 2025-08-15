@@ -45,7 +45,7 @@ namespace rocket {
         this->size = size;
         this->title = title;
         if (!glfw_initialized) {
-            glfwSetErrorCallback([](int error, const char* description) { std::cout << util::format_error(description, error, "glfw", "fatal"); std::exit(1); });
+            glfwSetErrorCallback([](int error, const char* description) { std::cout << util::format_error(description, error, "glfw", "warning"); });
             glfwInit();
             glfw_initialized = true;
         }

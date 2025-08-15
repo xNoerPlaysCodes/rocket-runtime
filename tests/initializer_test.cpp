@@ -8,47 +8,37 @@
 #include <iostream>
 
 int main() {
-    rocket::windowflags_t window_flags = {
-        .msaa_samples = 4
-    };
-    rocket::window_t window({ 1920, 1080 }, "RocketGE - ExampleWindow", window_flags);
+    // Initialize a native window
+    rocket::window_t window = { {1280, 720}, "Basic Window" };
+
+    // Initialize default 2D renderer
     rocket::renderer_2d r2d(&window);
 
-    rocket::asset_manager_t asset_manager;
-    rocket::assetid_t txid = asset_manager.load_texture("/home/noerlol/C-Projects/TopDownGame/assets/barrel.png");
-
-    float deg = 0;
-
-    rocket::io::add_listener([&](rocket::io::key_event_t e) {
-        if (!e.state.down()) {
-            return;
-        }
-        if (e.key == rocket::io::keyboard_key::w) {
-            deg += 1.f;
-        }
-        if (e.key == rocket::io::keyboard_key::s) {
-            deg -= 1.f;
-        }
-    });
-
+    // The main loop
     while (window.is_running()) {
+        // Begin a new frame
         r2d.begin_frame();
+        // Clear the screen with default color
         r2d.clear();
         {
-            std::cout << deg << '\n';
-            deg = std::clamp(deg, 0.f, 360.f);
-            r2d.draw_texture(asset_manager.get_texture(txid), {
+            // Create and draw a basic rectangle
+            r2d.draw_rectangle({
+                // Set the position
                 .pos = {
-                    .x = window.get_size().x / 2 - 360,
-                    .y = window.get_size().y / 2 - 360,
+                    .x = 100,
+                    .y = 100
                 },
+                // Set the size
                 .size = {
-                    .x = 720,
-                    .y = 720
+                    .x = 128,
+                    .y = 128
                 }
-            }, deg);
+                // Set the color
+            }, rocket::rgba_color::red());
         }
+        // End the frame
         r2d.end_frame();
+        // Poll window events
         window.poll_events();
     }
 
