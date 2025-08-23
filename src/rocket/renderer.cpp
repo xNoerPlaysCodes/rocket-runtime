@@ -1,6 +1,11 @@
+#include "rocket/types.hpp"
 #include <cmath>
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
+#include <utility>
 #define STB_TRUETYPE_IMPLEMENTATION
 #include <iostream>
+#include "../include/rgl.hpp"
 #include <GL/glew.h>
 #include "../../include/rocket/renderer.hpp"
 #include "util.hpp"
@@ -13,7 +18,7 @@
 
 #include <glm/glm.hpp>                    // core GLM types like vec2, mat4
 #include <glm/gtc/matrix_transform.hpp>   // for glm::translate, glm::scale, glm::ortho
-#include <glm/gtc/type_ptr.hpp>           // for glm::value_ptr if you prefer using that
+#include <glm/gtc/type_ptr.hpp>           // for glm::value_ptr
 
 #define DEBUG_GL_CHECK_ERROR(x) \
     x; \
@@ -42,131 +47,137 @@ namespace rocket {
 
             // Must make sure OpenGL context is current before glewInit
             if (!window || !window->glfw_window) {
-                std::cerr << "[ERROR] Invalid window pointer or not initialized!\n";
+                std::cerr << "[ERROR] Invalid window pointer or uninitialized!\n";
                 std::exit(1);
             }
             glfwMakeContextCurrent(window->glfw_window);
+//
+//             GLenum err = glewInit();
+//             if (err != GLEW_OK) {
+//                 const GLubyte* err_str = glewGetErrorString(err);
+//                 std::cerr << util::format_error(reinterpret_cast<const char*>(err_str), err, "glew", "warning");
+//             }
+//
+//             // Clear any errors from glewInit
+//             while (glGetError() != GL_NO_ERROR) {};
+//
+//             // Set viewport
+//             DEBUG_GL_CHECK_ERROR(glViewport(0, 0, window->size.x, window->size.y));
+//
+//             // Generate and bind VAO/VBO
+//             DEBUG_GL_CHECK_ERROR(glGenVertexArrays(1, &rectVAO));
+//             DEBUG_GL_CHECK_ERROR(glGenBuffers(1, &rectVBO));
+//
+//             glGenVertexArrays(1, &txVAO);
+//             glGenBuffers(1, &txVBO);
+//
+//             glGenVertexArrays(1, &textVAO);
+//             glGenBuffers(1, &textVBO);
+//
+//             DEBUG_GL_CHECK_ERROR(glBindVertexArray(rectVAO));
+//             DEBUG_GL_CHECK_ERROR(glBindBuffer(GL_ARRAY_BUFFER, rectVBO));
+//
+//             glBindVertexArray(txVAO);
+//             glBindBuffer(GL_ARRAY_BUFFER, txVBO);
+//
+//             glBindVertexArray(textVAO);
+//             glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+//
+//             float square_vertices[] = {
+//                 0.0f, 0.0f,
+//                 1.0f, 0.0f,
+//                 1.0f, 1.0f,
+//                 0.0f, 0.0f,
+//                 1.0f, 1.0f,
+//                 0.0f, 1.0f
+//             };
+//
+//             glBindVertexArray(rectVAO);
+//             glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
+//
+//             glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices, GL_STATIC_DRAW);
+//             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+//             glEnableVertexAttribArray(0);
+//
+//             glBindBuffer(GL_ARRAY_BUFFER, 0);
+//             glBindVertexArray(0);
+//
+//             glBindVertexArray(txVAO);
+//             glBindBuffer(GL_ARRAY_BUFFER, txVBO);
+//
+//             glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices, GL_STATIC_DRAW);
+//             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+//             glEnableVertexAttribArray(0);
+//
+//             glBindBuffer(GL_ARRAY_BUFFER, 0);
+//             glBindVertexArray(0);
+//
+//
+//             glGenVertexArrays(1, &textVAO);
+//             glGenBuffers(1, &textVBO);
+//
+//             glBindVertexArray(textVAO);
+//             glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+//             glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+//
+//             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+//             glEnableVertexAttribArray(0); // aPos
+//
+//             glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+//             glEnableVertexAttribArray(1); // aTex
+//
+//             glBindBuffer(GL_ARRAY_BUFFER, 0);
+//             glBindVertexArray(0);
+//
+//             // Blending (alpha support)
+//             DEBUG_GL_CHECK_ERROR(glEnable(GL_BLEND));
+//             bool gl_blend = true;
+//             DEBUG_GL_CHECK_ERROR(glEnable(GL_MULTISAMPLE));
+//             bool gl_multisample = true;
+//             DEBUG_GL_CHECK_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+//             bool gl_blendfunc = "GL_SRC_ALPHA::GL_ONE_MINUS_SRC_ALPHA";
+//
+//             // Enable SRGB framebuffer if needed
+//             DEBUG_GL_CHECK_ERROR(glEnable(GL_FRAMEBUFFER_SRGB));
+//             bool gl_srgb = true;
+//             int max_tx_size;
+//             glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_tx_size);
+//             rocket::log("OpenGL Initialized", "renderer_2d", "constructor", "info");
+//             const std::vector<std::string> log_messages = {
+//                 "RocketGE Modules:",
+// #ifdef ROCKETGE__BUILD_QUARK
+//                 "- Quark: [TRUE]",
+// #else
+//                 "- Quark: [FALSE]",
+// #endif
+// #ifdef ROCKETGE__BUILD_ASTRO
+//                 "- AstroUI: [TRUE]",
+// #else
+//                 "- AstroUI: [FALSE]",
+// #endif
+//             "GL Info:",
+//                 "- GL Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))),
+//                 "- GL Vendor: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
+//                 "- GL Activated Functions: ",
+//                 "   - GL_BLEND: [" + (gl_blend ? std::string("TRUE") : std::string("FALSE")) + "]",
+//                 "   - GL_MULTISAMPLE: [" + (gl_multisample ? std::string("TRUE") : std::string("FALSE")) + "]",
+//                 "   - GL_BLEND_FUNC: [" + (gl_blendfunc ? std::string("TRUE") : std::string("FALSE")) + "]",
+//                 "   - GL_FRAMEBUFFER_SRGB: [" + (gl_srgb ? std::string("TRUE") : std::string("FALSE")) + "]",
+//                 "- GL VAO/VBO Pairs Created:",
+//                 "   - rectVAO/VBO: [" + (rectVAO != 0 && rectVBO != 0 ? std::string("TRUE") : std::string("FALSE")) + "]",
+//                 "   - txVAO/VBO: [" + (txVAO != 0 && txVBO != 0 ? std::string("TRUE") : std::string("FALSE")) + "]",
+//                 "   - textVAO/VBO: [" + (textVAO != 0 && textVBO != 0 ? std::string("TRUE") : std::string("FALSE")) + "]",
+//                 "- GL GPU-Specific Values:",
+//                 "   - GL_MAX_TEXTURE_SIZE: " + std::to_string(max_tx_size) + " x " + std::to_string(max_tx_size),
+//             "Screen Info:",
+//                 "- Window Size: " + std::to_string(window->size.x) + " x " + std::to_string(window->size.y)
+//             };
+//
+            std::vector<std::string> log_messages = rgl::init_gl({ static_cast<float>(window->size.x), static_cast<float>(window->size.y) });
 
-            GLenum err = glewInit();
-            if (err != GLEW_OK) {
-                const GLubyte* err_str = glewGetErrorString(err);
-                std::cerr << util::format_error(reinterpret_cast<const char*>(err_str), err, "glew", "warning");
-            }
-
-            // Clear any errors from glewInit
-            while (glGetError() != GL_NO_ERROR) {};
-
-            // Set viewport
-            DEBUG_GL_CHECK_ERROR(glViewport(0, 0, window->size.x, window->size.y));
-
-            // Generate and bind VAO/VBO
-            DEBUG_GL_CHECK_ERROR(glGenVertexArrays(1, &rectVAO));
-            DEBUG_GL_CHECK_ERROR(glGenBuffers(1, &rectVBO));
-
-            glGenVertexArrays(1, &txVAO);
-            glGenBuffers(1, &txVBO);
-
-            glGenVertexArrays(1, &textVAO);
-            glGenBuffers(1, &textVBO);
-
-            DEBUG_GL_CHECK_ERROR(glBindVertexArray(rectVAO));
-            DEBUG_GL_CHECK_ERROR(glBindBuffer(GL_ARRAY_BUFFER, rectVBO));
-
-            glBindVertexArray(txVAO);
-            glBindBuffer(GL_ARRAY_BUFFER, txVBO);
-
-            glBindVertexArray(textVAO);
-            glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-
-            float square_vertices[] = {
-                0.0f, 0.0f,
-                1.0f, 0.0f,
-                1.0f, 1.0f,
-                0.0f, 0.0f,
-                1.0f, 1.0f,
-                0.0f, 1.0f
-            };
-
-            glBindVertexArray(rectVAO);
-            glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
-
-            glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices, GL_STATIC_DRAW);
-            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-            glEnableVertexAttribArray(0);
-
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
-
-            glBindVertexArray(txVAO);
-            glBindBuffer(GL_ARRAY_BUFFER, txVBO);
-
-            glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices, GL_STATIC_DRAW);
-            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-            glEnableVertexAttribArray(0);
-
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
-
-
-            glGenVertexArrays(1, &textVAO);
-            glGenBuffers(1, &textVBO);
-
-            glBindVertexArray(textVAO);
-            glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
-
-            glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-            glEnableVertexAttribArray(0); // aPos
-
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-            glEnableVertexAttribArray(1); // aTex
-
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
-
-            // Blending (alpha support)
-            DEBUG_GL_CHECK_ERROR(glEnable(GL_BLEND));
-            bool gl_blend = true;
-            DEBUG_GL_CHECK_ERROR(glEnable(GL_MULTISAMPLE));
-            bool gl_multisample = true;
-            DEBUG_GL_CHECK_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-            bool gl_blendfunc = "GL_SRC_ALPHA::GL_ONE_MINUS_SRC_ALPHA";
-
-            // Enable SRGB framebuffer if needed
-            DEBUG_GL_CHECK_ERROR(glEnable(GL_FRAMEBUFFER_SRGB));
-            bool gl_srgb = true;
-            int max_tx_size;
-            glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_tx_size);
-            rocket::log("OpenGL Initialized", "renderer_2d", "constructor", "info");
-            const std::vector<std::string> log_messages = {
-                "RocketGE Modules:",
-#ifdef ROCKETGE__BUILD_QUARK
-                "- Quark: [TRUE]",
-#else
-                "- Quark: [FALSE]",
-#endif
-#ifdef ROCKETGE__BUILD_ASTRO
-                "- AstroUI: [TRUE]",
-#else
-                "- AstroUI: [FALSE]",
-#endif
-            "GL Info:",
-                "- GL Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))),
-                "- GL Vendor: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
-                "- GL Activated Functions: ",
-                "   - GL_BLEND: [" + (gl_blend ? std::string("TRUE") : std::string("FALSE")) + "]",
-                "   - GL_MULTISAMPLE: [" + (gl_multisample ? std::string("TRUE") : std::string("FALSE")) + "]",
-                "   - GL_BLEND_FUNC: [" + (gl_blendfunc ? std::string("TRUE") : std::string("FALSE")) + "]",
-                "   - GL_FRAMEBUFFER_SRGB: [" + (gl_srgb ? std::string("TRUE") : std::string("FALSE")) + "]",
-                "- GL VAO/VBO Pairs Created:",
-                "   - rectVAO/VBO: [" + (rectVAO != 0 && rectVBO != 0 ? std::string("TRUE") : std::string("FALSE")) + "]",
-                "   - txVAO/VBO: [" + (txVAO != 0 && txVBO != 0 ? std::string("TRUE") : std::string("FALSE")) + "]",
-                "   - textVAO/VBO: [" + (textVAO != 0 && textVBO != 0 ? std::string("TRUE") : std::string("FALSE")) + "]",
-                "- GL GPU-Specific Values:",
-                "   - GL_MAX_TEXTURE_SIZE: " + std::to_string(max_tx_size) + " x " + std::to_string(max_tx_size),
-            "Screen Info:",
-                "- Window Size: " + std::to_string(window->size.x) + " x " + std::to_string(window->size.y)
-            };
+            std::pair<rgl::vao_t, rgl::vbo_t> text_vo = rgl::get_text_vos();
+            textVAO = text_vo.first;
+            textVBO = text_vo.second;
 
             for (auto &l : log_messages) {
                 rocket::log(l, "renderer_2d", "constructor", "info");
@@ -176,7 +187,27 @@ namespace rocket {
     }
 
     void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color) {
-        draw_rectangle({ pos, { radius * 2, radius * 2 } }, color, 0, 1);
+        draw_rectangle({ pos, { radius * 2, radius * 2 } }, color, 0, 0);
+    }
+
+    void renderer_2d::draw_line(rocket::vec2f_t start, rocket::vec2f_t end, rocket::rgba_color color, float thickness) {
+        // Direction vector
+        rocket::vec2f_t dir = { end.x - start.x, end.y - start.y };
+
+        // Line length
+        float length = sqrt(dir.x * dir.x + dir.y * dir.y);
+
+        // Rotation angle in radians
+        float angle = atan2(dir.y, dir.x);
+
+        // Rectangle representing the line
+        rocket::fbounding_box box = {
+            .pos = start,
+            .size = { length, thickness }  // width = line length, height = line thickness
+        };
+
+        // Draw rotated rectangle (0 rounding for a normal line)
+        draw_rectangle(box, color, glm::degrees(angle), 0.0f);
     }
 
     void renderer_2d::begin_frame() {
@@ -192,226 +223,265 @@ namespace rocket {
         vec4<float> clr = util::glify_a(color);
         glClearColor(clr.x, clr.y, clr.z, clr.w);
     }
-    
-    void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture,
-                                    rocket::fbounding_box rect,
-                                    float rotation,
-                                    float roundedness) {
-        static GLuint shader_program = 0;
 
-        if (shader_program == 0) {
-            const char* vert_src = R"(
-                #version 330 core
-                layout(location = 0) in vec2 aPos;
-                out vec2 v_uv;
-                uniform mat4 u_transform;
+    void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation, float roundedness) {
+        rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(rect.pos, rect.size, rotation, roundedness);
+        if (texture->glid == 0) {
+            glGenTextures(1, &texture->glid);
+            glBindTexture(GL_TEXTURE_2D, texture->glid);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, texture->size.x, texture->size.y, 0,
+                         texture->channels == 4 ? GL_RGBA : GL_RGB,
+                         GL_UNSIGNED_BYTE, texture->data.data());
 
-                void main() {
-                    v_uv = aPos; // 0→1 quad coords
-                    gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
-                }
-            )";
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-            const char* frag_src = R"(
-                #version 330 core
-                in vec2 v_uv;
-                out vec4 FragColor;
-
-                uniform sampler2D u_texture;
-                uniform float u_radius; // fraction 0..1 of min size
-                uniform vec2 u_size;    // rect size in pixels
-
-                void main() {
-                    // Convert UV to local pixel space
-                    vec2 local_px = v_uv * u_size;
-
-                    // Convert fraction to pixel radius
-                    float radius_px = u_radius * 0.5 * min(u_size.x, u_size.y);
-
-                    // Distance from nearest edge
-                    vec2 cornerDist = min(local_px, u_size - local_px);
-
-                // Distance from corner arc
-                float dist = length(cornerDist - vec2(radius_px));
-
-                // Anti-alias edge
-                float edge_thickness = 1.0;
-                float alpha = 1.0;
-
-                if (cornerDist.x < radius_px && cornerDist.y < radius_px) {
-                    alpha = 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist);
-                }
-
-                vec4 texColor = texture(u_texture, v_uv);
-                FragColor = vec4(texColor.rgb, texColor.a * alpha);
-            }
-        )";
-
-        GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vs, 1, &vert_src, nullptr);
-        glCompileShader(vs);
-
-        GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fs, 1, &frag_src, nullptr);
-        glCompileShader(fs);
-
-        shader_program = glCreateProgram();
-        glAttachShader(shader_program, vs);
-        glAttachShader(shader_program, fs);
-        glLinkProgram(shader_program);
-
-        glDeleteShader(vs);
-        glDeleteShader(fs);
-    }
-
-    glUseProgram(shader_program);
-
-    if (texture->glid == 0) {
-        glGenTextures(1, &texture->glid);
+            texture->data.clear();
+            texture->data.shrink_to_fit();
+        }
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture->glid);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, texture->size.x, texture->size.y, 0,
-                     texture->channels == 4 ? GL_RGBA : GL_RGB,
-                     GL_UNSIGNED_BYTE, texture->data.data());
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        texture->data.clear();
-        texture->data.shrink_to_fit();
+        glUniform1i(glGetUniformLocation(pg, "u_texture"), 0);
+        rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
     }
+    
+    // void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture,
+    //                                 rocket::fbounding_box rect,
+    //                                 float rotation,
+    //                                 float roundedness) {
+    //         static GLuint shader_program = 0;
+    //
+    //         if (shader_program == 0) {
+    //             const char* vert_src = R"(
+    //                 #version 330 core
+    //                 layout(location = 0) in vec2 aPos;
+    //                 out vec2 v_uv;
+    //                 uniform mat4 u_transform;
+    //
+    //                 void main() {
+    //                     v_uv = aPos; // 0→1 quad coords
+    //                     gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
+    //                 }
+    //             )";
+    //
+    //             const char* frag_src = R"(
+    //                 #version 330 core
+    //                 in vec2 v_uv;
+    //                 out vec4 FragColor;
+    //
+    //                 uniform sampler2D u_texture;
+    //                 uniform float u_radius; // fraction 0..1 of min size
+    //                 uniform vec2 u_size;    // rect size in pixels
+    //
+    //                 void main() {
+    //                     // Convert UV to local pixel space
+    //                     vec2 local_px = v_uv * u_size;
+    //
+    //                     // Convert fraction to pixel radius
+    //                     float radius_px = u_radius * 0.5 * min(u_size.x, u_size.y);
+    //
+    //                     // Distance from nearest edge
+    //                     vec2 cornerDist = min(local_px, u_size - local_px);
+    //
+    //                 // Distance from corner arc
+    //                 float dist = length(cornerDist - vec2(radius_px));
+    //
+    //                 // Anti-alias edge
+    //                 float edge_thickness = 1.0;
+    //                 float alpha = 1.0;
+    //
+    //                 if (cornerDist.x < radius_px && cornerDist.y < radius_px) {
+    //                     alpha = 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist);
+    //                 }
+    //
+    //                 vec4 texColor = texture(u_texture, v_uv);
+    //                 FragColor = vec4(texColor.rgb, texColor.a * alpha);
+    //             }
+    //         )";
+    //
+    //         GLuint vs = glCreateShader(GL_VERTEX_SHADER);
+    //         glShaderSource(vs, 1, &vert_src, nullptr);
+    //         glCompileShader(vs);
+    //
+    //         GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
+    //         glShaderSource(fs, 1, &frag_src, nullptr);
+    //         glCompileShader(fs);
+    //
+    //         shader_program = glCreateProgram();
+    //         glAttachShader(shader_program, vs);
+    //         glAttachShader(shader_program, fs);
+    //         glLinkProgram(shader_program);
+    //
+    //         glDeleteShader(vs);
+    //         glDeleteShader(fs);
+    //     }
+    //
+    //     glUseProgram(shader_program);
+    //
+    //     if (texture->glid == 0) {
+    //         glGenTextures(1, &texture->glid);
+    //         glBindTexture(GL_TEXTURE_2D, texture->glid);
+    //         glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, texture->size.x, texture->size.y, 0,
+    //                      texture->channels == 4 ? GL_RGBA : GL_RGB,
+    //                      GL_UNSIGNED_BYTE, texture->data.data());
+    //
+    //         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    //         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //
+    //         texture->data.clear();
+    //         texture->data.shrink_to_fit();
+    //     }
+    //
+    //     // Transform
+    //     glm::mat4 projection = glm::ortho(
+    //         0.0f, static_cast<float>(window->size.x),
+    //         static_cast<float>(window->size.y), 0.0f,
+    //         -1.0f, 1.0f
+    //     );
+    //
+    //     float cx = rect.pos.x + rect.size.x * 0.5f;
+    //     float cy = rect.pos.y + rect.size.y * 0.5f;
+    //
+    //     glm::mat4 transform = projection
+    //         * glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
+    //         * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
+    //         * glm::translate(glm::mat4(1.0f), glm::vec3(-rect.size.x * 0.5f, -rect.size.y * 0.5f, 0.0f))
+    //         * glm::scale(glm::mat4(1.0f), glm::vec3(rect.size.x, rect.size.y, 1.0f));
+    //
+    //     glUniformMatrix4fv(glGetUniformLocation(shader_program, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
+    //
+    //     // Pass uniforms
+    //     glUniform1f(glGetUniformLocation(shader_program, "u_radius"), roundedness);
+    //     glUniform2f(glGetUniformLocation(shader_program, "u_size"), rect.size.x, rect.size.y);
+    //
+    //     glActiveTexture(GL_TEXTURE0);
+    //     glBindTexture(GL_TEXTURE_2D, texture->glid);
+    //     glUniform1i(glGetUniformLocation(shader_program, "u_texture"), 0);
+    //
+    //     glBindVertexArray(txVAO);
+    //     glDrawArrays(GL_TRIANGLES, 0, 6);
+    // }
 
-    // Transform
-    glm::mat4 projection = glm::ortho(
-        0.0f, static_cast<float>(window->size.x),
-        static_cast<float>(window->size.y), 0.0f,
-        -1.0f, 1.0f
-    );
-
-    float cx = rect.pos.x + rect.size.x * 0.5f;
-    float cy = rect.pos.y + rect.size.y * 0.5f;
-
-    glm::mat4 transform = projection
-        * glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
-        * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
-        * glm::translate(glm::mat4(1.0f), glm::vec3(-rect.size.x * 0.5f, -rect.size.y * 0.5f, 0.0f))
-        * glm::scale(glm::mat4(1.0f), glm::vec3(rect.size.x, rect.size.y, 1.0f));
-
-    glUniformMatrix4fv(glGetUniformLocation(shader_program, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
-
-    // Pass uniforms
-    glUniform1f(glGetUniformLocation(shader_program, "u_radius"), roundedness);
-    glUniform2f(glGetUniformLocation(shader_program, "u_size"), rect.size.x, rect.size.y);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture->glid);
-    glUniform1i(glGetUniformLocation(shader_program, "u_texture"), 0);
-
-    glBindVertexArray(txVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-}
+    void renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
+        rgl::shader_program_t pg = rgl::get_paramaterized_quad(rect.pos, rect.size, color, rotation, roundedness);
+        rgl::draw_shader(pg, rgl::shader_use_t::rect);
+    }
   
-    void renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness) {
-        static GLuint shader_program = 0;
-
-        if (shader_program == 0) {
-            const char* vert_src = R"(
-
-#version 330 core
-    layout(location = 0) in vec2 aPos; // 0→1 quad coords
-    uniform mat4 u_transform;
-    out vec2 v_local;
-
-    void main() {
-        v_local = aPos; // normalized quad coordinates
-        gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
-    }
-
-            )";
-
-            const char* frag_src = R"(
-
-
-#version 330 core
-    in vec2 v_local;
-    out vec4 FragColor;
-
-    uniform vec4 u_color;   // RGBA 0–1
-    uniform float u_radius; // fraction 0..1 of min size
-    uniform vec2 u_size;    // rect size in pixels
-
-    void main() {
-        vec2 local_px = v_local * u_size;
-
-        // Convert fraction to pixel radius
-        float radius_px = u_radius * 0.5 * min(u_size.x, u_size.y);
-
-        // Distance from nearest edge
-        vec2 cornerDist = min(local_px, u_size - local_px);
-
-        // Distance from corner arc
-        float dist = length(cornerDist - vec2(radius_px));
-
-        // Anti-aliased alpha edge
-        float edge_thickness = 1.0; // in pixels
-        float alpha = 1.0;
-
-        if (cornerDist.x < radius_px && cornerDist.y < radius_px) {
-            alpha = 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist);
-        }
-
-        FragColor = vec4(u_color.rgb, u_color.a * alpha);
-    }
-
-            )";
-
-            GLuint vert_shader = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(vert_shader, 1, &vert_src, nullptr);
-            glCompileShader(vert_shader);
-
-            GLuint frag_shader = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(frag_shader, 1, &frag_src, nullptr);
-            glCompileShader(frag_shader);
-
-            shader_program = glCreateProgram();
-            glAttachShader(shader_program, vert_shader);
-            glAttachShader(shader_program, frag_shader);
-            glLinkProgram(shader_program);
-
-            glDeleteShader(vert_shader);
-            glDeleteShader(frag_shader);
-        }
-
-        glUseProgram(shader_program);
-
-        glm::mat4 projection = glm::ortho(
-            0.0f, static_cast<float>(window->size.x),
-            static_cast<float>(window->size.y), 0.0f,
-            -1.0f, 1.0f
-        );
-
-        float cx = rect.pos.x + rect.size.x * 0.5f;
-        float cy = rect.pos.y + rect.size.y * 0.5f;
-
-        glm::mat4 transform = projection
-            * glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
-            * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
-            * glm::translate(glm::mat4(1.0f), glm::vec3(-rect.size.x * 0.5f, -rect.size.y * 0.5f, 0.0f))
-            * glm::scale(glm::mat4(1.0f), glm::vec3(rect.size.x, rect.size.y, 1.0f));
-
-        glUniformMatrix4fv(glGetUniformLocation(shader_program, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
-        glUniform4f(glGetUniformLocation(shader_program, "u_color"),
-            color.x / 255.0f,
-            color.y / 255.0f,
-            color.z / 255.0f,
-            color.w / 255.0f);
-
-        // Pass size and radius to shader
-        glUniform2f(glGetUniformLocation(shader_program, "u_size"), rect.size.x, rect.size.y);
-        glUniform1f(glGetUniformLocation(shader_program, "u_radius"), roundedness);
-
-        glBindVertexArray(rectVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-    }
+//     void renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
+//         static GLuint shader_program = 0;
+//
+//         if (shader_program == 0) {
+//             const char* vert_src = R"(
+//
+// #version 330 core
+//     layout(location = 0) in vec2 aPos; // 0→1 quad coords
+//     uniform mat4 u_transform;
+//     out vec2 v_local;
+//
+//     void main() {
+//         v_local = aPos; // normalized quad coordinates
+//         gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
+//     }
+//
+//             )";
+//
+//             const char* frag_src = R"(
+//     #version 330 core
+//     in vec2 v_local;
+//     out vec4 FragColor;
+//
+//     uniform vec4 u_color;   // RGBA 0–1
+//     uniform float u_radius; // fraction 0..1 of min size
+//     uniform vec2 u_size;    // rect size in pixels
+//
+//     void main() {
+//         vec2 local_px = v_local * u_size;
+//
+//         // Convert fraction to pixel radius
+//         float radius_px = u_radius * 0.5 * min(u_size.x, u_size.y);
+//
+//         // Distance from nearest edge
+//         vec2 cornerDist = min(local_px, u_size - local_px);
+//
+//         // Distance from corner arc
+//         float dist = length(cornerDist - vec2(radius_px));
+//
+//         // Anti-aliased alpha edge
+//         float edge_thickness = 1.0; // in pixels
+//         float alpha = 1.0;
+//
+//         if (cornerDist.x < radius_px && cornerDist.y < radius_px) {
+//             alpha = 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist);
+//         }
+//
+//         FragColor = vec4(u_color.rgb, u_color.a * alpha);
+//     }
+//
+//             )";
+//
+//             GLuint vert_shader = glCreateShader(GL_VERTEX_SHADER);
+//             glShaderSource(vert_shader, 1, &vert_src, nullptr);
+//             glCompileShader(vert_shader);
+//
+//             GLuint frag_shader = glCreateShader(GL_FRAGMENT_SHADER);
+//             glShaderSource(frag_shader, 1, &frag_src, nullptr);
+//             glCompileShader(frag_shader);
+//
+//             shader_program = glCreateProgram();
+//             glAttachShader(shader_program, vert_shader);
+//             glAttachShader(shader_program, frag_shader);
+//             glLinkProgram(shader_program);
+//
+//             glDeleteShader(vert_shader);
+//             glDeleteShader(frag_shader);
+//         }
+//
+//         if (lines) {
+//             rocket::vec2f_t pos = rect.pos;
+//             rocket::vec2f_t size = rect.size;
+//             float thickness = 1.f; // hardcode TODO
+//             // top
+//             draw_rectangle({ pos, { size.x, thickness } }, color);
+//             // bottom
+//             draw_rectangle({ { pos.x, pos.y + size.y - thickness }, { size.x, thickness } }, color);
+//             // left
+//             draw_rectangle({ pos, { thickness, size.y } }, color);
+//             // right
+//             draw_rectangle({ { pos.x + size.x - thickness, pos.y }, { thickness, size.y } }, color);
+//             return;
+//         }
+//
+//         glUseProgram(shader_program);
+//
+//         glm::mat4 projection = glm::ortho(
+//             0.0f, static_cast<float>(window->size.x),
+//             static_cast<float>(window->size.y), 0.0f,
+//             -1.0f, 1.0f
+//         );
+//
+//         float cx = rect.pos.x + rect.size.x * 0.5f;
+//         float cy = rect.pos.y + rect.size.y * 0.5f;
+//
+//         glm::mat4 transform = projection
+//             * glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
+//             * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
+//             * glm::translate(glm::mat4(1.0f), glm::vec3(-rect.size.x * 0.5f, -rect.size.y * 0.5f, 0.0f))
+//             * glm::scale(glm::mat4(1.0f), glm::vec3(rect.size.x, rect.size.y, 1.0f));
+//
+//         glUniformMatrix4fv(glGetUniformLocation(shader_program, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
+//         glUniform4f(glGetUniformLocation(shader_program, "u_color"),
+//             color.x / 255.0f,
+//             color.y / 255.0f,
+//             color.z / 255.0f,
+//             color.w / 255.0f);
+//
+//         // Pass size and radius to shader
+//         glUniform2f(glGetUniformLocation(shader_program, "u_size"), rect.size.x, rect.size.y);
+//         glUniform1f(glGetUniformLocation(shader_program, "u_radius"), roundedness);
+//
+//         glBindVertexArray(rectVAO);
+//         glDrawArrays(GL_TRIANGLES, 0, 6);
+//     }
         
     void renderer_2d::draw_text(rocket::text_t &text, rocket::vec2f_t position) {
         static GLuint shader_program = 0;
@@ -475,10 +545,6 @@ namespace rocket {
             glDeleteShader(vert);
             glDeleteShader(frag);
         }
-
-        // Enable blending
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // Use shader
         glUseProgram(shader_program);
@@ -545,20 +611,20 @@ namespace rocket {
     }
 
     void renderer_2d::draw_shader(shader_t shader, rocket::fbounding_box rect) {
-glUseProgram(shader.glprogram);
+        glUseProgram(shader.glprogram);
 
-glm::mat4 projection = glm::ortho(0.f, (float) window->size.x, (float) window->size.y, 0.f, -1.f, 1.f);
+        glm::mat4 projection = glm::ortho(0.f, (float) window->size.x, (float) window->size.y, 0.f, -1.f, 1.f);
 
-glm::mat4 transform = projection
-    * glm::translate(glm::mat4(1.f), glm::vec3(rect.pos.x + rect.size.x/2, rect.pos.y + rect.size.y/2, 0.f))
-    * glm::scale(glm::mat4(1.f), glm::vec3(rect.size.x, rect.size.y, 1.f));
+        glm::mat4 transform = projection
+            * glm::translate(glm::mat4(1.f), glm::vec3(rect.pos.x + rect.size.x/2, rect.pos.y + rect.size.y/2, 0.f))
+            * glm::scale(glm::mat4(1.f), glm::vec3(rect.size.x, rect.size.y, 1.f));
 
-glUniformMatrix4fv(glGetUniformLocation(shader.glprogram, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
-glUniform2f(glGetUniformLocation(shader.glprogram, "u_size"), rect.size.x, rect.size.y);
-glUniform1f(glGetUniformLocation(shader.glprogram, "u_radius"), 0.f);
+        glUniformMatrix4fv(glGetUniformLocation(shader.glprogram, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
+        glUniform2f(glGetUniformLocation(shader.glprogram, "u_size"), rect.size.x, rect.size.y);
+        glUniform1f(glGetUniformLocation(shader.glprogram, "u_radius"), 0.f);
 
-glBindVertexArray(rectVAO);
-glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindVertexArray(rectVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 
     void renderer_2d::set_wireframe(bool x) {
@@ -576,7 +642,15 @@ glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 
     void renderer_2d::draw_fps(vec2f_t pos) {
-        std::string fps_text = "FPS: " + std::to_string(this->fps);
+        double delta = glfwGetTime() - this->frame_start_time;
+        double current_fps = 1.0 / delta;
+
+        // Smooth FPS (EMA)
+        static double smoothed_fps = current_fps;
+        smoothed_fps = 0.9 * smoothed_fps + 0.1 * current_fps;
+
+        std::string fps_text = "FPS: " + std::to_string((int)smoothed_fps);
+
         static rocket::text_t fps = rocket::text_t(fps_text, 24, rocket::rgb_color::green());
         fps.text = fps_text;
         this->draw_text(fps, pos);
@@ -584,7 +658,8 @@ glDrawArrays(GL_TRIANGLES, 0, 6);
 
     void renderer_2d::end_frame() {
         glfwSwapBuffers(this->window->glfw_window);
-
+        this->delta_time = glfwGetTime() - this->frame_start_time;
+        this->frame_start_time = glfwGetTime();
         if (this->vsync) {
             return; // We're done here
         }
@@ -596,6 +671,8 @@ glDrawArrays(GL_TRIANGLES, 0, 6);
 
         double frame_end_time = glfwGetTime();
         double frame_duration = frame_end_time - frame_start_time;
+
+        this->delta_time = frame_duration;
 
         auto err = glGetError();
         if (err != GL_NO_ERROR) {
@@ -609,6 +686,11 @@ glDrawArrays(GL_TRIANGLES, 0, 6);
             double sleep_time = frametime_limit - frame_duration;
             std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time));
         }
+
+        rgl::update_viewport({
+            static_cast<float>(this->window->size.x),
+            static_cast<float>(this->window->size.y)
+        });
     }
 
     double renderer_2d::get_delta_time() {

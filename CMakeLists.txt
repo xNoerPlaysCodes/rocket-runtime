@@ -24,8 +24,11 @@ option(BUILD_TESTS "Build Tests" ON)
 option(BUILD_QUARK "Build Quark [physics]" ON)
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 
+include_directories(include)
+
 if (BUILD_QUARK)
     set(QUARK_SOURCES 
+        src/quark/physics.cpp
     )
     add_compile_definitions(ROCKETGE__BUILD_QUARK)
 endif()
@@ -51,6 +54,8 @@ add_library(${PROJECT_NAME}
     src/rocket/text.cpp
 
     src/rocket/shader.cpp
+
+    src/rocket/rgl.cpp
 
     # AstroUI
     ${ASTRO_SOURCES}
@@ -78,6 +83,7 @@ if (BUILD_TESTS)
         ui_init_test
         shader_test
         rounded_texture_rectangle_test
+        line_test
     )
 
     foreach(test_name IN LISTS TEST_NAMES)

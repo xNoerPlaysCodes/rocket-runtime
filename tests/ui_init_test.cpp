@@ -37,8 +37,10 @@ void draw_info_util(astro::button_t &button, astro::draw_info_t &info) {
 }
 
 int main() {
-    rocket::window_t window({ 1280, 720 }, "RocketGE - UI Init Test");
-    rocket::renderer_2d r(&window);
+    rocket::windowflags_t flags;
+    flags.gl_version = { 3, 0 };
+    rocket::window_t window({ 1280, 720 }, "RocketGE - UI Init Test", flags);
+    rocket::renderer_2d r(&window, 60);
 
     astro::set_renderer(&r);
 
@@ -82,6 +84,7 @@ int main() {
             }
         }
         astro::end_ui();
+        r.draw_fps();
         r.end_frame();
         window.poll_events();
     }

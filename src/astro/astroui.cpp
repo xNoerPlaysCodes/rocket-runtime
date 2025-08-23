@@ -1,10 +1,15 @@
 #include "../../include/astro/astroui.hpp"
+#include <memory>
+#include <unordered_map>
 
 namespace astro {
     rocket::renderer_2d *r;
+    std::unordered_map<int, std::shared_ptr<rocket::font_t>> fonts;
 
     void set_renderer(rocket::renderer_2d *renderer) {
         r = renderer;
+        fonts[24] = rocket::font_t::font_default(24);
+        fonts[48] = rocket::font_t::font_default(48);
     }
 
     void begin_ui() {
@@ -13,7 +18,12 @@ namespace astro {
             std::exit(0);
         }
     }
+
     void end_ui() {}
+
+    void set_font(int size, std::shared_ptr<rocket::font_t> font) {
+        fonts[size] = font;
+    }
 
     rocket::rgba_color clr_gray() {
         return { 128, 128, 128, 255 };
@@ -90,7 +100,7 @@ namespace astro {
             r->draw_rectangle(rect, info.color, 0, info.border.radius);
         }
 
-        rocket::text_t text(this->text, 24, { info.text_color.x, info.text_color.y, info.text_color.z }); // TODO font
+        rocket::text_t text(this->text, 24, { info.text_color.x, info.text_color.y, info.text_color.z }, fonts[24]); // TODO font
         float text_offset_y = 0;
         r->draw_text(text, {pos.x + (size.x / 2) - (float) text.measure().x / 2 + text_offset, pos.y - text.font->get_line_height() / 2 + size.y / 2 + text_offset_y});
     }
@@ -154,7 +164,7 @@ namespace astro {
             tc = {info.text_color.x, info.text_color.y, info.text_color.z};
         }
 
-        rocket::text_t txt(draw_text, 24, tc);
+        rocket::text_t txt(draw_text, 24, tc, fonts[24]);
 
         r->begin_scissor_mode(rect);
         {
@@ -265,7 +275,7 @@ namespace astro {
             r->draw_rectangle(rect, info.color, 0, info.border.radius);
         }
 
-        rocket::text_t t(text, 24, { info.text_color.x, info.text_color.y, info.text_color.z });
+        rocket::text_t t(text, 24, { info.text_color.x, info.text_color.y, info.text_color.z }, fonts[24]);
         r->draw_text(t, tpos);
     }
 

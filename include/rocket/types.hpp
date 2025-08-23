@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <stdexcept>
+#include <type_traits>
 namespace rocket {
     template<typename T>
     struct vec2 {
@@ -23,6 +24,10 @@ namespace rocket {
 
         bool operator==(const vec2<T>& other) const {
             return x == other.x && y == other.y;
+        }
+
+        static inline constexpr vec2<T> v(T x) {
+            return {x, x};
         }
     };
 
@@ -45,6 +50,14 @@ namespace rocket {
 
         bool operator==(const vec3<T>& other) const {
             return x == other.x && y == other.y && z == other.z;
+        }
+
+        static inline constexpr vec3<T> v(T x) {
+            return {x, x, x};
+        }
+
+        static inline constexpr vec3<T> v(T x, T y) {
+            return {x, y, y};
         }
     };
 
@@ -88,6 +101,18 @@ namespace rocket {
 
         bool operator==(const vec4<T>& other) const {
             return x == other.x && y == other.y && z == other.z && w == other.w;
+        }
+
+        static inline constexpr vec4<T> v(T x) {
+            return {x, x, x, x};
+        }
+
+        static inline constexpr vec4<T> v(T x, T y) {
+            return {x, y, y, y};
+        }
+
+        static inline constexpr vec4<T> v(T x, T y, T z) {
+            return {x, y, z, z};
         }
     };
     
@@ -208,6 +233,15 @@ namespace rocket {
         static rgba_color green();
         static rgba_color blue();
         static rgba_color yellow();
+
+        vec4<float> normalize() const {
+            return {
+                .x = static_cast<float>(x) / 255.0f,
+                .y = static_cast<float>(y) / 255.0f,
+                .z = static_cast<float>(z) / 255.0f,
+                .w = static_cast<float>(w) / 255.0f
+            };
+        }
     };
 
     struct rgb_color {
@@ -233,6 +267,7 @@ namespace rocket {
     using vec4f_t       =       vec4<float>;
     using vec4d_t       =       vec4<double>;
 
+    /// new additions
     using vec2_t = vec2f_t;
     using vec3_t = vec3f_t;
     using vec4_t = vec4f_t;

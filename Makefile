@@ -207,6 +207,19 @@ rounded_texture_rectangle_test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rounded_texture_rectangle_test.dir/build.make CMakeFiles/rounded_texture_rectangle_test.dir/build
 .PHONY : rounded_texture_rectangle_test/fast
 
+#=============================================================================
+# Target rules for targets named line_test
+
+# Build rule for target.
+line_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 line_test
+.PHONY : line_test
+
+# fast build rule for target.
+line_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/line_test.dir/build.make CMakeFiles/line_test.dir/build
+.PHONY : line_test/fast
+
 src/astro/astroui.o: src/astro/astroui.cpp.o
 .PHONY : src/astro/astroui.o
 
@@ -230,6 +243,30 @@ src/astro/astroui.s: src/astro/astroui.cpp.s
 src/astro/astroui.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.s
 .PHONY : src/astro/astroui.cpp.s
+
+src/quark/physics.o: src/quark/physics.cpp.o
+.PHONY : src/quark/physics.o
+
+# target to build an object file
+src/quark/physics.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o
+.PHONY : src/quark/physics.cpp.o
+
+src/quark/physics.i: src/quark/physics.cpp.i
+.PHONY : src/quark/physics.i
+
+# target to preprocess a source file
+src/quark/physics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.i
+.PHONY : src/quark/physics.cpp.i
+
+src/quark/physics.s: src/quark/physics.cpp.s
+.PHONY : src/quark/physics.s
+
+# target to generate assembly for a file
+src/quark/physics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.s
+.PHONY : src/quark/physics.cpp.s
 
 src/rocket/asset.o: src/rocket/asset.cpp.o
 .PHONY : src/rocket/asset.o
@@ -350,6 +387,30 @@ src/rocket/renderer3d.s: src/rocket/renderer3d.cpp.s
 src/rocket/renderer3d.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.s
 .PHONY : src/rocket/renderer3d.cpp.s
+
+src/rocket/rgl.o: src/rocket/rgl.cpp.o
+.PHONY : src/rocket/rgl.o
+
+# target to build an object file
+src/rocket/rgl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o
+.PHONY : src/rocket/rgl.cpp.o
+
+src/rocket/rgl.i: src/rocket/rgl.cpp.i
+.PHONY : src/rocket/rgl.i
+
+# target to preprocess a source file
+src/rocket/rgl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.i
+.PHONY : src/rocket/rgl.cpp.i
+
+src/rocket/rgl.s: src/rocket/rgl.cpp.s
+.PHONY : src/rocket/rgl.s
+
+# target to generate assembly for a file
+src/rocket/rgl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.s
+.PHONY : src/rocket/rgl.cpp.s
 
 src/rocket/runtime.o: src/rocket/runtime.cpp.o
 .PHONY : src/rocket/runtime.o
@@ -519,6 +580,30 @@ tests/initializer_test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/initializer_test.dir/build.make CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.s
 .PHONY : tests/initializer_test.cpp.s
 
+tests/line_test.o: tests/line_test.cpp.o
+.PHONY : tests/line_test.o
+
+# target to build an object file
+tests/line_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/line_test.dir/build.make CMakeFiles/line_test.dir/tests/line_test.cpp.o
+.PHONY : tests/line_test.cpp.o
+
+tests/line_test.i: tests/line_test.cpp.i
+.PHONY : tests/line_test.i
+
+# target to preprocess a source file
+tests/line_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/line_test.dir/build.make CMakeFiles/line_test.dir/tests/line_test.cpp.i
+.PHONY : tests/line_test.cpp.i
+
+tests/line_test.s: tests/line_test.cpp.s
+.PHONY : tests/line_test.s
+
+# target to generate assembly for a file
+tests/line_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/line_test.dir/build.make CMakeFiles/line_test.dir/tests/line_test.cpp.s
+.PHONY : tests/line_test.cpp.s
+
 tests/rectangle_test.o: tests/rectangle_test.cpp.o
 .PHONY : tests/rectangle_test.o
 
@@ -649,6 +734,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... RocketRuntime"
 	@echo "... initializer_test"
+	@echo "... line_test"
 	@echo "... rectangle_test"
 	@echo "... rounded_texture_rectangle_test"
 	@echo "... shader_test"
@@ -657,6 +743,9 @@ help:
 	@echo "... src/astro/astroui.o"
 	@echo "... src/astro/astroui.i"
 	@echo "... src/astro/astroui.s"
+	@echo "... src/quark/physics.o"
+	@echo "... src/quark/physics.i"
+	@echo "... src/quark/physics.s"
 	@echo "... src/rocket/asset.o"
 	@echo "... src/rocket/asset.i"
 	@echo "... src/rocket/asset.s"
@@ -672,6 +761,9 @@ help:
 	@echo "... src/rocket/renderer3d.o"
 	@echo "... src/rocket/renderer3d.i"
 	@echo "... src/rocket/renderer3d.s"
+	@echo "... src/rocket/rgl.o"
+	@echo "... src/rocket/rgl.i"
+	@echo "... src/rocket/rgl.s"
 	@echo "... src/rocket/runtime.o"
 	@echo "... src/rocket/runtime.i"
 	@echo "... src/rocket/runtime.s"
@@ -693,6 +785,9 @@ help:
 	@echo "... tests/initializer_test.o"
 	@echo "... tests/initializer_test.i"
 	@echo "... tests/initializer_test.s"
+	@echo "... tests/line_test.o"
+	@echo "... tests/line_test.i"
+	@echo "... tests/line_test.s"
 	@echo "... tests/rectangle_test.o"
 	@echo "... tests/rectangle_test.i"
 	@echo "... tests/rectangle_test.s"

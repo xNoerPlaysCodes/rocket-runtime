@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK
 
-CXX_INCLUDES = -I/usr/include/freetype2 -I/home/noerlol/C-Projects/RocketGE/include
+CXX_INCLUDES = -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/freetype2
 
 CXX_FLAGS = -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto
 

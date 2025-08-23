@@ -12,7 +12,9 @@ bin/libRocketRuntime.so: \
   CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o \
+  CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o \
+  CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGL.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libglfw.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGLU.so \
@@ -70,7 +72,11 @@ CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o:
 
 CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o:
 
+CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o:
+
 CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o:
+
+CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGL.so:
 

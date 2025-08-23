@@ -43,8 +43,10 @@ namespace rocket {
 
         void draw_shader(shader_t shader, rocket::fbounding_box box);
 
-        void draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f, float roundedness = 0.f);
+        void draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f, float roundedness = 0.f, bool lines = false);
         void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 });
+
+        void draw_line(rocket::vec2f_t p1, rocket::vec2f_t p2, rocket::rgba_color color = { 0, 0, 0, 255 }, float thickness = 1.f);
 
         void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f, float roundedness = 0.f);
 

@@ -74,7 +74,7 @@ namespace rocket {
         assetid_t id;
         /// INNER
         GLuint glid = 0;
-        vec2i_t sttex_size = { 512, 512 };
+        rocket::vec2i_t sttex_size = { 512, 512 };
         stbtt_bakedchar cdata[96];
         std::vector<uint8_t> ttf_data;
         /// INNER

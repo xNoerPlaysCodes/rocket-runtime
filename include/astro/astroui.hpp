@@ -11,6 +11,9 @@ namespace astro {
     /// @brief Does NOT call rocket::renderer_2d::begin_frame()
     void begin_ui();
 
+    /// @brief Sets font for all future drawcalls
+    void set_font(int size, std::shared_ptr<rocket::font_t> font);
+
     struct border_t {
         float width = 0;
         float radius = 0;

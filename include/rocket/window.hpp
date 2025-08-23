@@ -13,6 +13,7 @@ namespace rocket {
         bool vsync = false;
         bool resizable = true;
         int msaa_samples = 0;
+        rocket::vec2i_t gl_version = { 4, 3 }; // 4.3
     };
 
     enum class cursor_mode_t : int {

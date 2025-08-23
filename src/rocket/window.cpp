@@ -55,14 +55,25 @@ namespace rocket {
             std::exit(1);
         }
 
-        int glversion[2] = {4, 3};
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glversion[0]);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glversion[1]);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, flags.gl_version.x);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, flags.gl_version.y);
+        float glver = static_cast<float>(flags.gl_version.x) + static_cast<float>(0.1 * flags.gl_version.y);
+        if (glver < 3.0f) {
+            rocket::log_error("OpenGL Version 3.0 or higher must be used", 1, "PreGL", "fatal");
+            std::exit(7);
+        }
+        if (glver > 3.1f) {
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        }
 
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
+
+        if (util::is_wayland()) {
+            glfwWindowHintString(GLFW_WAYLAND_APP_ID, "rocketge-game");
+        }
  
         if (!flags.fullscreen) {
             monitor = nullptr;
@@ -86,7 +97,7 @@ namespace rocket {
             glViewport(0, 0, width, height);
         });
 
-        glfwSetCharModsCallback(glfw_window, [](GLFWwindow* window, unsigned int codepoint, int mods) {
+        glfwSetCharModsCallback(this->glfw_window, [](GLFWwindow* window, unsigned int codepoint, int mods) {
             char c = static_cast<char>(codepoint);
             ::util::push_formatted_char_typed(c);
         });
@@ -95,14 +106,40 @@ namespace rocket {
         auto mode = glfwGetVideoMode(glfwaltGetMonitorWithCursor());
         sx = mode->width;
         sy = mode->height;
-        glfwSetWindowPos(glfw_window, (sx - size.x) / 2, (sy - size.y) / 2);
+        if (!util::is_wayland()) {
+            glfwSetWindowPos(glfw_window, (sx - size.x) / 2, (sy - size.y) / 2);
+        }
         glfwSetWindowUserPointer(glfw_window, this);
         glfwSetWindowSizeCallback(glfw_window, [](GLFWwindow* window, int width, int height) {
             window_t *w = static_cast<window_t*>(glfwGetWindowUserPointer(window));
             w->size = { width, height };
         });
 
-        std::cerr << ::util::format_log("GLFW window Initialized with size " + std::to_string(size.x) + "x" + std::to_string(size.y) + " and title " + title, "window_t", "constructor", "info");
+        glfwSetWindowIconifyCallback(this->glfw_window, [](GLFWwindow* window, int iconified) {
+            glfwWaitEvents();
+        });
+
+        rocket::log("GLFW window Initialized with size " + std::to_string(size.x) + "x" + std::to_string(size.y) + " and title " + title, 
+            "window_t", "constructor", 
+            "info");
+
+        std::vector<std::string> logs = {
+            "Modules:",
+            #ifdef ROCKETGE__BUILD_QUARK
+                "- Quark: [ENABLED]",
+            #else
+                "- Quark: [DISABLED]",
+            #endif
+            #ifdef ROCKETGE__BUILD_ASTRO
+                "- AstroUI: [ENABLED]",
+            #else
+                "- AstroUI: [DISABLED]",
+            #endif
+        };
+
+        for (auto &l : logs) {
+            rocket::log(l, "window_t", "constructor", "info");
+        }
     }
 
     void window_t::set_cursor_mode(cursor_mode_t m) {
@@ -116,8 +153,7 @@ namespace rocket {
                 if (glfwRawMouseMotionSupported()) {
                     glfwSetInputMode(glfw_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
                 } else {
-                    std::cout << util::format_error("GLFW_RAW_MOUSE_MOTION is not supported .. on wayland, you're cooked buddy", 1, "RocketRuntime", "fatal");
-                    std::exit(1);
+                    std::cout << util::format_error("GLFW_RAW_MOUSE_MOTION is not supported on wayland", 1, "RocketRuntime", "warning");
                 }
 #ifdef RocketRuntime_DEBUG
                 std::cout << util::format_error("cursor mode 'GLFW_CURSOR_NORMAL' not supported on wayland so 'GLFW_CURSOR_DISABLED' has to be used", 1, "RocketRuntime", "warn");

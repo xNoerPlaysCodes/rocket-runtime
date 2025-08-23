@@ -11,7 +11,6 @@ namespace rocket {
             middle = 2,
         };
 
-
         enum class keyboard_key : int {
             unknown = -1,
 
