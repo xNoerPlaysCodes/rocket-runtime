@@ -1,1 +1,1 @@
-/usr/bin/c++ -g -Wl,--dependency-file=CMakeFiles/text_test.dir/link.d CMakeFiles/text_test.dir/tests/text_test.cpp.o -o bin/text_test   -L/home/noerlol/C-Projects/RocketGE/bin  -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin bin/libRocketRuntime.so
+/usr/bin/c++ -g -Wl,--dependency-file=CMakeFiles/text_test.dir/link.d CMakeFiles/text_test.dir/tests/text_test.cpp.o -o bin/tests/text_test   -L/home/noerlol/C-Projects/RocketGE/bin  -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin bin/libRocketRuntime.so

@@ -504,7 +504,7 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o: tests/rectangle_test.c
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h
 
-bin/rectangle_test: /usr/lib/Scrt1.o \
+bin/tests/rectangle_test: /usr/lib/Scrt1.o \
   /usr/lib/crti.o \
   /usr/lib/crtn.o \
   /usr/lib/libc.so \

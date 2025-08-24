@@ -507,7 +507,7 @@ CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o: tests/initializer_
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h
 
-bin/initializer_test: /usr/lib/Scrt1.o \
+bin/tests/initializer_test: /usr/lib/Scrt1.o \
   /usr/lib/crti.o \
   /usr/lib/crtn.o \
   /usr/lib/libc.so \

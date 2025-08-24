@@ -2,8 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/rectangle_test.dir/link.d"
   "CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o"
   "CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.d"
-  "bin/rectangle_test"
-  "bin/rectangle_test.pdb"
+  "bin/tests/rectangle_test"
+  "bin/tests/rectangle_test.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

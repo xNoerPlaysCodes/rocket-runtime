@@ -17,6 +17,8 @@ namespace rocket {
         shader_type type;
         std::string vcode;
         std::string fcode;
+
+        GLuint vao, vbo;
         
         friend class renderer_2d;
         friend class renderer_3d;

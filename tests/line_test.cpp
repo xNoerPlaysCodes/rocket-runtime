@@ -12,6 +12,10 @@ int main() {
         r.clear();
         {
             r.draw_line({ 100, 100 }, { 200, 200 }, rocket::rgba_color::red(), 4.f);
+            r.draw_rectangle({
+                .pos = { 100, 300 },
+                .size = { 100, 100 }
+            }, rocket::rgba_color::red(), 0, 0, true);
         }
         r.end_frame();
         window.poll_events();

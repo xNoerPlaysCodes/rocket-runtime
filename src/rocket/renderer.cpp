@@ -39,8 +39,10 @@ namespace rocket {
     renderer_2d::renderer_2d(window_t *window, int fps) {
         this->window = window;
         this->fps = fps;
+        this->vsync = false;
 
         glfwMakeContextCurrent(window->glfw_window);
+        this->vsync = window->flags.vsync;
 
         if (!util::glinitialized()) {
             util::glinit(true);
@@ -51,128 +53,6 @@ namespace rocket {
                 std::exit(1);
             }
             glfwMakeContextCurrent(window->glfw_window);
-//
-//             GLenum err = glewInit();
-//             if (err != GLEW_OK) {
-//                 const GLubyte* err_str = glewGetErrorString(err);
-//                 std::cerr << util::format_error(reinterpret_cast<const char*>(err_str), err, "glew", "warning");
-//             }
-//
-//             // Clear any errors from glewInit
-//             while (glGetError() != GL_NO_ERROR) {};
-//
-//             // Set viewport
-//             DEBUG_GL_CHECK_ERROR(glViewport(0, 0, window->size.x, window->size.y));
-//
-//             // Generate and bind VAO/VBO
-//             DEBUG_GL_CHECK_ERROR(glGenVertexArrays(1, &rectVAO));
-//             DEBUG_GL_CHECK_ERROR(glGenBuffers(1, &rectVBO));
-//
-//             glGenVertexArrays(1, &txVAO);
-//             glGenBuffers(1, &txVBO);
-//
-//             glGenVertexArrays(1, &textVAO);
-//             glGenBuffers(1, &textVBO);
-//
-//             DEBUG_GL_CHECK_ERROR(glBindVertexArray(rectVAO));
-//             DEBUG_GL_CHECK_ERROR(glBindBuffer(GL_ARRAY_BUFFER, rectVBO));
-//
-//             glBindVertexArray(txVAO);
-//             glBindBuffer(GL_ARRAY_BUFFER, txVBO);
-//
-//             glBindVertexArray(textVAO);
-//             glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-//
-//             float square_vertices[] = {
-//                 0.0f, 0.0f,
-//                 1.0f, 0.0f,
-//                 1.0f, 1.0f,
-//                 0.0f, 0.0f,
-//                 1.0f, 1.0f,
-//                 0.0f, 1.0f
-//             };
-//
-//             glBindVertexArray(rectVAO);
-//             glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
-//
-//             glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices, GL_STATIC_DRAW);
-//             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-//             glEnableVertexAttribArray(0);
-//
-//             glBindBuffer(GL_ARRAY_BUFFER, 0);
-//             glBindVertexArray(0);
-//
-//             glBindVertexArray(txVAO);
-//             glBindBuffer(GL_ARRAY_BUFFER, txVBO);
-//
-//             glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices, GL_STATIC_DRAW);
-//             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-//             glEnableVertexAttribArray(0);
-//
-//             glBindBuffer(GL_ARRAY_BUFFER, 0);
-//             glBindVertexArray(0);
-//
-//
-//             glGenVertexArrays(1, &textVAO);
-//             glGenBuffers(1, &textVBO);
-//
-//             glBindVertexArray(textVAO);
-//             glBindBuffer(GL_ARRAY_BUFFER, textVBO);
-//             glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
-//
-//             glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-//             glEnableVertexAttribArray(0); // aPos
-//
-//             glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-//             glEnableVertexAttribArray(1); // aTex
-//
-//             glBindBuffer(GL_ARRAY_BUFFER, 0);
-//             glBindVertexArray(0);
-//
-//             // Blending (alpha support)
-//             DEBUG_GL_CHECK_ERROR(glEnable(GL_BLEND));
-//             bool gl_blend = true;
-//             DEBUG_GL_CHECK_ERROR(glEnable(GL_MULTISAMPLE));
-//             bool gl_multisample = true;
-//             DEBUG_GL_CHECK_ERROR(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-//             bool gl_blendfunc = "GL_SRC_ALPHA::GL_ONE_MINUS_SRC_ALPHA";
-//
-//             // Enable SRGB framebuffer if needed
-//             DEBUG_GL_CHECK_ERROR(glEnable(GL_FRAMEBUFFER_SRGB));
-//             bool gl_srgb = true;
-//             int max_tx_size;
-//             glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_tx_size);
-//             rocket::log("OpenGL Initialized", "renderer_2d", "constructor", "info");
-//             const std::vector<std::string> log_messages = {
-//                 "RocketGE Modules:",
-// #ifdef ROCKETGE__BUILD_QUARK
-//                 "- Quark: [TRUE]",
-// #else
-//                 "- Quark: [FALSE]",
-// #endif
-// #ifdef ROCKETGE__BUILD_ASTRO
-//                 "- AstroUI: [TRUE]",
-// #else
-//                 "- AstroUI: [FALSE]",
-// #endif
-//             "GL Info:",
-//                 "- GL Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))),
-//                 "- GL Vendor: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
-//                 "- GL Activated Functions: ",
-//                 "   - GL_BLEND: [" + (gl_blend ? std::string("TRUE") : std::string("FALSE")) + "]",
-//                 "   - GL_MULTISAMPLE: [" + (gl_multisample ? std::string("TRUE") : std::string("FALSE")) + "]",
-//                 "   - GL_BLEND_FUNC: [" + (gl_blendfunc ? std::string("TRUE") : std::string("FALSE")) + "]",
-//                 "   - GL_FRAMEBUFFER_SRGB: [" + (gl_srgb ? std::string("TRUE") : std::string("FALSE")) + "]",
-//                 "- GL VAO/VBO Pairs Created:",
-//                 "   - rectVAO/VBO: [" + (rectVAO != 0 && rectVBO != 0 ? std::string("TRUE") : std::string("FALSE")) + "]",
-//                 "   - txVAO/VBO: [" + (txVAO != 0 && txVBO != 0 ? std::string("TRUE") : std::string("FALSE")) + "]",
-//                 "   - textVAO/VBO: [" + (textVAO != 0 && textVBO != 0 ? std::string("TRUE") : std::string("FALSE")) + "]",
-//                 "- GL GPU-Specific Values:",
-//                 "   - GL_MAX_TEXTURE_SIZE: " + std::to_string(max_tx_size) + " x " + std::to_string(max_tx_size),
-//             "Screen Info:",
-//                 "- Window Size: " + std::to_string(window->size.x) + " x " + std::to_string(window->size.y)
-//             };
-//
             std::vector<std::string> log_messages = rgl::init_gl({ static_cast<float>(window->size.x), static_cast<float>(window->size.y) });
 
             std::pair<rgl::vao_t, rgl::vbo_t> text_vo = rgl::get_text_vos();
@@ -187,7 +67,54 @@ namespace rocket {
     }
 
     void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color) {
-        draw_rectangle({ pos, { radius * 2, radius * 2 } }, color, 0, 0);
+        static const char *vsrc = R"(
+            #version 330 core
+
+            layout(location = 0) in vec2 aPos; // -1..1 quad
+            out vec2 fragOffset;
+
+            uniform vec2 u_position; // circle center in pixels
+            uniform float u_radius;  // in pixels
+            uniform vec2 u_viewport; // viewport size
+
+            void main() {
+                fragOffset = aPos * u_radius;
+                vec2 ndcPos = (u_position + fragOffset) / u_viewport * 2.0 - 1.0;
+                ndcPos.y = -ndcPos.y; // flip Y if your window origin is top-left
+                gl_Position = vec4(ndcPos, 0.0, 1.0);
+            }
+        )";
+        static const char *fsrc = R"(
+            #version 330 core
+
+            in vec2 fragOffset;
+            out vec4 FragColor;
+
+            uniform vec4 u_color;
+            uniform float u_radius;
+
+            void main() {
+                float dist = length(fragOffset);
+                float alpha = 1.0 - step(u_radius, dist);
+                FragColor = vec4(u_color.rgb, u_color.a * alpha);
+            }
+        )";
+
+        static std::array<float,12> quad_vertices = {
+            -1,-1,  1,-1,  1,1,
+            -1,-1,  1,1,  -1,1
+        };
+        static std::pair<rgl::vao_t, rgl::vbo_t> circle_vo = rgl::compile_vo(quad_vertices);
+
+        static rgl::shader_program_t pg = rgl::cache_compile_shader(vsrc, fsrc);
+        glUseProgram(pg);
+        glUniform2f(glGetUniformLocation(pg, "u_position"), pos.x, pos.y);
+        glUniform1f(glGetUniformLocation(pg, "u_radius"), radius);
+        auto nm = color.normalize();
+        glUniform4f(glGetUniformLocation(pg, "u_color"), nm.x, nm.y, nm.z, nm.w);
+        glUniform2f(glGetUniformLocation(pg, "u_viewport"), rgl::get_viewport_size().x, rgl::get_viewport_size().y);
+
+        rgl::draw_shader(pg, circle_vo.first, circle_vo.second);
     }
 
     void renderer_2d::draw_line(rocket::vec2f_t start, rocket::vec2f_t end, rocket::rgba_color color, float thickness) {
@@ -247,9 +174,24 @@ namespace rocket {
 
     void renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
         rgl::shader_program_t pg = rgl::get_paramaterized_quad(rect.pos, rect.size, color, rotation, roundedness);
+        if (lines) {
+            rocket::vec2f_t pos = rect.pos;
+            rocket::vec2f_t size = rect.size;
+            float thickness = 1.f; // hardcode TODO
+            // top
+            draw_rectangle({ pos, { size.x, thickness } }, color);
+            // bottom
+            draw_rectangle({ { pos.x, pos.y + size.y - thickness }, { size.x, thickness } }, color);
+            // left
+            draw_rectangle({ pos, { thickness, size.y } }, color);
+            // right
+            draw_rectangle({ { pos.x + size.x - thickness, pos.y }, { thickness, size.y } }, color);
+
+            return;
+        }
         rgl::draw_shader(pg, rgl::shader_use_t::rect);
     }
-  
+   
     void renderer_2d::draw_text(rocket::text_t &text, rocket::vec2f_t position) {
         static GLuint shader_program = 0;
 
@@ -377,20 +319,9 @@ namespace rocket {
         }
     }
 
-    void renderer_2d::draw_shader(shader_t shader, rocket::fbounding_box rect) {
+    void renderer_2d::draw_shader(shader_t shader) {
         glUseProgram(shader.glprogram);
-
-        glm::mat4 projection = glm::ortho(0.f, (float) window->size.x, (float) window->size.y, 0.f, -1.f, 1.f);
-
-        glm::mat4 transform = projection
-            * glm::translate(glm::mat4(1.f), glm::vec3(rect.pos.x + rect.size.x/2, rect.pos.y + rect.size.y/2, 0.f))
-            * glm::scale(glm::mat4(1.f), glm::vec3(rect.size.x, rect.size.y, 1.f));
-
-        glUniformMatrix4fv(glGetUniformLocation(shader.glprogram, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
-        glUniform2f(glGetUniformLocation(shader.glprogram, "u_size"), rect.size.x, rect.size.y);
-        glUniform1f(glGetUniformLocation(shader.glprogram, "u_radius"), 0.f);
-
-        glBindVertexArray(rectVAO);
+        glBindVertexArray(shader.vao);
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 
@@ -409,14 +340,7 @@ namespace rocket {
     }
 
     void renderer_2d::draw_fps(vec2f_t pos) {
-        double delta = glfwGetTime() - this->frame_start_time;
-        double current_fps = 1.0 / delta;
-
-        // Smooth FPS (EMA)
-        static double smoothed_fps = current_fps;
-        smoothed_fps = 0.9 * smoothed_fps + 0.1 * current_fps;
-
-        std::string fps_text = "FPS: " + std::to_string((int)smoothed_fps);
+        std::string fps_text = "FPS: " + std::to_string(get_current_fps());
 
         static rocket::text_t fps = rocket::text_t(fps_text, 24, rocket::rgb_color::green());
         fps.text = fps_text;
@@ -427,19 +351,13 @@ namespace rocket {
         glfwSwapBuffers(this->window->glfw_window);
         this->delta_time = glfwGetTime() - this->frame_start_time;
         this->frame_start_time = glfwGetTime();
-        if (this->vsync) {
-            return; // We're done here
-        }
 
-        double frametime_limit = 1.0 / fps;
-        // SET_PHYSICS_DELTATIME(delta_time);
+        rgl::update_viewport({
+            static_cast<float>(this->window->size.x),
+            static_cast<float>(this->window->size.y)
+        });
 
         frame_counter++;
-
-        double frame_end_time = glfwGetTime();
-        double frame_duration = frame_end_time - frame_start_time;
-
-        this->delta_time = frame_duration;
 
         auto err = glGetError();
         if (err != GL_NO_ERROR) {
@@ -449,15 +367,21 @@ namespace rocket {
         }
         glFlush();
 
+        if (this->vsync) {
+            return; // We're done here
+        }
+
+        double frametime_limit = 1.0 / fps;
+
+        double frame_end_time = glfwGetTime();
+        double frame_duration = frame_end_time - frame_start_time;
+
+        this->delta_time = frame_duration;
+
         if (frame_duration < frametime_limit) {
             double sleep_time = frametime_limit - frame_duration;
             std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time));
         }
-
-        rgl::update_viewport({
-            static_cast<float>(this->window->size.x),
-            static_cast<float>(this->window->size.y)
-        });
     }
 
     double renderer_2d::get_delta_time() {

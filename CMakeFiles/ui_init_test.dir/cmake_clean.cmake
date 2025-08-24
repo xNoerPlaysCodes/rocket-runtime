@@ -2,8 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/ui_init_test.dir/link.d"
   "CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o"
   "CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o.d"
-  "bin/ui_init_test"
-  "bin/ui_init_test.pdb"
+  "bin/tests/ui_init_test"
+  "bin/tests/ui_init_test.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

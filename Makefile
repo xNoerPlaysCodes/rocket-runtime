@@ -182,19 +182,6 @@ ui_init_test/fast:
 .PHONY : ui_init_test/fast
 
 #=============================================================================
-# Target rules for targets named shader_test
-
-# Build rule for target.
-shader_test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 shader_test
-.PHONY : shader_test
-
-# fast build rule for target.
-shader_test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/build
-.PHONY : shader_test/fast
-
-#=============================================================================
 # Target rules for targets named rounded_texture_rectangle_test
 
 # Build rule for target.
@@ -219,6 +206,80 @@ line_test: cmake_check_build_system
 line_test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/line_test.dir/build.make CMakeFiles/line_test.dir/build
 .PHONY : line_test/fast
+
+#=============================================================================
+# Target rules for targets named moving_circle
+
+# Build rule for target.
+moving_circle: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 moving_circle
+.PHONY : moving_circle
+
+# fast build rule for target.
+moving_circle/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/moving_circle.dir/build.make CMakeFiles/moving_circle.dir/build
+.PHONY : moving_circle/fast
+
+#=============================================================================
+# Target rules for targets named custom_shader
+
+# Build rule for target.
+custom_shader: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 custom_shader
+.PHONY : custom_shader
+
+# fast build rule for target.
+custom_shader/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/custom_shader.dir/build.make CMakeFiles/custom_shader.dir/build
+.PHONY : custom_shader/fast
+
+examples/custom_shader.o: examples/custom_shader.cpp.o
+.PHONY : examples/custom_shader.o
+
+# target to build an object file
+examples/custom_shader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/custom_shader.dir/build.make CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o
+.PHONY : examples/custom_shader.cpp.o
+
+examples/custom_shader.i: examples/custom_shader.cpp.i
+.PHONY : examples/custom_shader.i
+
+# target to preprocess a source file
+examples/custom_shader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/custom_shader.dir/build.make CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.i
+.PHONY : examples/custom_shader.cpp.i
+
+examples/custom_shader.s: examples/custom_shader.cpp.s
+.PHONY : examples/custom_shader.s
+
+# target to generate assembly for a file
+examples/custom_shader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/custom_shader.dir/build.make CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.s
+.PHONY : examples/custom_shader.cpp.s
+
+examples/moving_circle.o: examples/moving_circle.cpp.o
+.PHONY : examples/moving_circle.o
+
+# target to build an object file
+examples/moving_circle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/moving_circle.dir/build.make CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o
+.PHONY : examples/moving_circle.cpp.o
+
+examples/moving_circle.i: examples/moving_circle.cpp.i
+.PHONY : examples/moving_circle.i
+
+# target to preprocess a source file
+examples/moving_circle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/moving_circle.dir/build.make CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.i
+.PHONY : examples/moving_circle.cpp.i
+
+examples/moving_circle.s: examples/moving_circle.cpp.s
+.PHONY : examples/moving_circle.s
+
+# target to generate assembly for a file
+examples/moving_circle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/moving_circle.dir/build.make CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.s
+.PHONY : examples/moving_circle.cpp.s
 
 src/astro/astroui.o: src/astro/astroui.cpp.o
 .PHONY : src/astro/astroui.o
@@ -652,30 +713,6 @@ tests/rounded_texture_rectangle_test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rounded_texture_rectangle_test.dir/build.make CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.s
 .PHONY : tests/rounded_texture_rectangle_test.cpp.s
 
-tests/shader_test.o: tests/shader_test.cpp.o
-.PHONY : tests/shader_test.o
-
-# target to build an object file
-tests/shader_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/tests/shader_test.cpp.o
-.PHONY : tests/shader_test.cpp.o
-
-tests/shader_test.i: tests/shader_test.cpp.i
-.PHONY : tests/shader_test.i
-
-# target to preprocess a source file
-tests/shader_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/tests/shader_test.cpp.i
-.PHONY : tests/shader_test.cpp.i
-
-tests/shader_test.s: tests/shader_test.cpp.s
-.PHONY : tests/shader_test.s
-
-# target to generate assembly for a file
-tests/shader_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader_test.dir/build.make CMakeFiles/shader_test.dir/tests/shader_test.cpp.s
-.PHONY : tests/shader_test.cpp.s
-
 tests/text_test.o: tests/text_test.cpp.o
 .PHONY : tests/text_test.o
 
@@ -733,13 +770,20 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... RocketRuntime"
+	@echo "... custom_shader"
 	@echo "... initializer_test"
 	@echo "... line_test"
+	@echo "... moving_circle"
 	@echo "... rectangle_test"
 	@echo "... rounded_texture_rectangle_test"
-	@echo "... shader_test"
 	@echo "... text_test"
 	@echo "... ui_init_test"
+	@echo "... examples/custom_shader.o"
+	@echo "... examples/custom_shader.i"
+	@echo "... examples/custom_shader.s"
+	@echo "... examples/moving_circle.o"
+	@echo "... examples/moving_circle.i"
+	@echo "... examples/moving_circle.s"
 	@echo "... src/astro/astroui.o"
 	@echo "... src/astro/astroui.i"
 	@echo "... src/astro/astroui.s"
@@ -794,9 +838,6 @@ help:
 	@echo "... tests/rounded_texture_rectangle_test.o"
 	@echo "... tests/rounded_texture_rectangle_test.i"
 	@echo "... tests/rounded_texture_rectangle_test.s"
-	@echo "... tests/shader_test.o"
-	@echo "... tests/shader_test.i"
-	@echo "... tests/shader_test.s"
 	@echo "... tests/text_test.o"
 	@echo "... tests/text_test.i"
 	@echo "... tests/text_test.s"

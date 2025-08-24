@@ -9,7 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/noerlol/C-Projects/RocketGE/tests/shader_test.cpp" "CMakeFiles/shader_test.dir/tests/shader_test.cpp.o" "gcc" "CMakeFiles/shader_test.dir/tests/shader_test.cpp.o.d"
-  "" "bin/shader_test" "gcc" "CMakeFiles/shader_test.dir/link.d"
+  "" "bin/tests/shader_test" "gcc" "CMakeFiles/shader_test.dir/link.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

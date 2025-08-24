@@ -20,6 +20,7 @@ set(CMAKE_BUILD_TYPE Debug)
 
 option(BUILD_SHARED_LIBS "Build Shared" ON)
 option(BUILD_TESTS "Build Tests" ON)
+option(BUILD_EXAMPLES "Build Examples" ON)
 
 option(BUILD_QUARK "Build Quark [physics]" ON)
 option(BUILD_ASTRO "Build Astro [ui]" ON)
@@ -81,13 +82,16 @@ if (BUILD_TESTS)
         initializer_test
         text_test
         ui_init_test
-        shader_test
         rounded_texture_rectangle_test
         line_test
     )
 
     foreach(test_name IN LISTS TEST_NAMES)
         add_executable(${test_name} tests/${test_name}.cpp)
+
+        set_target_properties(${test_name} PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/tests
+        )
 
         target_link_directories(${test_name} PRIVATE bin)
         target_include_directories(${test_name} PRIVATE include)
@@ -98,6 +102,28 @@ if (BUILD_TESTS)
     endforeach()
 endif()
 
+if (BUILD_EXAMPLES)
+    set(EXAMPLE_NAMES
+        moving_circle
+        custom_shader
+    )
+
+    foreach (example_name IN LISTS EXAMPLE_NAMES)
+        add_executable(${example_name} examples/${example_name}.cpp)
+
+        set_target_properties(${example_name} PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/examples
+        )
+
+        target_link_directories(${example_name} PRIVATE bin)
+        target_include_directories(${example_name} PRIVATE include)
+
+        target_link_libraries(${example_name} PRIVATE RocketRuntime glfw) # TODO REMOVE
+
+        target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3 -flto)
+    endforeach()
+endif()
+
 message("Build Type: ${CMAKE_BUILD_TYPE}")
 message("Build Shared: ${BUILD_SHARED_LIBS}")
 message("Build Tests: ${BUILD_TESTS}")
@@ -105,6 +131,13 @@ if (BUILD_TESTS)
     message("Building Tests:")
     foreach(test_name IN LISTS TEST_NAMES)
         message("  ${test_name}")
+    endforeach()
+endif()
+message("Build Examples: ${BUILD_EXAMPLES}")
+if (BUILD_EXAMPLES)
+    message("Building Examples:")
+    foreach(example_name IN LISTS EXAMPLE_NAMES)
+        message("  ${example_name}")
     endforeach()
 endif()
 message("Build Quark: ${BUILD_QUARK}")

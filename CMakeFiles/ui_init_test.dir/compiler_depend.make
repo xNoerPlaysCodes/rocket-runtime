@@ -511,7 +511,7 @@ CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o: tests/ui_init_test.cpp \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h
 
-bin/ui_init_test: /usr/lib/Scrt1.o \
+bin/tests/ui_init_test: /usr/lib/Scrt1.o \
   /usr/lib/crti.o \
   /usr/lib/crtn.o \
   /usr/lib/libc.so \

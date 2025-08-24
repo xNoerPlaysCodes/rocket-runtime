@@ -52,7 +52,8 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/initializer_test.dir/DependInfo.cmake"
   "CMakeFiles/text_test.dir/DependInfo.cmake"
   "CMakeFiles/ui_init_test.dir/DependInfo.cmake"
-  "CMakeFiles/shader_test.dir/DependInfo.cmake"
   "CMakeFiles/rounded_texture_rectangle_test.dir/DependInfo.cmake"
   "CMakeFiles/line_test.dir/DependInfo.cmake"
+  "CMakeFiles/moving_circle.dir/DependInfo.cmake"
+  "CMakeFiles/custom_shader.dir/DependInfo.cmake"
   )

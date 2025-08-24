@@ -1,1 +1,1 @@
-/usr/bin/c++ -g -Wl,--dependency-file=CMakeFiles/initializer_test.dir/link.d CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o -o bin/initializer_test   -L/home/noerlol/C-Projects/RocketGE/bin  -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin bin/libRocketRuntime.so
+/usr/bin/c++ -g -Wl,--dependency-file=CMakeFiles/initializer_test.dir/link.d CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o -o bin/tests/initializer_test   -L/home/noerlol/C-Projects/RocketGE/bin  -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin bin/libRocketRuntime.so

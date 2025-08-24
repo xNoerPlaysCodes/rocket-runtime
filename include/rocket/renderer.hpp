@@ -1,6 +1,7 @@
 #ifndef ROCKETGE__RENDERER_HPP
 #define ROCKETGE__RENDERER_HPP
 
+#include <array>
 #include <glm/detail/qualifier.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
@@ -19,9 +20,9 @@ namespace rocket {
     class renderer_2d {
     private:
         window_t *window;
-        int fps;
-        bool wireframe;
-        bool vsync;
+        int fps = 60;
+        bool wireframe = false;
+        bool vsync = false;
 
         std::chrono::time_point<std::chrono::high_resolution_clock> start_time;
         double last_time;
@@ -41,7 +42,7 @@ namespace rocket {
         void begin_scissor_mode(float x, float y, float sx, float sy);
         void clear(rocket::rgba_color color = { 255, 255, 255, 255 });
 
-        void draw_shader(shader_t shader, rocket::fbounding_box box);
+        void draw_shader(shader_t shader);
 
         void draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f, float roundedness = 0.f, bool lines = false);
         void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 });

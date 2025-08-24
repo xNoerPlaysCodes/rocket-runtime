@@ -17,6 +17,9 @@
 //Build Astro [ui]
 BUILD_ASTRO:BOOL=ON
 
+//Build Examples
+BUILD_EXAMPLES:BOOL=ON
+
 //Build Quark [physics]
 BUILD_QUARK:BOOL=ON
 

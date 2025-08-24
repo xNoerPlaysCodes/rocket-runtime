@@ -9,7 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/noerlol/C-Projects/RocketGE/tests/initializer_test.cpp" "CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o" "gcc" "CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o.d"
-  "" "bin/initializer_test" "gcc" "CMakeFiles/initializer_test.dir/link.d"
+  "" "bin/tests/initializer_test" "gcc" "CMakeFiles/initializer_test.dir/link.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

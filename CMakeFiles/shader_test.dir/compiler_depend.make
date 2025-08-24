@@ -507,7 +507,7 @@ CMakeFiles/shader_test.dir/tests/shader_test.cpp.o: tests/shader_test.cpp \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h
 
-bin/shader_test: /usr/lib/Scrt1.o \
+bin/tests/shader_test: /usr/lib/Scrt1.o \
   /usr/lib/crti.o \
   /usr/lib/crtn.o \
   /usr/lib/libc.so \

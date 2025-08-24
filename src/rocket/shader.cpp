@@ -8,7 +8,7 @@ namespace rocket {
     void gl_check_errors(int step) {
         GLenum err;
         while ((err = glGetError()) != GL_NO_ERROR) {
-            std::cerr << "[OpenGL Error] Step " << step << ": " << std::hex << err << std::dec << std::endl;
+            std::cerr << "[OpenGL Error] Step " << step << ": " << err << std::endl;
         }
     }
 
@@ -76,11 +76,50 @@ namespace rocket {
         glDeleteShader(glshaderf);
         gl_check_errors(7);
 
+        std::array<float, 12> vertices = {
+            -1.0f, -1.0f,   // bottom left
+             1.0f, -1.0f,   // bottom right
+            -1.0f,  1.0f,   // top left
+
+            -1.0f,  1.0f,   // top left
+             1.0f, -1.0f,   // bottom right
+             1.0f,  1.0f    // top right
+        };
+        glGenVertexArrays(1, &vao);
+        gl_check_errors(8);
+        glGenBuffers(1, &vbo);
+        gl_check_errors(9);
+
+        glBindVertexArray(vao);
+        gl_check_errors(10);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        gl_check_errors(11);
+
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
+        gl_check_errors(12);
+
+        // This matches "layout(location = 0) in vec2 aPos;" in vertex shader
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr);
+        gl_check_errors(13);
+        glEnableVertexAttribArray(0);
+        gl_check_errors(14);
+
+        glBindVertexArray(0);
+        gl_check_errors(15);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        gl_check_errors(16);
+
         rocket::log("(2) Shaders compiled successfully", "shader_t", "constructor", "info");
     }
 
     GLint getloc(std::string name, GLuint glprogram) {
-        return glGetUniformLocation(glprogram, name.c_str());
+        GLint loc = glGetUniformLocation(glprogram, name.c_str());
+        if (loc == -1) {
+            std::cerr << "Uniform " << name << " not found in shader" << std::endl;
+            std::exit(45);
+        }
+        glUseProgram(glprogram);
+        return loc;
     }
 
     void shader_t::set_uniform(std::string name, float value) {

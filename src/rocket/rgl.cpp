@@ -4,6 +4,7 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <string>
 #include "rocket/asset.hpp"
 #include "rocket/types.hpp"
 #include "../../include/rocket/runtime.hpp"
@@ -47,7 +48,7 @@ namespace rgl {
         GL_CHECK(glBindVertexArray(rectVO.first));
         GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, rectVO.second));
         GL_CHECK(glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices, GL_STATIC_DRAW));
-        GL_CHECK(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0));
+        GL_CHECK(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr));
         GL_CHECK(glEnableVertexAttribArray(0));
         GL_CHECK(glBindVertexArray(0));
         GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
@@ -59,7 +60,7 @@ namespace rgl {
         GL_CHECK(glBindVertexArray(textureVO.first));
         GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, textureVO.second));
         GL_CHECK(glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices, GL_STATIC_DRAW));
-        GL_CHECK(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0));
+        GL_CHECK(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr));
         GL_CHECK(glEnableVertexAttribArray(0));
         GL_CHECK(glBindVertexArray(0));
         GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
@@ -72,11 +73,34 @@ namespace rgl {
         GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, textVO.second));
         GL_CHECK(glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW));
         GL_CHECK(glEnableVertexAttribArray(0)); // aPos
-        GL_CHECK(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0));
+        GL_CHECK(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr));
         GL_CHECK(glEnableVertexAttribArray(1)); // aTex
         GL_CHECK(glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float))));
         GL_CHECK(glBindVertexArray(0));
         GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    }
+
+    std::pair<vao_t, vbo_t> compile_vo(
+        const std::array<float, 12>& square_vertices,
+        GLenum draw_type,
+        int stride_size
+    ) {
+        vao_t vao;
+        vbo_t vbo;
+
+        GL_CHECK(glGenVertexArrays(1, &vao));
+        GL_CHECK(glGenBuffers(1, &vbo));
+
+        GL_CHECK(glBindVertexArray(vao));
+        GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, vbo));
+
+        GL_CHECK(glBufferData(GL_ARRAY_BUFFER, sizeof(square_vertices), square_vertices.data(), draw_type));
+        GL_CHECK(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, stride_size * sizeof(float), nullptr));
+        GL_CHECK(glEnableVertexAttribArray(0));
+        GL_CHECK(glBindVertexArray(0));
+        GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
+
+        return { vao, vbo };
     }
 
     std::pair<vao_t, vbo_t> get_text_vos() {
@@ -167,12 +191,12 @@ namespace rgl {
             "- GL GPU-Specific Values:",
             " - GL_MAX_TEXTURE_SIZE: " + std::to_string(max_tx_size) + " x " + std::to_string(max_tx_size),
 
+            "Viewport Info:",
             "- Viewport Size: " + std::to_string(viewport_size.x) + " x " + std::to_string(viewport_size.y)
         };
 
         return logs;
     }
-
 
     rgl::shader_program_t load_shader_generic(const char *vsrc, const char *fsrc) {
         GLuint vs = GL_CHECK(glCreateShader(GL_VERTEX_SHADER));
@@ -223,6 +247,24 @@ namespace rgl {
         return pg;
     }
 
+    rgl::shader_program_t cache_compile_shader(const char *vsrc, const char *fsrc) {
+        std::string key = std::string(vsrc) + "#" + fsrc;
+        static std::unordered_map<std::string, rgl::shader_program_t> shader_cache;
+
+        auto it = shader_cache.find(key);
+        if (it != shader_cache.end()) {
+            return it->second;
+        } else {
+            rgl::shader_program_t pg = load_shader_generic(vsrc, fsrc);
+            shader_cache[vsrc] = pg;
+            return pg;
+        }
+    }
+
+    rgl::shader_program_t nocache_compile_shader(const char *vsrc, const char *fsrc) {
+        return load_shader_generic(vsrc, fsrc);
+    }
+
     rgl::shader_program_t load_shader_textured_rect() {
         const char* vert_src = R"(
             #version 330 core
@@ -262,9 +304,8 @@ namespace rgl {
             float edge_thickness = 1.0;
             float alpha = 1.0;
 
-            if (cornerDist.x < radius_px && cornerDist.y < radius_px) {
-                alpha = 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist);
-            }
+            float corner_mask = step(cornerDist.x, radius_px) * step(cornerDist.y, radius_px);
+            alpha = mix(alpha, 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist), corner_mask);
 
             vec4 texColor = texture(u_texture, v_uv);
             FragColor = vec4(texColor.rgb, texColor.a * alpha);
@@ -313,9 +354,10 @@ namespace rgl {
         float edge_thickness = 1.0; // in pixels
         float alpha = 1.0;
 
-        if (cornerDist.x < radius_px && cornerDist.y < radius_px) {
-            alpha = 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist);
-        }
+
+        float corner_mask = step(cornerDist.x, radius_px) * step(cornerDist.y, radius_px);
+        alpha = mix(alpha, 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist), corner_mask);
+
 
         FragColor = vec4(u_color.rgb, u_color.a * alpha);
     }
@@ -459,8 +501,19 @@ namespace rgl {
         GL_CHECK(glDrawArrays(GL_TRIANGLES, 0, 6));
     }
 
+    void draw_shader(rgl::shader_program_t pg, vao_t vao, vbo_t vbo) {
+        GL_CHECK(glUseProgram(pg));
+
+        GL_CHECK(glBindVertexArray(vao));
+        GL_CHECK(glDrawArrays(GL_TRIANGLES, 0, 6));
+    }
+
     void update_viewport(const rocket::vec2f_t &size) {
         viewport_size = size;
         glViewport(0, 0, size.x, size.y);
+    }
+
+    rocket::vec2f_t get_viewport_size() {
+        return viewport_size;
     }
 }

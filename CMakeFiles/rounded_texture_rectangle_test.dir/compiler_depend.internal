@@ -507,7 +507,7 @@ CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_te
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h
 
-bin/rounded_texture_rectangle_test
+bin/tests/rounded_texture_rectangle_test
  /usr/lib/Scrt1.o
  /usr/lib/crti.o
  /usr/lib/crtn.o

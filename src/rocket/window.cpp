@@ -214,6 +214,7 @@ namespace rocket {
             io::mouse_event_t event;
             event.button = static_cast<io::mouse_button>(i);
             event.state = buttons[i];
+
             util::dispatch_event(event);
         }
 

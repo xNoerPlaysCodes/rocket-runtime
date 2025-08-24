@@ -503,7 +503,7 @@ CMakeFiles/line_test.dir/tests/line_test.cpp.o: tests/line_test.cpp \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h
 
-bin/line_test: /usr/lib/Scrt1.o \
+bin/tests/line_test: /usr/lib/Scrt1.o \
   /usr/lib/crti.o \
   /usr/lib/crtn.o \
   /usr/lib/libc.so \
