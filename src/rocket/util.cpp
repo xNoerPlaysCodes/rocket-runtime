@@ -36,6 +36,16 @@ namespace util {
 #endif
     }
 
+    bool is_x11() {
+#ifdef __linux__
+        if (const char *session = std::getenv("XDG_SESSION_TYPE")) {
+            return std::string(session) == "x11";
+        }
+#else
+        return false;
+#endif
+    }
+
     std::string fmtd_time_str() {
         std::time_t now = std::time(nullptr);
         std::tm local_tm;

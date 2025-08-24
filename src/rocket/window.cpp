@@ -73,6 +73,8 @@ namespace rocket {
 
         if (util::is_wayland()) {
             glfwWindowHintString(GLFW_WAYLAND_APP_ID, "rocketge-game");
+        } else if (util::is_x11()) {
+            glfwWindowHintString(GLFW_X11_CLASS_NAME, "rocketge-game");
         }
  
         if (!flags.fullscreen) {

@@ -8,7 +8,7 @@ namespace rocket {
     void gl_check_errors(int step) {
         GLenum err;
         while ((err = glGetError()) != GL_NO_ERROR) {
-            std::cerr << "[OpenGL Error] Step " << step << ": " << err << std::endl;
+            rocket::log_error("OpenGL error at step " + std::to_string(step), err, "OpenGL", "warning");
         }
     }
 

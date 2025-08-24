@@ -38,6 +38,7 @@ namespace util {
     void glinit(bool);
 
     bool is_wayland();
+    bool is_x11();
 
     void set_log_level(rocket::log_level_t level);
 

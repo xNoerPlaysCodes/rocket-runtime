@@ -7,13 +7,19 @@
 #include "types.hpp"
 #include "window.hpp"
 
-namespace rocket {
-    #define ROCKETGE_MINOR_VERSION  "1"
-    #define ROCKETGE_MAJOR_VERSION  "0"
-    #define ROCKETGE_BUILD          "open-dev"
-    #define ROCKETGE_VERSION        ROCKETGE_MAJOR_VERSION "." ROCKETGE_MINOR_VERSION "-" ROCKETGE_BUILD
-}
-#define ROCKETGE_OpenGL_SupportComputeShader
+#define ROCKETGE__MINOR_VERSION  1
+#define ROCKETGE__MAJOR_VERSION  0
+#define ROCKETGE__BUILD          "open-dev"
+#define ROCKETGE__VERSION        #ROCKETGE_MAJOR_VERSION "." #ROCKETGE_MINOR_VERSION "-" ROCKETGE_BUILD
+
+#define ROCKETGE__FEATURE_MAX_GL_VERSION_MAJOR 4
+#define ROCKETGE__FEATURE_MAX_GL_VERSION_MINOR 6
+
+#define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 3
+#define ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR 0
+
+#define ROCKETGE__FEATURE_SHADER_SUPPORT_VERT_FRAG
+// #define ROCKETGE__FEATURE_SHADER_SUPPORT_COMPUTE_SHADER
 
 namespace rocket {
     enum class log_level_t : int {

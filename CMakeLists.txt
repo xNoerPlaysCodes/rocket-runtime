@@ -108,7 +108,7 @@ if (BUILD_EXAMPLES)
         custom_shader
     )
 
-    foreach (example_name IN LISTS EXAMPLE_NAMES)
+    foreach(example_name IN LISTS EXAMPLE_NAMES)
         add_executable(${example_name} examples/${example_name}.cpp)
 
         set_target_properties(${example_name} PROPERTIES
@@ -118,7 +118,7 @@ if (BUILD_EXAMPLES)
         target_link_directories(${example_name} PRIVATE bin)
         target_include_directories(${example_name} PRIVATE include)
 
-        target_link_libraries(${example_name} PRIVATE RocketRuntime glfw) # TODO REMOVE
+        target_link_libraries(${example_name} PRIVATE RocketRuntime)
 
         target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3 -flto)
     endforeach()

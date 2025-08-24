@@ -4,7 +4,6 @@ bin/examples/custom_shader: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtbeginS.o \
   CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o \
   bin/libRocketRuntime.so \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libglfw.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libm.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libm.so \
@@ -32,6 +31,7 @@ bin/examples/custom_shader: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/crtendS.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/crtn.o \
   /usr/lib/libGL.so.1 \
+  /usr/lib/libglfw.so.3 \
   /usr/lib/libGLU.so.1 \
   /usr/lib/libGLEW.so.2.2 \
   /usr/lib/libGLEW.so.2.2 \
@@ -65,8 +65,6 @@ bin/examples/custom_shader: \
 CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o:
 
 bin/libRocketRuntime.so:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libglfw.so:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libstdc++.so:
 
@@ -121,6 +119,8 @@ bin/libRocketRuntime.so:
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/crtn.o:
 
 /usr/lib/libGL.so.1:
+
+/usr/lib/libglfw.so.3:
 
 /usr/lib/libGLU.so.1:
 

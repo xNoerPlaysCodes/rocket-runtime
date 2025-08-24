@@ -36,6 +36,6 @@ namespace rocket {
     }
 
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
-        std::cerr << util::format_log(log, class_file_library_source, function_source, level);
+        std::cout << util::format_log(log, class_file_library_source, function_source, level);
     }
 }
