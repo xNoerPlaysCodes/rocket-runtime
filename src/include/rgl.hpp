@@ -1,21 +1,23 @@
 #ifndef RocketGL__HPP
 #define RocketGL__HPP
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "rocket/asset.hpp"
+#include "rocket/types.hpp"
 #include <cstdint>
 #include <unordered_map>
 #include <utility>
-#include "rocket/asset.hpp"
-#include "rocket/types.hpp"
 #include <string>
 #include <vector>
+#define rGL_TXID_INVALID 0
+#define rGL_SHADERLOC_INVALID -1
 // types
 namespace rgl {
     using vao_t = GLuint;
     using vbo_t = GLuint;
 
     using texture_id_t = GLuint;
+
+    using shader_location_t = GLint;
 
     using shader_program_t = GLuint;
     using cp_vert_shader_t = GLuint;
@@ -46,6 +48,8 @@ namespace rgl {
     );
 
     std::pair<vao_t, vbo_t> get_text_vos();
+    std::pair<vao_t, vbo_t> get_quad_vos();
+    std::pair<vao_t, vbo_t> get_txquad_vos();
 
     enum class shader_use_t {
         rect,
@@ -61,7 +65,15 @@ namespace rgl {
     shader_program_t cache_compile_shader(const char *vs, const char *fs);
     shader_program_t nocache_compile_shader(const char *vs, const char *fs);
 
+    shader_location_t get_shader_location(shader_program_t sp, const char *name);
+    shader_location_t get_shader_location(shader_program_t sp, std::string name);
+
     rocket::vec2f_t get_viewport_size();
+
+    void gl_draw_arrays(GLenum mode, GLint first, GLsizei count);
+
+    int reset_drawcalls();
+    int read_drawcalls();
 }
 
 #endif

@@ -1,7 +1,7 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/src/rocket/rgl.cpp \
- /usr/include/stdc-predef.h /usr/include/c++/15.1.1/iostream \
- /usr/include/c++/15.1.1/bits/requires_hosted.h \
+ /usr/include/stdc-predef.h /usr/include/GL/glew.h \
+ /usr/include/c++/15.1.1/cstddef \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -10,28 +10,42 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
  /usr/include/c++/15.1.1/pstl/pstl_config.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h \
+ /usr/include/c++/15.1.1/bits/version.h /usr/include/c++/15.1.1/cstdint \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/include/bits/time64.h /usr/include/bits/wchar.h \
+ /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
+ /usr/include/bits/stdint-least.h /usr/include/GL/glu.h \
+ /usr/include/GL/gl.h /usr/include/glm/ext/vector_float2.hpp \
+ /usr/include/glm/detail/type_vec2.hpp \
+ /usr/include/glm/detail/qualifier.hpp /usr/include/glm/detail/setup.hpp \
+ /usr/include/c++/15.1.1/cassert /usr/include/assert.h \
+ /usr/include/glm/simd/platform.h /usr/include/c++/15.1.1/type_traits \
+ /usr/include/glm/detail/type_vec2.inl \
+ /usr/include/glm/detail/compute_vector_relational.hpp \
+ /usr/include/c++/15.1.1/limits /usr/include/c++/15.1.1/iostream \
+ /usr/include/c++/15.1.1/bits/requires_hosted.h \
  /usr/include/c++/15.1.1/ostream /usr/include/c++/15.1.1/bits/ostream.h \
  /usr/include/c++/15.1.1/ios /usr/include/c++/15.1.1/iosfwd \
  /usr/include/c++/15.1.1/bits/stringfwd.h \
  /usr/include/c++/15.1.1/bits/memoryfwd.h \
  /usr/include/c++/15.1.1/bits/postypes.h /usr/include/c++/15.1.1/cwchar \
- /usr/include/wchar.h /usr/include/bits/libc-header-start.h \
- /usr/include/bits/floatn.h /usr/include/bits/floatn-common.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h \
+ /usr/include/wchar.h /usr/include/bits/floatn.h \
+ /usr/include/bits/floatn-common.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
- /usr/include/bits/wchar.h /usr/include/bits/types/wint_t.h \
- /usr/include/bits/types/mbstate_t.h \
+ /usr/include/bits/types/wint_t.h /usr/include/bits/types/mbstate_t.h \
  /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h /usr/include/bits/types/locale_t.h \
  /usr/include/bits/types/__locale_t.h /usr/include/c++/15.1.1/exception \
  /usr/include/c++/15.1.1/bits/exception.h \
- /usr/include/c++/15.1.1/bits/version.h \
  /usr/include/c++/15.1.1/bits/exception_ptr.h \
  /usr/include/c++/15.1.1/bits/exception_defines.h \
  /usr/include/c++/15.1.1/bits/cxxabi_init_exception.h \
  /usr/include/c++/15.1.1/typeinfo \
  /usr/include/c++/15.1.1/bits/hash_bytes.h /usr/include/c++/15.1.1/new \
- /usr/include/c++/15.1.1/bits/move.h /usr/include/c++/15.1.1/type_traits \
+ /usr/include/c++/15.1.1/bits/move.h \
  /usr/include/c++/15.1.1/bits/nested_exception.h \
  /usr/include/c++/15.1.1/bits/char_traits.h \
  /usr/include/c++/15.1.1/compare /usr/include/c++/15.1.1/concepts \
@@ -47,10 +61,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++locale.h \
  /usr/include/c++/15.1.1/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/15.1.1/cctype \
- /usr/include/ctype.h /usr/include/bits/types.h \
- /usr/include/bits/typesizes.h /usr/include/bits/time64.h \
- /usr/include/bits/endian.h /usr/include/bits/endianness.h \
- /usr/include/c++/15.1.1/bits/ios_base.h \
+ /usr/include/ctype.h /usr/include/bits/endian.h \
+ /usr/include/bits/endianness.h /usr/include/c++/15.1.1/bits/ios_base.h \
  /usr/include/c++/15.1.1/ext/atomicity.h \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
@@ -114,14 +126,13 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/c++/15.1.1/ext/string_conversions.h \
  /usr/include/c++/15.1.1/cstdlib /usr/include/stdlib.h \
  /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
- /usr/include/sys/types.h /usr/include/bits/stdint-intn.h \
- /usr/include/endian.h /usr/include/bits/byteswap.h \
- /usr/include/bits/uintn-identity.h /usr/include/sys/select.h \
- /usr/include/bits/select.h /usr/include/bits/types/sigset_t.h \
- /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
- /usr/include/c++/15.1.1/bits/std_abs.h /usr/include/c++/15.1.1/cstdio \
- /usr/include/stdio.h /usr/include/bits/types/__fpos_t.h \
- /usr/include/bits/types/__fpos64_t.h \
+ /usr/include/sys/types.h /usr/include/endian.h \
+ /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
+ /usr/include/sys/select.h /usr/include/bits/select.h \
+ /usr/include/bits/types/sigset_t.h /usr/include/alloca.h \
+ /usr/include/bits/stdlib-float.h /usr/include/c++/15.1.1/bits/std_abs.h \
+ /usr/include/c++/15.1.1/cstdio /usr/include/stdio.h \
+ /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__fpos64_t.h \
  /usr/include/bits/types/struct_FILE.h \
  /usr/include/bits/types/cookie_io_functions_t.h \
  /usr/include/bits/stdio_lim.h /usr/include/c++/15.1.1/cerrno \
@@ -132,7 +143,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/c++/15.1.1/bits/charconv.h \
  /usr/include/c++/15.1.1/bits/basic_string.tcc \
  /usr/include/c++/15.1.1/bits/memory_resource.h \
- /usr/include/c++/15.1.1/cstddef \
  /usr/include/c++/15.1.1/bits/uses_allocator.h \
  /usr/include/c++/15.1.1/bits/uses_allocator_args.h \
  /usr/include/c++/15.1.1/tuple \
@@ -151,8 +161,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/c++/15.1.1/bits/locale_facets.tcc \
  /usr/include/c++/15.1.1/bits/basic_ios.tcc \
  /usr/include/c++/15.1.1/format /usr/include/c++/15.1.1/array \
- /usr/include/c++/15.1.1/charconv /usr/include/c++/15.1.1/limits \
- /usr/include/c++/15.1.1/locale \
+ /usr/include/c++/15.1.1/charconv /usr/include/c++/15.1.1/locale \
  /usr/include/c++/15.1.1/bits/locale_facets_nonio.h \
  /usr/include/c++/15.1.1/ctime \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/time_members.h \
@@ -164,10 +173,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/c++/15.1.1/bits/enable_special_members.h \
  /usr/include/c++/15.1.1/span /usr/include/c++/15.1.1/bits/monostate.h \
  /usr/include/c++/15.1.1/bits/formatfwd.h \
- /usr/include/c++/15.1.1/bits/unicode.h /usr/include/c++/15.1.1/cstdint \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h \
- /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
- /usr/include/bits/stdint-least.h /usr/include/c++/15.1.1/bits/stl_algo.h \
+ /usr/include/c++/15.1.1/bits/unicode.h \
+ /usr/include/c++/15.1.1/bits/stl_algo.h \
  /usr/include/c++/15.1.1/bits/algorithmfwd.h \
  /usr/include/c++/15.1.1/bits/stl_heap.h \
  /usr/include/c++/15.1.1/bits/uniform_int_dist.h \
@@ -176,15 +183,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/c++/15.1.1/bits/ostream.tcc /usr/include/c++/15.1.1/istream \
  /usr/include/c++/15.1.1/bits/istream.tcc \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../include/rgl.hpp \
- /usr/include/GL/glew.h /usr/include/GL/glu.h /usr/include/GL/gl.h \
- /usr/include/GLFW/glfw3.h /usr/include/c++/15.1.1/unordered_map \
- /usr/include/c++/15.1.1/bits/unordered_map.h \
- /usr/include/c++/15.1.1/bits/hashtable.h \
- /usr/include/c++/15.1.1/bits/hashtable_policy.h \
- /usr/include/c++/15.1.1/ext/aligned_buffer.h \
- /usr/include/c++/15.1.1/bits/node_handle.h \
- /usr/include/c++/15.1.1/bits/erase_if.h /usr/include/c++/15.1.1/utility \
- /usr/include/c++/15.1.1/bits/stl_relops.h \
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h \
@@ -201,12 +199,19 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/c++/15.1.1/bits/shared_ptr_base.h \
  /usr/include/c++/15.1.1/bits/allocated_ptr.h \
  /usr/include/c++/15.1.1/bits/unique_ptr.h \
+ /usr/include/c++/15.1.1/ext/aligned_buffer.h \
  /usr/include/c++/15.1.1/ext/concurrence.h \
  /usr/include/c++/15.1.1/bits/align.h \
  /usr/include/c++/15.1.1/bits/chrono_io.h /usr/include/c++/15.1.1/iomanip \
  /usr/include/c++/15.1.1/bits/quoted_string.h \
  /usr/include/c++/15.1.1/functional \
  /usr/include/c++/15.1.1/bits/std_function.h \
+ /usr/include/c++/15.1.1/unordered_map \
+ /usr/include/c++/15.1.1/bits/unordered_map.h \
+ /usr/include/c++/15.1.1/bits/hashtable.h \
+ /usr/include/c++/15.1.1/bits/hashtable_policy.h \
+ /usr/include/c++/15.1.1/bits/node_handle.h \
+ /usr/include/c++/15.1.1/bits/erase_if.h \
  /usr/include/c++/15.1.1/bits/move_only_function.h \
  /usr/include/c++/15.1.1/bits/mofunc_impl.h /usr/include/c++/15.1.1/map \
  /usr/include/c++/15.1.1/bits/stl_tree.h \
@@ -245,22 +250,19 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/c++/15.1.1/bits/ranges_uninitialized.h \
  /usr/include/c++/15.1.1/bits/out_ptr.h \
  /usr/include/c++/15.1.1/pstl/glue_memory_defs.h \
- /usr/include/c++/15.1.1/pstl/execution_defs.h \
+ /usr/include/c++/15.1.1/pstl/execution_defs.h /usr/include/GLFW/glfw3.h \
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+ /usr/include/c++/15.1.1/utility \
+ /usr/include/c++/15.1.1/bits/stl_relops.h \
  /usr/include/glm/ext/matrix_clip_space.hpp \
  /usr/include/glm/ext/scalar_constants.hpp \
- /usr/include/glm/detail/setup.hpp /usr/include/c++/15.1.1/cassert \
- /usr/include/assert.h /usr/include/glm/simd/platform.h \
+ /usr/include/glm/detail/setup.hpp \
  /usr/include/glm/ext/scalar_constants.inl /usr/include/glm/geometric.hpp \
  /usr/include/glm/detail/type_vec3.hpp \
- /usr/include/glm/detail/qualifier.hpp /usr/include/glm/detail/setup.hpp \
  /usr/include/glm/detail/type_vec3.inl \
- /usr/include/glm/detail/compute_vector_relational.hpp \
  /usr/include/glm/detail/func_geometric.inl \
  /usr/include/glm/exponential.hpp /usr/include/glm/detail/type_vec1.hpp \
  /usr/include/glm/detail/type_vec1.inl \
- /usr/include/glm/detail/type_vec2.hpp \
- /usr/include/glm/detail/type_vec2.inl \
  /usr/include/glm/detail/type_vec4.hpp \
  /usr/include/glm/detail/type_vec4.inl /usr/include/c++/15.1.1/cmath \
  /usr/include/math.h /usr/include/bits/math-vector.h \
@@ -297,7 +299,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/glm/detail/type_mat4x4.inl /usr/include/glm/matrix.hpp \
  /usr/include/glm/vec2.hpp /usr/include/glm/ext/vector_bool2.hpp \
  /usr/include/glm/ext/vector_bool2_precision.hpp \
- /usr/include/glm/ext/vector_float2.hpp \
  /usr/include/glm/ext/vector_float2_precision.hpp \
  /usr/include/glm/ext/vector_double2.hpp \
  /usr/include/glm/ext/vector_double2_precision.hpp \
@@ -421,12 +422,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/c++/15.1.1/cstring /usr/include/string.h \
  /usr/include/strings.h /usr/include/glm/gtc/type_ptr.inl \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/runtime.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/asset.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp

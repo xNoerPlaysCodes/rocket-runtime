@@ -1,3 +1,5 @@
+#include <GL/glew.h>
+#include <glm/ext/vector_float2.hpp>
 #include <iostream>
 
 #include "../include/rgl.hpp"
@@ -107,6 +109,18 @@ namespace rgl {
         return textVO;
     }
 
+    std::pair<vao_t, vbo_t> get_quad_vos() {
+        return rectVO;
+    }
+
+    std::pair<vao_t, vbo_t> get_txquad_vos() {
+        return textureVO;
+    }
+
+    std::string bool_to_str(bool b) {
+        return std::string("[") + (b ? "TRUE" : "FALSE") + "]";
+    }
+
     std::vector<std::string> init_gl(const rocket::vec2f_t viewport_size) {
         ::rgl::viewport_size = viewport_size;
 
@@ -151,12 +165,13 @@ namespace rgl {
             glDebugMessageCallback(
                 [](GLenum source, GLenum type, GLuint id, GLenum severity,
                    GLsizei length, const GLchar* message, const void* userParam) {
-                    fprintf(stderr, "[GL DEBUG] %s\n", message);
+                        rocket::log_error(message, -5, "OpenGL_Context_Verification", "fatal");
+                        std::exit(-1);
                 },
                 nullptr);
         }
 
-        shader_program_t prg = get_paramaterized_quad({0.f, 0.f}, {1.f, 1.f}, rocket::rgba_color::red(), 0.f, 0.f);
+        static shader_program_t prg = get_paramaterized_quad({0.f, 0.f}, {1.f, 1.f}, rocket::rgba_color::red(), 0.f, 0.f);
         draw_shader(prg, shader_use_t::rect);
 #endif
 
@@ -175,21 +190,25 @@ namespace rgl {
             "- GLSL Version: " + std::string((const char *) glGetString(GL_SHADING_LANGUAGE_VERSION)),
 
             "- GL Activated Functions:",
-            " - GL_BLEND: [" + (gl_blend ? std::string("TRUE") : std::string("FALSE")) + "]",
-            " - GL_MULTISAMPLE: [" + (gl_multisample ? std::string("TRUE") : std::string("FALSE")) + "]",
-            " - GL_BLEND_FUNC: [" + gl_blendfunc + "]",
-            " - GL_FRAMEBUFFER_SRGB: [" + (gl_srgb ? std::string("TRUE") : std::string("FALSE")) + "]",
+            "   - GL_BLEND: [" + (gl_blend ? std::string("TRUE") : std::string("FALSE")) + "]",
+            "   - GL_MULTISAMPLE: [" + (gl_multisample ? std::string("TRUE") : std::string("FALSE")) + "]",
+            "   - GL_BLEND_FUNC: [" + gl_blendfunc + "]",
+            "   - GL_FRAMEBUFFER_SRGB: [" + (gl_srgb ? std::string("TRUE") : std::string("FALSE")) + "]",
 
             "- GL VAO/VBO Pairs Created:",
-            " - rectVAO/VBO: [" + (rectVO.first != 0 && rectVO.second != 0
+            "   - rectVAO/VBO: [" + (rectVO.first != 0 && rectVO.second != 0
                                     ? std::string("TRUE") : std::string("FALSE")) + "]",
-            " - txVAO/VBO: [" + (textureVO.first != 0 && textureVO.second != 0
+            "   - txVAO/VBO: [" + (textureVO.first != 0 && textureVO.second != 0
                                     ? std::string("TRUE") : std::string("FALSE")) + "]",
-            " - textVAO/VBO: [" + (textVO.first != 0 && textVO.second != 0
+            "   - textVAO/VBO: [" + (textVO.first != 0 && textVO.second != 0
                                     ? std::string("TRUE") : std::string("FALSE")) + "]",
 
+            "- rGL Features:",
+            "   - OpenGL Context Verification: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
+            "   - Drawcall Tracking: " + bool_to_str(true),
+
             "- GL GPU-Specific Values:",
-            " - GL_MAX_TEXTURE_SIZE: " + std::to_string(max_tx_size) + " x " + std::to_string(max_tx_size),
+            "   - GL_MAX_TEXTURE_SIZE: " + std::to_string(max_tx_size) + " x " + std::to_string(max_tx_size),
 
             "Viewport Info:",
             "- Viewport Size: " + std::to_string(viewport_size.x) + " x " + std::to_string(viewport_size.y)
@@ -429,7 +448,7 @@ namespace rgl {
         float rotation,
         float roundedness
     ) {
-        rgl::shader_program_t pg = init_shader(rgl::shader_use_t::rect);
+        static rgl::shader_program_t pg = init_shader(rgl::shader_use_t::rect);
 
         glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
 
@@ -459,7 +478,7 @@ namespace rgl {
         float rotation,
         float roundedness
     ) {
-        rgl::shader_program_t pg = init_shader(rgl::shader_use_t::textured_rect);
+        static rgl::shader_program_t pg = init_shader(rgl::shader_use_t::textured_rect);
 
         glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
 
@@ -480,6 +499,38 @@ namespace rgl {
         return pg;
     }
 
+    std::pair<glm::vec2, glm::vec2> get_rect_uv_bounds(const glm::vec2& pos, const glm::vec2& size, const glm::mat4& mvp) {
+        // Local corners in world-space
+        std::array<glm::vec2, 4> corners = {
+            pos,
+            pos + glm::vec2(size.x, 0.0f),
+            pos + glm::vec2(0.0f, size.y),
+            pos + size
+        };
+
+        std::array<glm::vec2, 4> uvs;
+
+        // Transform each corner
+        for (int i = 0; i < 4; i++) {
+            glm::vec4 clip = mvp * glm::vec4(corners[i], 0.0f, 1.0f);
+
+            // Ortho → clip.w == 1, but safe to divide
+            glm::vec3 ndc = glm::vec3(clip) / clip.w;
+
+            // Convert NDC (-1..1) → UV (0..1)
+            uvs[i].x = ndc.x * 0.5f + 0.5f;
+            uvs[i].y = ndc.y * 0.5f + 0.5f;
+        }
+
+        // Find bounds
+        float u_min = std::min({uvs[0].x, uvs[1].x, uvs[2].x, uvs[3].x});
+        float u_max = std::max({uvs[0].x, uvs[1].x, uvs[2].x, uvs[3].x});
+        float v_min = std::min({uvs[0].y, uvs[1].y, uvs[2].y, uvs[3].y});
+        float v_max = std::max({uvs[0].y, uvs[1].y, uvs[2].y, uvs[3].y});
+
+        return { glm::vec2(u_min, v_min), glm::vec2(u_max, v_max) };
+    }
+
     void draw_shader(rgl::shader_program_t pg, rgl::shader_use_t use) {
         GL_CHECK(glUseProgram(pg));
 
@@ -498,14 +549,14 @@ namespace rgl {
                 break;
         }
 
-        GL_CHECK(glDrawArrays(GL_TRIANGLES, 0, 6));
+        GL_CHECK(gl_draw_arrays(GL_TRIANGLES, 0, 6));
     }
 
     void draw_shader(rgl::shader_program_t pg, vao_t vao, vbo_t vbo) {
         GL_CHECK(glUseProgram(pg));
 
         GL_CHECK(glBindVertexArray(vao));
-        GL_CHECK(glDrawArrays(GL_TRIANGLES, 0, 6));
+        GL_CHECK(gl_draw_arrays(GL_TRIANGLES, 0, 6));
     }
 
     void update_viewport(const rocket::vec2f_t &size) {
@@ -515,5 +566,29 @@ namespace rgl {
 
     rocket::vec2f_t get_viewport_size() {
         return viewport_size;
+    }
+
+    shader_location_t get_shader_location(shader_program_t sp, const char *name) {
+        return glGetUniformLocation(sp, name);
+    }
+
+    shader_location_t get_shader_location(shader_program_t sp, const std::string &name) {
+        return get_shader_location(sp, name.c_str());
+    }
+
+    static int drawcalls = 0;
+    void gl_draw_arrays(GLenum mode, GLint first, GLsizei count) {
+        drawcalls++;
+        GL_CHECK(glDrawArrays(mode, first, count));
+    }
+
+    int reset_drawcalls() {
+        int ret = read_drawcalls();
+        drawcalls = 0;
+        return ret;
+    }
+
+    int read_drawcalls() {
+        return drawcalls;
     }
 }

@@ -26,6 +26,7 @@ option(BUILD_QUARK "Build Quark [physics]" ON)
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 
 include_directories(include)
+include_directories(src/include)
 
 if (BUILD_QUARK)
     set(QUARK_SOURCES 
@@ -65,15 +66,12 @@ add_library(${PROJECT_NAME}
     ${QUARK_SOURCES}
 )
 
-include_directories(
-    /usr/include/freetype2
-    /usr/include
-)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal freetype)
+target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1)
+else()
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -O3 -flto)
 endif()
 
 if (BUILD_TESTS)

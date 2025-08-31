@@ -1,3 +1,4 @@
+#include <GL/glew.h>
 #include "rocket/types.hpp"
 #include <cmath>
 #include <glm/ext/matrix_clip_space.hpp>
@@ -6,7 +7,6 @@
 #define STB_TRUETYPE_IMPLEMENTATION
 #include <iostream>
 #include "../include/rgl.hpp"
-#include <GL/glew.h>
 #include "../../include/rocket/renderer.hpp"
 #include "util.hpp"
 #include <GLFW/glfw3.h>
@@ -144,6 +144,11 @@ namespace rocket {
         last_time = frame_start_time;
     }
 
+    void renderer_2d::begin_batch() {
+        this->batched = true;
+        rocket::log_error("Batching is not implemented yet", -1, "renderer_2d", "info");
+    }
+
     void renderer_2d::clear(rocket::rgba_color color) {
         glGetError();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -189,6 +194,16 @@ namespace rocket {
 
             return;
         }
+        if (this->batched) {
+            instanced_quad_t i;
+            i.pos = rect.pos;
+            i.size = rect.size;
+            i.color = color;
+            i.gltxid = rGL_TXID_INVALID;
+            this->batch.push_back(i);
+            return;
+        }
+        
         rgl::draw_shader(pg, rgl::shader_use_t::rect);
     }
    
@@ -289,23 +304,19 @@ namespace rocket {
         float x = position.x;
         float y = position.y + baseline;
 
+        std::vector<float> verts;
+        verts.reserve(text.text.size() * 6 * 4); // 6 vertices * 4 floats per vertex
+
         for (char c : text.text) {
             stbtt_aligned_quad q;
-            stbtt_GetBakedQuad(
-                text.font->cdata,
-                text.font->sttex_size.x,
-                text.font->sttex_size.y,
-                c - 32,
-                &x, &y,
-                &q, 1
-            );
+            stbtt_GetBakedQuad(text.font->cdata, 512, 512, c - 32, &x, &y, &q, 1);
 
             float x0 = (q.x0 / screen_w) * 2.0f - 1.0f;
             float y0 = 1.0f - (q.y0 / screen_h) * 2.0f;
             float x1 = (q.x1 / screen_w) * 2.0f - 1.0f;
             float y1 = 1.0f - (q.y1 / screen_h) * 2.0f;
 
-            float vertices[6][4] = {
+            float quad[6][4] = {
                 { x0, y0, q.s0, q.t0 },
                 { x0, y1, q.s0, q.t1 },
                 { x1, y1, q.s1, q.t1 },
@@ -314,15 +325,16 @@ namespace rocket {
                 { x1, y1, q.s1, q.t1 },
                 { x1, y0, q.s1, q.t0 }
             };
-            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-            glDrawArrays(GL_TRIANGLES, 0, 6);
+
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quad), quad);
+            rgl::gl_draw_arrays(GL_TRIANGLES, 0, 6);
         }
     }
 
     void renderer_2d::draw_shader(shader_t shader) {
         glUseProgram(shader.glprogram);
         glBindVertexArray(shader.vao);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        rgl::gl_draw_arrays(GL_TRIANGLES, 0, 6);
     }
 
     void renderer_2d::set_wireframe(bool x) {
@@ -349,8 +361,7 @@ namespace rocket {
 
     void renderer_2d::end_frame() {
         glfwSwapBuffers(this->window->glfw_window);
-        this->delta_time = glfwGetTime() - this->frame_start_time;
-        this->frame_start_time = glfwGetTime();
+        int _ = rgl::reset_drawcalls();
 
         rgl::update_viewport({
             static_cast<float>(this->window->size.x),
@@ -365,23 +376,194 @@ namespace rocket {
             this->window->close();
             std::exit(1);
         }
-        glFlush();
+
+        if (this->fps == -1) {
+            return;
+        }
 
         if (this->vsync) {
             return; // We're done here
         }
 
-        double frametime_limit = 1.0 / fps;
-
         double frame_end_time = glfwGetTime();
         double frame_duration = frame_end_time - frame_start_time;
 
-        this->delta_time = frame_duration;
-
+        double frametime_limit = 1.0 / fps;
         if (frame_duration < frametime_limit) {
             double sleep_time = frametime_limit - frame_duration;
-            std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time));
+
+            // sleep for most of it
+            if (sleep_time > 0.002) // leave ~2ms for busy-wait
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - 0.002));
+
+            // busy wait for the rest
+            while ((glfwGetTime() - frame_start_time) < frametime_limit) {}
         }
+
+        this->delta_time = glfwGetTime() - frame_start_time;
+        this->frame_start_time = glfwGetTime();
+    }
+
+    struct batched_quad_t {
+        vec2f_t pos = {0,0};
+        vec2f_t size = {0,0};
+        vec4f_t color = { 0,0,0,0 };
+        GLuint gltxid;
+    };
+
+    void init_batch_renderer(rgl::vao_t quadVAO, rgl::vbo_t quadVBO, rgl::vbo_t instanceVBO) {
+        // Base quad (two triangles, 0..1 range)
+        float quadVertices[] = {
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f
+        };
+
+        glGenVertexArrays(1, &quadVAO);
+        glGenBuffers(1, &quadVBO);
+        glGenBuffers(1, &instanceVBO);
+
+        glBindVertexArray(quadVAO);
+
+        // base quad VBO
+        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+
+        // instance VBO (empty init)
+        glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+        glBufferData(GL_ARRAY_BUFFER, 2048 /* max batch size */ * sizeof(batched_quad_t), nullptr, GL_DYNAMIC_DRAW);
+
+        // iPos
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, pos));
+        glVertexAttribDivisor(1, 1);
+
+        // iSize
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, size));
+        glVertexAttribDivisor(2, 1);
+
+        // iColor
+        glEnableVertexAttribArray(3);
+        glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, color));
+        glVertexAttribDivisor(3, 1);
+
+        glBindVertexArray(0);
+    }
+
+    void renderer_2d::end_batch(size_t max_batch_size) {
+        if (batch.size() > max_batch_size || batch.size() == 0) {
+            this->batch.clear();
+            return;
+        }
+
+        enum class batch_type {
+            quad = 0,
+            txquad = 1
+        };
+
+        std::vector<batched_quad_t> bquads;
+
+        batch_type type = batch_type::txquad;
+        if (batch.at(0).gltxid == rGL_TXID_INVALID) {
+            type = batch_type::quad;
+        }
+
+        static rgl::vao_t quadVAO;
+        static rgl::vbo_t quadVBO;
+        static rgl::vbo_t instanceVBO;
+
+        if (quadVAO == 0) {
+            init_batch_renderer(quadVAO, quadVBO, instanceVBO);
+        }
+
+        for (auto &i : batch) {
+            batched_quad_t bq;
+            vec2f_t nmpos = {};
+            vec2f_t nmsize = {};
+
+            nmpos.x = i.pos.x / window->size.x;
+            nmpos.y = i.pos.y / window->size.y;
+            nmsize.x = i.size.x / window->size.x;
+            nmsize.y = i.size.y / window->size.y;
+
+            bq.pos = nmpos;
+            bq.size = nmsize;
+
+            bq.color = i.color.normalize();
+            bq.gltxid = i.gltxid;
+            bquads.push_back(bq);
+        }
+
+        static rgl::shader_program_t pg = 0;
+        if (pg == 0) {
+            const char *vsrc = R"(
+                #version 330 core
+                in vec2 aPos;        // quad vertex
+                in vec2 iPos;        // instance position
+                in vec2 iSize;       // instance size
+                in vec4 iColor;      // instance color
+
+                out vec4 vColor;
+
+                void main() {
+                    vec2 pos = aPos * iSize + iPos;
+                    gl_Position = vec4(pos * 2.0 - 1.0, 0.0, 1.0);
+                    vColor = iColor;
+                }
+            )";
+
+            const char *fsrc = R"(
+                #version 330 core
+                in vec4 vColor;
+                out vec4 FragColor;
+                void main() {
+                    FragColor = vColor;
+                }
+            )";
+            pg = rgl::cache_compile_shader(vsrc, fsrc);
+        }
+
+
+        // glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+        // glBufferSubData(GL_ARRAY_BUFFER, 0, batch.size() * sizeof(batched_quad_t), bquads.data());
+
+        glUseProgram(pg);
+        glBindVertexArray(quadVAO);
+
+        // data
+        rgl::shader_location_t aPos = rgl::get_shader_location(pg, "aPos");
+        rgl::shader_location_t iPos = rgl::get_shader_location(pg, "iPos");
+        rgl::shader_location_t iSize = rgl::get_shader_location(pg, "iSize");
+        rgl::shader_location_t iColor = rgl::get_shader_location(pg, "iColor");
+
+        glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+        glBufferData(GL_ARRAY_BUFFER, bquads.size() * sizeof(batched_quad_t), bquads.data(), GL_DYNAMIC_DRAW);
+
+        // iPos
+        glEnableVertexAttribArray(iPos);
+        glVertexAttribPointer(iPos, 2, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, pos));
+        glVertexAttribDivisor(iPos, 1);
+
+        // iSize
+        glEnableVertexAttribArray(iSize);
+        glVertexAttribPointer(iSize, 2, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, size));
+        glVertexAttribDivisor(iSize, 1);
+
+        // iColor
+        glEnableVertexAttribArray(iColor);
+        glVertexAttribPointer(iColor, 4, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, color));
+        glVertexAttribDivisor(iColor, 1);
+
+        glDrawArraysInstanced(GL_TRIANGLES, 0, 6, bquads.size());
+
+        glDrawArraysInstanced(GL_TRIANGLES, 0, 6, batch.size());
     }
 
     double renderer_2d::get_delta_time() {
@@ -402,6 +584,10 @@ namespace rocket {
 
     int renderer_2d::get_current_fps() {
         return static_cast<int>(std::round(1.0 / get_delta_time()));
+    }
+
+    int renderer_2d::get_drawcalls() {
+        return rgl::read_drawcalls();
     }
 
     void renderer_2d::begin_scissor_mode(rocket::fbounding_box rect) {

@@ -133,13 +133,7 @@ namespace util {
     }
 
     void gl_setup_ortho(rocket::vec2i_t size) {
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-
-        glOrtho(0, size.x, size.y, 0, -1, 1);
-
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
+        glViewport(0, 0, size.x, size.y);
     }
 
     void close_callback(GLFWwindow *) {

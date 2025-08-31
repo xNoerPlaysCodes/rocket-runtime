@@ -5945,6 +5945,10 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
  /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp
  /usr/include/AL/al.h
  /usr/include/GL/gl.h
@@ -6445,7 +6449,6 @@ bin/libRocketRuntime.so
  /usr/lib/libGLEW.so
  /usr/lib/libGLU.so
  /usr/lib/libc.so
- /usr/lib/libfreetype.so
  /usr/lib/libgcc_s.so
  /usr/lib/libgcc_s.so.1
  /usr/lib/libglfw.so

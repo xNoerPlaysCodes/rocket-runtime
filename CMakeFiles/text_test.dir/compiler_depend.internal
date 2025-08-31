@@ -532,23 +532,13 @@ bin/tests/text_test
  /usr/lib/libX11.so.6
  /usr/lib/libXau.so.6
  /usr/lib/libXdmcp.so.6
- /usr/lib/libbrotlicommon.so.1
- /usr/lib/libbrotlidec.so.1
- /usr/lib/libbz2.so.1.0
  /usr/lib/libc.so.6
  /usr/lib/libc_nonshared.a
- /usr/lib/libfreetype.so.6
  /usr/lib/libglfw.so.3
- /usr/lib/libglib-2.0.so.0
- /usr/lib/libgraphite2.so.3
- /usr/lib/libharfbuzz.so.0
  /usr/lib/libm.so.6
  /usr/lib/libmvec.so.1
  /usr/lib/libopenal.so.1
- /usr/lib/libpcre2-8.so.0
- /usr/lib/libpng16.so.16
  /usr/lib/libxcb.so.1
- /usr/lib/libz.so.1
  /home/noerlol/C-Projects/RocketGE/CMakeFiles/text_test.dir/tests/text_test.cpp.o
  /home/noerlol/C-Projects/RocketGE/bin/libRocketRuntime.so
 

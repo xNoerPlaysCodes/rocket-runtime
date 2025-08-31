@@ -5931,6 +5931,10 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: src/rocket/window.cpp \
   include/rocket/stb_truetype.h \
   include/rocket/types.hpp \
   include/rocket/window.hpp \
+  include/rocket/io.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/types.hpp \
+  include/rocket/window.hpp \
   src/rocket/util.hpp \
   /usr/include/AL/al.h \
   /usr/include/GL/gl.h \
@@ -6430,7 +6434,6 @@ bin/libRocketRuntime.so: /usr/lib/crti.o \
   /usr/lib/libGLEW.so \
   /usr/lib/libGLU.so \
   /usr/lib/libc.so \
-  /usr/lib/libfreetype.so \
   /usr/lib/libgcc_s.so \
   /usr/lib/libgcc_s.so.1 \
   /usr/lib/libglfw.so \
@@ -7022,8 +7025,6 @@ src/astro/astroui.cpp:
 /usr/include/bits/mathcalls-macros.h:
 
 /usr/include/c++/15.1.1/format:
-
-/usr/lib/libfreetype.so:
 
 /usr/include/c++/15.1.1/bits/string_view.tcc:
 

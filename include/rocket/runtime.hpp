@@ -1,9 +1,9 @@
 #ifndef ROCKETGE__RUNTIME_HPP
 #define ROCKETGE__RUNTIME_HPP
 
+#include "renderer.hpp"
 #include "asset.hpp"
 #include "io.hpp"
-#include "renderer.hpp"
 #include "types.hpp"
 #include "window.hpp"
 
@@ -17,6 +17,9 @@
 
 #define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 3
 #define ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR 0
+
+#define ROCKETGE__FEATURE_GL_LOADER "GLEW"
+#define ROCKETGE__PLATFORM "GLFW::Desktop"
 
 #define ROCKETGE__FEATURE_SHADER_SUPPORT_VERT_FRAG
 // #define ROCKETGE__FEATURE_SHADER_SUPPORT_COMPUTE_SHADER

@@ -17,6 +17,13 @@
 #include <vector>
 
 namespace rocket {
+    struct instanced_quad_t {
+        vec2f_t pos = {0,0};
+        vec2f_t size = {0,0};
+
+        GLuint gltxid = 0;
+        rgba_color color = {0,0,0,0};
+    };
     class renderer_2d {
     private:
         window_t *window;
@@ -30,6 +37,9 @@ namespace rocket {
         double delta_time;
 
         uint64_t frame_counter;
+
+        std::vector<instanced_quad_t> batch;
+        bool batched = false;
 
         friend class renderer_3d;
         friend class font_t;
@@ -53,6 +63,14 @@ namespace rocket {
 
         void draw_text(rocket::text_t &text, vec2f_t position);
     public:
+        /// @brief All drawcalls will be redirected to an internal buffer
+        /// @brief and be drawn later
+        void begin_batch();
+
+        /// @brief All drawcalls that have been stored in the buffer will
+        /// @brief be drawn now
+        void end_batch(size_t max_batch_size = 2048);
+    public:
         void draw_fps(vec2f_t pos = { 10, 10 });
     public:
         void set_wireframe(bool);
@@ -66,6 +84,11 @@ namespace rocket {
         bool get_vsync();
         int get_fps();
         double get_delta_time();
+
+        /// @brief For proper drawcall tracking,
+        /// @brief you should probably call this
+        /// @brief after end_frame() or just before
+        int get_drawcalls();
     public:
         int get_current_fps();
     public:

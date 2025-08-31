@@ -20,7 +20,6 @@ bin/libRocketRuntime.so: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGLU.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGLEW.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libopenal.so \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libfreetype.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libm.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libm.so \
@@ -87,8 +86,6 @@ CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o:
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libGLEW.so:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libopenal.so:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libfreetype.so:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/../../../../lib/libstdc++.so:
 

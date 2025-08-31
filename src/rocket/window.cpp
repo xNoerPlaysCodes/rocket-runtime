@@ -2,7 +2,9 @@
 #include <GLFW/glfw3.h>
 #include <cstdlib>
 #include <iostream>
+#include <string>
 #include <vector>
+#include "rocket/runtime.hpp"
 #include "util.hpp"
 
 namespace rocket {
@@ -66,6 +68,14 @@ namespace rocket {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         }
 
+#ifdef RocketRuntime_DEBUG
+        if (glver >= 4.3f) {
+            glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+        } else {
+            rocket::log_error("OpenGL Context Verification requires 4.3 or higher", -5, "OpenGL", "warn");
+        }
+#endif
+
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -85,9 +95,7 @@ namespace rocket {
         } else {
             glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
         }
-        if (flags.vsync) {
-            glfwSwapInterval(1);
-        }
+        // We set Swap Interval at polL_events() -> first_init
         this->flags = flags;
         glfwWindowHint(GLFW_SAMPLES, flags.msaa_samples);
         glfw_window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
@@ -124,6 +132,19 @@ namespace rocket {
         rocket::log("GLFW window Initialized with size " + std::to_string(size.x) + "x" + std::to_string(size.y) + " and title " + title, 
             "window_t", "constructor", 
             "info");
+        auto glfw_platform = glfwGetPlatform();
+        std::string glfw_platform_str = "Unknown";
+        if (glfw_platform == GLFW_PLATFORM_X11) {
+            glfw_platform_str = "X11";
+        } else if (glfw_platform == GLFW_PLATFORM_WAYLAND) {
+            glfw_platform_str = "Wayland";
+        } else if (glfw_platform == GLFW_PLATFORM_COCOA) {
+            glfw_platform_str = "MacOS (Cocoa)";
+        } else if (glfw_platform == GLFW_PLATFORM_WIN32) {
+            glfw_platform_str = "Windows";
+        }
+        rocket::log("GLFW Platform: " + glfw_platform_str, "window_t", "constructor", "info");
+        rocket::log("RGE Platform: " + std::string(ROCKETGE__PLATFORM), "window_t", "constructor", "info");
 
         std::vector<std::string> logs = {
             "Modules:",
@@ -187,6 +208,15 @@ namespace rocket {
     }
 
     void window_t::poll_events() {
+        static bool first_init = false;
+        if (!first_init) {
+            if (flags.vsync) {
+                glfwSwapInterval(1);
+            } else {
+                glfwSwapInterval(0);
+            }
+            first_init = true;
+        }
         glfwPollEvents();
         int w, h;
         glfwGetFramebufferSize(glfw_window, &w, &h);

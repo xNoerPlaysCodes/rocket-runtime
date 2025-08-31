@@ -180,74 +180,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
  /usr/include/GLFW/glfw3.h \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/runtime.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/stb_truetype.h \
- /usr/include/AL/al.h /usr/include/c++/15.1.1/chrono \
- /usr/include/c++/15.1.1/bits/chrono.h /usr/include/c++/15.1.1/ratio \
- /usr/include/c++/15.1.1/bits/parse_numbers.h \
- /usr/include/c++/15.1.1/sstream /usr/include/c++/15.1.1/bits/sstream.tcc \
- /usr/include/c++/15.1.1/vector \
- /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
- /usr/include/c++/15.1.1/bits/stl_vector.h \
- /usr/include/c++/15.1.1/bits/stl_bvector.h \
- /usr/include/c++/15.1.1/bits/vector.tcc \
- /usr/include/c++/15.1.1/bits/shared_ptr.h \
- /usr/include/c++/15.1.1/bits/shared_ptr_base.h \
- /usr/include/c++/15.1.1/bits/allocated_ptr.h \
- /usr/include/c++/15.1.1/bits/unique_ptr.h \
- /usr/include/c++/15.1.1/ext/aligned_buffer.h \
- /usr/include/c++/15.1.1/ext/concurrence.h \
- /usr/include/c++/15.1.1/bits/align.h \
- /usr/include/c++/15.1.1/bits/chrono_io.h /usr/include/c++/15.1.1/iomanip \
- /usr/include/c++/15.1.1/bits/quoted_string.h \
- /usr/include/c++/15.1.1/functional \
- /usr/include/c++/15.1.1/bits/std_function.h \
- /usr/include/c++/15.1.1/unordered_map \
- /usr/include/c++/15.1.1/bits/unordered_map.h \
- /usr/include/c++/15.1.1/bits/hashtable.h \
- /usr/include/c++/15.1.1/bits/hashtable_policy.h \
- /usr/include/c++/15.1.1/bits/node_handle.h \
- /usr/include/c++/15.1.1/bits/erase_if.h \
- /usr/include/c++/15.1.1/bits/move_only_function.h \
- /usr/include/c++/15.1.1/bits/mofunc_impl.h /usr/include/c++/15.1.1/map \
- /usr/include/c++/15.1.1/bits/stl_tree.h \
- /usr/include/c++/15.1.1/bits/stl_map.h \
- /usr/include/c++/15.1.1/bits/stl_multimap.h \
- /usr/include/c++/15.1.1/mutex /usr/include/c++/15.1.1/bits/std_mutex.h \
- /usr/include/c++/15.1.1/bits/unique_lock.h \
- /usr/include/c++/15.1.1/thread /usr/include/c++/15.1.1/stop_token \
- /usr/include/c++/15.1.1/atomic \
- /usr/include/c++/15.1.1/bits/atomic_base.h \
- /usr/include/c++/15.1.1/bits/atomic_lockfree_defines.h \
- /usr/include/c++/15.1.1/bits/atomic_wait.h \
- /usr/include/c++/15.1.1/climits \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/limits.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h \
- /usr/include/limits.h /usr/include/bits/posix1_lim.h \
- /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
- /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
- /usr/include/bits/uio_lim.h /usr/include/unistd.h \
- /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
- /usr/include/bits/confname.h /usr/include/bits/getopt_posix.h \
- /usr/include/bits/getopt_core.h /usr/include/bits/unistd_ext.h \
- /usr/include/linux/close_range.h /usr/include/syscall.h \
- /usr/include/sys/syscall.h /usr/include/asm/unistd.h \
- /usr/include/asm/unistd_64.h /usr/include/bits/syscall.h \
- /usr/include/c++/15.1.1/bits/std_thread.h \
- /usr/include/c++/15.1.1/semaphore \
- /usr/include/c++/15.1.1/bits/semaphore_base.h \
- /usr/include/c++/15.1.1/bits/atomic_timed_wait.h \
- /usr/include/c++/15.1.1/bits/this_thread_sleep.h /usr/include/sys/time.h \
- /usr/include/semaphore.h /usr/include/bits/semaphore.h \
- /usr/include/c++/15.1.1/memory \
- /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
- /usr/include/c++/15.1.1/bits/shared_ptr_atomic.h \
- /usr/include/c++/15.1.1/backward/auto_ptr.h \
- /usr/include/c++/15.1.1/bits/ranges_uninitialized.h \
- /usr/include/c++/15.1.1/bits/out_ptr.h \
- /usr/include/c++/15.1.1/pstl/glue_memory_defs.h \
- /usr/include/c++/15.1.1/pstl/execution_defs.h \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
  /usr/include/glm/detail/qualifier.hpp /usr/include/glm/detail/setup.hpp \
  /usr/include/c++/15.1.1/cassert /usr/include/assert.h \
@@ -391,8 +323,76 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: \
  /usr/include/glm/ext/vector_relational.inl \
  /usr/include/glm/detail/type_float.hpp \
  /usr/include/glm/ext/quaternion_geometric.inl \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/asset.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/stb_truetype.h \
+ /usr/include/AL/al.h /usr/include/c++/15.1.1/chrono \
+ /usr/include/c++/15.1.1/bits/chrono.h /usr/include/c++/15.1.1/ratio \
+ /usr/include/c++/15.1.1/bits/parse_numbers.h \
+ /usr/include/c++/15.1.1/sstream /usr/include/c++/15.1.1/bits/sstream.tcc \
+ /usr/include/c++/15.1.1/vector \
+ /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
+ /usr/include/c++/15.1.1/bits/stl_vector.h \
+ /usr/include/c++/15.1.1/bits/stl_bvector.h \
+ /usr/include/c++/15.1.1/bits/vector.tcc \
+ /usr/include/c++/15.1.1/bits/shared_ptr.h \
+ /usr/include/c++/15.1.1/bits/shared_ptr_base.h \
+ /usr/include/c++/15.1.1/bits/allocated_ptr.h \
+ /usr/include/c++/15.1.1/bits/unique_ptr.h \
+ /usr/include/c++/15.1.1/ext/aligned_buffer.h \
+ /usr/include/c++/15.1.1/ext/concurrence.h \
+ /usr/include/c++/15.1.1/bits/align.h \
+ /usr/include/c++/15.1.1/bits/chrono_io.h /usr/include/c++/15.1.1/iomanip \
+ /usr/include/c++/15.1.1/bits/quoted_string.h \
+ /usr/include/c++/15.1.1/functional \
+ /usr/include/c++/15.1.1/bits/std_function.h \
+ /usr/include/c++/15.1.1/unordered_map \
+ /usr/include/c++/15.1.1/bits/unordered_map.h \
+ /usr/include/c++/15.1.1/bits/hashtable.h \
+ /usr/include/c++/15.1.1/bits/hashtable_policy.h \
+ /usr/include/c++/15.1.1/bits/node_handle.h \
+ /usr/include/c++/15.1.1/bits/erase_if.h \
+ /usr/include/c++/15.1.1/bits/move_only_function.h \
+ /usr/include/c++/15.1.1/bits/mofunc_impl.h /usr/include/c++/15.1.1/map \
+ /usr/include/c++/15.1.1/bits/stl_tree.h \
+ /usr/include/c++/15.1.1/bits/stl_map.h \
+ /usr/include/c++/15.1.1/bits/stl_multimap.h \
+ /usr/include/c++/15.1.1/mutex /usr/include/c++/15.1.1/bits/std_mutex.h \
+ /usr/include/c++/15.1.1/bits/unique_lock.h \
+ /usr/include/c++/15.1.1/thread /usr/include/c++/15.1.1/stop_token \
+ /usr/include/c++/15.1.1/atomic \
+ /usr/include/c++/15.1.1/bits/atomic_base.h \
+ /usr/include/c++/15.1.1/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/15.1.1/bits/atomic_wait.h \
+ /usr/include/c++/15.1.1/climits \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/limits.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h \
+ /usr/include/limits.h /usr/include/bits/posix1_lim.h \
+ /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
+ /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
+ /usr/include/bits/uio_lim.h /usr/include/unistd.h \
+ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
+ /usr/include/bits/confname.h /usr/include/bits/getopt_posix.h \
+ /usr/include/bits/getopt_core.h /usr/include/bits/unistd_ext.h \
+ /usr/include/linux/close_range.h /usr/include/syscall.h \
+ /usr/include/sys/syscall.h /usr/include/asm/unistd.h \
+ /usr/include/asm/unistd_64.h /usr/include/bits/syscall.h \
+ /usr/include/c++/15.1.1/bits/std_thread.h \
+ /usr/include/c++/15.1.1/semaphore \
+ /usr/include/c++/15.1.1/bits/semaphore_base.h \
+ /usr/include/c++/15.1.1/bits/atomic_timed_wait.h \
+ /usr/include/c++/15.1.1/bits/this_thread_sleep.h /usr/include/sys/time.h \
+ /usr/include/semaphore.h /usr/include/bits/semaphore.h \
+ /usr/include/c++/15.1.1/memory \
+ /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
+ /usr/include/c++/15.1.1/bits/shared_ptr_atomic.h \
+ /usr/include/c++/15.1.1/backward/auto_ptr.h \
+ /usr/include/c++/15.1.1/bits/ranges_uninitialized.h \
+ /usr/include/c++/15.1.1/bits/out_ptr.h \
+ /usr/include/c++/15.1.1/pstl/glue_memory_defs.h \
+ /usr/include/c++/15.1.1/pstl/execution_defs.h \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp
