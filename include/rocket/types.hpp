@@ -234,6 +234,46 @@ namespace rocket {
         static rgba_color blue();
         static rgba_color yellow();
 
+        static rgba_color aqua() {
+            return {
+                .x = 0,
+                .y = 255,
+                .z = 255,
+                .w = 255
+            };
+        }
+
+        static rgba_color magenta() {
+            return {
+                .x = 255,
+                .y = 0,
+                .z = 255,
+                .w = 255
+            };
+        }
+
+        static rgba_color orange() {
+            return {
+                .x = 255,
+                .y = 165,
+                .z = 0,
+                .w = 255
+            };
+        }
+
+        static rgba_color blank() {
+            return {
+                .x = 0,
+                .y = 0,
+                .z = 0,
+                .w = 0
+            };
+        }
+
+        rgba_color fade(uint8_t alpha) {
+            return {x,y,z, alpha};
+        }
+
         vec4<float> normalize() const {
             return {
                 .x = static_cast<float>(x) / 255.0f,
@@ -253,6 +293,38 @@ namespace rocket {
         static rgb_color green();
         static rgb_color blue();
         static rgb_color yellow();
+
+        static rgb_color aqua() {
+            return {
+                .x = 0,
+                .y = 255,
+                .z = 255,
+            };
+        }
+
+        static rgb_color magenta() {
+            return {
+                .x = 255,
+                .y = 0,
+                .z = 255,
+            };
+        }
+
+        static rgb_color orange() {
+            return {
+                .x = 255,
+                .y = 165,
+                .z = 0,
+            };
+        }
+
+        static rgb_color blank() {
+            return {
+                .x = 0,
+                .y = 0,
+                .z = 0,
+            };
+        }
     };
 
     using vec2i_t       =       vec2<int32_t>;

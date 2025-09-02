@@ -18,11 +18,10 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: \
  /usr/include/bits/time64.h /usr/include/bits/wchar.h \
  /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
  /usr/include/bits/stdint-least.h /usr/include/GL/glu.h \
- /usr/include/GL/gl.h /usr/include/c++/15.1.1/iostream \
+ /usr/include/GL/gl.h /usr/include/c++/15.1.1/fstream \
  /usr/include/c++/15.1.1/bits/requires_hosted.h \
- /usr/include/c++/15.1.1/ostream /usr/include/c++/15.1.1/bits/ostream.h \
- /usr/include/c++/15.1.1/ios /usr/include/c++/15.1.1/iosfwd \
- /usr/include/c++/15.1.1/bits/stringfwd.h \
+ /usr/include/c++/15.1.1/istream /usr/include/c++/15.1.1/ios \
+ /usr/include/c++/15.1.1/iosfwd /usr/include/c++/15.1.1/bits/stringfwd.h \
  /usr/include/c++/15.1.1/bits/memoryfwd.h \
  /usr/include/c++/15.1.1/bits/postypes.h /usr/include/c++/15.1.1/cwchar \
  /usr/include/wchar.h /usr/include/bits/floatn.h \
@@ -153,6 +152,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
  /usr/include/c++/15.1.1/bits/locale_facets.tcc \
  /usr/include/c++/15.1.1/bits/basic_ios.tcc \
+ /usr/include/c++/15.1.1/ostream /usr/include/c++/15.1.1/bits/ostream.h \
  /usr/include/c++/15.1.1/format /usr/include/c++/15.1.1/array \
  /usr/include/c++/15.1.1/charconv /usr/include/c++/15.1.1/limits \
  /usr/include/c++/15.1.1/locale \
@@ -174,8 +174,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: \
  /usr/include/c++/15.1.1/bits/uniform_int_dist.h \
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
  /usr/include/c++/15.1.1/bits/unicode-data.h \
- /usr/include/c++/15.1.1/bits/ostream.tcc /usr/include/c++/15.1.1/istream \
+ /usr/include/c++/15.1.1/bits/ostream.tcc \
  /usr/include/c++/15.1.1/bits/istream.tcc \
+ /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/basic_file.h \
+ /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++io.h \
+ /usr/include/c++/15.1.1/bits/fstream.tcc \
+ /usr/include/c++/15.1.1/iostream \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
  /usr/include/GLFW/glfw3.h \

@@ -1,8 +1,11 @@
 #include <GL/glew.h>
 #include "rocket/types.hpp"
 #include <cmath>
+#include <cstdint>
+#include <cstring>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
+#include <unordered_map>
 #include <utility>
 #define STB_TRUETYPE_IMPLEMENTATION
 #include <iostream>
@@ -19,15 +22,6 @@
 #include <glm/glm.hpp>                    // core GLM types like vec2, mat4
 #include <glm/gtc/matrix_transform.hpp>   // for glm::translate, glm::scale, glm::ortho
 #include <glm/gtc/type_ptr.hpp>           // for glm::value_ptr
-
-#define DEBUG_GL_CHECK_ERROR(x) \
-    x; \
-    { \
-        GLenum err = glGetError(); \
-        if (err != GL_NO_ERROR) { \
-            std::cerr << "[GL ERROR] " << #x << " -> " << util::format_error("OpenGL error", err, "OpenGL", "warn") << std::endl; \
-        } \
-    }
 
 namespace rocket {
     std::vector<shader_t> shader_cache;
@@ -327,14 +321,12 @@ namespace rocket {
             };
 
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quad), quad);
-            rgl::gl_draw_arrays(GL_TRIANGLES, 0, 6);
+            rgl::draw_shader(shader_program, rgl::shader_use_t::text);
         }
     }
 
     void renderer_2d::draw_shader(shader_t shader) {
-        glUseProgram(shader.glprogram);
-        glBindVertexArray(shader.vao);
-        rgl::gl_draw_arrays(GL_TRIANGLES, 0, 6);
+        rgl::draw_shader(shader.glprogram, shader.vao, shader.vbo);
     }
 
     void renderer_2d::set_wireframe(bool x) {
@@ -357,6 +349,57 @@ namespace rocket {
         static rocket::text_t fps = rocket::text_t(fps_text, 24, rocket::rgb_color::green());
         fps.text = fps_text;
         this->draw_text(fps, pos);
+    }
+}
+
+namespace std {
+    template<> struct hash<std::pair<float, float>> {
+        size_t operator()(const std::pair<float, float> &p) const {
+            return std::hash<float>()(p.first) ^ std::hash<float>()(p.second);
+        }
+    };
+}
+
+namespace rocket {
+    std::unordered_map<std::pair<float, float>, std::vector<rgba_color>> fb_pixels;
+    std::vector<rgba_color> renderer_2d::get_framebuffer() {
+        std::pair<float, float> key = { rgl::get_viewport_size().x, rgl::get_viewport_size().y };
+        auto it = fb_pixels.find(key);
+        if (it != fb_pixels.end()) {
+            return it->second;
+        }
+
+        fb_pixels[key] = std::vector<rgba_color>(rgl::get_viewport_size().x * rgl::get_viewport_size().y);
+        return fb_pixels[key];
+    }
+
+    void renderer_2d::push_framebuffer(std::vector<rgba_color> &framebuffer) {
+        static GLuint framebuffer_tx = rGL_TXID_INVALID;
+        if (framebuffer_tx == rGL_TXID_INVALID) {
+            glGenTextures(1, &framebuffer_tx);
+            glBindTexture(GL_TEXTURE_2D, framebuffer_tx);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, rgl::get_viewport_size().x, rgl::get_viewport_size().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        }
+
+        std::vector<uint8_t> flat(framebuffer.size() * 4);
+        std::memcpy(flat.data(), framebuffer.data(), framebuffer.size() * sizeof(rgba_color));
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, framebuffer_tx);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, rgl::get_viewport_size().x, rgl::get_viewport_size().y, GL_RGBA, GL_UNSIGNED_BYTE, flat.data());
+
+        static rgl::shader_program_t shader = rgl::get_paramaterized_textured_quad({0,0}, rgl::get_viewport_size(), 0.f, 0.f);
+        glUniform1i(glGetUniformLocation(shader, "u_texture"), 0);
+        rgl::draw_shader(shader, rgl::shader_use_t::textured_rect);
+
+        framebuffer.clear();
+    }
+
+    vec2f_t renderer_2d::get_viewport_size() {
+        return rgl::get_viewport_size();
     }
 
     void renderer_2d::end_frame() {

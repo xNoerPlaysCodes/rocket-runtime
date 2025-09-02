@@ -104,6 +104,7 @@ if (BUILD_EXAMPLES)
     set(EXAMPLE_NAMES
         moving_circle
         custom_shader
+        software_renderer
     )
 
     foreach(example_name IN LISTS EXAMPLE_NAMES)

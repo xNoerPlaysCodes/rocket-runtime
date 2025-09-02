@@ -139,7 +139,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: \
  /usr/include/c++/15.1.1/tr1/poly_hermite.tcc \
  /usr/include/c++/15.1.1/tr1/poly_laguerre.tcc \
  /usr/include/c++/15.1.1/tr1/riemann_zeta.tcc \
- /usr/include/glm/ext/matrix_clip_space.hpp \
+ /usr/include/c++/15.1.1/cstring /usr/include/string.h \
+ /usr/include/strings.h /usr/include/glm/ext/matrix_clip_space.hpp \
  /usr/include/glm/ext/scalar_constants.hpp \
  /usr/include/glm/detail/setup.hpp /usr/include/c++/15.1.1/cassert \
  /usr/include/assert.h /usr/include/glm/simd/platform.h \
@@ -251,7 +252,15 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: \
  /usr/include/glm/mat4x4.hpp /usr/include/glm/ext/matrix_double4x4.hpp \
  /usr/include/glm/ext/matrix_double4x4_precision.hpp \
  /usr/include/glm/ext/matrix_float4x4_precision.hpp \
- /usr/include/glm/detail/func_matrix.inl /usr/include/c++/15.1.1/utility \
+ /usr/include/glm/detail/func_matrix.inl \
+ /usr/include/c++/15.1.1/unordered_map \
+ /usr/include/c++/15.1.1/bits/unordered_map.h \
+ /usr/include/c++/15.1.1/bits/hashtable.h \
+ /usr/include/c++/15.1.1/bits/hashtable_policy.h \
+ /usr/include/c++/15.1.1/ext/aligned_buffer.h \
+ /usr/include/c++/15.1.1/bits/enable_special_members.h \
+ /usr/include/c++/15.1.1/bits/node_handle.h \
+ /usr/include/c++/15.1.1/bits/erase_if.h /usr/include/c++/15.1.1/utility \
  /usr/include/c++/15.1.1/bits/stl_relops.h \
  /usr/include/c++/15.1.1/iostream /usr/include/c++/15.1.1/ostream \
  /usr/include/c++/15.1.1/bits/ostream.h /usr/include/c++/15.1.1/ios \
@@ -298,9 +307,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: \
  /usr/include/libintl.h /usr/include/c++/15.1.1/bits/codecvt.h \
  /usr/include/c++/15.1.1/bits/locale_facets_nonio.tcc \
  /usr/include/c++/15.1.1/bits/locale_conv.h \
- /usr/include/c++/15.1.1/optional \
- /usr/include/c++/15.1.1/bits/enable_special_members.h \
- /usr/include/c++/15.1.1/span /usr/include/c++/15.1.1/bits/monostate.h \
+ /usr/include/c++/15.1.1/optional /usr/include/c++/15.1.1/span \
+ /usr/include/c++/15.1.1/bits/monostate.h \
  /usr/include/c++/15.1.1/bits/formatfwd.h \
  /usr/include/c++/15.1.1/bits/unicode.h \
  /usr/include/c++/15.1.1/bits/stl_algo.h \
@@ -316,9 +324,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h \
  /usr/include/c++/15.1.1/math.h /usr/include/c++/15.1.1/stdlib.h \
- /usr/include/string.h /usr/include/strings.h /usr/include/AL/al.h \
- /usr/include/c++/15.1.1/chrono /usr/include/c++/15.1.1/bits/chrono.h \
- /usr/include/c++/15.1.1/ratio \
+ /usr/include/AL/al.h /usr/include/c++/15.1.1/chrono \
+ /usr/include/c++/15.1.1/bits/chrono.h /usr/include/c++/15.1.1/ratio \
  /usr/include/c++/15.1.1/bits/parse_numbers.h \
  /usr/include/c++/15.1.1/sstream /usr/include/c++/15.1.1/bits/sstream.tcc \
  /usr/include/c++/15.1.1/vector \
@@ -330,19 +337,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: \
  /usr/include/c++/15.1.1/bits/shared_ptr_base.h \
  /usr/include/c++/15.1.1/bits/allocated_ptr.h \
  /usr/include/c++/15.1.1/bits/unique_ptr.h \
- /usr/include/c++/15.1.1/ext/aligned_buffer.h \
  /usr/include/c++/15.1.1/ext/concurrence.h \
  /usr/include/c++/15.1.1/bits/align.h \
  /usr/include/c++/15.1.1/bits/chrono_io.h /usr/include/c++/15.1.1/iomanip \
  /usr/include/c++/15.1.1/bits/quoted_string.h \
  /usr/include/c++/15.1.1/functional \
  /usr/include/c++/15.1.1/bits/std_function.h \
- /usr/include/c++/15.1.1/unordered_map \
- /usr/include/c++/15.1.1/bits/unordered_map.h \
- /usr/include/c++/15.1.1/bits/hashtable.h \
- /usr/include/c++/15.1.1/bits/hashtable_policy.h \
- /usr/include/c++/15.1.1/bits/node_handle.h \
- /usr/include/c++/15.1.1/bits/erase_if.h \
  /usr/include/c++/15.1.1/bits/move_only_function.h \
  /usr/include/c++/15.1.1/bits/mofunc_impl.h /usr/include/c++/15.1.1/map \
  /usr/include/c++/15.1.1/bits/stl_tree.h \
@@ -439,4 +439,4 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: \
  /usr/include/glm/ext/vector_int1_sized.hpp \
  /usr/include/glm/ext/vector_uint1.hpp \
  /usr/include/glm/ext/vector_uint1_sized.hpp \
- /usr/include/c++/15.1.1/cstring /usr/include/glm/gtc/type_ptr.inl
+ /usr/include/glm/gtc/type_ptr.inl

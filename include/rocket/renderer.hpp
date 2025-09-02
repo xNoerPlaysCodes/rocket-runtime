@@ -2,6 +2,7 @@
 #define ROCKETGE__RENDERER_HPP
 
 #include <array>
+#include <cstdint>
 #include <glm/detail/qualifier.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
@@ -47,6 +48,11 @@ namespace rocket {
         void glinit();
     public:
         void begin_frame();
+        /// @brief Adjusted to viewport
+        /// @note this is supposed to be empty...
+        std::vector<rgba_color> get_framebuffer();
+        void push_framebuffer(std::vector<rgba_color> &framebuffer);
+        vec2f_t get_viewport_size();
         void begin_scissor_mode(rocket::fbounding_box rect);
         void begin_scissor_mode(rocket::vec2f_t pos, rocket::vec2f_t size);
         void begin_scissor_mode(float x, float y, float sx, float sy);

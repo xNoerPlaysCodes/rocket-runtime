@@ -56,4 +56,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/line_test.dir/DependInfo.cmake"
   "CMakeFiles/moving_circle.dir/DependInfo.cmake"
   "CMakeFiles/custom_shader.dir/DependInfo.cmake"
+  "CMakeFiles/software_renderer.dir/DependInfo.cmake"
   )

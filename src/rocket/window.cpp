@@ -37,8 +37,36 @@ namespace rocket {
         return glfwGetPrimaryMonitor();
     }
 
-    void window_t::glfw_set_platform(const char *platform) {
-        setenv("GLFW_PLATFORM", platform, 1);
+    auto translate_glfw_bool(bool b) {
+        if (b) return GLFW_TRUE;
+        return GLFW_FALSE;
+    }
+
+    platform_t window_t::get_platform() {
+        auto glfw_platform = glfwGetPlatform();
+        platform_t platform;
+        std::string glfw_platform_str = platform.name;
+        if (glfw_platform == GLFW_PLATFORM_X11) {
+            glfw_platform_str = "X11";
+            platform.type = platform_type_t::linux_x11;
+            platform.os_name = "Linux";
+        } else if (glfw_platform == GLFW_PLATFORM_WAYLAND) {
+            glfw_platform_str = "Wayland";
+            platform.type = platform_type_t::linux_wayland;
+            platform.os_name = "Linux";
+        } else if (glfw_platform == GLFW_PLATFORM_COCOA) {
+            glfw_platform_str = "MacOS (Cocoa)";
+            platform.type = platform_type_t::macos_cocoa;
+            platform.os_name = "macOS";
+        } else if (glfw_platform == GLFW_PLATFORM_WIN32) {
+            glfw_platform_str = "Windows";
+            platform.type = platform_type_t::windows;
+            platform.os_name = "Windows";
+        }
+
+        platform.name = glfw_platform_str;
+        platform.rge_name = std::string(ROCKETGE__PLATFORM);
+        return platform;
     }
 
     window_t::window_t(const rocket::vec2i_t& size,
@@ -61,8 +89,7 @@ namespace rocket {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, flags.gl_version.y);
         float glver = static_cast<float>(flags.gl_version.x) + static_cast<float>(0.1 * flags.gl_version.y);
         if (glver < 3.0f) {
-            rocket::log_error("OpenGL Version 3.0 or higher must be used", 1, "PreGL", "fatal");
-            std::exit(7);
+            rocket::log_error("OpenGL Version 3.0 or higher must be used for a stable environment", 1, "PreGL", "warning");
         }
         if (glver > 3.1f) {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -72,14 +99,34 @@ namespace rocket {
         if (glver >= 4.3f) {
             glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
         } else {
-            rocket::log_error("OpenGL Context Verification requires 4.3 or higher", -5, "OpenGL", "warn");
+            rocket::log_error("OpenGL::ContextVerifier requires 4.3 or higher", -5, "OpenGL", "warn");
         }
 #endif
 
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        if (glver >= 3.0f) {
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        }
         glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
+
+        glfwWindowHint(GLFW_DECORATED, translate_glfw_bool(!flags.undecorated));
+        glfwWindowHint(GLFW_VISIBLE, translate_glfw_bool(!flags.hidden));
+
+        if (flags.minimized) {
+            glfwIconifyWindow(glfw_window);
+        }
+
+        glfwWindowHint(GLFW_MAXIMIZED, translate_glfw_bool(flags.maximized));
+        glfwWindowHint(GLFW_FOCUSED, translate_glfw_bool(!flags.unfocused));
+        glfwWindowHint(GLFW_FLOATING, translate_glfw_bool(flags.topmost));
+        if (flags.always_run) {
+            rocket::log_error("Always Run is not implemented yet", -1, "window_t::constructor", "warn");
+        }
+
+        glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, translate_glfw_bool(flags.transparent));
+
+        glfwWindowHint(GLFW_SCALE_TO_MONITOR, translate_glfw_bool(flags.hidpi));
 
         if (util::is_wayland()) {
             glfwWindowHintString(GLFW_WAYLAND_APP_ID, "rocketge-game");
@@ -132,19 +179,10 @@ namespace rocket {
         rocket::log("GLFW window Initialized with size " + std::to_string(size.x) + "x" + std::to_string(size.y) + " and title " + title, 
             "window_t", "constructor", 
             "info");
-        auto glfw_platform = glfwGetPlatform();
-        std::string glfw_platform_str = "Unknown";
-        if (glfw_platform == GLFW_PLATFORM_X11) {
-            glfw_platform_str = "X11";
-        } else if (glfw_platform == GLFW_PLATFORM_WAYLAND) {
-            glfw_platform_str = "Wayland";
-        } else if (glfw_platform == GLFW_PLATFORM_COCOA) {
-            glfw_platform_str = "MacOS (Cocoa)";
-        } else if (glfw_platform == GLFW_PLATFORM_WIN32) {
-            glfw_platform_str = "Windows";
-        }
+        auto platform = get_platform();
+        std::string glfw_platform_str = platform.name;
         rocket::log("GLFW Platform: " + glfw_platform_str, "window_t", "constructor", "info");
-        rocket::log("RGE Platform: " + std::string(ROCKETGE__PLATFORM), "window_t", "constructor", "info");
+        rocket::log("RGE Platform: " + platform.rge_name, "window_t", "constructor", "info");
 
         std::vector<std::string> logs = {
             "Modules:",

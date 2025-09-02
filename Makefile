@@ -233,6 +233,19 @@ custom_shader/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/custom_shader.dir/build.make CMakeFiles/custom_shader.dir/build
 .PHONY : custom_shader/fast
 
+#=============================================================================
+# Target rules for targets named software_renderer
+
+# Build rule for target.
+software_renderer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 software_renderer
+.PHONY : software_renderer
+
+# fast build rule for target.
+software_renderer/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/software_renderer.dir/build.make CMakeFiles/software_renderer.dir/build
+.PHONY : software_renderer/fast
+
 examples/custom_shader.o: examples/custom_shader.cpp.o
 .PHONY : examples/custom_shader.o
 
@@ -280,6 +293,30 @@ examples/moving_circle.s: examples/moving_circle.cpp.s
 examples/moving_circle.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/moving_circle.dir/build.make CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.s
 .PHONY : examples/moving_circle.cpp.s
+
+examples/software_renderer.o: examples/software_renderer.cpp.o
+.PHONY : examples/software_renderer.o
+
+# target to build an object file
+examples/software_renderer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/software_renderer.dir/build.make CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o
+.PHONY : examples/software_renderer.cpp.o
+
+examples/software_renderer.i: examples/software_renderer.cpp.i
+.PHONY : examples/software_renderer.i
+
+# target to preprocess a source file
+examples/software_renderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/software_renderer.dir/build.make CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.i
+.PHONY : examples/software_renderer.cpp.i
+
+examples/software_renderer.s: examples/software_renderer.cpp.s
+.PHONY : examples/software_renderer.s
+
+# target to generate assembly for a file
+examples/software_renderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/software_renderer.dir/build.make CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.s
+.PHONY : examples/software_renderer.cpp.s
 
 src/astro/astroui.o: src/astro/astroui.cpp.o
 .PHONY : src/astro/astroui.o
@@ -776,6 +813,7 @@ help:
 	@echo "... moving_circle"
 	@echo "... rectangle_test"
 	@echo "... rounded_texture_rectangle_test"
+	@echo "... software_renderer"
 	@echo "... text_test"
 	@echo "... ui_init_test"
 	@echo "... examples/custom_shader.o"
@@ -784,6 +822,9 @@ help:
 	@echo "... examples/moving_circle.o"
 	@echo "... examples/moving_circle.i"
 	@echo "... examples/moving_circle.s"
+	@echo "... examples/software_renderer.o"
+	@echo "... examples/software_renderer.i"
+	@echo "... examples/software_renderer.s"
 	@echo "... src/astro/astroui.o"
 	@echo "... src/astro/astroui.i"
 	@echo "... src/astro/astroui.s"

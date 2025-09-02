@@ -14,11 +14,39 @@ namespace rocket {
         bool resizable = true;
         int msaa_samples = 0;
         rocket::vec2i_t gl_version = { 4, 3 }; // 4.3
+
+        /// --- Extras ---
+        bool undecorated = false;
+        bool hidden = false;
+        bool minimized = false;
+        bool maximized = false;
+        bool unfocused = false;
+        bool topmost = false;
+        /// @brief This requires very specific circumstances
+        bool transparent = false;
+        bool always_run = false;
+        bool hidpi = false;
+        bool interlacing = false;
     };
 
     enum class cursor_mode_t : int {
         normal = 0,
         hidden = 1
+    };
+
+    enum class platform_type_t {
+        unknown = 0,
+        windows,
+        linux_wayland,
+        linux_x11,
+        macos_cocoa,
+    };
+
+    struct platform_t {
+        std::string name = "UnknownWindowingAPI";
+        std::string rge_name = "UnknownWindowingAPI::UnknownPlatformType";
+        std::string os_name = "UnknownOperatingSystem";
+        platform_type_t type = platform_type_t::unknown;
     };
 
     class window_t {
@@ -33,6 +61,8 @@ namespace rocket {
 
         friend class renderer_2d;
         friend class renderer_3d;
+    private:
+        bool is_wayland();
     public:
         void set_size(const rocket::vec2i_t& size);
         void set_title(const std::string& title);
@@ -52,12 +82,10 @@ namespace rocket {
 
         rocket::vec2d_t get_cursor_position();
 
-        bool is_wayland();
-
         bool is_running() const;
     public:
-        /// @brief GLFW utility function
-        static void glfw_set_platform(const char *platform);
+        /// @brief Gets the current platform
+        platform_t get_platform();
     public:
         /// @brief creates a new window
         window_t(const rocket::vec2i_t& size = { 800, 600 }, 

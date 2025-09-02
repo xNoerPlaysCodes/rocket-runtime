@@ -161,14 +161,20 @@ namespace rgl {
         glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
         if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
             glEnable(GL_DEBUG_OUTPUT);
-            glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS); // so you see them immediately
+            glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+            glDebugMessageControl(
+                GL_DONT_CARE,  // source
+                GL_DONT_CARE,  // type
+                GL_DEBUG_SEVERITY_NOTIFICATION,  // severity to filter
+                0,             // count of ids to filter
+                nullptr,       // ids array
+                GL_FALSE       // GL_TRUE to enable, GL_FALSE to disable
+            );
             glDebugMessageCallback(
                 [](GLenum source, GLenum type, GLuint id, GLenum severity,
                    GLsizei length, const GLchar* message, const void* userParam) {
-                        rocket::log_error(message, -5, "OpenGL_Context_Verification", "fatal");
-                        std::exit(-1);
-                },
-                nullptr);
+                        rocket::log_error(message, -5, "OpenGL::ContextVerifier", "fatal-to-function");
+                }, nullptr);
         }
 
         static shader_program_t prg = get_paramaterized_quad({0.f, 0.f}, {1.f, 1.f}, rocket::rgba_color::red(), 0.f, 0.f);
@@ -204,7 +210,7 @@ namespace rgl {
                                     ? std::string("TRUE") : std::string("FALSE")) + "]",
 
             "- rGL Features:",
-            "   - OpenGL Context Verification: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
+            "   - OpenGL::ContextVerifier: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
             "   - Drawcall Tracking: " + bool_to_str(true),
 
             "- GL GPU-Specific Values:",

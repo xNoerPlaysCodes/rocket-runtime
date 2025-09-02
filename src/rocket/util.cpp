@@ -44,6 +44,7 @@ namespace util {
 #else
         return false;
 #endif
+        return false;
     }
 
     std::string fmtd_time_str() {
@@ -57,7 +58,7 @@ namespace util {
         #endif
 
         std::ostringstream oss;
-        oss << std::put_time(&local_tm, "%Y-%m-%d %H:%M:%S");
+        oss << std::put_time(&local_tm, "%H:%M:%S");
         return oss.str();
     }
 
@@ -73,18 +74,19 @@ namespace util {
             elevel = rocket::log_level_t::fatal;
         } else if (level == "fatal_to_function" || level == "fatal-to-function") {
             elevel = rocket::log_level_t::fatal_to_function;
+        } else {
+            return format_log(error, error_source, "", level);
         }
         if (elevel > log_level) {
             return "";
         }
-        std::stringstream sstream;
-        sstream << "---\n";
-        sstream << '[' << fmtd_time_str() << ']' << ' ' << "[" << level << "]" << " " << "(" << error_source << ") " << "(" << "ID = " << error_id << ")";
-        sstream << "\n";
-        sstream << error;
-        sstream << "\n";
-        sstream << "---\n";
-        return sstream.str();
+        std::stringstream ss;
+        ss << '[' << fmtd_time_str() << ']' << ' '
+            << "[" << log_level_to_str(elevel) << "]" << ' '
+            << '(' << error_source << ')' << ' '
+            << error
+            << '\n';
+        return ss.str();
     }
 
     std::string format_log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
@@ -99,14 +101,16 @@ namespace util {
             elvl = rocket::log_level_t::debug;
         } else if (level == "trace") {
             elvl = rocket::log_level_t::trace;
+        } else {
+            return format_error(log, -1, class_file_library_source + "::" + function_source, level);
         }
         if (elvl > log_level) {
             return "";
         }
         std::stringstream ss;
         ss << '[' << fmtd_time_str() << ']' << ' '
+            << "[" << log_level_to_str(elvl) << "]" << ' '
             << '(' << class_file_library_source << "::" << function_source << ')' << ' '
-            << "->" << ' '
             << log
             << '\n';
         return ss.str();
