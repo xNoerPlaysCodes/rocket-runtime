@@ -185,6 +185,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: \
  /usr/include/GLFW/glfw3.h \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/runtime.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/macros.hpp \
  /usr/include/glm/detail/qualifier.hpp /usr/include/glm/detail/setup.hpp \
  /usr/include/c++/15.1.1/cassert /usr/include/assert.h \
  /usr/include/glm/simd/platform.h \
@@ -394,6 +395,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: \
  /usr/include/c++/15.1.1/bits/out_ptr.h \
  /usr/include/c++/15.1.1/pstl/glue_memory_defs.h \
  /usr/include/c++/15.1.1/pstl/execution_defs.h \
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+ /usr/include/c++/15.1.1/utility \
+ /usr/include/c++/15.1.1/bits/stl_relops.h \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \

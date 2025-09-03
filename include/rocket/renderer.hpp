@@ -1,6 +1,7 @@
 #ifndef ROCKETGE__RENDERER_HPP
 #define ROCKETGE__RENDERER_HPP
 
+#include "macros.hpp"
 #include <array>
 #include <cstdint>
 #include <glm/detail/qualifier.hpp>
@@ -11,6 +12,7 @@
 #include <glm/geometric.hpp>
 #include "asset.hpp"
 #include "rgl.hpp"
+#include "rocket/runtime.hpp"
 #include "types.hpp"
 #include "window.hpp"
 #include "shader.hpp"

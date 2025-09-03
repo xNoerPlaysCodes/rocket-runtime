@@ -6,6 +6,7 @@
 #include "io.hpp"
 #include "types.hpp"
 #include "window.hpp"
+#include "shader.hpp"
 
 #define ROCKETGE__MINOR_VERSION  1
 #define ROCKETGE__MAJOR_VERSION  0
@@ -24,8 +25,10 @@
 #define ROCKETGE__FEATURE_SHADER_SUPPORT_VERT_FRAG
 // #define ROCKETGE__FEATURE_SHADER_SUPPORT_COMPUTE_SHADER
 
-#define ROCKETGE__NOT_IMPLEMENTED __attribute__((unavailable("Not Implemented")))
-#define ROCKETGE__DEPRECATED [[deprecated]]
+// #define ROCKETGE__NOT_IMPLEMENTED __attribute__((unavailable("Not Implemented")))
+#define ROCKETGE__NOT_IMPLEMENTED
+// #define ROCKETGE__DEPRECATED [[deprecated]]
+#define ROCKETGE__DEPRECATED
 
 namespace rocket {
     /// @brief Log Level

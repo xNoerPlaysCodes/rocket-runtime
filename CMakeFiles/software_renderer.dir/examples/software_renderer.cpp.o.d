@@ -2,6 +2,7 @@ CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/examples/software_renderer.cpp \
  /usr/include/stdc-predef.h \
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp \
  /usr/include/c++/15.1.1/array /usr/include/c++/15.1.1/compare \
  /usr/include/c++/15.1.1/bits/version.h \
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -389,16 +390,16 @@ CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o: \
  /usr/include/c++/15.1.1/pstl/execution_defs.h /usr/include/GLFW/glfw3.h \
  /usr/include/GL/gl.h /usr/include/GL/glext.h \
  /usr/include/KHR/khrplatform.h \
- /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
- /usr/include/c++/15.1.1/cstring /usr/include/string.h \
- /usr/include/strings.h /usr/include/c++/15.1.1/iostream \
+ /usr/include/c++/15.1.1/utility \
+ /usr/include/c++/15.1.1/bits/stl_relops.h \
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
- /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
- /usr/include/c++/15.1.1/utility \
- /usr/include/c++/15.1.1/bits/stl_relops.h
+ /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
+ /usr/include/c++/15.1.1/cstring /usr/include/string.h \
+ /usr/include/strings.h /usr/include/c++/15.1.1/iostream

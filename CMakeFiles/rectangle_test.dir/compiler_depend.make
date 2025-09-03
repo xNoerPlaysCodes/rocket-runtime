@@ -3,7 +3,12 @@
 
 CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o: tests/rectangle_test.cpp \
   include/rocket/asset.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/types.hpp \
+  src/include/rgl.hpp \
+  include/rocket/asset.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
@@ -216,6 +221,7 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o: tests/rectangle_test.c
   /usr/include/c++/15.1.1/bits/stl_multimap.h \
   /usr/include/c++/15.1.1/bits/stl_pair.h \
   /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15.1.1/bits/stl_relops.h \
   /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.1.1/bits/stl_tree.h \
   /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
@@ -310,6 +316,7 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o: tests/rectangle_test.c
   /usr/include/c++/15.1.1/type_traits \
   /usr/include/c++/15.1.1/typeinfo \
   /usr/include/c++/15.1.1/unordered_map \
+  /usr/include/c++/15.1.1/utility \
   /usr/include/c++/15.1.1/vector \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -771,8 +778,6 @@ bin/tests/rectangle_test: /usr/lib/Scrt1.o \
 
 /usr/include/ctype.h:
 
-/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
-
 /usr/include/sys/select.h:
 
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/os_defines.h:
@@ -885,6 +890,10 @@ bin/tests/rectangle_test: /usr/lib/Scrt1.o \
 
 /usr/include/c++/15.1.1/ext/atomicity.h:
 
+/usr/include/c++/15.1.1/ext/alloc_traits.h:
+
+/usr/include/c++/15.1.1/exception:
+
 /usr/include/glm/ext/matrix_clip_space.hpp:
 
 /usr/include/c++/15.1.1/backward/auto_ptr.h:
@@ -917,8 +926,6 @@ bin/libRocketRuntime.so:
 
 /usr/include/c++/15.1.1/bits/stl_algobase.h:
 
-/usr/include/c++/15.1.1/exception:
-
 /usr/include/bits/types/sigset_t.h:
 
 /usr/include/glm/ext/matrix_double3x4.hpp:
@@ -938,10 +945,6 @@ include/rocket/asset.hpp:
 /usr/include/c++/15.1.1/bits/uses_allocator_args.h:
 
 /usr/include/bits/types/__fpos64_t.h:
-
-/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/time_members.h:
-
-/usr/include/c++/15.1.1/bits/ostream_insert.h:
 
 /usr/include/glm/ext/scalar_constants.inl:
 
@@ -966,6 +969,10 @@ include/rocket/asset.hpp:
 /usr/include/bits/thread-shared-types.h:
 
 /usr/include/bits/struct_mutex.h:
+
+/usr/include/c++/15.1.1/ext/aligned_buffer.h:
+
+/usr/include/bits/stdlib-bsearch.h:
 
 /usr/include/glm/ext/matrix_float2x4.hpp:
 
@@ -1025,29 +1032,15 @@ include/rocket/asset.hpp:
 
 /usr/include/c++/15.1.1/bits/stl_function.h:
 
-/usr/include/c++/15.1.1/tr1/beta_function.tcc:
+/usr/include/glm/detail/type_mat2x4.inl:
 
-/usr/include/bits/types/__fpos_t.h:
+/usr/include/bits/posix_opt.h:
 
-/usr/include/asm/unistd_64.h:
+/usr/include/c++/15.1.1/bits/alloc_traits.h:
 
-CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o:
+/usr/include/bits/atomic_wide_counter.h:
 
-/usr/include/bits/long-double.h:
-
-/usr/include/bits/waitflags.h:
-
-/usr/include/bits/types/struct_sched_param.h:
-
-/usr/include/c++/15.1.1/bits/enable_special_members.h:
-
-/usr/include/glm/ext/vector_bool3_precision.hpp:
-
-/usr/include/c++/15.1.1/bits/string_view.tcc:
-
-/usr/include/bits/types/mbstate_t.h:
-
-/usr/include/bits/semaphore.h:
+/usr/include/c++/15.1.1/bits/localefwd.h:
 
 /usr/include/c++/15.1.1/format:
 
@@ -1070,10 +1063,6 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o:
 /usr/include/c++/15.1.1/bit:
 
 /usr/include/GL/glext.h:
-
-/usr/lib/libxcb.so.1:
-
-/usr/include/bits/endian.h:
 
 /usr/include/asm-generic/errno-base.h:
 
@@ -1111,72 +1100,6 @@ CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o:
 
 /usr/include/c++/15.1.1/bits/stl_bvector.h:
 
-/usr/include/glm/ext/vector_int3_sized.hpp:
-
-/usr/include/assert.h:
-
-/usr/include/stdio.h:
-
-/usr/include/bits/wordsize.h:
-
-/usr/include/c++/15.1.1/bits/allocator.h:
-
-/usr/include/bits/types/struct_timespec.h:
-
-/usr/include/asm-generic/posix_types.h:
-
-/usr/include/c++/15.1.1/cerrno:
-
-/usr/include/c++/15.1.1/clocale:
-
-include/rocket/io.hpp:
-
-/usr/include/glm/matrix.hpp:
-
-/usr/include/glm/ext/vector_bool3.hpp:
-
-include/rocket/stb_truetype.h:
-
-/usr/include/bits/types/timer_t.h:
-
-/usr/include/c++/15.1.1/tr1/gamma.tcc:
-
-/usr/include/bits/mathcalls-narrow.h:
-
-/usr/include/glm/ext/vector_double2.hpp:
-
-/usr/include/c++/15.1.1/bits/functional_hash.h:
-
-include/rocket/shader.hpp:
-
-/usr/include/c++/15.1.1/bits/node_handle.h:
-
-/usr/include/asm-generic/errno.h:
-
-/usr/include/bits/fp-logb.h:
-
-/usr/include/glm/detail/type_mat3x2.inl:
-
-/usr/include/c++/15.1.1/bits/atomic_timed_wait.h:
-
-/usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/glm/ext/matrix_float2x2_precision.hpp:
-
-include/rocket/window.hpp:
-
-/usr/include/asm/types.h:
-
-/usr/include/bits/types/cookie_io_functions_t.h:
-
-/usr/include/c++/15.1.1/charconv:
-
-/usr/include/glm/ext/vector_bool4_precision.hpp:
-
-/usr/include/alloca.h:
-
 /usr/include/linux/posix_types.h:
 
 /usr/include/bits/types/FILE.h:
@@ -1195,23 +1118,125 @@ include/rocket/window.hpp:
 
 /usr/include/bits/mathcalls-helper-functions.h:
 
-/usr/include/c++/15.1.1/bits/stl_iterator.h:
+/usr/include/bits/types/timer_t.h:
+
+/usr/include/c++/15.1.1/tr1/gamma.tcc:
+
+/usr/include/bits/mathcalls-narrow.h:
+
+/usr/include/glm/ext/vector_double2.hpp:
+
+/usr/include/c++/15.1.1/bits/functional_hash.h:
+
+/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
+
+include/rocket/macros.hpp:
+
+/usr/include/glm/ext/vector_uint3.hpp:
+
+/usr/include/c++/15.1.1/bits/atomic_base.h:
+
+/usr/include/bits/libc-header-start.h:
+
+include/rocket/shader.hpp:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/glm/ext/matrix_float2x2_precision.hpp:
+
+include/rocket/window.hpp:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/types/struct_sched_param.h:
+
+/usr/include/c++/15.1.1/bits/enable_special_members.h:
+
+/usr/include/glm/ext/vector_bool3_precision.hpp:
+
+/usr/include/c++/15.1.1/bits/string_view.tcc:
+
+/usr/include/c++/15.1.1/tr1/beta_function.tcc:
+
+/usr/include/bits/types/__fpos_t.h:
+
+/usr/include/asm/unistd_64.h:
+
+CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o:
+
+/usr/include/bits/long-double.h:
+
+/usr/lib/libxcb.so.1:
+
+/usr/include/bits/endian.h:
 
 /usr/include/c++/15.1.1/bits/locale_facets_nonio.h:
+
+/usr/include/c++/15.1.1/bits/stl_iterator.h:
+
+/usr/include/glm/matrix.hpp:
+
+/usr/include/glm/ext/vector_bool3.hpp:
+
+include/rocket/stb_truetype.h:
+
+/usr/include/stdio.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/c++/15.1.1/bits/allocator.h:
+
+/usr/include/bits/types/struct_timespec.h:
+
+/usr/include/asm-generic/posix_types.h:
+
+/usr/include/c++/15.1.1/cerrno:
+
+/usr/include/c++/15.1.1/clocale:
+
+include/rocket/io.hpp:
+
+/usr/include/glm/ext/vector_int3_sized.hpp:
+
+/usr/include/assert.h:
+
+/usr/include/asm/types.h:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
+
+/usr/include/c++/15.1.1/charconv:
+
+/usr/include/bits/semaphore.h:
+
+/usr/include/bits/types/mbstate_t.h:
+
+/usr/include/glm/ext/vector_bool4_precision.hpp:
+
+/usr/include/alloca.h:
+
+/usr/include/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/c++/15.1.1/backward/binders.h:
+
+/usr/include/AL/al.h:
+
+/usr/include/c++/15.1.1/bits/node_handle.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/bits/fp-logb.h:
+
+/usr/include/glm/detail/type_mat3x2.inl:
+
+/usr/include/c++/15.1.1/bits/atomic_timed_wait.h:
+
+/usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h:
+
+src/include/rgl.hpp:
 
 /usr/include/bits/stdint-intn.h:
 
 /usr/include/bits/types/clockid_t.h:
-
-/usr/include/c++/15.1.1/bits/alloc_traits.h:
-
-/usr/include/bits/atomic_wide_counter.h:
-
-/usr/include/glm/detail/type_mat2x4.inl:
-
-/usr/include/bits/posix_opt.h:
-
-/usr/include/c++/15.1.1/bits/localefwd.h:
 
 tests/rectangle_test.cpp:
 
@@ -1279,6 +1304,8 @@ include/rocket/types.hpp:
 
 /usr/include/c++/15.1.1/bits/locale_classes.h:
 
+/usr/include/c++/15.1.1/utility:
+
 /usr/include/asm/unistd.h:
 
 /usr/include/glm/ext/vector_int2.hpp:
@@ -1303,12 +1330,6 @@ include/rocket/renderer.hpp:
 
 /usr/include/bits/getopt_posix.h:
 
-/usr/include/glm/ext/vector_uint3.hpp:
-
-/usr/include/c++/15.1.1/bits/atomic_base.h:
-
-/usr/include/bits/libc-header-start.h:
-
 /usr/include/wctype.h:
 
 /usr/include/sched.h:
@@ -1323,12 +1344,6 @@ include/rocket/renderer.hpp:
 
 /usr/include/bits/posix1_lim.h:
 
-/usr/include/c++/15.1.1/backward/binders.h:
-
-/usr/include/AL/al.h:
-
-/usr/include/bits/pthread_stack_min-dynamic.h:
-
 /usr/include/glm/ext/vector_bool2.hpp:
 
 /usr/include/c++/15.1.1/bits/atomic_wait.h:
@@ -1336,6 +1351,12 @@ include/rocket/renderer.hpp:
 /usr/include/glm/ext/vector_uint2_sized.hpp:
 
 /usr/include/c++/15.1.1/bits/basic_ios.tcc:
+
+/usr/include/glm/detail/type_vec3.inl:
+
+/usr/include/c++/15.1.1/bits/hashtable_policy.h:
+
+/usr/include/c++/15.1.1/bits/hash_bytes.h:
 
 /usr/include/c++/15.1.1/bits/memory_resource.h:
 
@@ -1388,12 +1409,6 @@ include/rocket/renderer.hpp:
 /usr/include/c++/15.1.1/bits/exception_ptr.h:
 
 /usr/include/c++/15.1.1/bits/formatfwd.h:
-
-/usr/include/glm/detail/type_vec3.inl:
-
-/usr/include/c++/15.1.1/bits/hash_bytes.h:
-
-/usr/include/c++/15.1.1/bits/hashtable_policy.h:
 
 /usr/include/glm/ext/vector_uint3_sized.hpp:
 
@@ -1549,6 +1564,12 @@ include/rocket/runtime.hpp:
 
 /usr/include/c++/15.1.1/bits/stl_multimap.h:
 
+/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/time_members.h:
+
+/usr/include/c++/15.1.1/bits/ostream_insert.h:
+
+/usr/include/c++/15.1.1/bits/stl_relops.h:
+
 /usr/include/c++/15.1.1/bits/shared_ptr_atomic.h:
 
 /usr/include/c++/15.1.1/bits/stl_tempbuf.h:
@@ -1596,9 +1617,3 @@ include/rocket/runtime.hpp:
 /usr/include/c++/15.1.1/cstddef:
 
 /usr/include/c++/15.1.1/cstdio:
-
-/usr/include/bits/stdlib-bsearch.h:
-
-/usr/include/c++/15.1.1/ext/aligned_buffer.h:
-
-/usr/include/c++/15.1.1/ext/alloc_traits.h:

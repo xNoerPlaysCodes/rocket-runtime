@@ -4,7 +4,11 @@
 CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/astro/astroui.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
@@ -12,6 +16,7 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
  /home/noerlol/C-Projects/RocketGE/include/astro/astroui.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
  /usr/include/AL/al.h
  /usr/include/GL/gl.h
  /usr/include/GL/glext.h
@@ -216,6 +221,7 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o
  /usr/include/c++/15.1.1/bits/stl_multimap.h
  /usr/include/c++/15.1.1/bits/stl_pair.h
  /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h
+ /usr/include/c++/15.1.1/bits/stl_relops.h
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h
  /usr/include/c++/15.1.1/bits/stl_tree.h
  /usr/include/c++/15.1.1/bits/stl_uninitialized.h
@@ -309,6 +315,7 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o
  /usr/include/c++/15.1.1/type_traits
  /usr/include/c++/15.1.1/typeinfo
  /usr/include/c++/15.1.1/unordered_map
+ /usr/include/c++/15.1.1/utility
  /usr/include/c++/15.1.1/vector
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h
@@ -747,7 +754,12 @@ CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/asset.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
@@ -965,6 +977,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o
  /usr/include/c++/15.1.1/bits/stl_multimap.h
  /usr/include/c++/15.1.1/bits/stl_pair.h
  /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h
+ /usr/include/c++/15.1.1/bits/stl_relops.h
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h
  /usr/include/c++/15.1.1/bits/stl_tree.h
  /usr/include/c++/15.1.1/bits/stl_uninitialized.h
@@ -1062,6 +1075,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o
  /usr/include/c++/15.1.1/type_traits
  /usr/include/c++/15.1.1/typeinfo
  /usr/include/c++/15.1.1/unordered_map
+ /usr/include/c++/15.1.1/utility
  /usr/include/c++/15.1.1/vector
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h
@@ -1265,6 +1279,15 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/font.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h
@@ -1474,6 +1497,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o
  /usr/include/c++/15.1.1/bits/stl_multimap.h
  /usr/include/c++/15.1.1/bits/stl_pair.h
  /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h
+ /usr/include/c++/15.1.1/bits/stl_relops.h
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h
  /usr/include/c++/15.1.1/bits/stl_tree.h
  /usr/include/c++/15.1.1/bits/stl_uninitialized.h
@@ -1567,6 +1591,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o
  /usr/include/c++/15.1.1/type_traits
  /usr/include/c++/15.1.1/typeinfo
  /usr/include/c++/15.1.1/unordered_map
+ /usr/include/c++/15.1.1/utility
  /usr/include/c++/15.1.1/vector
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h
@@ -1764,7 +1789,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/io.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
@@ -1976,6 +2006,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o
  /usr/include/c++/15.1.1/bits/stl_multimap.h
  /usr/include/c++/15.1.1/bits/stl_pair.h
  /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h
+ /usr/include/c++/15.1.1/bits/stl_relops.h
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h
  /usr/include/c++/15.1.1/bits/stl_tree.h
  /usr/include/c++/15.1.1/bits/stl_uninitialized.h
@@ -2069,6 +2100,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o
  /usr/include/c++/15.1.1/type_traits
  /usr/include/c++/15.1.1/typeinfo
  /usr/include/c++/15.1.1/unordered_map
+ /usr/include/c++/15.1.1/utility
  /usr/include/c++/15.1.1/vector
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h
@@ -2266,10 +2298,17 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/renderer.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
@@ -2828,6 +2867,15 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
@@ -3036,6 +3084,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o
  /usr/include/c++/15.1.1/bits/stl_multimap.h
  /usr/include/c++/15.1.1/bits/stl_pair.h
  /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h
+ /usr/include/c++/15.1.1/bits/stl_relops.h
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h
  /usr/include/c++/15.1.1/bits/stl_tree.h
  /usr/include/c++/15.1.1/bits/stl_uninitialized.h
@@ -3132,6 +3181,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o
  /usr/include/c++/15.1.1/type_traits
  /usr/include/c++/15.1.1/typeinfo
  /usr/include/c++/15.1.1/unordered_map
+ /usr/include/c++/15.1.1/utility
  /usr/include/c++/15.1.1/vector
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h
@@ -3375,10 +3425,13 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/rgl.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
@@ -3921,7 +3974,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/runtime.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
@@ -4133,6 +4191,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o
  /usr/include/c++/15.1.1/bits/stl_multimap.h
  /usr/include/c++/15.1.1/bits/stl_pair.h
  /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h
+ /usr/include/c++/15.1.1/bits/stl_relops.h
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h
  /usr/include/c++/15.1.1/bits/stl_tree.h
  /usr/include/c++/15.1.1/bits/stl_uninitialized.h
@@ -4227,6 +4286,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o
  /usr/include/c++/15.1.1/type_traits
  /usr/include/c++/15.1.1/typeinfo
  /usr/include/c++/15.1.1/unordered_map
+ /usr/include/c++/15.1.1/utility
  /usr/include/c++/15.1.1/vector
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h
@@ -4424,7 +4484,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/shader.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
@@ -4637,6 +4702,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o
  /usr/include/c++/15.1.1/bits/stl_multimap.h
  /usr/include/c++/15.1.1/bits/stl_pair.h
  /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h
+ /usr/include/c++/15.1.1/bits/stl_relops.h
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h
  /usr/include/c++/15.1.1/bits/stl_tree.h
  /usr/include/c++/15.1.1/bits/stl_uninitialized.h
@@ -4732,6 +4798,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o
  /usr/include/c++/15.1.1/type_traits
  /usr/include/c++/15.1.1/typeinfo
  /usr/include/c++/15.1.1/unordered_map
+ /usr/include/c++/15.1.1/utility
  /usr/include/c++/15.1.1/vector
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/basic_file.h
@@ -5425,7 +5492,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/util.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
@@ -5943,12 +6015,14 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/window.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
@@ -6158,6 +6232,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o
  /usr/include/c++/15.1.1/bits/stl_multimap.h
  /usr/include/c++/15.1.1/bits/stl_pair.h
  /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h
+ /usr/include/c++/15.1.1/bits/stl_relops.h
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h
  /usr/include/c++/15.1.1/bits/stl_tree.h
  /usr/include/c++/15.1.1/bits/stl_uninitialized.h
@@ -6252,6 +6327,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o
  /usr/include/c++/15.1.1/type_traits
  /usr/include/c++/15.1.1/typeinfo
  /usr/include/c++/15.1.1/unordered_map
+ /usr/include/c++/15.1.1/utility
  /usr/include/c++/15.1.1/vector
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h

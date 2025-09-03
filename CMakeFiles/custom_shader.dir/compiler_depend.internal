@@ -5,12 +5,14 @@ CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o
  /home/noerlol/C-Projects/RocketGE/examples/custom_shader.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
  /usr/include/AL/al.h
  /usr/include/GL/gl.h
  /usr/include/GL/glext.h
@@ -217,6 +219,7 @@ CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o
  /usr/include/c++/15.1.1/bits/stl_multimap.h
  /usr/include/c++/15.1.1/bits/stl_pair.h
  /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h
+ /usr/include/c++/15.1.1/bits/stl_relops.h
  /usr/include/c++/15.1.1/bits/stl_tempbuf.h
  /usr/include/c++/15.1.1/bits/stl_tree.h
  /usr/include/c++/15.1.1/bits/stl_uninitialized.h
@@ -310,6 +313,7 @@ CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o
  /usr/include/c++/15.1.1/type_traits
  /usr/include/c++/15.1.1/typeinfo
  /usr/include/c++/15.1.1/unordered_map
+ /usr/include/c++/15.1.1/utility
  /usr/include/c++/15.1.1/vector
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h
  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h

@@ -3,7 +3,11 @@
 
 CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: src/astro/astroui.cpp \
   include/rocket/asset.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/types.hpp \
+  include/rocket/asset.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
@@ -11,6 +15,7 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: src/astro/astroui.cpp \
   include/rocket/types.hpp \
   include/rocket/window.hpp \
   include/astro/astroui.hpp \
+  src/include/rgl.hpp \
   /usr/include/AL/al.h \
   /usr/include/GL/gl.h \
   /usr/include/GL/glext.h \
@@ -215,6 +220,7 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: src/astro/astroui.cpp \
   /usr/include/c++/15.1.1/bits/stl_multimap.h \
   /usr/include/c++/15.1.1/bits/stl_pair.h \
   /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15.1.1/bits/stl_relops.h \
   /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.1.1/bits/stl_tree.h \
   /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
@@ -308,6 +314,7 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: src/astro/astroui.cpp \
   /usr/include/c++/15.1.1/type_traits \
   /usr/include/c++/15.1.1/typeinfo \
   /usr/include/c++/15.1.1/unordered_map \
+  /usr/include/c++/15.1.1/utility \
   /usr/include/c++/15.1.1/vector \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -744,7 +751,12 @@ CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o: src/quark/physics.cpp \
 
 CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: src/rocket/asset.cpp \
   include/rocket/asset.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/types.hpp \
+  src/include/rgl.hpp \
+  include/rocket/asset.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
@@ -962,6 +974,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: src/rocket/asset.cpp \
   /usr/include/c++/15.1.1/bits/stl_multimap.h \
   /usr/include/c++/15.1.1/bits/stl_pair.h \
   /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15.1.1/bits/stl_relops.h \
   /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.1.1/bits/stl_tree.h \
   /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
@@ -1059,6 +1072,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: src/rocket/asset.cpp \
   /usr/include/c++/15.1.1/type_traits \
   /usr/include/c++/15.1.1/typeinfo \
   /usr/include/c++/15.1.1/unordered_map \
+  /usr/include/c++/15.1.1/utility \
   /usr/include/c++/15.1.1/vector \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -1261,6 +1275,15 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: src/rocket/asset.cpp \
 
 CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: src/rocket/font.cpp \
   include/rocket/asset.hpp \
+  include/rocket/io.hpp \
+  include/rocket/renderer.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/shader.hpp \
+  include/rocket/types.hpp \
+  include/rocket/window.hpp \
+  src/include/rgl.hpp \
+  include/rocket/asset.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/shader.hpp \
   include/rocket/stb_truetype.h \
@@ -1470,6 +1493,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: src/rocket/font.cpp \
   /usr/include/c++/15.1.1/bits/stl_multimap.h \
   /usr/include/c++/15.1.1/bits/stl_pair.h \
   /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15.1.1/bits/stl_relops.h \
   /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.1.1/bits/stl_tree.h \
   /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
@@ -1563,6 +1587,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: src/rocket/font.cpp \
   /usr/include/c++/15.1.1/type_traits \
   /usr/include/c++/15.1.1/typeinfo \
   /usr/include/c++/15.1.1/unordered_map \
+  /usr/include/c++/15.1.1/utility \
   /usr/include/c++/15.1.1/vector \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -1759,7 +1784,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: src/rocket/font.cpp \
 
 CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: src/rocket/io.cpp \
   include/rocket/asset.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/types.hpp \
+  src/include/rgl.hpp \
+  include/rocket/asset.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
@@ -1971,6 +2001,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: src/rocket/io.cpp \
   /usr/include/c++/15.1.1/bits/stl_multimap.h \
   /usr/include/c++/15.1.1/bits/stl_pair.h \
   /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15.1.1/bits/stl_relops.h \
   /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.1.1/bits/stl_tree.h \
   /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
@@ -2064,6 +2095,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: src/rocket/io.cpp \
   /usr/include/c++/15.1.1/type_traits \
   /usr/include/c++/15.1.1/typeinfo \
   /usr/include/c++/15.1.1/unordered_map \
+  /usr/include/c++/15.1.1/utility \
   /usr/include/c++/15.1.1/vector \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -2260,10 +2292,17 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: src/rocket/io.cpp \
 
 CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: src/rocket/renderer.cpp \
   include/rocket/asset.hpp \
+  include/rocket/io.hpp \
+  include/rocket/renderer.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/shader.hpp \
   include/rocket/stb_truetype.h \
   include/rocket/types.hpp \
+  include/rocket/window.hpp \
+  src/include/rgl.hpp \
   include/rocket/asset.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
@@ -2821,6 +2860,15 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o: src/rocket/renderer3d.
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
+  include/rocket/types.hpp \
+  include/rocket/window.hpp \
+  src/include/rgl.hpp \
+  include/rocket/asset.hpp \
+  include/rocket/io.hpp \
+  include/rocket/macros.hpp \
+  include/rocket/renderer.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/shader.hpp \
   include/rocket/stb_truetype.h \
   include/rocket/types.hpp \
   include/rocket/window.hpp \
@@ -3029,6 +3077,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o: src/rocket/renderer3d.
   /usr/include/c++/15.1.1/bits/stl_multimap.h \
   /usr/include/c++/15.1.1/bits/stl_pair.h \
   /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15.1.1/bits/stl_relops.h \
   /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.1.1/bits/stl_tree.h \
   /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
@@ -3125,6 +3174,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o: src/rocket/renderer3d.
   /usr/include/c++/15.1.1/type_traits \
   /usr/include/c++/15.1.1/typeinfo \
   /usr/include/c++/15.1.1/unordered_map \
+  /usr/include/c++/15.1.1/utility \
   /usr/include/c++/15.1.1/vector \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -3367,10 +3417,13 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o: src/rocket/renderer3d.
 
 CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: src/rocket/rgl.cpp \
   include/rocket/asset.hpp \
+  include/rocket/runtime.hpp \
   include/rocket/stb_truetype.h \
   include/rocket/types.hpp \
+  src/include/rgl.hpp \
   include/rocket/asset.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
@@ -3912,7 +3965,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: src/rocket/rgl.cpp \
 
 CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o: src/rocket/runtime.cpp \
   include/rocket/asset.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/types.hpp \
+  src/include/rgl.hpp \
+  include/rocket/asset.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
@@ -4124,6 +4182,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o: src/rocket/runtime.cpp \
   /usr/include/c++/15.1.1/bits/stl_multimap.h \
   /usr/include/c++/15.1.1/bits/stl_pair.h \
   /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15.1.1/bits/stl_relops.h \
   /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.1.1/bits/stl_tree.h \
   /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
@@ -4218,6 +4277,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o: src/rocket/runtime.cpp \
   /usr/include/c++/15.1.1/type_traits \
   /usr/include/c++/15.1.1/typeinfo \
   /usr/include/c++/15.1.1/unordered_map \
+  /usr/include/c++/15.1.1/utility \
   /usr/include/c++/15.1.1/vector \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -4414,7 +4474,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o: src/rocket/runtime.cpp \
 
 CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: src/rocket/shader.cpp \
   include/rocket/asset.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/types.hpp \
+  src/include/rgl.hpp \
+  include/rocket/asset.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
@@ -4627,6 +4692,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: src/rocket/shader.cpp \
   /usr/include/c++/15.1.1/bits/stl_multimap.h \
   /usr/include/c++/15.1.1/bits/stl_pair.h \
   /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15.1.1/bits/stl_relops.h \
   /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.1.1/bits/stl_tree.h \
   /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
@@ -4722,6 +4788,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: src/rocket/shader.cpp \
   /usr/include/c++/15.1.1/type_traits \
   /usr/include/c++/15.1.1/typeinfo \
   /usr/include/c++/15.1.1/unordered_map \
+  /usr/include/c++/15.1.1/utility \
   /usr/include/c++/15.1.1/vector \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/basic_file.h \
@@ -5412,7 +5479,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o: src/rocket/types.cpp \
 
 CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o: src/rocket/util.cpp \
   include/rocket/asset.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/types.hpp \
+  src/include/rgl.hpp \
+  include/rocket/asset.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
@@ -5929,12 +6001,14 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o: src/rocket/util.cpp \
 CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: src/rocket/window.cpp \
   include/rocket/asset.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
   include/rocket/stb_truetype.h \
   include/rocket/types.hpp \
   include/rocket/window.hpp \
+  src/include/rgl.hpp \
   include/rocket/io.hpp \
   include/rocket/runtime.hpp \
   include/rocket/types.hpp \
@@ -6144,6 +6218,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: src/rocket/window.cpp \
   /usr/include/c++/15.1.1/bits/stl_multimap.h \
   /usr/include/c++/15.1.1/bits/stl_pair.h \
   /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15.1.1/bits/stl_relops.h \
   /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.1.1/bits/stl_tree.h \
   /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
@@ -6238,6 +6313,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: src/rocket/window.cpp \
   /usr/include/c++/15.1.1/type_traits \
   /usr/include/c++/15.1.1/typeinfo \
   /usr/include/c++/15.1.1/unordered_map \
+  /usr/include/c++/15.1.1/utility \
   /usr/include/c++/15.1.1/vector \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -6562,9 +6638,7 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o:
 
 /usr/include/glm/ext/quaternion_double.hpp:
 
-/usr/include/c++/15.1.1/ext/alloc_traits.h:
-
-/usr/include/c++/15.1.1/ext/aligned_buffer.h:
+/usr/include/glm/ext/quaternion_common.inl:
 
 /usr/include/c++/15.1.1/cstdio:
 
@@ -6595,6 +6669,10 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o:
 /usr/include/asm-generic/bitsperlong.h:
 
 /usr/include/GL/gl.h:
+
+/usr/include/c++/15.1.1/bits/stl_relops.h:
+
+/usr/include/c++/15.1.1/bits/ostream_insert.h:
 
 /usr/include/c++/15.1.1/debug/assertions.h:
 
@@ -6706,10 +6784,6 @@ include/rocket/runtime.hpp:
 
 /usr/include/c++/15.1.1/bits/ios_base.h:
 
-/usr/include/c++/15.1.1/bits/hashtable_policy.h:
-
-/usr/include/glm/detail/type_vec3.inl:
-
 /usr/include/c++/15.1.1/bits/formatfwd.h:
 
 /usr/include/c++/15.1.1/bits/exception_ptr.h:
@@ -6748,11 +6822,17 @@ include/rocket/runtime.hpp:
 
 /usr/include/c++/15.1.1/bits/memory_resource.h:
 
+/usr/include/c++/15.1.1/bits/hashtable_policy.h:
+
+/usr/include/glm/detail/type_vec3.inl:
+
 /usr/include/c++/15.1.1/bits/basic_ios.tcc:
 
 src/quark/physics.cpp:
 
 /usr/include/glm/ext/vector_bool2.hpp:
+
+/usr/include/c++/15.1.1/bits/atomic_lockfree_defines.h:
 
 /usr/include/bits/posix1_lim.h:
 
@@ -6778,9 +6858,9 @@ include/astro/astroui.hpp:
 
 /usr/include/bits/mathcalls-narrow.h:
 
-/usr/include/c++/15.1.1/bits/atomic_base.h:
+/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/time_members.h:
 
-/usr/include/glm/ext/vector_uint3.hpp:
+/usr/include/bits/getopt_posix.h:
 
 /usr/include/errno.h:
 
@@ -6815,10 +6895,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o:
 src/rocket/io.cpp:
 
 /usr/include/bits/endianness.h:
-
-/usr/include/bits/libc-header-start.h:
-
-include/rocket/types.hpp:
 
 /usr/include/libintl.h:
 
@@ -6870,55 +6946,47 @@ src/rocket/types.cpp:
 
 /usr/include/linux/errno.h:
 
-/usr/include/c++/15.1.1/bits/localefwd.h:
-
-/usr/include/bits/posix_opt.h:
-
-/usr/include/glm/detail/type_mat2x4.inl:
-
-/usr/include/bits/atomic_wide_counter.h:
-
-/usr/include/glm/gtc/type_ptr.hpp:
-
-/usr/include/c++/15.1.1/bits/alloc_traits.h:
-
 /usr/include/bits/types/clockid_t.h:
+
+/usr/include/c++/15.1.1/bits/stl_iterator.h:
+
+/usr/include/glm/gtc/matrix_transform.inl:
+
+/usr/include/c++/15.1.1/bits/locale_facets_nonio.h:
+
+/usr/include/c++/15.1.1/bits/ranges_cmp.h:
+
+/usr/include/c++/15.1.1/bits/erase_if.h:
+
+/usr/include/asm/unistd_64.h:
+
+/usr/include/bits/types/__fpos_t.h:
+
+/usr/include/c++/15.1.1/tr1/beta_function.tcc:
+
+/usr/include/c++/15.1.1/bits/string_view.tcc:
+
+/usr/include/glm/ext/vector_bool3_precision.hpp:
+
+/usr/include/c++/15.1.1/bits/enable_special_members.h:
+
+/usr/include/bits/types/struct_sched_param.h:
 
 /usr/include/c++/15.1.1/bits/postypes.h:
 
 /usr/include/bits/types/timer_t.h:
 
-/usr/include/glm/ext/vector_bool4_precision.hpp:
+include/rocket/types.hpp:
 
-/usr/include/bits/types/mbstate_t.h:
+/usr/include/bits/libc-header-start.h:
 
-/usr/include/bits/semaphore.h:
+/usr/include/c++/15.1.1/bits/atomic_base.h:
 
-/usr/include/c++/15.1.1/charconv:
+/usr/include/glm/ext/vector_uint3.hpp:
 
-/usr/include/bits/types/cookie_io_functions_t.h:
+include/rocket/macros.hpp:
 
-/usr/include/c++/15.1.1/bits/uses_allocator.h:
-
-/usr/include/bits/environments.h:
-
-/usr/include/glm/ext/quaternion_geometric.hpp:
-
-/usr/include/glm/ext/matrix_float2x2_precision.hpp:
-
-/usr/include/c++/15.1.1/bits/nested_exception.h:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/c++/15.1.1/bits/requires_hosted.h:
-
-/usr/include/c++/15.1.1/bits/locale_conv.h:
-
-/usr/include/AL/al.h:
-
-/usr/include/c++/15.1.1/backward/binders.h:
-
-/usr/include/bits/pthread_stack_min-dynamic.h:
+/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
 
 /usr/include/glm/ext/quaternion_trigonometric.inl:
 
@@ -6946,7 +7014,31 @@ include/rocket/io.hpp:
 
 /usr/include/stdio.h:
 
+/usr/include/glm/ext/matrix_projection.inl:
+
+/usr/include/c++/15.1.1/bits/atomic_timed_wait.h:
+
+/usr/include/glm/detail/type_mat3x2.inl:
+
+/usr/include/c++/15.1.1/bits/node_handle.h:
+
+/usr/include/glm/ext/quaternion_geometric.hpp:
+
+/usr/include/glm/ext/matrix_float2x2_precision.hpp:
+
+/usr/include/c++/15.1.1/bits/nested_exception.h:
+
+/usr/include/stdc-predef.h:
+
 include/rocket/shader.hpp:
+
+/usr/include/c++/15.1.1/bits/uses_allocator.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h:
+
+/usr/include/bits/types/struct_FILE.h:
 
 /usr/lib/libc.so.6:
 
@@ -6968,11 +7060,25 @@ CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o:
 
 src/astro/astroui.cpp:
 
-/usr/include/glm/gtc/matrix_transform.inl:
+/usr/include/c++/15.1.1/bits/requires_hosted.h:
 
-/usr/include/c++/15.1.1/bits/locale_facets_nonio.h:
+/usr/include/c++/15.1.1/bits/locale_conv.h:
 
-/usr/include/c++/15.1.1/bits/stl_iterator.h:
+/usr/include/AL/al.h:
+
+/usr/include/c++/15.1.1/backward/binders.h:
+
+/usr/include/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/glm/ext/vector_bool4_precision.hpp:
+
+/usr/include/bits/types/mbstate_t.h:
+
+/usr/include/bits/semaphore.h:
+
+/usr/include/c++/15.1.1/charconv:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
 
 /usr/include/bits/mathcalls-helper-functions.h:
 
@@ -7010,6 +7116,10 @@ src/astro/astroui.cpp:
 
 /usr/include/c++/15.1.1/bits/charconv.h:
 
+/usr/include/c++/15.1.1/istream:
+
+/usr/include/c++/15.1.1/bits/align.h:
+
 /usr/include/bits/types/__sigset_t.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/limits.h:
@@ -7028,37 +7138,23 @@ src/astro/astroui.cpp:
 
 /usr/include/c++/15.1.1/thread:
 
-/usr/include/c++/15.1.1/bits/atomic_lockfree_defines.h:
-
-/usr/include/c++/15.1.1/bits/align.h:
-
-/usr/include/c++/15.1.1/istream:
-
 /usr/include/bits/mathcalls-macros.h:
 
 /usr/include/c++/15.1.1/format:
 
-/usr/include/c++/15.1.1/bits/string_view.tcc:
+/usr/include/c++/15.1.1/bits/localefwd.h:
 
-/usr/include/glm/ext/vector_bool3_precision.hpp:
+/usr/include/bits/atomic_wide_counter.h:
 
-/usr/include/c++/15.1.1/bits/enable_special_members.h:
+/usr/include/glm/gtc/type_ptr.hpp:
 
-/usr/include/bits/types/struct_sched_param.h:
+/usr/include/c++/15.1.1/bits/alloc_traits.h:
 
-/usr/include/c++/15.1.1/bits/ranges_cmp.h:
+/usr/include/bits/posix_opt.h:
 
-/usr/include/c++/15.1.1/bits/erase_if.h:
-
-/usr/include/asm/unistd_64.h:
-
-/usr/include/bits/types/__fpos_t.h:
-
-/usr/include/c++/15.1.1/tr1/beta_function.tcc:
+/usr/include/glm/detail/type_mat2x4.inl:
 
 /usr/include/c++/15.1.1/bits/stl_function.h:
-
-/usr/include/c++/15.1.1/ext/atomicity.h:
 
 /usr/include/bits/pthreadtypes.h:
 
@@ -7108,8 +7204,6 @@ src/astro/astroui.cpp:
 
 /usr/include/bits/struct_mutex.h:
 
-/usr/include/c++/15.1.1/bits/node_handle.h:
-
 /usr/include/bits/thread-shared-types.h:
 
 /usr/include/c++/15.1.1/bits/memoryfwd.h:
@@ -7131,14 +7225,6 @@ src/astro/astroui.cpp:
 /usr/include/glm/ext/vector_uint3_sized.hpp:
 
 /usr/include/glm/ext/scalar_constants.inl:
-
-/usr/include/c++/15.1.1/bits/ostream_insert.h:
-
-/usr/include/bits/getopt_posix.h:
-
-/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/time_members.h:
-
-/usr/include/c++/15.1.1/bits/stl_relops.h:
 
 /usr/include/bits/types/__fpos64_t.h:
 
@@ -7198,15 +7284,11 @@ src/astro/astroui.cpp:
 
 /usr/include/glm/ext/matrix_clip_space.hpp:
 
-/usr/include/bits/types/struct_FILE.h:
+/usr/include/c++/15.1.1/ext/aligned_buffer.h:
 
-/usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h:
+/usr/include/c++/15.1.1/ext/alloc_traits.h:
 
-/usr/include/glm/ext/matrix_projection.inl:
-
-/usr/include/c++/15.1.1/bits/atomic_timed_wait.h:
-
-/usr/include/glm/detail/type_mat3x2.inl:
+/usr/include/c++/15.1.1/ext/atomicity.h:
 
 /usr/include/c++/15.1.1/ext/concurrence.h:
 
@@ -7286,9 +7368,9 @@ include/rocket/renderer.hpp:
 
 /usr/include/glm/detail/type_half.hpp:
 
-include/rocket/window.hpp:
-
 /usr/include/bits/long-double.h:
+
+include/rocket/window.hpp:
 
 /usr/include/c++/15.1.1/stdexcept:
 
@@ -7367,8 +7449,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o:
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/os_defines.h:
 
 /usr/include/sys/select.h:
-
-/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
 
 /usr/include/c++/15.1.1/bits/cxxabi_init_exception.h:
 
@@ -7491,8 +7571,6 @@ src/rocket/renderer3d.cpp:
 /usr/include/glm/ext/matrix_double4x2_precision.hpp:
 
 /usr/include/glm/ext/matrix_double4x4_precision.hpp:
-
-/usr/include/glm/ext/quaternion_common.inl:
 
 /usr/include/glm/ext/matrix_float2x2.hpp:
 
@@ -7666,6 +7744,12 @@ include/quark/physics.hpp:
 
 /usr/include/pthread.h:
 
+/usr/include/glm/ext/vector_uint1_sized.hpp:
+
+src/include/rgl.hpp:
+
+/usr/include/stdlib.h:
+
 /usr/include/glm/detail/func_integer.inl:
 
 /usr/include/sys/types.h:
@@ -7711,12 +7795,6 @@ src/include/stb_vorbis.h:
 src/rocket/font.cpp:
 
 src/rocket/renderer.cpp:
-
-/usr/include/glm/ext/vector_uint1_sized.hpp:
-
-/usr/include/stdlib.h:
-
-src/include/rgl.hpp:
 
 /usr/include/GL/glu.h:
 
