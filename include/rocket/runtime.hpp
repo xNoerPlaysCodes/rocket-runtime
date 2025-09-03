@@ -10,13 +10,17 @@
 
 #define ROCKETGE__MINOR_VERSION  1
 #define ROCKETGE__MAJOR_VERSION  0
-#define ROCKETGE__BUILD          "open-dev"
+#define ROCKETGE__BUILD          "early-alpha"
 #define ROCKETGE__VERSION        #ROCKETGE_MAJOR_VERSION "." #ROCKETGE_MINOR_VERSION "-" ROCKETGE_BUILD
 
 #define ROCKETGE__FEATURE_MAX_GL_VERSION_MAJOR 4
 #define ROCKETGE__FEATURE_MAX_GL_VERSION_MINOR 6
 
-#define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 3
+
+/// @brief Be careful with versions less than 3.0
+///     They don't really support GLSL Shaders and
+///     most functionality will be broken...
+#define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 1
 #define ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR 0
 
 #define ROCKETGE__FEATURE_GL_LOADER "GLEW"
