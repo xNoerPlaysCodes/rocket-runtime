@@ -51,12 +51,18 @@ namespace rocket {
             last_key = 348
         };
 
+        /// @brief Keystate
         struct keystate_t {
+            /// @modify Do not modify
             bool current = false;
+            /// @modify Do not modify
             bool previous = false;
 
+            /// @brief Checks if the key is pressed
             bool pressed()  const;
+            /// @brief Checks if the key is released
             bool released() const;
+            /// @brief Checks if the key is down
             bool down()     const;
         };
 
@@ -74,23 +80,35 @@ namespace rocket {
             rocket::vec2<double> pos;
         };
 
+        /// @brief Add a key event listener
         void add_listener(std::function<void(key_event_t)>);
+        /// @brief Add a mouse event listener
         void add_listener(std::function<void(mouse_event_t)>);
+        /// @brief Add a mouse move event listener
         void add_listener(std::function<void(mouse_move_event_t)>);
 
         // IMMD IO
 
+        /// @brief Checks if a key is down
         bool key_down(keyboard_key key);
+        /// @brief Checks if a key is pressed
         bool key_pressed(keyboard_key key);
+        /// @brief Checks if a key is released
         bool key_released(keyboard_key key);
 
+        /// @brief Get mouse position
         rocket::vec2d_t mouse_pos();
+        /// @brief Get mouse position... in float
         rocket::vec2f_t mouse_pos_f();
 
+        /// @brief Checks if a mouse button is down
         bool mouse_down(mouse_button button);
+        /// @brief Checks if a mouse button is pressed
         bool mouse_pressed(mouse_button button);
+        /// @brief Checks if a mouse button is released
         bool mouse_released(mouse_button button);
 
+        /// @brief Get char typed (formatted)
         char get_formatted_char_typed();
     }
 }

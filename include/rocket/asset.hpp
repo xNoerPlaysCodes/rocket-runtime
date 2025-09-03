@@ -16,17 +16,24 @@
 #include <GLFW/glfw3.h>
 
 namespace rocket {
+    /// @brief Maps to OpenGL::Texture2D
     class texture_t {
     private:
         std::vector<uint8_t> data;
         int channels;
     public:
+        /// @brief OpenGL Texture ID
+        /// @modify Do not modify
         GLuint glid = 0;
         friend class asset_manager_t;
         friend class renderer_2d;
         friend class renderer_3d;
     public:
+        /// @brief Texture Size
+        /// @modify Do not modify
         vec2i_t size;
+        /// @brief AssetID
+        /// @modify Do not modify
         assetid_t id;
     public:
         texture_t();
@@ -38,7 +45,6 @@ namespace rocket {
 
     class audio_t {
     private:
-        assetid_t id;
         std::shared_ptr<audio_context_t> context;
         ALuint *buffer = nullptr;
         ALuint source = 0;
@@ -48,17 +54,28 @@ namespace rocket {
 
         bool playing = false;
         std::thread finish_thread;
+    public:
+        /// @brief AssetID
+        assetid_t id;
     private:
+        /// @brief Set Audio Context
+        /// @note Usually don't need to do this as
+        /// @note asset manager does it
         void set_context(std::shared_ptr<audio_context_t> context);
     public:
-        /// @brief play an audio (async)
-        /// @note vol is between 0, 100
+        /// @brief Play an audio (async)
+        /// @param vol Volume 0-100 [+100 is allowed]
+        /// @param loop Loop audio
+        /// @param on_finish Callback when audio finishes
         void play(float vol = 30.f, bool loop = false, std::function<void(audio_t *)> on_finish = nullptr);
 
-        /// @brief if playing seeks to time
+        /// @brief If audio is already playing,
+        /// @brief seeks the audio to the given time
+        /// @brief since beginning
         void seek(std::chrono::milliseconds time);
 
-        /// @brief get time it has played till
+        /// @brief Get time audio has played since beginning
+        /// @note It is not cumulative of loops
         std::chrono::milliseconds get_time();
     public:
         audio_t();
@@ -71,7 +88,6 @@ namespace rocket {
 
     class font_t {
     private:
-        assetid_t id;
         /// INNER
         GLuint glid = 0;
         rocket::vec2i_t sttex_size = { 512, 512 };
@@ -86,8 +102,14 @@ namespace rocket {
         friend class asset_manager_t;
         friend class text_t;
     public:
+        /// @brief AssetID
+        assetid_t id;
+    public:
+        /// @brief Get Line Height
         float get_line_height() const;
     public:
+        /// @brief Get the default font for a particular size
+        /// @note Lazy-Loaded
         static std::shared_ptr<font_t> font_default(int fsize);
     public:
         font_t();
@@ -103,16 +125,26 @@ namespace rocket {
 
         friend class renderer_2d;
     public:
+        /// @brief The font to use
         std::shared_ptr<font_t> font;
+        /// @brief Text
         std::string text;
     public:
+        /// @brief Set text size
+        /// @note Overriden by the font size
         void set_size(float size);
     public:
+        /// @brief Get text size
         float get_size();
     public:
+        /// @brief Get text measured dimensions
         vec2f_t measure();
     public:
-        /// @note if font is nullptr then internal default font will be used
+        /// @brief Construct text
+        /// @param text Text
+        /// @param size Text Size
+        /// @param color Text Color
+        /// @param font Font, if nullptr then default will be used
         text_t(std::string text, float size, rgb_color color, std::shared_ptr<font_t> font = nullptr);
     public:
         ~text_t();
@@ -137,16 +169,26 @@ namespace rocket {
         friend class std::thread;
         void cleanup();
     public:
+        /// @brief Load a Texture2D from path
         assetid_t load_texture(std::string path);
+        /// @brief Get a Texture2D from ID
         std::shared_ptr<texture_t> get_texture(assetid_t id);
 
+        /// @brief Load an Audio from path
         assetid_t load_audio(std::string path);
+        /// @brief Get an Audio from ID
         std::shared_ptr<audio_t> get_audio(assetid_t id);
 
+        /// @brief Load a Font
         assetid_t load_font(int size, std::string path);
+        /// @brief Load a Font from memory
         assetid_t load_font(int fsize, std::vector<uint8_t> mem);
+        /// @brief Get a Font from ID
         std::shared_ptr<font_t> get_font(assetid_t id);
     public:
+        /// @brief Construct Asset Manager
+        /// @param cleanup_interval How often to clean up unused assets
+        /// @param-note If set to 0, cleanup is disabled
         asset_manager_t(std::chrono::seconds cleanup_interval = std::chrono::seconds(0));
     public:
         void close();

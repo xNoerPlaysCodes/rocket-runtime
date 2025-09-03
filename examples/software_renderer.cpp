@@ -3,9 +3,12 @@
 #include "rocket/window.hpp"
 #include <cstring>
 #include <iostream>
+#include <limits>
 #include <rocket/runtime.hpp>
 #include <memory>
+#include <rgl.hpp>
 
+/// @brief Contiguous
 using framebuffer_t = std::vector<rocket::rgba_color>;
 
 rocket::rgba_color &access_framebuffer_pixel(framebuffer_t *fb, int x, int y, int width) {
@@ -40,8 +43,13 @@ int main() {
     });
     rocket::renderer_2d r(&window, 60);
 
-    int i = 0;
-    constexpr int h = 4;
+    uint64_t i = 0;
+    /// I use hyprland and hyprland likes to
+    /// have animations and it takes a few
+    /// frames to reach the actual window size
+    ///
+    /// @tldr remove this if not on hyprland
+    constexpr uint64_t h = 4;
     while (window.is_running()) {
         r.begin_frame();
         r.clear();
@@ -52,9 +60,14 @@ int main() {
                 r.push_framebuffer(fb);
             }
             i++;
-            if (i % r.get_current_fps() == 0) {
+            static int last_sec = -1;
+            int current_sec = static_cast<int>(window.get_time());
+
+            if (current_sec != last_sec) {
+                last_sec = current_sec;
+
                 std::cout << "FPS: " << r.get_current_fps() << '\n';
-                std::cout << "(GPU) Drawcalls: " << r.get_drawcalls() << '\n';
+                std::cout << "GPU Drawcalls: " << r.get_drawcalls() << '\n';
             }
         }
         r.end_frame();

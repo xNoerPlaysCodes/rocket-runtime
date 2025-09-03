@@ -24,7 +24,11 @@
 #define ROCKETGE__FEATURE_SHADER_SUPPORT_VERT_FRAG
 // #define ROCKETGE__FEATURE_SHADER_SUPPORT_COMPUTE_SHADER
 
+#define ROCKETGE__NOT_IMPLEMENTED __attribute__((unavailable("Not Implemented")))
+#define ROCKETGE__DEPRECATED [[deprecated]]
+
 namespace rocket {
+    /// @brief Log Level
     enum class log_level_t : int {
         trace = 0,
         debug = 1,
@@ -34,24 +38,46 @@ namespace rocket {
         fatal = 5,
     };
 
+    /// @brief Sets minimum log level to be printed to the console
+    /// @brief or callback
     void set_log_level(log_level_t level);
+    
+    /// @brief Log (Fatal/FatalToFunction/Warning) Callback
+    /// @param std::string error
+    /// @param int error_id
+    /// @param std::string error_source
+    /// @param std::string level
     using log_error_callback_t = std::function<void(
             std::string error, 
             int error_id, 
             std::string error_source, 
             std::string level)>;
 
+    /// @brief Converts log level to string
+    /// @note lowercase
     std::string log_level_to_str(log_level_t level);
+
+    /// @brief Sets log error callback
     void set_log_error_callback(log_error_callback_t);
 
+    /// @brief Log Callback
+    /// @param std::string log_message
+    /// @param std::string class, file, or library source
+    /// @param std::string function_source
+    /// @param std::string level
     using log_callback_t = std::function<void(
-            std::string log, 
+            std::string log_message, 
             std::string class_file_library_source, 
             std::string function_source,
             std::string level)>;
+
+    /// @brief Sets log callback
     void set_log_callback(log_callback_t);
 
+    /// @brief Log (Fatal/FatalToFunction/Warning) using RocketLogger or callback
     void log_error(std::string error, int error_id, std::string error_source, std::string level);
+
+    /// @brief Log using RocketLogger or callback
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);
 }
 

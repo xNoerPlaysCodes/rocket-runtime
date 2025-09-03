@@ -18,7 +18,7 @@ namespace rocket {
         std::string vcode;
         std::string fcode;
 
-        std::string name = "Unknown";
+        std::string name = "NON_RLSL_SHADER";
         std::string rlsl_version = "NOT_COMPILED_BY_RLSL";
 
         GLuint vao, vbo;
@@ -40,7 +40,7 @@ namespace rocket {
             return glprogram == other.glprogram;
         }
     public:
-        shader_t(shader_type type, std::string vcode, std::string fcode, std::string name = "UnknownShader");
+        shader_t(shader_type type, std::string vcode, std::string fcode, std::string name = "NON_RLSL_SHADER");
         /// @brief Loads a shader from a file (.rlsl)
         shader_t(shader_type type, std::string rlsl_shader_path);
         static shader_t rectangle(rgba_color fill_color);

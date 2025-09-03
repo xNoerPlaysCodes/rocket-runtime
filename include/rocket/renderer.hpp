@@ -10,6 +10,7 @@
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 #include "asset.hpp"
+#include "rgl.hpp"
 #include "types.hpp"
 #include "window.hpp"
 #include "shader.hpp"
@@ -22,7 +23,7 @@ namespace rocket {
         vec2f_t pos = {0,0};
         vec2f_t size = {0,0};
 
-        GLuint gltxid = 0;
+        GLuint gltxid = rGL_TXID_INVALID;
         rgba_color color = {0,0,0,0};
     };
     class renderer_2d {
@@ -44,51 +45,98 @@ namespace rocket {
 
         friend class renderer_3d;
         friend class font_t;
-    private:
-        void glinit();
     public:
         void begin_frame();
-        /// @brief Adjusted to viewport
-        /// @note this is supposed to be empty...
+        /// @brief Get a contiguous block of pixels
+        /// @brief adjusted to viewport size
         std::vector<rgba_color> get_framebuffer();
+        /// @brief Push a contiguous block of pixels
+        /// @brief adjusted to viewport size
         void push_framebuffer(std::vector<rgba_color> &framebuffer);
+        /// @brief Get the size of the viewport
         vec2f_t get_viewport_size();
+        /// @brief Begin scissor mode
         void begin_scissor_mode(rocket::fbounding_box rect);
+        /// @brief Begin scissor mode
         void begin_scissor_mode(rocket::vec2f_t pos, rocket::vec2f_t size);
+        /// @brief Begin scissor mode
         void begin_scissor_mode(float x, float y, float sx, float sy);
+        /// @brief Clear the screen
+        /// @note uses OpenGL Flags: GL_CLEAR_COLOR_BUFFER_BIT,
+        /// @note and GL_CLEAR_DEPTH_BUFFER_BIT
         void clear(rocket::rgba_color color = { 255, 255, 255, 255 });
 
+        /// @brief Draw a shader
         void draw_shader(shader_t shader);
 
+        /// @brief Draw a rectangle
+        /// @param rect Rectangle
+        /// @param color Color
+        /// @param rotation Rotation in degrees
+        /// @param roundedness Roundedness [0-1]
+        /// @param lines Draw lines
         void draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f, float roundedness = 0.f, bool lines = false);
+
+        /// @brief Draw a circle
+        /// @param pos Position
+        /// @param radius Radius
+        /// @param color Color
         void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 });
 
+        /// @brief Draw a line
+        /// @param p1 Point 1
+        /// @param p2 Point 2
+        /// @param color Color
+        /// @param thickness Thickness
         void draw_line(rocket::vec2f_t p1, rocket::vec2f_t p2, rocket::rgba_color color = { 0, 0, 0, 255 }, float thickness = 1.f);
 
+        /// @brief Draw a texture
+        /// @param texture Texture
+        /// @param rect Rectangle
+        /// @param rotation Rotation in degrees
+        /// @param roundedness Roundedness [0-1]
         void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f, float roundedness = 0.f);
 
+        /// @brief Draw text
+        /// @param text Text
+        /// @param position Position
         void draw_text(rocket::text_t &text, vec2f_t position);
     public:
         /// @brief All drawcalls will be redirected to an internal buffer
         /// @brief and be drawn later
-        void begin_batch();
+        ROCKETGE__NOT_IMPLEMENTED void begin_batch();
 
         /// @brief All drawcalls that have been stored in the buffer will
         /// @brief be drawn now
-        void end_batch(size_t max_batch_size = 2048);
+        /// @note Unsupported
+        ROCKETGE__NOT_IMPLEMENTED void end_batch(size_t max_batch_size = 2048);
     public:
+        /// @brief Draw FPS at the top left
         void draw_fps(vec2f_t pos = { 10, 10 });
     public:
+        /// @brief Set Wireframe State
         void set_wireframe(bool);
+        /// @brief Set Vsync
         void set_vsync(bool);
+        /// @brief Set FPS
         void set_fps(int fps = 60);
+        /// @brief End scissor mode
         void end_scissor_mode();
+        /// @brief End frame
         void end_frame();
+        /// @brief Close the renderer2d
+        /// @note Does not close the OpenGL Context fully
         void close();
     public:
+        /// @brief Get Wireframe State
         bool get_wireframe();
+        /// @brief Get Vsync
         bool get_vsync();
+        /// @brief Get FPS
+        /// @note Gives the TARGET FPS,
+        /// @note NOT the current fps
         int get_fps();
+        /// @brief Get Delta Time
         double get_delta_time();
 
         /// @brief For proper drawcall tracking,
@@ -96,8 +144,12 @@ namespace rocket {
         /// @brief after end_frame() or just before
         int get_drawcalls();
     public:
+        /// @brief Get Current FPS
         int get_current_fps();
     public:
+        /// @brief Initialize the renderer
+        /// @param window Window
+        /// @param fps FPS = 60
         renderer_2d(window_t *window, int fps = 60);
     public:
         ~renderer_2d();
@@ -137,7 +189,7 @@ namespace rocket {
         ~shell_renderer_2d();
     };
 
-    class renderer_3d {
+    class ROCKETGE__NOT_IMPLEMENTED renderer_3d {
     private:
         window_t *window;
         int fps;

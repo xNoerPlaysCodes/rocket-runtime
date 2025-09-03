@@ -95,13 +95,13 @@ namespace rocket {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         }
 
-#ifdef RocketRuntime_DEBUG
-        if (glver >= 4.3f) {
-            glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-        } else {
-            rocket::log_error("OpenGL::ContextVerifier requires 4.3 or higher", -5, "OpenGL", "warn");
+        if (flags.gl_contextverifier) {
+            if (glver >= 4.3f) {
+                glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+            } else {
+                rocket::log_error("OpenGL::ContextVerifier requires 4.3 or higher", -5, "OpenGL", "warn");
+            }
         }
-#endif
 
         if (glver >= 3.0f) {
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -318,6 +318,10 @@ namespace rocket {
 
     bool window_t::is_running() const {
         return !glfwWindowShouldClose(glfw_window);
+    }
+
+    double window_t::get_time() const {
+        return glfwGetTime();
     }
 
     cursor_mode_t window_t::get_cursor_mode() {

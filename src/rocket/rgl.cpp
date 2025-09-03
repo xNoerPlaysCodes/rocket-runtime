@@ -156,8 +156,7 @@ namespace rgl {
         // Query max texture size
         glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_tx_size);
 
-#ifdef RocketRuntime_DEBUG
-        int flags; 
+        int flags;
         glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
         if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
             glEnable(GL_DEBUG_OUTPUT);
@@ -176,9 +175,25 @@ namespace rgl {
                         rocket::log_error(message, -5, "OpenGL::ContextVerifier", "fatal-to-function");
                 }, nullptr);
         }
-
-        static shader_program_t prg = get_paramaterized_quad({0.f, 0.f}, {1.f, 1.f}, rocket::rgba_color::red(), 0.f, 0.f);
+#ifdef RocketRuntime_DEBUG
+        shader_program_t prg = get_paramaterized_quad({0.f, 0.f}, {1.f, 1.f}, rocket::rgba_color::red(), 0.f, 0.f);
         draw_shader(prg, shader_use_t::rect);
+
+        rgl::texture_id_t glid;
+        glGenTextures(1, &glid);
+        glBindTexture(GL_TEXTURE_2D, glid);
+        uint8_t pixel[4] = { 0, 0, 0, 255 };
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixel);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+        glActiveTexture(GL_TEXTURE0);
+        prg = get_paramaterized_textured_quad({0.f, 0.f}, {1.f, 1.f}, 0.f, 0.f);
+        glUniform1i(glGetUniformLocation(prg, "u_texture"), 0);
+        draw_shader(prg, shader_use_t::textured_rect);
+
+        glDeleteTextures(1, &glid);
+        glBindTexture(GL_TEXTURE_2D, 0);
 #endif
 
         float glversion = 0;

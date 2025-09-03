@@ -22,6 +22,30 @@ namespace rocket {
             return { x / other.x, y / other.y };
         }
 
+        vec2<T> operator+=(const vec2<T>& other) {
+            x += other.x;
+            y += other.y;
+            return *this;
+        }
+
+        vec2<T> operator-=(const vec2<T>& other) {
+            x -= other.x;
+            y -= other.y;
+            return *this;
+        }
+
+        vec2<T> operator*=(const vec2<T>& other) {
+            x *= other.x;
+            y *= other.y;
+            return *this;
+        }
+
+        vec2<T> operator/=(const vec2<T>& other) {
+            x /= other.x;
+            y /= other.y;
+            return *this;
+        }
+
         bool operator==(const vec2<T>& other) const {
             return x == other.x && y == other.y;
         }
@@ -46,6 +70,34 @@ namespace rocket {
         }
         vec3<T> operator/(const vec3<T>& other) const {
             return {x / other.x, y / other.y, z / other.z};
+        }
+
+        vec3<T> operator+=(const vec3<T>& other) {
+            x += other.x;
+            y += other.y;
+            z += other.z;
+            return *this;
+        }
+
+        vec3<T> operator-=(const vec3<T>& other) {
+            x -= other.x;
+            y -= other.y;
+            z -= other.z;
+            return *this;
+        }
+
+        vec3<T> operator*=(const vec3<T>& other) {
+            x *= other.x;
+            y *= other.y;
+            z *= other.z;
+            return *this;
+        }
+
+        vec3<T> operator/=(const vec3<T>& other) {
+            x /= other.x;
+            y /= other.y;
+            z /= other.z;
+            return *this;
         }
 
         bool operator==(const vec3<T>& other) const {
@@ -76,6 +128,38 @@ namespace rocket {
         }
         vec4<T> operator/(const vec4<T>& other) const {
             return {x / other.x, y / other.y, z / other.z, w / other.w};
+        }
+
+        vec4<T> operator+=(const vec4<T>& other) {
+            x += other.x;
+            y += other.y;
+            z += other.z;
+            w += other.w;
+            return *this;
+        }
+
+        vec4<T> operator-=(const vec4<T>& other) {
+            x -= other.x;
+            y -= other.y;
+            z -= other.z;
+            w -= other.w;
+            return *this;
+        }
+
+        vec4<T> operator*=(const vec4<T>& other) {
+            x *= other.x;
+            y *= other.y;
+            z *= other.z;
+            w *= other.w;
+            return *this;
+        }
+
+        vec4<T> operator/=(const vec4<T>& other) {
+            x /= other.x;
+            y /= other.y;
+            z /= other.z;
+            w /= other.w;
+            return *this;
         }
 
         T& operator[](int i) {
