@@ -1,0 +1,104 @@
+\doxysection{rocket\+::renderer\+\_\+3d Class Reference}
+\hypertarget{classrocket_1_1renderer__3d}{}\label{classrocket_1_1renderer__3d}\index{rocket::renderer\_3d@{rocket::renderer\_3d}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_ad563fdfdde06a3fb0890685589d69fc7}\label{classrocket_1_1renderer__3d_ad563fdfdde06a3fb0890685589d69fc7} 
+void {\bfseries begin\+\_\+frame} ()
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_aa74ce51f996c4542f46d6db291a587d2}\label{classrocket_1_1renderer__3d_aa74ce51f996c4542f46d6db291a587d2} 
+void {\bfseries clear} (\mbox{\hyperlink{structrocket_1_1rgba__color}{rocket\+::rgba\+\_\+color}} color=\{ 255, 255, 255, 255 \})
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_ab91cdc7d403584b676c851313cb6f3cd}\label{classrocket_1_1renderer__3d_ab91cdc7d403584b676c851313cb6f3cd} 
+std\+::vector$<$ \mbox{\hyperlink{structrocket_1_1vec3}{vec3f\+\_\+t}} $>$ {\bfseries draw\+\_\+camera} ()
+\begin{DoxyCompactList}\small\item\em Returns the camera frustum\textquotesingle{}s normal. \end{DoxyCompactList}\item 
+\Hypertarget{classrocket_1_1renderer__3d_a2f541958a354dce5e52dea269a12d238}\label{classrocket_1_1renderer__3d_a2f541958a354dce5e52dea269a12d238} 
+void {\bfseries draw\+\_\+rectangle} (\mbox{\hyperlink{structrocket_1_1fbounding__box__3d}{rocket\+::fbounding\+\_\+box\+\_\+3d}} fbox, \mbox{\hyperlink{structrocket_1_1rgba__color}{rocket\+::rgba\+\_\+color}} color=\{ 0, 0, 0, 255 \})
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_aaeeea01ab64644461b2b96e201a9f1b8}\label{classrocket_1_1renderer__3d_aaeeea01ab64644461b2b96e201a9f1b8} 
+void {\bfseries draw\+\_\+texture} (\mbox{\hyperlink{structrocket_1_1fbounding__box__3d}{rocket\+::fbounding\+\_\+box\+\_\+3d}} fbox, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classrocket_1_1texture__t}{rocket\+::texture\+\_\+t}} $>$ textures\mbox{[}6\mbox{]})
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_a79d90d63185555137a6a6487a4700397}\label{classrocket_1_1renderer__3d_a79d90d63185555137a6a6487a4700397} 
+void {\bfseries begin\+\_\+2d} ()
+\begin{DoxyCompactList}\small\item\em Call AFTER doing ALL your 3D work. \end{DoxyCompactList}\item 
+\Hypertarget{classrocket_1_1renderer__3d_a5fe46fb349ab13df8278c6de34cd14db}\label{classrocket_1_1renderer__3d_a5fe46fb349ab13df8278c6de34cd14db} 
+\mbox{\hyperlink{classrocket_1_1shell__renderer__2d}{shell\+\_\+renderer\+\_\+2d}} \& {\bfseries get\+\_\+r2d} ()
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_a7e966a8c67f8a7df436c41324d4df7d0}\label{classrocket_1_1renderer__3d_a7e966a8c67f8a7df436c41324d4df7d0} 
+void {\bfseries end\+\_\+2d} ()
+\begin{DoxyCompactList}\small\item\em Call BEFORE ending frame. \end{DoxyCompactList}\item 
+\Hypertarget{classrocket_1_1renderer__3d_a118053c991d17bb4b006b9cf6bc4873c}\label{classrocket_1_1renderer__3d_a118053c991d17bb4b006b9cf6bc4873c} 
+void {\bfseries end\+\_\+frame} ()
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_a46cb232f16ba3ddb15c32a0412c83545}\label{classrocket_1_1renderer__3d_a46cb232f16ba3ddb15c32a0412c83545} 
+void {\bfseries set\+\_\+fps} (int)
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_a788c302202a1aed1f92b2a5e38f696cf}\label{classrocket_1_1renderer__3d_a788c302202a1aed1f92b2a5e38f696cf} 
+void {\bfseries set\+\_\+wireframe} (bool)
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_acc7ab3f9708499432515fe0b1364b1b9}\label{classrocket_1_1renderer__3d_acc7ab3f9708499432515fe0b1364b1b9} 
+void {\bfseries set\+\_\+vsync} (bool)
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_aa0f196782232e7ac2785084af30d7641}\label{classrocket_1_1renderer__3d_aa0f196782232e7ac2785084af30d7641} 
+void {\bfseries set\+\_\+culling} (bool)
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_a16b9220e98349c8aa960f47bf99cde26}\label{classrocket_1_1renderer__3d_a16b9220e98349c8aa960f47bf99cde26} 
+bool {\bfseries get\+\_\+wireframe} ()
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_a543d906a6829699d5d4ba2e8a9b57ade}\label{classrocket_1_1renderer__3d_a543d906a6829699d5d4ba2e8a9b57ade} 
+bool {\bfseries get\+\_\+vsync} ()
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_a2881e8376fa17852c69476ed0d8a5b4a}\label{classrocket_1_1renderer__3d_a2881e8376fa17852c69476ed0d8a5b4a} 
+bool {\bfseries get\+\_\+culling} ()
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_a33203cd289377524b5e2618681b9f5fc}\label{classrocket_1_1renderer__3d_a33203cd289377524b5e2618681b9f5fc} 
+int {\bfseries get\+\_\+fps} ()
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_ab20f928bb8fba4a45b9054d4ab149af9}\label{classrocket_1_1renderer__3d_ab20f928bb8fba4a45b9054d4ab149af9} 
+void {\bfseries move\+\_\+cam\+\_\+left} (float speed, bool use\+\_\+delta\+\_\+time=true)
+\begin{DoxyCompactList}\small\item\em Side-\/to-\/side utility moving. \end{DoxyCompactList}\item 
+\Hypertarget{classrocket_1_1renderer__3d_a1b81150d934395e8405f82f12df7ef80}\label{classrocket_1_1renderer__3d_a1b81150d934395e8405f82f12df7ef80} 
+void {\bfseries move\+\_\+cam\+\_\+right} (float speed, bool use\+\_\+delta\+\_\+time=true)
+\begin{DoxyCompactList}\small\item\em Side-\/to-\/side utility moving. \end{DoxyCompactList}\item 
+\Hypertarget{classrocket_1_1renderer__3d_af39dfd88491687ddb71bc867999a98de}\label{classrocket_1_1renderer__3d_af39dfd88491687ddb71bc867999a98de} 
+void {\bfseries move\+\_\+cam\+\_\+forward} (float speed, bool use\+\_\+delta\+\_\+time=true, bool can\+\_\+move\+\_\+up\+\_\+using\+\_\+forward\+\_\+backward=true, bool can\+\_\+move\+\_\+down\+\_\+using\+\_\+forward\+\_\+backward=true)
+\begin{DoxyCompactList}\small\item\em Forward utility moving. \end{DoxyCompactList}\item 
+\Hypertarget{classrocket_1_1renderer__3d_a578e12576d14b19805283ddc711ce66d}\label{classrocket_1_1renderer__3d_a578e12576d14b19805283ddc711ce66d} 
+void {\bfseries move\+\_\+cam\+\_\+backward} (float speed, bool use\+\_\+delta\+\_\+time=true, bool can\+\_\+move\+\_\+up\+\_\+using\+\_\+forward\+\_\+backward=true, bool can\+\_\+move\+\_\+down\+\_\+using\+\_\+forward\+\_\+backward=true)
+\begin{DoxyCompactList}\small\item\em Backward utility moving. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classrocket_1_1renderer__3d_a2c50b766aa450b0962e5d405ee587343}{mouse\+\_\+move}} (float sensitivity=0.\+1f)
+\begin{DoxyCompactList}\small\item\em Mouse. \end{DoxyCompactList}\item 
+\Hypertarget{classrocket_1_1renderer__3d_a9dd783a9095a29a249f77366c486bd5d}\label{classrocket_1_1renderer__3d_a9dd783a9095a29a249f77366c486bd5d} 
+{\bfseries renderer\+\_\+3d} (\mbox{\hyperlink{classrocket_1_1window__t}{window\+\_\+t}} \texorpdfstring{$\ast$}{*}window, \mbox{\hyperlink{structrocket_1_1camera3d__t}{camera3d\+\_\+t}} \texorpdfstring{$\ast$}{*}cam, int fps=60)
+\item 
+\Hypertarget{classrocket_1_1renderer__3d_aee2428476e705086b848a356c52d9b42}\label{classrocket_1_1renderer__3d_aee2428476e705086b848a356c52d9b42} 
+void {\bfseries close} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{classrocket_1_1renderer__3d_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classrocket_1_1renderer__3d_a2c50b766aa450b0962e5d405ee587343}\index{rocket::renderer\_3d@{rocket::renderer\_3d}!mouse\_move@{mouse\_move}}
+\index{mouse\_move@{mouse\_move}!rocket::renderer\_3d@{rocket::renderer\_3d}}
+\doxysubsubsection{\texorpdfstring{mouse\_move()}{mouse\_move()}}
+{\footnotesize\ttfamily \label{classrocket_1_1renderer__3d_a2c50b766aa450b0962e5d405ee587343} 
+void rocket\+::renderer\+\_\+3d\+::mouse\+\_\+move (\begin{DoxyParamCaption}\item[{float}]{sensitivity}{ = {\ttfamily 0.1f}}\end{DoxyParamCaption})}
+
+
+
+Mouse. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensitivity} & Percentage \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Sensitivity is clamped from 0 to 100+ (for extra-\/high) 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/rocket/renderer.\+hpp\end{DoxyCompactItemize}

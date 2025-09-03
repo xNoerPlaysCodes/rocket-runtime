@@ -1,0 +1,145 @@
+\chapter{🚀 Rocket }
+\hypertarget{md_README}{}\label{md_README}\index{🚀 Rocket@{🚀 Rocket}}
+\label{md_README_autotoc_md0}%
+\Hypertarget{md_README_autotoc_md0}%
+
+
+\hypertarget{md_README_autotoc_md1}{}\doxysection{\texorpdfstring{Included Libraries}{Included Libraries}}\label{md_README_autotoc_md1}
+
+\begin{DoxyItemize}
+\item Rocket
+\begin{DoxyItemize}
+\item The core rocket runtime, for drawing logic and rendering with GLFW and Open\+GL.
+\end{DoxyItemize}
+\item Astro
+\begin{DoxyItemize}
+\item The All-\/in-\/one GUI library for making simple but powerful game GUIs.
+\end{DoxyItemize}
+\item Quark
+\begin{DoxyItemize}
+\item \mbox{[}unfinished\mbox{]} The simple but powerful 2D + 3D Physics Library for your Physic(al) needs.
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md2}{}\doxysection{\texorpdfstring{Features}{Features}}\label{md_README_autotoc_md2}
+
+\begin{DoxyItemize}
+\item Asset Manager
+\begin{DoxyItemize}
+\item A powerful and clean asset manager with use timeouts and lazy loading
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+{\bfseries{and much more ...}}\hypertarget{md_README_autotoc_md3}{}\doxysection{\texorpdfstring{Examples}{Examples}}\label{md_README_autotoc_md3}
+\hypertarget{md_README_autotoc_md4}{}\doxysubsection{\texorpdfstring{{\ttfamily basic window}}{{\ttfamily basic window}}}\label{md_README_autotoc_md4}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <rocket/runtime.hpp>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Initialize\ a\ native\ window}}
+\DoxyCodeLine{\ \ \ \ rocket::window\_t\ window\ =\ \{\ \{1280,\ 720\},\ \textcolor{stringliteral}{"{}Basic\ Window"{}}\ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Initialize\ default\ 2D\ renderer}}
+\DoxyCodeLine{\ \ \ \ rocket::renderer\_2d\ r2d(\&window);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ The\ main\ loop}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}\ (window.is\_running())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Begin\ a\ new\ frame}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ r2d.begin\_frame();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ the\ screen\ with\ default\ color}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ r2d.clear();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ and\ draw\ a\ basic\ rectangle}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ r2d.draw\_rectangle(\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ the\ position}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .pos\ =\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .x\ =\ 100,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .y\ =\ 100}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ the\ size}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .size\ =\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .x\ =\ 128,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .y\ =\ 128}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ the\ color}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \},\ rocket::rgba\_color::red());}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ End\ the\ frame}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ r2d.end\_frame();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Poll\ window\ events}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ window.poll\_events();}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ window.close();}
+\DoxyCodeLine{\ \ \ \ r2d.close();}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+{\itshape A basic window created with the above code}\hypertarget{md_README_autotoc_md5}{}\doxysubsection{\texorpdfstring{{\ttfamily custom shader}}{{\ttfamily custom shader}}}\label{md_README_autotoc_md5}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}rocket/runtime.hpp"{}}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}rocket/shader.hpp"{}}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}rocket/types.hpp"{}}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}rocket/window.hpp"{}}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \{}
+\DoxyCodeLine{\ \ \ \ rocket::window\_t\ window(\{1280,\ 720\},\ \textcolor{stringliteral}{"{}rgeExample\ -\/\ Custom\ Shader"{}});}
+\DoxyCodeLine{\ \ \ \ rocket::renderer\_2d\ r(\&window,\ 60);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *vcode\ =\ R\textcolor{stringliteral}{"{}(}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \#version\ 330\ core}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ layout(location\ =\ 0)\ in\ vec2\ aPos;}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ out\ vec2\ fragPos;}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ }}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ void\ main()\ \{}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ fragPos\ =\ aPos;}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ gl\_Position\ =\ vec4(aPos,\ 0.0,\ 1.0);}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ )"{};}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ }\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *fcode\ =\ R\textcolor{stringliteral}{"{}(}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \#version\ 330\ core}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ out\ vec4\ FragColor;}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ in\ vec2\ fragPos;}}
+\DoxyCodeLine{\textcolor{stringliteral}{}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ vec3\ hsv2rgb(float\ h,\ float\ s,\ float\ v)\ \{}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ vec3\ k\ =\ vec3(5.0,\ 3.0,\ 1.0);}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ vec3\ p\ =\ abs(fract(h\ +\ k/6.0)\ *\ 6.0\ -\/\ 3.0);}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ return\ v\ *\ mix(vec3(1.0),\ clamp(p\ -\/\ 1.0,\ 0.0,\ 1.0),\ s);}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{stringliteral}{}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ void\ main()\ \{}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ float\ r\ =\ length(fragPos);}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ float\ hue\ =\ atan(fragPos.y,\ fragPos.x)\ /\ (2.0\ *\ 3.14159)\ +\ 0.5;}}
+\DoxyCodeLine{\textcolor{stringliteral}{}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ float\ s\ =\ smoothstep(r\ -\/\ 1.,\ 1.,\ r);}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ float\ v\ =\ s;}}
+\DoxyCodeLine{\textcolor{stringliteral}{}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ FragColor\ =\ vec4(hsv2rgb(hue,\ s,\ v),\ 1.);}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ )"{};}}
+\DoxyCodeLine{\textcolor{stringliteral}{}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ rocket::shader\_t\ shader\ =\ \{rocket::shader\_type::vert\_frag,\ vcode,\ fcode\};}}
+\DoxyCodeLine{\textcolor{stringliteral}{}}
+\DoxyCodeLine{\textcolor{stringliteral}{\ \ \ \ }\textcolor{keywordflow}{while}\ (window.is\_running())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ r.begin\_frame();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ r.clear();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ r.draw\_shader(shader);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ r.draw\_fps();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ r.end\_frame();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ window.poll\_events();}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ r.close();}
+\DoxyCodeLine{\ \ \ \ window.close();}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+{\itshape Custom Shader created with the 2D Renderer} 

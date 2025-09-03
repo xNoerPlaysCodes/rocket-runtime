@@ -1,0 +1,57 @@
+\doxysection{shader.\+hpp}
+\hypertarget{shader_8hpp_source}{}\label{shader_8hpp_source}\index{include/rocket/shader.hpp@{include/rocket/shader.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ ROCKETGE\_\_SHADERTOOL\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ ROCKETGE\_\_SHADERTOOL\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}types.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <GLFW/glfw3.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }rocket\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{enum\ class}\ shader\_type\ \{}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ vert\_frag,}
+\DoxyCodeLine{00010\ \ \ \ \ \};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{class\ }shader\_t\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ GLuint\ glshaderv\ =\ 0;}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ GLuint\ glshaderf\ =\ 0;}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ GLuint\ glprogram\ =\ 0;}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ shader\_type\ type;}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ std::string\ vcode;}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ std::string\ fcode;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ std::string\ name\ =\ \textcolor{stringliteral}{"{}NON\_RLSL\_SHADER"{}};}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ std::string\ rlsl\_version\ =\ \textcolor{stringliteral}{"{}NOT\_COMPILED\_BY\_RLSL"{}};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ GLuint\ vao,\ vbo;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }renderer\_2d;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }renderer\_3d;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ shader\_init();}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_uniform(std::string\ name,\ \textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_uniform(std::string\ name,\ \textcolor{keywordtype}{int}\ value);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_uniform(std::string\ name,\ vec2f\_t\ value);}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_uniform(std::string\ name,\ vec3f\_t\ value);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_uniform(std::string\ name,\ vec4f\_t\ value);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_uniform(std::string\ name,\ \mbox{\hyperlink{structrocket_1_1mat4}{mat4}}\ value);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_uniform\_raw(std::string\ name,\ GLenum\ type,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ data,\ GLsizei\ count);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ shader\_t\ \&other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ glprogram\ ==\ other.glprogram;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ shader\_t(shader\_type\ type,\ std::string\ vcode,\ std::string\ fcode,\ std::string\ name\ =\ \textcolor{stringliteral}{"{}NON\_RLSL\_SHADER"{}});}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1shader__t_a3e9e49a932d3bd7af4e4c41e2ffdd6ca}{shader\_t}}(shader\_type\ type,\ std::string\ rlsl\_shader\_path);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ shader\_t\ rectangle(\mbox{\hyperlink{structrocket_1_1rgba__color}{rgba\_color}}\ fill\_color);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \string~shader\_t();}
+\DoxyCodeLine{00049\ \ \ \ \ \};}
+\DoxyCodeLine{00050\ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ROCKETGE\_\_SHADERTOOL\_HPP}}
+
+\end{DoxyCode}

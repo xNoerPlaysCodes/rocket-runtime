@@ -1,0 +1,193 @@
+\doxysection{renderer.\+hpp}
+\hypertarget{renderer_8hpp_source}{}\label{renderer_8hpp_source}\index{include/rocket/renderer.hpp@{include/rocket/renderer.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ ROCKETGE\_\_RENDERER\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ ROCKETGE\_\_RENDERER\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <glm/detail/qualifier.hpp>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <glm/ext/matrix\_clip\_space.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <glm/ext/matrix\_transform.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <glm/ext/quaternion\_geometric.hpp>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <glm/ext/vector\_float3.hpp>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <glm/geometric.hpp>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}asset.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}rgl.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}types.hpp"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}window.hpp"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}shader.hpp"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }rocket\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrocket_1_1instanced__quad__t}{instanced\_quad\_t}}\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ vec2f\_t\ pos\ =\ \{0,0\};}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ vec2f\_t\ size\ =\ \{0,0\};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ GLuint\ gltxid\ =\ rGL\_TXID\_INVALID;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structrocket_1_1rgba__color}{rgba\_color}}\ color\ =\ \{0,0,0,0\};}
+\DoxyCodeLine{00028\ \ \ \ \ \};}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classrocket_1_1renderer__2d_a880d24cf88bf2c235f3b2ac362ed5ce8}{renderer\_2d}}\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1window__t}{window\_t}}\ *window;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fps\ =\ 60;}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ wireframe\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ vsync\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ std::chrono::time\_point<std::chrono::high\_resolution\_clock>\ start\_time;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ last\_time;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ frame\_start\_time;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ delta\_time;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ uint64\_t\ frame\_counter;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ std::vector<instanced\_quad\_t>\ batch;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ batched\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }renderer\_3d;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }font\_t;}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ begin\_frame();}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ std::vector<rgba\_color>\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a275d49940bd100952821111a3839f74f}{get\_framebuffer}}();}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a38a936f3bf3b21e7d3c781fa64234db0}{push\_framebuffer}}(std::vector<rgba\_color>\ \&framebuffer);}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ vec2f\_t\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a37486a5809fe332b8cb4c9463cceec53}{get\_viewport\_size}}();}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a3e0c7826c76c351c48c141d801b424dc}{begin\_scissor\_mode}}(\mbox{\hyperlink{structrocket_1_1fbounding__box}{rocket::fbounding\_box}}\ rect);}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a883028108e5e247f1aa90c19500a9900}{begin\_scissor\_mode}}(rocket::vec2f\_t\ pos,\ rocket::vec2f\_t\ size);}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a06b5d2cffcbb118950e5e969ac48d163}{begin\_scissor\_mode}}(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ sx,\ \textcolor{keywordtype}{float}\ sy);}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a580c9b911c3bd3e26610d29234c9865d}{clear}}(\mbox{\hyperlink{structrocket_1_1rgba__color}{rocket::rgba\_color}}\ color\ =\ \{\ 255,\ 255,\ 255,\ 255\ \});}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a387b7866c0b345db92e7004ce0e3393c}{draw\_shader}}(\mbox{\hyperlink{classrocket_1_1shader__t}{shader\_t}}\ shader);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_acd038493bc7f6d6c99e16d755dd9ebd4}{draw\_rectangle}}(\mbox{\hyperlink{structrocket_1_1fbounding__box}{rocket::fbounding\_box}}\ rect,\ \mbox{\hyperlink{structrocket_1_1rgba__color}{rocket::rgba\_color}}\ color\ =\ \{\ 0,\ 0,\ 0,\ 255\ \},\ \textcolor{keywordtype}{float}\ rotation\ =\ 0.f,\ \textcolor{keywordtype}{float}\ roundedness\ =\ 0.f,\ \textcolor{keywordtype}{bool}\ lines\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a2b95703973670630a7e57ad22490fb76}{draw\_circle}}(rocket::vec2f\_t\ pos,\ \textcolor{keywordtype}{float}\ radius,\ \mbox{\hyperlink{structrocket_1_1rgba__color}{rocket::rgba\_color}}\ color\ =\ \{\ 0,\ 0,\ 0,\ 255\ \});}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a3fddc7ee372f7bd26e5ed3a93aea38de}{draw\_line}}(rocket::vec2f\_t\ p1,\ rocket::vec2f\_t\ p2,\ \mbox{\hyperlink{structrocket_1_1rgba__color}{rocket::rgba\_color}}\ color\ =\ \{\ 0,\ 0,\ 0,\ 255\ \},\ \textcolor{keywordtype}{float}\ thickness\ =\ 1.f);}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a8841d6886288704fe7eb55882e8531d9}{draw\_texture}}(std::shared\_ptr<rocket::texture\_t>\ texture,\ \mbox{\hyperlink{structrocket_1_1fbounding__box}{rocket::fbounding\_box}}\ rect,\ \textcolor{keywordtype}{float}\ rotation\ =\ 0.f,\ \textcolor{keywordtype}{float}\ roundedness\ =\ 0.f);}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a4bce1c7b7bc0d4f35eb94e9a8a06f202}{draw\_text}}(\mbox{\hyperlink{classrocket_1_1text__t}{rocket::text\_t}}\ \&text,\ vec2f\_t\ position);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ ROCKETGE\_\_NOT\_IMPLEMENTED\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a9cdea2e60b68d1370f31e99346a83c78}{begin\_batch}}();}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ ROCKETGE\_\_NOT\_IMPLEMENTED\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a45b4124820373fba0015c1afd624e972}{end\_batch}}(\textcolor{keywordtype}{size\_t}\ max\_batch\_size\ =\ 2048);}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_accca90f52a1be0a748ffc99d3cb83b6b}{draw\_fps}}(vec2f\_t\ pos\ =\ \{\ 10,\ 10\ \});}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a1fa2d532de124447dfbbba8e4c892552}{set\_wireframe}}(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_aeb4f44e9003c6f13496b241e774312b5}{set\_vsync}}(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_adb855419557391e77a03567bbac11593}{set\_fps}}(\textcolor{keywordtype}{int}\ fps\ =\ 60);}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a273e0d9b8c3b5c73332b46ae9491e655}{end\_scissor\_mode}}();}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a2397a6b5b9f10bbdb156b95e378b2cf1}{end\_frame}}();}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a7fab89130e3a1e40d9cac7c4376e154a}{close}}();}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a285a7cdd57044700dd504de171f17c91}{get\_wireframe}}();}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_ac254455db9156b218711ed6bfe0235c7}{get\_vsync}}();}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a8e4bc10623d15a28593646e75452017d}{get\_fps}}();}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_aeb1c39e79f35a5c1791943c0631e19fe}{get\_delta\_time}}();}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_a66dd1ad53877b6f567d6a9870e542175}{get\_drawcalls}}();}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classrocket_1_1renderer__2d_ab3e37afed88495a53e40b24cf6c84a8c}{get\_current\_fps}}();}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1renderer__2d_a880d24cf88bf2c235f3b2ac362ed5ce8}{renderer\_2d}}(\mbox{\hyperlink{classrocket_1_1window__t}{window\_t}}\ *window,\ \textcolor{keywordtype}{int}\ fps\ =\ 60);}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1renderer__2d_a880d24cf88bf2c235f3b2ac362ed5ce8}{\string~renderer\_2d}}();}
+\DoxyCodeLine{00156\ \ \ \ \ \};}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrocket_1_1camera3d__t}{camera3d\_t}}\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structrocket_1_1camera3d__t_a643a7a67fbe157bd00419cdcefdedcfd}{fov}}\ =\ 45.f;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structrocket_1_1camera3d__t_ad17c303814fed098a9b561313b34f8fc}{render\_distance}}\ =\ 100.f;}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ vec3f\_t\ \mbox{\hyperlink{structrocket_1_1camera3d__t_ad44955e7d40320a1c7610ff612d50fa2}{pos}}\ =\ \{\ 0.f,\ 0.f,\ 0.f\ \};}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ vec3f\_t\ \mbox{\hyperlink{structrocket_1_1camera3d__t_af30ea9671eb5c9676515106a5ef583a3}{up}}\ =\ \{\ 0.f,\ 1.f,\ 0.f\ \};}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ vec3f\_t\ \mbox{\hyperlink{structrocket_1_1camera3d__t_a3e49c171277a6867f323451e7ec2c4d9}{lookat}}\ =\ \{\ 0.f,\ 0.f,\ 0.f\ \};}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structrocket_1_1camera3d__t_a9c6de57b0dc116008536bbf69ce669ec}{yaw}}\ =\ -\/90.f;}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structrocket_1_1camera3d__t_ab86cfc84a112a9edf95cb2ab9a5252b4}{pitch}}\ =\ 0.f;}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ vec3f\_t\ \mbox{\hyperlink{structrocket_1_1camera3d__t_a399f0ce5788950401c869fd4b199643a}{front}}\ =\ \{\ 0,\ 0,\ -\/1\ \};}
+\DoxyCodeLine{00178\ \ \ \ \ \};}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keyword}{class\ }shell\_renderer\_2d\ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1renderer__2d}{renderer\_2d}}\ *r;}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ draw\_rectangle(\mbox{\hyperlink{structrocket_1_1fbounding__box}{rocket::fbounding\_box}}\ rect,\ \mbox{\hyperlink{structrocket_1_1rgba__color}{rocket::rgba\_color}}\ color\ =\ \{\ 0,\ 0,\ 0,\ 255\ \},\ \textcolor{keywordtype}{float}\ rotation\ =\ 0.f);}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ draw\_circle(rocket::vec2f\_t\ pos,\ \textcolor{keywordtype}{float}\ radius,\ \mbox{\hyperlink{structrocket_1_1rgba__color}{rocket::rgba\_color}}\ color\ =\ \{\ 0,\ 0,\ 0,\ 255\ \});}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ draw\_texture(std::shared\_ptr<rocket::texture\_t>\ texture,\ \mbox{\hyperlink{structrocket_1_1fbounding__box}{rocket::fbounding\_box}}\ rect,\ \textcolor{keywordtype}{float}\ rotation\ =\ 0.f);}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ shell\_renderer\_2d(\mbox{\hyperlink{classrocket_1_1renderer__2d}{renderer\_2d}}\ *r);}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \string~shell\_renderer\_2d();}
+\DoxyCodeLine{00190\ \ \ \ \ \};}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{class\ }ROCKETGE\_\_NOT\_IMPLEMENTED\ renderer\_3d\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1window__t}{window\_t}}\ *window;}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fps;}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ wireframe;}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ vsync;}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ glm::mat4\ projection;}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ glm::mat4\ view;}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ std::chrono::time\_point<std::chrono::high\_resolution\_clock>\ start\_time;}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ last\_time;}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ frame\_start\_time;}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ delta\_time;}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ uint64\_t\ frame\_counter;}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structrocket_1_1camera3d__t}{camera3d\_t}}\ *cam;}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1renderer__2d}{renderer\_2d}}\ r2d;}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1shell__renderer__2d}{shell\_renderer\_2d}}\ shellr2d;}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ culling\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ glinit();}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ begin\_frame();}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ clear(\mbox{\hyperlink{structrocket_1_1rgba__color}{rocket::rgba\_color}}\ color\ =\ \{\ 255,\ 255,\ 255,\ 255\ \});}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ std::vector<vec3f\_t>\ \mbox{\hyperlink{classrocket_1_1renderer__3d_ab91cdc7d403584b676c851313cb6f3cd}{draw\_camera}}();}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ draw\_rectangle(\mbox{\hyperlink{structrocket_1_1fbounding__box__3d}{rocket::fbounding\_box\_3d}}\ fbox,\ \mbox{\hyperlink{structrocket_1_1rgba__color}{rocket::rgba\_color}}\ color\ =\ \{\ 0,\ 0,\ 0,\ 255\ \});}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ draw\_texture(\mbox{\hyperlink{structrocket_1_1fbounding__box__3d}{rocket::fbounding\_box\_3d}}\ fbox,\ std::shared\_ptr<rocket::texture\_t>\ textures[6]);}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__3d_a79d90d63185555137a6a6487a4700397}{begin\_2d}}();}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1shell__renderer__2d}{shell\_renderer\_2d}}\ \&get\_r2d();}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__3d_a7e966a8c67f8a7df436c41324d4df7d0}{end\_2d}}();}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ end\_frame();}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_fps(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_wireframe(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_vsync(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_culling(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ get\_wireframe();}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ get\_vsync();}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ get\_culling();}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ get\_fps();}
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__3d_ab20f928bb8fba4a45b9054d4ab149af9}{move\_cam\_left}}(\textcolor{keywordtype}{float}\ speed,\ \textcolor{keywordtype}{bool}\ use\_delta\_time\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__3d_a1b81150d934395e8405f82f12df7ef80}{move\_cam\_right}}(\textcolor{keywordtype}{float}\ speed,\ \textcolor{keywordtype}{bool}\ use\_delta\_time\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__3d_af39dfd88491687ddb71bc867999a98de}{move\_cam\_forward}}(\textcolor{keywordtype}{float}\ speed,\ \textcolor{keywordtype}{bool}\ use\_delta\_time\ =\ \textcolor{keyword}{true},\ \textcolor{keywordtype}{bool}\ can\_move\_up\_using\_forward\_backward\ =\ \textcolor{keyword}{true},\ \textcolor{keywordtype}{bool}\ can\_move\_down\_using\_forward\_backward\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__3d_a578e12576d14b19805283ddc711ce66d}{move\_cam\_backward}}(\textcolor{keywordtype}{float}\ speed,\ \textcolor{keywordtype}{bool}\ use\_delta\_time\ =\ \textcolor{keyword}{true},\ \textcolor{keywordtype}{bool}\ can\_move\_up\_using\_forward\_backward\ =\ \textcolor{keyword}{true},\ \textcolor{keywordtype}{bool}\ can\_move\_down\_using\_forward\_backward\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1renderer__3d_a2c50b766aa450b0962e5d405ee587343}{mouse\_move}}(\textcolor{keywordtype}{float}\ sensitivity\ =\ 0.1f);}
+\DoxyCodeLine{00261\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ renderer\_3d(\mbox{\hyperlink{classrocket_1_1window__t}{window\_t}}\ *window,\ \mbox{\hyperlink{structrocket_1_1camera3d__t}{camera3d\_t}}\ *cam,\ \textcolor{keywordtype}{int}\ fps\ =\ 60);}
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ close();}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \string~renderer\_3d();}
+\DoxyCodeLine{00266\ \ \ \ \ \};}
+\DoxyCodeLine{00267\ \}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,106 @@
+\doxysection{window.\+hpp}
+\hypertarget{window_8hpp_source}{}\label{window_8hpp_source}\index{include/rocket/window.hpp@{include/rocket/window.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ ROCKETGE\_\_WINDOW\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ ROCKETGE\_\_WINDOW\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}types.hpp"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <GLFW/glfw3.h>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }rocket\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrocket_1_1windowflags__t}{windowflags\_t}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ fullscreen\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ vsync\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ resizable\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ msaa\_samples\ =\ 0;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structrocket_1_1windowflags__t_a8b944df069b61cceacb948cfd08ab4ee}{undecorated}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hidden\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ minimized\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ maximized\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ unfocused\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ topmost\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structrocket_1_1windowflags__t_add0cd2cd1b4c831b60bc490f81c47607}{transparent}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ always\_run\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hidpi\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ interlacing\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ rocket::vec2i\_t\ \mbox{\hyperlink{structrocket_1_1windowflags__t_ac401f92886d3f61f41b7a9d3ed867f39}{gl\_version}}\ =\ \{\ 4,\ 3\ \};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ gl\_contextverifier\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00034\ \ \ \ \ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{enum\ class}\ cursor\_mode\_t\ :\ \textcolor{keywordtype}{int}\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ normal\ =\ 0,}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ hidden\ =\ 1}
+\DoxyCodeLine{00039\ \ \ \ \ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{enum\ class}\ platform\_type\_t\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ unknown\ =\ 0,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ windows,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ linux\_wayland,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ linux\_x11,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ macos\_cocoa,}
+\DoxyCodeLine{00047\ \ \ \ \ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrocket_1_1platform__t}{platform\_t}}\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{structrocket_1_1platform__t_ac5f10cc56d078c566a44a2257c63c5ad}{name}}\ =\ \textcolor{stringliteral}{"{}UnknownWindowingAPI"{}};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{structrocket_1_1platform__t_a2acfeb783afaa30b1b5d35cf8fcbb6df}{rge\_name}}\ =\ \textcolor{stringliteral}{"{}UnknownWindowingAPI::UnknownPlatformType"{}};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{structrocket_1_1platform__t_a3977e2ce3fb385c9bab9328081c1168f}{os\_name}}\ =\ \textcolor{stringliteral}{"{}UnknownOperatingSystem"{}};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ platform\_type\_t\ \mbox{\hyperlink{structrocket_1_1platform__t_addd222d74d988123882da4fd7c594d67}{type}}\ =\ platform\_type\_t::unknown;}
+\DoxyCodeLine{00058\ \ \ \ \ \};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classrocket_1_1window__t_a57e97ccd5c795f03ece8ffe1b1ae0b44}{window\_t}}\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ GLFWwindow\ *glfw\_window\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ rocket::vec2i\_t\ size\ =\ \{\ 0,\ 0\ \};}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ std::string\ title\ =\ \textcolor{stringliteral}{"{}Null"{}};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ cursor\_mode\_t\ mode\ =\ cursor\_mode\_t::normal;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structrocket_1_1windowflags__t}{windowflags\_t}}\ flags;}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }renderer\_2d;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }renderer\_3d;}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_wayland();}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1window__t_a2eb0c44e0a9f6745b4c171acc96f85c2}{set\_size}}(\textcolor{keyword}{const}\ rocket::vec2i\_t\&\ size);}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1window__t_ab3fe6e63ca2adf72e9d8b8d1a5c83af3}{set\_title}}(\textcolor{keyword}{const}\ std::string\&\ title);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1window__t_acef84a7474ae3c3dc86b010e991da405}{register\_on\_close}}(std::function<\textcolor{keywordtype}{void}()>);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1window__t_a36877b3824bdcf35c4468ad0b5021762}{set\_cursor\_mode}}(cursor\_mode\_t);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1window__t_a7e79a8128200cf7f75834a1a3ce277fb}{set\_cursor\_position}}(\textcolor{keyword}{const}\ rocket::vec2d\_t\&\ pos);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1window__t_afcaf1ccacff42b2ca1f29a6caad9a2c1}{poll\_events}}();}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{classrocket_1_1window__t_adde2ed027687d466e9e655113dd34371}{get\_title}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ rocket::vec2i\_t\ \mbox{\hyperlink{classrocket_1_1window__t_a3b06d2fd8e0aa007ab78a74f6a6379eb}{get\_size}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ cursor\_mode\_t\ \mbox{\hyperlink{classrocket_1_1window__t_a6cee1c1f88c450a05640eb921ae899a7}{get\_cursor\_mode}}();}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ rocket::vec2d\_t\ \mbox{\hyperlink{classrocket_1_1window__t_af7b4327150a0aa55cf88f3b4f32d320d}{get\_cursor\_position}}();}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classrocket_1_1window__t_a01685ebd400f642f33e8ba1feb0d5075}{is\_running}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classrocket_1_1window__t_ad08315a7cb9ee237de46dce684519857}{get\_time}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structrocket_1_1platform__t}{platform\_t}}\ \mbox{\hyperlink{classrocket_1_1window__t_ab8881f04be6addc36bc3ac38de03a8c4}{get\_platform}}();}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1window__t_a57e97ccd5c795f03ece8ffe1b1ae0b44}{window\_t}}(\textcolor{keyword}{const}\ rocket::vec2i\_t\&\ size\ =\ \{\ 800,\ 600\ \},\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ title\ =\ \textcolor{stringliteral}{"{}rGE\ -\/\ Example\ Window"{}},\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structrocket_1_1windowflags__t}{windowflags\_t}}\ flags\ =\ \mbox{\hyperlink{structrocket_1_1windowflags__t}{windowflags\_t}}());}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classrocket_1_1window__t_ae2c90c9120c86b0e1cf9f45480aa9f49}{close}}();}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classrocket_1_1window__t_a57e97ccd5c795f03ece8ffe1b1ae0b44}{\string~window\_t}}();}
+\DoxyCodeLine{00124\ \ \ \ \ \};}
+\DoxyCodeLine{00125\ \}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
