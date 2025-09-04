@@ -61,6 +61,7 @@ namespace rgl {
     void draw_shader(shader_program_t sp, vao_t vao, vbo_t vbo);
 
     void update_viewport(const rocket::vec2f_t &size);
+    void update_viewport(const rocket::vec2f_t &offset, const rocket::vec2f_t &size);
 
     shader_program_t cache_compile_shader(const char *vs, const char *fs);
     shader_program_t nocache_compile_shader(const char *vs, const char *fs);

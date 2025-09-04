@@ -61,54 +61,7 @@ namespace rocket {
     }
 
     void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color) {
-        static const char *vsrc = R"(
-            #version 330 core
-
-            layout(location = 0) in vec2 aPos; // -1..1 quad
-            out vec2 fragOffset;
-
-            uniform vec2 u_position; // circle center in pixels
-            uniform float u_radius;  // in pixels
-            uniform vec2 u_viewport; // viewport size
-
-            void main() {
-                fragOffset = aPos * u_radius;
-                vec2 ndcPos = (u_position + fragOffset) / u_viewport * 2.0 - 1.0;
-                ndcPos.y = -ndcPos.y; // flip Y if your window origin is top-left
-                gl_Position = vec4(ndcPos, 0.0, 1.0);
-            }
-        )";
-        static const char *fsrc = R"(
-            #version 330 core
-
-            in vec2 fragOffset;
-            out vec4 FragColor;
-
-            uniform vec4 u_color;
-            uniform float u_radius;
-
-            void main() {
-                float dist = length(fragOffset);
-                float alpha = 1.0 - step(u_radius, dist);
-                FragColor = vec4(u_color.rgb, u_color.a * alpha);
-            }
-        )";
-
-        static std::array<float,12> quad_vertices = {
-            -1,-1,  1,-1,  1,1,
-            -1,-1,  1,1,  -1,1
-        };
-        static std::pair<rgl::vao_t, rgl::vbo_t> circle_vo = rgl::compile_vo(quad_vertices);
-
-        static rgl::shader_program_t pg = rgl::cache_compile_shader(vsrc, fsrc);
-        glUseProgram(pg);
-        glUniform2f(glGetUniformLocation(pg, "u_position"), pos.x, pos.y);
-        glUniform1f(glGetUniformLocation(pg, "u_radius"), radius);
-        auto nm = color.normalize();
-        glUniform4f(glGetUniformLocation(pg, "u_color"), nm.x, nm.y, nm.z, nm.w);
-        glUniform2f(glGetUniformLocation(pg, "u_viewport"), rgl::get_viewport_size().x, rgl::get_viewport_size().y);
-
-        rgl::draw_shader(pg, circle_vo.first, circle_vo.second);
+        draw_rectangle({ pos, { radius * 2, radius * 2 } }, color, 0, 1);
     }
 
     void renderer_2d::draw_line(rocket::vec2f_t start, rocket::vec2f_t end, rocket::rgba_color color, float thickness) {
@@ -343,6 +296,14 @@ namespace rocket {
         this->fps = fps;
     }
 
+    void renderer_2d::set_viewport_size(vec2f_t size) {
+        this->override_viewport_size = size;
+    }
+
+    void renderer_2d::set_viewport_offset(vec2f_t offset) {
+        this->override_viewport_offset = offset;
+    }
+
     void renderer_2d::draw_fps(vec2f_t pos) {
         std::string fps_text = "FPS: " + std::to_string(get_current_fps());
 
@@ -406,16 +367,31 @@ namespace rocket {
         glfwSwapBuffers(this->window->glfw_window);
         int _ = rgl::reset_drawcalls();
 
-        rgl::update_viewport({
-            static_cast<float>(this->window->size.x),
-            static_cast<float>(this->window->size.y)
-        });
+        rocket::vec2f_t final_viewport_position = { 0, 0 };
+        rocket::vec2f_t final_viewport_size     = { -1, -1 };
+
+        // If override size is set, use that, otherwise fallback to window size
+        if (this->override_viewport_size != rocket::vec2f_t{ -1, -1 }) {
+            final_viewport_size = this->override_viewport_size;
+        } else {
+            final_viewport_size = {
+                static_cast<float>(this->window->size.x),
+                static_cast<float>(this->window->size.y)
+            };
+        }
+
+        // If override offset is set, use that
+        if (this->override_viewport_offset != rocket::vec2f_t{ -1, -1 }) {
+            final_viewport_position = this->override_viewport_offset;
+        }
+
+        rgl::update_viewport(final_viewport_position, final_viewport_size);
 
         frame_counter++;
 
         auto err = glGetError();
         if (err != GL_NO_ERROR) {
-            std::cout << util::format_error(reinterpret_cast<const char *>(glewGetErrorString(err)), err, "OpenGL", "fatal");
+            rocket::log_error(reinterpret_cast<const char *>(glewGetErrorString(err)), err, "OpenGL", "fatal");
             this->window->close();
             std::exit(1);
         }
@@ -658,7 +634,7 @@ namespace rocket {
 
     void renderer_2d::close() {
         if (window == nullptr) {
-            std::cout << util::format_error("window already closed", -1, "RocketRuntime", "warn");
+            rocket::log_error("window already closed", -1, "RocketRuntime", "warn");
             return;
         }
         window->close();

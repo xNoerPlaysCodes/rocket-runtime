@@ -392,11 +392,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: \
  /usr/include/c++/15.1.1/bits/out_ptr.h \
  /usr/include/c++/15.1.1/pstl/glue_memory_defs.h \
  /usr/include/c++/15.1.1/pstl/execution_defs.h \
- /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
- /usr/include/c++/15.1.1/utility \
- /usr/include/c++/15.1.1/bits/stl_relops.h \
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \

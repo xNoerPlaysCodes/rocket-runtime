@@ -21,8 +21,10 @@ namespace rocket {
         bool maximized = false;
         bool unfocused = false;
         bool topmost = false;
-        /// @brief This requires very specific circumstances
-        bool transparent = false;
+        /// @brief 0-1 Window Framebuffer Opacity
+        /// @note 0 means Fully Transparent
+        /// @note 1 means Fully Opaque
+        float opacity = 1;
         bool always_run = false;
         bool hidpi = false;
         bool interlacing = false;

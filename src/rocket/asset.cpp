@@ -42,7 +42,7 @@ namespace rocket {
     
     void audio_t::play(float vol, bool loop, std::function<void(audio_t *)> on_finish) {
         if (this->playing) {
-            std::cout << util::format_error("audio is already playing", 1, "openal", "fatal-to-function") << std::endl;
+            rocket::log_error("audio is already playing", 1, "openal", "fatal-to-function");
             return;
         }
 
@@ -67,7 +67,7 @@ namespace rocket {
 
         ALenum error = alGetError();
         if (error != AL_NO_ERROR) {
-            std::cout << util::format_error("failed to play audio: " + std::to_string(error), 1, "openal", "fatal-to-function") << std::endl;
+            rocket::log_error("failed to play audio: " + std::to_string(error), 1, "openal", "fatal-to-function");
             return;
         }
 
@@ -112,7 +112,7 @@ namespace rocket {
         // Re-decode using stb_vorbis
         stb_vorbis* vorbis = stb_vorbis_open_filename(this->path.c_str(), nullptr, nullptr);
         if (!vorbis) {
-            std::cout << util::format_error("seek failed: could not reopen audio", 1, "openal", "fatal-to-function") << std::endl;
+            rocket::log_error("seek failed: could not reopen audio", 1, "openal", "fatal-to-function");
             return;
         }
 
@@ -181,7 +181,7 @@ namespace rocket {
         uint8_t *img_data = stbi_load(path.c_str(), &texture->size.x, &texture->size.y, &texture->channels, 0);
 
         if (!img_data) {
-            std::cout << util::format_error("failed to load texture: " + path, 1, "stb_image", "fatal-to-function") << std::endl;
+            rocket::log_error("failed to load texture: " + path, 1, "stb_image", "fatal-to-function");
             current_id--;
             return -1;
         }
@@ -207,13 +207,13 @@ namespace rocket {
         if (!openal_initialized) {
             ALCdevice *device = alcOpenDevice(nullptr); // Default device
             if (!device) {
-                std::cout << util::format_error("failed to open OpenAL device", 1, "openal", "fatal-to-function") << std::endl;
+                rocket::log_error("failed to open OpenAL device", 1, "openal", "fatal-to-function");
                 return -1;
             }
 
             ALCcontext *context = alcCreateContext(device, nullptr);
             if (!context || !alcMakeContextCurrent(context)) {
-                std::cout << util::format_error("failed to create OpenAL context", 1, "openal", "fatal-to-function") << std::endl;
+                rocket::log_error("failed to create OpenAL context", 1, "openal", "fatal-to-function");
                 if (context) alcDestroyContext(context);
                 alcCloseDevice(device);
                 return - 1;
@@ -231,7 +231,7 @@ namespace rocket {
 
         ALenum error = alGetError();
         if (error != AL_NO_ERROR) {
-            std::cout << util::format_error("failed to generate OpenAL buffer", 1, "openal", "fatal-to-function") << std::endl;
+            rocket::log_error("failed to generate OpenAL buffer", 1, "openal", "fatal-to-function");
             delete audio->buffer;
             audio->buffer = nullptr;
             current_id--;
@@ -244,7 +244,7 @@ namespace rocket {
 
         stb_vorbis* vorbis = stb_vorbis_open_filename(path.c_str(), nullptr, nullptr);
         if (!vorbis) {
-            std::cout << util::format_error("failed to load " + path, 1, "stb_vorbis", "fatal-to-function") << std::endl;
+            rocket::log_error("failed to load " + path, 1, "stb_vorbis", "fatal-to-function");
             delete audio->buffer;
             audio->buffer = nullptr;
             current_id--;
@@ -268,7 +268,7 @@ namespace rocket {
 
         error = alGetError();
         if (error != AL_NO_ERROR) {
-            std::cout << util::format_error("failed to load audio properly: " + path, 1, "openal", "fatal-to-function") << std::endl;
+            rocket::log_error("failed to load audio properly: " + path, 1, "openal", "fatal-to-function");
             alDeleteBuffers(1, audio->buffer);
             delete audio->buffer;
             audio->buffer = nullptr;
@@ -302,7 +302,7 @@ namespace rocket {
 
             stbtt_fontinfo info;
             if (!stbtt_InitFont(&info, rocket_font::FontDefault, 0)) {
-                std::cerr << util::format_error("failed to init font", 1, "stbtt", "fatal-to-function") << std::endl;
+                rocket::log_error("failed to init font", 1, "stbtt", "fatal-to-function");
                 return nullptr;
             }
             int ascent, descent, line_gap;
@@ -336,7 +336,7 @@ namespace rocket {
 
         stbtt_fontinfo info;
         if (!stbtt_InitFont(&info, rocket_font::FontDefault, 0)) {
-            std::cerr << util::format_error("failed to init font", 1, "stbtt", "fatal-to-function") << std::endl;
+            rocket::log_error("failed to init font", 1, "stbtt", "fatal-to-function");
             current_id--;
             return -1;
         }

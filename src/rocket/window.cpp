@@ -37,9 +37,8 @@ namespace rocket {
         return glfwGetPrimaryMonitor();
     }
 
-    auto translate_glfw_bool(bool b) {
-        if (b) return GLFW_TRUE;
-        return GLFW_FALSE;
+    int glfwaltGetBoolean(bool b) {
+        return static_cast<int>(b);
     }
 
     platform_t window_t::get_platform() {
@@ -75,13 +74,13 @@ namespace rocket {
         this->size = size;
         this->title = title;
         if (!glfw_initialized) {
-            glfwSetErrorCallback([](int error, const char* description) { std::cout << util::format_error(description, error, "glfw", "warning"); });
+            glfwSetErrorCallback([](int error, const char* description) { rocket::log_error(description, error, "GLFW::ErrorCallback", "warn"); });
             glfwInit();
             glfw_initialized = true;
         }
         GLFWmonitor *monitor = glfwGetPrimaryMonitor();
         if (monitor == nullptr && flags.fullscreen) {
-            std::cout << util::format_error("failed to get primary monitor", 1, "GLFW", "fatal");
+            rocket::log_error("failed to get primary monitor", 1, "GLFW", "fatal");
             std::exit(1);
         }
 
@@ -89,7 +88,7 @@ namespace rocket {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, flags.gl_version.y);
         float glver = static_cast<float>(flags.gl_version.x) + static_cast<float>(0.1 * flags.gl_version.y);
         if (glver < 3.0f) {
-            rocket::log_error("OpenGL Version 3.0 or higher must be used for a stable environment", 1, "PreGL", "warning");
+            rocket::log_error("OpenGL Version 3.0 or higher must be used for a modern environment", 1, "PreGL", "warning");
         }
         if (glver > 3.1f) {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -110,38 +109,37 @@ namespace rocket {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
 
-        glfwWindowHint(GLFW_DECORATED, translate_glfw_bool(!flags.undecorated));
-        glfwWindowHint(GLFW_VISIBLE, translate_glfw_bool(!flags.hidden));
+        glfwWindowHint(GLFW_DECORATED, glfwaltGetBoolean(!flags.undecorated));
+        glfwWindowHint(GLFW_VISIBLE, glfwaltGetBoolean(!flags.hidden));
 
         if (flags.minimized) {
             glfwIconifyWindow(glfw_window);
         }
 
-        glfwWindowHint(GLFW_MAXIMIZED, translate_glfw_bool(flags.maximized));
-        glfwWindowHint(GLFW_FOCUSED, translate_glfw_bool(!flags.unfocused));
-        glfwWindowHint(GLFW_FLOATING, translate_glfw_bool(flags.topmost));
+        glfwWindowHint(GLFW_MAXIMIZED, glfwaltGetBoolean(flags.maximized));
+        glfwWindowHint(GLFW_FOCUSED, glfwaltGetBoolean(!flags.unfocused));
+        glfwWindowHint(GLFW_FLOATING, glfwaltGetBoolean(flags.topmost));
         if (flags.always_run) {
             rocket::log_error("Always Run is not implemented yet", -1, "window_t::constructor", "warn");
         }
 
-        glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, translate_glfw_bool(flags.transparent));
+        if (flags.opacity < 1.0f) {
+            glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, glfwaltGetBoolean(true));
+            glfwSetWindowOpacity(glfw_window, flags.opacity);
+        }
 
-        glfwWindowHint(GLFW_SCALE_TO_MONITOR, translate_glfw_bool(flags.hidpi));
+        glfwWindowHint(GLFW_SCALE_TO_MONITOR, glfwaltGetBoolean(flags.hidpi));
 
         if (util::is_wayland()) {
-            glfwWindowHintString(GLFW_WAYLAND_APP_ID, "rocketge-game");
+            glfwWindowHintString(GLFW_WAYLAND_APP_ID, ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID);
         } else if (util::is_x11()) {
-            glfwWindowHintString(GLFW_X11_CLASS_NAME, "rocketge-game");
+            glfwWindowHintString(GLFW_X11_CLASS_NAME, ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID);
         }
  
         if (!flags.fullscreen) {
             monitor = nullptr;
         }
-        if (flags.resizable) {
-            glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        } else {
-            glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-        }
+        glfwWindowHint(GLFW_RESIZABLE, glfwaltGetBoolean(flags.resizable));
         // We set Swap Interval at polL_events() -> first_init
         this->flags = flags;
         glfwWindowHint(GLFW_SAMPLES, flags.msaa_samples);
@@ -214,10 +212,10 @@ namespace rocket {
                 if (glfwRawMouseMotionSupported()) {
                     glfwSetInputMode(glfw_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
                 } else {
-                    std::cout << util::format_error("GLFW_RAW_MOUSE_MOTION is not supported on wayland", 1, "RocketRuntime", "warning");
+                    rocket::log_error("GLFW_RAW_MOUSE_MOTION is not supported on wayland", 1, "RocketRuntime", "warning");
                 }
 #ifdef RocketRuntime_DEBUG
-                std::cout << util::format_error("cursor mode 'GLFW_CURSOR_NORMAL' not supported on wayland so 'GLFW_CURSOR_DISABLED' has to be used", 1, "RocketRuntime", "warn");
+                rocket::log_error("cursor mode 'GLFW_CURSOR_NORMAL' not supported on wayland so 'GLFW_CURSOR_DISABLED' has to be used", 1, "RocketRuntime", "warn");
 #endif
             }
         }
@@ -225,7 +223,7 @@ namespace rocket {
 
     void window_t::set_cursor_position(const rocket::vec2d_t& pos) {
         if (util::is_wayland()) {
-            std::cout << util::format_error("setting cursor position is not supported on wayland", 1, "RocketRuntime", "warn");
+            rocket::log_error("setting cursor position is not supported on wayland", 1, "RocketRuntime", "warn");
             return;
         }
         glfwSetCursorPos(glfw_window, pos.x, pos.y);
@@ -351,7 +349,7 @@ namespace rocket {
         if (destructor_called) {
             cxf = "destructor";
         }
-        std::cerr << util::format_log("GLFW window closed", "window_t", cxf, "info");
+        rocket::log("GLFW window closed", "window_t", cxf, "info");
     }
 
     window_t::~window_t() {

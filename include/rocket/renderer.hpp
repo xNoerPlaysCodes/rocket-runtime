@@ -11,8 +11,6 @@
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 #include "asset.hpp"
-#include "rgl.hpp"
-#include "rocket/runtime.hpp"
 #include "types.hpp"
 #include "window.hpp"
 #include "shader.hpp"
@@ -25,7 +23,7 @@ namespace rocket {
         vec2f_t pos = {0,0};
         vec2f_t size = {0,0};
 
-        GLuint gltxid = rGL_TXID_INVALID;
+        GLuint gltxid = 0;
         rgba_color color = {0,0,0,0};
     };
     class renderer_2d {
@@ -45,9 +43,13 @@ namespace rocket {
         std::vector<instanced_quad_t> batch;
         bool batched = false;
 
+        rocket::vec2f_t override_viewport_size = {-1, -1};
+        rocket::vec2f_t override_viewport_offset = {-1, -1};
+
         friend class renderer_3d;
         friend class font_t;
     public:
+        /// @brief Begin frame
         void begin_frame();
         /// @brief Get a contiguous block of pixels
         /// @brief adjusted to viewport size
@@ -126,6 +128,11 @@ namespace rocket {
         void end_scissor_mode();
         /// @brief End frame
         void end_frame();
+        /// @brief Set viewport size
+        void set_viewport_size(vec2f_t size);
+        /// @brief Set viewport offset
+        /// @param zero_pos The offset (zero position)
+        void set_viewport_offset(vec2f_t zero_pos);
         /// @brief Close the renderer2d
         /// @note Does not close the OpenGL Context fully
         void close();

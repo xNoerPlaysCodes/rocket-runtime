@@ -68,13 +68,16 @@ namespace util {
             return "";
         }
         rocket::log_level_t elevel = rocket::log_level_t::fatal;
-        if (level == "warn") {
+        if (level == "warn" || level == "warning") {
             elevel = rocket::log_level_t::warn;
         } else if (level == "fatal") {
             elevel = rocket::log_level_t::fatal;
         } else if (level == "fatal_to_function" || level == "fatal-to-function") {
             elevel = rocket::log_level_t::fatal_to_function;
         } else {
+            if (level != "info" && level != "debug" && level != "trace") {
+                return format_error("Unknown Logger Level: " + level, -42, error_source, "fatal-to-function");
+            }
             return format_log(error, error_source, "", level);
         }
         if (elevel > log_level) {

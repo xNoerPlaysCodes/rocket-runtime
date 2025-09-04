@@ -392,17 +392,5 @@ CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: \
  /usr/include/glm/detail/type_float.hpp \
  /usr/include/glm/ext/quaternion_geometric.inl \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
- /usr/include/c++/15.1.1/utility \
- /usr/include/c++/15.1.1/bits/stl_relops.h \
- /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp

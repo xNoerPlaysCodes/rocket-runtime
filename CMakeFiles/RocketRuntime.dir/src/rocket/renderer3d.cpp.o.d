@@ -386,24 +386,14 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o: \
  /usr/include/c++/15.1.1/bits/out_ptr.h \
  /usr/include/c++/15.1.1/pstl/glue_memory_defs.h \
  /usr/include/c++/15.1.1/pstl/execution_defs.h /usr/include/GLFW/glfw3.h \
- /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
- /usr/include/c++/15.1.1/utility \
- /usr/include/c++/15.1.1/bits/stl_relops.h \
- /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/runtime.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
  /usr/include/c++/15.1.1/iostream /usr/include/glm/glm.hpp \
  /usr/include/c++/15.1.1/cfloat \
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/float.h \

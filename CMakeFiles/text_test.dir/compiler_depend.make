@@ -5,10 +5,8 @@ CMakeFiles/text_test.dir/tests/text_test.cpp.o: tests/text_test.cpp \
   include/rocket/asset.hpp \
   include/rocket/io.hpp \
   include/rocket/renderer.hpp \
-  include/rocket/runtime.hpp \
   include/rocket/types.hpp \
   include/rocket/window.hpp \
-  src/include/rgl.hpp \
   include/rocket/asset.hpp \
   include/rocket/io.hpp \
   include/rocket/macros.hpp \
@@ -224,7 +222,6 @@ CMakeFiles/text_test.dir/tests/text_test.cpp.o: tests/text_test.cpp \
   /usr/include/c++/15.1.1/bits/stl_multimap.h \
   /usr/include/c++/15.1.1/bits/stl_pair.h \
   /usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h \
-  /usr/include/c++/15.1.1/bits/stl_relops.h \
   /usr/include/c++/15.1.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.1.1/bits/stl_tree.h \
   /usr/include/c++/15.1.1/bits/stl_uninitialized.h \
@@ -318,7 +315,6 @@ CMakeFiles/text_test.dir/tests/text_test.cpp.o: tests/text_test.cpp \
   /usr/include/c++/15.1.1/type_traits \
   /usr/include/c++/15.1.1/typeinfo \
   /usr/include/c++/15.1.1/unordered_map \
-  /usr/include/c++/15.1.1/utility \
   /usr/include/c++/15.1.1/vector \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -896,8 +892,6 @@ CMakeFiles/text_test.dir/tests/text_test.cpp.o:
 
 /usr/include/c++/15.1.1/ext/alloc_traits.h:
 
-/usr/include/c++/15.1.1/exception:
-
 /usr/include/glm/ext/matrix_clip_space.hpp:
 
 /usr/include/c++/15.1.1/backward/auto_ptr.h:
@@ -930,6 +924,8 @@ bin/libRocketRuntime.so:
 
 /usr/include/c++/15.1.1/bits/stl_algobase.h:
 
+/usr/include/c++/15.1.1/exception:
+
 /usr/include/bits/types/sigset_t.h:
 
 /usr/include/glm/ext/matrix_double3x4.hpp:
@@ -949,6 +945,10 @@ include/rocket/asset.hpp:
 /usr/include/c++/15.1.1/bits/uses_allocator_args.h:
 
 /usr/include/bits/types/__fpos64_t.h:
+
+/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/time_members.h:
+
+/usr/include/c++/15.1.1/bits/ostream_insert.h:
 
 /usr/include/glm/ext/scalar_constants.inl:
 
@@ -973,10 +973,6 @@ include/rocket/asset.hpp:
 /usr/include/bits/thread-shared-types.h:
 
 /usr/include/bits/struct_mutex.h:
-
-/usr/include/c++/15.1.1/ext/aligned_buffer.h:
-
-/usr/include/bits/stdlib-bsearch.h:
 
 /usr/include/glm/ext/matrix_float2x4.hpp:
 
@@ -1036,15 +1032,27 @@ include/rocket/asset.hpp:
 
 /usr/include/c++/15.1.1/bits/stl_function.h:
 
-/usr/include/glm/detail/type_mat2x4.inl:
+/usr/include/c++/15.1.1/tr1/beta_function.tcc:
 
-/usr/include/bits/posix_opt.h:
+/usr/include/bits/types/__fpos_t.h:
 
-/usr/include/c++/15.1.1/bits/alloc_traits.h:
+/usr/include/asm/unistd_64.h:
 
-/usr/include/bits/atomic_wide_counter.h:
+/usr/include/bits/long-double.h:
 
-/usr/include/c++/15.1.1/bits/localefwd.h:
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/types/struct_sched_param.h:
+
+/usr/include/c++/15.1.1/bits/enable_special_members.h:
+
+/usr/include/glm/ext/vector_bool3_precision.hpp:
+
+/usr/include/c++/15.1.1/bits/string_view.tcc:
+
+/usr/include/bits/types/mbstate_t.h:
+
+/usr/include/bits/semaphore.h:
 
 /usr/include/c++/15.1.1/format:
 
@@ -1067,6 +1075,10 @@ include/rocket/asset.hpp:
 /usr/include/c++/15.1.1/bit:
 
 /usr/include/GL/glext.h:
+
+/usr/lib/libxcb.so.1:
+
+/usr/include/bits/endian.h:
 
 /usr/include/asm-generic/errno-base.h:
 
@@ -1122,6 +1134,20 @@ include/rocket/asset.hpp:
 
 /usr/include/bits/mathcalls-helper-functions.h:
 
+/usr/include/c++/15.1.1/bits/stl_iterator.h:
+
+/usr/include/c++/15.1.1/bits/locale_facets_nonio.h:
+
+/usr/include/glm/detail/type_mat2x4.inl:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/c++/15.1.1/bits/alloc_traits.h:
+
+/usr/include/bits/atomic_wide_counter.h:
+
+/usr/include/c++/15.1.1/bits/localefwd.h:
+
 include/rocket/shader.hpp:
 
 /usr/include/c++/15.1.1/bits/node_handle.h:
@@ -1162,12 +1188,6 @@ include/rocket/stb_truetype.h:
 
 /usr/include/assert.h:
 
-/usr/include/stdc-predef.h:
-
-/usr/include/glm/ext/matrix_float2x2_precision.hpp:
-
-include/rocket/window.hpp:
-
 /usr/include/bits/pthread_stack_min-dynamic.h:
 
 /usr/include/c++/15.1.1/backward/binders.h:
@@ -1176,47 +1196,11 @@ include/rocket/window.hpp:
 
 /usr/include/bits/types/timer_t.h:
 
-/usr/include/bits/types/mbstate_t.h:
+/usr/include/stdc-predef.h:
 
-/usr/include/bits/semaphore.h:
+/usr/include/glm/ext/matrix_float2x2_precision.hpp:
 
-src/include/rgl.hpp:
-
-/usr/include/bits/waitflags.h:
-
-/usr/include/bits/types/struct_sched_param.h:
-
-/usr/include/c++/15.1.1/bits/enable_special_members.h:
-
-/usr/include/glm/ext/vector_bool3_precision.hpp:
-
-/usr/include/c++/15.1.1/bits/string_view.tcc:
-
-/usr/include/c++/15.1.1/tr1/beta_function.tcc:
-
-/usr/include/bits/types/__fpos_t.h:
-
-/usr/include/asm/unistd_64.h:
-
-/usr/include/bits/long-double.h:
-
-/usr/lib/libxcb.so.1:
-
-/usr/include/bits/endian.h:
-
-/usr/include/c++/15.1.1/bits/locale_facets_nonio.h:
-
-/usr/include/c++/15.1.1/bits/stl_iterator.h:
-
-/usr/include/asm/types.h:
-
-/usr/include/bits/types/cookie_io_functions_t.h:
-
-/usr/include/c++/15.1.1/charconv:
-
-/usr/include/glm/ext/vector_bool4_precision.hpp:
-
-/usr/include/alloca.h:
+include/rocket/window.hpp:
 
 /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
 
@@ -1227,6 +1211,16 @@ include/rocket/macros.hpp:
 /usr/include/c++/15.1.1/bits/atomic_base.h:
 
 /usr/include/bits/libc-header-start.h:
+
+/usr/include/asm/types.h:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
+
+/usr/include/c++/15.1.1/charconv:
+
+/usr/include/glm/ext/vector_bool4_precision.hpp:
+
+/usr/include/alloca.h:
 
 /usr/include/bits/stdint-intn.h:
 
@@ -1297,8 +1291,6 @@ tests/text_test.cpp:
 /usr/include/bits/types/struct_timeval.h:
 
 /usr/include/c++/15.1.1/bits/locale_classes.h:
-
-/usr/include/c++/15.1.1/utility:
 
 /usr/include/asm/unistd.h:
 
@@ -1564,12 +1556,6 @@ include/rocket/runtime.hpp:
 
 /usr/include/c++/15.1.1/bits/stl_multimap.h:
 
-/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/time_members.h:
-
-/usr/include/c++/15.1.1/bits/ostream_insert.h:
-
-/usr/include/c++/15.1.1/bits/stl_relops.h:
-
 /usr/include/c++/15.1.1/bits/shared_ptr_atomic.h:
 
 /usr/include/c++/15.1.1/bits/stl_tempbuf.h:
@@ -1617,3 +1603,7 @@ include/rocket/runtime.hpp:
 /usr/include/c++/15.1.1/cstddef:
 
 /usr/include/c++/15.1.1/cstdio:
+
+/usr/include/bits/stdlib-bsearch.h:
+
+/usr/include/c++/15.1.1/ext/aligned_buffer.h:

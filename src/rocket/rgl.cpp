@@ -18,7 +18,7 @@
         { \
             GLenum err = glGetError(); \
             if (err != GL_NO_ERROR) { \
-                std::cerr << "[GL ERROR] " << #x << " -> " << util::format_error("OpenGL error", err, "OpenGL", "warn") << std::endl; \
+                rocket::log_error("[GL_CHECK::ERROR_CAUGHT]", err, "OpenGL", "warn"); \
             } \
         }
 #else
@@ -31,6 +31,7 @@ namespace rgl {
     std::pair<vao_t, vbo_t> textVO = {0, 0};
 
     rocket::vec2f_t viewport_size;
+    rocket::vec2f_t viewport_offset = { 0, 0 };
     int max_tx_size = 0;
 
     void init_vo_all() {
@@ -583,6 +584,15 @@ namespace rgl {
     void update_viewport(const rocket::vec2f_t &size) {
         viewport_size = size;
         glViewport(0, 0, size.x, size.y);
+    }
+
+    void update_viewport(const rocket::vec2f_t &offset, const rocket::vec2f_t &size) {
+        viewport_size   = size;
+        viewport_offset = offset;
+
+        int flipped_y = size.y - (offset.y + size.y);
+
+        glViewport(offset.x, flipped_y, size.x, size.y);
     }
 
     rocket::vec2f_t get_viewport_size() {

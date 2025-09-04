@@ -6,4 +6,6 @@
 // #define ROCKETGE__DEPRECATED [[deprecated]]
 #define ROCKETGE__DEPRECATED
 
+#define ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID "rge-game"
+
 #endif // ROCKETGE__MACROS_HPP

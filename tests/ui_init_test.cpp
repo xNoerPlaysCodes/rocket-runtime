@@ -38,7 +38,7 @@ void draw_info_util(astro::button_t &button, astro::draw_info_t &info) {
 
 int main() {
     rocket::windowflags_t flags;
-    flags.gl_version = { 3, 0 };
+    flags.resizable = false;
     rocket::window_t window({ 1280, 720 }, "RocketGE - UI Init Test", flags);
     rocket::renderer_2d r(&window, 60);
 
@@ -63,13 +63,13 @@ int main() {
                 .text_color = rocket::rgb_color::black(),
                 .border = {
                     .width = 0,
-                    .radius = 0.3,
+                    .radius = 0.25,
                     .color = clr_blank()
                 }
             };
             astro::draw_info_t info_btn1 = info;
             astro::draw_info_t info_btn2 = info;
-            info.border.radius = 0.15;
+            info.border.radius = 0.05;
             draw_info_util(b1, info_btn1);
             draw_info_util(b2, info_btn2);
             info.color = rocket::rgba_color::white();

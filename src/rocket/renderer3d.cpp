@@ -14,22 +14,13 @@
 #include <thread>
 #include <vector>
 
-#include <glm/glm.hpp>                    // core GLM types like vec2, mat4
-#include <glm/gtc/matrix_transform.hpp>   // for glm::translate, glm::scale, glm::ortho
-#include <glm/gtc/type_ptr.hpp>           // for glm::value_ptr if you prefer using that
-
-#define DEBUG_GL_CHECK_ERROR(x) \
-    x; \
-    { \
-        GLenum err = glGetError(); \
-        if (err != GL_NO_ERROR) { \
-            std::cerr << "[GL ERROR] " << #x << " -> " << util::format_error("OpenGL error", err, "OpenGL", "warn") << std::endl; \
-        } \
-    }
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace rocket {
     renderer_3d::renderer_3d(window_t *window, camera3d_t *cam, int fps) : window(window), r2d(window), shellr2d(&r2d) {
-        rocket::log("renderer_3d is under construction", "renderer_3d", "construction", "info");
+        rocket::log("renderer_3d is under construction", "renderer_3d", "constructor", "info");
         this->window = window;
         this->cam = cam;
         this->fps = fps;
@@ -41,14 +32,14 @@ namespace rocket {
 
             // Must make sure OpenGL context is current before glewInit
             if (!window || !window->glfw_window) {
-                std::cout << util::format_error("Invalid glfw_window pointer or not initialized", -1, "RocketRuntime", "fatal");
+                rocket::log_error("Invalid glfw_window pointer or not initialized", -1, "RocketRuntime", "fatal");
                 std::exit(1);
             }
 
             GLenum err = glewInit();
             if (err != GLEW_OK) {
                 const GLubyte* err_str = glewGetErrorString(err);
-                std::cerr << util::format_error(reinterpret_cast<const char*>(err_str), err, "glew", "fatal");
+                rocket::log_error(reinterpret_cast<const char*>(err_str), err, "glew", "fatal");
                 std::exit(1);
             }
 
@@ -438,7 +429,7 @@ namespace rocket {
 
         auto err = glGetError();
         if (err != GL_NO_ERROR) {
-            std::cout << util::format_error(reinterpret_cast<const char *>(glewGetErrorString(err)), err, "OpenGL", "fatal");
+            rocket::log_error(reinterpret_cast<const char *>(glewGetErrorString(err)), err, "OpenGL", "fatal");
             this->window->close();
             std::exit(1);
         }
