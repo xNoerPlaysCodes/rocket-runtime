@@ -503,6 +503,150 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: src/astro/astroui.cpp \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h
 
+CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o: src/headeronlyimpl.cpp \
+  include/rocket/stb_truetype.h \
+  src/include/stb_image.h \
+  /usr/include/alloca.h \
+  /usr/include/assert.h \
+  /usr/include/bits/atomic_wide_counter.h \
+  /usr/include/bits/byteswap.h \
+  /usr/include/bits/endian.h \
+  /usr/include/bits/endianness.h \
+  /usr/include/bits/floatn-common.h \
+  /usr/include/bits/floatn.h \
+  /usr/include/bits/flt-eval-method.h \
+  /usr/include/bits/fp-fast.h \
+  /usr/include/bits/fp-logb.h \
+  /usr/include/bits/iscanonical.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/libm-simd-decl-stubs.h \
+  /usr/include/bits/local_lim.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/math-vector.h \
+  /usr/include/bits/mathcalls-helper-functions.h \
+  /usr/include/bits/mathcalls-macros.h \
+  /usr/include/bits/mathcalls-narrow.h \
+  /usr/include/bits/mathcalls.h \
+  /usr/include/bits/posix1_lim.h \
+  /usr/include/bits/posix2_lim.h \
+  /usr/include/bits/pthread_stack_min-dynamic.h \
+  /usr/include/bits/pthreadtypes-arch.h \
+  /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/select.h \
+  /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-least.h \
+  /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/stdlib-float.h \
+  /usr/include/bits/struct_mutex.h \
+  /usr/include/bits/struct_rwlock.h \
+  /usr/include/bits/thread-shared-types.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
+  /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
+  /usr/include/bits/types/__sigset_t.h \
+  /usr/include/bits/types/clock_t.h \
+  /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
+  /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/types/struct_timespec.h \
+  /usr/include/bits/types/struct_timeval.h \
+  /usr/include/bits/types/time_t.h \
+  /usr/include/bits/types/timer_t.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/uintn-identity.h \
+  /usr/include/bits/uio_lim.h \
+  /usr/include/bits/waitflags.h \
+  /usr/include/bits/waitstatus.h \
+  /usr/include/bits/wchar.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/bits/xopen_lim.h \
+  /usr/include/c++/15.1.1/bit \
+  /usr/include/c++/15.1.1/bits/concept_check.h \
+  /usr/include/c++/15.1.1/bits/cpp_type_traits.h \
+  /usr/include/c++/15.1.1/bits/exception.h \
+  /usr/include/c++/15.1.1/bits/exception_defines.h \
+  /usr/include/c++/15.1.1/bits/functexcept.h \
+  /usr/include/c++/15.1.1/bits/iterator_concepts.h \
+  /usr/include/c++/15.1.1/bits/move.h \
+  /usr/include/c++/15.1.1/bits/predefined_ops.h \
+  /usr/include/c++/15.1.1/bits/ptr_traits.h \
+  /usr/include/c++/15.1.1/bits/ranges_cmp.h \
+  /usr/include/c++/15.1.1/bits/requires_hosted.h \
+  /usr/include/c++/15.1.1/bits/specfun.h \
+  /usr/include/c++/15.1.1/bits/std_abs.h \
+  /usr/include/c++/15.1.1/bits/stl_algobase.h \
+  /usr/include/c++/15.1.1/bits/stl_construct.h \
+  /usr/include/c++/15.1.1/bits/stl_iterator.h \
+  /usr/include/c++/15.1.1/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/15.1.1/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15.1.1/bits/stl_pair.h \
+  /usr/include/c++/15.1.1/bits/utility.h \
+  /usr/include/c++/15.1.1/bits/version.h \
+  /usr/include/c++/15.1.1/cmath \
+  /usr/include/c++/15.1.1/compare \
+  /usr/include/c++/15.1.1/concepts \
+  /usr/include/c++/15.1.1/cstdlib \
+  /usr/include/c++/15.1.1/debug/assertions.h \
+  /usr/include/c++/15.1.1/debug/debug.h \
+  /usr/include/c++/15.1.1/ext/numeric_traits.h \
+  /usr/include/c++/15.1.1/ext/type_traits.h \
+  /usr/include/c++/15.1.1/limits \
+  /usr/include/c++/15.1.1/math.h \
+  /usr/include/c++/15.1.1/new \
+  /usr/include/c++/15.1.1/pstl/pstl_config.h \
+  /usr/include/c++/15.1.1/stdlib.h \
+  /usr/include/c++/15.1.1/tr1/bessel_function.tcc \
+  /usr/include/c++/15.1.1/tr1/beta_function.tcc \
+  /usr/include/c++/15.1.1/tr1/ell_integral.tcc \
+  /usr/include/c++/15.1.1/tr1/exp_integral.tcc \
+  /usr/include/c++/15.1.1/tr1/gamma.tcc \
+  /usr/include/c++/15.1.1/tr1/hypergeometric.tcc \
+  /usr/include/c++/15.1.1/tr1/legendre_function.tcc \
+  /usr/include/c++/15.1.1/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/15.1.1/tr1/poly_hermite.tcc \
+  /usr/include/c++/15.1.1/tr1/poly_laguerre.tcc \
+  /usr/include/c++/15.1.1/tr1/riemann_zeta.tcc \
+  /usr/include/c++/15.1.1/tr1/special_function_util.h \
+  /usr/include/c++/15.1.1/type_traits \
+  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
+  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
+  /usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/endian.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/limits.h \
+  /usr/include/linux/limits.h \
+  /usr/include/math.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
+  /usr/include/sys/cdefs.h \
+  /usr/include/sys/select.h \
+  /usr/include/sys/types.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/limits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/xmmintrin.h
+
 CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o: src/quark/physics.cpp \
   include/rocket/types.hpp \
   include/quark/physics.hpp \
@@ -1251,15 +1395,11 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: src/rocket/asset.cpp \
   /usr/include/unistd.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/emmintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/limits.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/mm_malloc.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/mmintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/xmmintrin.h
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h
 
 CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: src/rocket/font.cpp \
   include/rocket/asset.hpp \
@@ -1761,6 +1901,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: src/rocket/font.cpp \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/syslimits.h
 
 CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: src/rocket/io.cpp \
+  include/rocket/types.hpp \
   include/rocket/asset.hpp \
   include/rocket/io.hpp \
   include/rocket/macros.hpp \
@@ -2264,16 +2405,18 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: src/rocket/io.cpp \
 
 CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: src/rocket/renderer.cpp \
   include/rocket/asset.hpp \
-  include/rocket/stb_truetype.h \
-  include/rocket/types.hpp \
-  include/rocket/asset.hpp \
   include/rocket/io.hpp \
   include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
+  include/rocket/stb_truetype.h \
   include/rocket/types.hpp \
   include/rocket/window.hpp \
+  include/rocket/io.hpp \
+  include/rocket/renderer.hpp \
+  include/rocket/runtime.hpp \
+  include/rocket/types.hpp \
   src/include/rgl.hpp \
   src/rocket/util.hpp \
   /usr/include/AL/al.h \
@@ -2541,7 +2684,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: src/rocket/renderer.cpp 
   /usr/include/c++/15.1.1/limits \
   /usr/include/c++/15.1.1/locale \
   /usr/include/c++/15.1.1/map \
-  /usr/include/c++/15.1.1/math.h \
   /usr/include/c++/15.1.1/memory \
   /usr/include/c++/15.1.1/mutex \
   /usr/include/c++/15.1.1/new \
@@ -2556,7 +2698,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: src/rocket/renderer.cpp 
   /usr/include/c++/15.1.1/span \
   /usr/include/c++/15.1.1/sstream \
   /usr/include/c++/15.1.1/stdexcept \
-  /usr/include/c++/15.1.1/stdlib.h \
   /usr/include/c++/15.1.1/stop_token \
   /usr/include/c++/15.1.1/streambuf \
   /usr/include/c++/15.1.1/string \
@@ -5420,6 +5561,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o: src/rocket/types.cpp \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stdint.h
 
 CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o: src/rocket/util.cpp \
+  include/rocket/runtime.hpp \
   include/rocket/asset.hpp \
   include/rocket/io.hpp \
   include/rocket/macros.hpp \
@@ -6464,6 +6606,7 @@ bin/libRocketRuntime.so: /usr/lib/crti.o \
   /usr/lib/libm.so.6 \
   /usr/lib/libmvec.so.1 \
   CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o \
+  CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o \
@@ -7055,6 +7198,10 @@ src/astro/astroui.cpp:
 
 /usr/include/c++/15.1.1/chrono:
 
+/usr/include/glm/ext/quaternion_common.hpp:
+
+/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++config.h:
+
 /usr/include/asm/posix_types.h:
 
 /usr/include/c++/15.1.1/bits/sstream.tcc:
@@ -7389,6 +7536,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o:
 
 /usr/include/ctype.h:
 
+CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o:
+
 /usr/include/glm/gtc/type_ptr.inl:
 
 /usr/include/glm/common.hpp:
@@ -7583,10 +7732,6 @@ src/rocket/renderer3d.cpp:
 
 /usr/include/glm/ext/vector_double3_precision.hpp:
 
-/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/c++config.h:
-
-/usr/include/glm/ext/quaternion_common.hpp:
-
 /usr/include/c++/15.1.1/cmath:
 
 /usr/include/glm/ext/vector_double4_precision.hpp:
@@ -7693,25 +7838,15 @@ include/quark/physics.hpp:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/stddef.h:
 
-/usr/include/semaphore.h:
-
-include/quark/types.hpp:
-
-src/include/FontDefault.h:
-
-src/include/stb_vorbis.h:
-
-/usr/include/AL/alc.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/emmintrin.h:
-
-/usr/include/c++/15.1.1/math.h:
-
-/usr/include/c++/15.1.1/algorithm:
+src/headeronlyimpl.cpp:
 
 /usr/include/c++/15.1.1/stdlib.h:
 
 /usr/include/string.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/emmintrin.h:
+
+/usr/include/AL/alc.h:
 
 /usr/include/c++/15.1.1/bits/uniform_int_dist.h:
 
@@ -7720,6 +7855,18 @@ src/include/stb_vorbis.h:
 /usr/include/glm/ext/vector_int3.hpp:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/xmmintrin.h:
+
+/usr/include/semaphore.h:
+
+include/quark/types.hpp:
+
+src/include/FontDefault.h:
+
+src/include/stb_vorbis.h:
+
+/usr/include/c++/15.1.1/math.h:
+
+/usr/include/c++/15.1.1/algorithm:
 
 src/rocket/font.cpp:
 

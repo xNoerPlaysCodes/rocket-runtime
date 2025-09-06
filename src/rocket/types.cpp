@@ -47,10 +47,18 @@ namespace rocket {
     rgba_color rgba_color::blue() { return { 0, 0, 255, 255 }; }
     rgba_color rgba_color::yellow() { return { 255, 255, 0, 255 }; }
 
+    inline rgba_color::operator rgb_color() const {
+        return { this->x, this->y, this->z };
+    }
+
     rgb_color rgb_color::white() { return { 255, 255, 255 }; }
     rgb_color rgb_color::black() { return { 0, 0, 0 }; }
     rgb_color rgb_color::red() { return { 255, 0, 0 }; }
     rgb_color rgb_color::green() { return { 0, 255, 0 }; }
     rgb_color rgb_color::blue() { return { 0, 0, 255 }; }
     rgb_color rgb_color::yellow() { return { 255, 255, 0 }; }
+
+    inline rgb_color::operator rgba_color() const {
+        return { this->x, this->y, this->z, 255 };
+    }
 }

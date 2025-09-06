@@ -1,4 +1,5 @@
 #include "util.hpp"
+#include "rocket/runtime.hpp"
 #include <algorithm>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
@@ -14,6 +15,7 @@ std::vector<std::function<void()>> on_close_listeners = {};
 std::vector<std::function<void(rocket::io::key_event_t)>> _key_listeners = {};
 std::vector<std::function<void(rocket::io::mouse_event_t)>> _mouse_listeners = {};
 std::vector<std::function<void(rocket::io::mouse_move_event_t)>> _mouse_move_listeners = {};
+std::vector<std::function<void(rocket::io::scroll_offset_event_t)>> _scroll_offset_listeners = {};
 
 std::unordered_map<rocket::io::keyboard_key, rocket::io::keystate_t> kstates;
 std::unordered_map<rocket::io::mouse_button, rocket::io::keystate_t> mstates;
@@ -23,7 +25,11 @@ std::stack<char> chars_typed;
 namespace util {
 
     bool is_glinit = false;
-    rocket::log_level_t log_level = rocket::log_level_t::fatal;
+#ifdef RocketRuntime_DEBUG
+    rocket::log_level_t log_level = rocket::log_level_t::all;
+#else
+    rocket::log_level_t log_level = rocket::log_level_t::info;
+#endif
 
     bool is_wayland() {
 #ifdef __linux__
@@ -74,13 +80,15 @@ namespace util {
             elevel = rocket::log_level_t::fatal;
         } else if (level == "fatal_to_function" || level == "fatal-to-function") {
             elevel = rocket::log_level_t::fatal_to_function;
+        } else if (level == "all") {
+            elevel = rocket::log_level_t::all;
         } else {
             if (level != "info" && level != "debug" && level != "trace") {
                 return format_error("Unknown Logger Level: " + level, -42, error_source, "fatal-to-function");
             }
             return format_log(error, error_source, "", level);
         }
-        if (elevel > log_level) {
+        if (elevel < log_level) {
             return "";
         }
         std::stringstream ss;
@@ -97,17 +105,19 @@ namespace util {
             log_cb(log, class_file_library_source, function_source, level);
             return "";
         }
-        rocket::log_level_t elvl;
+        rocket::log_level_t elvl = rocket::log_level_t::info;
         if (level == "info") {
             elvl = rocket::log_level_t::info;
         } else if (level == "debug") {
             elvl = rocket::log_level_t::debug;
         } else if (level == "trace") {
             elvl = rocket::log_level_t::trace;
+        } else if (level == "all") {
+            elvl = rocket::log_level_t::all;
         } else {
             return format_error(log, -1, class_file_library_source + "::" + function_source, level);
         }
-        if (elvl > log_level) {
+        if (elvl < log_level) {
             return "";
         }
         std::stringstream ss;
@@ -127,23 +137,7 @@ namespace util {
         lerror_cb = callback;
     }
 
-    void gl_setup_perspective(rocket::vec3f_t size, float fov) {
-        float aspect = size.x / size.y;
-        fov = glm::radians(std::clamp(fov, 1.f, 179.f));
-        float near_plane = 0.1f;
-        float far_plane = 100.0f;
-
-        glm::mat4 projection = glm::perspective(fov, aspect, near_plane, far_plane);
-        // GLint u_projection = glGetUniformLocation(shader_program, "u_projection");
-        // glUniformMatrix4fv(u_projection, 1, GL_FALSE, glm::value_ptr(projection));
-        // ^^ Shader ^^
-    }
-
-    void gl_setup_ortho(rocket::vec2i_t size) {
-        glViewport(0, 0, size.x, size.y);
-    }
-
-    void close_callback(GLFWwindow *) {
+    void close_callback(GLFWwindow *glfw_window__ignored) {
         for (auto l : on_close_listeners) {
             l();
         }
@@ -171,6 +165,10 @@ namespace util {
 
     std::vector<std::function<void(rocket::io::mouse_move_event_t)>> &mouse_move_listeners() {
         return _mouse_move_listeners;
+    }
+
+    std::vector<std::function<void(rocket::io::scroll_offset_event_t)>> &scroll_offset_listeners() {
+        return _scroll_offset_listeners;
     }
 
     bool key_down(rocket::io::keyboard_key key) {
@@ -217,6 +215,12 @@ namespace util {
 
     void dispatch_event(rocket::io::mouse_move_event_t event) {
         for (auto l : _mouse_move_listeners) {
+            l(event);
+        }
+    }
+
+    void dispatch_event(rocket::io::scroll_offset_event_t event) {
+        for (auto l : _scroll_offset_listeners) {
             l(event);
         }
     }

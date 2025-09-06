@@ -9,8 +9,9 @@ int main() {
     rocket::renderer_2d r(&window, 60);
 
     rocket::vec2f_t position = { 100, 100 };
+    rocket::vec2f_t old_position = position;
 
-    rocket::io::add_listener([&position, &window](rocket::io::key_event_t event) {
+    rocket::io::add_listener([&](rocket::io::key_event_t event) {
         if (!event.state.down()) return;
 
         if (event.key == rocket::io::keyboard_key::w) {
@@ -23,15 +24,17 @@ int main() {
             position.x += 10;
         }
 
-        position.x = std::clamp(position.x, 0.f, (float) window.get_size().x);
-        position.y = std::clamp(position.y, 0.f, (float) window.get_size().y);
+        old_position = position;
+        position = rocket::vec2f_t{
+            std::clamp(position.x, 0.f, (float) window.get_size().x),
+            std::clamp(position.y, 0.f, (float) window.get_size().y)
+        };
     });
-
     while (window.is_running()) {
         r.begin_frame();
         r.clear();
         {
-            r.draw_circle(position, 50, { 255, 0, 0, 255 });
+            r.draw_circle(position, 48, rocket::rgba_color::red());
             r.draw_fps();
         }
         r.end_frame();

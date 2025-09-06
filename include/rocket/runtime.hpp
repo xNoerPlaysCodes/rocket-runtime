@@ -37,12 +37,13 @@
 namespace rocket {
     /// @brief Log Level
     enum class log_level_t : int {
-        trace = 0,
-        debug = 1,
-        info = 2,
-        warn = 3,
-        fatal_to_function = 4,
-        fatal = 5,
+        all = 0,
+        trace = 1,
+        debug = 2,
+        info = 3,
+        warn = 4,
+        fatal_to_function = 5,
+        fatal = 6,
     };
 
     /// @brief Sets minimum log level to be printed to the console
@@ -78,6 +79,20 @@ namespace rocket {
             std::string function_source,
             std::string level)>;
 
+    /// @brief OpenGL::ContextVerifier Error Callback
+    /// @param std::string type
+    /// @param std::string severity
+    /// @param int id
+    /// @param std::string message
+    /// @param std::string source
+    using gl_error_callback_t = std::function<void(
+            std::string type,
+            std::string severity,
+            int id,
+            std::string message,
+            std::string source
+    )>;
+
     /// @brief Sets log callback
     void set_log_callback(log_callback_t);
 
@@ -86,6 +101,12 @@ namespace rocket {
 
     /// @brief Log using RocketLogger or callback
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);
+
+    /// @brief Set OpenGL Error callback
+    void set_opengl_error_callback(gl_error_callback_t);
+
+    /// @brief Get OpenGL Error callback
+    gl_error_callback_t get_opengl_error_callback();
 }
 
 #endif

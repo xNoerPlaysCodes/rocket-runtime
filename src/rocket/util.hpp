@@ -17,9 +17,6 @@ namespace util {
     void set_log_error_callback(rocket::log_error_callback_t);
     void set_log_callback(rocket::log_callback_t);
 
-    void gl_setup_ortho(rocket::vec2i_t size);
-    void gl_setup_perspective(rocket::vec3f_t size, float fov);
-
     void close_callback(GLFWwindow *);
     std::vector<std::function<void()>> &get_on_close_listeners();
 
@@ -29,10 +26,12 @@ namespace util {
     std::vector<std::function<void(rocket::io::key_event_t)>> &key_listeners();
     std::vector<std::function<void(rocket::io::mouse_event_t)>> &mouse_listeners();
     std::vector<std::function<void(rocket::io::mouse_move_event_t)>> &mouse_move_listeners();
+    std::vector<std::function<void(rocket::io::scroll_offset_event_t)>> &scroll_offset_listeners();
 
     void dispatch_event(rocket::io::key_event_t);
     void dispatch_event(rocket::io::mouse_event_t);
     void dispatch_event(rocket::io::mouse_move_event_t);
+    void dispatch_event(rocket::io::scroll_offset_event_t);
 
     bool glinitialized();
     void glinit(bool);

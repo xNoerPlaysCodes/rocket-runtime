@@ -195,6 +195,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: \
  /usr/include/c++/15.1.1/bits/unicode-data.h \
  /usr/include/c++/15.1.1/bits/ostream.tcc /usr/include/c++/15.1.1/istream \
  /usr/include/c++/15.1.1/bits/istream.tcc \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp \
@@ -341,7 +343,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: \
  /usr/include/glm/detail/type_float.hpp \
  /usr/include/glm/ext/quaternion_geometric.inl \
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h \
  /usr/include/AL/al.h /usr/include/c++/15.1.1/chrono \
  /usr/include/c++/15.1.1/bits/chrono.h /usr/include/c++/15.1.1/ratio \
@@ -395,6 +396,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \

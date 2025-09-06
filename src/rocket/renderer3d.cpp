@@ -65,11 +65,6 @@ namespace rocket {
             glGenVertexArrays(1, &dummyVAO);
             glBindVertexArray(dummyVAO);
         }
-        util::gl_setup_perspective({
-            (float) window->size.x,
-            (float) window->size.y,
-            cam->render_distance
-        }, cam->fov);
     }
 
     void renderer_3d::begin_frame() {

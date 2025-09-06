@@ -342,6 +342,30 @@ src/astro/astroui.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.s
 .PHONY : src/astro/astroui.cpp.s
 
+src/headeronlyimpl.o: src/headeronlyimpl.cpp.o
+.PHONY : src/headeronlyimpl.o
+
+# target to build an object file
+src/headeronlyimpl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o
+.PHONY : src/headeronlyimpl.cpp.o
+
+src/headeronlyimpl.i: src/headeronlyimpl.cpp.i
+.PHONY : src/headeronlyimpl.i
+
+# target to preprocess a source file
+src/headeronlyimpl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.i
+.PHONY : src/headeronlyimpl.cpp.i
+
+src/headeronlyimpl.s: src/headeronlyimpl.cpp.s
+.PHONY : src/headeronlyimpl.s
+
+# target to generate assembly for a file
+src/headeronlyimpl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.s
+.PHONY : src/headeronlyimpl.cpp.s
+
 src/quark/physics.o: src/quark/physics.cpp.o
 .PHONY : src/quark/physics.o
 
@@ -828,6 +852,9 @@ help:
 	@echo "... src/astro/astroui.o"
 	@echo "... src/astro/astroui.i"
 	@echo "... src/astro/astroui.s"
+	@echo "... src/headeronlyimpl.o"
+	@echo "... src/headeronlyimpl.i"
+	@echo "... src/headeronlyimpl.s"
 	@echo "... src/quark/physics.o"
 	@echo "... src/quark/physics.i"
 	@echo "... src/quark/physics.s"

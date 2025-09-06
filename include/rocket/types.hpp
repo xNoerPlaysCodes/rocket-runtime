@@ -46,6 +46,46 @@ namespace rocket {
             return *this;
         }
 
+        vec2<T> operator+(const T &other) {
+            return { x + other, y + other };
+        }
+
+        vec2<T> operator-(const T &other) {
+            return { x - other, y - other };
+        }
+
+        vec2<T> operator*(const T &other) {
+            return { x * other, y * other };
+        }
+
+        vec2<T> operator/(const T &other) {
+            return { x / other, y / other };
+        }
+
+        vec2<T> operator+=(const T &other) {
+            x += other;
+            y += other;
+            return *this;
+        }
+
+        vec2<T> operator-=(const T &other) {
+            x -= other;
+            y -= other;
+            return *this;
+        }
+
+        vec2<T> operator*=(const T &other) {
+            x *= other;
+            y *= other;
+            return *this;
+        }
+
+        vec2<T> operator/=(const T &other) {
+            x /= other;
+            y /= other;
+            return *this;
+        }
+
         bool operator==(const vec2<T>& other) const {
             return x == other.x && y == other.y;
         }
@@ -97,6 +137,50 @@ namespace rocket {
             x /= other.x;
             y /= other.y;
             z /= other.z;
+            return *this;
+        }
+
+        vec3<T> operator+(const T &other) {
+            return { x + other, y + other, z + other };
+        }
+
+        vec3<T> operator-(const T &other) {
+            return { x - other, y - other, z - other };
+        }
+
+        vec3<T> operator*(const T &other) {
+            return { x * other, y * other, z * other };
+        }
+
+        vec3<T> operator/(const T &other) {
+            return { x / other, y / other, z / other };
+        }
+
+        vec3<T> operator+=(const T &other) {
+            x += other;
+            y += other;
+            z += other;
+            return *this;
+        }
+
+        vec3<T> operator-=(const T &other) {
+            x -= other;
+            y -= other;
+            z -= other;
+            return *this;
+        }
+
+        vec3<T> operator*=(const T &other) {
+            x *= other;
+            y *= other;
+            z *= other;
+            return *this;
+        }
+
+        vec3<T> operator/=(const T &other) {
+            x /= other;
+            y /= other;
+            z /= other;
             return *this;
         }
 
@@ -160,6 +244,38 @@ namespace rocket {
             z /= other.z;
             w /= other.w;
             return *this;
+        }
+
+        vec4<T> operator+(const T &other) {
+            return { x + other, y + other, z + other, w + other };
+        }
+
+        vec4<T> operator-(const T &other) {
+            return { x - other, y - other, z - other, w - other };
+        }
+
+        vec4<T> operator*(const T &other) {
+            return { x * other, y * other, z * other, w * other };
+        }
+
+        vec4<T> operator/(const T &other) {
+            return { x / other, y / other, z / other, w / other };
+        }
+
+        vec4<T> operator+=(const T &other) {
+            return { x += other, y += other, z += other, w += other };
+        }
+
+        vec4<T> operator-=(const T &other) {
+            return { x -= other, y -= other, z -= other, w -= other };
+        }
+
+        vec4<T> operator*=(const T &other) {
+            return { x *= other, y *= other, z *= other, w *= other };
+        }
+
+        vec4<T> operator/=(const T &other) {
+            return { x /= other, y /= other, z /= other, w /= other };
         }
 
         T& operator[](int i) {
@@ -308,8 +424,11 @@ namespace rocket {
         bool intersects(const ibounding_box_3d& other) const;
     };
 
+    struct rgb_color;
+
     struct rgba_color {
-        uint8_t x, y, z, w;
+        uint8_t x = 0, y = 0, z = 0;
+        uint8_t w = 255;
 
         static rgba_color white();
         static rgba_color black();
@@ -366,6 +485,8 @@ namespace rocket {
                 .w = static_cast<float>(w) / 255.0f
             };
         }
+
+        operator struct rgb_color() const;
     };
 
     struct rgb_color {
@@ -409,6 +530,8 @@ namespace rocket {
                 .z = 0,
             };
         }
+
+        operator struct rgba_color() const;
     };
 
     using vec2i_t       =       vec2<int32_t>;

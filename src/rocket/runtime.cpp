@@ -5,6 +5,10 @@
 namespace rocket {
     void set_log_level(log_level_t level) { util::set_log_level(level); }
 
+    gl_error_callback_t glerror_cb_default = [](std::string, std::string, int, std::string, std::string) {};
+
+    gl_error_callback_t glerror_cb = nullptr;
+
     std::string log_level_to_str(log_level_t level) {
         switch (level) {
             case log_level_t::trace:
@@ -37,5 +41,13 @@ namespace rocket {
 
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
         std::cout << util::format_log(log, class_file_library_source, function_source, level);
+    }
+
+    void set_opengl_error_callback(gl_error_callback_t cb) {
+        glerror_cb = cb;
+    }
+
+    gl_error_callback_t get_opengl_error_callback() {
+        return glerror_cb == nullptr ? glerror_cb_default : glerror_cb;
     }
 }

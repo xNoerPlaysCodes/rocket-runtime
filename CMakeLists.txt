@@ -59,6 +59,9 @@ add_library(${PROJECT_NAME}
 
     src/rocket/rgl.cpp
 
+    # Header-Only Libraries Implementation
+    src/headeronlyimpl.cpp
+
     # AstroUI
     ${ASTRO_SOURCES}
 

@@ -2,6 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/RocketRuntime.dir/link.d"
   "CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o"
   "CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.d"
+  "CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o"
+  "CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.d"
   "CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o"
   "CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.d"
   "CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o"

@@ -404,10 +404,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../include/stb_image.h \
- /usr/include/c++/15.1.1/stdlib.h /usr/include/string.h \
- /usr/include/strings.h /usr/include/c++/15.1.1/math.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/emmintrin.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/xmmintrin.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/mmintrin.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.1.1/include/mm_malloc.h \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../include/stb_vorbis.h
+ /usr/include/c++/15.1.1/stdlib.h \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../include/stb_vorbis.h \
+ /usr/include/string.h /usr/include/strings.h \
+ /usr/include/c++/15.1.1/math.h

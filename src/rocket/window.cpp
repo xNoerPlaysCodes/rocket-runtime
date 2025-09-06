@@ -4,7 +4,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "rocket/io.hpp"
 #include "rocket/runtime.hpp"
+#include "rocket/types.hpp"
 #include "util.hpp"
 
 namespace rocket {
@@ -157,6 +159,12 @@ namespace rocket {
             ::util::push_formatted_char_typed(c);
         });
 
+        glfwSetScrollCallback(this->glfw_window, [](GLFWwindow* window, double xoffset, double yoffset) {
+            rocket::io::scroll_offset_event_t event;
+            event.offset = { xoffset, yoffset };
+            util::dispatch_event(event);
+        });
+
         int sx, sy;
         auto mode = glfwGetVideoMode(glfwaltGetMonitorWithCursor());
         sx = mode->width;
@@ -265,6 +273,7 @@ namespace rocket {
             io::key_event_t event;
             event.key = static_cast<io::keyboard_key>(i);
             event.state = keys[i];
+            event.scancode = glfwGetKeyScancode(i);
             util::dispatch_event(event);
         }
         
@@ -273,8 +282,6 @@ namespace rocket {
             if (buttons[i].current != new_state) {
                 buttons[i].previous = buttons[i].current;
                 buttons[i].current = new_state;
-
-                // Dispatch only on change
             } else {
                 buttons[i].previous = buttons[i].current;
             }
@@ -290,8 +297,8 @@ namespace rocket {
         glfwGetCursorPos(glfw_window, &mouse_x, &mouse_y);
         if (mouse_x != last_mouse_x || mouse_y != last_mouse_y) {
             io::mouse_move_event_t event;
-            event.pos.x = mouse_x;
-            event.pos.y = mouse_y;
+            event.pos = { mouse_x, mouse_y };
+            event.old_pos = { last_mouse_x, last_mouse_y };
             util::dispatch_event(event);
             last_mouse_x = mouse_x;
             last_mouse_y = mouse_y;

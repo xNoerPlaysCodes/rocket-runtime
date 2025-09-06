@@ -26,6 +26,15 @@ namespace rocket {
         GLuint gltxid = 0;
         rgba_color color = {0,0,0,0};
     };
+    struct renderer_flags_t {
+        bool fxaa_simplified = false;
+    };
+    enum class render_mode_t {
+        /// @brief Enables a preloaded simplified FXAA Shader
+        /// @note HEAVILY BROKEN, rendering with this is just ...
+        ///         all over the place... :(
+        fxaa
+    };
     class renderer_2d {
     private:
         window_t *window;
@@ -46,11 +55,17 @@ namespace rocket {
         rocket::vec2f_t override_viewport_size = {-1, -1};
         rocket::vec2f_t override_viewport_offset = {-1, -1};
 
+        std::vector<render_mode_t> active_render_modes;
+        
+        renderer_flags_t flags;
+
         friend class renderer_3d;
         friend class font_t;
     public:
         /// @brief Begin frame
         void begin_frame();
+        /// @brief Begin render mode
+        void begin_render_mode(render_mode_t);
         /// @brief Get a contiguous block of pixels
         /// @brief adjusted to viewport size
         std::vector<rgba_color> get_framebuffer();
@@ -87,6 +102,13 @@ namespace rocket {
         /// @param color Color
         void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 });
 
+        /// @brief Draw a polygon
+        /// @param pos Position
+        /// @param radius Radius
+        /// @param color Color
+        /// @note Uses [sides] many triangles
+        void draw_polygon(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 }, int sides = 3, float rotation = 0.f);
+
         /// @brief Draw a line
         /// @param p1 Point 1
         /// @param p2 Point 2
@@ -105,6 +127,11 @@ namespace rocket {
         /// @param text Text
         /// @param position Position
         void draw_text(rocket::text_t &text, vec2f_t position);
+
+        /// @brief Draw a singular pixel
+        /// @param pos Position
+        /// @param color Color
+        void draw_pixel(rocket::vec2f_t pos, rocket::rgba_color color);
     public:
         /// @brief All drawcalls will be redirected to an internal buffer
         /// @brief and be drawn later
@@ -126,6 +153,8 @@ namespace rocket {
         void set_fps(int fps = 60);
         /// @brief End scissor mode
         void end_scissor_mode();
+        /// @brief End render mode
+        void end_render_mode(render_mode_t mode);
         /// @brief End frame
         void end_frame();
         /// @brief Set viewport size
@@ -159,7 +188,7 @@ namespace rocket {
         /// @brief Initialize the renderer
         /// @param window Window
         /// @param fps FPS = 60
-        renderer_2d(window_t *window, int fps = 60);
+        renderer_2d(window_t *window, int fps = 60, renderer_flags_t flags = {});
     public:
         ~renderer_2d();
     };

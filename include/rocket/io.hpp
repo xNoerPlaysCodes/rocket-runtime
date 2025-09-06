@@ -3,6 +3,7 @@
 
 #include "types.hpp"
 #include <functional>
+#include <string>
 namespace rocket {
     namespace io {
         enum class mouse_button : int {
@@ -64,11 +65,18 @@ namespace rocket {
             bool released() const;
             /// @brief Checks if the key is down
             bool down()     const;
+
+            static keystate_t make_pressed();
+            static keystate_t make_released();
+            static keystate_t make_down();
+
+            bool operator==(const keystate_t& other) const { return current == other.current && previous == other.previous; }
         };
 
         struct key_event_t {
             keyboard_key key;
             keystate_t state;
+            int scancode = 0;
         };
 
         struct mouse_event_t {
@@ -77,7 +85,12 @@ namespace rocket {
         };
 
         struct mouse_move_event_t {
-            rocket::vec2<double> pos;
+            rocket::vec2d_t old_pos = { 0, 0 };
+            rocket::vec2d_t pos = { 0, 0 };
+        };
+
+        struct scroll_offset_event_t {
+            rocket::vec2d_t offset = { 0, 0 };
         };
 
         /// @brief Add a key event listener
@@ -86,6 +99,8 @@ namespace rocket {
         void add_listener(std::function<void(mouse_event_t)>);
         /// @brief Add a mouse move event listener
         void add_listener(std::function<void(mouse_move_event_t)>);
+        /// @brief Add a scroll offset event listener
+        void add_listener(std::function<void(scroll_offset_event_t)>);
 
         // IMMD IO
 
@@ -96,10 +111,16 @@ namespace rocket {
         /// @brief Checks if a key is released
         bool key_released(keyboard_key key);
 
+        /// @brief Checks if a key is a particular state
+        bool key_state(keyboard_key key, keystate_t state);
+
         /// @brief Get mouse position
         rocket::vec2d_t mouse_pos();
         /// @brief Get mouse position... in float
         rocket::vec2f_t mouse_pos_f();
+
+        /// @brief Get mouse bounding box
+        rocket::fbounding_box mouse_bbox();
 
         /// @brief Checks if a mouse button is down
         bool mouse_down(mouse_button button);
@@ -107,6 +128,9 @@ namespace rocket {
         bool mouse_pressed(mouse_button button);
         /// @brief Checks if a mouse button is released
         bool mouse_released(mouse_button button);
+
+        /// @brief Checks if a mouse button is a particular state
+        bool mouse_state(mouse_button button, keystate_t state);
 
         /// @brief Get char typed (formatted)
         char get_formatted_char_typed();

@@ -6,6 +6,7 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <sstream>
 #include <string>
 #include "rocket/asset.hpp"
 #include "rocket/types.hpp"
@@ -18,18 +19,44 @@
         { \
             GLenum err = glGetError(); \
             if (err != GL_NO_ERROR) { \
-                rocket::log_error("[GL_CHECK::ERROR_CAUGHT]", err, "OpenGL", "warn"); \
+                rocket::log_error("[GL_CHECK] Error Caught at function: " + std::string(#x), err, "OpenGL", "warn"); \
             } \
         }
 #else
     #define GL_CHECK(x) x
 #endif
 
+namespace glutil {
+    std::string glenum_str(GLenum e) {
+        switch (e) {
+            default: return "GLENUM_STR__CASE_NOT_HANDLED";
+            // Blend Stuff
+            case GL_ZERO: return "GL_ZERO";
+            case GL_SRC_COLOR: return "GL_SRC_COLOR";
+            case GL_ONE_MINUS_SRC_COLOR: return "GL_ONE_MINUS_SRC_COLOR";
+            case GL_DST_COLOR: return "GL_DST_COLOR";
+            case GL_ONE_MINUS_DST_COLOR: return "GL_ONE_MINUS_DST_COLOR";
+            case GL_SRC_ALPHA: return "GL_SRC_ALPHA";
+            case GL_ONE_MINUS_SRC_ALPHA: return "GL_ONE_MINUS_SRC_ALPHA";
+            case GL_DST_ALPHA: return "GL_DST_ALPHA";
+            case GL_ONE_MINUS_DST_ALPHA: return "GL_ONE_MINUS_DST_ALPHA";
+            case GL_SRC_ALPHA_SATURATE: return "GL_SRC_ALPHA_SATURATE";
+            case GL_CONSTANT_COLOR: return "GL_CONSTANT_COLOR";
+            case GL_ONE_MINUS_CONSTANT_COLOR: return "GL_ONE_MINUS_CONSTANT_COLOR";
+            case GL_CONSTANT_ALPHA: return "GL_CONSTANT_ALPHA";
+            case GL_ONE_MINUS_CONSTANT_ALPHA: return "GL_ONE_MINUS_CONSTANT_ALPHA";
+            case GL_SRC1_COLOR: return "GL_SRC1_COLOR";
+            case GL_ONE_MINUS_SRC1_COLOR: return "GL_ONE_MINUS_SRC1_COLOR";
+        }
+    }
+}
+
 namespace rgl {
     std::pair<vao_t, vbo_t> rectVO = {0, 0};
     std::pair<vao_t, vbo_t> textureVO = {0, 0};
     std::pair<vao_t, vbo_t> textVO = {0, 0};
 
+    fbo_t active_fbo = rGL_FBO_INVALID;
     rocket::vec2f_t viewport_size;
     rocket::vec2f_t viewport_offset = { 0, 0 };
     int max_tx_size = 0;
@@ -106,6 +133,30 @@ namespace rgl {
         return { vao, vbo };
     }
 
+    std::pair<vao_t, vbo_t> compile_vo(
+        const std::vector<float> &vertices,
+        GLenum draw_type,
+        int stride_size
+    ) {
+        vao_t vao;
+        vbo_t vbo;
+
+        GL_CHECK(glGenVertexArrays(1, &vao));
+        GL_CHECK(glGenBuffers(1, &vbo));
+
+        GL_CHECK(glBindVertexArray(vao));
+        GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, vbo));
+
+        GL_CHECK(glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), draw_type));
+
+        GL_CHECK(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, stride_size * sizeof(float), nullptr));
+        GL_CHECK(glEnableVertexAttribArray(0));
+        GL_CHECK(glBindVertexArray(0));
+        GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
+
+        return { vao, vbo };
+    }
+
     std::pair<vao_t, vbo_t> get_text_vos() {
         return textVO;
     }
@@ -118,8 +169,14 @@ namespace rgl {
         return textureVO;
     }
 
-    std::string bool_to_str(bool b) {
-        return std::string("[") + (b ? "TRUE" : "FALSE") + "]";
+    std::string bool_to_str(bool b, bool caps = true) { 
+        const std::string ctrue_s = "TRUE";
+        const std::string cfalse_s = "FALSE";
+        const std::string strue_s = "true";
+        const std::string sfalse_s = "false";
+        std::string true_s = caps ? ctrue_s : strue_s;
+        std::string false_s = caps ? cfalse_s : sfalse_s;
+        return std::string("[") + (b ? true_s : false_s) + "]";
     }
 
     std::vector<std::string> init_gl(const rocket::vec2f_t viewport_size) {
@@ -172,11 +229,72 @@ namespace rgl {
             );
             glDebugMessageCallback(
                 [](GLenum source, GLenum type, GLuint id, GLenum severity,
-                   GLsizei length, const GLchar* message, const void* userParam) {
-                        rocket::log_error(message, -5, "OpenGL::ContextVerifier", "fatal-to-function");
-                }, nullptr);
+   GLsizei length, const GLchar* message, const void* userParam) 
+{
+    std::string srcStr;
+    switch (source) {
+        case GL_DEBUG_SOURCE_API:             srcStr = "API"; break;
+        case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   srcStr = "Window System"; break;
+        case GL_DEBUG_SOURCE_SHADER_COMPILER: srcStr = "Shader Compiler"; break;
+        case GL_DEBUG_SOURCE_THIRD_PARTY:     srcStr = "Third Party"; break;
+        case GL_DEBUG_SOURCE_APPLICATION:     srcStr = "Application"; break;
+        case GL_DEBUG_SOURCE_OTHER:           srcStr = "Other"; break;
+    }
+
+    std::string typeStr;
+    switch (type) {
+        case GL_DEBUG_TYPE_ERROR:               typeStr = "Error"; break;
+        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: typeStr = "Deprecated Behavior"; break;
+        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  typeStr = "Undefined Behavior"; break;
+        case GL_DEBUG_TYPE_PORTABILITY:         typeStr = "Portability"; break;
+        case GL_DEBUG_TYPE_PERFORMANCE:         typeStr = "Performance"; break;
+        case GL_DEBUG_TYPE_MARKER:              typeStr = "Marker"; break;
+        case GL_DEBUG_TYPE_PUSH_GROUP:          typeStr = "Push Group"; break;
+        case GL_DEBUG_TYPE_POP_GROUP:           typeStr = "Pop Group"; break;
+        case GL_DEBUG_TYPE_OTHER:               typeStr = "Other"; break;
+    }
+
+    std::string sevStr;
+    switch (severity) {
+        case GL_DEBUG_SEVERITY_HIGH:         sevStr = "High"; break;
+        case GL_DEBUG_SEVERITY_MEDIUM:       sevStr = "Medium"; break;
+        case GL_DEBUG_SEVERITY_LOW:          sevStr = "Low"; break;
+        case GL_DEBUG_SEVERITY_NOTIFICATION: sevStr = "Notification"; break;
+    }
+
+    glstate_t state = rgl::save_state();
+
+    std::vector<std::string> log_messages = {
+        "Error Caught at:",
+        "   Type: " + typeStr,
+        "   Severity: " + sevStr,
+        "   ID: " + std::to_string(id),
+        "   Message: " + std::string(message),
+        "   Source: " + srcStr,
+        "",
+        "OpenGL State:",
+        "   Blend: " + bool_to_str(state.blend_mode.enabled) + " ...",
+        "     SRC RGB: " + glutil::glenum_str(state.blend_mode.src_rgb),
+        "     DST RGB: " + glutil::glenum_str(state.blend_mode.dst_rgb),
+        "     SRC Alpha: " + glutil::glenum_str(state.blend_mode.src_alpha),
+        "     DST Alpha: " + glutil::glenum_str(state.blend_mode.dst_alpha),
+        "   Bound Framebuffer:",
+        "     fboID: " + std::to_string(state.bound_framebuffer.fbo),
+        "     fboCOLORTEX: " + std::to_string(state.bound_framebuffer.color_tex),
+        "   Bound VertexObject:",
+        "     vaoID: " + std::to_string(state.bound_vo.first),
+        "     vboID: " + std::to_string(state.bound_vo.second),
+        "   Active Shader ID: " + std::to_string(state.active_shader),
+    };
+
+    for (auto &l : log_messages) {
+        rocket::log_error(l, -5, "OpenGL::ContextVerifier", "fatal-to-function");
+    }
+    rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
+}, nullptr);
+
         }
-#ifdef RocketRuntime_DEBUG
+#ifdef RocketRuntime_VerifyShaderLoading
         shader_program_t prg = get_paramaterized_quad({0.f, 0.f}, {1.f, 1.f}, rocket::rgba_color::red(), 0.f, 0.f);
         draw_shader(prg, shader_use_t::rect);
 
@@ -197,19 +315,29 @@ namespace rgl {
         glBindTexture(GL_TEXTURE_2D, 0);
 #endif
 
+        auto gl_get_integer = [](GLenum e) -> int {
+            int val;
+            glGetIntegerv(e, &val);
+            return val;
+        };
+
         float glversion = 0;
-        int major, minor;
-        glGetIntegerv(GL_MAJOR_VERSION, &major);
-        glGetIntegerv(GL_MINOR_VERSION, &minor);
+        int major = gl_get_integer(GL_MAJOR_VERSION);
+        int minor = gl_get_integer(GL_MINOR_VERSION);
         glversion = major + minor / 10.f;
+
+        int max_available_tx_units = gl_get_integer(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+
+        int loaded_extensions = gl_get_integer(GL_NUM_EXTENSIONS);
 
         // Collect init logs
         std::vector<std::string> logs = {
             "GL Info:",
-            "- GL Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))),
-            "- GL Vendor: "  + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
-            "- Using GL Version: " + std::to_string(major) + "." + std::to_string(minor),
+            "- Driver Highest Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))),
+            "- Vendor: "  + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
+            "- In-use Version: " + std::to_string(major) + "." + std::to_string(minor),
             "- GLSL Version: " + std::string((const char *) glGetString(GL_SHADING_LANGUAGE_VERSION)),
+            "- Loaded " + std::to_string(loaded_extensions) + " extensions",
 
             "- GL Activated Functions:",
             "   - GL_BLEND: [" + (gl_blend ? std::string("TRUE") : std::string("FALSE")) + "]",
@@ -217,7 +345,7 @@ namespace rgl {
             "   - GL_BLEND_FUNC: [" + gl_blendfunc + "]",
             "   - GL_FRAMEBUFFER_SRGB: [" + (gl_srgb ? std::string("TRUE") : std::string("FALSE")) + "]",
 
-            "- GL VAO/VBO Pairs Created:",
+            "- GL VAO/VBO Default Pairs Created:",
             "   - rectVAO/VBO: [" + (rectVO.first != 0 && rectVO.second != 0
                                     ? std::string("TRUE") : std::string("FALSE")) + "]",
             "   - txVAO/VBO: [" + (textureVO.first != 0 && textureVO.second != 0
@@ -228,15 +356,72 @@ namespace rgl {
             "- rGL Features:",
             "   - OpenGL::ContextVerifier: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
             "   - Drawcall Tracking: " + bool_to_str(true),
+            "   - FBO Support: " +
+#ifdef rGL__FEATURE_SUPPORT_FBO
+                bool_to_str(true),
+#else
+                bool_to_str(false),
+#endif
 
             "- GL GPU-Specific Values:",
             "   - GL_MAX_TEXTURE_SIZE: " + std::to_string(max_tx_size) + " x " + std::to_string(max_tx_size),
+            "   - GL_MAX_TEXTURE_IMAGE_UNITS: " + std::to_string(max_available_tx_units),
 
             "Viewport Info:",
             "- Viewport Size: " + std::to_string(viewport_size.x) + " x " + std::to_string(viewport_size.y)
         };
 
         return logs;
+    }
+
+    bool is_active_any_fbo() {
+        GLint fbo = 0;
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
+
+        return fbo != 0;
+    }
+
+    fbo_t create_fbo() {
+        fbo_t fbo;
+        glGenFramebuffers(1, &fbo.fbo);
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo.fbo);
+
+        glGenTextures(1, &fbo.color_tex);
+        glBindTexture(GL_TEXTURE_2D, fbo.color_tex);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, viewport_size.x, viewport_size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fbo.color_tex, 0);
+
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+            rocket::log_error("Failed to create framebuffer", -1, "OpenGL::Framebuffer", "fatal");
+            std::exit(-1);
+        }
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        return fbo;
+    }
+
+    void use_fbo(fbo_t f) {
+        glBindFramebuffer(GL_FRAMEBUFFER, f.fbo);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, f.color_tex);
+
+        active_fbo = f;
+    }
+
+    void delete_fbo(fbo_t f) {
+        glDeleteFramebuffers(1, &f.fbo);
+        glDeleteTextures(1, &f.color_tex);
+    }
+
+    void reset_to_default_fbo() {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        active_fbo = rGL_FBO_INVALID;
+    }
+
+    fbo_t get_active_fbo() {
+        return active_fbo;
     }
 
     rgl::shader_program_t load_shader_generic(const char *vsrc, const char *fsrc) {
@@ -251,7 +436,7 @@ namespace rgl {
             glGetShaderiv(vs, GL_INFO_LOG_LENGTH, &logLen);
             std::string log(logLen, '\0');
             glGetShaderInfoLog(vs, logLen, nullptr, log.data());
-            std::cerr << "[GL SHADER ERROR] Vertex shader compile failed:\n" << log << std::endl;
+            rocket::log_error("Vertex shader compile failed: " + log, -1, "OpenGL::ShaderCompiler", "fatal-to-function");
         }
 
         GLuint fs = GL_CHECK(glCreateShader(GL_FRAGMENT_SHADER));
@@ -265,7 +450,7 @@ namespace rgl {
             glGetShaderiv(fs, GL_INFO_LOG_LENGTH, &logLen);
             std::string log(logLen, '\0');
             glGetShaderInfoLog(fs, logLen, nullptr, log.data());
-            std::cerr << "[GL SHADER ERROR] Fragment shader compile failed:\n" << log << std::endl;
+            rocket::log_error("Fragment shader compile failed: " + log, -1, "OpenGL::ShaderCompiler", "fatal-to-function");
         }
 
         rgl::shader_program_t pg = GL_CHECK(glCreateProgram());
@@ -279,12 +464,11 @@ namespace rgl {
             glGetProgramiv(pg, GL_INFO_LOG_LENGTH, &logLen);
             std::string log(logLen, '\0');
             glGetProgramInfoLog(pg, logLen, nullptr, log.data());
-            std::cerr << "[GL SHADER ERROR] Program link failed:\n" << log << std::endl;
+            rocket::log_error("Shader program link failed: " + log, -1, "OpenGL::ShaderCompiler", "fatal-to-function");
         }
 
         GL_CHECK(glDeleteShader(vs));
         GL_CHECK(glDeleteShader(fs));
-
         return pg;
     }
 
@@ -304,6 +488,10 @@ namespace rgl {
 
     rgl::shader_program_t nocache_compile_shader(const char *vsrc, const char *fsrc) {
         return load_shader_generic(vsrc, fsrc);
+    }
+
+    void log_default_shader_compiled(std::string shader_name) {
+        rocket::log("Shader '" + shader_name + "' compiled successfully", "rgl", "lazyshader", "info");
     }
 
     rgl::shader_program_t load_shader_textured_rect() {
@@ -338,74 +526,76 @@ namespace rgl {
                 // Distance from nearest edge
                 vec2 cornerDist = min(local_px, u_size - local_px);
 
-            // Distance from corner arc
-            float dist = length(cornerDist - vec2(radius_px));
+                // Distance from corner arc
+                float dist = length(cornerDist - vec2(radius_px));
 
-            // Anti-alias edge
-            float edge_thickness = 1.0;
-            float alpha = 1.0;
+                // Anti-alias edge
+                float edge_thickness = 1.0;
+                float alpha = 1.0;
 
-            float corner_mask = step(cornerDist.x, radius_px) * step(cornerDist.y, radius_px);
-            alpha = mix(alpha, 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist), corner_mask);
+                float corner_mask = step(cornerDist.x, radius_px) * step(cornerDist.y, radius_px);
+                alpha = mix(alpha, 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist), corner_mask);
 
-            vec4 texColor = texture(u_texture, v_uv);
-            FragColor = vec4(texColor.rgb, texColor.a * alpha);
-        })";
+                vec4 texColor = texture(u_texture, v_uv);
+                FragColor = vec4(texColor.rgb, texColor.a * alpha);
+            }
+        )";
 
-        return load_shader_generic(vert_src, frag_src);
+        shader_program_t pg = load_shader_generic(vert_src, frag_src);
+        log_default_shader_compiled("textured_rect");
+        return pg;
     }
 
     rgl::shader_program_t load_shader_rect() {
-            const char* vert_src = R"(
+        const char* vert_src = R"(
+            #version 330 core
+            layout(location = 0) in vec2 aPos; // 0→1 quad coords
+            uniform mat4 u_transform;
+            out vec2 v_local;
 
-#version 330 core
-    layout(location = 0) in vec2 aPos; // 0→1 quad coords
-    uniform mat4 u_transform;
-    out vec2 v_local;
+            void main() {
+                v_local = aPos; // normalized quad coordinates
+                gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
+            }
+        )";
 
-    void main() {
-        v_local = aPos; // normalized quad coordinates
-        gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
-    }
+        const char* frag_src = R"(
+            #version 330 core
+            in vec2 v_local;
+            out vec4 FragColor;
 
-            )";
+            uniform vec4 u_color;   // RGBA 0–1
+            uniform float u_radius; // fraction 0..1 of min size
+            uniform vec2 u_size;    // rect size in pixels
 
-            const char* frag_src = R"(
-    #version 330 core
-    in vec2 v_local;
-    out vec4 FragColor;
+            void main() {
+                vec2 local_px = v_local * u_size;
 
-    uniform vec4 u_color;   // RGBA 0–1
-    uniform float u_radius; // fraction 0..1 of min size
-    uniform vec2 u_size;    // rect size in pixels
+                // Convert fraction to pixel radius
+                float radius_px = u_radius * 0.5 * min(u_size.x, u_size.y);
 
-    void main() {
-        vec2 local_px = v_local * u_size;
+                // Distance from nearest edge
+                vec2 cornerDist = min(local_px, u_size - local_px);
 
-        // Convert fraction to pixel radius
-        float radius_px = u_radius * 0.5 * min(u_size.x, u_size.y);
+                // Distance from corner arc
+                float dist = length(cornerDist - vec2(radius_px));
 
-        // Distance from nearest edge
-        vec2 cornerDist = min(local_px, u_size - local_px);
-
-        // Distance from corner arc
-        float dist = length(cornerDist - vec2(radius_px));
-
-        // Anti-aliased alpha edge
-        float edge_thickness = 1.0; // in pixels
-        float alpha = 1.0;
+                // Anti-aliased alpha edge
+                float edge_thickness = 1.0; // in pixels
+                float alpha = 1.0;
 
 
-        float corner_mask = step(cornerDist.x, radius_px) * step(cornerDist.y, radius_px);
-        alpha = mix(alpha, 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist), corner_mask);
+                float corner_mask = step(cornerDist.x, radius_px) * step(cornerDist.y, radius_px);
+                alpha = mix(alpha, 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist), corner_mask);
 
 
-        FragColor = vec4(u_color.rgb, u_color.a * alpha);
-    }
+                FragColor = vec4(u_color.rgb, u_color.a * alpha);
+            }
+        )";
 
-            )";
-
-        return load_shader_generic(vert_src, frag_src);
+        shader_program_t pg = load_shader_generic(vert_src, frag_src);
+        log_default_shader_compiled("rect");
+        return pg;
     }
 
     rgl::shader_program_t load_shader_text() {
@@ -439,12 +629,16 @@ namespace rgl {
             }
         )";
 
-        return load_shader_generic(vert_src, frag_src);
+        shader_program_t pg = load_shader_generic(vert_src, frag_src);
+        log_default_shader_compiled("text");
+        return pg;
     }
 
     rgl::shader_program_t init_shader(rgl::shader_use_t use) {
         static std::unordered_map<rgl::shader_use_t, rgl::shader_program_t> shader_cache;
-
+        if (shader_cache.find(use) != shader_cache.end()) {
+            return shader_cache[use];
+        }
         switch (use) {
             case rgl::shader_use_t::rect:
                 shader_cache[use] = load_shader_rect();
@@ -608,8 +802,10 @@ namespace rgl {
     }
 
     static int drawcalls = 0;
+    static int tricount = 0;
     void gl_draw_arrays(GLenum mode, GLint first, GLsizei count) {
         drawcalls++;
+        tricount += count / 3;
         GL_CHECK(glDrawArrays(mode, first, count));
     }
 
@@ -621,5 +817,126 @@ namespace rgl {
 
     int read_drawcalls() {
         return drawcalls;
+    }
+
+    int reset_tricount() {
+        int ret = read_tricount();
+        tricount = 0;
+        return ret;
+    }
+
+    int read_tricount() {
+        return tricount;
+    }
+
+    rgl::shader_program_t get_fxaa_simplified_shader() {
+        const char *vsrc = R"(
+            #version 330 core
+            layout(location = 0) in vec2 aPos;
+            layout(location = 1) in vec2 aTexCoord;
+
+            out vec2 vTexCoord;
+
+            void main() {
+                vTexCoord = aTexCoord;
+                gl_Position = vec4(aPos, 0.0, 1.0);
+            }
+        )";
+        const char *fsrc = R"(
+            #version 330 core
+            in vec2 vTexCoord;
+            out vec4 FragColor;
+
+            uniform sampler2D uScene;
+            uniform vec2 uResolution; // screen width/height
+
+            // FXAA settings
+            #define FXAA_REDUCE_MIN   (1.0/128.0)
+            #define FXAA_REDUCE_MUL   (1.0/8.0)  // was 1/8
+            #define FXAA_SPAN_MAX     8.0       // was 8.0
+
+            void main() {
+                vec3 rgbNW = texture(uScene, vTexCoord + vec2(-1.0, -1.0) / uResolution).rgb;
+                vec3 rgbNE = texture(uScene, vTexCoord + vec2( 1.0, -1.0) / uResolution).rgb;
+                vec3 rgbSW = texture(uScene, vTexCoord + vec2(-1.0,  1.0) / uResolution).rgb;
+                vec3 rgbSE = texture(uScene, vTexCoord + vec2( 1.0,  1.0) / uResolution).rgb;
+                vec3 rgbM  = texture(uScene, vTexCoord).rgb;
+
+                vec3 luma = vec3(0.299, 0.587, 0.114);
+
+                float lumaNW = dot(rgbNW, luma);
+                float lumaNE = dot(rgbNE, luma);
+                float lumaSW = dot(rgbSW, luma);
+                float lumaSE = dot(rgbSE, luma);
+                float lumaM  = dot(rgbM,  luma);
+
+                float lumaMin = min(lumaM, min(min(lumaNW, lumaNE), min(lumaSW, lumaSE)));
+                float lumaMax = max(lumaM, max(max(lumaNW, lumaNE), max(lumaSW, lumaSE)));
+
+                vec2 dir;
+                dir.x = -((lumaNW + lumaNE) - (lumaSW + lumaSE));
+                dir.y =  ((lumaNW + lumaSW) - (lumaNE + lumaSE));
+
+                float dirReduce = max((lumaNW + lumaNE + lumaSW + lumaSE) * (0.25 * FXAA_REDUCE_MUL), FXAA_REDUCE_MIN);
+                float rcpDirMin = 1.0 / (min(abs(dir.x), abs(dir.y)) + dirReduce);
+                dir = clamp(dir * rcpDirMin, vec2(-FXAA_SPAN_MAX), vec2(FXAA_SPAN_MAX)) / uResolution;
+
+                vec3 rgbA = 0.5 * (
+                    texture(uScene, vTexCoord + dir * (1.0/3.0 - 0.5)).rgb +
+                    texture(uScene, vTexCoord + dir * (2.0/3.0 - 0.5)).rgb
+                );
+                vec3 rgbB = rgbA * 0.5 + 0.25 * (
+                    texture(uScene, vTexCoord + dir * -0.5).rgb +
+                    texture(uScene, vTexCoord + dir * 0.5).rgb
+                );
+
+                float lumaB = dot(rgbB, luma);
+                FragColor = vec4((lumaB < lumaMin || lumaB > lumaMax) ? rgbA : rgbB, 1.0);
+            }
+        )";
+
+        return load_shader_generic(vsrc, fsrc);
+    }
+
+    rgl::glstate_t save_state() {
+        rgl::glstate_t state;
+        state.bound_framebuffer = rgl::get_active_fbo();
+        GLint active_txunit;
+        glGetIntegerv(GL_ACTIVE_TEXTURE, &active_txunit);
+        state.bound_texture_unit = active_txunit;
+
+        rgl::vao_t vao;
+        glGetIntegerv(GL_VERTEX_ARRAY_BINDING, reinterpret_cast<GLint*>(&vao));
+        rgl::vbo_t vbo;
+        glGetIntegerv(GL_ARRAY_BUFFER_BINDING, reinterpret_cast<GLint*>(&vbo));
+        state.bound_vo = std::make_pair(vao, vbo);
+
+        glGetIntegerv(GL_CURRENT_PROGRAM, reinterpret_cast<GLint*>(&state.active_shader));
+
+        glGetIntegerv(GL_BLEND_SRC_RGB, reinterpret_cast<GLint*>(&state.blend_mode.src_rgb));
+        glGetIntegerv(GL_BLEND_DST_RGB, reinterpret_cast<GLint*>(&state.blend_mode.dst_rgb));
+        glGetIntegerv(GL_BLEND_SRC_ALPHA, reinterpret_cast<GLint*>(&state.blend_mode.src_alpha));
+        glGetIntegerv(GL_BLEND_DST_ALPHA, reinterpret_cast<GLint*>(&state.blend_mode.dst_alpha));
+        GLboolean blend_enabled = glIsEnabled(GL_BLEND);
+        state.blend_mode.enabled = blend_enabled;
+        return state;
+    }
+
+    void restore_state(rgl::glstate_t state) {
+        rgl::use_fbo(state.bound_framebuffer);
+        glActiveTexture(GL_TEXTURE0 + state.bound_texture_unit);
+        if (state.bound_vo.first != rGL_VAO_INVALID && state.bound_vo.second != rGL_VBO_INVALID) {
+            glBindVertexArray(state.bound_vo.first);
+            glBindBuffer(GL_ARRAY_BUFFER, state.bound_vo.second);
+        }
+
+        if (state.active_shader != rGL_SHADER_INVALID) {
+            glUseProgram(state.active_shader);
+        }
+
+        if (state.blend_mode.enabled) {
+            glEnable(GL_BLEND);
+            glBlendFuncSeparate(state.blend_mode.src_rgb, state.blend_mode.dst_rgb, state.blend_mode.src_alpha, state.blend_mode.dst_alpha);
+        }
     }
 }
