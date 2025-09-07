@@ -1,34 +1,9 @@
-Version: 1.0
+Version: 1.1
 GL_MinimumVersion: 3.3
 Name: ColorWheel
 
-VertexStart
-    #version 330 core
-    layout(location = 0) in vec2 aPos;
+//              line  vt/fg  source
+IncludeHeader: 4 Fragment custom_shader_hsvutil.glsl
 
-    out vec2 fragPos;
-
-    void main() {
-        fragPos = aPos;
-        gl_Position = vec4(aPos, 0.0, 1.0);
-    }
-VertexEnd
-
-FragmentStart
-    #version 330 core
-    out vec4 FragColor;
-    in vec2 fragPos;
-
-    vec3 hsv2rgb(float h, float s, float v) {
-        vec3 k = vec3(5.0, 3.0, 1.0);
-        vec3 p = abs(fract(h + k/6.0) * 6.0 - 3.0);
-        return v * mix(vec3(1.0), clamp(p - 1.0, 0.0, 1.0), s);
-    }
-
-    void main() {
-        float r = length(fragPos);
-        float hue = atan(fragPos.y, fragPos.x) / (2.0 * 3.14159) + 0.5;
-
-        FragColor = vec4(hsv2rgb(hue, 1., 1.), 1.);
-    }
-FragmentEnd
+ExternalSource: Vertex custom_shader_vert.glsl
+ExternalSource: Fragment custom_shader_frag.glsl

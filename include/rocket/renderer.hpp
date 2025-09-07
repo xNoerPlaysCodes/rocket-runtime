@@ -176,6 +176,8 @@ namespace rocket {
         int get_fps();
         /// @brief Get Delta Time
         double get_delta_time();
+        /// @brief Get number of frames elapsed since first frame
+        uint64_t get_framecount();
 
         /// @brief For proper drawcall tracking,
         /// @brief you should probably call this

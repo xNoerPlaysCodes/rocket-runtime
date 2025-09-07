@@ -8,7 +8,6 @@
 #include <glm/ext/matrix_float4x4.hpp>
 #include <unordered_map>
 #include <utility>
-#include <iostream>
 #include "../include/rgl.hpp"
 #include "../../include/rocket/renderer.hpp"
 #include "util.hpp"
@@ -757,6 +756,10 @@ namespace rocket {
 
     int renderer_2d::get_fps() {
         return fps;
+    }
+
+    uint64_t renderer_2d::get_framecount() {
+        return this->frame_counter;
     }
 
     bool renderer_2d::get_vsync() {

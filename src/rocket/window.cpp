@@ -182,12 +182,13 @@ namespace rocket {
             glfwWaitEvents();
         });
 
-        rocket::log("GLFW window Initialized with size " + std::to_string(size.x) + "x" + std::to_string(size.y) + " and title " + title, 
+        rocket::log("Window Initialized with size " + std::to_string(size.x) + "x" + std::to_string(size.y) + " and title " + title, 
             "window_t", "constructor", 
             "info");
         auto platform = get_platform();
         std::string glfw_platform_str = platform.name;
-        rocket::log("GLFW Platform: " + glfw_platform_str, "window_t", "constructor", "info");
+        rocket::log("CPL Windowing Library: GLFW", "window_t", "constructor", "info");
+        rocket::log("Windowing API: " + glfw_platform_str, "window_t", "constructor", "info");
         rocket::log("RGE Platform: " + platform.rge_name, "window_t", "constructor", "info");
 
         std::vector<std::string> logs = {
@@ -356,7 +357,7 @@ namespace rocket {
         if (destructor_called) {
             cxf = "destructor";
         }
-        rocket::log("GLFW window closed", "window_t", cxf, "info");
+        rocket::log("Window closed", "window_t", cxf, "info");
     }
 
     window_t::~window_t() {

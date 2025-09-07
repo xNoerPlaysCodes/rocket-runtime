@@ -387,7 +387,7 @@ namespace rocket {
             return result;
         }
 
-        inline const float* data() const {
+        inline const float *data() const {
             return &columns[0].x;
         }
     };

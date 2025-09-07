@@ -6,12 +6,9 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <sstream>
 #include <string>
-#include "rocket/asset.hpp"
 #include "rocket/types.hpp"
 #include "../../include/rocket/runtime.hpp"
-#include "util.hpp"
 
 #ifdef RocketRuntime_DEBUG
     #define GL_CHECK(x) \
@@ -60,6 +57,17 @@ namespace rgl {
     rocket::vec2f_t viewport_size;
     rocket::vec2f_t viewport_offset = { 0, 0 };
     int max_tx_size = 0;
+
+    std::string float_str(float value) {
+        std::ostringstream oss;
+        oss << std::fixed << std::setprecision(6) << value; // control precision
+        std::string s = oss.str();
+
+        // strip trailing zeros and possibly the decimal point
+        s.erase(s.find_last_not_of('0') + 1, std::string::npos);
+        if (s.back() == '.') s.pop_back();
+        return s;
+    }
 
     void init_vo_all() {
         // rect quad
@@ -368,7 +376,8 @@ namespace rgl {
             "   - GL_MAX_TEXTURE_IMAGE_UNITS: " + std::to_string(max_available_tx_units),
 
             "Viewport Info:",
-            "- Viewport Size: " + std::to_string(viewport_size.x) + " x " + std::to_string(viewport_size.y)
+            "- Viewport Size: " + float_str(viewport_size.x) + "x" + float_str(viewport_size.y),
+            "- Viewport Offset: " + float_str(viewport_offset.x) + "x" + float_str(viewport_offset.y)
         };
 
         return logs;
@@ -895,7 +904,9 @@ namespace rgl {
             }
         )";
 
-        return load_shader_generic(vsrc, fsrc);
+        shader_program_t pg = load_shader_generic(vsrc, fsrc);
+        log_default_shader_compiled("fxaa_simplified");
+        return pg;
     }
 
     rgl::glstate_t save_state() {

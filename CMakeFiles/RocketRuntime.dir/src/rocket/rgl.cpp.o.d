@@ -183,6 +183,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /usr/include/c++/15.1.1/bits/ostream.tcc /usr/include/c++/15.1.1/istream \
  /usr/include/c++/15.1.1/bits/istream.tcc \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../include/rgl.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h \
@@ -428,7 +429,4 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp

@@ -23,7 +23,15 @@
 #define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 1
 #define ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR 0
 
+/// @brief The max RLSL version supported
+///                ^^^^ -> RocketShaderLanguage
+#define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MAJOR 1
+#define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR 1
+
 #define ROCKETGE__FEATURE_GL_LOADER "GLEW"
+// @brief The CPLWindowingAPI::Desktop/MobilePhone/Embedded
+//            ^^^ Cross-Platform Windowing API
+//              is fixed to GLFW as of now...
 #define ROCKETGE__PLATFORM "GLFW::Desktop"
 
 #define ROCKETGE__FEATURE_SHADER_SUPPORT_VERT_FRAG
@@ -44,6 +52,7 @@ namespace rocket {
         warn = 4,
         fatal_to_function = 5,
         fatal = 6,
+        none = 7
     };
 
     /// @brief Sets minimum log level to be printed to the console

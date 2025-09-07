@@ -15,8 +15,8 @@ namespace rocket {
         GLuint glshaderf = 0;
         GLuint glprogram = 0;
         shader_type type;
-        std::string vcode;
-        std::string fcode;
+        std::string vcode = "";
+        std::string fcode = "";
 
         std::string name = "NON_RLSL_SHADER";
         std::string rlsl_version = "NOT_COMPILED_BY_RLSL";

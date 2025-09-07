@@ -6,6 +6,7 @@ CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o: examples/soft
   include/rocket/io.hpp \
   include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
+  include/rocket/rgl.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
   include/rocket/stb_truetype.h \
@@ -654,8 +655,6 @@ bin/examples/software_renderer: /usr/lib/Scrt1.o \
 
 /usr/include/glm/ext/vector_double3.hpp:
 
-/usr/include/glm/ext/vector_bool2_precision.hpp:
-
 /usr/include/glm/ext/scalar_uint_sized.hpp:
 
 /usr/include/glm/ext/scalar_constants.hpp:
@@ -1092,6 +1091,86 @@ include/rocket/asset.hpp:
 
 /usr/include/c++/15.1.1/bits/stl_bvector.h:
 
+/usr/include/asm/types.h:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
+
+/usr/include/c++/15.1.1/charconv:
+
+/usr/include/bits/semaphore.h:
+
+/usr/include/bits/types/mbstate_t.h:
+
+/usr/include/glm/ext/vector_bool4_precision.hpp:
+
+/usr/include/alloca.h:
+
+/usr/include/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/c++/15.1.1/backward/binders.h:
+
+/usr/include/AL/al.h:
+
+/usr/include/glm/detail/type_mat3x4.inl:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/bits/types/struct___jmp_buf_tag.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/bits/timesize.h:
+
+/usr/include/c++/15.1.1/bits/std_function.h:
+
+/usr/include/bits/types/timer_t.h:
+
+/usr/include/c++/15.1.1/bits/node_handle.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/bits/fp-logb.h:
+
+/usr/include/glm/detail/type_mat3x2.inl:
+
+/usr/include/c++/15.1.1/bits/atomic_timed_wait.h:
+
+/usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h:
+
+/usr/include/bits/types/struct_timespec.h:
+
+/usr/include/asm-generic/posix_types.h:
+
+/usr/include/c++/15.1.1/cerrno:
+
+/usr/include/c++/15.1.1/clocale:
+
+include/rocket/io.hpp:
+
+/usr/include/glm/ext/vector_bool2_precision.hpp:
+
+include/rocket/rgl.hpp:
+
+/usr/include/c++/15.1.1/ext/string_conversions.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/glm/matrix.hpp:
+
+/usr/include/glm/ext/vector_bool3.hpp:
+
+include/rocket/stb_truetype.h:
+
+/usr/include/glm/ext/vector_int3_sized.hpp:
+
+/usr/include/assert.h:
+
+include/rocket/shader.hpp:
+
+/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
+
+include/rocket/macros.hpp:
+
 /usr/include/linux/posix_types.h:
 
 /usr/include/bits/types/FILE.h:
@@ -1110,55 +1189,11 @@ include/rocket/asset.hpp:
 
 /usr/include/bits/mathcalls-helper-functions.h:
 
-/usr/include/c++/15.1.1/bits/node_handle.h:
-
-/usr/include/asm-generic/errno.h:
-
-/usr/include/bits/fp-logb.h:
-
-/usr/include/glm/detail/type_mat3x2.inl:
-
-/usr/include/c++/15.1.1/bits/atomic_timed_wait.h:
-
-/usr/include/c++/15.1.1/bits/stl_raw_storage_iter.h:
-
-/usr/include/stdio.h:
-
-/usr/include/bits/wordsize.h:
-
-/usr/include/c++/15.1.1/bits/allocator.h:
-
-/usr/include/bits/types/struct_timespec.h:
-
-/usr/include/asm-generic/posix_types.h:
-
-/usr/include/c++/15.1.1/cerrno:
-
-/usr/include/c++/15.1.1/clocale:
-
-include/rocket/io.hpp:
-
-/usr/include/glm/matrix.hpp:
-
-/usr/include/glm/ext/vector_bool3.hpp:
-
-include/rocket/stb_truetype.h:
-
-/usr/include/glm/ext/vector_int3_sized.hpp:
-
-/usr/include/assert.h:
-
-include/rocket/shader.hpp:
-
-/usr/include/c++/15.1.1/x86_64-pc-linux-gnu/bits/gthr.h:
-
-include/rocket/macros.hpp:
-
 /usr/include/glm/ext/vector_uint3.hpp:
 
-/usr/include/c++/15.1.1/bits/atomic_base.h:
-
 /usr/include/bits/libc-header-start.h:
+
+/usr/include/c++/15.1.1/bits/atomic_base.h:
 
 /usr/include/stdc-predef.h:
 
@@ -1184,18 +1219,6 @@ include/rocket/window.hpp:
 
 /usr/include/bits/long-double.h:
 
-/usr/include/bits/timesize.h:
-
-/usr/include/glm/detail/type_mat3x4.inl:
-
-/usr/include/bits/wchar.h:
-
-/usr/include/bits/types/struct___jmp_buf_tag.h:
-
-/usr/include/bits/waitstatus.h:
-
-/usr/include/c++/15.1.1/bits/std_function.h:
-
 /usr/lib/libxcb.so.1:
 
 /usr/include/bits/endian.h:
@@ -1204,29 +1227,7 @@ include/rocket/window.hpp:
 
 /usr/include/c++/15.1.1/bits/stl_iterator.h:
 
-/usr/include/bits/pthread_stack_min-dynamic.h:
-
-/usr/include/c++/15.1.1/backward/binders.h:
-
-/usr/include/AL/al.h:
-
-/usr/include/bits/types/mbstate_t.h:
-
-/usr/include/bits/semaphore.h:
-
 src/include/rgl.hpp:
-
-/usr/include/asm/types.h:
-
-/usr/include/bits/types/cookie_io_functions_t.h:
-
-/usr/include/c++/15.1.1/charconv:
-
-/usr/include/glm/ext/vector_bool4_precision.hpp:
-
-/usr/include/alloca.h:
-
-/usr/include/bits/types/timer_t.h:
 
 /usr/include/bits/stdint-intn.h:
 
@@ -1245,10 +1246,6 @@ src/include/rgl.hpp:
 /usr/include/c++/15.1.1/bits/shared_ptr.h:
 
 /usr/include/bits/byteswap.h:
-
-/usr/include/c++/15.1.1/ext/string_conversions.h:
-
-/usr/include/bits/confname.h:
 
 /usr/include/bits/uio_lim.h:
 
@@ -1345,6 +1342,12 @@ include/rocket/renderer.hpp:
 /usr/include/glm/mat3x2.hpp:
 
 /usr/include/bits/posix1_lim.h:
+
+/usr/include/stdio.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/c++/15.1.1/bits/allocator.h:
 
 /usr/include/glm/ext/vector_bool2.hpp:
 
