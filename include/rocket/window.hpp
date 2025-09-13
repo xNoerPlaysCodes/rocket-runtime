@@ -35,6 +35,27 @@ namespace rocket {
         bool gl_contextverifier = true;
     };
 
+    struct window_state_t {
+        /// @brief Is the window focused
+        bool focused = false;
+
+        /// @brief Is the window visible
+        bool visible = false;
+
+        /// @brief Is the window iconified
+        bool iconified = false;
+
+        /// @brief Is the window maximized
+        bool maximized = false;
+
+        /// @brief Is the window floating
+        bool floating = false;
+
+        /// @brief Is the cursor hovering over the window content
+        ///         area DIRECTLY
+        bool hovering = false;
+    };
+
     enum class cursor_mode_t : int {
         normal = 0,
         hidden = 1
@@ -110,6 +131,12 @@ namespace rocket {
 
         /// @brief Gets the current time
         double get_time() const;
+    public:
+        /// @brief Gets the current window state
+        window_state_t get_window_state();
+
+        /// @brief Sets the current window state
+        void set_window_state(window_state_t state);
     public:
         /// @brief Gets the current platform
         platform_t get_platform();

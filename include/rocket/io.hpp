@@ -82,6 +82,7 @@ namespace rocket {
         struct mouse_event_t {
             mouse_button button;
             keystate_t state;
+            rocket::vec2d_t position;
         };
 
         struct mouse_move_event_t {
@@ -134,6 +135,14 @@ namespace rocket {
 
         /// @brief Get char typed (formatted)
         char get_formatted_char_typed();
+
+        /// @brief Simulate Input
+        /// @note Only triggers LISTENERS
+        void simulate(keyboard_key key, keystate_t state);
+
+        /// @brief Simulate Input
+        /// @note Only triggers LISTENERS
+        void simulate(mouse_button btn, keystate_t state, rocket::vec2d_t pos);
     }
 
     // Controller (Referred as Gamepad) Input
@@ -184,6 +193,7 @@ namespace rocket {
             dpad_left = 14,
         };
 
+        /// @brief Gamepad Axes
         enum class axis_t {
             left_x = 0,
             left_y = 1,
@@ -200,22 +210,36 @@ namespace rocket {
             rt = 5,
         };
 
+        /// @brief Gamepad Button/Axes Style
         enum class style_t : int {
             generic = 0,
             xbox,
             dualshock
         };
 
+        /// @brief Gamepad Handle
         using gamepad_t = uint8_t;
 
+        /// @brief Check Availability for a particular ID
         bool is_available(int id = 0);
+        /// @brief Get Gamepad Handle from ID
         gamepad_t get_handle(int id = 0);
 
+        /// @brief Get Human Readable Name
         std::string get_human_readable_name(button_t, style_t);
+        /// @brief Get Human Readable Name
         std::string get_human_readable_name(axis_t, style_t);
 
+        /// @brief Get the Gamepad name
+        std::string get_name(gamepad_t handle);
+
+        /// @brief Get Axis value
         float get_axis_state(gamepad_t, axis_t, float deadzone = 0.1f);
+        /// @brief Get Button state
         bool get_button_state(gamepad_t, button_t);
+
+        /// @brief Set the gamepad input focus tester
+        void set_focused(bool);
     }
 }
 

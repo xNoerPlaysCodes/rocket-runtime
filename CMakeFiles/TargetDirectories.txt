@@ -5,6 +5,7 @@
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/ui_init_test.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/rounded_texture_rectangle_test.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/line_test.dir
+/home/noerlol/C-Projects/RocketGE/CMakeFiles/gamepad_test.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/moving_circle.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/custom_shader.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/software_renderer.dir

@@ -210,6 +210,14 @@ namespace rocket {
         }
     }
 
+    void window_t::set_window_state(window_state_t state) {
+        glfwSetWindowAttrib(glfw_window, GLFW_FOCUSED, state.focused);
+        glfwSetWindowAttrib(glfw_window, GLFW_VISIBLE, state.visible);
+        glfwSetWindowAttrib(glfw_window, GLFW_ICONIFIED, state.iconified);
+        glfwSetWindowAttrib(glfw_window, GLFW_MAXIMIZED, state.maximized);
+        glfwSetWindowAttrib(glfw_window, GLFW_FLOATING, state.floating);
+    }
+
     void window_t::set_cursor_mode(cursor_mode_t m) {
         this->mode = m;
         if (m == cursor_mode_t::normal) {
@@ -221,18 +229,15 @@ namespace rocket {
                 if (glfwRawMouseMotionSupported()) {
                     glfwSetInputMode(glfw_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
                 } else {
-                    rocket::log_error("GLFW_RAW_MOUSE_MOTION is not supported on wayland", 1, "RocketRuntime", "warning");
+                    rocket::log_error("GLFW_RAW_MOUSE_MOTION is not supported on Linux-Wayland", 1, "window_t::set_cursor_mode", "warning");
                 }
-#ifdef RocketRuntime_DEBUG
-                rocket::log_error("cursor mode 'GLFW_CURSOR_NORMAL' not supported on wayland so 'GLFW_CURSOR_DISABLED' has to be used", 1, "RocketRuntime", "warn");
-#endif
             }
         }
     }
 
     void window_t::set_cursor_position(const rocket::vec2d_t& pos) {
         if (util::is_wayland()) {
-            rocket::log_error("setting cursor position is not supported on wayland", 1, "RocketRuntime", "warn");
+            rocket::log_error("setting cursor position is not supported on wayland", 1, "window_t::set_cursor_position", "warn");
             return;
         }
         glfwSetCursorPos(glfw_window, pos.x, pos.y);
@@ -290,6 +295,8 @@ namespace rocket {
             io::mouse_event_t event;
             event.button = static_cast<io::mouse_button>(i);
             event.state = buttons[i];
+            event.position = {};
+            glfwGetCursorPos(glfw_window, &event.position.x, &event.position.y);
 
             util::dispatch_event(event);
         }
@@ -328,6 +335,17 @@ namespace rocket {
 
     double window_t::get_time() const {
         return glfwGetTime();
+    }
+
+    window_state_t window_t::get_window_state() {
+        window_state_t state;
+        state.focused = glfwGetWindowAttrib(this->glfw_window, GLFW_FOCUSED);
+        state.visible = glfwGetWindowAttrib(this->glfw_window, GLFW_VISIBLE);
+        state.iconified = glfwGetWindowAttrib(this->glfw_window, GLFW_ICONIFIED);
+        state.maximized = glfwGetWindowAttrib(this->glfw_window, GLFW_MAXIMIZED);
+        state.floating = glfwGetWindowAttrib(this->glfw_window, GLFW_FLOATING);
+        state.hovering = glfwGetWindowAttrib(this->glfw_window, GLFW_HOVERED);
+        return state;
     }
 
     cursor_mode_t window_t::get_cursor_mode() {

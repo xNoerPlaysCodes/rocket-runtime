@@ -127,6 +127,12 @@
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/gamepad_test.cpp",
+  "file": "/home/noerlol/C-Projects/RocketGE/tests/gamepad_test.cpp",
+  "output": "CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/RocketGE",
   "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o -c /home/noerlol/C-Projects/RocketGE/examples/moving_circle.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/examples/moving_circle.cpp",
   "output": "CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o"

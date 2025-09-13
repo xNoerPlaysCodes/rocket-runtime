@@ -85,6 +85,7 @@ if (BUILD_TESTS)
         ui_init_test
         rounded_texture_rectangle_test
         line_test
+        gamepad_test
     )
 
     foreach(test_name IN LISTS TEST_NAMES)

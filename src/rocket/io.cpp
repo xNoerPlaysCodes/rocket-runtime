@@ -29,6 +29,24 @@ namespace rocket {
         void add_listener(std::function<void(scroll_offset_event_t)> listener) {
             ::util::scroll_offset_listeners().push_back(listener);
         }
+
+        void simulate(keyboard_key key, keystate_t state) {
+            key_event_t event;
+            event.scancode = glfwGetKeyScancode(static_cast<int>(key));
+            event.key = key;
+            event.state = state;
+
+            ::util::dispatch_event(event);
+        }
+
+        void simulate(mouse_button btn, keystate_t state, rocket::vec2d_t position) {
+            mouse_event_t event;
+            event.button = btn;
+            event.state = state;
+            event.position = position;
+
+            ::util::dispatch_event(event);
+        }
     }
 
     // IMMD IO
@@ -93,6 +111,7 @@ namespace rocket {
     }
 
     namespace gpad {
+        bool gpad_focused = true;
         bool is_available(int id) {
             return glfwJoystickIsGamepad(id);
         }
@@ -112,7 +131,18 @@ namespace rocket {
             return "Unknown";
         }
 
+        std::string get_name(gamepad_t handle) {
+            if (!is_available(handle)) {
+                rocket::log_error("Gamepad not available with ID: " + std::to_string(handle), -1, "rocket::gpad::get_name", "warning");
+                return "Unknown";
+            }
+            return glfwGetGamepadName(handle);
+        }
+
         float get_axis_state(gamepad_t g, axis_t a, float deadzone) {
+            if (!gpad_focused) {
+                return -1.f;
+            }
             GLFWgamepadstate state;
             glfwGetGamepadState(g, &state);
             int glfw_enum = static_cast<int>(a);
@@ -121,13 +151,20 @@ namespace rocket {
                 return v;
             }
 
-            return 0.f;
+            return -1.f;
         }
         bool get_button_state(gamepad_t g, button_t b) {
+            if (!gpad_focused) {
+                return false;
+            }
             GLFWgamepadstate state;
             glfwGetGamepadState(g, &state);
             int glfw_enum = static_cast<int>(b);
             return state.buttons[glfw_enum];
+        }
+
+        void set_focused(bool focused) {
+            gpad_focused = focused;
         }
     }
 }

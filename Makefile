@@ -208,6 +208,19 @@ line_test/fast:
 .PHONY : line_test/fast
 
 #=============================================================================
+# Target rules for targets named gamepad_test
+
+# Build rule for target.
+gamepad_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gamepad_test
+.PHONY : gamepad_test
+
+# fast build rule for target.
+gamepad_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gamepad_test.dir/build.make CMakeFiles/gamepad_test.dir/build
+.PHONY : gamepad_test/fast
+
+#=============================================================================
 # Target rules for targets named moving_circle
 
 # Build rule for target.
@@ -678,6 +691,30 @@ src/rocket/window.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.s
 .PHONY : src/rocket/window.cpp.s
 
+tests/gamepad_test.o: tests/gamepad_test.cpp.o
+.PHONY : tests/gamepad_test.o
+
+# target to build an object file
+tests/gamepad_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gamepad_test.dir/build.make CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o
+.PHONY : tests/gamepad_test.cpp.o
+
+tests/gamepad_test.i: tests/gamepad_test.cpp.i
+.PHONY : tests/gamepad_test.i
+
+# target to preprocess a source file
+tests/gamepad_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gamepad_test.dir/build.make CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.i
+.PHONY : tests/gamepad_test.cpp.i
+
+tests/gamepad_test.s: tests/gamepad_test.cpp.s
+.PHONY : tests/gamepad_test.s
+
+# target to generate assembly for a file
+tests/gamepad_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gamepad_test.dir/build.make CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.s
+.PHONY : tests/gamepad_test.cpp.s
+
 tests/initializer_test.o: tests/initializer_test.cpp.o
 .PHONY : tests/initializer_test.o
 
@@ -832,6 +869,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... RocketRuntime"
 	@echo "... custom_shader"
+	@echo "... gamepad_test"
 	@echo "... initializer_test"
 	@echo "... line_test"
 	@echo "... moving_circle"
@@ -894,6 +932,9 @@ help:
 	@echo "... src/rocket/window.o"
 	@echo "... src/rocket/window.i"
 	@echo "... src/rocket/window.s"
+	@echo "... tests/gamepad_test.o"
+	@echo "... tests/gamepad_test.i"
+	@echo "... tests/gamepad_test.s"
 	@echo "... tests/initializer_test.o"
 	@echo "... tests/initializer_test.i"
 	@echo "... tests/initializer_test.s"
