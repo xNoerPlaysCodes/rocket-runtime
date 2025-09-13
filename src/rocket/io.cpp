@@ -2,6 +2,8 @@
 #include "rocket/types.hpp"
 #include "util.hpp"
 
+#include <GLFW/glfw3.h>
+
 namespace rocket {
     namespace io {
         bool keystate_t::pressed() const { return current && !previous; }
@@ -87,6 +89,45 @@ namespace rocket {
 
         char get_formatted_char_typed() {
             return ::util::get_formatted_char_typed();
+        }
+    }
+
+    namespace gpad {
+        bool is_available(int id) {
+            return glfwJoystickIsGamepad(id);
+        }
+        gamepad_t get_handle(int id) {
+            if (!is_available(id)) {
+                rocket::log_error("Gamepad not available with ID: " + std::to_string(id), -1, "rocket::gpad::get_handle", "warning");
+                return 255;
+            }
+
+            return static_cast<gamepad_t>(id);
+        }
+
+        std::string get_human_readable_name(button_t button, style_t style) {
+            return "Unknown";
+        }
+        std::string get_human_readable_name(axis_t, style_t) {
+            return "Unknown";
+        }
+
+        float get_axis_state(gamepad_t g, axis_t a, float deadzone) {
+            GLFWgamepadstate state;
+            glfwGetGamepadState(g, &state);
+            int glfw_enum = static_cast<int>(a);
+            float v = state.axes[glfw_enum];
+            if (std::abs(v) > deadzone) {
+                return v;
+            }
+
+            return 0.f;
+        }
+        bool get_button_state(gamepad_t g, button_t b) {
+            GLFWgamepadstate state;
+            glfwGetGamepadState(g, &state);
+            int glfw_enum = static_cast<int>(b);
+            return state.buttons[glfw_enum];
         }
     }
 }

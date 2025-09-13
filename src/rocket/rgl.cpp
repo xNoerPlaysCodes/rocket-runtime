@@ -334,7 +334,7 @@ namespace rgl {
         int minor = gl_get_integer(GL_MINOR_VERSION);
         glversion = major + minor / 10.f;
 
-        int max_available_tx_units = gl_get_integer(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+        int max_available_tx_units = gl_get_integer(GL_MAX_TEXTURE_IMAGE_UNITS);
 
         int loaded_extensions = gl_get_integer(GL_NUM_EXTENSIONS);
 

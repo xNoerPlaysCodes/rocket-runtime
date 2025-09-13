@@ -135,6 +135,88 @@ namespace rocket {
         /// @brief Get char typed (formatted)
         char get_formatted_char_typed();
     }
+
+    // Controller (Referred as Gamepad) Input
+    namespace gpad {
+        /// @brief Gamepad Buttons
+        enum class button_t : int {
+            bottom = 0,
+            a = 0,
+            cross = 0,
+
+            right = 1,
+            b = 1,
+            circle = 1,
+
+            left = 2,
+            x = 2,
+            square = 2,
+
+            top = 3,
+            y = 3,
+            triangle = 3,
+
+            left_bumper = 4,
+            lb = 4,
+            l1 = 4,
+
+            right_bumper = 5,
+            rb = 5,
+            r1 = 5,
+
+            start = 7,
+            option = 7,
+
+            guide = 8,
+            xbox = 8,
+            ps = 8,
+            home = 8,
+
+            left_stick = 9,
+            l3 = 9,
+
+            right_stick = 10,
+            r3 = 10,
+
+            dpad_up = 11,
+            dpad_right = 12,
+            dpad_down = 13,
+            dpad_left = 14,
+        };
+
+        enum class axis_t {
+            left_x = 0,
+            left_y = 1,
+
+            right_x = 2,
+            right_y = 3,
+
+            left_trigger = 4,
+            l2 = 4,
+            lt = 4,
+
+            right_trigger = 5,
+            r2 = 5,
+            rt = 5,
+        };
+
+        enum class style_t : int {
+            generic = 0,
+            xbox,
+            dualshock
+        };
+
+        using gamepad_t = uint8_t;
+
+        bool is_available(int id = 0);
+        gamepad_t get_handle(int id = 0);
+
+        std::string get_human_readable_name(button_t, style_t);
+        std::string get_human_readable_name(axis_t, style_t);
+
+        float get_axis_state(gamepad_t, axis_t, float deadzone = 0.1f);
+        bool get_button_state(gamepad_t, button_t);
+    }
 }
 
 #endif
