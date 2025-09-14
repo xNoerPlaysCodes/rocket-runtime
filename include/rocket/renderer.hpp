@@ -96,6 +96,15 @@ namespace rocket {
         /// @param lines Draw lines
         void draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f, float roundedness = 0.f, bool lines = false);
 
+        /// @brief Draw a rectangle
+        /// @param pos Position
+        /// @param size Size
+        /// @param color Color
+        /// @param rotation Rotation in degrees
+        /// @param roundedness Roundedness [0-1]
+        /// @param lines Draw lines
+        void draw_rectangle(rocket::vec2f_t pos, rocket::vec2f_t size, rocket::rgba_color color = { 0, 0, 0, 255 }, float rotation = 0.f, float roundedness = 0.f, bool lines = false);
+
         /// @brief Draw a circle
         /// @param pos Position
         /// @param radius Radius

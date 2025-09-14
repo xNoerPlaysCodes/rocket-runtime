@@ -1,4 +1,6 @@
 #include <GL/glew.h>
+#include "rocket/io.hpp"
+#include "rocket/rgl.hpp"
 #include "rocket/runtime.hpp"
 #include "rocket/types.hpp"
 #include <cmath>
@@ -152,23 +154,21 @@ namespace rocket {
     }
 
     void renderer_2d::draw_line(rocket::vec2f_t start, rocket::vec2f_t end, rocket::rgba_color color, float thickness) {
-        // Direction vector
-        rocket::vec2f_t dir = { end.x - start.x, end.y - start.y };
-
-        // Line length
-        float length = sqrt(dir.x * dir.x + dir.y * dir.y);
-
-        // Rotation angle in radians
-        float angle = atan2(dir.y, dir.x);
-
-        // Rectangle representing the line
-        rocket::fbounding_box box = {
-            .pos = start,
-            .size = { length, thickness }  // width = line length, height = line thickness
-        };
-
-        // Draw rotated rectangle (0 rounding for a normal line)
-        draw_rectangle(box, color, glm::degrees(angle), 0.0f);
+        // Quick Note:
+        //  I tried, every. single. algorithm.
+        //  I MADE my own algorithm.
+        //  I used EVERY algorithm that exists.
+        //  Yet it STILL doesn't work.
+        //  At this point, I'd like to quit here, and
+        //  one of you smarties can get this working.
+        //
+        //  Sincerely,
+        //  noerlol
+        rocket::log_error("Implementation not finished", -1, "renderer_2d::draw_line", "fatal-to-function");
+    }
+    void renderer_2d::draw_rectangle(rocket::vec2f_t pos, rocket::vec2f_t size, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
+        rocket::fbounding_box box = {pos, size};
+        this->draw_rectangle(box, color, rotation, roundedness, lines);
     }
 
     void renderer_2d::begin_frame() {
