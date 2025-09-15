@@ -6,6 +6,7 @@
 #include <functional>
 #include <memory>
 #include <mutex>
+#include <sstream>
 #include <string>
 #include <thread>
 #include <vector>
@@ -51,7 +52,8 @@ namespace rocket {
 
         alGenSources(1, &source);
 
-        vol = std::clamp(vol, 0.f, 100.f) / 100.f;
+        // Remove percentage
+        vol = vol / 100.f;
         alSourcei(source, AL_BUFFER, *buffer);
         alSourcef(source, AL_GAIN, vol);
 
@@ -156,7 +158,6 @@ namespace rocket {
         }
     }
 
-
     struct audio_context_t {
         ALCdevice *device;
         ALCcontext *context;
@@ -178,7 +179,7 @@ namespace rocket {
         uint8_t *img_data = stbi_load(path.c_str(), &texture->size.x, &texture->size.y, &texture->channels, 0);
 
         if (!img_data) {
-            rocket::log_error("failed to load texture: " + path, 1, "stb_image", "fatal-to-function");
+            rocket::log_error("failed to load texture: " + path, 1, "stb_image::stbi_load", "fatal-to-function");
             current_id--;
             return -1;
         }
@@ -190,6 +191,28 @@ namespace rocket {
         return id;
     }
 
+    assetid_t asset_manager_t::load_texture(std::vector<uint8_t> data) {
+        assetid_t id = current_id++;
+        std::shared_ptr<texture_t> texture = std::make_shared<texture_t>();
+        texture->id = id;
+
+        uint8_t *file_data = data.data();
+        size_t len = data.size();
+
+        uint8_t *img_data = stbi_load_from_memory(file_data, len, &texture->size.x, &texture->size.y, &texture->channels, 0);
+        if (img_data == nullptr) {
+            std::stringstream address;
+            address << file_data << '\n';
+            rocket::log_error("failed to load texture from memory, address: " + address.str(), 1, "stb_image::stbi_load", "fatal-to-function");
+
+            current_id--;
+            return -1;
+        }
+
+        textures.insert({texture, std::chrono::high_resolution_clock::now()});
+        return id;
+    }
+
     std::shared_ptr<texture_t> asset_manager_t::get_texture(assetid_t id) {
         for (auto &[k, v] : textures) {
             if (k->id == id) {
@@ -198,19 +221,18 @@ namespace rocket {
         }
         return nullptr;
     }
-
     
     assetid_t asset_manager_t::load_audio(std::string path) {
         if (!openal_initialized) {
             ALCdevice *device = alcOpenDevice(nullptr); // Default device
             if (!device) {
-                rocket::log_error("failed to open OpenAL device", 1, "openal", "fatal-to-function");
+                rocket::log_error("failed to open OpenAL device", 1, "OpenAL::alcOpenDevice", "fatal-to-function");
                 return -1;
             }
 
             ALCcontext *context = alcCreateContext(device, nullptr);
             if (!context || !alcMakeContextCurrent(context)) {
-                rocket::log_error("failed to create OpenAL context", 1, "openal", "fatal-to-function");
+                rocket::log_error("failed to create OpenAL context", 1, "OpenAL::alcCreateContext", "fatal-to-function");
                 if (context) alcDestroyContext(context);
                 alcCloseDevice(device);
                 return - 1;
@@ -228,7 +250,7 @@ namespace rocket {
 
         ALenum error = alGetError();
         if (error != AL_NO_ERROR) {
-            rocket::log_error("failed to generate OpenAL buffer", 1, "openal", "fatal-to-function");
+            rocket::log_error("failed to generate OpenAL buffer", 1, "OpenAL::alGenBuffers", "fatal-to-function");
             delete audio->buffer;
             audio->buffer = nullptr;
             current_id--;
@@ -241,7 +263,7 @@ namespace rocket {
 
         stb_vorbis* vorbis = stb_vorbis_open_filename(path.c_str(), nullptr, nullptr);
         if (!vorbis) {
-            rocket::log_error("failed to load " + path, 1, "stb_vorbis", "fatal-to-function");
+            rocket::log_error("failed to load " + path, 1, "stb_vorbis::stb_vorbis_open_filename", "fatal-to-function");
             delete audio->buffer;
             audio->buffer = nullptr;
             current_id--;
@@ -265,7 +287,7 @@ namespace rocket {
 
         error = alGetError();
         if (error != AL_NO_ERROR) {
-            rocket::log_error("failed to load audio properly: " + path, 1, "openal", "fatal-to-function");
+            rocket::log_error("failed to load audio properly: " + path, 1, "OpenAL::alBufferData", "fatal-to-function");
             alDeleteBuffers(1, audio->buffer);
             delete audio->buffer;
             audio->buffer = nullptr;
@@ -274,6 +296,84 @@ namespace rocket {
         }
 
         audio->path = path;
+        audios.insert({audio, std::chrono::high_resolution_clock::now()});
+        return id;
+    }
+
+    assetid_t asset_manager_t::load_audio(std::vector<uint8_t> mem) {
+        if (!openal_initialized) {
+            ALCdevice *device = alcOpenDevice(nullptr); // Default device
+            if (!device) {
+                rocket::log_error("failed to open OpenAL device", 1, "OpenAL::alcOpenDevice", "fatal-to-function");
+                return -1;
+            }
+
+            ALCcontext *context = alcCreateContext(device, nullptr);
+            if (!context || !alcMakeContextCurrent(context)) {
+                rocket::log_error("failed to create OpenAL context", 1, "OpenAL::alcCreateContext", "fatal-to-function");
+                if (context) alcDestroyContext(context);
+                alcCloseDevice(device);
+                return - 1;
+            }
+
+            openal_initialized = true;
+        }
+
+        assetid_t id = current_id++;
+        std::shared_ptr<audio_t> audio = std::make_shared<audio_t>();
+        audio->id = id;
+
+        audio->buffer = new ALuint;
+        alGenBuffers(1, audio->buffer);
+
+        ALenum error = alGetError();
+        if (error != AL_NO_ERROR) {
+            rocket::log_error("failed to generate OpenAL buffer", 1, "OpenAL::alGenBuffers", "fatal-to-function");
+            delete audio->buffer;
+            audio->buffer = nullptr;
+            current_id--;
+            return -1;
+        }
+
+        int channels, samplerate;
+        short *output;
+        int samples;
+
+        stb_vorbis* vorbis = stb_vorbis_open_memory(mem.data(), mem.size(), nullptr, nullptr);
+        if (!vorbis) {
+            rocket::log_error("failed to load audio from [memory]", 1, "stb_vorbis::stb_vorbis_open_memory", "fatal-to-function");
+            delete audio->buffer;
+            audio->buffer = nullptr;
+            current_id--;
+            return -1;
+        }
+
+        stb_vorbis_info info = stb_vorbis_get_info(vorbis);
+        channels = info.channels;
+        samplerate = info.sample_rate;
+
+        samples = stb_vorbis_stream_length_in_samples(vorbis);
+        output = new short[samples * channels];
+
+        int numSamples = stb_vorbis_get_samples_short_interleaved(vorbis, channels, output, samples * channels);
+        stb_vorbis_close(vorbis);
+
+        ALenum format = (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+
+        alBufferData(*audio->buffer, format, output, numSamples * sizeof(short) * channels, samplerate);
+        delete[] output;
+
+        error = alGetError();
+        if (error != AL_NO_ERROR) {
+            rocket::log_error("failed to load audio properly: [memory]", 1, "OpenAL::alBufferData", "fatal-to-function");
+            alDeleteBuffers(1, audio->buffer);
+            delete audio->buffer;
+            audio->buffer = nullptr;
+            current_id--;
+            return -1;
+        }
+
+        audio->path = "[memory]";
         audios.insert({audio, std::chrono::high_resolution_clock::now()});
         return id;
     }

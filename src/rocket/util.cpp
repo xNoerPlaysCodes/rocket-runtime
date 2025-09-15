@@ -47,17 +47,17 @@ namespace util {
         if (const char *session = std::getenv("XDG_SESSION_TYPE")) {
             return std::string(session) == "x11";
         }
+        return false;
 #else
         return false;
 #endif
-        return false;
     }
 
     std::string fmtd_time_str() {
         std::time_t now = std::time(nullptr);
         std::tm local_tm;
 
-        #ifdef _WIN32
+        #ifdef ROCKETGE__Platform_Windows
             localtime_s(&local_tm, &now);   // Windows secure version
         #else
             localtime_r(&now, &local_tm);   // POSIX thread-safe version

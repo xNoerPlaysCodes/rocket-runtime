@@ -212,8 +212,10 @@ namespace rgl {
         glEnable(GL_MULTISAMPLE);
         bool gl_multisample = true;
 
+        GLenum sfactor = GL_SRC_ALPHA;
+        GLenum dfactor = GL_ONE_MINUS_SRC_ALPHA;
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        std::string gl_blendfunc = "GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA";
+        std::string gl_blendfunc = glutil::glenum_str(sfactor) + ", " + glutil::glenum_str(dfactor);
 
         // Enable SRGB framebuffer if supported
         glEnable(GL_FRAMEBUFFER_SRGB);
@@ -384,10 +386,10 @@ namespace rgl {
     }
 
     bool is_active_any_fbo() {
-        GLint fbo = 0;
+        GLint fbo = rGL_FBO_INVALID.fbo;
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
 
-        return fbo != 0;
+        return fbo != rGL_FBO_INVALID.fbo;
     }
 
     fbo_t create_fbo() {

@@ -202,9 +202,10 @@ namespace rocket {
     void renderer_2d::clear(rocket::rgba_color color) {
         this_frame_clear_color = color;
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        vec4<float> clr = color.normalize();
+        vec4f_t clr = color.normalize();
         glClearColor(clr.x, clr.y, clr.z, clr.w);
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation, float roundedness) {
@@ -259,7 +260,7 @@ namespace rocket {
     }
    
     void renderer_2d::draw_text(rocket::text_t &text, rocket::vec2f_t position) {
-        static GLuint shader_program = rGL_SHADER_INVALID;
+        static rgl::shader_program_t shader_program = rGL_SHADER_INVALID;
 
         if (shader_program == rGL_SHADER_INVALID) {
             const char* vert_src = R"(
@@ -566,6 +567,7 @@ namespace rocket {
         }
 
         if (this->vsync) {
+            this->delta_time = glfwGetTime() - frame_start_time;
             return; // We're done here
         }
 
@@ -585,7 +587,6 @@ namespace rocket {
         }
 
         this->delta_time = glfwGetTime() - frame_start_time;
-        this->frame_start_time = glfwGetTime();
     }
 
     struct batched_quad_t {

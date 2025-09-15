@@ -2,6 +2,8 @@
 #define ROCKETGE__WINDOW_HPP
 
 #include "types.hpp"
+#include "macros.hpp"
+#include "asset.hpp"
 
 #include <GLFW/glfw3.h>
 #include <functional>
@@ -33,6 +35,9 @@ namespace rocket {
         /// @brief 4.3
         rocket::vec2i_t gl_version = { 4, 3 };
         bool gl_contextverifier = true;
+
+        /// --- Advanced ---
+        std::string window_class_name = ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID;
     };
 
     struct window_state_t {
@@ -91,6 +96,8 @@ namespace rocket {
         cursor_mode_t mode = cursor_mode_t::normal;
         windowflags_t flags;
 
+        std::shared_ptr<rocket::texture_t> icon = nullptr;
+
         friend class renderer_2d;
         friend class renderer_3d;
     private:
@@ -137,6 +144,12 @@ namespace rocket {
 
         /// @brief Sets the current window state
         void set_window_state(window_state_t state);
+    public:
+        /// @brief Gets the window icon
+        std::shared_ptr<rocket::texture_t> get_icon();
+
+        /// @brief Sets the window icon
+        void set_icon(std::shared_ptr<rocket::texture_t> icon);
     public:
         /// @brief Gets the current platform
         platform_t get_platform();

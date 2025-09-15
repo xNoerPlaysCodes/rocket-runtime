@@ -4,7 +4,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "rocket/asset.hpp"
 #include "rocket/io.hpp"
+#include "rocket/macros.hpp"
 #include "rocket/runtime.hpp"
 #include "rocket/types.hpp"
 #include "util.hpp"
@@ -132,11 +134,17 @@ namespace rocket {
 
         glfwWindowHint(GLFW_SCALE_TO_MONITOR, glfwaltGetBoolean(flags.hidpi));
 
+        using GLFWenum = int;
+        GLFWenum class_name = 0;
         if (util::is_wayland()) {
-            glfwWindowHintString(GLFW_WAYLAND_APP_ID, ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID);
+            class_name = GLFW_WAYLAND_APP_ID;
         } else if (util::is_x11()) {
-            glfwWindowHintString(GLFW_X11_CLASS_NAME, ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID);
+            class_name = GLFW_X11_CLASS_NAME;
         }
+
+        std::string class_name_or_id = flags.window_class_name.empty() || flags.window_class_name == ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID ? ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID : flags.window_class_name;
+
+        glfwWindowHintString(class_name, class_name_or_id.c_str());
  
         if (!flags.fullscreen) {
             monitor = nullptr;
@@ -187,11 +195,11 @@ namespace rocket {
             "info");
         auto platform = get_platform();
         std::string glfw_platform_str = platform.name;
-        rocket::log("CPL Windowing Library: GLFW", "window_t", "constructor", "info");
-        rocket::log("Windowing API: " + glfw_platform_str, "window_t", "constructor", "info");
-        rocket::log("RGE Platform: " + platform.rge_name, "window_t", "constructor", "info");
 
         std::vector<std::string> logs = {
+            "CPL Windowing Library: GLFW",
+            "Windowing API: " + glfw_platform_str,
+            "rGE Platform: " + platform.rge_name,
             "Modules:",
             #ifdef ROCKETGE__BUILD_QUARK
                 "- Quark: [ENABLED]",
@@ -216,6 +224,22 @@ namespace rocket {
         glfwSetWindowAttrib(glfw_window, GLFW_ICONIFIED, state.iconified);
         glfwSetWindowAttrib(glfw_window, GLFW_MAXIMIZED, state.maximized);
         glfwSetWindowAttrib(glfw_window, GLFW_FLOATING, state.floating);
+    }
+
+    void window_t::set_icon(std::shared_ptr<rocket::texture_t> texture) {
+        if (texture->channels != rGE__TEXTURE_CHANNEL_COUNT_RGBA) {
+            std::string channel_count = std::to_string(texture->channels);
+            rocket::log_error("texture must be in RGBA format, channel count was: " + channel_count, -1, "window_t::set_icon", "fatal-to-function");
+            return;
+        }
+        auto pxdata = texture->data.data();
+
+        GLFWimage image;
+        image.pixels = pxdata;
+        image.width = texture->size.x;
+        image.height = texture->size.y;
+
+        glfwSetWindowIcon(this->glfw_window, 1, &image);
     }
 
     void window_t::set_cursor_mode(cursor_mode_t m) {
@@ -346,6 +370,10 @@ namespace rocket {
         state.floating = glfwGetWindowAttrib(this->glfw_window, GLFW_FLOATING);
         state.hovering = glfwGetWindowAttrib(this->glfw_window, GLFW_HOVERED);
         return state;
+    }
+
+    std::shared_ptr<texture_t> window_t::get_icon() {
+        return icon;
     }
 
     cursor_mode_t window_t::get_cursor_mode() {

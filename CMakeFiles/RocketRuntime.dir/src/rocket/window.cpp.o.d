@@ -120,8 +120,9 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: \
  /usr/include/c++/15.2.1/cstddef \
  /usr/include/c++/15.2.1/bits/uses_allocator.h \
  /usr/include/c++/15.2.1/bits/uses_allocator_args.h \
- /usr/include/c++/15.2.1/tuple /usr/include/GLFW/glfw3.h \
- /usr/include/GL/gl.h /usr/include/GL/glext.h \
+ /usr/include/c++/15.2.1/tuple \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/macros.hpp \
+ /usr/include/GLFW/glfw3.h /usr/include/GL/gl.h /usr/include/GL/glext.h \
  /usr/include/KHR/khrplatform.h /usr/include/c++/15.2.1/functional \
  /usr/include/c++/15.2.1/bits/std_function.h \
  /usr/include/c++/15.2.1/unordered_map \
@@ -197,6 +198,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: \
  /usr/include/c++/15.2.1/bits/istream.tcc \
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp \

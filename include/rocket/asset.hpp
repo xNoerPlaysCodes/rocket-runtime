@@ -15,12 +15,20 @@
 #include <memory>
 #include <GLFW/glfw3.h>
 
+#define rGE__TEXTURE_CHANNEL_COUNT_RGBA     4
+#define rGE__TEXTURE_CHANNEL_COUNT_RGB      3
+
 namespace rocket {
     /// @brief Maps to OpenGL::Texture2D
     class texture_t {
-    private:
-        std::vector<uint8_t> data;
+    public:
+        /// @brief Texture Format
+        /// @modify Do not modify
         int channels;
+
+        /// @brief Texture Raw Pixel Data
+        /// @modify Do not modify (advanced)
+        std::vector<uint8_t> data;
     public:
         /// @brief OpenGL Texture ID
         /// @modify Do not modify
@@ -94,13 +102,15 @@ namespace rocket {
         stbtt_bakedchar cdata[96];
         std::vector<uint8_t> ttf_data;
         /// INNER
-        float size;
-
         float line_height;
 
         friend class renderer_2d;
         friend class asset_manager_t;
         friend class text_t;
+    public:
+        /// @brief The Font Size
+        /// @modify Do not Modify
+        float size;
     public:
         /// @brief AssetID
         assetid_t id;
@@ -171,11 +181,15 @@ namespace rocket {
     public:
         /// @brief Load a Texture2D from path
         assetid_t load_texture(std::string path);
+        /// @brief Load a Texture2D from memory
+        assetid_t load_texture(std::vector<uint8_t> mem);
         /// @brief Get a Texture2D from ID
         std::shared_ptr<texture_t> get_texture(assetid_t id);
 
         /// @brief Load an Audio from path
         assetid_t load_audio(std::string path);
+        /// @brief Load an Audio from Memory
+        assetid_t load_audio(std::vector<uint8_t> mem);
         /// @brief Get an Audio from ID
         std::shared_ptr<audio_t> get_audio(assetid_t id);
 

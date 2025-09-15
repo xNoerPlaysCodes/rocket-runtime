@@ -6101,6 +6101,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: src/rocket/window.cpp \
   include/rocket/types.hpp \
   include/rocket/window.hpp \
   include/rocket/io.hpp \
+  include/rocket/macros.hpp \
   include/rocket/runtime.hpp \
   include/rocket/types.hpp \
   include/rocket/window.hpp \
