@@ -97,6 +97,7 @@ namespace rocket {
         windowflags_t flags;
 
         std::shared_ptr<rocket::texture_t> icon = nullptr;
+        bool destructor_called = false;
 
         friend class renderer_2d;
         friend class renderer_3d;

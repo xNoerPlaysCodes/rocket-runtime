@@ -14,6 +14,7 @@ bin/libRocketRuntime.so: \
   CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o \
+  CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libGL.so \
@@ -75,6 +76,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o:
 CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o:
 
 CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o:
+
+CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o:
 
 CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o:
 

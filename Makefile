@@ -221,6 +221,19 @@ gamepad_test/fast:
 .PHONY : gamepad_test/fast
 
 #=============================================================================
+# Target rules for targets named icon_test
+
+# Build rule for target.
+icon_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 icon_test
+.PHONY : icon_test
+
+# fast build rule for target.
+icon_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/icon_test.dir/build.make CMakeFiles/icon_test.dir/build
+.PHONY : icon_test/fast
+
+#=============================================================================
 # Target rules for targets named moving_circle
 
 # Build rule for target.
@@ -475,6 +488,30 @@ src/rocket/io.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.s
 .PHONY : src/rocket/io.cpp.s
 
+src/rocket/native.o: src/rocket/native.cpp.o
+.PHONY : src/rocket/native.o
+
+# target to build an object file
+src/rocket/native.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o
+.PHONY : src/rocket/native.cpp.o
+
+src/rocket/native.i: src/rocket/native.cpp.i
+.PHONY : src/rocket/native.i
+
+# target to preprocess a source file
+src/rocket/native.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.i
+.PHONY : src/rocket/native.cpp.i
+
+src/rocket/native.s: src/rocket/native.cpp.s
+.PHONY : src/rocket/native.s
+
+# target to generate assembly for a file
+src/rocket/native.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.s
+.PHONY : src/rocket/native.cpp.s
+
 src/rocket/renderer.o: src/rocket/renderer.cpp.o
 .PHONY : src/rocket/renderer.o
 
@@ -715,6 +752,30 @@ tests/gamepad_test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gamepad_test.dir/build.make CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.s
 .PHONY : tests/gamepad_test.cpp.s
 
+tests/icon_test.o: tests/icon_test.cpp.o
+.PHONY : tests/icon_test.o
+
+# target to build an object file
+tests/icon_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/icon_test.dir/build.make CMakeFiles/icon_test.dir/tests/icon_test.cpp.o
+.PHONY : tests/icon_test.cpp.o
+
+tests/icon_test.i: tests/icon_test.cpp.i
+.PHONY : tests/icon_test.i
+
+# target to preprocess a source file
+tests/icon_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/icon_test.dir/build.make CMakeFiles/icon_test.dir/tests/icon_test.cpp.i
+.PHONY : tests/icon_test.cpp.i
+
+tests/icon_test.s: tests/icon_test.cpp.s
+.PHONY : tests/icon_test.s
+
+# target to generate assembly for a file
+tests/icon_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/icon_test.dir/build.make CMakeFiles/icon_test.dir/tests/icon_test.cpp.s
+.PHONY : tests/icon_test.cpp.s
+
 tests/initializer_test.o: tests/initializer_test.cpp.o
 .PHONY : tests/initializer_test.o
 
@@ -870,6 +931,7 @@ help:
 	@echo "... RocketRuntime"
 	@echo "... custom_shader"
 	@echo "... gamepad_test"
+	@echo "... icon_test"
 	@echo "... initializer_test"
 	@echo "... line_test"
 	@echo "... moving_circle"
@@ -905,6 +967,9 @@ help:
 	@echo "... src/rocket/io.o"
 	@echo "... src/rocket/io.i"
 	@echo "... src/rocket/io.s"
+	@echo "... src/rocket/native.o"
+	@echo "... src/rocket/native.i"
+	@echo "... src/rocket/native.s"
 	@echo "... src/rocket/renderer.o"
 	@echo "... src/rocket/renderer.i"
 	@echo "... src/rocket/renderer.s"
@@ -935,6 +1000,9 @@ help:
 	@echo "... tests/gamepad_test.o"
 	@echo "... tests/gamepad_test.i"
 	@echo "... tests/gamepad_test.s"
+	@echo "... tests/icon_test.o"
+	@echo "... tests/icon_test.i"
+	@echo "... tests/icon_test.s"
 	@echo "... tests/initializer_test.o"
 	@echo "... tests/initializer_test.i"
 	@echo "... tests/initializer_test.s"

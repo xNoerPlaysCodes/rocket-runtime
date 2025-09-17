@@ -160,6 +160,12 @@ namespace rocket {
         ~text_t();
     };
 
+    enum class texture_color_format_t : int {
+        auto_extract = 0,
+        rgba = rGE__TEXTURE_CHANNEL_COUNT_RGBA,
+        rgb = rGE__TEXTURE_CHANNEL_COUNT_RGB
+    };
+
     class asset_manager_t {
     private:
         std::unordered_map<std::shared_ptr<texture_t>, std::chrono::time_point<std::chrono::high_resolution_clock>> textures;
@@ -180,9 +186,9 @@ namespace rocket {
         void cleanup();
     public:
         /// @brief Load a Texture2D from path
-        assetid_t load_texture(std::string path);
+        assetid_t load_texture(std::string path, texture_color_format_t format = texture_color_format_t::auto_extract);
         /// @brief Load a Texture2D from memory
-        assetid_t load_texture(std::vector<uint8_t> mem);
+        assetid_t load_texture(std::vector<uint8_t> mem, texture_color_format_t format = texture_color_format_t::auto_extract);
         /// @brief Get a Texture2D from ID
         std::shared_ptr<texture_t> get_texture(assetid_t id);
 

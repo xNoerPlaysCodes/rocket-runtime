@@ -254,10 +254,24 @@ CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/headeronlyimpl.cpp -o CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.s
 
+CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
+CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o: src/rocket/native.cpp
+CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/native.cpp
+
+CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noerlol/C-Projects/RocketGE/src/rocket/native.cpp > CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.i
+
+CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noerlol/C-Projects/RocketGE/src/rocket/native.cpp -o CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.s
+
 CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
 CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: src/astro/astroui.cpp
 CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/astro/astroui.cpp
 
 CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.i: cmake_force
@@ -271,7 +285,7 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.s: cmake_force
 CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o: CMakeFiles/RocketRuntime.dir/flags.make
 CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o: src/quark/physics.cpp
 CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o -MF CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.d -o CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/quark/physics.cpp
 
 CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.i: cmake_force
@@ -297,6 +311,7 @@ RocketRuntime_OBJECTS = \
 "CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o" \
 "CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o" \
 "CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o" \
+"CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o" \
 "CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o" \
 "CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o"
 
@@ -316,12 +331,13 @@ bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o
 bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o
 bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o
 bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o
+bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o
 bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o
 bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o
 bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/build.make
 bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/compiler_depend.ts
 bin/libRocketRuntime.so: CMakeFiles/RocketRuntime.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX shared library bin/libRocketRuntime.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/noerlol/C-Projects/RocketGE/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX shared library bin/libRocketRuntime.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/RocketRuntime.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

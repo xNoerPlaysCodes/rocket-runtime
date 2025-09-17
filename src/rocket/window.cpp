@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "native.hpp"
 #include "rocket/asset.hpp"
 #include "rocket/io.hpp"
 #include "rocket/macros.hpp"
@@ -79,7 +80,10 @@ namespace rocket {
         this->title = title;
         if (!glfw_initialized) {
             glfwSetErrorCallback([](int error, const char* description) { rocket::log_error(description, error, "GLFW::ErrorCallback", "warn"); });
-            glfwInit();
+            int glfwInit_exc = glfwInit();
+            if (!glfwInit_exc) {
+                rocket::log_error("glfwInit() failed with exit code: " + std::to_string(glfwInit_exc), -1, "GLFW::glfwInit", "fatal");
+            }
             glfw_initialized = true;
         }
         GLFWmonitor *monitor = glfwGetPrimaryMonitor();
@@ -153,7 +157,15 @@ namespace rocket {
         // We set Swap Interval at polL_events() -> first_init
         this->flags = flags;
         glfwWindowHint(GLFW_SAMPLES, flags.msaa_samples);
-        glfw_window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
+        this->glfw_window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
+        if (this->glfw_window == nullptr) {
+            rocket::log_error("failed to create window", -1, "window_t::constructor", "fatal");
+            platform_t platform = this->get_platform();
+            std::vector<std::string> log_messages = {
+                "Error String: " + std::string("glfwCreateWindow resulted in a nullptr")
+            };
+            std::exit(1);
+        }
         glfwMakeContextCurrent(glfw_window);
 
         monitor = glfwaltGetMonitorWithCursor();
@@ -229,7 +241,7 @@ namespace rocket {
     void window_t::set_icon(std::shared_ptr<rocket::texture_t> texture) {
         if (texture->channels != rGE__TEXTURE_CHANNEL_COUNT_RGBA) {
             std::string channel_count = std::to_string(texture->channels);
-            rocket::log_error("texture must be in RGBA format, channel count was: " + channel_count, -1, "window_t::set_icon", "fatal-to-function");
+            rocket::log_error("texture must be in RGBA format (try load in texture_color_format_t::rgba), channel count was: " + channel_count, -1, "window_t::set_icon", "fatal-to-function");
             return;
         }
         auto pxdata = texture->data.data();
@@ -238,6 +250,16 @@ namespace rocket {
         image.pixels = pxdata;
         image.width = texture->size.x;
         image.height = texture->size.y;
+
+        if (util::is_wayland()) {
+            rnative::wayland_set_window_icon(this->glfw_window, image);
+            return;
+        }
+ 
+        if (get_platform().type == platform_type_t::macos_cocoa) {
+            rocket::log_error("macOS::Cocoa does not support dynamically setting window icons", -1, "window_t::set_icon", "fatal-to-function");
+            return;
+        }
 
         glfwSetWindowIcon(this->glfw_window, 1, &image);
     }
@@ -383,8 +405,6 @@ namespace rocket {
     bool is_wayland() {
         return util::is_wayland();
     }
-
-    bool destructor_called = false;
 
     void window_t::close() {
         if (glfw_window == nullptr) {

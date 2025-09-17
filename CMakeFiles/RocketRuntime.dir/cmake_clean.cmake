@@ -12,6 +12,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o.d"
   "CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o"
   "CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o.d"
+  "CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o"
+  "CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.d"
   "CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o"
   "CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.d"
   "CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o"

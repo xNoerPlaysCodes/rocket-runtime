@@ -42,6 +42,12 @@ if (BUILD_ASTRO)
     add_compile_definitions(ROCKETGE__BUILD_ASTRO)
 endif()
 
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(RNATIVE_SOURCES
+        src/rnative/xdg-toplevel-icon-v1-client-protocol.c
+    )
+endif()
+
 add_library(${PROJECT_NAME}
     src/rocket/window.cpp
     src/rocket/util.cpp
@@ -61,6 +67,10 @@ add_library(${PROJECT_NAME}
 
     # Header-Only Libraries Implementation
     src/headeronlyimpl.cpp
+
+    # RNative
+    ${RNATIVE_SOURCES}
+    src/rocket/native.cpp
 
     # AstroUI
     ${ASTRO_SOURCES}
@@ -86,6 +96,7 @@ if (BUILD_TESTS)
         rounded_texture_rectangle_test
         line_test
         gamepad_test
+        icon_test
     )
 
     foreach(test_name IN LISTS TEST_NAMES)

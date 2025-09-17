@@ -171,12 +171,12 @@ namespace rocket {
         this->cleanup_running = true;
     }
 
-    assetid_t asset_manager_t::load_texture(std::string path) {
+    assetid_t asset_manager_t::load_texture(std::string path, texture_color_format_t format) {
         assetid_t id = current_id++;
         std::shared_ptr<texture_t> texture = std::make_shared<texture_t>();
         texture->id = id;
         
-        uint8_t *img_data = stbi_load(path.c_str(), &texture->size.x, &texture->size.y, &texture->channels, 0);
+        uint8_t *img_data = stbi_load(path.c_str(), &texture->size.x, &texture->size.y, &texture->channels, static_cast<int>(format));
 
         if (!img_data) {
             rocket::log_error("failed to load texture: " + path, 1, "stb_image::stbi_load", "fatal-to-function");
@@ -184,14 +184,17 @@ namespace rocket {
             return -1;
         }
         
-        texture->data.assign(img_data, img_data + texture->size.x * texture->size.y * texture->channels);
+        if (format != texture_color_format_t::auto_extract) {
+            texture->channels = static_cast<int>(format);
+        }
+        texture->data.assign(img_data, img_data + texture->size.x * texture->size.y * texture->channels); 
 
         textures.insert({texture, std::chrono::high_resolution_clock::now()});
 
         return id;
     }
 
-    assetid_t asset_manager_t::load_texture(std::vector<uint8_t> data) {
+    assetid_t asset_manager_t::load_texture(std::vector<uint8_t> data, texture_color_format_t format) {
         assetid_t id = current_id++;
         std::shared_ptr<texture_t> texture = std::make_shared<texture_t>();
         texture->id = id;
@@ -199,7 +202,7 @@ namespace rocket {
         uint8_t *file_data = data.data();
         size_t len = data.size();
 
-        uint8_t *img_data = stbi_load_from_memory(file_data, len, &texture->size.x, &texture->size.y, &texture->channels, 0);
+        uint8_t *img_data = stbi_load_from_memory(file_data, len, &texture->size.x, &texture->size.y, &texture->channels, static_cast<int>(format));
         if (img_data == nullptr) {
             std::stringstream address;
             address << file_data << '\n';
@@ -208,7 +211,9 @@ namespace rocket {
             current_id--;
             return -1;
         }
-
+        if (format != texture_color_format_t::auto_extract) {
+            texture->channels = static_cast<int>(format);
+        }
         textures.insert({texture, std::chrono::high_resolution_clock::now()});
         return id;
     }
