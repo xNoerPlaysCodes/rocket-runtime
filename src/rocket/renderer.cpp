@@ -261,49 +261,47 @@ namespace rocket {
    
     void renderer_2d::draw_text(rocket::text_t &text, rocket::vec2f_t position) {
         static rgl::shader_program_t shader_program = rGL_SHADER_INVALID;
-
         if (shader_program == rGL_SHADER_INVALID) {
-            const char* vert_src = R"(
-                #version 330 core
-                layout(location = 0) in vec2 aPos;
-                layout(location = 1) in vec2 aTex;
+            // const char* vert_src = R"(
+            //     #version 330 core
+            //     layout(location = 0) in vec2 aPos;
+            //     layout(location = 1) in vec2 aTex;
+            //
+            //     out vec2 TexCoord;
+            //
+            //     void main() {
+            //         gl_Position = vec4(aPos.xy, 0.0, 1.0);
+            //         TexCoord = aTex;
+            //     }
+            // )";
+            //
+            // const char* frag_src = R"(
+            //     #version 330 core
+            //     in vec2 TexCoord;
+            //     out vec4 FragColor;
+            //
+            //     uniform sampler2D u_texture;
+            //     uniform vec3 u_color;
+            //
+            //     void main() {
+            //         float alpha = texture(u_texture, TexCoord).r;
+            //
+            //         // Gamma correct to linear
+            //         alpha = pow(alpha, 2.2);
+            //
+            //         // Sharpen edges (smaller = sharper, 1.0 = no change)
+            //         alpha = pow(alpha, 0.5);
+            //
+            //         // Convert back to sRGB
+            //         alpha = pow(alpha, 1.0 / 2.2);
+            //
+            //         // Premultiply color
+            //         vec3 rgb = u_color * alpha;
+            //         FragColor = vec4(rgb, alpha);
+            //     }
+            // )";
 
-                out vec2 TexCoord;
-
-                void main() {
-                    gl_Position = vec4(aPos.xy, 0.0, 1.0);
-                    TexCoord = aTex;
-                }
-            )";
-
-            const char* frag_src = R"(
-                #version 330 core
-                in vec2 TexCoord;
-                out vec4 FragColor;
-
-                uniform sampler2D u_texture;
-                uniform vec3 u_color;
-
-                void main() {
-                    float alpha = texture(u_texture, TexCoord).r;
-
-                    // Gamma correct to linear
-                    alpha = pow(alpha, 2.2);
-
-                    // Sharpen edges (smaller = sharper, 1.0 = no change)
-                    alpha = pow(alpha, 0.5);
-
-                    // Convert back to sRGB
-                    alpha = pow(alpha, 1.0 / 2.2);
-
-                    // Premultiply color
-                    vec3 rgb = u_color * alpha;
-                    FragColor = vec4(rgb, alpha);
-                }
-            )";
-
-            shader_program = rgl::cache_compile_shader(vert_src, frag_src);
-            rocket::log("Shader 'text' compiled successfully", "rgl", "lazyshader", "info");
+            shader_program = rgl::get_shader(rgl::shader_use_t::text);
         }
 
         // Use shader

@@ -113,6 +113,8 @@ namespace rgl {
         textured_rect
     };
 
+    shader_program_t get_shader(shader_use_t);
+
     void draw_shader(shader_program_t sp, shader_use_t use);
     void draw_shader(shader_program_t sp, vao_t vao, vbo_t vbo);
 
@@ -148,6 +150,10 @@ namespace rgl {
 
     rgl::glstate_t save_state();
     void restore_state(rgl::glstate_t state);
+
+    /// @brief Compiles all default shaders
+    /// @note Can take a variable amount of time
+    void compile_all_default_shaders();
 }
 
 #endif

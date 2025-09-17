@@ -69,8 +69,8 @@ add_library(${PROJECT_NAME}
     src/headeronlyimpl.cpp
 
     # RNative
-    ${RNATIVE_SOURCES}
     src/rocket/native.cpp
+    ${RNATIVE_SOURCES}
 
     # AstroUI
     ${ASTRO_SOURCES}

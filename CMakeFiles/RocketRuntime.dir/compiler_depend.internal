@@ -2429,6 +2429,18 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o
  /usr/include/GLFW/glfw3.h
  /usr/include/GLFW/glfw3native.h
  /usr/include/KHR/khrplatform.h
+ /usr/include/X11/X.h
+ /usr/include/X11/Xdefs.h
+ /usr/include/X11/Xfuncproto.h
+ /usr/include/X11/Xlib.h
+ /usr/include/X11/Xosdefs.h
+ /usr/include/X11/Xutil.h
+ /usr/include/X11/extensions/Xrandr.h
+ /usr/include/X11/extensions/Xrender.h
+ /usr/include/X11/extensions/randr.h
+ /usr/include/X11/extensions/render.h
+ /usr/include/X11/keysym.h
+ /usr/include/X11/keysymdef.h
  /usr/include/alloca.h
  /usr/include/asm-generic/bitsperlong.h
  /usr/include/asm-generic/errno-base.h
@@ -2571,6 +2583,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o
  /usr/include/c++/15.2.1/bits/ios_base.h
  /usr/include/c++/15.2.1/bits/istream.tcc
  /usr/include/c++/15.2.1/bits/iterator_concepts.h
+ /usr/include/c++/15.2.1/bits/list.tcc
  /usr/include/c++/15.2.1/bits/locale_classes.h
  /usr/include/c++/15.2.1/bits/locale_classes.tcc
  /usr/include/c++/15.2.1/bits/locale_conv.h
@@ -2626,6 +2639,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o
  /usr/include/c++/15.2.1/bits/stl_iterator.h
  /usr/include/c++/15.2.1/bits/stl_iterator_base_funcs.h
  /usr/include/c++/15.2.1/bits/stl_iterator_base_types.h
+ /usr/include/c++/15.2.1/bits/stl_list.h
  /usr/include/c++/15.2.1/bits/stl_map.h
  /usr/include/c++/15.2.1/bits/stl_multimap.h
  /usr/include/c++/15.2.1/bits/stl_pair.h
@@ -2686,6 +2700,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o
  /usr/include/c++/15.2.1/iosfwd
  /usr/include/c++/15.2.1/istream
  /usr/include/c++/15.2.1/limits
+ /usr/include/c++/15.2.1/list
  /usr/include/c++/15.2.1/locale
  /usr/include/c++/15.2.1/map
  /usr/include/c++/15.2.1/math.h
@@ -2919,6 +2934,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o
  /usr/include/wayland-client-protocol.hpp
  /usr/include/wayland-client.h
  /usr/include/wayland-client.hpp
+ /usr/include/wayland-server-core.h
+ /usr/include/wayland-server.hpp
  /usr/include/wayland-util.h
  /usr/include/wayland-util.hpp
  /usr/include/wayland-version.h
@@ -2927,6 +2944,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o
  /usr/include/wctype.h
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/limits.h
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdarg.h
+ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdbool.h
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stddef.h
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdint.h
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/syslimits.h
@@ -6877,6 +6895,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o
  /usr/include/c++/15.2.1/climits
  /usr/include/c++/15.2.1/clocale
  /usr/include/c++/15.2.1/cmath
+ /usr/include/c++/15.2.1/codecvt
  /usr/include/c++/15.2.1/compare
  /usr/include/c++/15.2.1/concepts
  /usr/include/c++/15.2.1/cstddef

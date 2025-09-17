@@ -396,4 +396,9 @@ CMakeFiles/icon_test.dir/tests/icon_test.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/tests/../include/rocket/io.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
- /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+ /usr/include/c++/15.2.1/utility \
+ /usr/include/c++/15.2.1/bits/stl_relops.h \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp

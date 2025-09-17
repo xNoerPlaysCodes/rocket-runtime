@@ -248,7 +248,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: \
  /usr/include/c++/15.2.1/pstl/glue_memory_defs.h \
  /usr/include/c++/15.2.1/pstl/execution_defs.h /usr/include/GLFW/glfw3.h \
  /usr/include/GL/gl.h /usr/include/GL/glext.h \
- /usr/include/KHR/khrplatform.h /usr/include/c++/15.2.1/iostream \
+ /usr/include/KHR/khrplatform.h /usr/include/c++/15.2.1/codecvt \
+ /usr/include/c++/15.2.1/iostream \
  /home/noerlol/C-Projects/RocketGE/src/include/native.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \

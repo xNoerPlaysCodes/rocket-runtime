@@ -160,6 +160,10 @@ namespace rocket {
                 const std::string& title = "rGE - Example Window", 
                 windowflags_t flags = windowflags_t());
     public:
+        /// @brief Force a specific platform to use in GLFW/Backend
+        /// @note Must be called BEFORE constructor of all windows
+        static void set_forced_platform(platform_type_t type);
+    public:
         /// @brief closes the window
         /// @brief called by destructor
         void close();

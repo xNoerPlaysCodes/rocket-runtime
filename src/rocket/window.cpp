@@ -1,7 +1,9 @@
 #include "../../include/rocket/window.hpp"
 #include <GLFW/glfw3.h>
+#include <codecvt>
 #include <cstdlib>
 #include <iostream>
+#include <locale>
 #include <string>
 #include <vector>
 #include "native.hpp"
@@ -12,13 +14,13 @@
 #include "rocket/types.hpp"
 #include "util.hpp"
 
+#define RGE_STATIC_FUNC_IMPL
+
 namespace rocket {
-    bool glfw_initialized = false;
+    static bool glfw_initialized = false;
 
     io::keystate_t keys[GLFW_KEY_LAST + 1] = {};
     io::keystate_t buttons[GLFW_MOUSE_BUTTON_MIDDLE + 1] = {};
-
-    double last_mouse_x, last_mouse_y;
 
     GLFWmonitor* glfwaltGetMonitorWithCursor() {
         int count;
@@ -47,7 +49,7 @@ namespace rocket {
     }
 
     platform_t window_t::get_platform() {
-        auto glfw_platform = glfwGetPlatform();
+        int glfw_platform = glfwGetPlatform();
         platform_t platform;
         std::string glfw_platform_str = platform.name;
         if (glfw_platform == GLFW_PLATFORM_X11) {
@@ -59,11 +61,11 @@ namespace rocket {
             platform.type = platform_type_t::linux_wayland;
             platform.os_name = "Linux";
         } else if (glfw_platform == GLFW_PLATFORM_COCOA) {
-            glfw_platform_str = "MacOS (Cocoa)";
+            glfw_platform_str = "Cocoa";
             platform.type = platform_type_t::macos_cocoa;
             platform.os_name = "macOS";
         } else if (glfw_platform == GLFW_PLATFORM_WIN32) {
-            glfw_platform_str = "Windows";
+            glfw_platform_str = "Win32";
             platform.type = platform_type_t::windows;
             platform.os_name = "Windows";
         }
@@ -73,6 +75,43 @@ namespace rocket {
         return platform;
     }
 
+    RGE_STATIC_FUNC_IMPL void window_t::set_forced_platform(platform_type_t type) {
+        if (glfw_initialized) {
+            rocket::log_error("too late! glfw has already been initialized", -1, "window_t::set_forced_platform", "fatal");
+            return;
+        }
+
+        if (type == platform_type_t::linux_wayland) {
+#ifndef ROCKETGE__Platform_Linux
+            rocket::log_error("type can only be platform_type_t::linux_wayland when on linux", -1, "window_t::set_forced_platform", "fatal-to-function");
+#else
+            glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WAYLAND);
+#endif
+        } else if (type == platform_type_t::linux_x11) {
+#ifndef ROCKETGE__Platform_Linux
+            rocket::log_error("type can only be platform_type_t::linux_x11 when on linux", -1, "window_t::set_forced_platform", "fatal-to-function");
+#else
+            glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
+#endif
+        }
+
+        else if (type == platform_type_t::windows) {
+#ifndef ROCKETGE__Platform_Windows
+            rocket::log_error("type can only be platform_type_t::windows when on windows", -1, "window_t::set_forced_platform", "fatal-to-function");
+#else
+            glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WIN32);
+#endif
+        } else if (type == platform_type_t::macos_cocoa) {
+#ifndef ROCKETGE__Platform_macOS
+            rocket::log_error("type can only be platform_type_t::macos_cocoa when on macOS", -1, "window_t::set_forced_platform", "fatal-to-function");
+#else
+            glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_COCOA);
+#endif
+        } else {
+            rocket::log_error("platform is not valid!", -1, "window_t::set_forced_platform", "fatal-to-function");
+        }
+    }
+
     window_t::window_t(const rocket::vec2i_t& size,
             const std::string& title,
             windowflags_t flags) {
@@ -80,8 +119,7 @@ namespace rocket {
         this->title = title;
         if (!glfw_initialized) {
             glfwSetErrorCallback([](int error, const char* description) { rocket::log_error(description, error, "GLFW::ErrorCallback", "warn"); });
-            int glfwInit_exc = glfwInit();
-            if (!glfwInit_exc) {
+            if (int glfwInit_exc = glfwInit(); !glfwInit_exc) {
                 rocket::log_error("glfwInit() failed with exit code: " + std::to_string(glfwInit_exc), -1, "GLFW::glfwInit", "fatal");
             }
             glfw_initialized = true;
@@ -148,7 +186,24 @@ namespace rocket {
 
         std::string class_name_or_id = flags.window_class_name.empty() || flags.window_class_name == ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID ? ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID : flags.window_class_name;
 
-        glfwWindowHintString(class_name, class_name_or_id.c_str());
+        if (class_name != 0) {
+            glfwWindowHintString(class_name, class_name_or_id.c_str());
+        }
+
+#ifdef ROCKETGE__Platform_Windows
+        auto to_widestr = [](std::string str) -> std::wstring {
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+            return converter.from_bytes(str);
+        };
+
+        bool is_custom_class_id = !flags.window_class_name.empty() && flags.window_class_name != ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID;
+        if (is_custom_class_id) {
+            rocket::log_error("using an untested native API: may break", -1, "window_t::constructor", "warn");
+            std::wstring wstr = to_widestr(flags.window_class_name);
+            const wchar_t *cwstr = wstr.c_str();
+            rnative::windows_set_window_class_name_prewincreate(cwstr);
+        }
+#endif
  
         if (!flags.fullscreen) {
             monitor = nullptr;
@@ -251,7 +306,7 @@ namespace rocket {
         image.width = texture->size.x;
         image.height = texture->size.y;
 
-        if (util::is_wayland()) {
+        if (int platform = glfwGetPlatform(); platform == GLFW_PLATFORM_WAYLAND) {
             rnative::wayland_set_window_icon(this->glfw_window, image);
             return;
         }
@@ -347,7 +402,8 @@ namespace rocket {
             util::dispatch_event(event);
         }
 
-        double mouse_x, mouse_y;
+        static double last_mouse_x{0}, last_mouse_y{0};
+        double mouse_x{0}, mouse_y{0};
         glfwGetCursorPos(glfw_window, &mouse_x, &mouse_y);
         if (mouse_x != last_mouse_x || mouse_y != last_mouse_y) {
             io::mouse_move_event_t event;

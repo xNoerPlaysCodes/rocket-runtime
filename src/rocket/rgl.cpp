@@ -7,6 +7,7 @@
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
+#include "rocket/rgl.hpp"
 #include "rocket/types.hpp"
 #include "../../include/rocket/runtime.hpp"
 
@@ -668,6 +669,10 @@ namespace rgl {
         return shader_cache[use];
     }
 
+    rgl::shader_program_t get_shader(shader_use_t use) {
+        return init_shader(use);
+    }
+
     shader_program_t get_paramaterized_quad(
         const rocket::vec2f_t &pos,
         const rocket::vec2f_t &size,
@@ -951,5 +956,12 @@ namespace rgl {
             glEnable(GL_BLEND);
             glBlendFuncSeparate(state.blend_mode.src_rgb, state.blend_mode.dst_rgb, state.blend_mode.src_alpha, state.blend_mode.dst_alpha);
         }
+    }
+
+    void compile_all_default_shaders() {
+        init_shader(shader_use_t::rect);
+        init_shader(shader_use_t::text);
+        init_shader(shader_use_t::textured_rect);
+        rGL_SHADER_INVALID;
     }
 }

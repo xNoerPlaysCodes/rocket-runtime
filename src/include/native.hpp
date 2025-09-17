@@ -2,8 +2,12 @@
 #define ROCKETGE__RNATIVE_HPP
 
 #include <GLFW/glfw3.h>
+#include <string>
 namespace rnative {
     void wayland_set_window_icon(GLFWwindow *window, GLFWimage &image);
+    /// @brief Pre window creation
+    /// @param window Pass nullptr
+    void windows_set_window_class_name_prewincreate(const wchar_t *str);
 }
 
 #ifdef RNATIVE__INCLUDE_WAYLAND
@@ -13,5 +17,19 @@ namespace rnative {
 #include "rnative/xdg-toplevel-icon-v1-client-protocol.h"
 
 #endif // RNATIVE__INCLUDE_WAYLAND
+
+#ifdef RNATIVE__INCLUDE_X11
+
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+
+#endif // RNATIVE__INCLUDE_X11
+
+#ifdef RNATIVE__INCLUDE_WINDOWS
+
+#include <windows.h>
+#include <shobjidl.h>
+
+#endif // RNATIVE__INCLUDE_WINDOWS
 
 #endif // ROCKETGE__RNATIVE_HPP

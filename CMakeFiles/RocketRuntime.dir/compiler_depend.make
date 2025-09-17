@@ -2422,6 +2422,18 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o: src/rocket/native.cpp \
   /usr/include/GLFW/glfw3.h \
   /usr/include/GLFW/glfw3native.h \
   /usr/include/KHR/khrplatform.h \
+  /usr/include/X11/X.h \
+  /usr/include/X11/Xdefs.h \
+  /usr/include/X11/Xfuncproto.h \
+  /usr/include/X11/Xlib.h \
+  /usr/include/X11/Xosdefs.h \
+  /usr/include/X11/Xutil.h \
+  /usr/include/X11/extensions/Xrandr.h \
+  /usr/include/X11/extensions/Xrender.h \
+  /usr/include/X11/extensions/randr.h \
+  /usr/include/X11/extensions/render.h \
+  /usr/include/X11/keysym.h \
+  /usr/include/X11/keysymdef.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -2564,6 +2576,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o: src/rocket/native.cpp \
   /usr/include/c++/15.2.1/bits/ios_base.h \
   /usr/include/c++/15.2.1/bits/istream.tcc \
   /usr/include/c++/15.2.1/bits/iterator_concepts.h \
+  /usr/include/c++/15.2.1/bits/list.tcc \
   /usr/include/c++/15.2.1/bits/locale_classes.h \
   /usr/include/c++/15.2.1/bits/locale_classes.tcc \
   /usr/include/c++/15.2.1/bits/locale_conv.h \
@@ -2619,6 +2632,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o: src/rocket/native.cpp \
   /usr/include/c++/15.2.1/bits/stl_iterator.h \
   /usr/include/c++/15.2.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/15.2.1/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15.2.1/bits/stl_list.h \
   /usr/include/c++/15.2.1/bits/stl_map.h \
   /usr/include/c++/15.2.1/bits/stl_multimap.h \
   /usr/include/c++/15.2.1/bits/stl_pair.h \
@@ -2679,6 +2693,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o: src/rocket/native.cpp \
   /usr/include/c++/15.2.1/iosfwd \
   /usr/include/c++/15.2.1/istream \
   /usr/include/c++/15.2.1/limits \
+  /usr/include/c++/15.2.1/list \
   /usr/include/c++/15.2.1/locale \
   /usr/include/c++/15.2.1/map \
   /usr/include/c++/15.2.1/math.h \
@@ -2912,6 +2927,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o: src/rocket/native.cpp \
   /usr/include/wayland-client-protocol.hpp \
   /usr/include/wayland-client.h \
   /usr/include/wayland-client.hpp \
+  /usr/include/wayland-server-core.h \
+  /usr/include/wayland-server.hpp \
   /usr/include/wayland-util.h \
   /usr/include/wayland-util.hpp \
   /usr/include/wayland-version.h \
@@ -2920,6 +2937,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o: src/rocket/native.cpp \
   /usr/include/wctype.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/limits.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdarg.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdbool.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stddef.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdint.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/syslimits.h
@@ -6861,6 +6879,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: src/rocket/window.cpp \
   /usr/include/c++/15.2.1/climits \
   /usr/include/c++/15.2.1/clocale \
   /usr/include/c++/15.2.1/cmath \
+  /usr/include/c++/15.2.1/codecvt \
   /usr/include/c++/15.2.1/compare \
   /usr/include/c++/15.2.1/concepts \
   /usr/include/c++/15.2.1/cstddef \
@@ -7235,8 +7254,6 @@ src/rocket/runtime.cpp:
 
 /usr/include/glm/packing.hpp:
 
-/usr/include/glm/gtc/vec1.hpp:
-
 /usr/include/glm/gtc/type_ptr.hpp:
 
 /usr/include/glm/gtc/quaternion.inl:
@@ -7295,11 +7312,35 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o:
 
 include/rocket/rgl.hpp:
 
+/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdbool.h:
+
+/usr/include/wayland-version.hpp:
+
+/usr/include/wayland-version.h:
+
+/usr/include/wayland-util.hpp:
+
+/usr/include/wayland-server.hpp:
+
+/usr/include/wayland-server-core.h:
+
+/usr/include/wayland-client-protocol.hpp:
+
+/usr/include/wayland-client-protocol.h:
+
+/usr/include/inttypes.h:
+
+/usr/include/c++/15.2.1/utility:
+
+/usr/include/glm/gtc/vec1.hpp:
+
+/usr/include/c++/15.2.1/bits/stl_list.h:
+
+/usr/include/c++/15.2.1/bits/list.tcc:
+
 /usr/include/c++/15.2.1/ext/aligned_buffer.h:
 
 /usr/include/c++/15.2.1/locale:
-
-/usr/include/wayland-client-protocol.hpp:
 
 /usr/include/c++/15.2.1/ctime:
 
@@ -7319,6 +7360,8 @@ include/rocket/rgl.hpp:
 
 /usr/include/c++/15.2.1/cassert:
 
+/usr/include/X11/extensions/randr.h:
+
 /usr/include/c++/15.2.1/bits/utility.h:
 
 /usr/include/bits/types/FILE.h:
@@ -7336,6 +7379,10 @@ include/rocket/rgl.hpp:
 /usr/include/c++/15.2.1/bits/unique_ptr.h:
 
 /usr/include/c++/15.2.1/bits/uniform_int_dist.h:
+
+/usr/include/wayland-util.h:
+
+/usr/include/c++/15.2.1/cwchar:
 
 /usr/include/c++/15.2.1/ext/alloc_traits.h:
 
@@ -7380,6 +7427,8 @@ src/include/rnative/xdg-toplevel-icon-v1-client-protocol.h:
 src/rocket/shader.cpp:
 
 /usr/include/glm/detail/type_mat2x4.hpp:
+
+/usr/include/X11/Xosdefs.h:
 
 /usr/include/c++/15.2.1/bits/shared_ptr_atomic.h:
 
@@ -7440,8 +7489,6 @@ src/rocket/shader.cpp:
 /usr/include/glm/detail/type_mat2x2.hpp:
 
 /usr/include/c++/15.2.1/bits/memory_resource.h:
-
-/usr/include/glm/ext/matrix_clip_space.hpp:
 
 /usr/include/c++/15.2.1/bits/max_size_type.h:
 
@@ -7655,6 +7702,10 @@ CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o:
 
 include/rocket/runtime.hpp:
 
+/usr/include/wayland-client.hpp:
+
+/usr/include/bits/types/struct_sched_param.h:
+
 /usr/include/c++/15.2.1/bits/stl_pair.h:
 
 /usr/include/glm/gtc/quaternion.hpp:
@@ -7700,6 +7751,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o:
 /usr/include/c++/15.2.1/limits:
 
 include/rocket/stb_truetype.h:
+
+/usr/include/c++/15.2.1/list:
 
 /usr/include/glm/ext/vector_bool3.hpp:
 
@@ -7787,8 +7840,6 @@ src/astro/astroui.cpp:
 
 /usr/include/glm/detail/type_vec2.hpp:
 
-/usr/include/bits/posix1_lim.h:
-
 /usr/include/bits/iscanonical.h:
 
 /usr/include/glm/mat3x2.hpp:
@@ -7821,9 +7872,9 @@ src/astro/astroui.cpp:
 
 /usr/include/glm/detail/type_mat2x2.inl:
 
-src/rocket/renderer.cpp:
+/usr/include/wayland-client.h:
 
-/usr/include/c++/15.2.1/cstdlib:
+/usr/include/sys/syscall.h:
 
 /usr/include/bits/types/cookie_io_functions_t.h:
 
@@ -7837,6 +7888,8 @@ src/rocket/renderer.cpp:
 
 /usr/include/glm/detail/type_mat3x4.inl:
 
+/usr/include/X11/extensions/render.h:
+
 /usr/include/bits/types/__mbstate_t.h:
 
 /usr/include/bits/stdio_lim.h:
@@ -7844,6 +7897,10 @@ src/rocket/renderer.cpp:
 CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o:
 
 /usr/include/glm/ext/matrix_double2x2_precision.hpp:
+
+/usr/include/wayland-client-core.h:
+
+/usr/include/X11/Xdefs.h:
 
 /usr/include/c++/15.2.1/iosfwd:
 
@@ -7884,6 +7941,8 @@ include/rocket/asset.hpp:
 /usr/include/c++/15.2.1/bits/allocated_ptr.h:
 
 /usr/include/glm/ext/matrix_double3x3.hpp:
+
+/usr/include/X11/extensions/Xrender.h:
 
 /usr/include/c++/15.2.1/bits/parse_numbers.h:
 
@@ -8085,6 +8144,8 @@ include/rocket/shader.hpp:
 
 /usr/include/ctype.h:
 
+/usr/include/X11/keysymdef.h:
+
 /usr/include/glm/detail/func_common.inl:
 
 /usr/include/c++/15.2.1/tr1/exp_integral.tcc:
@@ -8096,8 +8157,6 @@ include/rocket/shader.hpp:
 src/rocket/util.hpp:
 
 /usr/include/linux/close_range.h:
-
-/usr/include/wayland-client-protocol.h:
 
 /usr/include/c++/15.2.1/bits/stl_relops.h:
 
@@ -8129,6 +8188,12 @@ src/rocket/asset.cpp:
 
 /usr/include/glm/detail/type_mat3x2.inl:
 
+src/rocket/renderer.cpp:
+
+/usr/include/c++/15.2.1/cstdlib:
+
+/usr/include/X11/Xfuncproto.h:
+
 /usr/include/c++/15.2.1/bits/version.h:
 
 /usr/include/glm/ext/matrix_double4x2_precision.hpp:
@@ -8138,8 +8203,6 @@ src/rocket/asset.cpp:
 /usr/include/c++/15.2.1/tr1/legendre_function.tcc:
 
 /usr/include/glm/detail/type_mat3x3.inl:
-
-/usr/include/glm/ext/vector_uint4_sized.hpp:
 
 /usr/include/glm/detail/type_mat3x4.hpp:
 
@@ -8154,10 +8217,6 @@ src/rocket/asset.cpp:
 /usr/include/c++/15.2.1/bits/functexcept.h:
 
 /usr/include/glm/detail/type_mat4x3.hpp:
-
-/usr/include/bits/types/struct_sched_param.h:
-
-/usr/include/wayland-client.hpp:
 
 /usr/include/glm/detail/type_mat4x4.hpp:
 
@@ -8305,10 +8364,6 @@ src/rocket/renderer3d.cpp:
 
 /usr/include/glm/ext/vector_float3.hpp:
 
-/usr/include/sys/syscall.h:
-
-/usr/include/wayland-client.h:
-
 /usr/include/glm/ext/vector_float3_precision.hpp:
 
 /usr/include/glm/ext/vector_uint2_sized.hpp:
@@ -8331,6 +8386,10 @@ include/quark/physics.hpp:
 
 /usr/include/glm/ext/vector_int3.hpp:
 
+/usr/include/glm/ext/matrix_clip_space.hpp:
+
+/usr/include/X11/X.h:
+
 /usr/include/glm/detail/type_quat.inl:
 
 /usr/include/glm/ext/vector_int4.hpp:
@@ -8339,10 +8398,6 @@ include/quark/physics.hpp:
 
 /usr/include/glm/ext/vector_uint2.hpp:
 
-/usr/include/glm/ext/scalar_constants.inl:
-
-/usr/include/glm/ext/vector_uint3_sized.hpp:
-
 /usr/include/glm/ext/vector_uint4.hpp:
 
 /usr/include/c++/15.2.1/bits/exception.h:
@@ -8350,6 +8405,10 @@ include/quark/physics.hpp:
 /usr/include/glm/gtc/constants.hpp:
 
 /usr/include/glm/gtc/constants.inl:
+
+/usr/include/glm/ext/vector_uint4_sized.hpp:
+
+/usr/include/X11/Xutil.h:
 
 /usr/include/c++/15.2.1/ratio:
 
@@ -8407,6 +8466,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o:
 
 /usr/include/sys/time.h:
 
+/usr/include/X11/Xlib.h:
+
 /usr/include/sys/types.h:
 
 /usr/include/syscall.h:
@@ -8416,8 +8477,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o:
 /usr/include/unistd.h:
 
 src/headeronlyimpl.cpp:
-
-/usr/include/wayland-util.hpp:
 
 src/include/stb_image.h:
 
@@ -8457,16 +8516,12 @@ src/rocket/font.cpp:
 
 src/include/native.hpp:
 
-/usr/include/wayland-version.hpp:
+/usr/include/bits/posix1_lim.h:
 
-/usr/include/c++/15.2.1/utility:
+/usr/include/X11/extensions/Xrandr.h:
 
-/usr/include/inttypes.h:
+/usr/include/glm/ext/scalar_constants.inl:
 
-/usr/include/wayland-client-core.h:
+/usr/include/glm/ext/vector_uint3_sized.hpp:
 
-/usr/include/c++/15.2.1/cwchar:
-
-/usr/include/wayland-util.h:
-
-/usr/include/wayland-version.h:
+/usr/include/X11/keysym.h:
