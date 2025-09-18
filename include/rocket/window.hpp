@@ -120,8 +120,6 @@ namespace rocket {
 
         friend class renderer_2d;
         friend class renderer_3d;
-    private:
-        bool is_wayland();
     public:
         /// @brief Sets the size of the window
         void set_size(const rocket::vec2i_t& size);

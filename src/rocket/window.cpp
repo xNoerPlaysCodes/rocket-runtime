@@ -14,6 +14,7 @@
 #include "rocket/types.hpp"
 #include "util.hpp"
 
+// @brief A semantic helper for static function implementations
 #define RGE_STATIC_FUNC_IMPL
 
 namespace rocket {
@@ -155,6 +156,14 @@ namespace rocket {
         }
     }
 
+    bool glfw_platform_is_wayland(platform_t platform) {
+        return platform.type == platform_type_t::linux_wayland;
+    }
+
+    bool glfw_platform_is_x11(platform_t platform) {
+        return platform.type == platform_type_t::linux_x11;
+    }
+
     window_t::window_t(const rocket::vec2i_t& size,
             const std::string& title,
             windowflags_t flags) {
@@ -223,9 +232,9 @@ namespace rocket {
 
         using GLFWenum = int;
         GLFWenum class_name = 0;
-        if (util::is_wayland()) {
+        if (glfw_platform_is_wayland(get_platform())) {
             class_name = GLFW_WAYLAND_APP_ID;
-        } else if (util::is_x11()) {
+        } else if (glfw_platform_is_x11(get_platform())) {
             class_name = GLFW_X11_CLASS_NAME;
         }
 
@@ -289,7 +298,7 @@ namespace rocket {
         auto mode = glfwGetVideoMode(glfwaltGetMonitorWithCursor());
         sx = mode->width;
         sy = mode->height;
-        if (!util::is_wayland()) {
+        if (!glfw_platform_is_wayland(get_platform())) {
             glfwSetWindowPos(glfw_window, (sx - size.x) / 2, (sy - size.y) / 2);
         }
         glfwSetWindowUserPointer(glfw_window, this);
@@ -370,7 +379,7 @@ namespace rocket {
             glfwSetInputMode(glfw_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); 
         } else if (m == cursor_mode_t::hidden) {
             glfwSetInputMode(glfw_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-            if (util::is_wayland()) {
+            if (glfw_platform_is_wayland(get_platform())) {
                 glfwSetInputMode(glfw_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
                 if (glfwRawMouseMotionSupported()) {
                     glfwSetInputMode(glfw_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
@@ -382,7 +391,7 @@ namespace rocket {
     }
 
     void window_t::set_cursor_position(const rocket::vec2d_t& pos) {
-        if (util::is_wayland()) {
+        if (glfw_platform_is_wayland(get_platform())) {
             rocket::log_error("setting cursor position is not supported on wayland", 1, "window_t::set_cursor_position", "warn");
             return;
         }
@@ -501,10 +510,6 @@ namespace rocket {
 
     cursor_mode_t window_t::get_cursor_mode() {
         return this->mode;
-    }
-
-    bool is_wayland() {
-        return util::is_wayland();
     }
 
     void window_t::close() {
