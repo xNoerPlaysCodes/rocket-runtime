@@ -555,7 +555,7 @@ namespace rocket {
         if (err != GL_NO_ERROR) {
             rocket::log_error(reinterpret_cast<const char *>(glewGetErrorString(err)), err, "OpenGL", "fatal");
             this->window->close();
-            std::exit(1);
+            rocket::exit(1);
         }
 
         this->active_render_modes.clear();

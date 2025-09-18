@@ -33,14 +33,14 @@ namespace rocket {
             // Must make sure OpenGL context is current before glewInit
             if (!window || !window->glfw_window) {
                 rocket::log_error("Invalid glfw_window pointer or not initialized", -1, "RocketRuntime", "fatal");
-                std::exit(1);
+                rocket::exit(1);
             }
 
             GLenum err = glewInit();
             if (err != GLEW_OK) {
                 const GLubyte* err_str = glewGetErrorString(err);
                 rocket::log_error(reinterpret_cast<const char*>(err_str), err, "glew", "fatal");
-                std::exit(1);
+                rocket::exit(1);
             }
 
             // Clear any errors from glewInit
@@ -426,7 +426,7 @@ namespace rocket {
         if (err != GL_NO_ERROR) {
             rocket::log_error(reinterpret_cast<const char *>(glewGetErrorString(err)), err, "OpenGL", "fatal");
             this->window->close();
-            std::exit(1);
+            rocket::exit(1);
         }
         glFlush();
 
@@ -587,7 +587,7 @@ namespace rocket {
 
     void renderer_3d::close() {
         if (window == nullptr) {
-            std::exit(0);
+            rocket::exit(0);
         }
         window->close();
         this->r2d.close();

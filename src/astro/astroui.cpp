@@ -15,7 +15,7 @@ namespace astro {
     void begin_ui() {
         if (r == nullptr) {
             rocket::log_error("No renderer set for AstroUI", -3, "astroui.cpp::begin_ui", "fatal");
-            std::exit(0);
+            rocket::exit(0);
         }
     }
 

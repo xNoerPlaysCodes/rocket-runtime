@@ -10,6 +10,25 @@
 #include <string>
 
 namespace rocket {
+    /// @brief Monitor Representation Struct
+    struct monitor_t {
+        //  (with cursor = -1)
+        int idx = -1;
+        vec2i_t size = { 0, 0 };
+        int redbits = 0;
+        int greenbits = 0;
+        int bluebits = 0;
+        /// @brief The refresh rate, in Hz
+        int refreshrate = 0;
+
+        static monitor_t with_cursor();
+        /// @brief Load a monitor by index
+        /// @param idx Default = 0 -> Primary Monitor
+        static monitor_t of(int idx = 0);
+        /// @brief Get the amount of monitors
+        static int get_count();
+    };
+
     struct windowflags_t {
         bool fullscreen = false;
         bool vsync = false;

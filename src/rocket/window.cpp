@@ -48,6 +48,49 @@ namespace rocket {
         return static_cast<int>(b);
     }
 
+    RGE_STATIC_FUNC_IMPL monitor_t monitor_t::with_cursor() {
+        monitor_t m;
+        GLFWmonitor *glfwm = glfwaltGetMonitorWithCursor();
+        const GLFWvidmode *glfwvm = glfwGetVideoMode(glfwm);
+        m.idx = -1;
+        m.size = { glfwvm->width, glfwvm->height };
+        m.redbits = glfwvm->redBits;
+        m.greenbits = glfwvm->greenBits;
+        m.bluebits = glfwvm->blueBits;
+        m.refreshrate = glfwvm->refreshRate;
+        return m;
+    }
+
+    RGE_STATIC_FUNC_IMPL int monitor_t::get_count() {
+        int count;
+        glfwGetMonitors(&count);
+        return count;
+    }
+
+    RGE_STATIC_FUNC_IMPL monitor_t monitor_t::of(int idx) {
+        if (idx < 0) {
+            rocket::log_error("monitor index out of range (min is 0), using monitor with cursor", -1, "monitor_t::of", "fatal");
+            return monitor_t::with_cursor();
+        }
+        int count;
+        GLFWmonitor **monitors = glfwGetMonitors(&count);
+
+        if (idx >= count) {
+            rocket::log_error("monitor index out of range (max is " + std::to_string(count) + ")", -1, "monitor_t::of", "fatal");
+            return {};
+        }
+
+        monitor_t m;
+        m.idx = idx;
+        const GLFWvidmode *glfwvm = glfwGetVideoMode(monitors[idx]);
+        m.size = { glfwvm->width, glfwvm->height };
+        m.redbits = glfwvm->redBits;
+        m.greenbits = glfwvm->greenBits;
+        m.bluebits = glfwvm->blueBits;
+        m.refreshrate = glfwvm->refreshRate;
+        return m;
+    }
+
     platform_t window_t::get_platform() {
         int glfw_platform = glfwGetPlatform();
         platform_t platform;
@@ -121,13 +164,15 @@ namespace rocket {
             glfwSetErrorCallback([](int error, const char* description) { rocket::log_error(description, error, "GLFW::ErrorCallback", "warn"); });
             if (int glfwInit_exc = glfwInit(); !glfwInit_exc) {
                 rocket::log_error("glfwInit() failed with exit code: " + std::to_string(glfwInit_exc), -1, "GLFW::glfwInit", "fatal");
+                glfw_initialized = false;
+                rocket::exit(1);
             }
             glfw_initialized = true;
         }
         GLFWmonitor *monitor = glfwGetPrimaryMonitor();
         if (monitor == nullptr && flags.fullscreen) {
             rocket::log_error("failed to get primary monitor", 1, "GLFW", "fatal");
-            std::exit(1);
+            rocket::exit(1);
         }
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, flags.gl_version.x);
@@ -219,7 +264,7 @@ namespace rocket {
             std::vector<std::string> log_messages = {
                 "Error String: " + std::string("glfwCreateWindow resulted in a nullptr")
             };
-            std::exit(1);
+            rocket::exit(1);
         }
         glfwMakeContextCurrent(glfw_window);
 
@@ -465,7 +510,7 @@ namespace rocket {
     void window_t::close() {
         if (glfw_window == nullptr) {
             // Silent Error, doesn't matter
-            std::exit(0);
+            rocket::exit(0);
         }
         glfwDestroyWindow(glfw_window);
         glfw_window = nullptr;

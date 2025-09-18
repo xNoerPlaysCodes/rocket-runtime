@@ -102,14 +102,27 @@ namespace rocket {
             std::string source
     )>;
 
+    /// @brief Exit Callback
+    /// @note You can choose not to exit at all
+    /// @param int status_code
+    using exit_callback_t = std::function<void(
+            int status_code
+    )>;
+
     /// @brief Sets log callback
     void set_log_callback(log_callback_t);
+
+    /// @brief Set exit callback
+    void set_exit_callback(exit_callback_t);
 
     /// @brief Log (Fatal/FatalToFunction/Warning) using RocketLogger or callback
     void log_error(std::string error, int error_id, std::string error_source, std::string level);
 
     /// @brief Log using RocketLogger or callback
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);
+
+    /// @brief Exit using RocketExit or callback
+    void exit(int status_code = 1);
 
     /// @brief Set OpenGL Error callback
     void set_opengl_error_callback(gl_error_callback_t);

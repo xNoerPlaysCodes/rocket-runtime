@@ -8,6 +8,7 @@ namespace rocket {
     gl_error_callback_t glerror_cb_default = [](std::string, std::string, int, std::string, std::string) {};
 
     gl_error_callback_t glerror_cb = nullptr;
+    exit_callback_t exitcb = nullptr;
 
     std::string log_level_to_str(log_level_t level) {
         switch (level) {
@@ -45,6 +46,18 @@ namespace rocket {
 
     void set_opengl_error_callback(gl_error_callback_t cb) {
         glerror_cb = cb;
+    }
+
+    void set_exit_callback(exit_callback_t cb) {
+        exitcb = cb;
+    }
+
+    void exit(int status_code) {
+        if (exitcb != nullptr) {
+            exitcb(status_code);
+        }
+
+        std::exit(status_code);
     }
 
     gl_error_callback_t get_opengl_error_callback() {

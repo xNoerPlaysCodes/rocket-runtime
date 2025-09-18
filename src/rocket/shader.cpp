@@ -408,7 +408,7 @@ void main() {
         GLint loc = glGetUniformLocation(glprogram, name.c_str());
         if (loc == -1) {
             std::cerr << "Uniform " << name << " not found in shader" << std::endl;
-            std::exit(45);
+            rocket::exit(45);
         }
         glUseProgram(glprogram);
         return loc;

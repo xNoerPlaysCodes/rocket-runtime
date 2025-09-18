@@ -408,7 +408,7 @@ namespace rgl {
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             rocket::log_error("Failed to create framebuffer", -1, "OpenGL::Framebuffer", "fatal");
-            std::exit(-1);
+            rocket::exit(-1);
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         return fbo;

@@ -14,7 +14,6 @@ int main() {
         .msaa_samples = 4
     } };
     rocket::renderer_2d r(&window);
-    rgl::compile_all_default_shaders();
     rocket::asset_manager_t asset_manager;
     rocket::assetid_t texture = asset_manager.load_texture("resources/window_icon.jpg", rocket::texture_color_format_t::rgba);
     window.set_icon(asset_manager.get_texture(texture));
@@ -23,7 +22,7 @@ int main() {
         r.begin_frame();
         r.clear();
         {
-            rocket::text_t text = { "Window Icon!", 36, rocket::rgb_color::black() };
+            static rocket::text_t text = { "Window Icon!", 36, rocket::rgb_color::black() };
             const auto text_size    = text.measure();
             const auto tex_size     = rocket::vec2{128, 128};
             const int padding       = 8;
