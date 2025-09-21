@@ -3,6 +3,7 @@
 
 CMakeFiles/line_test.dir/tests/line_test.cpp.o: tests/line_test.cpp \
   include/rocket/asset.hpp \
+  include/rocket/constants.hpp \
   include/rocket/io.hpp \
   include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
@@ -548,10 +549,6 @@ bin/tests/line_test: /usr/lib/Scrt1.o \
 
 bin/libRocketRuntime.so:
 
-/usr/include/c++/15.2.1/ext/aligned_buffer.h:
-
-/usr/include/c++/15.2.1/locale:
-
 /usr/include/c++/15.2.1/ctime:
 
 /usr/include/bits/timex.h:
@@ -734,6 +731,10 @@ bin/libRocketRuntime.so:
 
 /usr/include/semaphore.h:
 
+/usr/include/c++/15.2.1/bits/atomic_base.h:
+
+include/rocket/macros.hpp:
+
 /usr/include/wctype.h:
 
 /usr/include/c++/15.2.1/bits/vector.tcc:
@@ -802,14 +803,6 @@ tests/line_test.cpp:
 
 /usr/include/bits/local_lim.h:
 
-/usr/include/bits/posix_opt.h:
-
-/usr/include/glm/detail/type_mat2x4.inl:
-
-/usr/include/c++/15.2.1/bits/enable_special_members.h:
-
-/usr/include/bits/atomic_wide_counter.h:
-
 /usr/include/bits/types/clockid_t.h:
 
 /usr/include/c++/15.2.1/climits:
@@ -827,18 +820,6 @@ tests/line_test.cpp:
 /usr/include/c++/15.2.1/bits/stl_tempbuf.h:
 
 /usr/include/stdc-predef.h:
-
-include/rocket/types.hpp:
-
-/usr/include/bits/libc-header-start.h:
-
-/usr/include/glm/ext/vector_uint3.hpp:
-
-/usr/include/c++/15.2.1/bits/codecvt.h:
-
-include/rocket/macros.hpp:
-
-/usr/include/c++/15.2.1/bits/atomic_base.h:
 
 /usr/include/AL/al.h:
 
@@ -870,6 +851,68 @@ include/rocket/io.hpp:
 
 /usr/include/glm/ext/vector_bool3_precision.hpp:
 
+include/rocket/types.hpp:
+
+/usr/include/bits/libc-header-start.h:
+
+/usr/include/glm/ext/vector_uint3.hpp:
+
+/usr/include/c++/15.2.1/bits/codecvt.h:
+
+/usr/include/c++/15.2.1/bits/invoke.h:
+
+CMakeFiles/line_test.dir/tests/line_test.cpp.o:
+
+/usr/include/glm/common.hpp:
+
+/usr/lib/libxcb.so.1:
+
+/usr/include/asm/errno.h:
+
+/usr/include/bits/stdint-uintn.h:
+
+/usr/include/c++/15.2.1/system_error:
+
+include/rocket/window.hpp:
+
+/usr/include/bits/long-double.h:
+
+/usr/include/asm/unistd_64.h:
+
+/usr/include/c++/15.2.1/bits/string_view.tcc:
+
+/usr/include/bits/types/__fpos_t.h:
+
+/usr/include/c++/15.2.1/tr1/riemann_zeta.tcc:
+
+/usr/include/c++/15.2.1/bits/stl_raw_storage_iter.h:
+
+include/rocket/runtime.hpp:
+
+/usr/include/bits/types/struct_sched_param.h:
+
+/usr/include/c++/15.2.1/bits/stl_pair.h:
+
+/usr/include/endian.h:
+
+/usr/include/glm/ext/matrix_float4x3_precision.hpp:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/c++/15.2.1/bits/unique_lock.h:
+
+/usr/include/bits/types/__sigset_t.h:
+
+/usr/include/c++/15.2.1/bits/ostream.tcc:
+
+/usr/include/glm/ext/matrix_double3x4_precision.hpp:
+
+/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
+
+/usr/include/glm/ext/matrix_float2x4_precision.hpp:
+
+/usr/include/glm/detail/compute_vector_relational.hpp:
+
 /usr/include/c++/15.2.1/bits/stl_uninitialized.h:
 
 /usr/include/bits/types/time_t.h:
@@ -890,31 +933,7 @@ include/rocket/io.hpp:
 
 /usr/include/features.h:
 
-/usr/include/c++/15.2.1/bits/unique_lock.h:
-
-/usr/include/bits/types/__sigset_t.h:
-
-/usr/include/c++/15.2.1/bits/ostream.tcc:
-
-/usr/include/glm/ext/matrix_double3x4_precision.hpp:
-
-/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
-
-/usr/include/glm/ext/matrix_float2x4_precision.hpp:
-
-/usr/include/glm/detail/compute_vector_relational.hpp:
-
 /usr/include/asm-generic/errno-base.h:
-
-/usr/include/asm/errno.h:
-
-/usr/include/bits/stdint-uintn.h:
-
-/usr/include/c++/15.2.1/system_error:
-
-/usr/include/c++/15.2.1/bits/invoke.h:
-
-/usr/lib/libxcb.so.1:
 
 /usr/include/GL/glext.h:
 
@@ -962,31 +981,13 @@ include/rocket/io.hpp:
 
 /usr/include/bits/types/mbstate_t.h:
 
-/usr/include/c++/15.2.1/bits/stl_raw_storage_iter.h:
+/usr/include/c++/15.2.1/bits/enable_special_members.h:
 
-include/rocket/runtime.hpp:
+/usr/include/bits/atomic_wide_counter.h:
 
-/usr/include/bits/types/struct_sched_param.h:
+/usr/include/bits/posix_opt.h:
 
-/usr/include/c++/15.2.1/bits/stl_pair.h:
-
-/usr/include/endian.h:
-
-/usr/include/glm/ext/matrix_float4x3_precision.hpp:
-
-/usr/include/bits/waitflags.h:
-
-include/rocket/window.hpp:
-
-/usr/include/bits/long-double.h:
-
-/usr/include/asm/unistd_64.h:
-
-/usr/include/c++/15.2.1/bits/string_view.tcc:
-
-/usr/include/bits/types/__fpos_t.h:
-
-/usr/include/c++/15.2.1/tr1/riemann_zeta.tcc:
+/usr/include/glm/detail/type_mat2x4.inl:
 
 /usr/include/bits/pthreadtypes-arch.h:
 
@@ -1120,10 +1121,6 @@ include/rocket/asset.hpp:
 
 /usr/include/c++/15.2.1/bits/memoryfwd.h:
 
-/usr/include/glm/common.hpp:
-
-CMakeFiles/line_test.dir/tests/line_test.cpp.o:
-
 /usr/include/bits/types/wint_t.h:
 
 /usr/include/glm/ext/scalar_int_sized.hpp:
@@ -1154,6 +1151,10 @@ include/rocket/shader.hpp:
 
 /usr/include/c++/15.2.1/bits/alloc_traits.h:
 
+/usr/include/c++/15.2.1/ext/aligned_buffer.h:
+
+/usr/include/c++/15.2.1/locale:
+
 /usr/include/linux/types.h:
 
 /usr/include/c++/15.2.1/bits/ranges_uninitialized.h:
@@ -1183,6 +1184,8 @@ include/rocket/shader.hpp:
 /usr/include/c++/15.2.1/new:
 
 /usr/include/c++/15.2.1/charconv:
+
+include/rocket/constants.hpp:
 
 /usr/include/c++/15.2.1/optional:
 

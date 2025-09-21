@@ -2,8 +2,10 @@
 #define ROCKETGE__IO_HPP
 
 #include "types.hpp"
+#include "constants.hpp"
 #include <functional>
 #include <string>
+
 namespace rocket {
     namespace io {
         enum class mouse_button : int {
@@ -51,6 +53,14 @@ namespace rocket {
 
             last_key = 348
         };
+
+        /// @brief Get scancode by key
+        int scancode_by_key(keyboard_key key);
+        /// @brief Get key by scancode_by_key
+        /// @note The first run of this function builds
+        ///         an internal map that may create a
+        ///         lag spike or performance hit temporarily
+        int key_by_scancode(int scancode);
 
         /// @brief Keystate
         struct keystate_t {
@@ -137,12 +147,18 @@ namespace rocket {
         char get_formatted_char_typed();
 
         /// @brief Simulate Input
-        /// @note Only triggers LISTENERS
         void simulate(keyboard_key key, keystate_t state);
 
         /// @brief Simulate Input
-        /// @note Only triggers LISTENERS
         void simulate(mouse_button btn, keystate_t state, rocket::vec2d_t pos);
+
+        /// @brief Simulate Input
+        /// @param old_position if it is set to magic number then the 
+        ///         current mouse position will be used
+        void simulate(rocket::vec2d_t position, rocket::vec2d_t old_position = {
+            rocket::cst::io_mn_set_to_current_mpos,
+            rocket::cst::io_mn_set_to_current_mpos
+        });
     }
 
     // Controller (Referred as Gamepad) Input

@@ -10,6 +10,7 @@ CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o: tests/ui_init_test.cpp \
   include/rocket/runtime.hpp \
   include/astro/astroui.hpp \
   include/rocket/asset.hpp \
+  include/rocket/constants.hpp \
   include/rocket/io.hpp \
   include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
@@ -558,6 +559,8 @@ bin/libRocketRuntime.so:
 
 /usr/lib32/libxcb.so.1:
 
+/usr/lib32/libXdmcp.so.6:
+
 /usr/include/c++/15.2.1/ctime:
 
 /usr/include/bits/timex.h:
@@ -601,10 +604,6 @@ bin/libRocketRuntime.so:
 /usr/include/c++/15.2.1/ext/type_traits.h:
 
 /usr/include/bits/typesizes.h:
-
-/usr/include/c++/15.2.1/bits/stl_heap.h:
-
-/usr/include/asm-generic/bitsperlong.h:
 
 /usr/include/c++/15.2.1/bits/stl_tree.h:
 
@@ -744,6 +743,8 @@ bin/libRocketRuntime.so:
 
 include/rocket/macros.hpp:
 
+/usr/include/wchar.h:
+
 /usr/include/sched.h:
 
 /usr/include/wctype.h:
@@ -808,13 +809,49 @@ include/astro/astroui.hpp:
 
 /usr/include/bits/byteswap.h:
 
+/usr/include/glm/mat3x2.hpp:
+
+/usr/include/bits/iscanonical.h:
+
 /usr/include/bits/syscall.h:
 
 /usr/include/bits/local_lim.h:
 
 /usr/include/bits/types/clockid_t.h:
 
-/usr/include/c++/15.2.1/bits/ostream.h:
+/usr/include/c++/15.2.1/cstdio:
+
+/usr/include/c++/15.2.1/bits/istream.tcc:
+
+/usr/include/bits/struct_mutex.h:
+
+/usr/include/c++/15.2.1/limits:
+
+include/rocket/stb_truetype.h:
+
+/usr/include/glm/ext/vector_bool3.hpp:
+
+/usr/include/c++/15.2.1/bits/ranges_base.h:
+
+include/rocket/io.hpp:
+
+/usr/include/c++/15.2.1/bits/stl_construct.h:
+
+/usr/include/glm/ext/matrix_double4x4_precision.hpp:
+
+/usr/include/c++/15.2.1/bits/align.h:
+
+/usr/include/c++/15.2.1/debug/debug.h:
+
+/usr/include/glm/ext/vector_bool3_precision.hpp:
+
+include/rocket/types.hpp:
+
+/usr/include/bits/libc-header-start.h:
+
+/usr/include/glm/ext/vector_uint3.hpp:
+
+/usr/include/c++/15.2.1/bits/codecvt.h:
 
 /usr/include/c++/15.2.1/bits/invoke.h:
 
@@ -850,39 +887,21 @@ include/rocket/runtime.hpp:
 
 /usr/include/bits/waitflags.h:
 
-include/rocket/types.hpp:
+/usr/include/c++/15.2.1/bits/ostream.h:
 
-/usr/include/bits/libc-header-start.h:
+/usr/include/c++/15.2.1/bits/unique_lock.h:
 
-/usr/include/glm/ext/vector_uint3.hpp:
+/usr/include/bits/types/__sigset_t.h:
 
-/usr/include/c++/15.2.1/bits/codecvt.h:
+/usr/include/c++/15.2.1/bits/ostream.tcc:
 
-/usr/include/c++/15.2.1/cstdio:
+/usr/include/glm/ext/matrix_double3x4_precision.hpp:
 
-/usr/include/c++/15.2.1/bits/istream.tcc:
+/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
 
-/usr/include/bits/struct_mutex.h:
+/usr/include/glm/ext/matrix_float2x4_precision.hpp:
 
-/usr/include/c++/15.2.1/limits:
-
-include/rocket/stb_truetype.h:
-
-/usr/include/glm/ext/vector_bool3.hpp:
-
-/usr/include/c++/15.2.1/bits/ranges_base.h:
-
-include/rocket/io.hpp:
-
-/usr/include/c++/15.2.1/bits/stl_construct.h:
-
-/usr/include/glm/ext/matrix_double4x4_precision.hpp:
-
-/usr/include/c++/15.2.1/bits/align.h:
-
-/usr/include/c++/15.2.1/debug/debug.h:
-
-/usr/include/glm/ext/vector_bool3_precision.hpp:
+/usr/include/glm/detail/compute_vector_relational.hpp:
 
 /usr/include/bits/long-double.h:
 
@@ -891,10 +910,6 @@ include/rocket/window.hpp:
 /usr/include/c++/15.2.1/bits/stl_tempbuf.h:
 
 /usr/include/stdc-predef.h:
-
-/usr/include/AL/al.h:
-
-/usr/include/bits/pthread_stack_min-dynamic.h:
 
 /usr/include/c++/15.2.1/climits:
 
@@ -906,23 +921,19 @@ include/rocket/window.hpp:
 
 /usr/lib32/libEGL.so.1:
 
-/usr/include/c++/15.2.1/bits/stl_bvector.h:
+tests/ui_init_test.cpp:
 
-/usr/include/bits/types.h:
+/usr/include/AL/al.h:
 
-/usr/include/c++/15.2.1/bits/locale_facets.tcc:
+/usr/include/c++/15.2.1/bits/stl_heap.h:
 
-/usr/include/asm/posix_types_64.h:
+/usr/include/asm-generic/bitsperlong.h:
 
-/usr/include/bits/posix2_lim.h:
-
-/usr/include/glm/ext/matrix_float2x3_precision.hpp:
-
-/usr/include/bits/semaphore.h:
+/usr/include/bits/pthread_stack_min-dynamic.h:
 
 /usr/include/bits/types/mbstate_t.h:
 
-tests/ui_init_test.cpp:
+/usr/include/bits/semaphore.h:
 
 /usr/include/c++/15.2.1/bits/stl_uninitialized.h:
 
@@ -944,20 +955,6 @@ tests/ui_init_test.cpp:
 
 /usr/include/features.h:
 
-/usr/include/c++/15.2.1/bits/unique_lock.h:
-
-/usr/include/bits/types/__sigset_t.h:
-
-/usr/include/c++/15.2.1/bits/ostream.tcc:
-
-/usr/include/glm/ext/matrix_double3x4_precision.hpp:
-
-/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
-
-/usr/include/glm/ext/matrix_float2x4_precision.hpp:
-
-/usr/include/glm/detail/compute_vector_relational.hpp:
-
 /usr/include/asm-generic/errno-base.h:
 
 /usr/include/GL/glext.h:
@@ -978,17 +975,23 @@ tests/ui_init_test.cpp:
 
 /usr/include/glm/detail/type_vec2.hpp:
 
-/usr/include/bits/iscanonical.h:
+/usr/include/asm/posix_types_64.h:
 
-/usr/include/glm/mat3x2.hpp:
+/usr/include/bits/types.h:
 
-/usr/include/wchar.h:
+/usr/include/c++/15.2.1/bits/locale_facets.tcc:
 
 /usr/include/bits/mathcalls-macros.h:
 
 /usr/include/asm-generic/int-ll64.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stddef.h:
+
+/usr/include/c++/15.2.1/bits/stl_bvector.h:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/glm/ext/matrix_float2x3_precision.hpp:
 
 /usr/include/c++/15.2.1/bits/enable_special_members.h:
 
@@ -1193,6 +1196,8 @@ include/rocket/shader.hpp:
 /usr/include/c++/15.2.1/new:
 
 /usr/include/c++/15.2.1/charconv:
+
+include/rocket/constants.hpp:
 
 /usr/include/c++/15.2.1/optional:
 
@@ -1639,5 +1644,3 @@ include/rocket/shader.hpp:
 /usr/lib32/libX11.so.6:
 
 /usr/lib32/libXau.so.6:
-
-/usr/lib32/libXdmcp.so.6:

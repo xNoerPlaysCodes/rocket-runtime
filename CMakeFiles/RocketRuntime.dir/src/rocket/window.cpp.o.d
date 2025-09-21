@@ -254,7 +254,9 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/include/intl_macros.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp \

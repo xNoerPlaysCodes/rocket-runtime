@@ -394,4 +394,5 @@ CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/src/astro/../../include/astro/../rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/src/astro/../../include/astro/../rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/src/astro/../../include/astro/../rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/astro/../../include/astro/../rocket/constants.hpp \
  /home/noerlol/C-Projects/RocketGE/src/astro/../../include/astro/../rocket/renderer.hpp

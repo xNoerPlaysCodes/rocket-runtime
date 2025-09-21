@@ -166,7 +166,9 @@ namespace rocket {
     asset_manager_t::asset_manager_t(std::chrono::seconds cleanup_interval) {
         this->cleanup_interval = cleanup_interval;
 
-        this->cleanup_thread =std::thread(&asset_manager_t::cleanup, this);
+        if (cleanup_interval.count() != 0) {
+            this->cleanup_thread = std::thread(&asset_manager_t::cleanup, this);
+        }
         this->current_id = 0;
         this->cleanup_running = true;
     }

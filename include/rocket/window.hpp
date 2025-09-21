@@ -21,11 +21,15 @@ namespace rocket {
         /// @brief The refresh rate, in Hz
         int refreshrate = 0;
 
+        /// @brief Get the monitor with the cursor on it
+        /// @note Must call window_t::cpl_init() before-hand
         static monitor_t with_cursor();
         /// @brief Load a monitor by index
         /// @param idx Default = 0 -> Primary Monitor
+        /// @note Must call window_t::cpl_init() before-hand
         static monitor_t of(int idx = 0);
         /// @brief Get the amount of monitors
+        /// @note Must call window_t::cpl_init() before-hand
         static int get_count();
     };
 
@@ -62,19 +66,14 @@ namespace rocket {
     struct window_state_t {
         /// @brief Is the window focused
         bool focused = false;
-
         /// @brief Is the window visible
         bool visible = false;
-
         /// @brief Is the window iconified
         bool iconified = false;
-
         /// @brief Is the window maximized
         bool maximized = false;
-
         /// @brief Is the window floating
         bool floating = false;
-
         /// @brief Is the cursor hovering over the window content
         ///         area DIRECTLY
         bool hovering = false;
@@ -180,6 +179,9 @@ namespace rocket {
         /// @brief Force a specific platform to use in GLFW/Backend
         /// @note Must be called BEFORE constructor of all windows
         static void set_forced_platform(platform_type_t type);
+
+        /// @brief Initialize the CPL Windowing Library before-hand
+        static void cpl_init();
     public:
         /// @brief closes the window
         /// @brief called by destructor

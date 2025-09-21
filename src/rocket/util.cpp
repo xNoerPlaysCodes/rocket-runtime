@@ -1,4 +1,5 @@
 #include "util.hpp"
+#include "rocket/io.hpp"
 #include "rocket/runtime.hpp"
 #include <algorithm>
 #include <glm/ext/matrix_clip_space.hpp>
@@ -19,6 +20,11 @@ std::vector<std::function<void(rocket::io::scroll_offset_event_t)>> _scroll_offs
 
 std::unordered_map<rocket::io::keyboard_key, rocket::io::keystate_t> kstates;
 std::unordered_map<rocket::io::mouse_button, rocket::io::keystate_t> mstates;
+
+std::vector<rocket::io::key_event_t> simulated_kevents;
+std::vector<rocket::io::mouse_event_t> simulated_mevents;
+std::vector<rocket::io::mouse_move_event_t> simulated_mmevents;
+std::vector<rocket::io::scroll_offset_event_t> simulated_sevents;
 
 std::stack<char> chars_typed;
 
@@ -201,28 +207,56 @@ namespace util {
         return { x, y };
     }
 
-    void dispatch_event(rocket::io::key_event_t event) {
+    void dispatch_event(rocket::io::key_event_t event, bool addsm) {
         for (auto l : _key_listeners) {
             l(event);
+            if (addsm) {
+                simulated_kevents.push_back(event);
+            }
         }
     }
 
-    void dispatch_event(rocket::io::mouse_event_t event) {
+    void dispatch_event(rocket::io::mouse_event_t event, bool addsm) {
         for (auto l : _mouse_listeners) {
             l(event);
+            if (addsm) {
+                simulated_mevents.push_back(event);
+            }
         }
     }
 
-    void dispatch_event(rocket::io::mouse_move_event_t event) {
+    void dispatch_event(rocket::io::mouse_move_event_t event, bool addsm) {
         for (auto l : _mouse_move_listeners) {
             l(event);
+            if (addsm) {
+                simulated_mmevents.push_back(event);
+            }
         }
     }
 
-    void dispatch_event(rocket::io::scroll_offset_event_t event) {
+    void dispatch_event(rocket::io::scroll_offset_event_t event, bool addsm) {
         for (auto l : _scroll_offset_listeners) {
             l(event);
+            if (addsm) {
+                simulated_sevents.push_back(event);
+            }
         }
+    }
+
+    std::vector<rocket::io::key_event_t> get_simulated_kevents() {
+        return simulated_kevents;
+    }
+
+    std::vector<rocket::io::mouse_event_t> get_simulated_mevents() {
+        return simulated_mevents;
+    }
+
+    std::vector<rocket::io::mouse_move_event_t> get_simulated_mmevents() {
+        return simulated_mmevents;
+    }
+
+    std::vector<rocket::io::scroll_offset_event_t> get_simulated_sevents() {
+        return simulated_sevents;
     }
 
     bool glinitialized() {
@@ -246,6 +280,11 @@ namespace util {
             m.second.previous = m.second.current;
             m.second.current = glfwGetMouseButton(glfwGetCurrentContext(), static_cast<int>(m.first)) == GLFW_PRESS;
         }
+
+        simulated_kevents.clear();
+        simulated_mevents.clear();
+        simulated_mmevents.clear();
+        simulated_sevents.clear();
     }
 
     void push_formatted_char_typed(char c) {

@@ -3,6 +3,7 @@
 
 CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o: examples/moving_circle.cpp \
   include/rocket/asset.hpp \
+  include/rocket/constants.hpp \
   include/rocket/io.hpp \
   include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
@@ -548,9 +549,7 @@ bin/examples/moving_circle: /usr/lib/Scrt1.o \
 
 bin/libRocketRuntime.so:
 
-/usr/include/c++/15.2.1/ext/aligned_buffer.h:
-
-/usr/include/c++/15.2.1/locale:
+CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o:
 
 /usr/include/c++/15.2.1/ctime:
 
@@ -730,6 +729,10 @@ bin/libRocketRuntime.so:
 
 /usr/include/semaphore.h:
 
+/usr/include/c++/15.2.1/bits/atomic_base.h:
+
+include/rocket/macros.hpp:
+
 /usr/include/sched.h:
 
 /usr/include/wctype.h:
@@ -804,14 +807,6 @@ examples/moving_circle.cpp:
 
 /usr/include/bits/local_lim.h:
 
-/usr/include/bits/posix_opt.h:
-
-/usr/include/glm/detail/type_mat2x4.inl:
-
-/usr/include/c++/15.2.1/bits/enable_special_members.h:
-
-/usr/include/bits/atomic_wide_counter.h:
-
 /usr/include/bits/types/clockid_t.h:
 
 /usr/include/c++/15.2.1/climits:
@@ -838,9 +833,57 @@ include/rocket/types.hpp:
 
 /usr/include/c++/15.2.1/bits/codecvt.h:
 
-include/rocket/macros.hpp:
+/usr/include/c++/15.2.1/bits/invoke.h:
 
-/usr/include/c++/15.2.1/bits/atomic_base.h:
+/usr/include/glm/common.hpp:
+
+/usr/lib/libxcb.so.1:
+
+/usr/include/asm/errno.h:
+
+/usr/include/bits/stdint-uintn.h:
+
+/usr/include/c++/15.2.1/system_error:
+
+include/rocket/window.hpp:
+
+/usr/include/bits/long-double.h:
+
+/usr/include/asm/unistd_64.h:
+
+/usr/include/c++/15.2.1/bits/string_view.tcc:
+
+/usr/include/bits/types/__fpos_t.h:
+
+/usr/include/c++/15.2.1/tr1/riemann_zeta.tcc:
+
+/usr/include/c++/15.2.1/bits/stl_raw_storage_iter.h:
+
+include/rocket/runtime.hpp:
+
+/usr/include/bits/types/struct_sched_param.h:
+
+/usr/include/c++/15.2.1/bits/stl_pair.h:
+
+/usr/include/endian.h:
+
+/usr/include/glm/ext/matrix_float4x3_precision.hpp:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/c++/15.2.1/bits/unique_lock.h:
+
+/usr/include/bits/types/__sigset_t.h:
+
+/usr/include/c++/15.2.1/bits/ostream.tcc:
+
+/usr/include/glm/ext/matrix_double3x4_precision.hpp:
+
+/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
+
+/usr/include/glm/ext/matrix_float2x4_precision.hpp:
+
+/usr/include/glm/detail/compute_vector_relational.hpp:
 
 /usr/include/AL/al.h:
 
@@ -892,33 +935,7 @@ include/rocket/io.hpp:
 
 /usr/include/features.h:
 
-/usr/include/c++/15.2.1/bits/unique_lock.h:
-
-/usr/include/bits/types/__sigset_t.h:
-
-/usr/include/c++/15.2.1/bits/ostream.tcc:
-
-/usr/include/glm/ext/matrix_double3x4_precision.hpp:
-
-/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
-
-/usr/include/glm/ext/matrix_float2x4_precision.hpp:
-
-/usr/include/glm/detail/compute_vector_relational.hpp:
-
 /usr/include/asm-generic/errno-base.h:
-
-/usr/include/asm/errno.h:
-
-/usr/include/bits/stdint-uintn.h:
-
-/usr/include/c++/15.2.1/system_error:
-
-/usr/include/c++/15.2.1/bits/invoke.h:
-
-/usr/include/glm/common.hpp:
-
-/usr/lib/libxcb.so.1:
 
 /usr/include/GL/glext.h:
 
@@ -966,31 +983,13 @@ include/rocket/io.hpp:
 
 /usr/include/bits/types/mbstate_t.h:
 
-/usr/include/c++/15.2.1/bits/stl_raw_storage_iter.h:
+/usr/include/c++/15.2.1/bits/enable_special_members.h:
 
-include/rocket/runtime.hpp:
+/usr/include/bits/atomic_wide_counter.h:
 
-/usr/include/bits/types/struct_sched_param.h:
+/usr/include/bits/posix_opt.h:
 
-/usr/include/c++/15.2.1/bits/stl_pair.h:
-
-/usr/include/endian.h:
-
-/usr/include/glm/ext/matrix_float4x3_precision.hpp:
-
-/usr/include/bits/waitflags.h:
-
-include/rocket/window.hpp:
-
-/usr/include/bits/long-double.h:
-
-/usr/include/asm/unistd_64.h:
-
-/usr/include/c++/15.2.1/bits/string_view.tcc:
-
-/usr/include/bits/types/__fpos_t.h:
-
-/usr/include/c++/15.2.1/tr1/riemann_zeta.tcc:
+/usr/include/glm/detail/type_mat2x4.inl:
 
 /usr/include/bits/pthreadtypes-arch.h:
 
@@ -1124,8 +1123,6 @@ include/rocket/asset.hpp:
 
 /usr/include/c++/15.2.1/bits/memoryfwd.h:
 
-CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o:
-
 /usr/include/bits/types/wint_t.h:
 
 /usr/include/glm/ext/scalar_int_sized.hpp:
@@ -1153,6 +1150,10 @@ include/rocket/shader.hpp:
 /usr/include/c++/15.2.1/bits/basic_ios.h:
 
 /usr/include/asm/bitsperlong.h:
+
+/usr/include/c++/15.2.1/ext/aligned_buffer.h:
+
+/usr/include/c++/15.2.1/locale:
 
 /usr/include/linux/types.h:
 
@@ -1183,6 +1184,8 @@ include/rocket/shader.hpp:
 /usr/include/c++/15.2.1/new:
 
 /usr/include/c++/15.2.1/charconv:
+
+include/rocket/constants.hpp:
 
 /usr/include/c++/15.2.1/optional:
 

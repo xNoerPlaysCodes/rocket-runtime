@@ -4,6 +4,7 @@
 CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/astro/astroui.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -893,6 +894,7 @@ CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/asset.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -1907,8 +1909,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o
 
 CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/io.cpp
- /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -1917,6 +1919,10 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp
  /usr/include/AL/al.h
  /usr/include/GL/gl.h
@@ -2412,6 +2418,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/native.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -2952,6 +2959,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/renderer.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -3511,6 +3519,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/renderer3d.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -4067,6 +4076,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o
  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -4610,6 +4620,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/runtime.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -5118,6 +5129,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -6127,8 +6139,10 @@ CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o
 
 CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/util.cpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -6647,6 +6661,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o
 CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o
  /home/noerlol/C-Projects/RocketGE/src/rocket/window.cpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp
@@ -6654,6 +6669,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
+ /home/noerlol/C-Projects/RocketGE/src/include/intl_macros.hpp
  /home/noerlol/C-Projects/RocketGE/src/include/native.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp

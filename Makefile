@@ -234,6 +234,19 @@ icon_test/fast:
 .PHONY : icon_test/fast
 
 #=============================================================================
+# Target rules for targets named iosim
+
+# Build rule for target.
+iosim: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 iosim
+.PHONY : iosim
+
+# fast build rule for target.
+iosim/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/iosim.dir/build.make CMakeFiles/iosim.dir/build
+.PHONY : iosim/fast
+
+#=============================================================================
 # Target rules for targets named moving_circle
 
 # Build rule for target.
@@ -800,6 +813,30 @@ tests/initializer_test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/initializer_test.dir/build.make CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.s
 .PHONY : tests/initializer_test.cpp.s
 
+tests/iosim.o: tests/iosim.cpp.o
+.PHONY : tests/iosim.o
+
+# target to build an object file
+tests/iosim.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/iosim.dir/build.make CMakeFiles/iosim.dir/tests/iosim.cpp.o
+.PHONY : tests/iosim.cpp.o
+
+tests/iosim.i: tests/iosim.cpp.i
+.PHONY : tests/iosim.i
+
+# target to preprocess a source file
+tests/iosim.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/iosim.dir/build.make CMakeFiles/iosim.dir/tests/iosim.cpp.i
+.PHONY : tests/iosim.cpp.i
+
+tests/iosim.s: tests/iosim.cpp.s
+.PHONY : tests/iosim.s
+
+# target to generate assembly for a file
+tests/iosim.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/iosim.dir/build.make CMakeFiles/iosim.dir/tests/iosim.cpp.s
+.PHONY : tests/iosim.cpp.s
+
 tests/line_test.o: tests/line_test.cpp.o
 .PHONY : tests/line_test.o
 
@@ -933,6 +970,7 @@ help:
 	@echo "... gamepad_test"
 	@echo "... icon_test"
 	@echo "... initializer_test"
+	@echo "... iosim"
 	@echo "... line_test"
 	@echo "... moving_circle"
 	@echo "... rectangle_test"
@@ -1006,6 +1044,9 @@ help:
 	@echo "... tests/initializer_test.o"
 	@echo "... tests/initializer_test.i"
 	@echo "... tests/initializer_test.s"
+	@echo "... tests/iosim.o"
+	@echo "... tests/iosim.i"
+	@echo "... tests/iosim.s"
 	@echo "... tests/line_test.o"
 	@echo "... tests/line_test.i"
 	@echo "... tests/line_test.s"

@@ -10,12 +10,10 @@
 #include "rocket/asset.hpp"
 #include "rocket/io.hpp"
 #include "rocket/macros.hpp"
+#include "intl_macros.hpp"
 #include "rocket/runtime.hpp"
 #include "rocket/types.hpp"
 #include "util.hpp"
-
-// @brief A semantic helper for static function implementations
-#define RGE_STATIC_FUNC_IMPL
 
 namespace rocket {
     static bool glfw_initialized = false;
@@ -92,6 +90,18 @@ namespace rocket {
         return m;
     }
 
+    RGE_STATIC_FUNC_IMPL void window_t::cpl_init() {
+        if (!glfw_initialized) {
+            glfwSetErrorCallback([](int error, const char* description) { rocket::log_error(description, error, "GLFW::ErrorCallback", "warn"); });
+            if (int glfwInit_exc = glfwInit(); !glfwInit_exc) {
+                rocket::log_error("glfwInit() failed with exit code: " + std::to_string(glfwInit_exc), -1, "GLFW::glfwInit", "fatal");
+                glfw_initialized = false;
+                rocket::exit(1);
+            }
+            glfw_initialized = true;
+        }
+    }
+
     platform_t window_t::get_platform() {
         int glfw_platform = glfwGetPlatform();
         platform_t platform;
@@ -112,6 +122,9 @@ namespace rocket {
             glfw_platform_str = "Win32";
             platform.type = platform_type_t::windows;
             platform.os_name = "Windows";
+        } else {
+            rocket::log_error("[fixme] platform unimplemented", -1, "window_t::get_platform", "fatal-to-function");
+            return {};
         }
 
         platform.name = glfw_platform_str;
@@ -169,15 +182,7 @@ namespace rocket {
             windowflags_t flags) {
         this->size = size;
         this->title = title;
-        if (!glfw_initialized) {
-            glfwSetErrorCallback([](int error, const char* description) { rocket::log_error(description, error, "GLFW::ErrorCallback", "warn"); });
-            if (int glfwInit_exc = glfwInit(); !glfwInit_exc) {
-                rocket::log_error("glfwInit() failed with exit code: " + std::to_string(glfwInit_exc), -1, "GLFW::glfwInit", "fatal");
-                glfw_initialized = false;
-                rocket::exit(1);
-            }
-            glfw_initialized = true;
-        }
+        window_t::cpl_init();
         GLFWmonitor *monitor = glfwGetPrimaryMonitor();
         if (monitor == nullptr && flags.fullscreen) {
             rocket::log_error("failed to get primary monitor", 1, "GLFW", "fatal");
@@ -203,7 +208,7 @@ namespace rocket {
         }
 
         if (glver >= 3.0f) {
-            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
         }
         glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -220,7 +225,7 @@ namespace rocket {
         glfwWindowHint(GLFW_FOCUSED, glfwaltGetBoolean(!flags.unfocused));
         glfwWindowHint(GLFW_FLOATING, glfwaltGetBoolean(flags.topmost));
         if (flags.always_run) {
-            rocket::log_error("Always Run is not implemented yet", -1, "window_t::constructor", "warn");
+            rocket::log_error("[fixme] not implemented, windowflags_t::always_run", -1, "window_t::constructor", "warn");
         }
 
         if (flags.opacity < 1.0f) {
@@ -263,7 +268,7 @@ namespace rocket {
             monitor = nullptr;
         }
         glfwWindowHint(GLFW_RESIZABLE, glfwaltGetBoolean(flags.resizable));
-        // We set Swap Interval at polL_events() -> first_init
+        // We set Swap Interval at poll_events() -> first_init
         this->flags = flags;
         glfwWindowHint(GLFW_SAMPLES, flags.msaa_samples);
         this->glfw_window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
@@ -514,8 +519,7 @@ namespace rocket {
 
     void window_t::close() {
         if (glfw_window == nullptr) {
-            // Silent Error, doesn't matter
-            rocket::exit(0);
+            return;
         }
         glfwDestroyWindow(glfw_window);
         glfw_window = nullptr;

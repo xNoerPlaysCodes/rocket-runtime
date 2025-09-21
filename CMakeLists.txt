@@ -97,6 +97,7 @@ if (BUILD_TESTS)
         line_test
         gamepad_test
         icon_test
+        iosim
     )
 
     foreach(test_name IN LISTS TEST_NAMES)

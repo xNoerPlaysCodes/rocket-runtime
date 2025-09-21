@@ -120,7 +120,9 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: \
  /usr/include/c++/15.2.1/cstddef \
  /usr/include/c++/15.2.1/bits/uses_allocator.h \
  /usr/include/c++/15.2.1/bits/uses_allocator_args.h \
- /usr/include/c++/15.2.1/tuple /usr/include/c++/15.2.1/functional \
+ /usr/include/c++/15.2.1/tuple \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/constants.hpp \
+ /usr/include/c++/15.2.1/limits /usr/include/c++/15.2.1/functional \
  /usr/include/c++/15.2.1/bits/std_function.h \
  /usr/include/c++/15.2.1/unordered_map \
  /usr/include/c++/15.2.1/bits/unordered_map.h \
@@ -137,20 +139,17 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: \
  /usr/include/c++/15.2.1/bits/formatfwd.h /usr/include/c++/15.2.1/array \
  /usr/include/c++/15.2.1/bits/move_only_function.h \
  /usr/include/c++/15.2.1/bits/mofunc_impl.h \
- /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/runtime.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/macros.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp \
  /usr/include/glm/detail/qualifier.hpp /usr/include/glm/detail/setup.hpp \
  /usr/include/c++/15.2.1/cassert /usr/include/assert.h \
  /usr/include/glm/simd/platform.h \
  /usr/include/glm/ext/matrix_clip_space.hpp \
  /usr/include/glm/ext/scalar_constants.hpp \
  /usr/include/glm/detail/setup.hpp \
- /usr/include/glm/ext/scalar_constants.inl /usr/include/c++/15.2.1/limits \
- /usr/include/glm/geometric.hpp /usr/include/glm/detail/type_vec3.hpp \
+ /usr/include/glm/ext/scalar_constants.inl /usr/include/glm/geometric.hpp \
+ /usr/include/glm/detail/type_vec3.hpp \
  /usr/include/glm/detail/type_vec3.inl \
  /usr/include/glm/detail/compute_vector_relational.hpp \
  /usr/include/glm/detail/func_geometric.inl \
@@ -285,8 +284,9 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: \
  /usr/include/glm/ext/vector_relational.inl \
  /usr/include/glm/detail/type_float.hpp \
  /usr/include/glm/ext/quaternion_geometric.inl \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/asset.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/stb_truetype.h \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h \
  /usr/include/AL/al.h /usr/include/c++/15.2.1/chrono \
  /usr/include/c++/15.2.1/bits/chrono.h /usr/include/c++/15.2.1/ratio \
  /usr/include/c++/15.2.1/ctime /usr/include/time.h \
@@ -395,6 +395,11 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: \
  /usr/include/c++/15.2.1/pstl/execution_defs.h /usr/include/GLFW/glfw3.h \
  /usr/include/GL/gl.h /usr/include/GL/glext.h \
  /usr/include/KHR/khrplatform.h \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/runtime.hpp

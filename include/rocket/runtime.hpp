@@ -42,6 +42,8 @@
 // #define ROCKETGE__DEPRECATED [[deprecated]]
 #define ROCKETGE__DEPRECATED
 
+#include "constants.hpp"
+
 namespace rocket {
     /// @brief Log Level
     enum class log_level_t : int {

@@ -28,10 +28,15 @@ namespace util {
     std::vector<std::function<void(rocket::io::mouse_move_event_t)>> &mouse_move_listeners();
     std::vector<std::function<void(rocket::io::scroll_offset_event_t)>> &scroll_offset_listeners();
 
-    void dispatch_event(rocket::io::key_event_t);
-    void dispatch_event(rocket::io::mouse_event_t);
-    void dispatch_event(rocket::io::mouse_move_event_t);
-    void dispatch_event(rocket::io::scroll_offset_event_t);
+    void dispatch_event(rocket::io::key_event_t, bool add_simulated = false);
+    void dispatch_event(rocket::io::mouse_event_t, bool add_simulated = false);
+    void dispatch_event(rocket::io::mouse_move_event_t, bool add_simulated = false);
+    void dispatch_event(rocket::io::scroll_offset_event_t, bool add_simulated = false);
+
+    std::vector<rocket::io::key_event_t> get_simulated_kevents();
+    std::vector<rocket::io::mouse_event_t> get_simulated_mevents();
+    std::vector<rocket::io::mouse_move_event_t> get_simulated_mmevents();
+    std::vector<rocket::io::scroll_offset_event_t> get_simulated_sevents();
 
     bool glinitialized();
     void glinit(bool);

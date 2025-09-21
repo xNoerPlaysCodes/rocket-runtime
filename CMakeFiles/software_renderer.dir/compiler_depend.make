@@ -3,6 +3,7 @@
 
 CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o: examples/software_renderer.cpp \
   include/rocket/asset.hpp \
+  include/rocket/constants.hpp \
   include/rocket/io.hpp \
   include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
@@ -752,11 +753,9 @@ bin/libRocketRuntime.so:
 
 include/rocket/macros.hpp:
 
-/usr/include/wchar.h:
+/usr/include/c++/15.2.1/bits/allocated_ptr.h:
 
-/usr/include/sched.h:
-
-/usr/include/wctype.h:
+/usr/include/glm/ext/matrix_double3x3.hpp:
 
 /usr/include/c++/15.2.1/bits/vector.tcc:
 
@@ -775,6 +774,12 @@ include/rocket/renderer.hpp:
 /usr/include/GL/gl.h:
 
 /usr/include/c++/15.2.1/array:
+
+/usr/include/sched.h:
+
+/usr/include/wctype.h:
+
+/usr/include/wchar.h:
 
 /usr/include/bits/floatn.h:
 
@@ -824,6 +829,26 @@ examples/software_renderer.cpp:
 
 /usr/include/bits/types/clockid_t.h:
 
+/usr/include/c++/15.2.1/bits/stl_tempbuf.h:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/c++/15.2.1/bits/stl_uninitialized.h:
+
+/usr/include/bits/types/time_t.h:
+
+/usr/include/GLFW/glfw3.h:
+
+/usr/include/bits/flt-eval-method.h:
+
+include/rocket/types.hpp:
+
+/usr/include/bits/libc-header-start.h:
+
+/usr/include/glm/ext/vector_uint3.hpp:
+
+/usr/include/c++/15.2.1/bits/codecvt.h:
+
 /usr/include/c++/15.2.1/bits/invoke.h:
 
 /usr/include/glm/common.hpp:
@@ -835,6 +860,10 @@ examples/software_renderer.cpp:
 /usr/include/bits/stdint-uintn.h:
 
 /usr/include/c++/15.2.1/system_error:
+
+include/rocket/window.hpp:
+
+/usr/include/bits/long-double.h:
 
 /usr/include/asm/unistd_64.h:
 
@@ -858,29 +887,21 @@ include/rocket/runtime.hpp:
 
 /usr/include/bits/waitflags.h:
 
-/usr/include/bits/long-double.h:
+/usr/include/c++/15.2.1/bits/ostream.h:
 
-include/rocket/window.hpp:
+/usr/include/c++/15.2.1/bits/unique_lock.h:
 
-/usr/include/c++/15.2.1/bits/stl_tempbuf.h:
+/usr/include/bits/types/__sigset_t.h:
 
-/usr/include/stdc-predef.h:
+/usr/include/c++/15.2.1/bits/ostream.tcc:
 
-/usr/include/c++/15.2.1/bits/stl_uninitialized.h:
+/usr/include/glm/ext/matrix_double3x4_precision.hpp:
 
-/usr/include/bits/types/time_t.h:
+/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
 
-/usr/include/GLFW/glfw3.h:
+/usr/include/glm/ext/matrix_float2x4_precision.hpp:
 
-/usr/include/bits/flt-eval-method.h:
-
-include/rocket/types.hpp:
-
-/usr/include/bits/libc-header-start.h:
-
-/usr/include/glm/ext/vector_uint3.hpp:
-
-/usr/include/c++/15.2.1/bits/codecvt.h:
+/usr/include/glm/detail/compute_vector_relational.hpp:
 
 /usr/include/c++/15.2.1/cstdio:
 
@@ -903,6 +924,10 @@ include/rocket/stb_truetype.h:
 /usr/include/bits/confname.h:
 
 include/rocket/rgl.hpp:
+
+/usr/include/asm/types.h:
+
+/usr/include/glm/ext/vector_bool2_precision.hpp:
 
 /usr/include/c++/15.2.1/bits/ranges_base.h:
 
@@ -948,15 +973,9 @@ include/rocket/io.hpp:
 
 /usr/include/bits/pthread_stack_min-dynamic.h:
 
-/usr/include/c++/15.2.1/bits/ostream.h:
-
 /usr/include/bits/types/mbstate_t.h:
 
 /usr/include/bits/semaphore.h:
-
-/usr/include/glm/ext/vector_bool2_precision.hpp:
-
-/usr/include/asm/types.h:
 
 /usr/include/c++/15.2.1/bits/cpp_type_traits.h:
 
@@ -969,20 +988,6 @@ include/rocket/io.hpp:
 /usr/include/c++/15.2.1/chrono:
 
 /usr/include/features.h:
-
-/usr/include/c++/15.2.1/bits/unique_lock.h:
-
-/usr/include/bits/types/__sigset_t.h:
-
-/usr/include/c++/15.2.1/bits/ostream.tcc:
-
-/usr/include/glm/ext/matrix_double3x4_precision.hpp:
-
-/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
-
-/usr/include/glm/ext/matrix_float2x4_precision.hpp:
-
-/usr/include/glm/detail/compute_vector_relational.hpp:
 
 /usr/include/asm-generic/errno-base.h:
 
@@ -1128,10 +1133,6 @@ include/rocket/asset.hpp:
 
 /usr/include/glm/ext/matrix_double3x4.hpp:
 
-/usr/include/c++/15.2.1/bits/allocated_ptr.h:
-
-/usr/include/glm/ext/matrix_double3x3.hpp:
-
 /usr/include/c++/15.2.1/bits/parse_numbers.h:
 
 /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/atomic_word.h:
@@ -1229,6 +1230,8 @@ include/rocket/shader.hpp:
 /usr/include/c++/15.2.1/new:
 
 /usr/include/c++/15.2.1/charconv:
+
+include/rocket/constants.hpp:
 
 /usr/include/c++/15.2.1/optional:
 
@@ -1634,6 +1637,10 @@ include/rocket/shader.hpp:
 
 /usr/lib/libX11.so.6:
 
+/usr/lib32/libGL.so.1:
+
+/usr/lib/libXdmcp.so.6:
+
 /usr/include/bits/fp-fast.h:
 
 /usr/lib/libc.so.6:
@@ -1649,7 +1656,3 @@ include/rocket/shader.hpp:
 /usr/lib/libmvec.so.1:
 
 /usr/lib/libopenal.so.1:
-
-/usr/lib/libXdmcp.so.6:
-
-/usr/lib32/libGL.so.1:

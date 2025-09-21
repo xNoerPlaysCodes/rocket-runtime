@@ -399,6 +399,7 @@ CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp \
  /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \

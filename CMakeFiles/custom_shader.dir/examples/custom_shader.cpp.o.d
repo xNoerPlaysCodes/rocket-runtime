@@ -394,6 +394,7 @@ CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp
