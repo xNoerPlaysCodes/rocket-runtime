@@ -88,7 +88,10 @@ namespace util {
             elevel = rocket::log_level_t::fatal_to_function;
         } else if (level == "all") {
             elevel = rocket::log_level_t::all;
-        } else {
+        } else if (level == "fixme") {
+            elevel = rocket::log_level_t::warn;
+        }
+        else {
             if (level != "info" && level != "debug" && level != "trace") {
                 return format_error("Unknown Logger Level: " + level, -42, error_source, "fatal-to-function");
             }
@@ -302,5 +305,15 @@ namespace util {
         chars_typed.pop();
 
         return c;
+    }
+
+    rocket::renderer_2d *global_renderer_2d = nullptr;
+
+    void set_global_renderer_2d(rocket::renderer_2d *renderer) {
+        global_renderer_2d = renderer;
+    }
+
+    rocket::renderer_2d *get_global_renderer_2d() {
+        return global_renderer_2d;
     }
 }

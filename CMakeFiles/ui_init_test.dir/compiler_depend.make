@@ -539,6 +539,7 @@ bin/tests/ui_init_test: /usr/lib/Scrt1.o \
   /usr/lib/libc_nonshared.a \
   /usr/lib/libglfw.so.3 \
   /usr/lib/libm.so.6 \
+  /usr/lib/libminiz.so.3 \
   /usr/lib/libmvec.so.1 \
   /usr/lib/libopenal.so.1 \
   /usr/lib/libxcb.so.1 \
@@ -560,6 +561,8 @@ bin/libRocketRuntime.so:
 /usr/lib32/libxcb.so.1:
 
 /usr/lib32/libXdmcp.so.6:
+
+/usr/lib32/libXau.so.6:
 
 /usr/include/c++/15.2.1/ctime:
 
@@ -964,6 +967,8 @@ tests/ui_init_test.cpp:
 /usr/include/c++/15.2.1/bits/atomic_timed_wait.h:
 
 /usr/include/asm/posix_types.h:
+
+/usr/lib/libminiz.so.3:
 
 /usr/include/c++/15.2.1/compare:
 
@@ -1642,5 +1647,3 @@ include/rocket/constants.hpp:
 /usr/lib32/libOpenGL.so.0:
 
 /usr/lib32/libX11.so.6:
-
-/usr/lib32/libXau.so.6:

@@ -37,6 +37,7 @@ bin/tests/ui_init_test: \
   /usr/lib/libGLEW.so.2.2 \
   /usr/lib/libGLEW.so.2.2 \
   /usr/lib/libopenal.so.1 \
+  /usr/lib/libminiz.so.3 \
   /usr/lib/ld-linux-x86-64.so.2 \
   /usr/lib32/libGLdispatch.so.0 \
   /usr/lib/libGLdispatch.so.0 \
@@ -130,6 +131,8 @@ bin/libRocketRuntime.so:
 /usr/lib/libGLEW.so.2.2:
 
 /usr/lib/libopenal.so.1:
+
+/usr/lib/libminiz.so.3:
 
 /usr/lib/ld-linux-x86-64.so.2:
 

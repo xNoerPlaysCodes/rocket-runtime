@@ -404,6 +404,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../include/stb_image.h \
  /usr/include/c++/15.2.1/stdlib.h \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../include/stb_vorbis.h \

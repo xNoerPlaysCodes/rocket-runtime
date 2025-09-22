@@ -13,6 +13,7 @@ bin/libRocketRuntime.so: \
   CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o \
+  CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o \
   CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o \
@@ -22,6 +23,7 @@ bin/libRocketRuntime.so: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libGLU.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libGLEW.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libopenal.so \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libminiz.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libm.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libm.so \
@@ -75,6 +77,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o:
 
 CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o:
 
+CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o:
+
 CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o:
 
 CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o:
@@ -92,6 +96,8 @@ CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o:
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libGLEW.so:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libopenal.so:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libminiz.so:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libstdc++.so:
 

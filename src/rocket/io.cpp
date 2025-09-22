@@ -117,7 +117,7 @@ namespace rocket {
             } else if (state == keystate_t::make_released()) {
                 return key_released(key);
             }
-            rocket::log_error("[fixme] unimplemented key_state", -1, "rocket::io::key_state", "warning");
+            rocket::log_error("[fixme] unimplemented key_state", -1, "rocket::io::key_state", "fixme");
             return false;
         }
 
@@ -159,7 +159,7 @@ namespace rocket {
             } else if (state.released()) {
                 return ::util::mouse_released(button);
             }
-            rocket::log_error("[fixme] unimplemented key_state", -1, "rocket::io::mouse_state", "warning");
+            rocket::log_error("[fixme] unimplemented key_state", -1, "rocket::io::mouse_state", "fixme");
             return false;
         }
 
@@ -196,11 +196,11 @@ namespace rocket {
         }
 
         std::string get_human_readable_name(button_t button, style_t style) {
-            rocket::log_error("[fixme] unimplemented", -1, "rocket::gpad::get_human_readable_name", "warning");
+            rocket::log_error("[fixme] unimplemented", -1, "rocket::gpad::get_human_readable_name", "fixme");
             return "Unknown";
         }
         std::string get_human_readable_name(axis_t, style_t) {
-            rocket::log_error("[fixme] unimplemented", -1, "rocket::gpad::get_human_readable_name", "warning");
+            rocket::log_error("[fixme] unimplemented", -1, "rocket::gpad::get_human_readable_name", "fixme");
             return "Unknown";
         }
 

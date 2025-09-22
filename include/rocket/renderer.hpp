@@ -28,6 +28,7 @@ namespace rocket {
     };
     struct renderer_flags_t {
         bool fxaa_simplified = false;
+        bool share_renderer_as_global = true;
     };
     enum class render_mode_t {
         /// @brief Enables a preloaded simplified FXAA Shader

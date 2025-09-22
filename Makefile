@@ -247,6 +247,19 @@ iosim/fast:
 .PHONY : iosim/fast
 
 #=============================================================================
+# Target rules for targets named plugin_test
+
+# Build rule for target.
+plugin_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 plugin_test
+.PHONY : plugin_test
+
+# fast build rule for target.
+plugin_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/plugin_test.dir/build.make CMakeFiles/plugin_test.dir/build
+.PHONY : plugin_test/fast
+
+#=============================================================================
 # Target rules for targets named moving_circle
 
 # Build rule for target.
@@ -524,6 +537,30 @@ src/rocket/native.s: src/rocket/native.cpp.s
 src/rocket/native.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.s
 .PHONY : src/rocket/native.cpp.s
+
+src/rocket/plugin/plugin.o: src/rocket/plugin/plugin.cpp.o
+.PHONY : src/rocket/plugin/plugin.o
+
+# target to build an object file
+src/rocket/plugin/plugin.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o
+.PHONY : src/rocket/plugin/plugin.cpp.o
+
+src/rocket/plugin/plugin.i: src/rocket/plugin/plugin.cpp.i
+.PHONY : src/rocket/plugin/plugin.i
+
+# target to preprocess a source file
+src/rocket/plugin/plugin.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.i
+.PHONY : src/rocket/plugin/plugin.cpp.i
+
+src/rocket/plugin/plugin.s: src/rocket/plugin/plugin.cpp.s
+.PHONY : src/rocket/plugin/plugin.s
+
+# target to generate assembly for a file
+src/rocket/plugin/plugin.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RocketRuntime.dir/build.make CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.s
+.PHONY : src/rocket/plugin/plugin.cpp.s
 
 src/rocket/renderer.o: src/rocket/renderer.cpp.o
 .PHONY : src/rocket/renderer.o
@@ -861,6 +898,30 @@ tests/line_test.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/line_test.dir/build.make CMakeFiles/line_test.dir/tests/line_test.cpp.s
 .PHONY : tests/line_test.cpp.s
 
+tests/plugin_test.o: tests/plugin_test.cpp.o
+.PHONY : tests/plugin_test.o
+
+# target to build an object file
+tests/plugin_test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/plugin_test.dir/build.make CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o
+.PHONY : tests/plugin_test.cpp.o
+
+tests/plugin_test.i: tests/plugin_test.cpp.i
+.PHONY : tests/plugin_test.i
+
+# target to preprocess a source file
+tests/plugin_test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/plugin_test.dir/build.make CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.i
+.PHONY : tests/plugin_test.cpp.i
+
+tests/plugin_test.s: tests/plugin_test.cpp.s
+.PHONY : tests/plugin_test.s
+
+# target to generate assembly for a file
+tests/plugin_test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/plugin_test.dir/build.make CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.s
+.PHONY : tests/plugin_test.cpp.s
+
 tests/rectangle_test.o: tests/rectangle_test.cpp.o
 .PHONY : tests/rectangle_test.o
 
@@ -973,6 +1034,7 @@ help:
 	@echo "... iosim"
 	@echo "... line_test"
 	@echo "... moving_circle"
+	@echo "... plugin_test"
 	@echo "... rectangle_test"
 	@echo "... rounded_texture_rectangle_test"
 	@echo "... software_renderer"
@@ -1008,6 +1070,9 @@ help:
 	@echo "... src/rocket/native.o"
 	@echo "... src/rocket/native.i"
 	@echo "... src/rocket/native.s"
+	@echo "... src/rocket/plugin/plugin.o"
+	@echo "... src/rocket/plugin/plugin.i"
+	@echo "... src/rocket/plugin/plugin.s"
 	@echo "... src/rocket/renderer.o"
 	@echo "... src/rocket/renderer.i"
 	@echo "... src/rocket/renderer.s"
@@ -1050,6 +1115,9 @@ help:
 	@echo "... tests/line_test.o"
 	@echo "... tests/line_test.i"
 	@echo "... tests/line_test.s"
+	@echo "... tests/plugin_test.o"
+	@echo "... tests/plugin_test.i"
+	@echo "... tests/plugin_test.s"
 	@echo "... tests/rectangle_test.o"
 	@echo "... tests/rectangle_test.i"
 	@echo "... tests/rectangle_test.s"

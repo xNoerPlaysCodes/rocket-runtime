@@ -395,6 +395,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/runtime.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
  /usr/include/c++/15.2.1/iostream /usr/include/glm/glm.hpp \
  /usr/include/c++/15.2.1/cfloat \
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/float.h \

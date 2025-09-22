@@ -399,6 +399,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
  /usr/include/c++/15.2.1/algorithm \

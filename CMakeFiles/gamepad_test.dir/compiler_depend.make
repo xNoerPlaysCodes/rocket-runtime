@@ -531,6 +531,7 @@ bin/tests/gamepad_test: /usr/lib/Scrt1.o \
   /usr/lib/libc_nonshared.a \
   /usr/lib/libglfw.so.3 \
   /usr/lib/libm.so.6 \
+  /usr/lib/libminiz.so.3 \
   /usr/lib/libmvec.so.1 \
   /usr/lib/libopenal.so.1 \
   /usr/lib/libxcb.so.1 \
@@ -550,6 +551,8 @@ bin/tests/gamepad_test: /usr/lib/Scrt1.o \
 bin/libRocketRuntime.so:
 
 CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o:
+
+/usr/lib32/libxcb.so.1:
 
 /usr/include/c++/15.2.1/ctime:
 
@@ -909,8 +912,6 @@ include/rocket/runtime.hpp:
 
 /usr/include/glm/detail/compute_vector_relational.hpp:
 
-/usr/lib32/libxcb.so.1:
-
 tests/gamepad_test.cpp:
 
 /usr/include/c++/15.2.1/bits/stl_uninitialized.h:
@@ -942,6 +943,8 @@ tests/gamepad_test.cpp:
 /usr/include/c++/15.2.1/bits/atomic_timed_wait.h:
 
 /usr/include/asm/posix_types.h:
+
+/usr/lib/libminiz.so.3:
 
 /usr/include/c++/15.2.1/compare:
 

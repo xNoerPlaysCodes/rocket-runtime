@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include "rocket/io.hpp"
+#include "rocket/plugin/plugin.hpp"
 #include "rocket/rgl.hpp"
 #include "rocket/runtime.hpp"
 #include "rocket/types.hpp"
@@ -36,6 +37,10 @@ namespace rocket {
     renderer_2d::renderer_2d(window_t *window, int fps, renderer_flags_t flags) {
         this->window = window;
         this->fps = fps;
+
+        if (flags.share_renderer_as_global) {
+            util::set_global_renderer_2d(this);
+        }
 
         glfwMakeContextCurrent(window->glfw_window);
         this->vsync = window->flags.vsync;
@@ -206,6 +211,11 @@ namespace rocket {
         glClearColor(clr.x, clr.y, clr.z, clr.w);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // you probably want plugins to start rendering AFTER clearing
+        if (flags.share_renderer_as_global) {
+            __rallframestart();
+        }
     }
 
     void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation, float roundedness) {
@@ -492,6 +502,9 @@ namespace rocket {
     }
 
     void renderer_2d::end_frame() {
+        if (flags.share_renderer_as_global) {
+            __rallframeend();
+        }
         if (flags.fxaa_simplified && fxaa_shader != rGL_SHADER_INVALID && std::find(active_render_modes.begin(), active_render_modes.end(), render_mode_t::fxaa) != active_render_modes.end()) {
             vec4f_t nm = this_frame_clear_color.normalize();
             glClearColor(nm.x, nm.y, nm.z, nm.w);
@@ -806,6 +819,10 @@ namespace rocket {
             return;
         }
         window->close();
+
+        if (util::get_global_renderer_2d() == this) {
+            util::set_global_renderer_2d(nullptr);
+        }
     }
 
     renderer_2d::~renderer_2d() {

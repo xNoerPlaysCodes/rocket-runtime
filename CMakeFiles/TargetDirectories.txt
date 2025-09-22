@@ -8,6 +8,7 @@
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/gamepad_test.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/icon_test.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/iosim.dir
+/home/noerlol/C-Projects/RocketGE/CMakeFiles/plugin_test.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/moving_circle.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/custom_shader.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/software_renderer.dir

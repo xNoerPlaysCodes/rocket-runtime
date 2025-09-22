@@ -411,4 +411,5 @@ CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: \
  /usr/include/c++/15.2.1/bits/stl_relops.h \
  /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp \
  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
- /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp
+ /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp

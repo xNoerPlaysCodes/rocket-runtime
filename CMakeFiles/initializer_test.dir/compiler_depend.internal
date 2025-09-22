@@ -537,6 +537,7 @@ bin/tests/initializer_test
  /usr/lib/libc_nonshared.a
  /usr/lib/libglfw.so.3
  /usr/lib/libm.so.6
+ /usr/lib/libminiz.so.3
  /usr/lib/libmvec.so.1
  /usr/lib/libopenal.so.1
  /usr/lib/libxcb.so.1

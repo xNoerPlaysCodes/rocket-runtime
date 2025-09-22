@@ -4,6 +4,7 @@
 #include "../../include/rocket/types.hpp"
 #include "../../include/rocket/io.hpp"
 #include "../../include/rocket/runtime.hpp"
+#include "rocket/renderer.hpp"
 #include <GLFW/glfw3.h>
 #include <functional>
 #include <sstream>
@@ -60,6 +61,9 @@ namespace util {
 
     char get_formatted_char_typed();
     void push_formatted_char_typed(char c);
+
+    void set_global_renderer_2d(rocket::renderer_2d *renderer);
+    rocket::renderer_2d *get_global_renderer_2d();
 }
 
 #endif

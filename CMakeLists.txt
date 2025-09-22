@@ -26,6 +26,7 @@ option(BUILD_QUARK "Build Quark [physics]" ON)
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 
 include_directories(include)
+include_directories(/usr/include/miniz)
 include_directories(src/include)
 
 if (BUILD_QUARK)
@@ -65,6 +66,9 @@ add_library(${PROJECT_NAME}
 
     src/rocket/rgl.cpp
 
+    # Plugin Subsystem
+    src/rocket/plugin/plugin.cpp
+
     # Header-Only Libraries Implementation
     src/headeronlyimpl.cpp
 
@@ -79,7 +83,7 @@ add_library(${PROJECT_NAME}
     ${QUARK_SOURCES}
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal)
+target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal miniz)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1)
@@ -98,6 +102,7 @@ if (BUILD_TESTS)
         gamepad_test
         icon_test
         iosim
+        plugin_test
     )
 
     foreach(test_name IN LISTS TEST_NAMES)

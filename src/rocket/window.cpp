@@ -123,7 +123,7 @@ namespace rocket {
             platform.type = platform_type_t::windows;
             platform.os_name = "Windows";
         } else {
-            rocket::log_error("[fixme] platform unimplemented", -1, "window_t::get_platform", "fatal-to-function");
+            rocket::log_error("platform unimplemented", -1, "window_t::get_platform", "fatal-to-function");
             return {};
         }
 
@@ -225,7 +225,7 @@ namespace rocket {
         glfwWindowHint(GLFW_FOCUSED, glfwaltGetBoolean(!flags.unfocused));
         glfwWindowHint(GLFW_FLOATING, glfwaltGetBoolean(flags.topmost));
         if (flags.always_run) {
-            rocket::log_error("[fixme] not implemented, windowflags_t::always_run", -1, "window_t::constructor", "warn");
+            rocket::log_error("[fixme] not implemented, windowflags_t::always_run", -1, "window_t::constructor", "fixme");
         }
 
         if (flags.opacity < 1.0f) {
@@ -299,12 +299,8 @@ namespace rocket {
             util::dispatch_event(event);
         });
 
-        int sx, sy;
-        auto mode = glfwGetVideoMode(glfwaltGetMonitorWithCursor());
-        sx = mode->width;
-        sy = mode->height;
-        if (!glfw_platform_is_wayland(get_platform())) {
-            glfwSetWindowPos(glfw_window, (sx - size.x) / 2, (sy - size.y) / 2);
+        if (auto mode = glfwGetVideoMode(glfwaltGetMonitorWithCursor()); !glfw_platform_is_wayland(get_platform())) {
+            glfwSetWindowPos(glfw_window, (mode->width - size.x) / 2, (mode->height - size.y) / 2);
         }
         glfwSetWindowUserPointer(glfw_window, this);
         glfwSetWindowSizeCallback(glfw_window, [](GLFWwindow* window, int width, int height) {
@@ -326,7 +322,7 @@ namespace rocket {
             "CPL Windowing Library: GLFW",
             "Windowing API: " + glfw_platform_str,
             "rGE Platform: " + platform.rge_name,
-            "Modules:",
+            "Rocket Libraries:",
             #ifdef ROCKETGE__BUILD_QUARK
                 "- Quark: [ENABLED]",
             #else

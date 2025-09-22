@@ -531,6 +531,7 @@ bin/examples/moving_circle: /usr/lib/Scrt1.o \
   /usr/lib/libc_nonshared.a \
   /usr/lib/libglfw.so.3 \
   /usr/lib/libm.so.6 \
+  /usr/lib/libminiz.so.3 \
   /usr/lib/libmvec.so.1 \
   /usr/lib/libopenal.so.1 \
   /usr/lib/libxcb.so.1 \
@@ -550,6 +551,8 @@ bin/examples/moving_circle: /usr/lib/Scrt1.o \
 bin/libRocketRuntime.so:
 
 CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o:
+
+/usr/lib32/libxcb.so.1:
 
 /usr/include/c++/15.2.1/ctime:
 
@@ -755,8 +758,6 @@ include/rocket/renderer.hpp:
 
 /usr/include/c++/15.2.1/array:
 
-/usr/lib32/libxcb.so.1:
-
 /usr/include/bits/floatn.h:
 
 /usr/include/c++/15.2.1/atomic:
@@ -944,6 +945,8 @@ include/rocket/io.hpp:
 /usr/include/c++/15.2.1/bits/atomic_timed_wait.h:
 
 /usr/include/asm/posix_types.h:
+
+/usr/lib/libminiz.so.3:
 
 /usr/include/c++/15.2.1/compare:
 

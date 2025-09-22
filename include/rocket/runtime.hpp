@@ -131,6 +131,12 @@ namespace rocket {
 
     /// @brief Get OpenGL Error callback
     gl_error_callback_t get_opengl_error_callback();
+
+
+    /// @brief Optionally set CLI arguments
+    void set_cli_arguments(int argc, char *argv[]);
+    /// @brief Optionally set CLI arguments
+    void set_cli_arguments(std::vector<std::string> args);
 }
 
 #endif
