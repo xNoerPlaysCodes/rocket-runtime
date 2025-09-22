@@ -3,12 +3,17 @@
 #include "rocket/plugin/plugin.hpp"
 #include "rocket/window.hpp"
 
-int main() {
+int main(int argc, char **argv) {
+    rocket::set_cli_arguments(argc, argv);
     rocket::set_log_level(rocket::log_level_t::warn);
     auto plugin = rocket::load_plugin("resources/test.plugin");
-    void (*my_test)() = reinterpret_cast<void(*)()>(plugin->get_function("my_test"));
+    if (plugin != nullptr) {
+        void (*my_test)() = reinterpret_cast<void(*)()>(plugin->get_function("my_test"));
 
-    my_test();
+        my_test();
+    } else {
+        rocket::log_error("you didn't let it load the plugin!", -1, "main.cpp::main", "warn");
+    }
 
     rocket::window_t window = { { 1280, 720 }, "RocketGE - Plugin Test" };
     rocket::renderer_2d r(&window);

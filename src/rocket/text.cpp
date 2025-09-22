@@ -1,4 +1,5 @@
 #include "../../include/rocket/asset.hpp"
+#include <iostream>
 
 namespace rocket {
     text_t::text_t(std::string text, float size, rgb_color color, std::shared_ptr<font_t> font) {
@@ -8,6 +9,8 @@ namespace rocket {
         this->font = font;
         if (this->font == nullptr) {
             this->font = font_t::font_default(size);
+        } if (font.get() == reinterpret_cast<font_t*>(0x01)) {
+            this->font = font_t::font_default_monospace(size);
         }
     }
 

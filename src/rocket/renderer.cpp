@@ -1,4 +1,5 @@
 #include <GL/glew.h>
+#include "rocket/asset.hpp"
 #include "rocket/io.hpp"
 #include "rocket/plugin/plugin.hpp"
 #include "rocket/rgl.hpp"
@@ -9,6 +10,7 @@
 #include <cstring>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
+#include <iostream>
 #include <unordered_map>
 #include <utility>
 #include "../include/rgl.hpp"
@@ -33,6 +35,8 @@ namespace rocket {
 
     rgl::fbo_t fxaa_fbo;
     rgl::shader_program_t fxaa_shader;
+    
+    util::global_state_cliargs_t ovr_clistate = {};
 
     renderer_2d::renderer_2d(window_t *window, int fps, renderer_flags_t flags) {
         this->window = window;
@@ -71,6 +75,8 @@ namespace rocket {
         }
         // replacement for gl_setup_ortho
         glViewport(0, 0, window->size.x, window->size.y);
+
+        ::rocket::ovr_clistate = util::get_clistate();
     }
 
     void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color) {
@@ -501,6 +507,61 @@ namespace rocket {
         }
     }
 
+    void draw_debug_overlay(bool draw, renderer_2d *ren, double start) {
+        if (!draw) { return; }
+
+        const float margin = 8.f;
+        const float padding = 8.f;
+        vec2f_t size = { 384, 240 };
+        vec2f_t position = { margin, margin };
+
+        const float zx = margin + padding;
+        const float zy = margin + padding;
+        const float text_size = 24;
+
+        double end = glfwGetTime();
+        double time_took_for_frame = end - start;
+        auto double_to_str = [](double d) -> std::string {
+            std::stringstream ss;
+            ss << std::fixed << std::setprecision(4) << d;
+            return ss.str();
+        };
+        static std::shared_ptr<rocket::font_t> font = rGE__FONT_DEFAULT_MONOSPACED;
+        rocket::text_t fps_text = { "FPS: " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
+        rocket::text_t frametime_text = { "FrameTime: " + double_to_str(time_took_for_frame * 1000) + "ms", text_size, rgb_color::white(), font };
+        rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()) + "s", text_size, rgb_color::white(), font };
+        rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(rgl::read_drawcalls()), text_size, rgb_color::white(), font };
+        rocket::text_t tricount_text = { "TriCount: " + std::to_string(rgl::read_tricount()), text_size, rgb_color::white(), font };
+        std::string fbo_active = rgl::is_active_any_fbo() ? "Yes" : "No";
+        rocket::text_t framebuffer_active_text = { "FBO Active: " + fbo_active, text_size, rgb_color::white(), font };
+
+        ren->begin_scissor_mode(position, size);
+
+        ren->draw_rectangle(position, size, rgba_color::black(), 0., 0.05);
+        ren->draw_text(fps_text, { zx, zy + (0 * text_size) });
+        ren->draw_text(frametime_text, { zx, zy + (1 * text_size) });
+        ren->draw_text(deltatime_text, { zx, zy + (2 * text_size) });
+        ren->draw_text(drawcalls_text, { zx, zy + (3 * text_size) });
+        ren->draw_text(tricount_text, { zx, zy + (4 * text_size) });
+        ren->draw_text(framebuffer_active_text, { zx, zy + (5 * text_size) });
+
+        rocket::text_t rocket_version_text = { "RocketGE Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
+        std::string glmajor, glminor;
+        int mj, mn;
+        glGetIntegerv(GL_MAJOR_VERSION, &mj);
+        glGetIntegerv(GL_MINOR_VERSION, &mn);
+
+        glmajor = std::to_string(mj);
+        glminor = std::to_string(mn);
+        rocket::text_t opengl_version_text = { "OpenGL Version: " + glmajor + "." + glminor + " (core)", text_size, rgb_color::white(), font };
+
+        auto last_text_position = zy + size.y - text_size - padding - margin;
+        ren->draw_text(rocket_version_text, { zx, last_text_position });
+        ren->draw_text(opengl_version_text, { zx, last_text_position - text_size });
+
+        ren->end_scissor_mode();
+    }
+
     void renderer_2d::end_frame() {
         if (flags.share_renderer_as_global) {
             __rallframeend();
@@ -520,17 +581,20 @@ namespace rocket {
 
             draw_fullscreen_quad();
         }
+
+        draw_debug_overlay(util::get_clistate().debugoverlay, this, frame_start_time);
+
         glfwSwapBuffers(this->window->glfw_window);
         int drawcalls = rgl::reset_drawcalls();
-        if (drawcalls >= rGL_MAX_RECOMMENDED_DRAWCALLS) {
+        if (drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
             rocket::log_error("Too many drawcalls! (" + std::to_string(drawcalls) + ") Frames may suffer", -1, "renderer_2d::end_frame", "warning");
         }
         int tricount = rgl::reset_tricount();
-        if (tricount >= rGL_MAX_RECOMMENDED_TRICOUNT) {
+        if (tricount > rGL_MAX_RECOMMENDED_TRICOUNT) {
             rocket::log_error("Too many triangles! (" + std::to_string(tricount) + ") Frames may suffer", -1, "renderer_2d::end_frame", "warning");
         }
 
-        rocket::vec2f_t final_viewport_position = { 0, 0 };
+        rocket::vec2f_t final_viewport_position = {  0,  0 };
         rocket::vec2f_t final_viewport_size     = { -1, -1 };
 
         // If override size is set, use that, otherwise fallback to window size

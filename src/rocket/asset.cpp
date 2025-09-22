@@ -431,6 +431,43 @@ namespace rocket {
         return fonts[fsize];
     }
 
+    std::shared_ptr<font_t> font_t::font_default_monospace(int fsize) {
+        static std::unordered_map<int, std::shared_ptr<font_t>> fonts;
+        if (fonts.find(fsize) == fonts.end()) {
+            std::shared_ptr<font_t> font = std::make_shared<font_t>();
+            font->ttf_data = std::vector<uint8_t>(rocket_font::FontDefault_Monospace_ttf, rocket_font::FontDefault_Monospace_ttf + rocket_font::FontDefault_Monospace_ttf_len);
+            font->id = -1;
+            font->size = fsize;
+            std::vector<unsigned char> bitmap(font->sttex_size.x * font->sttex_size.y);
+            stbtt_BakeFontBitmap(rocket_font::FontDefault_Monospace_ttf, 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
+
+            stbtt_fontinfo info;
+            if (!stbtt_InitFont(&info, rocket_font::FontDefault_Monospace_ttf, 0)) {
+                rocket::log_error("failed to init font", 1, "stbtt", "fatal-to-function");
+                return nullptr;
+            }
+            int ascent, descent, line_gap;
+            stbtt_GetFontVMetrics(&info, &ascent, &descent, &line_gap);
+
+            // Convert from font units to pixels
+            float scale = stbtt_ScaleForPixelHeight(&info, fsize);
+            float line_height = (ascent - descent + line_gap) * scale;
+
+            // Generate OpenGL texture
+            glGenTextures(1, &font->glid);
+            glBindTexture(GL_TEXTURE_2D, font->glid);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, font->sttex_size.x, font->sttex_size.y, 0, GL_RED, GL_UNSIGNED_BYTE, bitmap.data());
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            font->line_height = line_height;
+            fonts[fsize] = font;
+        }
+
+        return fonts[fsize];
+    }
+
     assetid_t asset_manager_t::load_font(int fsize, std::vector<uint8_t> mem) {
         std::shared_ptr<font_t> font = std::make_shared<font_t>();
         font->id = current_id++;

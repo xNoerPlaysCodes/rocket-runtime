@@ -1,6 +1,7 @@
 #include "../../include/rocket/runtime.hpp"
 #include "util.hpp"
 #include <iostream>
+#include <string>
 
 namespace rocket {
     void set_log_level(log_level_t level) { util::set_log_level(level); }
@@ -62,5 +63,49 @@ namespace rocket {
 
     gl_error_callback_t get_opengl_error_callback() {
         return glerror_cb == nullptr ? glerror_cb_default : glerror_cb;
+    }
+
+    void set_cli_arguments(int argc, char *argv[]) {
+        if (argc < 0) {
+            return;
+        }
+
+        const std::vector<std::string> args_with_values = {};
+        util::global_state_cliargs_t args = {};
+        for (int i = 0; i < argc; ++i) {
+            int nexti = i + 1;
+            std::string arg = argv[i];
+            std::string value = "";
+            if (nexti != argc) {
+                if (argv[nexti][0] != '-' || argv[nexti][0] != '/') {
+                    value = argv[nexti];
+                }
+            }
+
+            if (arg.starts_with("--")) {
+                arg = arg.substr(2);
+            }
+            if (arg.starts_with("-")) {
+                arg = arg.substr(1);
+            }
+            if (arg.starts_with("/")) {
+                arg = arg.substr(1);
+            }
+
+            if (value.empty() && std::find(args_with_values.begin(), args_with_values.end(), arg) != args_with_values.end()) {
+                rocket::log_error("argument " + arg + " does not have a value where it is required", -1, "RocketRuntime", "fatal-to-function");
+                continue;
+            }
+
+            if (arg == "noplugins") {
+                args.noplugins = true;
+            } else if (arg == "logall") {
+                args.logall = true;
+            } else if (arg == "debugoverlay") {
+                args.debugoverlay = true;
+            }
+        }
+
+        util::init_clistate(args);
     }
 }

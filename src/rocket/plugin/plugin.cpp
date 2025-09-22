@@ -123,6 +123,9 @@ namespace rocket {
     }
 
     std::shared_ptr<plugin_t> load_plugin(std::filesystem::path plugin) {
+        if (util::get_clistate().noplugins) {
+            return nullptr;
+        }
         if (!std::filesystem::exists(plugin)) {
             rocket::log_error("plugin does not exist", -1, "plugin.cpp::load_plugin", "fatal-to-function");
             return nullptr;

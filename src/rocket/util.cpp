@@ -97,8 +97,10 @@ namespace util {
             }
             return format_log(error, error_source, "", level);
         }
-        if (elevel < log_level) {
-            return "";
+        if (!get_clistate().logall) {
+            if (elevel < log_level) {
+                return "";
+            }
         }
         std::stringstream ss;
         ss << '[' << fmtd_time_str() << ']' << ' '
@@ -126,8 +128,10 @@ namespace util {
         } else {
             return format_error(log, -1, class_file_library_source + "::" + function_source, level);
         }
-        if (elvl < log_level) {
-            return "";
+        if (!get_clistate().logall) {
+            if (elvl < log_level) {
+                return "";
+            }
         }
         std::stringstream ss;
         ss << '[' << fmtd_time_str() << ']' << ' '
@@ -315,5 +319,14 @@ namespace util {
 
     rocket::renderer_2d *get_global_renderer_2d() {
         return global_renderer_2d;
+    }
+
+    global_state_cliargs_t clistate = {};
+    void init_clistate(global_state_cliargs_t args) {
+        ::util::clistate = args;
+    }
+
+    global_state_cliargs_t get_clistate() {
+        return ::util::clistate;
     }
 }

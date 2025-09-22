@@ -6,5 +6,5 @@ CXX_DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK
 
 CXX_INCLUDES = -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include
 
-CXX_FLAGS = -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto
+CXX_FLAGS = -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto
 

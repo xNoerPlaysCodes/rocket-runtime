@@ -12,6 +12,12 @@
 #include <vector>
 
 namespace util {
+    struct global_state_cliargs_t {
+        bool noplugins = false;
+        bool logall = false;
+        bool debugoverlay = false;
+    };
+
     std::string format_error(std::string error, int error_id, std::string error_source, std::string level);
     std::string format_log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);
 
@@ -64,6 +70,9 @@ namespace util {
 
     void set_global_renderer_2d(rocket::renderer_2d *renderer);
     rocket::renderer_2d *get_global_renderer_2d();
+
+    void init_clistate(global_state_cliargs_t);
+    global_state_cliargs_t get_clistate();
 }
 
 #endif

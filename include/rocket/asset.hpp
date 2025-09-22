@@ -18,6 +18,9 @@
 #define rGE__TEXTURE_CHANNEL_COUNT_RGBA     4
 #define rGE__TEXTURE_CHANNEL_COUNT_RGB      3
 
+#define rGE__FONT_DEFAULT                   nullptr
+#define rGE__FONT_DEFAULT_MONOSPACED        std::shared_ptr<rocket::font_t>(reinterpret_cast<rocket::font_t*>(0x01))
+
 namespace rocket {
     /// @brief Maps to OpenGL::Texture2D
     class texture_t {
@@ -121,6 +124,10 @@ namespace rocket {
         /// @brief Get the default font for a particular size
         /// @note Lazy-Loaded
         static std::shared_ptr<font_t> font_default(int fsize);
+
+        /// @brief Get the default monospace font for a particular size
+        /// @note Lazy-Loaded
+        static std::shared_ptr<font_t> font_default_monospace(int fsize);
     public:
         font_t();
     public:
@@ -155,7 +162,8 @@ namespace rocket {
         /// @param size Text Size
         /// @param color Text Color
         /// @param font Font, if nullptr then default will be used
-        text_t(std::string text, float size, rgb_color color, std::shared_ptr<font_t> font = nullptr);
+        ///             if ptr == 0x01   then default monospaced font will be used
+        text_t(std::string text, float size, rgb_color color, std::shared_ptr<font_t> font = rGE__FONT_DEFAULT);
     public:
         ~text_t();
     };

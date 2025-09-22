@@ -1,181 +1,181 @@
 [
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/window.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/window.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/window.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/util.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/util.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/util.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/renderer.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/renderer.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/renderer.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/renderer3d.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/renderer3d.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/renderer3d.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/io.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/io.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/io.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/asset.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/asset.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/asset.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/types.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/types.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/types.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/runtime.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/runtime.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/runtime.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/font.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/font.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/font.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/text.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/text.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/text.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/shader.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/shader.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/shader.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/rgl.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/rgl.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/rgl.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/plugin/plugin.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/plugin/plugin.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/plugin/plugin.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/headeronlyimpl.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/headeronlyimpl.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/headeronlyimpl.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/native.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/native.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/native.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/astro/astroui.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/astro/astroui.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/astro/astroui.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -fPIC -o CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/quark/physics.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -fPIC -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/quark/physics.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/quark/physics.cpp",
   "output": "CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/rectangle_test.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/rectangle_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/rectangle_test.cpp",
   "output": "CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/initializer_test.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/initializer_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/initializer_test.cpp",
   "output": "CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/text_test.dir/tests/text_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/text_test.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/text_test.dir/tests/text_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/text_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/text_test.cpp",
   "output": "CMakeFiles/text_test.dir/tests/text_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/ui_init_test.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/ui_init_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/ui_init_test.cpp",
   "output": "CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/rounded_texture_rectangle_test.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/rounded_texture_rectangle_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/rounded_texture_rectangle_test.cpp",
   "output": "CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/line_test.dir/tests/line_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/line_test.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/line_test.dir/tests/line_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/line_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/line_test.cpp",
   "output": "CMakeFiles/line_test.dir/tests/line_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/gamepad_test.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/gamepad_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/gamepad_test.cpp",
   "output": "CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/icon_test.dir/tests/icon_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/icon_test.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/icon_test.dir/tests/icon_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/icon_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/icon_test.cpp",
   "output": "CMakeFiles/icon_test.dir/tests/icon_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/iosim.dir/tests/iosim.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/iosim.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/iosim.dir/tests/iosim.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/iosim.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/iosim.cpp",
   "output": "CMakeFiles/iosim.dir/tests/iosim.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/plugin_test.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/plugin_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/plugin_test.cpp",
   "output": "CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o -c /home/noerlol/C-Projects/RocketGE/examples/moving_circle.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o -c /home/noerlol/C-Projects/RocketGE/examples/moving_circle.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/examples/moving_circle.cpp",
   "output": "CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o -c /home/noerlol/C-Projects/RocketGE/examples/custom_shader.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o -c /home/noerlol/C-Projects/RocketGE/examples/custom_shader.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/examples/custom_shader.cpp",
   "output": "CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o -c /home/noerlol/C-Projects/RocketGE/examples/software_renderer.cpp",
+  "command": "/usr/bin/c++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -O3 -DNDEBUG -std=gnu++23 -Wall -Wextra -Wpedantic -O3 -flto -o CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o -c /home/noerlol/C-Projects/RocketGE/examples/software_renderer.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/examples/software_renderer.cpp",
   "output": "CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o"
 }

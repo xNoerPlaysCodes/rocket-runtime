@@ -8,10 +8,12 @@
 #include "window.hpp"
 #include "shader.hpp"
 
-#define ROCKETGE__MINOR_VERSION  1
-#define ROCKETGE__MAJOR_VERSION  0
+#define ROCKETGE__MAJOR_VERSION  1
+#define ROCKETGE__MINOR_VERSION  0
 #define ROCKETGE__BUILD          "alpha"
-#define ROCKETGE__VERSION        #ROCKETGE_MAJOR_VERSION "." #ROCKETGE_MINOR_VERSION "-" ROCKETGE_BUILD
+#define ROCKETGE__STRX_(x)       #x
+#define ROCKETGE__STRX(x)        ROCKETGE__STRX_(x)
+#define ROCKETGE__VERSION        ROCKETGE__STRX(ROCKETGE__MAJOR_VERSION) "." ROCKETGE__STRX(ROCKETGE__MINOR_VERSION) "-" ROCKETGE__BUILD
 
 #define ROCKETGE__FEATURE_MAX_GL_VERSION_MAJOR 4
 #define ROCKETGE__FEATURE_MAX_GL_VERSION_MINOR 6
@@ -39,7 +41,7 @@
 
 // #define ROCKETGE__NOT_IMPLEMENTED __attribute__((unavailable("Not Implemented")))
 #define ROCKETGE__NOT_IMPLEMENTED
-// #define ROCKETGE__DEPRECATED [[deprecated]]
+//  #define ROCKETGE__DEPRECATED [[deprecated]]
 #define ROCKETGE__DEPRECATED
 
 #include "constants.hpp"
