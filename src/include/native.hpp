@@ -2,7 +2,6 @@
 #define ROCKETGE__RNATIVE_HPP
 
 #include <GLFW/glfw3.h>
-#include <string>
 namespace rnative {
     void wayland_set_window_icon(GLFWwindow *window, GLFWimage &image);
     /// @brief Pre window creation
@@ -24,6 +23,14 @@ namespace rnative {
 #include <X11/Xutil.h>
 
 #endif // RNATIVE__INCLUDE_X11
+
+#if defined(RNATIVE__INCLUDE_X11) || defined(RNATIVE__INCLUDE_WAYLAND)
+
+#include <linux/input.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+#endif // X11 or WAYLAND
 
 #ifdef RNATIVE__INCLUDE_WINDOWS
 

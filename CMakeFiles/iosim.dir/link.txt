@@ -1,1 +1,1 @@
-/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/iosim.dir/link.d CMakeFiles/iosim.dir/tests/iosim.cpp.o -o bin/tests/iosim   -L/home/noerlol/C-Projects/RocketGE/bin  -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin bin/libRocketRuntime.so
+/usr/bin/c++ -g -Wl,--dependency-file=CMakeFiles/iosim.dir/link.d CMakeFiles/iosim.dir/tests/iosim.cpp.o -o bin/tests/iosim   -L/home/noerlol/C-Projects/RocketGE/bin  -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin bin/libRocketRuntime.so

@@ -7,6 +7,7 @@ CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o: tests/gamepad_test.cpp \
   include/rocket/io.hpp \
   include/rocket/macros.hpp \
   include/rocket/renderer.hpp \
+  include/rocket/rgl.hpp \
   include/rocket/runtime.hpp \
   include/rocket/shader.hpp \
   include/rocket/stb_truetype.h \
@@ -218,6 +219,7 @@ CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o: tests/gamepad_test.cpp \
   /usr/include/c++/15.2.1/bits/stl_multimap.h \
   /usr/include/c++/15.2.1/bits/stl_pair.h \
   /usr/include/c++/15.2.1/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15.2.1/bits/stl_relops.h \
   /usr/include/c++/15.2.1/bits/stl_tempbuf.h \
   /usr/include/c++/15.2.1/bits/stl_tree.h \
   /usr/include/c++/15.2.1/bits/stl_uninitialized.h \
@@ -311,6 +313,7 @@ CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o: tests/gamepad_test.cpp \
   /usr/include/c++/15.2.1/type_traits \
   /usr/include/c++/15.2.1/typeinfo \
   /usr/include/c++/15.2.1/unordered_map \
+  /usr/include/c++/15.2.1/utility \
   /usr/include/c++/15.2.1/vector \
   /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -524,6 +527,7 @@ bin/tests/gamepad_test: /usr/lib/Scrt1.o \
   /usr/lib/libGLX.so.0 \
   /usr/lib/libGLdispatch.so.0 \
   /usr/lib/libOpenGL.so.0 \
+  /usr/lib/libSDL2-2.0.so.0 \
   /usr/lib/libX11.so.6 \
   /usr/lib/libXau.so.6 \
   /usr/lib/libXdmcp.so.6 \
@@ -540,6 +544,7 @@ bin/tests/gamepad_test: /usr/lib/Scrt1.o \
   /usr/lib32/libGLX.so.0 \
   /usr/lib32/libGLdispatch.so.0 \
   /usr/lib32/libOpenGL.so.0 \
+  /usr/lib32/libSDL2-2.0.so.0 \
   /usr/lib32/libX11.so.6 \
   /usr/lib32/libXau.so.6 \
   /usr/lib32/libXdmcp.so.6 \
@@ -553,6 +558,14 @@ bin/libRocketRuntime.so:
 CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o:
 
 /usr/lib32/libxcb.so.1:
+
+/usr/lib32/libXdmcp.so.6:
+
+/usr/lib32/libXau.so.6:
+
+/usr/lib32/libX11.so.6:
+
+/usr/lib32/libSDL2-2.0.so.0:
 
 /usr/include/c++/15.2.1/ctime:
 
@@ -597,10 +610,6 @@ CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o:
 /usr/include/c++/15.2.1/ext/type_traits.h:
 
 /usr/include/bits/typesizes.h:
-
-/usr/include/c++/15.2.1/bits/stl_heap.h:
-
-/usr/include/asm-generic/bitsperlong.h:
 
 /usr/include/c++/15.2.1/bits/stl_tree.h:
 
@@ -740,6 +749,8 @@ CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o:
 
 include/rocket/macros.hpp:
 
+/usr/include/wchar.h:
+
 /usr/include/sched.h:
 
 /usr/include/wctype.h:
@@ -792,13 +803,15 @@ include/rocket/renderer.hpp:
 
 /usr/include/bits/uio_lim.h:
 
-/usr/include/bits/confname.h:
-
 /usr/include/c++/15.2.1/bits/stl_map.h:
 
 /usr/include/asm-generic/posix_types.h:
 
 /usr/include/bits/byteswap.h:
+
+/usr/include/glm/mat3x2.hpp:
+
+/usr/include/bits/iscanonical.h:
 
 /usr/include/bits/syscall.h:
 
@@ -816,35 +829,9 @@ include/rocket/renderer.hpp:
 
 /usr/lib32/libEGL.so.1:
 
-/usr/include/c++/15.2.1/bits/ostream.h:
-
 /usr/include/c++/15.2.1/bits/stl_tempbuf.h:
 
 /usr/include/stdc-predef.h:
-
-/usr/include/AL/al.h:
-
-/usr/include/bits/pthread_stack_min-dynamic.h:
-
-/usr/include/c++/15.2.1/cstdio:
-
-/usr/include/c++/15.2.1/bits/istream.tcc:
-
-/usr/include/bits/struct_mutex.h:
-
-/usr/include/c++/15.2.1/limits:
-
-include/rocket/stb_truetype.h:
-
-/usr/include/glm/ext/vector_bool3.hpp:
-
-/usr/include/c++/15.2.1/bits/ranges_base.h:
-
-include/rocket/io.hpp:
-
-/usr/include/c++/15.2.1/bits/stl_construct.h:
-
-/usr/include/glm/ext/matrix_double4x4_precision.hpp:
 
 /usr/include/c++/15.2.1/bits/align.h:
 
@@ -898,6 +885,8 @@ include/rocket/runtime.hpp:
 
 /usr/include/bits/waitflags.h:
 
+/usr/include/c++/15.2.1/bits/ostream.h:
+
 /usr/include/c++/15.2.1/bits/unique_lock.h:
 
 /usr/include/bits/types/__sigset_t.h:
@@ -912,15 +901,65 @@ include/rocket/runtime.hpp:
 
 /usr/include/glm/detail/compute_vector_relational.hpp:
 
-tests/gamepad_test.cpp:
+/usr/include/c++/15.2.1/cstdio:
+
+/usr/include/c++/15.2.1/bits/istream.tcc:
+
+/usr/include/glm/ext/matrix_double4x4_precision.hpp:
+
+/usr/include/c++/15.2.1/bits/stl_construct.h:
+
+/usr/include/bits/struct_mutex.h:
+
+/usr/include/c++/15.2.1/limits:
+
+include/rocket/stb_truetype.h:
+
+/usr/include/glm/ext/vector_bool3.hpp:
+
+/usr/include/c++/15.2.1/bits/ranges_base.h:
+
+include/rocket/io.hpp:
+
+/usr/include/c++/15.2.1/tr1/hypergeometric.tcc:
+
+/usr/include/bits/types/struct_timespec.h:
+
+/usr/include/bits/confname.h:
+
+include/rocket/rgl.hpp:
 
 /usr/include/c++/15.2.1/bits/stl_uninitialized.h:
+
+/usr/lib32/libOpenGL.so.0:
+
+/usr/include/glm/matrix.hpp:
+
+/usr/include/pthread.h:
 
 /usr/include/bits/types/time_t.h:
 
 /usr/include/GLFW/glfw3.h:
 
 /usr/include/bits/flt-eval-method.h:
+
+tests/gamepad_test.cpp:
+
+/usr/include/AL/al.h:
+
+/usr/include/c++/15.2.1/bits/stl_heap.h:
+
+/usr/include/asm-generic/bitsperlong.h:
+
+/usr/include/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/bits/types/mbstate_t.h:
+
+/usr/include/bits/semaphore.h:
+
+/usr/include/glm/ext/vector_bool2_precision.hpp:
+
+/usr/include/asm/types.h:
 
 /usr/include/c++/15.2.1/bits/cpp_type_traits.h:
 
@@ -962,27 +1001,17 @@ tests/gamepad_test.cpp:
 
 /usr/include/c++/15.2.1/bits/locale_facets.tcc:
 
-/usr/include/bits/iscanonical.h:
+/usr/include/bits/mathcalls-macros.h:
 
-/usr/include/glm/mat3x2.hpp:
+/usr/include/asm-generic/int-ll64.h:
 
-/usr/include/wchar.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stddef.h:
 
 /usr/include/c++/15.2.1/bits/stl_bvector.h:
 
 /usr/include/bits/posix2_lim.h:
 
 /usr/include/glm/ext/matrix_float2x3_precision.hpp:
-
-/usr/include/asm-generic/int-ll64.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stddef.h:
-
-/usr/include/bits/mathcalls-macros.h:
-
-/usr/include/bits/semaphore.h:
-
-/usr/include/bits/types/mbstate_t.h:
 
 /usr/include/c++/15.2.1/bits/enable_special_members.h:
 
@@ -997,6 +1026,14 @@ tests/gamepad_test.cpp:
 /usr/include/bits/pthreadtypes.h:
 
 /usr/include/c++/15.2.1/tr1/beta_function.tcc:
+
+/usr/include/c++/15.2.1/bits/basic_string.h:
+
+/usr/include/glm/mat2x4.hpp:
+
+/usr/include/asm-generic/types.h:
+
+/usr/lib/libc.so:
 
 /usr/include/glm/ext/vector_relational.inl:
 
@@ -1049,6 +1086,8 @@ tests/gamepad_test.cpp:
 /usr/include/c++/15.2.1/mutex:
 
 /usr/include/bits/types/__mbstate_t.h:
+
+/usr/lib/libSDL2-2.0.so.0:
 
 /usr/include/bits/stdio_lim.h:
 
@@ -1222,18 +1261,6 @@ include/rocket/constants.hpp:
 
 /usr/include/c++/15.2.1/tr1/gamma.tcc:
 
-/usr/include/bits/types/struct_timespec.h:
-
-/usr/include/c++/15.2.1/tr1/hypergeometric.tcc:
-
-/usr/include/c++/15.2.1/bits/basic_string.h:
-
-/usr/include/asm-generic/types.h:
-
-/usr/lib/libc.so:
-
-/usr/include/glm/mat2x4.hpp:
-
 /usr/include/c++/15.2.1/tr1/modified_bessel_func.tcc:
 
 /usr/include/c++/15.2.1/tr1/poly_laguerre.tcc:
@@ -1245,6 +1272,8 @@ include/rocket/constants.hpp:
 /usr/include/c++/15.2.1/typeinfo:
 
 /usr/include/c++/15.2.1/unordered_map:
+
+/usr/include/c++/15.2.1/utility:
 
 /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++locale.h:
 
@@ -1283,6 +1312,8 @@ include/rocket/constants.hpp:
 /usr/include/glm/detail/func_vector_relational.inl:
 
 /usr/include/linux/close_range.h:
+
+/usr/include/c++/15.2.1/bits/stl_relops.h:
 
 /usr/include/glm/detail/qualifier.hpp:
 
@@ -1458,10 +1489,6 @@ include/rocket/constants.hpp:
 
 /usr/include/glm/ext/scalar_uint_sized.hpp:
 
-/usr/include/asm/types.h:
-
-/usr/include/glm/ext/vector_bool2_precision.hpp:
-
 /usr/include/c++/15.2.1/bits/std_mutex.h:
 
 /usr/include/glm/ext/vector_double2.hpp:
@@ -1623,15 +1650,3 @@ include/rocket/constants.hpp:
 /usr/lib/libXdmcp.so.6:
 
 /usr/lib32/libGL.so.1:
-
-/usr/include/glm/matrix.hpp:
-
-/usr/include/pthread.h:
-
-/usr/lib32/libOpenGL.so.0:
-
-/usr/lib32/libX11.so.6:
-
-/usr/lib32/libXau.so.6:
-
-/usr/lib32/libXdmcp.so.6:

@@ -16,7 +16,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 #DebugMode
 project(${PROJECT_NAME} CXX)
 
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 
 option(BUILD_SHARED_LIBS "Build Shared" ON)
 option(BUILD_TESTS "Build Tests" ON)
@@ -83,7 +83,7 @@ add_library(${PROJECT_NAME}
     ${QUARK_SOURCES}
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal miniz)
+target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal miniz SDL2)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1)

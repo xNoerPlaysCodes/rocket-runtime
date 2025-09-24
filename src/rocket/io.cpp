@@ -4,6 +4,39 @@
 #include "util.hpp"
 
 #include <GLFW/glfw3.h>
+#include <SDL2/SDL_gamecontroller.h>
+#include <SDL2/SDL_haptic.h>
+#include <SDL2/SDL_joystick.h>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <utility>
+
+// if anyone has a better idea please do make a PR
+#include <SDL2/SDL.h>
+
+namespace std {
+    template <>
+    struct hash<std::pair<rocket::gpad::button_t, rocket::gpad::style_t>> {
+        std::size_t operator()(const std::pair<rocket::gpad::button_t, rocket::gpad::style_t>& p) const noexcept {
+            std::size_t h1 = static_cast<std::size_t>(p.first);
+            std::size_t h2 = static_cast<std::size_t>(p.second);
+            return h1 ^ (h2 << 1); // simple hash combine
+        }
+    };
+}
+
+namespace std {
+    template <>
+    struct hash<std::pair<rocket::gpad::axis_t, rocket::gpad::style_t>> {
+        std::size_t operator()(const std::pair<rocket::gpad::axis_t, rocket::gpad::style_t>& p) const noexcept {
+            std::size_t h1 = static_cast<std::size_t>(p.first);
+            std::size_t h2 = static_cast<std::size_t>(p.second);
+            return h1 ^ (h2 << 1); // simple hash combine
+        }
+    };
+}
 
 namespace rocket {
     namespace io {
@@ -196,11 +229,72 @@ namespace rocket {
         }
 
         std::string get_human_readable_name(button_t button, style_t style) {
-            rocket::log_error("[fixme] unimplemented", -1, "rocket::gpad::get_human_readable_name", "fixme");
+            using enum button_t;
+            const std::unordered_map<std::pair<button_t, style_t>, std::string> button_names = {
+                // Xbox
+                { {x, style_t::xbox}, "X" },
+                { {y, style_t::xbox}, "Y" },
+                { {a, style_t::xbox}, "A" },
+                { {b, style_t::xbox}, "B" },
+                { {view, style_t::xbox}, "View" },
+                { {menu, style_t::xbox}, "Menu" },
+                { {left_bumper, style_t::xbox}, "LB" },
+                { {right_bumper, style_t::xbox}, "RB" },
+                { {guide, style_t::xbox}, "Xbox" },
+                { {left_stick, style_t::xbox}, "LS" },
+                { {right_stick, style_t::xbox}, "RS" },
+                { {dpad_up, style_t::xbox}, "D-Pad Up" },
+                { {dpad_down, style_t::xbox}, "D-Pad Down" },
+                { {dpad_left, style_t::xbox}, "D-Pad Left" },
+                { {dpad_right, style_t::xbox}, "D-Pad Right" },
+
+                // DualShock
+                { {square, style_t::dualshock}, "Square" },
+                { {triangle, style_t::dualshock}, "Triangle" },
+                { {cross, style_t::dualshock}, "Cross" },
+                { {circle, style_t::dualshock}, "Circle" },
+                { {share, style_t::dualshock}, "Share" },
+                { {option, style_t::dualshock}, "Option" },
+                { {l1, style_t::dualshock}, "L1" },
+                { {r1, style_t::dualshock}, "R1" },
+                { {guide, style_t::dualshock}, "PS" },
+                { {left_stick, style_t::dualshock}, "L3" },
+                { {right_stick, style_t::dualshock}, "R3" },
+                { {dpad_up, style_t::dualshock}, "D-Pad Up" },
+                { {dpad_down, style_t::dualshock}, "D-Pad Down" },
+                { {dpad_left, style_t::dualshock}, "D-Pad Left" },
+                { {dpad_right, style_t::dualshock}, "D-Pad Right" },
+            };
+
+            auto it = button_names.find({button, style});
+            if (it != button_names.end()) {
+                return it->second;
+            }
             return "Unknown";
         }
-        std::string get_human_readable_name(axis_t, style_t) {
-            rocket::log_error("[fixme] unimplemented", -1, "rocket::gpad::get_human_readable_name", "fixme");
+        std::string get_human_readable_name(axis_t axis, style_t style) {
+            using enum axis_t;
+            using enum style_t;
+            const std::unordered_map<std::pair<axis_t, style_t>, std::string> axis_names = {
+                { {left_x, xbox}, "Left Stick X" },
+                { {left_y, xbox}, "Left Stick Y" },
+                { {right_x, xbox}, "Right Stick X" },
+                { {right_y, xbox}, "Right Stick Y" },
+                { {left_trigger, xbox}, "Left Trigger" },
+                { {right_trigger, xbox}, "Right Trigger" },
+
+                { {left_x, dualshock}, "Left Stick X" },
+                { {left_y, dualshock}, "Left Stick Y" },
+                { {right_x, dualshock}, "Right Stick X" },
+                { {right_y, dualshock}, "Right Stick Y" },
+                { {l2, dualshock}, "L2" },
+                { {r2, dualshock}, "R2" }
+            };
+
+            auto it = axis_names.find({axis, style});
+            if (it != axis_names.end()) {
+                return it->second;
+            }
             return "Unknown";
         }
 
@@ -238,6 +332,52 @@ namespace rocket {
 
         void set_focused(bool focused) {
             gpad_focused = focused;
+        }
+
+        void sdl_vibr_init() {
+            static bool is_init = false;
+            if (!is_init) {
+                SDL_Init(SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK);
+                is_init = true;
+            }
+        }
+
+
+        void set_vibration(gamepad_t gp, float strength, float duration_ms) {
+            sdl_vibr_init();
+            static std::unordered_map<gamepad_t, SDL_GameController*> controllers;
+            static std::unordered_map<SDL_GameController*, SDL_Haptic*> haptics;
+
+            SDL_GameController* gc = nullptr;
+            SDL_Haptic* haptic = nullptr;
+
+            auto itc = controllers.find(gp);
+            if (itc != controllers.end()) {
+                gc = itc->second;
+                haptic = haptics[gc];
+            } else {
+                // open SDL_GameController from GLFW GUID
+                SDL_JoystickGUID tgt = SDL_JoystickGetGUIDFromString(glfwGetJoystickGUID(gp));
+                int n = SDL_NumJoysticks();
+                for (int i = 0; i < n; ++i) {
+                    SDL_Joystick* j = SDL_JoystickOpen(i);
+                    if (!j) continue;
+                    SDL_JoystickGUID guid = SDL_JoystickGetGUID(j);
+                    if (SDL_memcmp(&guid, &tgt, sizeof(guid)) == 0) {
+                        gc = SDL_GameControllerOpen(i);
+                        haptic = SDL_HapticOpenFromJoystick(j);
+                        if (haptic) SDL_HapticRumbleInit(haptic);
+
+                        controllers[gp] = gc;
+                        haptics[gc] = haptic;
+                        break;
+                    }
+                }
+            }
+
+            if (!gc || !haptic) return;
+
+            SDL_HapticRumblePlay(haptic, strength, static_cast<int>(duration_ms));
         }
     }
 }

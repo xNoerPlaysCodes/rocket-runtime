@@ -189,7 +189,10 @@ namespace rocket {
             rb = 5,
             r1 = 5,
 
-            start = 7,
+            back = 6, view = 6,
+            share = 6,
+
+            start = 7, menu = 7,
             option = 7,
 
             guide = 8,
@@ -255,7 +258,11 @@ namespace rocket {
         bool get_button_state(gamepad_t, button_t);
 
         /// @brief Set the gamepad input focus tester
+        ///         The window is_focused state
         void set_focused(bool);
+
+        /// @brief Set the vibration for both motors
+        void set_vibration(gamepad_t, float v, float duration_ms);
     }
 }
 

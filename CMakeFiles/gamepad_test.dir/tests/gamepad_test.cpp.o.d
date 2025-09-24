@@ -395,6 +395,10 @@ CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o: \
  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
+ /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+ /usr/include/c++/15.2.1/utility \
+ /usr/include/c++/15.2.1/bits/stl_relops.h \
  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \

@@ -346,9 +346,9 @@ namespace rgl {
             "GL Info:",
             "- Driver Highest Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))),
             "- Vendor: "  + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
-            "- In-use Version: " + std::to_string(major) + "." + std::to_string(minor),
+            "- GL Version in use: " + std::to_string(major) + "." + std::to_string(minor),
             "- GLSL Version: " + std::string((const char *) glGetString(GL_SHADING_LANGUAGE_VERSION)),
-            "- Loaded " + std::to_string(loaded_extensions) + " extensions",
+            "- " + std::to_string(loaded_extensions) + " extensions loaded",
 
             "- GL Activated Functions:",
             "   - GL_BLEND: [" + (gl_blend ? std::string("TRUE") : std::string("FALSE")) + "]",
@@ -356,12 +356,12 @@ namespace rgl {
             "   - GL_BLEND_FUNC: [" + gl_blendfunc + "]",
             "   - GL_FRAMEBUFFER_SRGB: [" + (gl_srgb ? std::string("TRUE") : std::string("FALSE")) + "]",
 
-            "- GL VAO/VBO Default Pairs Created:",
-            "   - rectVAO/VBO: [" + (rectVO.first != 0 && rectVO.second != 0
+            "- GL VertexObjects Created:",
+            "   - rectVO: [" + (rectVO.first != 0 && rectVO.second != 0
                                     ? std::string("TRUE") : std::string("FALSE")) + "]",
-            "   - txVAO/VBO: [" + (textureVO.first != 0 && textureVO.second != 0
+            "   - txVO: [" + (textureVO.first != 0 && textureVO.second != 0
                                     ? std::string("TRUE") : std::string("FALSE")) + "]",
-            "   - textVAO/VBO: [" + (textVO.first != 0 && textVO.second != 0
+            "   - textVO: [" + (textVO.first != 0 && textVO.second != 0
                                     ? std::string("TRUE") : std::string("FALSE")) + "]",
 
             "- rGL Features:",

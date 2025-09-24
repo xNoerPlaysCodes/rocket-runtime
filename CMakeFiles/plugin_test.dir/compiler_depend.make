@@ -535,6 +535,7 @@ bin/tests/plugin_test: /usr/lib/Scrt1.o \
   /usr/lib/libGLX.so.0 \
   /usr/lib/libGLdispatch.so.0 \
   /usr/lib/libOpenGL.so.0 \
+  /usr/lib/libSDL2-2.0.so.0 \
   /usr/lib/libX11.so.6 \
   /usr/lib/libXau.so.6 \
   /usr/lib/libXdmcp.so.6 \
@@ -551,6 +552,7 @@ bin/tests/plugin_test: /usr/lib/Scrt1.o \
   /usr/lib32/libGLX.so.0 \
   /usr/lib32/libGLdispatch.so.0 \
   /usr/lib32/libOpenGL.so.0 \
+  /usr/lib32/libSDL2-2.0.so.0 \
   /usr/lib32/libX11.so.6 \
   /usr/lib32/libXau.so.6 \
   /usr/lib32/libXdmcp.so.6 \
@@ -571,11 +573,15 @@ CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o:
 
 /usr/lib32/libX11.so.6:
 
+/usr/lib32/libSDL2-2.0.so.0:
+
 /usr/lib32/libEGL.so.1:
 
 /usr/lib/libxcb.so.1:
 
 /usr/lib/libopenal.so.1:
+
+/usr/lib/libminiz.so.3:
 
 /usr/include/c++/15.2.1/concepts:
 
@@ -999,8 +1005,6 @@ tests/plugin_test.cpp:
 
 /usr/include/c++/15.2.1/bits/fs_dir.h:
 
-/usr/include/bits/stdio_lim.h:
-
 /usr/include/glm/ext/matrix_double2x2_precision.hpp:
 
 /usr/include/GL/glext.h:
@@ -1010,8 +1014,6 @@ tests/plugin_test.cpp:
 /usr/include/c++/15.2.1/bits/atomic_timed_wait.h:
 
 /usr/include/asm/posix_types.h:
-
-/usr/lib/libminiz.so.3:
 
 /usr/include/c++/15.2.1/compare:
 
@@ -1058,6 +1060,10 @@ tests/plugin_test.cpp:
 /usr/include/bits/posix_opt.h:
 
 /usr/include/glm/detail/type_mat2x4.inl:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/lib/libSDL2-2.0.so.0:
 
 /usr/include/glm/ext/vector_relational.inl:
 

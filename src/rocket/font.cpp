@@ -1,6 +1,4 @@
 #include "../../include/rocket/asset.hpp"
-#include "../../include/rocket/renderer.hpp"
-#include <unordered_map>
 
 namespace rocket {
     struct font_character_t {

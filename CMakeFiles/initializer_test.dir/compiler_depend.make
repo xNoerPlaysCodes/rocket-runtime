@@ -528,6 +528,7 @@ bin/tests/initializer_test: /usr/lib/Scrt1.o \
   /usr/lib/libGLX.so.0 \
   /usr/lib/libGLdispatch.so.0 \
   /usr/lib/libOpenGL.so.0 \
+  /usr/lib/libSDL2-2.0.so.0 \
   /usr/lib/libX11.so.6 \
   /usr/lib/libXau.so.6 \
   /usr/lib/libXdmcp.so.6 \
@@ -544,6 +545,7 @@ bin/tests/initializer_test: /usr/lib/Scrt1.o \
   /usr/lib32/libGLX.so.0 \
   /usr/lib32/libGLdispatch.so.0 \
   /usr/lib32/libOpenGL.so.0 \
+  /usr/lib32/libSDL2-2.0.so.0 \
   /usr/lib32/libX11.so.6 \
   /usr/lib32/libXau.so.6 \
   /usr/lib32/libXdmcp.so.6 \
@@ -563,6 +565,10 @@ CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o:
 /usr/lib32/libXau.so.6:
 
 /usr/lib32/libX11.so.6:
+
+/usr/lib32/libSDL2-2.0.so.0:
+
+/usr/lib32/libGLdispatch.so.0:
 
 /usr/include/c++/15.2.1/ctime:
 
@@ -599,8 +605,6 @@ CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o:
 /usr/include/c++/15.2.1/bits/uniform_int_dist.h:
 
 /usr/include/c++/15.2.1/cwchar:
-
-/usr/lib32/libGLdispatch.so.0:
 
 /usr/include/c++/15.2.1/bits/this_thread_sleep.h:
 
@@ -1073,6 +1077,8 @@ tests/initializer_test.cpp:
 /usr/include/c++/15.2.1/mutex:
 
 /usr/include/bits/types/__mbstate_t.h:
+
+/usr/lib/libSDL2-2.0.so.0:
 
 /usr/include/bits/stdio_lim.h:
 

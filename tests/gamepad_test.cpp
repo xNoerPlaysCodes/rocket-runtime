@@ -1,5 +1,6 @@
 #include "rocket/asset.hpp"
 #include "rocket/renderer.hpp"
+#include "rocket/rgl.hpp"
 #include "rocket/runtime.hpp"
 #include "rocket/io.hpp"
 #include "rocket/window.hpp"
@@ -7,16 +8,18 @@
 #include <string>
 
 int main() {
+    rocket::window_t::set_forced_platform(rocket::platform_type_t::linux_x11);
     rocket::window_t window = { { 1280, 720 }, "RocketGE - Gamepads" };
     rocket::renderer_2d r(&window);
 
     rocket::text_t text = { "", 48, rocket::rgb_color::black() };
 
-    if (!rocket::gpad::is_available()) {
+    int hd = 1;
+    if (!rocket::gpad::is_available(hd)) {
         rocket::log_error("Gamepad is not available", 1, "main.cpp::main", "fatal");
         return 1;
     }
-    rocket::gpad::gamepad_t gamepad = rocket::gpad::get_handle();
+    rocket::gpad::gamepad_t gamepad = rocket::gpad::get_handle(hd);
 
     rocket::io::add_listener([](rocket::io::mouse_event_t event) {
         if (!event.state.pressed()) {
@@ -55,6 +58,8 @@ int main() {
             r.draw_text(text, position);
 
             r.draw_fps();
+
+            rocket::gpad::set_vibration(gamepad, 1.0f, 1000);
         }
         r.end_frame();
         window.poll_events();

@@ -115,7 +115,7 @@ namespace rocket {
         auto to_ndc = [&](float x, float y) {
             return rocket::vec2f_t{
                 (x / viewport.x) * 2.0f - 1.0f,            // X: same
-                1.0f - (y / viewport.y) * 2.0f             // Y: flipped
+                1.0f - (y / viewport.y) * 2.0f             // Y: flip
             };
         };
 
@@ -154,7 +154,6 @@ namespace rocket {
         glUseProgram(pg);
         glUniform4f(color_loc, color_nm.x, color_nm.y, color_nm.z, color_nm.w);
 
-        // Make sure your draw call uses TRIANGLE_FAN
         glBindVertexArray(vo.first);
         glUseProgram(pg);
         rgl::gl_draw_arrays(GL_TRIANGLE_FAN, 0, vertex_count);
@@ -177,6 +176,7 @@ namespace rocket {
         //  noerlol
         rocket::log_error("Implementation not finished", -1, "renderer_2d::draw_line", "fatal-to-function");
     }
+
     void renderer_2d::draw_rectangle(rocket::vec2f_t pos, rocket::vec2f_t size, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
         rocket::fbounding_box box = {pos, size};
         this->draw_rectangle(box, color, rotation, roundedness, lines);
@@ -638,6 +638,7 @@ namespace rocket {
         this->active_render_modes.clear();
 
         if (this->fps == -1) {
+            this->delta_time = glfwGetTime() - frame_start_time;
             return;
         }
 
@@ -659,6 +660,18 @@ namespace rocket {
 
             // busy wait for the rest
             while ((glfwGetTime() - frame_start_time) < frametime_limit) {}
+        } /*else*/ {
+            double diff = frame_duration - frametime_limit;
+
+            auto double_to_str = [](double d, int decimal_places = 6) -> std::string {
+                std::stringstream ss;
+                ss << std::fixed << std::setprecision(decimal_places) << d;
+                return ss.str();
+            };
+
+            if (diff > 0.) {
+                rocket::log("frame took " + double_to_str(diff) + "ms more than expected", "renderer_2d", "end_frame", "debug");
+            }
         }
 
         this->delta_time = glfwGetTime() - frame_start_time;

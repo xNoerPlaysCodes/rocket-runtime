@@ -527,6 +527,7 @@ bin/tests/iosim: /usr/lib/Scrt1.o \
   /usr/lib/libGLX.so.0 \
   /usr/lib/libGLdispatch.so.0 \
   /usr/lib/libOpenGL.so.0 \
+  /usr/lib/libSDL2-2.0.so.0 \
   /usr/lib/libX11.so.6 \
   /usr/lib/libXau.so.6 \
   /usr/lib/libXdmcp.so.6 \
@@ -543,6 +544,7 @@ bin/tests/iosim: /usr/lib/Scrt1.o \
   /usr/lib32/libGLX.so.0 \
   /usr/lib32/libGLdispatch.so.0 \
   /usr/lib32/libOpenGL.so.0 \
+  /usr/lib32/libSDL2-2.0.so.0 \
   /usr/lib32/libX11.so.6 \
   /usr/lib32/libXau.so.6 \
   /usr/lib32/libXdmcp.so.6 \
@@ -562,6 +564,8 @@ CMakeFiles/iosim.dir/tests/iosim.cpp.o:
 /usr/lib32/libXau.so.6:
 
 /usr/lib32/libX11.so.6:
+
+/usr/lib32/libSDL2-2.0.so.0:
 
 /usr/include/c++/15.2.1/ctime:
 
@@ -927,6 +931,12 @@ include/rocket/runtime.hpp:
 
 /usr/include/c++/15.2.1/bits/stl_uninitialized.h:
 
+/usr/lib32/libOpenGL.so.0:
+
+/usr/include/glm/matrix.hpp:
+
+/usr/include/pthread.h:
+
 /usr/include/bits/types/time_t.h:
 
 /usr/include/GLFW/glfw3.h:
@@ -1060,6 +1070,8 @@ include/rocket/runtime.hpp:
 /usr/include/c++/15.2.1/mutex:
 
 /usr/include/bits/types/__mbstate_t.h:
+
+/usr/lib/libSDL2-2.0.so.0:
 
 /usr/include/bits/stdio_lim.h:
 
@@ -1638,9 +1650,3 @@ include/rocket/constants.hpp:
 /usr/lib/libXdmcp.so.6:
 
 /usr/lib32/libGL.so.1:
-
-/usr/include/glm/matrix.hpp:
-
-/usr/include/pthread.h:
-
-/usr/lib32/libOpenGL.so.0:

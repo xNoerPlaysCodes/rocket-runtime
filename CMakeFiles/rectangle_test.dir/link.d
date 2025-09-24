@@ -38,6 +38,8 @@ bin/tests/rectangle_test: \
   /usr/lib/libGLEW.so.2.2 \
   /usr/lib/libopenal.so.1 \
   /usr/lib/libminiz.so.3 \
+  /usr/lib32/libSDL2-2.0.so.0 \
+  /usr/lib/libSDL2-2.0.so.0 \
   /usr/lib/ld-linux-x86-64.so.2 \
   /usr/lib32/libGLdispatch.so.0 \
   /usr/lib/libGLdispatch.so.0 \
@@ -133,6 +135,10 @@ bin/libRocketRuntime.so:
 /usr/lib/libopenal.so.1:
 
 /usr/lib/libminiz.so.3:
+
+/usr/lib32/libSDL2-2.0.so.0:
+
+/usr/lib/libSDL2-2.0.so.0:
 
 /usr/lib/ld-linux-x86-64.so.2:
 
