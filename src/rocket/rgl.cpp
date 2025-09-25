@@ -10,6 +10,7 @@
 #include "rocket/rgl.hpp"
 #include "rocket/types.hpp"
 #include "../../include/rocket/runtime.hpp"
+#include "rocket/window.hpp"
 
 #ifdef RocketRuntime_DEBUG
     #define GL_CHECK(x) \
@@ -210,8 +211,12 @@ namespace rgl {
         glEnable(GL_BLEND);
         bool gl_blend = true;
 
-        glEnable(GL_MULTISAMPLE);
-        bool gl_multisample = true;
+        auto *win = reinterpret_cast<rocket::window_t*>(glfwGetWindowUserPointer(glfwGetCurrentContext()));
+        bool gl_multisample = false;
+        if (win->flags.msaa_samples > 0) {
+            glEnable(GL_MULTISAMPLE);
+            gl_multisample = true;
+        }
 
         GLenum sfactor = GL_SRC_ALPHA;
         GLenum dfactor = GL_ONE_MINUS_SRC_ALPHA;

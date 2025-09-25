@@ -532,8 +532,23 @@ namespace rocket {
         rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()) + "s", text_size, rgb_color::white(), font };
         rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(rgl::read_drawcalls()), text_size, rgb_color::white(), font };
         rocket::text_t tricount_text = { "TriCount: " + std::to_string(rgl::read_tricount()), text_size, rgb_color::white(), font };
+
+        if (rgl::read_drawcalls() > rGL_MAX_RECOMMENDED_DRAWCALLS) {
+            drawcalls_text.text += " (too many?)";
+        }
+
+        if (rgl::read_tricount() > rGL_MAX_RECOMMENDED_TRICOUNT) {
+            tricount_text.text += " (too many?)";
+        }
+
         std::string fbo_active = rgl::is_active_any_fbo() ? "Yes" : "No";
         rocket::text_t framebuffer_active_text = { "FBO Active: " + fbo_active, text_size, rgb_color::white(), font };
+        vec2d_t dmpos = io::mouse_pos();
+        vec2i_t mpos = {
+            static_cast<int>(dmpos.x),
+            static_cast<int>(dmpos.y)
+        };
+        rocket::text_t mouse_pos_text = { "Mouse Pos: " + std::to_string(mpos.x) + ", " + std::to_string(mpos.y), text_size, rgb_color::white(), font };
 
         ren->begin_scissor_mode(position, size);
 
@@ -544,6 +559,7 @@ namespace rocket {
         ren->draw_text(drawcalls_text, { zx, zy + (3 * text_size) });
         ren->draw_text(tricount_text, { zx, zy + (4 * text_size) });
         ren->draw_text(framebuffer_active_text, { zx, zy + (5 * text_size) });
+        ren->draw_text(mouse_pos_text, { zx, zy + (6 * text_size) });
 
         rocket::text_t rocket_version_text = { "RocketGE Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
         std::string glmajor, glminor;

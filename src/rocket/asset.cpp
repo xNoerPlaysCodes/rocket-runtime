@@ -70,11 +70,11 @@ namespace rocket {
             return;
         }
 
+        this->playing = true;
+
         if (on_finish == nullptr) {
             return;
         }
-
-        this->playing = true;
 
         // Wait until the audio actually starts playing
         ALint state;
@@ -228,13 +228,14 @@ namespace rocket {
         }
         return nullptr;
     }
-    
-    assetid_t asset_manager_t::load_audio(std::string path) {
+
+    void asset_manager_t::init_audio_ctx() {
+        static bool openal_initialized = false;
         if (!openal_initialized) {
             ALCdevice *device = alcOpenDevice(nullptr); // Default device
             if (!device) {
                 rocket::log_error("failed to open OpenAL device", 1, "OpenAL::alcOpenDevice", "fatal-to-function");
-                return -1;
+                return;
             }
 
             ALCcontext *context = alcCreateContext(device, nullptr);
@@ -242,11 +243,16 @@ namespace rocket {
                 rocket::log_error("failed to create OpenAL context", 1, "OpenAL::alcCreateContext", "fatal-to-function");
                 if (context) alcDestroyContext(context);
                 alcCloseDevice(device);
-                return - 1;
+                return;
             }
 
             openal_initialized = true;
+            rocket::log("Initialized audio context", "asset_manager_t", "init_audio_ctx", "info");
         }
+    }
+    
+    assetid_t asset_manager_t::load_audio(std::string path) {
+        init_audio_ctx();
 
         assetid_t id = current_id++;
         std::shared_ptr<audio_t> audio = std::make_shared<audio_t>();
@@ -308,23 +314,7 @@ namespace rocket {
     }
 
     assetid_t asset_manager_t::load_audio(std::vector<uint8_t> mem) {
-        if (!openal_initialized) {
-            ALCdevice *device = alcOpenDevice(nullptr); // Default device
-            if (!device) {
-                rocket::log_error("failed to open OpenAL device", 1, "OpenAL::alcOpenDevice", "fatal-to-function");
-                return -1;
-            }
-
-            ALCcontext *context = alcCreateContext(device, nullptr);
-            if (!context || !alcMakeContextCurrent(context)) {
-                rocket::log_error("failed to create OpenAL context", 1, "OpenAL::alcCreateContext", "fatal-to-function");
-                if (context) alcDestroyContext(context);
-                alcCloseDevice(device);
-                return - 1;
-            }
-
-            openal_initialized = true;
-        }
+        init_audio_ctx();
 
         assetid_t id = current_id++;
         std::shared_ptr<audio_t> audio = std::make_shared<audio_t>();

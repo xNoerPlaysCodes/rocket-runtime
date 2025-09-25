@@ -113,6 +113,10 @@ namespace rocket {
 
             ::util::dispatch_event(event, true);
         }
+
+        rocket::fbounding_box mouse_bbox() {
+            return { io::mouse_pos_f().x, io::mouse_pos_f().y, 1, 1 };
+        }
     }
 
     // IMMD IO

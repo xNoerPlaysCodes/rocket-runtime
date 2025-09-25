@@ -1,1 +1,0 @@
-/usr/bin/c++ -g -Wl,--dependency-file=CMakeFiles/custom_shader.dir/link.d CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o -o bin/examples/custom_shader   -L/home/noerlol/C-Projects/RocketGE/bin  -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin bin/libRocketRuntime.so

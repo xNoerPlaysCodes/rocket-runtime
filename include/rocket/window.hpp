@@ -9,6 +9,10 @@
 #include <functional>
 #include <string>
 
+namespace rgl {
+    std::vector<std::string> init_gl(const rocket::vec2f_t viewport_size);
+}
+
 namespace rocket {
     /// @brief Monitor Representation Struct
     struct monitor_t {
@@ -119,6 +123,7 @@ namespace rocket {
 
         friend class renderer_2d;
         friend class renderer_3d;
+        friend std::vector<std::string> rgl::init_gl(const rocket::vec2f_t viewport_size);
     public:
         /// @brief Sets the size of the window
         void set_size(const rocket::vec2i_t& size);

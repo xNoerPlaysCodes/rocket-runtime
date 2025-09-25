@@ -1,0 +1,32 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "Clang",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "/home/noerlol/C-Projects/RocketGE",
+	"dir-cur-src" : "/home/noerlol/C-Projects/RocketGE",
+	"dir-top-bld" : "/home/noerlol/C-Projects/RocketGE",
+	"dir-top-src" : "/home/noerlol/C-Projects/RocketGE",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"include",
+		"/usr/include/miniz",
+		"src/include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "/home/noerlol/C-Projects/RocketGE/CMakeFiles/software_renderer.dir",
+	"sources" : 
+	{
+		"CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/noerlol/C-Projects/RocketGE/examples/software_renderer.cpp"
+		}
+	}
+}

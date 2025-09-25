@@ -157,6 +157,12 @@ namespace astro {
             }
         }
 
+        if (info.border.radius == 0) {
+            r->draw_rectangle(rect, info.color);
+        } else {
+            r->draw_rectangle(rect, info.color, 0, info.border.radius);
+        }
+
         std::string draw_text = this->placeholder;
         rocket::rgb_color tc = {clr_dgray().x, clr_dgray().y, clr_dgray().z};
         if (this->text.length() > 0) {

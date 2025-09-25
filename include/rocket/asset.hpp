@@ -19,7 +19,10 @@
 #define rGE__TEXTURE_CHANNEL_COUNT_RGB      3
 
 #define rGE__FONT_DEFAULT                   nullptr
-#define rGE__FONT_DEFAULT_MONOSPACED        std::shared_ptr<rocket::font_t>(reinterpret_cast<rocket::font_t*>(0x01))
+#define rGE__FONT_DEFAULT_MONOSPACED        std::shared_ptr<rocket::font_t>(\
+        reinterpret_cast<rocket::font_t*>(0x01),\
+        [](rocket::font_t*){}\
+)
 
 namespace rocket {
     /// @brief Maps to OpenGL::Texture2D
@@ -137,15 +140,17 @@ namespace rocket {
 
     class text_t {
     private:
-        float size = 0.f;
-        rgb_color color;
-
         friend class renderer_2d;
     public:
         /// @brief The font to use
         std::shared_ptr<font_t> font;
         /// @brief Text
         std::string text;
+        /// @brief Font Size
+        /// @note Overriden by the font which is used's font size
+        float size = 0.f;
+        /// @brief Text Color
+        rgb_color color;
     public:
         /// @brief Set text size
         /// @note Overriden by the font size
@@ -200,6 +205,8 @@ namespace rocket {
         /// @brief Get a Texture2D from ID
         std::shared_ptr<texture_t> get_texture(assetid_t id);
 
+        /// @brief Initialize the Audio Context
+        void init_audio_ctx();
         /// @brief Load an Audio from path
         assetid_t load_audio(std::string path);
         /// @brief Load an Audio from Memory

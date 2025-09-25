@@ -333,6 +333,11 @@ namespace rocket {
             #else
                 "- AstroUI: [DISABLED]",
             #endif
+            #ifdef ROCKETGE__BUILD_NETWORKING
+                "- Networking: [ENABLED]",
+            #else
+                "- Networking: [DISABLED]",
+            #endif
         };
 
         for (auto &l : logs) {

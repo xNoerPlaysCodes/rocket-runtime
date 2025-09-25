@@ -1,1 +1,0 @@
-/usr/bin/c++ -g -Wl,--dependency-file=CMakeFiles/software_renderer.dir/link.d CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o -o bin/examples/software_renderer   -L/home/noerlol/C-Projects/RocketGE/bin  -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin bin/libRocketRuntime.so

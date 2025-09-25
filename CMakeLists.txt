@@ -24,6 +24,7 @@ option(BUILD_EXAMPLES "Build Examples" ON)
 
 option(BUILD_QUARK "Build Quark [physics]" ON)
 option(BUILD_ASTRO "Build Astro [ui]" ON)
+option(BUILD_NETWORKING "Build Networking [net]" ON)
 
 include_directories(include)
 include_directories(/usr/include/miniz)
@@ -41,6 +42,13 @@ if (BUILD_ASTRO)
         src/astro/astroui.cpp
     )
     add_compile_definitions(ROCKETGE__BUILD_ASTRO)
+endif()
+
+if (BUILD_NETWORKING)
+    set(NETWORKING_SOURCES
+        src/rocket/net/core.cpp
+    )
+    add_compile_definitions(ROCKETGE__BUILD_NETWORKING)
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
@@ -81,6 +89,9 @@ add_library(${PROJECT_NAME}
 
     # Quark
     ${QUARK_SOURCES}
+
+    # Networking
+    ${NETWORKING_SOURCES}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal miniz SDL2)
@@ -88,7 +99,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal miniz SDL2
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1)
 else()
-    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -O3 -flto)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -O3)
+    set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
 
 if (BUILD_TESTS)
@@ -96,7 +108,6 @@ if (BUILD_TESTS)
         rectangle_test
         initializer_test
         text_test
-        ui_init_test
         rounded_texture_rectangle_test
         line_test
         gamepad_test
@@ -104,6 +115,18 @@ if (BUILD_TESTS)
         iosim
         plugin_test
     )
+
+    if (BUILD_ASTRO)
+        set(TEST_NAMES ${TEST_NAMES}
+            ui_init_test
+        )
+    endif()
+
+    if (BUILD_NETWORKING)
+        set(TEST_NAMES ${TEST_NAMES}
+            netcore_test
+        )
+    endif()
 
     foreach(test_name IN LISTS TEST_NAMES)
         add_executable(${test_name} tests/${test_name}.cpp)
@@ -117,7 +140,8 @@ if (BUILD_TESTS)
 
         target_link_libraries(${test_name} PRIVATE RocketRuntime)
 
-        target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic -O3 -flto)
+        target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic)
+        set_target_properties(${test_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
     endforeach()
 endif()
 
@@ -140,7 +164,8 @@ if (BUILD_EXAMPLES)
 
         target_link_libraries(${example_name} PRIVATE RocketRuntime)
 
-        target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3 -flto)
+        target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3)
+        set_target_properties(${example_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
     endforeach()
 endif()
 
