@@ -685,7 +685,8 @@ namespace rocket {
                 return ss.str();
             };
 
-            if (diff > 0.) {
+            const double min_diff = 0.05;
+            if (diff > min_diff) {
                 rocket::log("frame took " + double_to_str(diff) + "ms more than expected", "renderer_2d", "end_frame", "debug");
             }
         }

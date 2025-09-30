@@ -8,6 +8,10 @@ std::string bool_str(bool b) {
 }
 
 int main() {
+#ifdef ROCKETGE__BUILD_NETWORKING
     rocket::net::init();
     std::cout << bool_str(rocket::net::check_connection_status()) << '\n';
+#else
+    std::cout << "RocketGE was built without networking support" << '\n';
+#endif
 }

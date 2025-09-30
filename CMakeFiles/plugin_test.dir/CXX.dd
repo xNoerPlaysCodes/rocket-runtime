@@ -1,0 +1,3 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o: dyndep
+

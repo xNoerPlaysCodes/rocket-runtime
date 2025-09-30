@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/icon_test.dir/tests/icon_test.cpp.o"
+    }
+  ],
+  "version": 1
+}

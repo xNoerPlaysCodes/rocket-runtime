@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o"
+    }
+  ],
+  "version": 1
+}

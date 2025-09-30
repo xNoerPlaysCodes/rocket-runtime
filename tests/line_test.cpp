@@ -7,6 +7,9 @@ int main() {
     rocket::window_t window({ 1280, 720 }, "RocketGE - Line Test");
     rocket::renderer_2d r(&window);
 
+    rocket::log_error("Test Failed: draw_line() is not implemented", -1, "main.cpp::main", "fatal");
+    rocket::exit(-1);
+
     while (window.is_running()) {
         r.begin_frame();
         r.clear();

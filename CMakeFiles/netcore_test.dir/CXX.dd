@@ -1,0 +1,3 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o: dyndep
+

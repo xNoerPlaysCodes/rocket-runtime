@@ -16,7 +16,9 @@
 	[
 		"include",
 		"/usr/include/miniz",
-		"src/include"
+		"src/include",
+		"/usr/include/AL",
+		"/usr/include/SDL2"
 	],
 	"language" : "CXX",
 	"linked-target-dirs" : [],

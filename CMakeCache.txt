@@ -14,14 +14,26 @@
 # EXTERNAL cache entries
 ########################
 
+//Amalgamate sources into miniz.h/c
+AMALGAMATE_SOURCES:BOOL=OFF
+
 //Build Astro [ui]
 BUILD_ASTRO:BOOL=ON
 
 //Build Examples
 BUILD_EXAMPLES:BOOL=ON
 
+//Build fuzz targets
+BUILD_FUZZERS:BOOL=OFF
+
+//Build a header-only version
+BUILD_HEADER_ONLY:BOOL=OFF
+
 //Build Networking [net]
 BUILD_NETWORKING:BOOL=ON
+
+//OFF
+BUILD_NO_STDIO" Build a without stdio version":BOOL=OFF
 
 //Build Quark [physics]
 BUILD_QUARK:BOOL=ON
@@ -68,6 +80,33 @@ CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
 
 //Flags used by the CXX compiler during RELWITHDEBINFO builds.
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
+
+//C compiler
+CMAKE_C_COMPILER:FILEPATH=/usr/bin/clang
+
+//LLVM archiver
+CMAKE_C_COMPILER_AR:FILEPATH=CMAKE_C_COMPILER_AR-NOTFOUND
+
+//`clang-scan-deps` dependency scanner
+CMAKE_C_COMPILER_CLANG_SCAN_DEPS:FILEPATH=/usr/bin/clang-scan-deps
+
+//Generate index for LLVM archive
+CMAKE_C_COMPILER_RANLIB:FILEPATH=CMAKE_C_COMPILER_RANLIB-NOTFOUND
+
+//Flags used by the C compiler during all build types.
+CMAKE_C_FLAGS:STRING=
+
+//Flags used by the C compiler during DEBUG builds.
+CMAKE_C_FLAGS_DEBUG:STRING=-g
+
+//Flags used by the C compiler during MINSIZEREL builds.
+CMAKE_C_FLAGS_MINSIZEREL:STRING=-Os -DNDEBUG
+
+//Flags used by the C compiler during RELEASE builds.
+CMAKE_C_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
+
+//Flags used by the C compiler during RELWITHDEBINFO builds.
+CMAKE_C_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //Path to a program.
 CMAKE_DLLTOOL:FILEPATH=CMAKE_DLLTOOL-NOTFOUND
@@ -229,6 +268,95 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Directory under which to collect all populated content
+FETCHCONTENT_BASE_DIR:PATH=/home/noerlol/C-Projects/RocketGE/_deps
+
+//Disables all attempts to download or update content and assumes
+// source dirs already exist
+FETCHCONTENT_FULLY_DISCONNECTED:BOOL=OFF
+
+//Enables QUIET option for all content population
+FETCHCONTENT_QUIET:BOOL=ON
+
+//When not empty, overrides where to find pre-populated content
+// for miniz
+FETCHCONTENT_SOURCE_DIR_MINIZ:PATH=
+
+//Enables UPDATE_DISCONNECTED behavior for all content population
+FETCHCONTENT_UPDATES_DISCONNECTED:BOOL=OFF
+
+//Enables UPDATE_DISCONNECTED behavior just for population of miniz
+FETCHCONTENT_UPDATES_DISCONNECTED_MINIZ:BOOL=OFF
+
+//Git command line client
+GIT_EXECUTABLE:FILEPATH=/usr/bin/git
+
+//The directory containing a CMake configuration file for GLEW.
+GLEW_DIR:PATH=GLEW_DIR-NOTFOUND
+
+//Path to a file.
+GLEW_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+GLEW_SHARED_LIBRARY_DEBUG:FILEPATH=GLEW_SHARED_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+GLEW_SHARED_LIBRARY_RELEASE:FILEPATH=/usr/lib/libGLEW.so
+
+//Path to a library.
+GLEW_STATIC_LIBRARY_DEBUG:FILEPATH=GLEW_STATIC_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+GLEW_STATIC_LIBRARY_RELEASE:FILEPATH=GLEW_STATIC_LIBRARY_RELEASE-NOTFOUND
+
+//Install project
+INSTALL_PROJECT:BOOL=OFF
+
+//Path to a file.
+OPENAL_INCLUDE_DIR:PATH=/usr/include/AL
+
+//Path to a library.
+OPENAL_LIBRARY:FILEPATH=/usr/lib/libopenal.so
+
+//Path to a file.
+OPENGL_EGL_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
+OPENGL_GLES2_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
+OPENGL_GLES3_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
+OPENGL_GLU_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
+OPENGL_GLX_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a file.
+OPENGL_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+OPENGL_egl_LIBRARY:FILEPATH=/usr/lib/libEGL.so
+
+//Path to a library.
+OPENGL_gles2_LIBRARY:FILEPATH=/usr/lib/libGLESv2.so
+
+//Path to a library.
+OPENGL_gles3_LIBRARY:FILEPATH=/usr/lib/libGLESv2.so
+
+//Path to a library.
+OPENGL_glu_LIBRARY:FILEPATH=/usr/lib/libGLU.so
+
+//Path to a library.
+OPENGL_glx_LIBRARY:FILEPATH=/usr/lib/libGLX.so
+
+//Path to a library.
+OPENGL_opengl_LIBRARY:FILEPATH=/usr/lib/libOpenGL.so
+
+//Path to a file.
+OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
+
 //Value Computed by CMake
 RocketRuntime_BINARY_DIR:STATIC=/home/noerlol/C-Projects/RocketGE
 
@@ -237,6 +365,24 @@ RocketRuntime_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 RocketRuntime_SOURCE_DIR:STATIC=/home/noerlol/C-Projects/RocketGE
+
+//The directory containing a CMake configuration file for SDL2.
+SDL2_DIR:PATH=/usr/lib/cmake/SDL2
+
+//The directory containing a CMake configuration file for glfw3.
+glfw3_DIR:PATH=/usr/lib/cmake/glfw3
+
+//Value Computed by CMake
+miniz_BINARY_DIR:STATIC=/home/noerlol/C-Projects/RocketGE/_deps/miniz-build
+
+//The directory containing a CMake configuration file for miniz.
+miniz_DIR:PATH=/usr/lib/cmake/miniz
+
+//Value Computed by CMake
+miniz_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+miniz_SOURCE_DIR:STATIC=/home/noerlol/C-Projects/RocketGE/_deps/miniz-src
 
 
 ########################
@@ -279,6 +425,24 @@ CMAKE_CXX_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
 CMAKE_CXX_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS_RELWITHDEBINFO
 CMAKE_CXX_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER
+CMAKE_C_COMPILER-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER_AR
+CMAKE_C_COMPILER_AR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER_CLANG_SCAN_DEPS
+CMAKE_C_COMPILER_CLANG_SCAN_DEPS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER_RANLIB
+CMAKE_C_COMPILER_RANLIB-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_FLAGS
+CMAKE_C_FLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_FLAGS_DEBUG
+CMAKE_C_FLAGS_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_FLAGS_MINSIZEREL
+CMAKE_C_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_FLAGS_RELEASE
+CMAKE_C_FLAGS_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_FLAGS_RELWITHDEBINFO
+CMAKE_C_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_DLLTOOL
 CMAKE_DLLTOOL-ADVANCED:INTERNAL=1
 //Path to cache edit program executable.
@@ -307,6 +471,8 @@ CMAKE_GENERATOR_INSTANCE:INTERNAL=
 CMAKE_GENERATOR_PLATFORM:INTERNAL=
 //Name of generator toolset.
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
+//Test CMAKE_HAVE_LIBC_PTHREAD
+CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/home/noerlol/C-Projects/RocketGE
@@ -378,4 +544,62 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Compiler support for a deprecated attribute
+COMPILER_HAS_DEPRECATED:INTERNAL=1
+//Test COMPILER_HAS_DEPRECATED_ATTR
+COMPILER_HAS_DEPRECATED_ATTR:INTERNAL=1
+//Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY
+COMPILER_HAS_HIDDEN_INLINE_VISIBILITY:INTERNAL=1
+//Test COMPILER_HAS_HIDDEN_VISIBILITY
+COMPILER_HAS_HIDDEN_VISIBILITY:INTERNAL=1
+//Details about finding GLEW
+FIND_PACKAGE_MESSAGE_DETAILS_GLEW:INTERNAL=[/usr/include][/usr/lib/libGLEW.so][v2.2.0()]
+//Details about finding OpenAL
+FIND_PACKAGE_MESSAGE_DETAILS_OpenAL:INTERNAL=[/usr/lib/libopenal.so][/usr/include/AL][v()]
+//Details about finding OpenGL
+FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/libOpenGL.so][/usr/lib/libGLX.so][/usr/include][ ][v()]
+//Details about finding Threads
+FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//ADVANCED property for variable: GIT_EXECUTABLE
+GIT_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_INCLUDE_DIR
+GLEW_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_SHARED_LIBRARY_DEBUG
+GLEW_SHARED_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_SHARED_LIBRARY_RELEASE
+GLEW_SHARED_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_STATIC_LIBRARY_DEBUG
+GLEW_STATIC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: GLEW_STATIC_LIBRARY_RELEASE
+GLEW_STATIC_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENAL_INCLUDE_DIR
+OPENAL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENAL_LIBRARY
+OPENAL_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_EGL_INCLUDE_DIR
+OPENGL_EGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_GLES2_INCLUDE_DIR
+OPENGL_GLES2_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_GLES3_INCLUDE_DIR
+OPENGL_GLES3_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_GLU_INCLUDE_DIR
+OPENGL_GLU_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_GLX_INCLUDE_DIR
+OPENGL_GLX_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_INCLUDE_DIR
+OPENGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_egl_LIBRARY
+OPENGL_egl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_gles2_LIBRARY
+OPENGL_gles2_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_gles3_LIBRARY
+OPENGL_gles3_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_glu_LIBRARY
+OPENGL_glu_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_glx_LIBRARY
+OPENGL_glx_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_opengl_LIBRARY
+OPENGL_opengl_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENGL_xmesa_INCLUDE_DIR
+OPENGL_xmesa_INCLUDE_DIR-ADVANCED:INTERNAL=1
 

@@ -243,72 +243,68 @@ namespace rgl {
                 nullptr,       // ids array
                 GL_FALSE       // GL_TRUE to enable, GL_FALSE to disable
             );
-            glDebugMessageCallback(
-                [](GLenum source, GLenum type, GLuint id, GLenum severity,
-   GLsizei length, const GLchar* message, const void* userParam) 
-{
-    std::string srcStr;
-    switch (source) {
-        case GL_DEBUG_SOURCE_API:             srcStr = "API"; break;
-        case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   srcStr = "Window System"; break;
-        case GL_DEBUG_SOURCE_SHADER_COMPILER: srcStr = "Shader Compiler"; break;
-        case GL_DEBUG_SOURCE_THIRD_PARTY:     srcStr = "Third Party"; break;
-        case GL_DEBUG_SOURCE_APPLICATION:     srcStr = "Application"; break;
-        case GL_DEBUG_SOURCE_OTHER:           srcStr = "Other"; break;
-    }
+            glDebugMessageCallback([](GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
+                std::string srcStr;
+                switch (source) {
+                    case GL_DEBUG_SOURCE_API:             srcStr = "API"; break;
+                    case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   srcStr = "Window System"; break;
+                    case GL_DEBUG_SOURCE_SHADER_COMPILER: srcStr = "Shader Compiler"; break;
+                    case GL_DEBUG_SOURCE_THIRD_PARTY:     srcStr = "Third Party"; break;
+                    case GL_DEBUG_SOURCE_APPLICATION:     srcStr = "Application"; break;
+                    case GL_DEBUG_SOURCE_OTHER:           srcStr = "Other"; break;
+                }
 
-    std::string typeStr;
-    switch (type) {
-        case GL_DEBUG_TYPE_ERROR:               typeStr = "Error"; break;
-        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: typeStr = "Deprecated Behavior"; break;
-        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  typeStr = "Undefined Behavior"; break;
-        case GL_DEBUG_TYPE_PORTABILITY:         typeStr = "Portability"; break;
-        case GL_DEBUG_TYPE_PERFORMANCE:         typeStr = "Performance"; break;
-        case GL_DEBUG_TYPE_MARKER:              typeStr = "Marker"; break;
-        case GL_DEBUG_TYPE_PUSH_GROUP:          typeStr = "Push Group"; break;
-        case GL_DEBUG_TYPE_POP_GROUP:           typeStr = "Pop Group"; break;
-        case GL_DEBUG_TYPE_OTHER:               typeStr = "Other"; break;
-    }
+                std::string typeStr;
+                switch (type) {
+                    case GL_DEBUG_TYPE_ERROR:               typeStr = "Error"; break;
+                    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: typeStr = "Deprecated Behavior"; break;
+                    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  typeStr = "Undefined Behavior"; break;
+                    case GL_DEBUG_TYPE_PORTABILITY:         typeStr = "Portability"; break;
+                    case GL_DEBUG_TYPE_PERFORMANCE:         typeStr = "Performance"; break;
+                    case GL_DEBUG_TYPE_MARKER:              typeStr = "Marker"; break;
+                    case GL_DEBUG_TYPE_PUSH_GROUP:          typeStr = "Push Group"; break;
+                    case GL_DEBUG_TYPE_POP_GROUP:           typeStr = "Pop Group"; break;
+                    case GL_DEBUG_TYPE_OTHER:               typeStr = "Other"; break;
+                }
 
-    std::string sevStr;
-    switch (severity) {
-        case GL_DEBUG_SEVERITY_HIGH:         sevStr = "High"; break;
-        case GL_DEBUG_SEVERITY_MEDIUM:       sevStr = "Medium"; break;
-        case GL_DEBUG_SEVERITY_LOW:          sevStr = "Low"; break;
-        case GL_DEBUG_SEVERITY_NOTIFICATION: sevStr = "Notification"; break;
-    }
+                std::string sevStr;
+                switch (severity) {
+                    case GL_DEBUG_SEVERITY_HIGH:         sevStr = "High"; break;
+                    case GL_DEBUG_SEVERITY_MEDIUM:       sevStr = "Medium"; break;
+                    case GL_DEBUG_SEVERITY_LOW:          sevStr = "Low"; break;
+                    case GL_DEBUG_SEVERITY_NOTIFICATION: sevStr = "Notification"; break;
+                }
 
-    glstate_t state = rgl::save_state();
+                glstate_t state = rgl::save_state();
 
-    std::vector<std::string> log_messages = {
-        "Error Caught at:",
-        "   Type: " + typeStr,
-        "   Severity: " + sevStr,
-        "   ID: " + std::to_string(id),
-        "   Message: " + std::string(message),
-        "   Source: " + srcStr,
-        "",
-        "OpenGL State:",
-        "   Blend: " + bool_to_str(state.blend_mode.enabled) + " ...",
-        "     Src RGB: " + glutil::glenum_str(state.blend_mode.src_rgb),
-        "     Dest RGB: " + glutil::glenum_str(state.blend_mode.dst_rgb),
-        "     Src Alpha: " + glutil::glenum_str(state.blend_mode.src_alpha),
-        "     Dest Alpha: " + glutil::glenum_str(state.blend_mode.dst_alpha),
-        "   Bound Framebuffer:",
-        "     fboID: " + std::to_string(state.bound_framebuffer.fbo),
-        "     fboColorTex: " + std::to_string(state.bound_framebuffer.color_tex),
-        "   Bound VertexObject:",
-        "     vaoID: " + std::to_string(state.bound_vo.first),
-        "     vboID: " + std::to_string(state.bound_vo.second),
-        "   Active Shader ID: " + std::to_string(state.active_shader),
-    };
+                std::vector<std::string> log_messages = {
+                    "Error Caught at:",
+                    "   Type: " + typeStr,
+                    "   Severity: " + sevStr,
+                    "   ID: " + std::to_string(id),
+                    "   Message: " + std::string(message),
+                    "   Source: " + srcStr,
+                    "",
+                    "OpenGL State:",
+                    "   Blend: " + bool_to_str(state.blend_mode.enabled) + " ...",
+                    "     Src RGB: " + glutil::glenum_str(state.blend_mode.src_rgb),
+                    "     Dest RGB: " + glutil::glenum_str(state.blend_mode.dst_rgb),
+                    "     Src Alpha: " + glutil::glenum_str(state.blend_mode.src_alpha),
+                    "     Dest Alpha: " + glutil::glenum_str(state.blend_mode.dst_alpha),
+                    "   Bound Framebuffer:",
+                    "     fboID: " + std::to_string(state.bound_framebuffer.fbo),
+                    "     fboColorTex: " + std::to_string(state.bound_framebuffer.color_tex),
+                    "   Bound VertexObject:",
+                    "     vaoID: " + std::to_string(state.bound_vo.first),
+                    "     vboID: " + std::to_string(state.bound_vo.second),
+                    "   Active Shader ID: " + std::to_string(state.active_shader),
+                };
 
-    for (auto &l : log_messages) {
-        rocket::log_error(l, -5, "OpenGL::ContextVerifier", "fatal-to-function");
-    }
-    rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
-}, nullptr);
-
+                for (auto &l : log_messages) {
+                    rocket::log_error(l, -5, "OpenGL::ContextVerifier", "fatal-to-function");
+                }
+                rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
+            }, nullptr);
         }
 #ifdef RocketRuntime_VerifyShaderLoading
         shader_program_t prg = get_paramaterized_quad({0.f, 0.f}, {1.f, 1.f}, rocket::rgba_color::red(), 0.f, 0.f);
@@ -967,6 +963,5 @@ namespace rgl {
         init_shader(shader_use_t::rect);
         init_shader(shader_use_t::text);
         init_shader(shader_use_t::textured_rect);
-        rGL_SHADER_INVALID;
     }
 }

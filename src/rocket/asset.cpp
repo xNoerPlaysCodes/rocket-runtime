@@ -512,6 +512,11 @@ namespace rocket {
         stbtt_BakeFontBitmap(ttf_buffer.data(), 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
 
         stbtt_fontinfo info;
+        if (!stbtt_InitFont(&info, ttf_buffer.data(), 0)) {
+            rocket::log_error("failed to init font", 1, "stbtt", "fatal-to-function");
+            current_id--;
+            return -1;
+        }
         int ascent, descent, line_gap;
         stbtt_GetFontVMetrics(&info, &ascent, &descent, &line_gap);
 

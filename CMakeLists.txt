@@ -94,7 +94,24 @@ add_library(${PROJECT_NAME}
     ${NETWORKING_SOURCES}
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE GL glfw GLU GLEW openal miniz SDL2)
+# Fetch Dependencies
+find_package(OpenGL REQUIRED)
+find_package(glfw3 REQUIRED)
+find_package(GLEW REQUIRED)
+find_package(OpenAL REQUIRED)
+find_package(miniz REQUIRED)
+find_package(SDL2 REQUIRED)
+
+# Usually miniz is not installed...
+# include(FetchContent)
+# FetchContent_Declare(
+#     miniz
+#     GIT_REPOSITORY https://github.com/richgel999/miniz.git
+#     GIT_TAG        master
+# )
+# FetchContent_MakeAvailable(miniz)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1)
