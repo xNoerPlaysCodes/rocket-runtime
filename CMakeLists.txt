@@ -99,17 +99,8 @@ find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(OpenAL REQUIRED)
-find_package(miniz REQUIRED)
+find_package(miniz REQUIRED) # miniz may not be installed
 find_package(SDL2 REQUIRED)
-
-# Usually miniz is not installed...
-# include(FetchContent)
-# FetchContent_Declare(
-#     miniz
-#     GIT_REPOSITORY https://github.com/richgel999/miniz.git
-#     GIT_TAG        master
-# )
-# FetchContent_MakeAvailable(miniz)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2)
 
@@ -122,14 +113,13 @@ endif()
 
 if (BUILD_TESTS)
     set(TEST_NAMES
-        rectangle_test
         initializer_test
         text_test
-        rounded_texture_rectangle_test
         line_test
         gamepad_test
         icon_test
         iosim
+        io_test
         plugin_test
     )
 

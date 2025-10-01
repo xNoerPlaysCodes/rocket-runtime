@@ -9,9 +9,19 @@
 namespace rocket {
     namespace io {
         enum class mouse_button : int {
+            first = 0,
+
             left = 0,
             right = 1,
             middle = 2,
+
+            button_4 = 3,
+            button_5 = 4,
+            button_6 = 5,
+            button_7 = 6,
+            button_8 = 7,
+
+            last = 7
         };
 
         enum class keyboard_key : int {

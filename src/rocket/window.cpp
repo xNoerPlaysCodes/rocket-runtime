@@ -19,7 +19,7 @@ namespace rocket {
     static bool glfw_initialized = false;
 
     io::keystate_t keys[GLFW_KEY_LAST + 1] = {};
-    io::keystate_t buttons[GLFW_MOUSE_BUTTON_MIDDLE + 1] = {};
+    io::keystate_t buttons[GLFW_MOUSE_BUTTON_LAST + 1] = {};
 
     GLFWmonitor* glfwaltGetMonitorWithCursor() {
         int count;
@@ -444,7 +444,7 @@ namespace rocket {
             util::dispatch_event(event);
         }
         
-        for (int i = static_cast<int>(io::mouse_button::left); i <= static_cast<int>(io::mouse_button::middle); ++i) {
+        for (int i = static_cast<int>(io::mouse_button::first); i <= static_cast<int>(io::mouse_button::last); ++i) {
             bool new_state = glfwGetMouseButton(glfw_window, i) == GLFW_PRESS;
             if (buttons[i].current != new_state) {
                 buttons[i].previous = buttons[i].current;

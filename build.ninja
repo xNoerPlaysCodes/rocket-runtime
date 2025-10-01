@@ -434,58 +434,6 @@ build bin/libRocketRuntime.so: CXX_SHARED_LIBRARY_LINKER__RocketRuntime_Debug CM
   TARGET_PDB = RocketRuntime.so.dbg
 
 # =============================================================================
-# Object build statements for EXECUTABLE target rectangle_test
-
-
-#############################################
-# Order-only phony target for rectangle_test
-
-build cmake_object_order_depends_target_rectangle_test: phony || cmake_object_order_depends_target_RocketRuntime
-
-build CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.ddi: CXX_SCAN__rectangle_test_Debug /home/noerlol/C-Projects/RocketGE/tests/rectangle_test.cpp || cmake_object_order_depends_target_rectangle_test
-  DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK
-  DEP_FILE = CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.ddi.d
-  DYNDEP_INTERMEDIATE_FILE = CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include
-  OBJ_FILE = CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o
-  PREPROCESSED_OUTPUT_FILE = CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.ddi.i
-
-build CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o: CXX_COMPILER__rectangle_test_scanned_Debug /home/noerlol/C-Projects/RocketGE/tests/rectangle_test.cpp | CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.modmap || cmake_object_order_depends_target_rectangle_test CMakeFiles/rectangle_test.dir/CXX.dd
-  CONFIG = Debug
-  DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK
-  DEP_FILE = CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.d
-  DYNDEP_MODULE_MAP_FILE = CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include
-  OBJECT_DIR = CMakeFiles/rectangle_test.dir
-  OBJECT_FILE_DIR = CMakeFiles/rectangle_test.dir/tests
-  dyndep = CMakeFiles/rectangle_test.dir/CXX.dd
-
-build CMakeFiles/rectangle_test.dir/CXX.dd | CMakeFiles/rectangle_test.dir/CXXModules.json CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.modmap: CXX_DYNDEP__rectangle_test_Debug CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.ddi | /home/noerlol/C-Projects/RocketGE/CMakeFiles/rectangle_test.dir/CXXDependInfo.json
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target rectangle_test
-
-
-#############################################
-# Link the executable bin/tests/rectangle_test
-
-build bin/tests/rectangle_test: CXX_EXECUTABLE_LINKER__rectangle_test_Debug CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o | bin/libRocketRuntime.so || bin/libRocketRuntime.so
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/rectangle_test.dir/link.d
-  FLAGS = -g -flto=thin
-  LINK_FLAGS = -Xlinker --dependency-file=CMakeFiles/rectangle_test.dir/link.d
-  LINK_LIBRARIES = -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin  bin/libRocketRuntime.so
-  LINK_PATH = -L/home/noerlol/C-Projects/RocketGE/bin
-  OBJECT_DIR = CMakeFiles/rectangle_test.dir
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_FILE = bin/tests/rectangle_test
-  TARGET_PDB = rectangle_test.dbg
-
-# =============================================================================
 # Object build statements for EXECUTABLE target initializer_test
 
 
@@ -588,58 +536,6 @@ build bin/tests/text_test: CXX_EXECUTABLE_LINKER__text_test_Debug CMakeFiles/tex
   PRE_LINK = :
   TARGET_FILE = bin/tests/text_test
   TARGET_PDB = text_test.dbg
-
-# =============================================================================
-# Object build statements for EXECUTABLE target rounded_texture_rectangle_test
-
-
-#############################################
-# Order-only phony target for rounded_texture_rectangle_test
-
-build cmake_object_order_depends_target_rounded_texture_rectangle_test: phony || cmake_object_order_depends_target_RocketRuntime
-
-build CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o.ddi: CXX_SCAN__rounded_texture_rectangle_test_Debug /home/noerlol/C-Projects/RocketGE/tests/rounded_texture_rectangle_test.cpp || cmake_object_order_depends_target_rounded_texture_rectangle_test
-  DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK
-  DEP_FILE = CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o.ddi.d
-  DYNDEP_INTERMEDIATE_FILE = CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include
-  OBJ_FILE = CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o
-  PREPROCESSED_OUTPUT_FILE = CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o.ddi.i
-
-build CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o: CXX_COMPILER__rounded_texture_rectangle_test_scanned_Debug /home/noerlol/C-Projects/RocketGE/tests/rounded_texture_rectangle_test.cpp | CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o.modmap || cmake_object_order_depends_target_rounded_texture_rectangle_test CMakeFiles/rounded_texture_rectangle_test.dir/CXX.dd
-  CONFIG = Debug
-  DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK
-  DEP_FILE = CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o.d
-  DYNDEP_MODULE_MAP_FILE = CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include
-  OBJECT_DIR = CMakeFiles/rounded_texture_rectangle_test.dir
-  OBJECT_FILE_DIR = CMakeFiles/rounded_texture_rectangle_test.dir/tests
-  dyndep = CMakeFiles/rounded_texture_rectangle_test.dir/CXX.dd
-
-build CMakeFiles/rounded_texture_rectangle_test.dir/CXX.dd | CMakeFiles/rounded_texture_rectangle_test.dir/CXXModules.json CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o.modmap: CXX_DYNDEP__rounded_texture_rectangle_test_Debug CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o.ddi | /home/noerlol/C-Projects/RocketGE/CMakeFiles/rounded_texture_rectangle_test.dir/CXXDependInfo.json
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target rounded_texture_rectangle_test
-
-
-#############################################
-# Link the executable bin/tests/rounded_texture_rectangle_test
-
-build bin/tests/rounded_texture_rectangle_test: CXX_EXECUTABLE_LINKER__rounded_texture_rectangle_test_Debug CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o | bin/libRocketRuntime.so || bin/libRocketRuntime.so
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles/rounded_texture_rectangle_test.dir/link.d
-  FLAGS = -g -flto=thin
-  LINK_FLAGS = -Xlinker --dependency-file=CMakeFiles/rounded_texture_rectangle_test.dir/link.d
-  LINK_LIBRARIES = -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin  bin/libRocketRuntime.so
-  LINK_PATH = -L/home/noerlol/C-Projects/RocketGE/bin
-  OBJECT_DIR = CMakeFiles/rounded_texture_rectangle_test.dir
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_FILE = bin/tests/rounded_texture_rectangle_test
-  TARGET_PDB = rounded_texture_rectangle_test.dbg
 
 # =============================================================================
 # Object build statements for EXECUTABLE target line_test
@@ -848,6 +744,58 @@ build bin/tests/iosim: CXX_EXECUTABLE_LINKER__iosim_Debug CMakeFiles/iosim.dir/t
   PRE_LINK = :
   TARGET_FILE = bin/tests/iosim
   TARGET_PDB = iosim.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target io_test
+
+
+#############################################
+# Order-only phony target for io_test
+
+build cmake_object_order_depends_target_io_test: phony || cmake_object_order_depends_target_RocketRuntime
+
+build CMakeFiles/io_test.dir/tests/io_test.cpp.o.ddi: CXX_SCAN__io_test_Debug /home/noerlol/C-Projects/RocketGE/tests/io_test.cpp || cmake_object_order_depends_target_io_test
+  DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK
+  DEP_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o.ddi
+  FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
+  INCLUDES = -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include
+  OBJ_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o.ddi.i
+
+build CMakeFiles/io_test.dir/tests/io_test.cpp.o: CXX_COMPILER__io_test_scanned_Debug /home/noerlol/C-Projects/RocketGE/tests/io_test.cpp | CMakeFiles/io_test.dir/tests/io_test.cpp.o.modmap || cmake_object_order_depends_target_io_test CMakeFiles/io_test.dir/CXX.dd
+  CONFIG = Debug
+  DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK
+  DEP_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o.modmap
+  FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
+  INCLUDES = -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include
+  OBJECT_DIR = CMakeFiles/io_test.dir
+  OBJECT_FILE_DIR = CMakeFiles/io_test.dir/tests
+  dyndep = CMakeFiles/io_test.dir/CXX.dd
+
+build CMakeFiles/io_test.dir/CXX.dd | CMakeFiles/io_test.dir/CXXModules.json CMakeFiles/io_test.dir/tests/io_test.cpp.o.modmap: CXX_DYNDEP__io_test_Debug CMakeFiles/io_test.dir/tests/io_test.cpp.o.ddi | /home/noerlol/C-Projects/RocketGE/CMakeFiles/io_test.dir/CXXDependInfo.json
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target io_test
+
+
+#############################################
+# Link the executable bin/tests/io_test
+
+build bin/tests/io_test: CXX_EXECUTABLE_LINKER__io_test_Debug CMakeFiles/io_test.dir/tests/io_test.cpp.o | bin/libRocketRuntime.so || bin/libRocketRuntime.so
+  CONFIG = Debug
+  DEP_FILE = CMakeFiles/io_test.dir/link.d
+  FLAGS = -g -flto=thin
+  LINK_FLAGS = -Xlinker --dependency-file=CMakeFiles/io_test.dir/link.d
+  LINK_LIBRARIES = -Wl,-rpath,/home/noerlol/C-Projects/RocketGE/bin  bin/libRocketRuntime.so
+  LINK_PATH = -L/home/noerlol/C-Projects/RocketGE/bin
+  OBJECT_DIR = CMakeFiles/io_test.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = bin/tests/io_test
+  TARGET_PDB = io_test.dbg
 
 # =============================================================================
 # Object build statements for EXECUTABLE target plugin_test
@@ -1198,6 +1146,8 @@ build icon_test: phony bin/tests/icon_test
 
 build initializer_test: phony bin/tests/initializer_test
 
+build io_test: phony bin/tests/io_test
+
 build iosim: phony bin/tests/iosim
 
 build libRocketRuntime.so: phony bin/libRocketRuntime.so
@@ -1209,10 +1159,6 @@ build moving_circle: phony bin/examples/moving_circle
 build netcore_test: phony bin/tests/netcore_test
 
 build plugin_test: phony bin/tests/plugin_test
-
-build rectangle_test: phony bin/tests/rectangle_test
-
-build rounded_texture_rectangle_test: phony bin/tests/rounded_texture_rectangle_test
 
 build software_renderer: phony bin/examples/software_renderer
 
@@ -1228,7 +1174,7 @@ build ui_init_test: phony bin/tests/ui_init_test
 #############################################
 # Folder: /home/noerlol/C-Projects/RocketGE
 
-build all: phony bin/libRocketRuntime.so bin/tests/rectangle_test bin/tests/initializer_test bin/tests/text_test bin/tests/rounded_texture_rectangle_test bin/tests/line_test bin/tests/gamepad_test bin/tests/icon_test bin/tests/iosim bin/tests/plugin_test bin/tests/ui_init_test bin/tests/netcore_test bin/examples/moving_circle bin/examples/custom_shader bin/examples/software_renderer
+build all: phony bin/libRocketRuntime.so bin/tests/initializer_test bin/tests/text_test bin/tests/line_test bin/tests/gamepad_test bin/tests/icon_test bin/tests/iosim bin/tests/io_test bin/tests/plugin_test bin/tests/ui_init_test bin/tests/netcore_test bin/examples/moving_circle bin/examples/custom_shader bin/examples/software_renderer
 
 # =============================================================================
 # Built-in targets

@@ -109,12 +109,6 @@
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o.modmap -o CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/rectangle_test.cpp",
-  "file": "/home/noerlol/C-Projects/RocketGE/tests/rectangle_test.cpp",
-  "output": "/home/noerlol/C-Projects/RocketGE/CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/RocketGE",
   "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o.modmap -o CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/initializer_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/initializer_test.cpp",
   "output": "/home/noerlol/C-Projects/RocketGE/CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o"
@@ -124,12 +118,6 @@
   "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/text_test.dir/tests/text_test.cpp.o.modmap -o CMakeFiles/text_test.dir/tests/text_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/text_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/text_test.cpp",
   "output": "/home/noerlol/C-Projects/RocketGE/CMakeFiles/text_test.dir/tests/text_test.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o.modmap -o CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/rounded_texture_rectangle_test.cpp",
-  "file": "/home/noerlol/C-Projects/RocketGE/tests/rounded_texture_rectangle_test.cpp",
-  "output": "/home/noerlol/C-Projects/RocketGE/CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
@@ -154,6 +142,12 @@
   "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/iosim.dir/tests/iosim.cpp.o.modmap -o CMakeFiles/iosim.dir/tests/iosim.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/iosim.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/iosim.cpp",
   "output": "/home/noerlol/C-Projects/RocketGE/CMakeFiles/iosim.dir/tests/iosim.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/io_test.dir/tests/io_test.cpp.o.modmap -o CMakeFiles/io_test.dir/tests/io_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/io_test.cpp",
+  "file": "/home/noerlol/C-Projects/RocketGE/tests/io_test.cpp",
+  "output": "/home/noerlol/C-Projects/RocketGE/CMakeFiles/io_test.dir/tests/io_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
