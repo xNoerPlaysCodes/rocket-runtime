@@ -1,4 +1,4 @@
-#include <GL/glew.h>
+#include <epoxy/gl.h>
 #include <glm/ext/vector_float2.hpp>
 #include <iostream>
 
@@ -18,7 +18,7 @@
         { \
             GLenum err = glGetError(); \
             if (err != GL_NO_ERROR) { \
-                rocket::log_error("[GL_CHECK] Error Caught at function: " + std::string(#x), err, "OpenGL", "warn"); \
+                rocket::log("Error " + std::to_string(err) + " caught at function: " + std::string(#x), "DebugMacros", "GL_CHECK", "trace"); \
             } \
         }
 #else
@@ -192,13 +192,8 @@ namespace rgl {
     std::vector<std::string> init_gl(const rocket::vec2f_t viewport_size) {
         ::rgl::viewport_size = viewport_size;
 
-        // Init GLEW
-        glewExperimental = true;
-        GLenum err = glewInit();
-        if (err != GLEW_OK) {
-            const GLubyte* err_str = glewGetErrorString(err);
-            rocket::log_error(reinterpret_cast<const char*>(err_str), err, "glew", "warning");
-        }
+        // Init GLEW... now libepoxy :)
+        // Jk no init needed :)
 
         // Setup viewport
         glViewport(0, 0, viewport_size.x, viewport_size.y);
@@ -213,9 +208,11 @@ namespace rgl {
 
         auto *win = reinterpret_cast<rocket::window_t*>(glfwGetWindowUserPointer(glfwGetCurrentContext()));
         bool gl_multisample = false;
+        int gl_samples = 0;
         if (win->flags.msaa_samples > 0) {
             glEnable(GL_MULTISAMPLE);
             gl_multisample = true;
+            glGetIntegerv(GL_SAMPLES, &gl_samples);
         }
 
         GLenum sfactor = GL_SRC_ALPHA;
@@ -225,7 +222,7 @@ namespace rgl {
 
         // Enable SRGB framebuffer if supported
         glEnable(GL_FRAMEBUFFER_SRGB);
-        bool gl_srgb = true;
+        std::string gl_framebuffer_mode = "SRGB";
 
         // Query max texture size
         glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_tx_size);
@@ -333,55 +330,51 @@ namespace rgl {
             return val;
         };
 
-        float glversion = 0;
         int major = gl_get_integer(GL_MAJOR_VERSION);
         int minor = gl_get_integer(GL_MINOR_VERSION);
-        glversion = major + minor / 10.f;
+
+        std::string gl_version_string = std::to_string(major) + "." + std::to_string(minor);
+
+        if (major >= 4 && minor > 6) {
+            gl_version_string = "Unsupported";
+        }
 
         int max_available_tx_units = gl_get_integer(GL_MAX_TEXTURE_IMAGE_UNITS);
 
         int loaded_extensions = gl_get_integer(GL_NUM_EXTENSIONS);
 
+        std::string gpu_name = std::string(reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
+
         // Collect init logs
         std::vector<std::string> logs = {
             "GL Info:",
-            "- Driver Highest Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))),
-            "- Vendor: "  + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
-            "- GL Version in use: " + std::to_string(major) + "." + std::to_string(minor),
-            "- GLSL Version: " + std::string((const char *) glGetString(GL_SHADING_LANGUAGE_VERSION)),
+            "- Driver Max Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))),
+            "- Reported Version: " + gl_version_string,
+            "- Reported GLSL Version: " + std::string((const char *) glGetString(GL_SHADING_LANGUAGE_VERSION)),
             "- " + std::to_string(loaded_extensions) + " extensions loaded",
 
-            "- GL Activated Functions:",
-            "   - GL_BLEND: [" + (gl_blend ? std::string("TRUE") : std::string("FALSE")) + "]",
-            "   - GL_MULTISAMPLE: [" + (gl_multisample ? std::string("TRUE") : std::string("FALSE")) + "]",
-            "   - GL_BLEND_FUNC: [" + gl_blendfunc + "]",
-            "   - GL_FRAMEBUFFER_SRGB: [" + (gl_srgb ? std::string("TRUE") : std::string("FALSE")) + "]",
-
-            "- GL VertexObjects Created:",
-            "   - rectVO: [" + (rectVO.first != 0 && rectVO.second != 0
-                                    ? std::string("TRUE") : std::string("FALSE")) + "]",
-            "   - txVO: [" + (textureVO.first != 0 && textureVO.second != 0
-                                    ? std::string("TRUE") : std::string("FALSE")) + "]",
-            "   - textVO: [" + (textVO.first != 0 && textVO.second != 0
-                                    ? std::string("TRUE") : std::string("FALSE")) + "]",
+            "- Activated Functions:",
+            "   - Blending: " + bool_to_str(gl_blend),
+            "   - Multisampling: " + bool_to_str(gl_multisample) + (gl_samples > 0 ? (" (" + std::to_string(gl_samples) + " samples)") : ""),
+            "   - Blend Function: [" + gl_blendfunc + "]",
+            "   - Framebuffer Mode: [" + gl_framebuffer_mode + "]",
 
             "- rGL Features:",
-            "   - OpenGL::ContextVerifier: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
-            "   - Drawcall Tracking: " + bool_to_str(true),
-            "   - FBO Support: " +
+            "   - Context Verifier: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
+            "   - Basic Draw Metrics: " + bool_to_str(true),
+            "   - Advanced Draw Metrics: " + bool_to_str(false),
+            "   - Custom FBO Support: " +
 #ifdef rGL__FEATURE_SUPPORT_FBO
                 bool_to_str(true),
 #else
                 bool_to_str(false),
 #endif
-
-            "- GL GPU-Specific Values:",
-            "   - GL_MAX_TEXTURE_SIZE: " + std::to_string(max_tx_size) + " x " + std::to_string(max_tx_size),
-            "   - GL_MAX_TEXTURE_IMAGE_UNITS: " + std::to_string(max_available_tx_units),
-
+            "- GPU Info:",
+            "   - Name: " + gpu_name,
+            "   - Vendor: "  + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
             "Viewport Info:",
-            "- Viewport Size: " + float_str(viewport_size.x) + "x" + float_str(viewport_size.y),
-            "- Viewport Offset: " + float_str(viewport_offset.x) + "x" + float_str(viewport_offset.y)
+            "- Size: " + float_str(viewport_size.x) + "x" + float_str(viewport_size.y),
+            "- Offset (TL): " + float_str(viewport_offset.x) + "x" + float_str(viewport_offset.y)
         };
 
         return logs;

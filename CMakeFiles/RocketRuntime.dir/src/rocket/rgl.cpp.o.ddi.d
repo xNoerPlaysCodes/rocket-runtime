@@ -1,17 +1,18 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
   /home/noerlol/C-Projects/RocketGE/src/rocket/rgl.cpp \
-  /usr/include/GL/glew.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstddef \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/epoxy/gl.h /usr/include/epoxy/common.h \
+  /usr/lib/clang/20/include/stdbool.h /usr/include/epoxy/gl_generated.h \
+  /usr/lib/clang/20/include/inttypes.h /usr/include/inttypes.h \
   /usr/include/features.h /usr/include/features-time64.h \
   /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
   /usr/include/stdc-predef.h /usr/include/sys/cdefs.h \
   /usr/include/bits/long-double.h /usr/include/gnu/stubs.h \
-  /usr/include/gnu/stubs-64.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/pstl_config.h \
-  /usr/lib/clang/20/include/stddef.h \
+  /usr/include/gnu/stubs-64.h /usr/lib/clang/20/include/stdint.h \
+  /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+  /usr/include/bits/time64.h /usr/include/bits/wchar.h \
+  /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdint-least.h /usr/lib/clang/20/include/stddef.h \
   /usr/lib/clang/20/include/__stddef_header_macro.h \
   /usr/lib/clang/20/include/__stddef_ptrdiff_t.h \
   /usr/lib/clang/20/include/__stddef_size_t.h \
@@ -20,21 +21,20 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
   /usr/lib/clang/20/include/__stddef_nullptr_t.h \
   /usr/lib/clang/20/include/__stddef_max_align_t.h \
   /usr/lib/clang/20/include/__stddef_offsetof.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/version.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdint \
-  /usr/lib/clang/20/include/stdint.h /usr/include/stdint.h \
-  /usr/include/bits/libc-header-start.h /usr/include/bits/types.h \
-  /usr/include/bits/typesizes.h /usr/include/bits/time64.h \
-  /usr/include/bits/wchar.h /usr/include/bits/stdint-intn.h \
-  /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
-  /usr/include/GL/glu.h /usr/include/GL/gl.h \
   /usr/include/glm/ext/vector_float2.hpp \
   /usr/include/glm/ext/../detail/type_vec2.hpp \
   /usr/include/glm/ext/../detail/qualifier.hpp \
   /usr/include/glm/ext/../detail/setup.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cassert \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/pstl_config.h \
   /usr/include/assert.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstddef \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/version.h \
   /usr/include/glm/ext/../detail/../simd/platform.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdint \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/type_traits \
   /usr/include/glm/ext/../detail/type_vec2.inl \
   /usr/include/glm/ext/../detail/./compute_vector_relational.hpp \

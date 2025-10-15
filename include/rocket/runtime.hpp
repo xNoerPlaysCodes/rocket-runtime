@@ -19,10 +19,12 @@
 #define ROCKETGE__FEATURE_MAX_GL_VERSION_MINOR 6
 
 
-/// @brief Be careful with versions less than 3.0
-///     They don't really support GLSL Shaders and
-///     most functionality will be broken...
-#define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 1
+/// @brief The minimum OpenGL version required for
+///     operation
+/// @note Versions less than 3.0 do not operate
+///         stably and may result in crashes
+///         and/or unintended behavior
+#define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 2
 #define ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR 0
 
 /// @brief The max RLSL version supported

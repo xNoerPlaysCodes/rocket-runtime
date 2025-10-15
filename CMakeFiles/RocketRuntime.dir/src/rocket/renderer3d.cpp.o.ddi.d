@@ -239,8 +239,10 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o.ddi: \
   /usr/include/glm/ext/../ext/vector_relational.hpp \
   /usr/include/glm/ext/../ext/vector_relational.inl \
   /usr/include/glm/ext/../ext/../detail/type_float.hpp \
-  /usr/include/glm/ext/quaternion_geometric.inl /usr/include/GL/glew.h \
-  /usr/include/GL/glu.h /usr/include/GL/gl.h \
+  /usr/include/glm/ext/quaternion_geometric.inl /usr/include/epoxy/gl.h \
+  /usr/include/epoxy/common.h /usr/lib/clang/20/include/stdbool.h \
+  /usr/include/epoxy/gl_generated.h /usr/lib/clang/20/include/inttypes.h \
+  /usr/include/inttypes.h \
   /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
   /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/macros.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/array \

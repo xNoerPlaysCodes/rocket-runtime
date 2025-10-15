@@ -150,7 +150,7 @@ namespace util {
         lerror_cb = callback;
     }
 
-    void close_callback(GLFWwindow *glfw_window__ignored) {
+    void close_callback() {
         for (auto l : on_close_listeners) {
             l();
         }

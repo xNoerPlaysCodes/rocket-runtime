@@ -11,11 +11,27 @@
 #include <string>
 #include <vector>
 
+#define GL_VERSION_UNK 0
+#define GL_VERSION_20 20
+#define GL_VERSION_21 21
+#define GL_VERSION_30 30
+#define GL_VERSION_31 31
+#define GL_VERSION_32 32
+#define GL_VERSION_33 33
+#define GL_VERSION_40 40
+#define GL_VERSION_41 41
+#define GL_VERSION_42 42
+#define GL_VERSION_43 43
+#define GL_VERSION_44 44
+#define GL_VERSION_45 45
+#define GL_VERSION_46 46
+
 namespace util {
     struct global_state_cliargs_t {
         bool noplugins = false;
         bool logall = false;
         bool debugoverlay = false;
+        int glversion = GL_VERSION_UNK;
     };
 
     std::string format_error(std::string error, int error_id, std::string error_source, std::string level);
@@ -24,7 +40,7 @@ namespace util {
     void set_log_error_callback(rocket::log_error_callback_t);
     void set_log_callback(rocket::log_callback_t);
 
-    void close_callback(GLFWwindow *);
+    void close_callback();
     std::vector<std::function<void()>> &get_on_close_listeners();
 
     rocket::vec4<float> glify_a(rocket::rgba_color);

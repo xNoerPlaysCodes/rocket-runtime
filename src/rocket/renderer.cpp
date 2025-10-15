@@ -1,4 +1,4 @@
-#include <GL/glew.h>
+#include <epoxy/gl.h>
 #include "rocket/asset.hpp"
 #include "rocket/io.hpp"
 #include "rocket/plugin/plugin.hpp"
@@ -30,9 +30,6 @@
 namespace rocket {
     std::vector<shader_t> shader_cache;
 
-    rgl::vao_t textVAO;
-    rgl::vbo_t textVBO;
-
     rgl::fbo_t fxaa_fbo;
     rgl::shader_program_t fxaa_shader;
     
@@ -59,10 +56,6 @@ namespace rocket {
             }
             glfwMakeContextCurrent(window->glfw_window);
             std::vector<std::string> log_messages = rgl::init_gl({ static_cast<float>(window->size.x), static_cast<float>(window->size.y) });
-
-            std::pair<rgl::vao_t, rgl::vbo_t> text_vo = rgl::get_text_vos();
-            textVAO = text_vo.first;
-            textVBO = text_vo.second;
 
             for (auto &l : log_messages) {
                 rocket::log(l, "renderer_2d", "constructor", "info");
@@ -337,8 +330,9 @@ namespace rocket {
         
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, text.font->glid);
-        glBindVertexArray(textVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, textVBO);
+        static auto text_vo = rgl::get_text_vos();
+        glBindVertexArray(text_vo.first);
+        glBindBuffer(GL_ARRAY_BUFFER, text_vo.second);
 
         float screen_w = (float) window->get_size().x;
         float screen_h = (float) window->get_size().y;
@@ -561,15 +555,55 @@ namespace rocket {
         ren->draw_text(framebuffer_active_text, { zx, zy + (5 * text_size) });
         ren->draw_text(mouse_pos_text, { zx, zy + (6 * text_size) });
 
-        rocket::text_t rocket_version_text = { "RocketGE Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
-        std::string glmajor, glminor;
-        int mj, mn;
-        glGetIntegerv(GL_MAJOR_VERSION, &mj);
-        glGetIntegerv(GL_MINOR_VERSION, &mn);
+        rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
+        static std::string glmajor, glminor;
+        static int mj = -1, mn = -1;
+        if (mj == -1 || mn == -1) {
+            glGetIntegerv(GL_MAJOR_VERSION, &mj);
+            glGetIntegerv(GL_MINOR_VERSION, &mn);
 
-        glmajor = std::to_string(mj);
-        glminor = std::to_string(mn);
-        rocket::text_t opengl_version_text = { "OpenGL Version: " + glmajor + "." + glminor + " (core)", text_size, rgb_color::white(), font };
+            glmajor = std::to_string(mj);
+            glminor = std::to_string(mn);
+        }
+        int versions[][19] = {
+            {4,6},
+            {4,5},
+            {4,4},
+            {4,3},
+            {4,2},
+            {4,1},
+            {4,0},
+
+            {3,3},
+            {3,2},
+            {3,1},
+            {3,0},
+
+            {2,1},
+            {2,0},
+
+            {1,5},
+            {1,4},
+            {1,3},
+            {1,2},
+            {1,1},
+            {1,0}
+        };
+
+        static bool may_use_gl_major_minor_version = false;
+        static std::string gl_rpt_version_string;
+        if (gl_rpt_version_string.empty()) {
+            gl_rpt_version_string = reinterpret_cast<const char*>(glGetString(GL_VERSION));
+            gl_rpt_version_string = gl_rpt_version_string.substr(0, 3);
+        }
+        for (auto &v : versions) {
+            if (v[0] == mj && v[1] == mn) {
+                may_use_gl_major_minor_version = true;
+                break;
+            }
+        }
+        static std::string gl_version = may_use_gl_major_minor_version ? glmajor + "." + glminor + " (core)" : gl_rpt_version_string + " (compat)";
+        rocket::text_t opengl_version_text = { "OpenGL Version: " + gl_version, text_size, rgb_color::white(), font };
 
         auto last_text_position = zy + size.y - text_size - padding - margin;
         ren->draw_text(rocket_version_text, { zx, last_text_position });
@@ -643,13 +677,6 @@ namespace rocket {
         }
 
         frame_counter++;
-
-        auto err = glGetError();
-        if (err != GL_NO_ERROR) {
-            rocket::log_error(reinterpret_cast<const char *>(glewGetErrorString(err)), err, "OpenGL", "fatal");
-            this->window->close();
-            rocket::exit(1);
-        }
 
         this->active_render_modes.clear();
 

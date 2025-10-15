@@ -4,7 +4,7 @@
 #include <glm/ext/quaternion_geometric.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
-#include <GL/glew.h>
+#include <epoxy/gl.h>
 #include "../../include/rocket/renderer.hpp"
 #include "util.hpp"
 #include <GLFW/glfw3.h>
@@ -33,13 +33,6 @@ namespace rocket {
             // Must make sure OpenGL context is current before glewInit
             if (!window || !window->glfw_window) {
                 rocket::log_error("Invalid glfw_window pointer or not initialized", -1, "RocketRuntime", "fatal");
-                rocket::exit(1);
-            }
-
-            GLenum err = glewInit();
-            if (err != GLEW_OK) {
-                const GLubyte* err_str = glewGetErrorString(err);
-                rocket::log_error(reinterpret_cast<const char*>(err_str), err, "glew", "fatal");
                 rocket::exit(1);
             }
 
@@ -424,7 +417,7 @@ namespace rocket {
 
         auto err = glGetError();
         if (err != GL_NO_ERROR) {
-            rocket::log_error(reinterpret_cast<const char *>(glewGetErrorString(err)), err, "OpenGL", "fatal");
+            rocket::log_error("Unknown", err, "OpenGL", "fatal");
             this->window->close();
             rocket::exit(1);
         }

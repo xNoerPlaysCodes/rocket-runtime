@@ -5,16 +5,24 @@ import sys
 
 
 parser: argparse.ArgumentParser = argparse.ArgumentParser()
-parser.add_argument("--get-deps", action="store_true", help="Shows the dependencies needed to build")
-parser.add_argument("--build-rnative", action="store_true", help="Builds the dependencies for RNative")
+parser.add_argument("--get-deps", action="store_true", help="Shows the \
+        dependencies needed to build")
+parser.add_argument("--build-rnative", action="store_true", help="Builds the \
+        dependencies for RNative")
 
 
 def get_deps() -> None:
-    deps: list[str] = ["GLFW", "SDL", "OpenGL", "GLEW", "OpenAL", "miniz"]
-    info: list[str] = [">= 3.4", "== 2.0", "any", ">= 1.5", "(OpenAL-soft) any", ">= 3.0"]
+    deps: dict = {
+        "GLFW": "  >= 3.4",
+        "SDL": "   == 2.0",
+        "OpenGL": ">= 1.1",
+        "GLEW": "  >= 1.5",
+        "OpenAL": "(OpenAL-soft) any",
+        "miniz": " >= 3.0"
+    }
 
-    for dep, ver in zip(deps, info):
-        print(f"{dep}: {ver}")
+    for key, value in deps.items():
+        print(key + ": " + value)
 
 
 def build_rnative() -> int:
@@ -22,7 +30,9 @@ def build_rnative() -> int:
     if sys.platform.startswith("linux"):
         print("linux")
         print("generate source and header for: xdg-toplevel-icon-v1")
-        gen_header = ["wayland-scanner", "client-header", "/usr/share/wayland-protocols/staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml", "src/include/rnative/xdg-toplevel-icon-v1-client-protocol.h"]
+        gen_header = ["wayland-scanner", "client-header",
+                      "/usr/share/wayland-protocols/staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml",
+                      "src/include/rnative/xdg-toplevel-icon-v1-client-protocol.h"]  # How am i supposed to split a path???
         gen_source = ["wayland-scanner", "private-code", "/usr/share/wayland-protocols/staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml", "src/rnative/xdg-toplevel-icon-v1-client-protocol.c"]
 
         print("command: " + " ".join(gen_header))

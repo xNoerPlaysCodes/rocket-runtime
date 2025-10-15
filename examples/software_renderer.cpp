@@ -31,7 +31,7 @@ void render(framebuffer_t *fb, rocket::renderer_2d *r) {
             float value = std::sin(nx*50 + t) * std::cos(ny*50 + t);
             value = (value > 0) ? 1.f : 0.f;
             uint8_t col = static_cast<uint8_t>(value * 255);
-            access_framebuffer_pixel(fb, x, y, width) = { col, 255, col, 255 };
+            access_framebuffer_pixel(fb, x, y, width) = { 255, col, 255, 255 };
         }
     }
 }
@@ -60,16 +60,8 @@ int main() {
                 r.push_framebuffer(fb);
             }
             i++;
-            static int last_sec = -1;
-            int current_sec = static_cast<int>(window.get_time());
-
-            if (current_sec != last_sec) {
-                last_sec = current_sec;
-
-                std::cout << "FPS: " << r.get_current_fps() << '\n';
-                std::cout << "GPU Drawcalls: " << r.get_drawcalls() << '\n';
-            }
         }
+        r.draw_fps();
         r.end_frame();
         window.poll_events();
     }

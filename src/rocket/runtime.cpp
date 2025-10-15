@@ -103,6 +103,8 @@ namespace rocket {
                 args.logall = true;
             } else if (arg == "debugoverlay") {
                 args.debugoverlay = true;
+            } else if (arg == "glversion") {
+                args.glversion = GL_VERSION_UNK; // TODO Replace
             }
         }
 
