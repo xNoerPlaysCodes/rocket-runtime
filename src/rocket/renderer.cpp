@@ -49,9 +49,8 @@ namespace rocket {
         if (!util::glinitialized()) {
             util::glinit(true);
 
-            // Must make sure OpenGL context is current before glewInit
             if (!window || !window->glfw_window) {
-                rocket::log_error("Invalid window ptr or window->glfw_window not initialized", -1, "renderer_2d::constructor", "fatal-to-function");
+                rocket::log_error("Invalid window ptr", -1, "renderer_2d::constructor", "fatal-to-function");
                 return;
             }
             glfwMakeContextCurrent(window->glfw_window);
@@ -419,8 +418,8 @@ namespace std {
 }
 
 namespace rocket {
-    std::unordered_map<std::pair<float, float>, std::vector<rgba_color>> fb_pixels;
     std::vector<rgba_color> renderer_2d::get_framebuffer() {
+        static std::unordered_map<std::pair<float, float>, std::vector<rgba_color>> fb_pixels;
         std::pair<float, float> key = { rgl::get_viewport_size().x, rgl::get_viewport_size().y };
         auto it = fb_pixels.find(key);
         if (it != fb_pixels.end()) {
@@ -680,7 +679,7 @@ namespace rocket {
 
         this->active_render_modes.clear();
 
-        if (this->fps == -1) {
+        if (this->fps == RGE_FPS_UNCAPPED) {
             this->delta_time = glfwGetTime() - frame_start_time;
             return;
         }

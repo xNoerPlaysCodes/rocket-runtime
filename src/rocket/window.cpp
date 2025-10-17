@@ -446,7 +446,7 @@ namespace rocket {
             "Backend Windowing: GLFW",
             "Native Windowing: " + glfw_platform_str,
             "Engine Platform: " + platform.rge_name,
-            "Rocket Libraries:",
+            "Modules:",
             #ifdef ROCKETGE__BUILD_QUARK
                 "- Quark: [ENABLED]",
             #else

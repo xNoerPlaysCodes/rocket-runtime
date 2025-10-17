@@ -127,14 +127,12 @@ namespace rgl {
     shader_location_t get_shader_location(shader_program_t sp, const char *name);
     shader_location_t get_shader_location(shader_program_t sp, std::string name);
 
-#ifdef rGL__FEATURE_SUPPORT_FBO
     fbo_t create_fbo();
     void use_fbo(fbo_t fbo);
     void reset_to_default_fbo();
     void delete_fbo(fbo_t fbo);
     bool is_active_any_fbo();
     fbo_t get_active_fbo();
-#endif
 
     rocket::vec2f_t get_viewport_size();
 
@@ -145,6 +143,10 @@ namespace rgl {
 
     int reset_tricount();
     int read_tricount();
+
+    // TODO Implement!
+    struct draw_metrics_t {
+    };
 
     rgl::shader_program_t get_fxaa_simplified_shader();
 

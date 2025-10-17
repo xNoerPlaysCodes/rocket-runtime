@@ -41,7 +41,7 @@ int main() {
     rocket::window_t window({1280, 720}, "rgeExample - Software Renderer", {
         .resizable = false
     });
-    rocket::renderer_2d r(&window, 60);
+    rocket::renderer_2d r(&window, -1);
 
     uint64_t i = 0;
     /// I use hyprland and hyprland likes to

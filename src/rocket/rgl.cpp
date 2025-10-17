@@ -336,10 +336,15 @@ namespace rgl {
         std::string gl_version_string = std::to_string(major) + "." + std::to_string(minor);
 
         if (major >= 4 && minor > 6) {
-            gl_version_string = "Unsupported";
+            gl_version_string = "< 3.0";
         }
 
         int max_available_tx_units = gl_get_integer(GL_MAX_TEXTURE_IMAGE_UNITS);
+
+        bool gpu_is_modern = true;
+        if (max_available_tx_units < 32 || max_tx_size < 16384) {
+            gpu_is_modern = false;
+        }
 
         int loaded_extensions = gl_get_integer(GL_NUM_EXTENSIONS);
 
@@ -348,30 +353,24 @@ namespace rgl {
         // Collect init logs
         std::vector<std::string> logs = {
             "GL Info:",
-            "- Driver Max Version: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))),
-            "- Reported Version: " + gl_version_string,
-            "- Reported GLSL Version: " + std::string((const char *) glGetString(GL_SHADING_LANGUAGE_VERSION)),
+            "- Driver: " + std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION))),
+            "- Version: " + gl_version_string,
+            "- GLSL Version: " + std::string((const char *) glGetString(GL_SHADING_LANGUAGE_VERSION)),
             "- " + std::to_string(loaded_extensions) + " extensions loaded",
-
             "- Activated Functions:",
             "   - Blending: " + bool_to_str(gl_blend),
             "   - Multisampling: " + bool_to_str(gl_multisample) + (gl_samples > 0 ? (" (" + std::to_string(gl_samples) + " samples)") : ""),
             "   - Blend Function: [" + gl_blendfunc + "]",
             "   - Framebuffer Mode: [" + gl_framebuffer_mode + "]",
-
             "- rGL Features:",
             "   - Context Verifier: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
             "   - Basic Draw Metrics: " + bool_to_str(true),
             "   - Advanced Draw Metrics: " + bool_to_str(false),
-            "   - Custom FBO Support: " +
-#ifdef rGL__FEATURE_SUPPORT_FBO
-                bool_to_str(true),
-#else
-                bool_to_str(false),
-#endif
+            "   - Precompiled Shader Support: " + bool_to_str(false),
             "- GPU Info:",
             "   - Name: " + gpu_name,
             "   - Vendor: "  + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
+            "   - Is Modern: " + bool_to_str(gpu_is_modern),
             "Viewport Info:",
             "- Size: " + float_str(viewport_size.x) + "x" + float_str(viewport_size.y),
             "- Offset (TL): " + float_str(viewport_offset.x) + "x" + float_str(viewport_offset.y)
@@ -401,8 +400,8 @@ namespace rgl {
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fbo.color_tex, 0);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            rocket::log_error("Failed to create framebuffer", -1, "OpenGL::Framebuffer", "fatal");
-            rocket::exit(-1);
+            rocket::log_error("Failed to create custom framebuffer", -1, "OpenGL::Framebuffer", "fatal-to-function");
+            return rGL_FBO_INVALID;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         return fbo;
@@ -464,7 +463,7 @@ namespace rgl {
         GL_CHECK(glAttachShader(pg, fs));
         GL_CHECK(glLinkProgram(pg));
 
-        glGetProgramiv(pg, GL_LINK_STATUS, &success);
+        GL_CHECK(glGetProgramiv(pg, GL_LINK_STATUS, &success));
         if (!success) {
             GLint logLen;
             glGetProgramiv(pg, GL_INFO_LOG_LENGTH, &logLen);
@@ -787,7 +786,7 @@ namespace rgl {
 
     void update_viewport(const rocket::vec2f_t &size) {
         viewport_size = size;
-        glViewport(0, 0, size.x, size.y);
+        GL_CHECK(glViewport(0, 0, size.x, size.y));
     }
 
     void update_viewport(const rocket::vec2f_t &offset, const rocket::vec2f_t &size) {
@@ -796,7 +795,7 @@ namespace rgl {
 
         int flipped_y = size.y - (offset.y + size.y);
 
-        glViewport(offset.x, flipped_y, size.x, size.y);
+        GL_CHECK(glViewport(offset.x, flipped_y, size.x, size.y));
     }
 
     rocket::vec2f_t get_viewport_size() {
@@ -804,7 +803,7 @@ namespace rgl {
     }
 
     shader_location_t get_shader_location(shader_program_t sp, const char *name) {
-        return glGetUniformLocation(sp, name);
+        return GL_CHECK(glGetUniformLocation(sp, name));
     }
 
     shader_location_t get_shader_location(shader_program_t sp, const std::string &name) {

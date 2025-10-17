@@ -18,6 +18,8 @@
 #include <string>
 #include <vector>
 
+#define RGE_FPS_UNCAPPED -1
+
 namespace rocket {
     struct instanced_quad_t {
         vec2f_t pos = {0,0};
