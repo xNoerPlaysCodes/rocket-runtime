@@ -211,7 +211,7 @@ namespace rocket {
         };
 
         for (int i = 0; i < 19; i++) {
-            rocket::log("Trying " + std::to_string(versions[i][0]) + "." + std::to_string(versions[i][1]), "RocketGE", "ContextCreator", "trace");
+            rocket::log("Trying " + std::to_string(versions[i][0]) + "." + std::to_string(versions[i][1]), "RocketGE", "ContextCreator", "debug");
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versions[i][0]);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versions[i][1]);
             float ver = (float)versions[i][0] + (float)versions[i][1] / 10.f;

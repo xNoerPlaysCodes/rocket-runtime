@@ -1,3 +1,4 @@
+#include <chrono>
 #include <epoxy/gl.h>
 #include <glm/ext/vector_float2.hpp>
 #include <iostream>
@@ -18,7 +19,7 @@
         { \
             GLenum err = glGetError(); \
             if (err != GL_NO_ERROR) { \
-                rocket::log("Error " + std::to_string(err) + " caught at function: " + std::string(#x), "DebugMacros", "GL_CHECK", "trace"); \
+                rocket::log("Error " + std::to_string(err) + " caught at function use: " + std::string(#x), "DebugMacros", "GL_CHECK", "trace"); \
             } \
         }
 #else
@@ -189,6 +190,26 @@ namespace rgl {
         return std::string("[") + (b ? true_s : false_s) + "]";
     }
 
+    std::vector<std::string> dump_gl_state() {
+        glstate_t state = rgl::save_state();
+
+        return {
+            "OpenGL State:",
+            "   Blend: " + bool_to_str(state.blend_mode.enabled) + " ...",
+            "     Src RGB: " + glutil::glenum_str(state.blend_mode.src_rgb),
+            "     Dest RGB: " + glutil::glenum_str(state.blend_mode.dst_rgb),
+            "     Src Alpha: " + glutil::glenum_str(state.blend_mode.src_alpha),
+            "     Dest Alpha: " + glutil::glenum_str(state.blend_mode.dst_alpha),
+            "   Bound Framebuffer:",
+            "     fboID: " + std::to_string(state.bound_framebuffer.fbo),
+            "     fboColorTex: " + std::to_string(state.bound_framebuffer.color_tex),
+            "   Bound VertexObject:",
+            "     vaoID: " + std::to_string(state.bound_vo.first),
+            "     vboID: " + std::to_string(state.bound_vo.second),
+            "   Active Shader ID: " + std::to_string(state.active_shader),
+        };
+    }
+
     std::vector<std::string> init_gl(const rocket::vec2f_t viewport_size) {
         ::rgl::viewport_size = viewport_size;
 
@@ -272,8 +293,6 @@ namespace rgl {
                     case GL_DEBUG_SEVERITY_NOTIFICATION: sevStr = "Notification"; break;
                 }
 
-                glstate_t state = rgl::save_state();
-
                 std::vector<std::string> log_messages = {
                     "Error Caught at:",
                     "   Type: " + typeStr,
@@ -281,23 +300,15 @@ namespace rgl {
                     "   ID: " + std::to_string(id),
                     "   Message: " + std::string(message),
                     "   Source: " + srcStr,
-                    "",
-                    "OpenGL State:",
-                    "   Blend: " + bool_to_str(state.blend_mode.enabled) + " ...",
-                    "     Src RGB: " + glutil::glenum_str(state.blend_mode.src_rgb),
-                    "     Dest RGB: " + glutil::glenum_str(state.blend_mode.dst_rgb),
-                    "     Src Alpha: " + glutil::glenum_str(state.blend_mode.src_alpha),
-                    "     Dest Alpha: " + glutil::glenum_str(state.blend_mode.dst_alpha),
-                    "   Bound Framebuffer:",
-                    "     fboID: " + std::to_string(state.bound_framebuffer.fbo),
-                    "     fboColorTex: " + std::to_string(state.bound_framebuffer.color_tex),
-                    "   Bound VertexObject:",
-                    "     vaoID: " + std::to_string(state.bound_vo.first),
-                    "     vboID: " + std::to_string(state.bound_vo.second),
-                    "   Active Shader ID: " + std::to_string(state.active_shader),
+                    ""
                 };
 
+                std::vector<std::string> log_messages2 = dump_gl_state();
+
                 for (auto &l : log_messages) {
+                    rocket::log_error(l, -5, "OpenGL::ContextVerifier", "fatal-to-function");
+                }
+                for (auto &l : log_messages2) {
                     rocket::log_error(l, -5, "OpenGL::ContextVerifier", "fatal-to-function");
                 }
                 rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
@@ -430,6 +441,7 @@ namespace rgl {
     }
 
     rgl::shader_program_t load_shader_generic(const char *vsrc, const char *fsrc) {
+        auto start = std::chrono::high_resolution_clock::now();
         GLuint vs = GL_CHECK(glCreateShader(GL_VERTEX_SHADER));
         GL_CHECK(glShaderSource(vs, 1, &vsrc, nullptr));
         GL_CHECK(glCompileShader(vs));
@@ -470,6 +482,11 @@ namespace rgl {
             std::string log(logLen, '\0');
             glGetProgramInfoLog(pg, logLen, nullptr, log.data());
             rocket::log_error("Shader program link failed: " + log, -1, "OpenGL::ShaderCompiler", "fatal-to-function");
+        } else {
+            auto end = std::chrono::high_resolution_clock::now();
+            auto diff = end - start;
+            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(diff).count();
+            rocket::log("Shader program compiled in " + std::to_string(ms) + "ms", "rgl", "load_shader_generic", "info");
         }
 
         GL_CHECK(glDeleteShader(vs));
@@ -485,6 +502,7 @@ namespace rgl {
         if (it != shader_cache.end()) {
             return it->second;
         } else {
+            rocket::log("Shader cache miss, compiling...", "rgl", "cache_compile_shader", "debug");
             rgl::shader_program_t pg = load_shader_generic(vsrc, fsrc);
             shader_cache[vsrc] = pg;
             return pg;
@@ -790,6 +808,9 @@ namespace rgl {
     }
 
     void update_viewport(const rocket::vec2f_t &offset, const rocket::vec2f_t &size) {
+        if (viewport_size != size) {
+            rocket::log("Viewport size changed: [" + std::to_string((int) viewport_size.x) + "x" + std::to_string((int)viewport_size.y) + "] to [" + std::to_string((int) size.x) + "x" + std::to_string((int) size.y) + "]", "rgl", "update_viewport", "debug");
+        }
         viewport_size   = size;
         viewport_offset = offset;
 
@@ -836,6 +857,11 @@ namespace rgl {
 
     int read_tricount() {
         return tricount;
+    }
+
+    draw_metrics_t get_draw_metrics() {
+        rocket::log("[fixme] unimplemented", "rgl", "get_draw_metrics", "fixme");
+        return {};
     }
 
     rgl::shader_program_t get_fxaa_simplified_shader() {

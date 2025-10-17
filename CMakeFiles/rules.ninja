@@ -7,14 +7,14 @@
 
 # =============================================================================
 # Project: RocketRuntime
-# Configurations: Release
+# Configurations: Debug
 # =============================================================================
 # =============================================================================
 
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__RocketRuntime_Release
+rule CXX_SCAN__RocketRuntime_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -23,7 +23,7 @@ rule CXX_SCAN__RocketRuntime_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__RocketRuntime_Release
+rule CXX_DYNDEP__RocketRuntime_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/RocketRuntime.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -34,7 +34,7 @@ rule CXX_DYNDEP__RocketRuntime_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__RocketRuntime_scanned_Release
+rule CXX_COMPILER__RocketRuntime_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -44,7 +44,7 @@ rule CXX_COMPILER__RocketRuntime_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__RocketRuntime_unscanned_Release
+rule CXX_COMPILER__RocketRuntime_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -54,7 +54,7 @@ rule CXX_COMPILER__RocketRuntime_unscanned_Release
 #############################################
 # Rule for linking CXX shared library.
 
-rule CXX_SHARED_LIBRARY_LINKER__RocketRuntime_Release
+rule CXX_SHARED_LIBRARY_LINKER__RocketRuntime_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ -fPIC $LANGUAGE_COMPILE_FLAGS $ARCH_FLAGS $LINK_FLAGS $SONAME_FLAG$SONAME -o $TARGET_FILE $in $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -65,7 +65,7 @@ rule CXX_SHARED_LIBRARY_LINKER__RocketRuntime_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__initializer_test_Release
+rule CXX_SCAN__initializer_test_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -74,7 +74,7 @@ rule CXX_SCAN__initializer_test_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__initializer_test_Release
+rule CXX_DYNDEP__initializer_test_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/initializer_test.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -85,7 +85,7 @@ rule CXX_DYNDEP__initializer_test_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__initializer_test_scanned_Release
+rule CXX_COMPILER__initializer_test_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -95,7 +95,7 @@ rule CXX_COMPILER__initializer_test_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__initializer_test_unscanned_Release
+rule CXX_COMPILER__initializer_test_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -105,7 +105,7 @@ rule CXX_COMPILER__initializer_test_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__initializer_test_Release
+rule CXX_EXECUTABLE_LINKER__initializer_test_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -116,7 +116,7 @@ rule CXX_EXECUTABLE_LINKER__initializer_test_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__text_test_Release
+rule CXX_SCAN__text_test_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -125,7 +125,7 @@ rule CXX_SCAN__text_test_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__text_test_Release
+rule CXX_DYNDEP__text_test_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/text_test.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -136,7 +136,7 @@ rule CXX_DYNDEP__text_test_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__text_test_scanned_Release
+rule CXX_COMPILER__text_test_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -146,7 +146,7 @@ rule CXX_COMPILER__text_test_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__text_test_unscanned_Release
+rule CXX_COMPILER__text_test_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -156,7 +156,7 @@ rule CXX_COMPILER__text_test_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__text_test_Release
+rule CXX_EXECUTABLE_LINKER__text_test_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -167,7 +167,7 @@ rule CXX_EXECUTABLE_LINKER__text_test_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__line_test_Release
+rule CXX_SCAN__line_test_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -176,7 +176,7 @@ rule CXX_SCAN__line_test_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__line_test_Release
+rule CXX_DYNDEP__line_test_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/line_test.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -187,7 +187,7 @@ rule CXX_DYNDEP__line_test_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__line_test_scanned_Release
+rule CXX_COMPILER__line_test_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -197,7 +197,7 @@ rule CXX_COMPILER__line_test_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__line_test_unscanned_Release
+rule CXX_COMPILER__line_test_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -207,7 +207,7 @@ rule CXX_COMPILER__line_test_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__line_test_Release
+rule CXX_EXECUTABLE_LINKER__line_test_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -218,7 +218,7 @@ rule CXX_EXECUTABLE_LINKER__line_test_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__gamepad_test_Release
+rule CXX_SCAN__gamepad_test_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -227,7 +227,7 @@ rule CXX_SCAN__gamepad_test_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__gamepad_test_Release
+rule CXX_DYNDEP__gamepad_test_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/gamepad_test.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -238,7 +238,7 @@ rule CXX_DYNDEP__gamepad_test_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__gamepad_test_scanned_Release
+rule CXX_COMPILER__gamepad_test_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -248,7 +248,7 @@ rule CXX_COMPILER__gamepad_test_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__gamepad_test_unscanned_Release
+rule CXX_COMPILER__gamepad_test_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -258,7 +258,7 @@ rule CXX_COMPILER__gamepad_test_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__gamepad_test_Release
+rule CXX_EXECUTABLE_LINKER__gamepad_test_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -269,7 +269,7 @@ rule CXX_EXECUTABLE_LINKER__gamepad_test_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__icon_test_Release
+rule CXX_SCAN__icon_test_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -278,7 +278,7 @@ rule CXX_SCAN__icon_test_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__icon_test_Release
+rule CXX_DYNDEP__icon_test_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/icon_test.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -289,7 +289,7 @@ rule CXX_DYNDEP__icon_test_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__icon_test_scanned_Release
+rule CXX_COMPILER__icon_test_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -299,7 +299,7 @@ rule CXX_COMPILER__icon_test_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__icon_test_unscanned_Release
+rule CXX_COMPILER__icon_test_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -309,7 +309,7 @@ rule CXX_COMPILER__icon_test_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__icon_test_Release
+rule CXX_EXECUTABLE_LINKER__icon_test_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -320,7 +320,7 @@ rule CXX_EXECUTABLE_LINKER__icon_test_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__iosim_Release
+rule CXX_SCAN__iosim_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -329,7 +329,7 @@ rule CXX_SCAN__iosim_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__iosim_Release
+rule CXX_DYNDEP__iosim_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/iosim.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -340,7 +340,7 @@ rule CXX_DYNDEP__iosim_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__iosim_scanned_Release
+rule CXX_COMPILER__iosim_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -350,7 +350,7 @@ rule CXX_COMPILER__iosim_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__iosim_unscanned_Release
+rule CXX_COMPILER__iosim_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -360,7 +360,7 @@ rule CXX_COMPILER__iosim_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__iosim_Release
+rule CXX_EXECUTABLE_LINKER__iosim_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -371,7 +371,7 @@ rule CXX_EXECUTABLE_LINKER__iosim_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__io_test_Release
+rule CXX_SCAN__io_test_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -380,7 +380,7 @@ rule CXX_SCAN__io_test_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__io_test_Release
+rule CXX_DYNDEP__io_test_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/io_test.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -391,7 +391,7 @@ rule CXX_DYNDEP__io_test_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__io_test_scanned_Release
+rule CXX_COMPILER__io_test_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -401,7 +401,7 @@ rule CXX_COMPILER__io_test_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__io_test_unscanned_Release
+rule CXX_COMPILER__io_test_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -411,7 +411,7 @@ rule CXX_COMPILER__io_test_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__io_test_Release
+rule CXX_EXECUTABLE_LINKER__io_test_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -422,7 +422,7 @@ rule CXX_EXECUTABLE_LINKER__io_test_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__plugin_test_Release
+rule CXX_SCAN__plugin_test_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -431,7 +431,7 @@ rule CXX_SCAN__plugin_test_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__plugin_test_Release
+rule CXX_DYNDEP__plugin_test_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/plugin_test.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -442,7 +442,7 @@ rule CXX_DYNDEP__plugin_test_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__plugin_test_scanned_Release
+rule CXX_COMPILER__plugin_test_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -452,7 +452,7 @@ rule CXX_COMPILER__plugin_test_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__plugin_test_unscanned_Release
+rule CXX_COMPILER__plugin_test_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -462,7 +462,7 @@ rule CXX_COMPILER__plugin_test_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__plugin_test_Release
+rule CXX_EXECUTABLE_LINKER__plugin_test_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -473,7 +473,7 @@ rule CXX_EXECUTABLE_LINKER__plugin_test_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__ui_init_test_Release
+rule CXX_SCAN__ui_init_test_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -482,7 +482,7 @@ rule CXX_SCAN__ui_init_test_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__ui_init_test_Release
+rule CXX_DYNDEP__ui_init_test_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/ui_init_test.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -493,7 +493,7 @@ rule CXX_DYNDEP__ui_init_test_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__ui_init_test_scanned_Release
+rule CXX_COMPILER__ui_init_test_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -503,7 +503,7 @@ rule CXX_COMPILER__ui_init_test_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__ui_init_test_unscanned_Release
+rule CXX_COMPILER__ui_init_test_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -513,7 +513,7 @@ rule CXX_COMPILER__ui_init_test_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__ui_init_test_Release
+rule CXX_EXECUTABLE_LINKER__ui_init_test_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -524,7 +524,7 @@ rule CXX_EXECUTABLE_LINKER__ui_init_test_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__netcore_test_Release
+rule CXX_SCAN__netcore_test_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -533,7 +533,7 @@ rule CXX_SCAN__netcore_test_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__netcore_test_Release
+rule CXX_DYNDEP__netcore_test_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/netcore_test.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -544,7 +544,7 @@ rule CXX_DYNDEP__netcore_test_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__netcore_test_scanned_Release
+rule CXX_COMPILER__netcore_test_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -554,7 +554,7 @@ rule CXX_COMPILER__netcore_test_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__netcore_test_unscanned_Release
+rule CXX_COMPILER__netcore_test_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -564,7 +564,7 @@ rule CXX_COMPILER__netcore_test_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__netcore_test_Release
+rule CXX_EXECUTABLE_LINKER__netcore_test_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -575,7 +575,7 @@ rule CXX_EXECUTABLE_LINKER__netcore_test_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__moving_circle_Release
+rule CXX_SCAN__moving_circle_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -584,7 +584,7 @@ rule CXX_SCAN__moving_circle_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__moving_circle_Release
+rule CXX_DYNDEP__moving_circle_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/moving_circle.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -595,7 +595,7 @@ rule CXX_DYNDEP__moving_circle_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__moving_circle_scanned_Release
+rule CXX_COMPILER__moving_circle_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -605,7 +605,7 @@ rule CXX_COMPILER__moving_circle_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__moving_circle_unscanned_Release
+rule CXX_COMPILER__moving_circle_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -615,7 +615,7 @@ rule CXX_COMPILER__moving_circle_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__moving_circle_Release
+rule CXX_EXECUTABLE_LINKER__moving_circle_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -626,7 +626,7 @@ rule CXX_EXECUTABLE_LINKER__moving_circle_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__custom_shader_Release
+rule CXX_SCAN__custom_shader_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -635,7 +635,7 @@ rule CXX_SCAN__custom_shader_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__custom_shader_Release
+rule CXX_DYNDEP__custom_shader_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/custom_shader.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -646,7 +646,7 @@ rule CXX_DYNDEP__custom_shader_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__custom_shader_scanned_Release
+rule CXX_COMPILER__custom_shader_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -656,7 +656,7 @@ rule CXX_COMPILER__custom_shader_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__custom_shader_unscanned_Release
+rule CXX_COMPILER__custom_shader_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -666,7 +666,7 @@ rule CXX_COMPILER__custom_shader_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__custom_shader_Release
+rule CXX_EXECUTABLE_LINKER__custom_shader_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
@@ -677,7 +677,7 @@ rule CXX_EXECUTABLE_LINKER__custom_shader_Release
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__software_renderer_Release
+rule CXX_SCAN__software_renderer_Debug
   depfile = $DEP_FILE
   command = "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -x c++ $in -c -o $OBJ_FILE -resource-dir "/usr/lib/clang/20" -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE > $DYNDEP_INTERMEDIATE_FILE.tmp && mv $DYNDEP_INTERMEDIATE_FILE.tmp $DYNDEP_INTERMEDIATE_FILE
   description = Scanning $in for CXX dependencies
@@ -686,7 +686,7 @@ rule CXX_SCAN__software_renderer_Release
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__software_renderer_Release
+rule CXX_DYNDEP__software_renderer_Debug
   command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/software_renderer.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
@@ -697,7 +697,7 @@ rule CXX_DYNDEP__software_renderer_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__software_renderer_scanned_Release
+rule CXX_COMPILER__software_renderer_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE @$DYNDEP_MODULE_MAP_FILE -o $out -c $in
@@ -707,7 +707,7 @@ rule CXX_COMPILER__software_renderer_scanned_Release
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__software_renderer_unscanned_Release
+rule CXX_COMPILER__software_renderer_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/clang++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -717,7 +717,7 @@ rule CXX_COMPILER__software_renderer_unscanned_Release
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__software_renderer_Release
+rule CXX_EXECUTABLE_LINKER__software_renderer_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = $PRE_LINK && /usr/bin/clang++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD

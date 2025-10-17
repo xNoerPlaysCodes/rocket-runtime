@@ -14,6 +14,10 @@
 # Features
 - Asset Manager
     - A powerful and clean asset manager with use timeouts and lazy loading
+- API Stability
+    - A stable API that rarely changes
+- Human Language
+    - Human-readable function names and classes with flow between each line
 
 <b>and much more ...</b>
 

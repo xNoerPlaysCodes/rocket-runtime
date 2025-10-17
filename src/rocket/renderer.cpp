@@ -451,8 +451,6 @@ namespace rocket {
         static rgl::shader_program_t shader = rgl::get_paramaterized_textured_quad({0,0}, rgl::get_viewport_size(), 0.f, 0.f);
         glUniform1i(glGetUniformLocation(shader, "u_texture"), 0);
         rgl::draw_shader(shader, rgl::shader_use_t::textured_rect);
-
-        framebuffer.clear();
     }
 
     vec2f_t renderer_2d::get_viewport_size() {
