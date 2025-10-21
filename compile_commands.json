@@ -73,6 +73,12 @@
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/threads.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/threads.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/threads.cpp",
+  "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/threads.cpp",
+  "output": "/home/noerlol/C-Projects/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/threads.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/RocketGE",
   "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o -c /home/noerlol/C-Projects/RocketGE/src/rocket/plugin/plugin.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/src/rocket/plugin/plugin.cpp",
   "output": "/home/noerlol/C-Projects/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o"
@@ -154,6 +160,12 @@
   "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o.modmap -o CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/plugin_test.cpp",
   "file": "/home/noerlol/C-Projects/RocketGE/tests/plugin_test.cpp",
   "output": "/home/noerlol/C-Projects/RocketGE/CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -I/home/noerlol/C-Projects/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/RocketGE/src/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o.modmap -o CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o -c /home/noerlol/C-Projects/RocketGE/tests/multithreaded_test.cpp",
+  "file": "/home/noerlol/C-Projects/RocketGE/tests/multithreaded_test.cpp",
+  "output": "/home/noerlol/C-Projects/RocketGE/CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/RocketGE",

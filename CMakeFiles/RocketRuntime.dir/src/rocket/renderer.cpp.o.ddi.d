@@ -1,18 +1,17 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.ddi: \
   /home/noerlol/C-Projects/RocketGE/src/rocket/renderer.cpp \
-  /usr/include/epoxy/gl.h /usr/include/epoxy/common.h \
-  /usr/lib/clang/20/include/stdbool.h /usr/include/epoxy/gl_generated.h \
-  /usr/lib/clang/20/include/inttypes.h /usr/include/inttypes.h \
+  /usr/include/GL/glew.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstddef \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
   /usr/include/features.h /usr/include/features-time64.h \
   /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
   /usr/include/stdc-predef.h /usr/include/sys/cdefs.h \
   /usr/include/bits/long-double.h /usr/include/gnu/stubs.h \
-  /usr/include/gnu/stubs-64.h /usr/lib/clang/20/include/stdint.h \
-  /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
-  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
-  /usr/include/bits/time64.h /usr/include/bits/wchar.h \
-  /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
-  /usr/include/bits/stdint-least.h /usr/lib/clang/20/include/stddef.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/pstl_config.h \
+  /usr/lib/clang/20/include/stddef.h \
   /usr/lib/clang/20/include/__stddef_header_macro.h \
   /usr/lib/clang/20/include/__stddef_ptrdiff_t.h \
   /usr/lib/clang/20/include/__stddef_size_t.h \
@@ -21,17 +20,20 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.ddi: \
   /usr/lib/clang/20/include/__stddef_nullptr_t.h \
   /usr/lib/clang/20/include/__stddef_max_align_t.h \
   /usr/lib/clang/20/include/__stddef_offsetof.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/version.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdint \
+  /usr/lib/clang/20/include/stdint.h /usr/include/stdint.h \
+  /usr/include/bits/libc-header-start.h /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h /usr/include/bits/time64.h \
+  /usr/include/bits/wchar.h /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
+  /usr/include/GL/glu.h /usr/include/GL/gl.h \
+  /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
   /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
   /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdint \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/pstl_config.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/stdexcept \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/exception \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/exception.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/version.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/exception_ptr.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/exception_defines.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/cxxabi_init_exception.h \
@@ -139,7 +141,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/charconv.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/basic_string.tcc \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/memory_resource.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstddef \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/uses_allocator.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/uses_allocator_args.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tuple \
@@ -284,6 +285,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_memory_defs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/execution_defs.h \
   /usr/include/GLFW/glfw3.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/utility \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_relops.h \
   /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
   /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp \
   /home/noerlol/C-Projects/RocketGE/include/rocket/plugin/plugin.hpp \
@@ -303,6 +306,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.ddi: \
   /usr/include/glm/ext/../detail/type_vec3.inl \
   /usr/include/glm/ext/../detail/compute_vector_relational.hpp \
   /usr/include/glm/ext/../detail/setup.hpp \
+  /usr/include/glm/ext/../detail/compute_vector_decl.hpp \
+  /usr/include/glm/ext/../detail/_vectorize.hpp \
   /usr/include/glm/ext/../detail/func_geometric.inl \
   /usr/include/glm/ext/../detail/../exponential.hpp \
   /usr/include/glm/ext/../detail/../detail/type_vec1.hpp \
@@ -336,7 +341,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.ddi: \
   /usr/include/glm/ext/../detail/../detail/../vector_relational.hpp \
   /usr/include/glm/ext/../detail/../detail/../detail/setup.hpp \
   /usr/include/glm/ext/../detail/../detail/../detail/func_vector_relational.inl \
-  /usr/include/glm/ext/../detail/../detail/_vectorize.hpp \
   /usr/include/glm/ext/../detail/../common.hpp \
   /usr/include/glm/ext/../detail/../detail/_fixes.hpp \
   /usr/include/glm/ext/../detail/../detail/func_common.inl \
@@ -465,9 +469,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/fs_ops.h \
   /usr/include/dlfcn.h /usr/include/bits/dlfcn.h \
   /usr/include/bits/dl_find_object.h \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/utility \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_relops.h \
   /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstring \
   /usr/include/string.h /usr/include/strings.h \
@@ -516,4 +517,5 @@ CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.ddi: \
   /usr/include/glm/gtc/../gtc/../ext/vector_int1_sized.hpp \
   /usr/include/glm/gtc/../gtc/../ext/vector_uint1.hpp \
   /usr/include/glm/gtc/../gtc/../ext/vector_uint1_sized.hpp \
-  /usr/include/glm/gtc/type_ptr.inl
+  /usr/include/glm/gtc/type_ptr.inl \
+  /home/noerlol/C-Projects/RocketGE/src/include/binary_stuff/splash_screen.h

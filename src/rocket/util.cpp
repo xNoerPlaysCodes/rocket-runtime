@@ -2,11 +2,16 @@
 #include "rocket/io.hpp"
 #include "rocket/runtime.hpp"
 #include <algorithm>
+#include <condition_variable>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/trigonometric.hpp>
+#include <iostream>
+#include <mutex>
+#include <queue>
 #include <sstream>
 #include <stack>
+#include <thread>
 
 rocket::log_error_callback_t lerror_cb;
 rocket::log_callback_t log_cb;
@@ -84,7 +89,7 @@ namespace util {
             elevel = rocket::log_level_t::warn;
         } else if (level == "fatal") {
             elevel = rocket::log_level_t::fatal;
-        } else if (level == "fatal_to_function" || level == "fatal-to-function") {
+        } else if (level == "fatal_to_function" || level == "error" || level == "error") {
             elevel = rocket::log_level_t::fatal_to_function;
         } else if (level == "all") {
             elevel = rocket::log_level_t::all;
@@ -93,7 +98,7 @@ namespace util {
         }
         else {
             if (level != "info" && level != "debug" && level != "trace") {
-                return format_error("Unknown Logger Level: " + level, -42, error_source, "fatal-to-function");
+                return format_error("Unknown Logger Level: " + level, -42, error_source, "error");
             }
             return format_log(error, error_source, "", level);
         }

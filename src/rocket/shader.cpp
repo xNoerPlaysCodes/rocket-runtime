@@ -1,4 +1,4 @@
-#include <epoxy/gl.h>
+#include <GL/glew.h>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -22,8 +22,8 @@ namespace rocket {
         if (!success) {
             char infoLog[1024];
             glGetShaderInfoLog(shader, sizeof(infoLog), nullptr, infoLog);
-            rocket::log_error(std::string(shader_type) + " " + "compilation error", -1, "OpenGL::ShaderCompiler", "fatal-to-function");
-            rocket::log_error(std::string(infoLog), -1, "OpenGL::ShaderCompiler", "fatal-to-function");
+            rocket::log_error(std::string(shader_type) + " " + "compilation error", -1, "OpenGL::ShaderCompiler", "error");
+            rocket::log_error(std::string(infoLog), -1, "OpenGL::ShaderCompiler", "error");
             return false;
         }
         return true;
@@ -35,8 +35,8 @@ namespace rocket {
         if (!success) {
             char infoLog[1024];
             glGetProgramInfoLog(program, sizeof(infoLog), nullptr, infoLog);
-            rocket::log_error("link error", -1, "OpenGL::ShaderLinker", "fatal-to-function");
-            rocket::log_error(std::string(infoLog), -1, "OpenGL::ShaderLinker", "fatal-to-function");
+            rocket::log_error("link error", -1, "OpenGL::ShaderLinker", "error");
+            rocket::log_error(std::string(infoLog), -1, "OpenGL::ShaderLinker", "error");
             return false;
         }
         return true;
@@ -75,7 +75,7 @@ void main() {
         glShaderSource(glshaderv, 1, &vsrc, nullptr);
         glCompileShader(glshaderv);
         if (!check_shader_compile(glshaderv, "Vertex")) {
-            rocket::log_error("Cannot continue with failed compilation", -1, "shader_t::constructor", "fatal-to-function");
+            rocket::log_error("Cannot continue with failed compilation", -1, "shader_t::constructor", "error");
             this->glprogram = rgl::nocache_compile_shader(default_vcode, default_fcode);
             this->fcode = default_fcode;
             this->vcode = default_vcode;
@@ -86,7 +86,7 @@ void main() {
         glShaderSource(glshaderf, 1, &fsrc, nullptr);
         glCompileShader(glshaderf);
         if (!check_shader_compile(glshaderf, "Fragment")) {
-            rocket::log_error("Cannot continue with failed compilation", -1, "shader_t::constructor", "fatal-to-function");
+            rocket::log_error("Cannot continue with failed compilation", -1, "shader_t::constructor", "error");
             this->glprogram = rgl::nocache_compile_shader(default_vcode, default_fcode);
             this->fcode = default_fcode;
             this->vcode = default_vcode;
@@ -103,7 +103,7 @@ void main() {
 
         glLinkProgram(glprogram);
         if (!check_program_link(glprogram)) {
-            rocket::log_error("Cannot continue with failed linking", -1, "shader_t::constructor", "fatal-to-function");
+            rocket::log_error("Cannot continue with failed linking", -1, "shader_t::constructor", "error");
             return;
         }
         gl_check_errors(5);
@@ -166,7 +166,7 @@ void main() {
         std::ifstream istream(rlsl_shader_path);
         std::filesystem::path shader_workingdir = std::filesystem::path(rlsl_shader_path).parent_path();
         if (!istream.is_open()) {
-            rocket::log_error("failed to open file path: " + rlsl_shader_path, -1, "shader_t::shader_t(shader_type, std::string)", "fatal-to-function");
+            rocket::log_error("failed to open file path: " + rlsl_shader_path, -1, "shader_t::shader_t(shader_type, std::string)", "error");
             return;
         }
 
@@ -202,7 +202,7 @@ void main() {
         static auto load_file = [&shader_workingdir](std::string path) -> std::vector<std::string> {
             std::ifstream file(shader_workingdir / path);
             if (!file.is_open()) {
-                rocket::log_error("failed to open file path: " + (shader_workingdir / path).string(), -1, "shader_t::constructor", "fatal-to-function");
+                rocket::log_error("failed to open file path: " + (shader_workingdir / path).string(), -1, "shader_t::constructor", "error");
                 return {};
             }
 
@@ -326,7 +326,7 @@ void main() {
         }
 
         if (rlsl_shader.vcode.empty() || rlsl_shader.fcode.empty()) {
-            rocket::log_error("failed to parse RLSL Shader: critical shader code missing", -1, "shader_t::constructor", "fatal-to-function");
+            rocket::log_error("failed to parse RLSL Shader: critical shader code missing", -1, "shader_t::constructor", "error");
             return;
         }
 

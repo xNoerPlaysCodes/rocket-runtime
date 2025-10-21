@@ -1,5 +1,5 @@
 #include <chrono>
-#include <epoxy/gl.h>
+#include <GL/glew.h>
 #include <glm/ext/vector_float2.hpp>
 #include <iostream>
 
@@ -13,7 +13,7 @@
 #include "../../include/rocket/runtime.hpp"
 #include "rocket/window.hpp"
 
-#ifdef RocketRuntime_DEBUG
+#ifdef RocketRuntime_DEBUG_CheckGL
     #define GL_CHECK(x) \
         x; \
         { \
@@ -23,7 +23,7 @@
             } \
         }
 #else
-    #define GL_CHECK(x) x
+    #define GL_CHECK(x) x;
 #endif
 
 namespace glutil {
@@ -60,6 +60,12 @@ namespace rgl {
     rocket::vec2f_t viewport_size;
     rocket::vec2f_t viewport_offset = { 0, 0 };
     int max_tx_size = 0;
+
+    GLFWwindow *gl_main_ctx;
+
+    GLFWwindow *__rglexp_get_main_context() {
+        return gl_main_ctx;
+    }
 
     std::string float_str(float value) {
         std::ostringstream oss;
@@ -210,11 +216,18 @@ namespace rgl {
         };
     }
 
+    void init_gl_wtd() {
+        GL_CHECK(glViewport(0, 0, viewport_size.x, viewport_size.y));
+        init_vo_all();
+    }
+
+    static std::unordered_map<rgl::shader_use_t, rgl::shader_program_t> shader_cache;
     std::vector<std::string> init_gl(const rocket::vec2f_t viewport_size) {
         ::rgl::viewport_size = viewport_size;
+        std::unordered_map<rgl::shader_use_t, rgl::shader_program_t>().swap(shader_cache);
 
         // Init GLEW... now libepoxy :)
-        // Jk no init needed :)
+        glewInit();
 
         // Setup viewport
         glViewport(0, 0, viewport_size.x, viewport_size.y);
@@ -256,10 +269,10 @@ namespace rgl {
             glDebugMessageControl(
                 GL_DONT_CARE,  // source
                 GL_DONT_CARE,  // type
-                GL_DEBUG_SEVERITY_NOTIFICATION,  // severity to filter
+                GL_DEBUG_SEVERITY_LOW,  // severity to filter
                 0,             // count of ids to filter
                 nullptr,       // ids array
-                GL_FALSE       // GL_TRUE to enable, GL_FALSE to disable
+                GL_TRUE       // GL_TRUE to enable, GL_FALSE to disable
             );
             glDebugMessageCallback([](GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
                 std::string srcStr;
@@ -306,10 +319,10 @@ namespace rgl {
                 std::vector<std::string> log_messages2 = dump_gl_state();
 
                 for (auto &l : log_messages) {
-                    rocket::log_error(l, -5, "OpenGL::ContextVerifier", "fatal-to-function");
+                    rocket::log_error(l, -5, "OpenGL::ContextVerifier", "error");
                 }
                 for (auto &l : log_messages2) {
-                    rocket::log_error(l, -5, "OpenGL::ContextVerifier", "fatal-to-function");
+                    rocket::log_error(l, -5, "OpenGL::ContextVerifier", "error");
                 }
                 rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
             }, nullptr);
@@ -361,6 +374,8 @@ namespace rgl {
 
         std::string gpu_name = std::string(reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
 
+        gl_main_ctx = glfwGetCurrentContext();
+
         // Collect init logs
         std::vector<std::string> logs = {
             "GL Info:",
@@ -390,6 +405,18 @@ namespace rgl {
         return logs;
     }
 
+    std::vector<std::function<void()>> scheduled;
+
+    void schedule_gl(std::function<void()> fn) {
+        scheduled.push_back(fn);
+    }
+
+    void cleanup_all() {
+        if (scheduled.size() > 0) {
+            rocket::log_error("Exiting with pending scheduled operations", -1, "OpenGL", "warn");
+        }
+    }
+
     bool is_active_any_fbo() {
         GLint fbo = rGL_FBO_INVALID.fbo;
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
@@ -411,7 +438,7 @@ namespace rgl {
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fbo.color_tex, 0);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            rocket::log_error("Failed to create custom framebuffer", -1, "OpenGL::Framebuffer", "fatal-to-function");
+            rocket::log_error("Failed to create custom framebuffer", -1, "OpenGL::Framebuffer", "error");
             return rGL_FBO_INVALID;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -453,7 +480,7 @@ namespace rgl {
             glGetShaderiv(vs, GL_INFO_LOG_LENGTH, &logLen);
             std::string log(logLen, '\0');
             glGetShaderInfoLog(vs, logLen, nullptr, log.data());
-            rocket::log_error("Vertex shader compile failed: " + log, -1, "OpenGL::ShaderCompiler", "fatal-to-function");
+            rocket::log_error("Vertex shader compile failed: " + log, -1, "OpenGL::ShaderCompiler", "error");
         }
 
         GLuint fs = GL_CHECK(glCreateShader(GL_FRAGMENT_SHADER));
@@ -467,7 +494,7 @@ namespace rgl {
             glGetShaderiv(fs, GL_INFO_LOG_LENGTH, &logLen);
             std::string log(logLen, '\0');
             glGetShaderInfoLog(fs, logLen, nullptr, log.data());
-            rocket::log_error("Fragment shader compile failed: " + log, -1, "OpenGL::ShaderCompiler", "fatal-to-function");
+            rocket::log_error("Fragment shader compile failed: " + log, -1, "OpenGL::ShaderCompiler", "error");
         }
 
         rgl::shader_program_t pg = GL_CHECK(glCreateProgram());
@@ -481,12 +508,11 @@ namespace rgl {
             glGetProgramiv(pg, GL_INFO_LOG_LENGTH, &logLen);
             std::string log(logLen, '\0');
             glGetProgramInfoLog(pg, logLen, nullptr, log.data());
-            rocket::log_error("Shader program link failed: " + log, -1, "OpenGL::ShaderCompiler", "fatal-to-function");
+            rocket::log_error("Shader program link failed: " + log, -1, "OpenGL::ShaderCompiler", "error");
         } else {
             auto end = std::chrono::high_resolution_clock::now();
             auto diff = end - start;
             auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(diff).count();
-            rocket::log("Shader program compiled in " + std::to_string(ms) + "ms", "rgl", "load_shader_generic", "info");
         }
 
         GL_CHECK(glDeleteShader(vs));
@@ -658,7 +684,6 @@ namespace rgl {
     }
 
     rgl::shader_program_t init_shader(rgl::shader_use_t use) {
-        static std::unordered_map<rgl::shader_use_t, rgl::shader_program_t> shader_cache;
         if (shader_cache.find(use) != shader_cache.end()) {
             return shader_cache[use];
         }
@@ -673,7 +698,7 @@ namespace rgl {
                 shader_cache[use] = load_shader_textured_rect();
                 break;
             default:
-                rocket::log_error("unknown shader use", -1, "rgl", "fatal-to-function");
+                rocket::log_error("unknown shader use", -1, "rgl", "error");
                 break;
         }
 
@@ -788,7 +813,7 @@ namespace rgl {
                 GL_CHECK(glBindVertexArray(textureVO.first));
                 break;
             default:
-                rocket::log_error("unknown shader use", -1, "rgl", "fatal-to-function");
+                rocket::log_error("unknown shader use", -1, "rgl", "error");
                 break;
         }
 
@@ -839,7 +864,17 @@ namespace rgl {
         GL_CHECK(glDrawArrays(mode, first, count));
     }
 
+    void run_all_scheduled_gl() {
+        for (auto &fn : scheduled) {
+            fn();
+            GL_CHECK(glFinish());
+        }
+        scheduled.clear();
+    }
+
     int reset_drawcalls() {
+        run_all_scheduled_gl();
+
         int ret = read_drawcalls();
         drawcalls = 0;
         return ret;

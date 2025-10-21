@@ -227,9 +227,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/chrono_io.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/iomanip \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/quoted_string.h \
-  /usr/include/epoxy/gl.h /usr/include/epoxy/common.h \
-  /usr/lib/clang/20/include/stdbool.h /usr/include/epoxy/gl_generated.h \
-  /usr/lib/clang/20/include/inttypes.h /usr/include/inttypes.h \
+  /usr/include/GL/glew.h /usr/include/GL/glu.h /usr/include/GL/gl.h \
   /usr/include/glm/ext/vector_float2.hpp \
   /usr/include/glm/ext/../detail/type_vec2.hpp \
   /usr/include/glm/ext/../detail/qualifier.hpp \
@@ -307,6 +305,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
   /usr/include/glm/ext/../geometric.hpp \
   /usr/include/glm/ext/../detail/type_vec3.hpp \
   /usr/include/glm/ext/../detail/type_vec3.inl \
+  /usr/include/glm/ext/../detail/compute_vector_decl.hpp \
+  /usr/include/glm/ext/../detail/_vectorize.hpp \
   /usr/include/glm/ext/../detail/func_geometric.inl \
   /usr/include/glm/ext/../detail/../exponential.hpp \
   /usr/include/glm/ext/../detail/../detail/type_vec1.hpp \
@@ -338,7 +338,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
   /usr/include/glm/ext/../detail/../detail/../vector_relational.hpp \
   /usr/include/glm/ext/../detail/../detail/../detail/setup.hpp \
   /usr/include/glm/ext/../detail/../detail/../detail/func_vector_relational.inl \
-  /usr/include/glm/ext/../detail/../detail/_vectorize.hpp \
   /usr/include/glm/ext/../detail/../common.hpp \
   /usr/include/glm/ext/../detail/../detail/_fixes.hpp \
   /usr/include/glm/ext/../detail/../detail/func_common.inl \

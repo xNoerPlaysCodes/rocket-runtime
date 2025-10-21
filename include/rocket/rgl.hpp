@@ -19,6 +19,11 @@
 
 #define rGL_MAX_RECOMMENDED_DRAWCALLS 5000
 #define rGL_MAX_RECOMMENDED_TRICOUNT 5000
+
+#ifdef RGL_EXPOSE_NATIVE_LIB
+#include <GLFW/glfw3.h>
+#endif
+
 // types
 namespace rgl {
     using vao_t = GLuint;
@@ -35,6 +40,12 @@ namespace rgl {
 
     using blend_src_t = GLenum;
     using blend_dst_t = GLenum;
+
+#ifdef RGL_EXPOSE_NATIVE_LIB
+    GLFWwindow *__rglexp_get_main_context();
+    void schedule_gl(std::function<void()> fn);
+    void cleanup_all();
+#endif
 
 #ifdef rGL__FEATURE_SUPPORT_FBO
     struct fbo_t {
@@ -73,6 +84,7 @@ namespace rgl {
 
 
     std::vector<std::string> init_gl(const rocket::vec2f_t viewport_size);
+    void init_gl_wtd();
     std::pair<vao_t, vbo_t> compile_vo(
         const std::array<float, 12>& square_vertices = std::array<float,12>{
             0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,

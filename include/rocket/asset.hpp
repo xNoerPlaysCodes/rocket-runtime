@@ -50,6 +50,8 @@ namespace rocket {
         /// @modify Do not modify
         assetid_t id;
     public:
+        bool is_ready();
+    public:
         texture_t();
     public:
         ~texture_t();
@@ -220,6 +222,8 @@ namespace rocket {
         assetid_t load_font(int fsize, std::vector<uint8_t> mem);
         /// @brief Get a Font from ID
         std::shared_ptr<font_t> get_font(assetid_t id);
+
+        static void __rst_fonts();
     public:
         /// @brief Construct Asset Manager
         /// @param cleanup_interval How often to clean up unused assets

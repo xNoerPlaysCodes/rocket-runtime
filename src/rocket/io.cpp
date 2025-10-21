@@ -56,7 +56,7 @@ namespace rocket {
                 return glfw_key_scancode[scancode];
             }
 
-            rocket::log_error("invalid key, no scancode for key was found", -1, "rocket::io::key_by_scancode", "fatal-to-function");
+            rocket::log_error("invalid key, no scancode for key was found", -1, "rocket::io::key_by_scancode", "error");
             return -1;
         }
 

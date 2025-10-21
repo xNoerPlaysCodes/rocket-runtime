@@ -73,6 +73,7 @@ add_library(${PROJECT_NAME}
     src/rocket/shader.cpp
 
     src/rocket/rgl.cpp
+    src/rocket/threads.cpp
 
     # Plugin Subsystem
     src/rocket/plugin/plugin.cpp
@@ -98,12 +99,13 @@ add_library(${PROJECT_NAME}
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(EPOXY REQUIRED epoxy)
+# pkg_check_modules(EPOXY REQUIRED epoxy)
+find_package(GLEW REQUIRED)
 find_package(OpenAL REQUIRED)
 find_package(miniz REQUIRED) # miniz may not be installed
 find_package(SDL2 REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} glfw OpenAL::OpenAL miniz SDL2::SDL2)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1)
@@ -123,6 +125,7 @@ if (BUILD_TESTS)
         iosim
         io_test
         plugin_test
+        multithreaded_test
     )
 
     if (BUILD_ASTRO)

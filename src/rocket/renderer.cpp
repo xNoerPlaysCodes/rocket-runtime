@@ -1,8 +1,9 @@
-#include <epoxy/gl.h>
+#include <GL/glew.h>
+#define RGL_EXPOSE_NATIVE_LIB
+#include "rocket/rgl.hpp"
 #include "rocket/asset.hpp"
 #include "rocket/io.hpp"
 #include "rocket/plugin/plugin.hpp"
-#include "rocket/rgl.hpp"
 #include "rocket/runtime.hpp"
 #include "rocket/types.hpp"
 #include <cmath>
@@ -27,10 +28,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "binary_stuff/splash_screen.h"
+
 namespace rocket {
     std::vector<shader_t> shader_cache;
 
-    rgl::fbo_t fxaa_fbo;
+    rgl::fbo_t fxaa_fbo = rGL_FBO_INVALID;
     rgl::shader_program_t fxaa_shader;
     
     util::global_state_cliargs_t ovr_clistate = {};
@@ -50,7 +53,7 @@ namespace rocket {
             util::glinit(true);
 
             if (!window || !window->glfw_window) {
-                rocket::log_error("Invalid window ptr", -1, "renderer_2d::constructor", "fatal-to-function");
+                rocket::log_error("Invalid window ptr", -1, "renderer_2d::constructor", "error");
                 return;
             }
             glfwMakeContextCurrent(window->glfw_window);
@@ -156,17 +159,8 @@ namespace rocket {
     }
 
     void renderer_2d::draw_line(rocket::vec2f_t start, rocket::vec2f_t end, rocket::rgba_color color, float thickness) {
-        // Quick Note:
-        //  I tried, every. single. algorithm.
-        //  I MADE my own algorithm.
-        //  I used EVERY algorithm that exists.
-        //  Yet it STILL doesn't work.
-        //  At this point, I'd like to quit here, and
-        //  one of you smarties can get this working.
-        //
-        //  Sincerely,
-        //  noerlol
-        rocket::log_error("Implementation not finished", -1, "renderer_2d::draw_line", "fatal-to-function");
+        // Yeah I'm not making this
+        rocket::log_error("Implementation not finished", -1, "renderer_2d::draw_line", "error");
     }
 
     void renderer_2d::draw_rectangle(rocket::vec2f_t pos, rocket::vec2f_t size, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
@@ -175,10 +169,91 @@ namespace rocket {
     }
 
     void renderer_2d::begin_frame() {
+        if (flags.show_splash && (!this->splash_shown)) {
+            this->show_splash();
+        }
+        this->frame_started = true;
         start_time = std::chrono::high_resolution_clock::now();
         frame_start_time = glfwGetTime();
         delta_time = frame_start_time - last_time;
         last_time = frame_start_time;
+    }
+
+    void renderer_2d::show_splash() {
+        this->splash_shown = true;
+
+        glfwHideWindow(this->window->glfw_window);
+        auto win_size = this->window->size;
+
+        asset_manager_t am;
+        std::vector<uint8_t> splash_screen = std::vector<uint8_t>(splash_screen_png, splash_screen_png + splash_screen_png_len);
+        int duration = 180;
+        auto tx = am.get_texture(am.load_texture(splash_screen));
+
+        auto old_window = this->window;
+        window_t::__silent_next_constructor();
+        auto splash_window = new window_t({ 1024, 576 }, old_window->title, {
+            .resizable = false,
+            .undecorated = true,
+            .share = old_window,
+        });
+
+        rgl::init_gl({ 1024, 576 });
+
+        this->window = splash_window;
+
+        glfwMakeContextCurrent(splash_window->glfw_window);
+
+        int frame = 0;
+        while (frame + 1 != duration && splash_window->is_running()) {
+
+            {
+                this->begin_frame();
+                this->clear();
+                {
+                    auto vp_size = this->get_viewport_size();
+                    this->draw_texture(tx, { {0,0}, vp_size });
+
+                    rocket::fbounding_box loading_bar = {
+                        { 330, 375 },
+                        { 395, 10 }
+                    };
+
+                    this->draw_rectangle(loading_bar, rgba_color::white());
+
+                    rocket::fbounding_box loaded_bar = loading_bar;
+                    loaded_bar.size.x = (frame / static_cast<float>(duration)) * loading_bar.size.x;
+
+                    this->draw_rectangle(loaded_bar, rgba_color::green());
+
+                    rocket::text_t version_text = { "Version: " ROCKETGE__VERSION, 24, rgb_color::white() };
+
+                    this->draw_text(version_text, { 0, vp_size.y - version_text.measure().y });
+                }
+                this->end_frame();
+                splash_window->poll_events();
+
+                int new_vp_x, new_vp_y;
+                glfwGetFramebufferSize(splash_window->glfw_window, &new_vp_x, &new_vp_y);
+
+                rgl::update_viewport({ (float)new_vp_x, (float)new_vp_y });
+                frame++;
+            }
+        }
+
+        this->window = old_window;
+        glfwMakeContextCurrent(old_window->glfw_window);
+
+        rgl::init_gl({ old_window->get_size().x * 1.f, old_window->get_size().y * 1.f });
+
+        asset_manager_t::__rst_fonts();
+
+        glfwShowWindow(this->window->glfw_window);
+        this->window->set_size(win_size);
+
+        window_t::__silent_next_close();
+        splash_window->close();
+        delete splash_window;
     }
 
     rocket::rgba_color this_frame_clear_color = rgba_color::blank();
@@ -216,9 +291,8 @@ namespace rocket {
         }
     }
 
-    void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation, float roundedness) {
-        rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(rect.pos, rect.size, rotation, roundedness);
-        if (texture->glid == 0) {
+    void renderer_2d::make_ready_texture(std::shared_ptr<rocket::texture_t> texture) {
+        if (texture != nullptr && texture->glid == 0) {
             glGenTextures(1, &texture->glid);
             glBindTexture(GL_TEXTURE_2D, texture->glid);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, texture->size.x, texture->size.y, 0,
@@ -227,12 +301,18 @@ namespace rocket {
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            texture->data.clear();
-            texture->data.shrink_to_fit();
         }
+    }
+
+    void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation, float roundedness) {
+        if (texture == nullptr) {
+            rocket::log_error("texture is null", -1, "renderer_2d::draw_texture", "error");
+            return;
+        }
+        rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(rect.pos, rect.size, rotation, roundedness);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture->glid);
+        this->make_ready_texture(texture);
         glUniform1i(glGetUniformLocation(pg, "u_texture"), 0);
         rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
     }
@@ -268,7 +348,7 @@ namespace rocket {
     }
    
     void renderer_2d::draw_text(rocket::text_t &text, rocket::vec2f_t position) {
-        static rgl::shader_program_t shader_program = rGL_SHADER_INVALID;
+        rgl::shader_program_t shader_program = rGL_SHADER_INVALID;
         if (shader_program == rGL_SHADER_INVALID) {
             // const char* vert_src = R"(
             //     #version 330 core
@@ -329,7 +409,7 @@ namespace rocket {
         
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, text.font->glid);
-        static auto text_vo = rgl::get_text_vos();
+        auto text_vo = rgl::get_text_vos();
         glBindVertexArray(text_vo.first);
         glBindBuffer(GL_ARRAY_BUFFER, text_vo.second);
 
@@ -539,7 +619,7 @@ namespace rocket {
             static_cast<int>(dmpos.x),
             static_cast<int>(dmpos.y)
         };
-        rocket::text_t mouse_pos_text = { "Mouse Pos: " + std::to_string(mpos.x) + ", " + std::to_string(mpos.y), text_size, rgb_color::white(), font };
+        rocket::text_t mouse_pos_text = { "Cursor Pos: " + std::to_string(mpos.x) + ", " + std::to_string(mpos.y), text_size, rgb_color::white(), font };
 
         ren->begin_scissor_mode(position, size);
 
@@ -609,11 +689,25 @@ namespace rocket {
         ren->end_scissor_mode();
     }
 
+    std::unordered_map<std::pair<float, float>, rgl::texture_id_t> scraped_vps;
+
+    bool renderer_2d::has_frame_began() {
+        return this->frame_started;
+    }
+
+    bool renderer_2d::has_frame_ended() {
+        return !this->frame_started;
+    }
+
     void renderer_2d::end_frame() {
+        this->frame_started = false;
         if (flags.share_renderer_as_global) {
             __rallframeend();
         }
-        if (flags.fxaa_simplified && fxaa_shader != rGL_SHADER_INVALID && std::find(active_render_modes.begin(), active_render_modes.end(), render_mode_t::fxaa) != active_render_modes.end()) {
+        bool fxaa_on = flags.fxaa_simplified && fxaa_shader != rGL_SHADER_INVALID && std::find(active_render_modes.begin(), active_render_modes.end(), render_mode_t::fxaa) != active_render_modes.end();
+        bool fbo_on = rgl::is_active_any_fbo();
+        auto cur_fbo = rgl::get_active_fbo();
+        if (fxaa_on) {
             vec4f_t nm = this_frame_clear_color.normalize();
             glClearColor(nm.x, nm.y, nm.z, nm.w);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -672,6 +766,22 @@ namespace rocket {
             rgl::use_fbo(fbo);
             rgl::update_viewport(final_viewport_position, final_viewport_size);
         }
+
+        if (scraped_vps.size() > 16) {
+            scraped_vps.clear();
+        }
+
+        auto it = scraped_vps.find({ final_viewport_size.x, final_viewport_size.y });
+        if (it == scraped_vps.end()) {
+            std::pair<float, float> key = { final_viewport_size.x, final_viewport_size.y };
+            rgl::texture_id_t tex;
+            glGenTextures(1, &tex);
+        }
+
+        auto tx = scraped_vps[{ final_viewport_size.x, final_viewport_size.y }];
+        glBindTexture(GL_TEXTURE_2D, tx);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, final_viewport_size.x, final_viewport_size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+        glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, final_viewport_size.x, final_viewport_size.y);
 
         frame_counter++;
 
@@ -932,15 +1042,13 @@ namespace rocket {
     }
 
     void renderer_2d::close() {
-        if (window == nullptr) {
-            rocket::log_error("window already closed", -1, "RocketRuntime", "warn");
-            return;
-        }
-        window->close();
+        window = nullptr; // unbind window
 
         if (util::get_global_renderer_2d() == this) {
             util::set_global_renderer_2d(nullptr);
         }
+
+        rgl::cleanup_all();
     }
 
     renderer_2d::~renderer_2d() {

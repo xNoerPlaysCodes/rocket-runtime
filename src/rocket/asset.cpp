@@ -33,6 +33,9 @@ using namespace std::chrono_literals;
 
 namespace rocket {
     bool openal_initialized;
+    bool texture_t::is_ready() {
+        return this->glid != 0;
+    }
     texture_t::texture_t() {}
     texture_t::~texture_t() {}
 
@@ -40,7 +43,7 @@ namespace rocket {
     
     void audio_t::play(float vol, bool loop, std::function<void(audio_t *)> on_finish) {
         if (this->playing) {
-            rocket::log_error("audio is already playing", 1, "openal", "fatal-to-function");
+            rocket::log_error("audio is already playing", 1, "openal", "error");
             return;
         }
 
@@ -66,7 +69,7 @@ namespace rocket {
 
         ALenum error = alGetError();
         if (error != AL_NO_ERROR) {
-            rocket::log_error("failed to play audio: " + std::to_string(error), 1, "openal", "fatal-to-function");
+            rocket::log_error("failed to play audio: " + std::to_string(error), 1, "openal", "error");
             return;
         }
 
@@ -111,7 +114,7 @@ namespace rocket {
         // Re-decode using stb_vorbis
         stb_vorbis* vorbis = stb_vorbis_open_filename(this->path.c_str(), nullptr, nullptr);
         if (!vorbis) {
-            rocket::log_error("seek failed: could not reopen audio", 1, "openal", "fatal-to-function");
+            rocket::log_error("seek failed: could not reopen audio", 1, "openal", "error");
             return;
         }
 
@@ -181,7 +184,7 @@ namespace rocket {
         uint8_t *img_data = stbi_load(path.c_str(), &texture->size.x, &texture->size.y, &texture->channels, static_cast<int>(format));
 
         if (!img_data) {
-            rocket::log_error("failed to load texture: " + path, 1, "stb_image::stbi_load", "fatal-to-function");
+            rocket::log_error("failed to load texture: " + path, 1, "stb_image::stbi_load", "error");
             current_id--;
             return -1;
         }
@@ -208,7 +211,7 @@ namespace rocket {
         if (img_data == nullptr) {
             std::stringstream address;
             address << file_data << '\n';
-            rocket::log_error("failed to load texture from memory, address: " + address.str(), 1, "stb_image::stbi_load", "fatal-to-function");
+            rocket::log_error("failed to load texture from memory, address: " + address.str(), 1, "stb_image::stbi_load", "error");
 
             current_id--;
             return -1;
@@ -216,6 +219,7 @@ namespace rocket {
         if (format != texture_color_format_t::auto_extract) {
             texture->channels = static_cast<int>(format);
         }
+        texture->data.assign(img_data, img_data + texture->size.x * texture->size.y * texture->channels);
         textures.insert({texture, std::chrono::high_resolution_clock::now()});
         return id;
     }
@@ -234,13 +238,13 @@ namespace rocket {
         if (!openal_initialized) {
             ALCdevice *device = alcOpenDevice(nullptr); // Default device
             if (!device) {
-                rocket::log_error("failed to open OpenAL device", 1, "OpenAL::alcOpenDevice", "fatal-to-function");
+                rocket::log_error("failed to open OpenAL device", 1, "OpenAL::alcOpenDevice", "error");
                 return;
             }
 
             ALCcontext *context = alcCreateContext(device, nullptr);
             if (!context || !alcMakeContextCurrent(context)) {
-                rocket::log_error("failed to create OpenAL context", 1, "OpenAL::alcCreateContext", "fatal-to-function");
+                rocket::log_error("failed to create OpenAL context", 1, "OpenAL::alcCreateContext", "error");
                 if (context) alcDestroyContext(context);
                 alcCloseDevice(device);
                 return;
@@ -263,7 +267,7 @@ namespace rocket {
 
         ALenum error = alGetError();
         if (error != AL_NO_ERROR) {
-            rocket::log_error("failed to generate OpenAL buffer", 1, "OpenAL::alGenBuffers", "fatal-to-function");
+            rocket::log_error("failed to generate OpenAL buffer", 1, "OpenAL::alGenBuffers", "error");
             delete audio->buffer;
             audio->buffer = nullptr;
             current_id--;
@@ -276,7 +280,7 @@ namespace rocket {
 
         stb_vorbis* vorbis = stb_vorbis_open_filename(path.c_str(), nullptr, nullptr);
         if (!vorbis) {
-            rocket::log_error("failed to load " + path, 1, "stb_vorbis::stb_vorbis_open_filename", "fatal-to-function");
+            rocket::log_error("failed to load " + path, 1, "stb_vorbis::stb_vorbis_open_filename", "error");
             delete audio->buffer;
             audio->buffer = nullptr;
             current_id--;
@@ -300,7 +304,7 @@ namespace rocket {
 
         error = alGetError();
         if (error != AL_NO_ERROR) {
-            rocket::log_error("failed to load audio properly: " + path, 1, "OpenAL::alBufferData", "fatal-to-function");
+            rocket::log_error("failed to load audio properly: " + path, 1, "OpenAL::alBufferData", "error");
             alDeleteBuffers(1, audio->buffer);
             delete audio->buffer;
             audio->buffer = nullptr;
@@ -325,7 +329,7 @@ namespace rocket {
 
         ALenum error = alGetError();
         if (error != AL_NO_ERROR) {
-            rocket::log_error("failed to generate OpenAL buffer", 1, "OpenAL::alGenBuffers", "fatal-to-function");
+            rocket::log_error("failed to generate OpenAL buffer", 1, "OpenAL::alGenBuffers", "error");
             delete audio->buffer;
             audio->buffer = nullptr;
             current_id--;
@@ -338,7 +342,7 @@ namespace rocket {
 
         stb_vorbis* vorbis = stb_vorbis_open_memory(mem.data(), mem.size(), nullptr, nullptr);
         if (!vorbis) {
-            rocket::log_error("failed to load audio from [memory]", 1, "stb_vorbis::stb_vorbis_open_memory", "fatal-to-function");
+            rocket::log_error("failed to load audio from [memory]", 1, "stb_vorbis::stb_vorbis_open_memory", "error");
             delete audio->buffer;
             audio->buffer = nullptr;
             current_id--;
@@ -362,7 +366,7 @@ namespace rocket {
 
         error = alGetError();
         if (error != AL_NO_ERROR) {
-            rocket::log_error("failed to load audio properly: [memory]", 1, "OpenAL::alBufferData", "fatal-to-function");
+            rocket::log_error("failed to load audio properly: [memory]", 1, "OpenAL::alBufferData", "error");
             alDeleteBuffers(1, audio->buffer);
             delete audio->buffer;
             audio->buffer = nullptr;
@@ -384,9 +388,16 @@ namespace rocket {
         return nullptr;
     }
 
+    static std::unordered_map<int, std::shared_ptr<font_t>> fonts_default;
+    static std::unordered_map<int, std::shared_ptr<font_t>> fonts_monospaced;
+
+    void asset_manager_t::__rst_fonts() {
+        std::unordered_map<int, std::shared_ptr<font_t>>().swap(fonts_default);
+        std::unordered_map<int, std::shared_ptr<font_t>>().swap(fonts_monospaced);
+    }
+
     std::shared_ptr<font_t> font_t::font_default(int fsize) {
-        static std::unordered_map<int, std::shared_ptr<font_t>> fonts;
-        if (fonts.find(fsize) == fonts.end()) {
+        if (fonts_default.find(fsize) == fonts_default.end()) {
             std::shared_ptr<font_t> font = std::make_shared<font_t>();
             font->ttf_data = std::vector<uint8_t>(rocket_font::FontDefault, rocket_font::FontDefault + rocket_font::FontDefault_len);
             font->id = -1;
@@ -396,7 +407,7 @@ namespace rocket {
 
             stbtt_fontinfo info;
             if (!stbtt_InitFont(&info, rocket_font::FontDefault, 0)) {
-                rocket::log_error("failed to init font", 1, "stbtt", "fatal-to-function");
+                rocket::log_error("failed to init font", 1, "stbtt", "error");
                 return nullptr;
             }
             int ascent, descent, line_gap;
@@ -415,15 +426,14 @@ namespace rocket {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
             font->line_height = line_height;
-            fonts[fsize] = font;
+            fonts_default[fsize] = font;
         }
 
-        return fonts[fsize];
+        return fonts_default[fsize];
     }
 
     std::shared_ptr<font_t> font_t::font_default_monospace(int fsize) {
-        static std::unordered_map<int, std::shared_ptr<font_t>> fonts;
-        if (fonts.find(fsize) == fonts.end()) {
+        if (fonts_monospaced.find(fsize) == fonts_monospaced.end()) {
             std::shared_ptr<font_t> font = std::make_shared<font_t>();
             font->ttf_data = std::vector<uint8_t>(rocket_font::FontDefault_Monospace_ttf, rocket_font::FontDefault_Monospace_ttf + rocket_font::FontDefault_Monospace_ttf_len);
             font->id = -1;
@@ -433,7 +443,7 @@ namespace rocket {
 
             stbtt_fontinfo info;
             if (!stbtt_InitFont(&info, rocket_font::FontDefault_Monospace_ttf, 0)) {
-                rocket::log_error("failed to init font", 1, "stbtt", "fatal-to-function");
+                rocket::log_error("failed to init font", 1, "stbtt", "error");
                 return nullptr;
             }
             int ascent, descent, line_gap;
@@ -452,10 +462,10 @@ namespace rocket {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
             font->line_height = line_height;
-            fonts[fsize] = font;
+            fonts_monospaced[fsize] = font;
         }
 
-        return fonts[fsize];
+        return fonts_monospaced[fsize];
     }
 
     assetid_t asset_manager_t::load_font(int fsize, std::vector<uint8_t> mem) {
@@ -467,7 +477,7 @@ namespace rocket {
 
         stbtt_fontinfo info;
         if (!stbtt_InitFont(&info, rocket_font::FontDefault, 0)) {
-            rocket::log_error("failed to init font", 1, "stbtt", "fatal-to-function");
+            rocket::log_error("failed to init font", 1, "stbtt", "error");
             current_id--;
             return -1;
         }
@@ -513,7 +523,7 @@ namespace rocket {
 
         stbtt_fontinfo info;
         if (!stbtt_InitFont(&info, ttf_buffer.data(), 0)) {
-            rocket::log_error("failed to init font", 1, "stbtt", "fatal-to-function");
+            rocket::log_error("failed to init font", 1, "stbtt", "error");
             current_id--;
             return -1;
         }

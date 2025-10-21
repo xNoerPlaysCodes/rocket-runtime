@@ -4,7 +4,7 @@
 #include <glm/ext/quaternion_geometric.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
-#include <epoxy/gl.h>
+#include <GL/glew.h>
 #include "../../include/rocket/renderer.hpp"
 #include "util.hpp"
 #include <GLFW/glfw3.h>

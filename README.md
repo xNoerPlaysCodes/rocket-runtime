@@ -15,7 +15,7 @@
 - Asset Manager
     - A powerful and clean asset manager with use timeouts and lazy loading
 - API Stability
-    - A stable API that rarely changes
+    - A stable API with few breaking changes
 - Human Language
     - Human-readable function names and classes with flow between each line
 

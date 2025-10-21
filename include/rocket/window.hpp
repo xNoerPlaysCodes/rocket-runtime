@@ -37,6 +37,8 @@ namespace rocket {
         static int get_count();
     };
 
+    class window_t;
+
     struct windowflags_t {
         bool fullscreen = false;
         bool vsync = false;
@@ -65,6 +67,7 @@ namespace rocket {
 
         /// --- Advanced ---
         std::string window_class_name = ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID;
+        window_t *share = nullptr;
     };
 
     struct window_state_t {
@@ -176,6 +179,7 @@ namespace rocket {
         /// @brief Gets the current platform
         platform_t get_platform();
     public:
+        static void __silent_next_constructor();
         /// @brief creates a new window
         window_t(const rocket::vec2i_t& size = { 800, 600 }, 
                 const std::string& title = "rGE - Example Window", 
@@ -188,6 +192,7 @@ namespace rocket {
         /// @brief Initialize the CPL Windowing Library before-hand
         static void cpl_init();
     public:
+        static void __silent_next_close();
         /// @brief closes the window
         /// @brief called by destructor
         void close();

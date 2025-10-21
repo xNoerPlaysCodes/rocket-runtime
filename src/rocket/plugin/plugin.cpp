@@ -36,7 +36,7 @@ namespace rocket {
 
     void *plugin_t::get_function(std::string name) {
         if (this->handle == nullptr) {
-            rocket::log_error("plugin not loaded", -1, "plugin_t::get_function", "fatal-to-function");
+            rocket::log_error("plugin not loaded", -1, "plugin_t::get_function", "error");
             return nullptr;
         }
 
@@ -62,13 +62,13 @@ namespace rocket {
         }
 
         if (on_load == nullptr || on_unload == nullptr) {
-            rocket::log_error("failed to get on_load or on_unload", -1, "plugin.cpp::handle_init_plugin", "fatal-to-function");
+            rocket::log_error("failed to get on_load or on_unload", -1, "plugin.cpp::handle_init_plugin", "error");
             return nullptr;
         }
 
         plugin_capabilities_t *cap = on_load(api);
         if (cap == nullptr) {
-            rocket::log_error("failed to get plugin capabilities", -1, "plugin.cpp::handle_init_plugin", "fatal-to-function");
+            rocket::log_error("failed to get plugin capabilities", -1, "plugin.cpp::handle_init_plugin", "error");
             return nullptr;
         }
 
@@ -80,13 +80,13 @@ namespace rocket {
             auto on_framestart = reinterpret_cast<void(*)()>(get_func(handle, "on_framestart"));
             auto on_frameend = reinterpret_cast<void(*)()>(get_func(handle, "on_frameend"));
             if (on_framestart == nullptr || on_frameend == nullptr) {
-                rocket::log_error("failed to get on_framestart or on_frameend while capabilities::needs_frame_events is true", -1, "plugin.cpp::handle_init_plugin", "fatal-to-function");
+                rocket::log_error("failed to get on_framestart or on_frameend while capabilities::needs_frame_events is true", -1, "plugin.cpp::handle_init_plugin", "error");
                 return nullptr;
             }
         }
 
         if (cap->is_lazy_loadable) {
-            rocket::log_error("lazy loadable plugins not supported", -1, "plugin.cpp::handle_init_plugin", "fatal-to-function");
+            rocket::log_error("lazy loadable plugins not supported", -1, "plugin.cpp::handle_init_plugin", "error");
         }
 
         return cap;
@@ -127,7 +127,7 @@ namespace rocket {
             return nullptr;
         }
         if (!std::filesystem::exists(plugin)) {
-            rocket::log_error("plugin does not exist", -1, "plugin.cpp::load_plugin", "fatal-to-function");
+            rocket::log_error("plugin does not exist", -1, "plugin.cpp::load_plugin", "error");
             return nullptr;
         }
 
@@ -135,7 +135,7 @@ namespace rocket {
         memset(&zip, 0, sizeof(zip));
         
         if (!mz_zip_reader_init_file(&zip, plugin.string().c_str(), 0)) {
-            rocket::log_error("failed to open plugin", -1, "plugin.cpp::load_plugin", "fatal-to-function");
+            rocket::log_error("failed to open plugin", -1, "plugin.cpp::load_plugin", "error");
             return nullptr;
         }
 
@@ -145,7 +145,7 @@ namespace rocket {
         for (int i = 0; i < num_files; ++i) {
             mz_zip_archive_file_stat stat;
             if (!mz_zip_reader_file_stat(&zip, i, &stat)) {
-                rocket::log_error("failed to get file stats", -1, "plugin.cpp::load_plugin", "fatal-to-function");
+                rocket::log_error("failed to get file stats", -1, "plugin.cpp::load_plugin", "error");
                 return nullptr;
             }
 
@@ -157,7 +157,7 @@ namespace rocket {
                 std::vector<uint8_t> buffer(lib_size);
 
                 if (!mz_zip_reader_extract_to_mem(&zip, i, buffer.data(), lib_size, 0)) {
-                    rocket::log_error("failed to extract library from plugin", -1, "plugin.cpp::load_plugin", "fatal-to-function");
+                    rocket::log_error("failed to extract library from plugin", -1, "plugin.cpp::load_plugin", "error");
                     return nullptr;
                 }
 
@@ -169,7 +169,7 @@ namespace rocket {
 
                 lib_handle handle = load_lib(tmp_path.string().c_str());
                 if (handle == nullptr) {
-                    rocket::log_error("failed to load extracted library", -1, "plugin.cpp::load_plugin", "fatal-to-function");
+                    rocket::log_error("failed to load extracted library", -1, "plugin.cpp::load_plugin", "error");
                     return nullptr;
                 }
 

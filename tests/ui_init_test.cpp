@@ -36,11 +36,14 @@ void draw_info_util(astro::button_t &button, astro::draw_info_t &info) {
     }
 }
 
-int main() {
+int main(int argc, char **argv) {
+    rocket::set_cli_arguments(argc, argv);
     rocket::windowflags_t flags;
     flags.resizable = false;
+    flags.msaa_samples = 4;
     rocket::window_t window({ 1280, 720 }, "RocketGE - UI Init Test", flags);
-    rocket::renderer_2d r(&window, 60);
+    rocket::renderer_2d r(&window, 60, {
+    });
 
     astro::set_renderer(&r);
 

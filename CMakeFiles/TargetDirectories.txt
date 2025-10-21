@@ -7,6 +7,7 @@
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/iosim.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/io_test.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/plugin_test.dir
+/home/noerlol/C-Projects/RocketGE/CMakeFiles/multithreaded_test.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/ui_init_test.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/netcore_test.dir
 /home/noerlol/C-Projects/RocketGE/CMakeFiles/moving_circle.dir

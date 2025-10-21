@@ -31,6 +31,8 @@ namespace rocket {
     struct renderer_flags_t {
         bool fxaa_simplified = false;
         bool share_renderer_as_global = true;
+        /// @brief Show the splash screen
+        bool show_splash = true;
     };
     enum class render_mode_t {
         /// @brief Enables a preloaded simplified FXAA Shader
@@ -55,6 +57,8 @@ namespace rocket {
         std::vector<instanced_quad_t> batch;
         bool batched = false;
 
+        bool frame_started = false;
+
         rocket::vec2f_t override_viewport_size = {-1, -1};
         rocket::vec2f_t override_viewport_offset = {-1, -1};
 
@@ -62,11 +66,17 @@ namespace rocket {
         
         renderer_flags_t flags;
 
+        bool splash_shown = false;
+
         friend class renderer_3d;
         friend class font_t;
     public:
+        /// @brief Check if frame has begun
+        bool has_frame_began();
         /// @brief Begin frame
         void begin_frame();
+        /// @brief Show the splash ignoring flags
+        void show_splash();
         /// @brief Begin render mode
         void begin_render_mode(render_mode_t);
         /// @brief Get a contiguous block of pixels
@@ -135,6 +145,10 @@ namespace rocket {
         /// @param roundedness Roundedness [0-1]
         void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f, float roundedness = 0.f);
 
+        /// @brief Make a texture ready for drawing
+        /// @note Not needed to be called before drawing
+        void make_ready_texture(std::shared_ptr<rocket::texture_t> texture);
+
         /// @brief Draw text
         /// @param text Text
         /// @param position Position
@@ -169,6 +183,8 @@ namespace rocket {
         void end_render_mode(render_mode_t mode);
         /// @brief End frame
         void end_frame();
+        /// @brief Check if frame has ended
+        bool has_frame_ended();
         /// @brief Set viewport size
         void set_viewport_size(vec2f_t size);
         /// @brief Set viewport offset

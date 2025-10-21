@@ -128,7 +128,7 @@ namespace rocket {
             platform.type = platform_type_t::windows;
             platform.os_name = "Windows";
         } else {
-            rocket::log_error("platform unimplemented", -1, "window_t::get_platform", "fatal-to-function");
+            rocket::log_error("platform unimplemented", -1, "window_t::get_platform", "error");
             return {};
         }
 
@@ -139,19 +139,19 @@ namespace rocket {
 
     RGE_STATIC_FUNC_IMPL void window_t::set_forced_platform(platform_type_t type) {
         if (glfw_initialized) {
-            rocket::log_error("too late! glfw has already been initialized", -1, "window_t::set_forced_platform", "fatal-to-function");
+            rocket::log_error("too late! glfw has already been initialized", -1, "window_t::set_forced_platform", "error");
             return;
         }
 
         if (type == platform_type_t::linux_wayland) {
 #ifndef ROCKETGE__Platform_Linux
-            rocket::log_error("type can only be platform_type_t::linux_wayland when on linux", -1, "window_t::set_forced_platform", "fatal-to-function");
+            rocket::log_error("type can only be platform_type_t::linux_wayland when on linux", -1, "window_t::set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WAYLAND);
 #endif
         } else if (type == platform_type_t::linux_x11) {
 #ifndef ROCKETGE__Platform_Linux
-            rocket::log_error("type can only be platform_type_t::linux_x11 when on linux", -1, "window_t::set_forced_platform", "fatal-to-function");
+            rocket::log_error("type can only be platform_type_t::linux_x11 when on linux", -1, "window_t::set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
 #endif
@@ -159,18 +159,18 @@ namespace rocket {
 
         else if (type == platform_type_t::windows) {
 #ifndef ROCKETGE__Platform_Windows
-            rocket::log_error("type can only be platform_type_t::windows when on windows", -1, "window_t::set_forced_platform", "fatal-to-function");
+            rocket::log_error("type can only be platform_type_t::windows when on windows", -1, "window_t::set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WIN32);
 #endif
         } else if (type == platform_type_t::macos_cocoa) {
 #ifndef ROCKETGE__Platform_macOS
-            rocket::log_error("type can only be platform_type_t::macos_cocoa when on macOS", -1, "window_t::set_forced_platform", "fatal-to-function");
+            rocket::log_error("type can only be platform_type_t::macos_cocoa when on macOS", -1, "window_t::set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_COCOA);
 #endif
         } else {
-            rocket::log_error("platform is not valid!", -1, "window_t::set_forced_platform", "fatal-to-function");
+            rocket::log_error("platform is not valid!", -1, "window_t::set_forced_platform", "error");
         }
     }
 
@@ -240,6 +240,12 @@ namespace rocket {
 
         glfwSetErrorCallback(_cb_glfw_error_cb);
         return 4.6f;
+    }
+
+    bool silent_cons = false;
+
+    RGE_STATIC_FUNC_IMPL void window_t::__silent_next_constructor() {
+        silent_cons = true;
     }
 
     window_t::window_t(const rocket::vec2i_t& size,
@@ -394,7 +400,11 @@ namespace rocket {
         // We set Swap Interval at poll_events() -> first_init
         this->flags = flags;
         glfwWindowHint(GLFW_SAMPLES, flags.msaa_samples);
-        this->glfw_window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
+        GLFWwindow *share = nullptr;
+        if (flags.share) {
+            share = flags.share->glfw_window;
+        }
+        this->glfw_window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, share);
         if (this->glfw_window == nullptr) {
             rocket::log_error("failed to create window", -1, "window_t::constructor", "fatal");
             platform_t platform = this->get_platform();
@@ -435,37 +445,40 @@ namespace rocket {
             glfwWaitEvents();
         });
 
-        rocket::log("Window created as [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "] " + title, 
-            "window_t", "constructor", 
-            "info");
-        auto platform = get_platform();
-        std::string glfw_platform_str = platform.name;
+        if (!silent_cons) {
+            silent_cons = false;
+            rocket::log("Window created as [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "] " + title, 
+                "window_t", "constructor", 
+                "info");
+            auto platform = get_platform();
+            std::string glfw_platform_str = platform.name;
 
-        std::vector<std::string> logs = {
-            "Engine Version: " ROCKETGE__VERSION,
-            "Backend Windowing: GLFW",
-            "Native Windowing: " + glfw_platform_str,
-            "Engine Platform: " + platform.rge_name,
-            "Modules:",
-            #ifdef ROCKETGE__BUILD_QUARK
-                "- Quark: [ENABLED]",
-            #else
-                "- Quark: [DISABLED]",
-            #endif
-            #ifdef ROCKETGE__BUILD_ASTRO
-                "- AstroUI: [ENABLED]",
-            #else
-                "- AstroUI: [DISABLED]",
-            #endif
-            #ifdef ROCKETGE__BUILD_NETWORKING
-                "- Networking: [ENABLED]",
-            #else
-                "- Networking: [DISABLED]",
-            #endif
-        };
+            std::vector<std::string> logs = {
+                "Engine Version: " ROCKETGE__VERSION,
+                "Backend Windowing: GLFW",
+                "Native Windowing: " + glfw_platform_str,
+                "Engine Platform: " + platform.rge_name,
+                "Modules:",
+                #ifdef ROCKETGE__BUILD_QUARK
+                    "- Quark: [ENABLED]",
+                #else
+                    "- Quark: [DISABLED]",
+                #endif
+                #ifdef ROCKETGE__BUILD_ASTRO
+                    "- AstroUI: [ENABLED]",
+                #else
+                    "- AstroUI: [DISABLED]",
+                #endif
+                #ifdef ROCKETGE__BUILD_NETWORKING
+                    "- Networking: [ENABLED]",
+                #else
+                    "- Networking: [DISABLED]",
+                #endif
+            };
 
-        for (auto &l : logs) {
-            rocket::log(l, "window_t", "constructor", "info");
+            for (auto &l : logs) {
+                rocket::log(l, "window_t", "constructor", "info");
+            }
         }
     }
 
@@ -480,7 +493,7 @@ namespace rocket {
     void window_t::set_icon(std::shared_ptr<rocket::texture_t> texture) {
         if (texture->channels != rGE__TEXTURE_CHANNEL_COUNT_RGBA) {
             std::string channel_count = std::to_string(texture->channels);
-            rocket::log_error("texture must be in RGBA format (try load in texture_color_format_t::rgba), channel count was: " + channel_count, -1, "window_t::set_icon", "fatal-to-function");
+            rocket::log_error("texture must be in RGBA format (try load in texture_color_format_t::rgba), channel count was: " + channel_count, -1, "window_t::set_icon", "error");
             return;
         }
         auto pxdata = texture->data.data();
@@ -496,7 +509,7 @@ namespace rocket {
         }
  
         if (get_platform().type == platform_type_t::macos_cocoa) {
-            rocket::log_error("macOS::Cocoa does not support dynamically setting window icons", -1, "window_t::set_icon", "fatal-to-function");
+            rocket::log_error("macOS::Cocoa does not support dynamically setting window icons", -1, "window_t::set_icon", "error");
             return;
         }
 
@@ -642,6 +655,11 @@ namespace rocket {
         return this->mode;
     }
 
+    bool silent_desc = false;
+    RGE_STATIC_FUNC_IMPL void window_t::__silent_next_close() {
+        silent_desc = true;
+    }
+
     void window_t::close() {
         if (glfw_window == nullptr) {
             return;
@@ -649,7 +667,7 @@ namespace rocket {
         glfwDestroyWindow(glfw_window);
         glfw_window = nullptr;
 
-        if (glfw_initialized) {
+        if (glfw_initialized && !silent_desc) {
             glfwTerminate();
             glfw_initialized = false;
         }
@@ -658,7 +676,11 @@ namespace rocket {
         if (destructor_called) {
             cxf = "destructor";
         }
-        rocket::log("Window closed", "window_t", cxf, "info");
+        if (silent_desc) {
+            rocket::log("Window closed", "window_t", cxf, "info");
+        }
+
+        silent_desc = false;
     }
 
     window_t::~window_t() {

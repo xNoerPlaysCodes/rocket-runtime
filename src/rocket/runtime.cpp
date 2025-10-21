@@ -2,6 +2,9 @@
 #include "util.hpp"
 #include <iostream>
 #include <string>
+#include <queue>
+#include <mutex>
+#include <condition_variable>
 
 namespace rocket {
     void set_log_level(log_level_t level) { util::set_log_level(level); }
@@ -21,8 +24,8 @@ namespace rocket {
                 return "info";
             case log_level_t::warn:
                 return "warn";
-            case log_level_t::fatal_to_function:
-                return "fatal_to_function";
+            case log_level_t::fatal_to_function: // || error:
+                return "error";
             case log_level_t::fatal:
                 return "fatal";
             default:
@@ -37,12 +40,61 @@ namespace rocket {
         util::set_log_callback(callback); 
     }
 
-    void log_error(std::string error, int error_id, std::string error_source, std::string level) { 
-        std::cerr << util::format_error(error, error_id, error_source, level);
+    std::mutex log_mutex;
+    std::queue<std::string> log_queue;
+    std::condition_variable log_cv;
+
+    std::atomic<bool> log_thread_continue = false;
+    std::thread log_thread;
+
+    void log_init() {
+        log_thread = std::thread([]() {
+            while (log_thread_continue) {
+                std::unique_lock<std::mutex> lock(log_mutex);
+                log_cv.wait(lock, [] { return !log_queue.empty() || !log_thread_continue; });
+                while (!log_queue.empty()) {
+                    std::cout << log_queue.front();
+                    log_queue.pop();
+                }
+            }
+        });
+    }
+
+    std::mutex log_error_mutex;
+    std::queue<std::string> log_error_queue;
+    std::condition_variable log_error_cv;
+
+    std::atomic<bool> log_error_thread_continue = false;
+    std::thread log_error_thread;
+
+    void log_error_init() {
+        log_error_thread = std::thread([]() {
+            while (log_error_thread_continue) {
+                std::unique_lock<std::mutex> lock(log_error_mutex);
+                log_error_cv.wait(lock, [] { return !log_error_queue.empty() || !log_error_thread_continue; });
+                while (!log_error_queue.empty()) {
+                    std::cerr << log_error_queue.front();
+                    log_error_queue.pop();
+                }
+            }
+        });
+    }
+
+    std::mutex cerr_mutex;
+    std::mutex cout_mutex;
+
+    void log_error(std::string error, int error_id, std::string error_source, std::string level) {
+        {
+            std::lock_guard<std::mutex> _(cerr_mutex);
+            std::cerr << util::format_error(error, error_id, error_source, level);
+        }
     }
 
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
-        std::cout << util::format_log(log, class_file_library_source, function_source, level);
+        {
+            std::lock_guard<std::mutex> _(cout_mutex);
+            std::cout << util::format_log(log, class_file_library_source, function_source, level);
+        }
     }
 
     void set_opengl_error_callback(gl_error_callback_t cb) {
@@ -93,7 +145,7 @@ namespace rocket {
             }
 
             if (value.empty() && std::find(args_with_values.begin(), args_with_values.end(), arg) != args_with_values.end()) {
-                rocket::log_error("argument " + arg + " does not have a value where it is required", -1, "RocketRuntime", "fatal-to-function");
+                rocket::log_error("argument " + arg + " does not have a value where it is required", -1, "RocketRuntime", "error");
                 continue;
             }
 

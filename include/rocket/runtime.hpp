@@ -10,7 +10,7 @@
 
 #define ROCKETGE__MAJOR_VERSION  1
 #define ROCKETGE__MINOR_VERSION  0
-#define ROCKETGE__BUILD          "alpha"
+#define ROCKETGE__BUILD          "rc"
 #define ROCKETGE__STRX_(x)       #x
 #define ROCKETGE__STRX(x)        ROCKETGE__STRX_(x)
 #define ROCKETGE__VERSION        ROCKETGE__STRX(ROCKETGE__MAJOR_VERSION) "." ROCKETGE__STRX(ROCKETGE__MINOR_VERSION) "-" ROCKETGE__BUILD
@@ -56,7 +56,9 @@ namespace rocket {
         debug = 2,
         info = 3,
         warn = 4,
+        /// DEPRECATED: USE ERROR
         fatal_to_function = 5,
+        error = 5,
         fatal = 6,
         none = 7
     };
