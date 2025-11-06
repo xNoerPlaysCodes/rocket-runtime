@@ -158,7 +158,18 @@ namespace rgl {
 
     // TODO Implement!
     struct draw_metrics_t {
+        float avg_frametime = 0;
+        float avg_fps = 0;
+
+        float max_frametime = 0;
+        float min_fps = 0;
+
+        float min_frametime = 0;
+        float max_fps = 0;
     };
+
+    void update_draw_metrics_data(float frametime, float fps);
+    draw_metrics_t get_draw_metrics();
 
     rgl::shader_program_t get_fxaa_simplified_shader();
 

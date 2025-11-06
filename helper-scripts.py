@@ -9,6 +9,8 @@ parser.add_argument("--get-deps", action="store_true", help="Shows the \
         dependencies needed to build")
 parser.add_argument("--build-rnative", action="store_true", help="Builds the \
         dependencies for RNative")
+parser.add_argument("--print-loc", action="store_true", help="Counts lines of \
+        code")
 
 
 def get_deps() -> None:
@@ -56,6 +58,19 @@ def build_rnative() -> int:
     return 0
 
 
+def print_loc():
+    import shutil
+    command = "cloc"
+    if not shutil.which(command):
+        print(f"{command} was not found in PATH.")
+        return 1
+    args = ["--include-ext=cpp,hpp", "src/", "include/"]
+
+    print("command: " + command + " " + " ".join(args))
+    subprocess.run([command] + args)
+    return 0
+
+
 def main() -> int:
     args = parser.parse_args()
 
@@ -63,6 +78,8 @@ def main() -> int:
         get_deps()
     elif args.build_rnative:
         return build_rnative()
+    elif args.print_loc:
+        return print_loc()
     else:
         parser.print_help()
         return 1

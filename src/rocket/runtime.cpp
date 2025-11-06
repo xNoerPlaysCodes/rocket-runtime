@@ -90,6 +90,14 @@ namespace rocket {
         }
     }
 
+    void log_error(std::string error, std::string error_source, std::string level) {
+        log_error(error, -1, error_source, level);
+    }
+
+    void __log_error_with_id(std::string error, int error_id, std::string error_source, std::string level) {
+        log_error(error, error_id, error_source, level);
+    }
+
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
         {
             std::lock_guard<std::mutex> _(cout_mutex);
@@ -124,40 +132,79 @@ namespace rocket {
 
         const std::vector<std::string> args_with_values = {};
         util::global_state_cliargs_t args = {};
-        for (int i = 0; i < argc; ++i) {
+        bool exit = false;
+        std::string additional_exit_message;
+        for (int i = 1; i < argc; ++i) {
             int nexti = i + 1;
             std::string arg = argv[i];
             std::string value = "";
             if (nexti != argc) {
-                if (argv[nexti][0] != '-' || argv[nexti][0] != '/') {
+                if (argv[nexti][0] != '-' && argv[nexti][0] != '/') {
                     value = argv[nexti];
                 }
             }
 
+            std::string rawarg = arg;
+
+            bool argument_detected = false;
+            bool too_many_prefixes;
+
             if (arg.starts_with("--")) {
                 arg = arg.substr(2);
+                too_many_prefixes = argument_detected;
+                argument_detected = true;
             }
             if (arg.starts_with("-")) {
                 arg = arg.substr(1);
+                too_many_prefixes = argument_detected;
+                argument_detected = true;
             }
             if (arg.starts_with("/")) {
                 arg = arg.substr(1);
+                too_many_prefixes = argument_detected;
+                argument_detected = true;
+            }
+
+            if (too_many_prefixes) {
+                exit = true;
+                rocket::log_error("unexpected argument: " + rawarg, -1, "rocket::argparse", "error");
             }
 
             if (value.empty() && std::find(args_with_values.begin(), args_with_values.end(), arg) != args_with_values.end()) {
-                rocket::log_error("argument " + arg + " does not have a value where it is required", -1, "RocketRuntime", "error");
+                rocket::log_error("argument " + arg + " does not have a value where it is required", -1, "rocket::argparse", "error");
                 continue;
             }
 
-            if (arg == "noplugins") {
-                args.noplugins = true;
-            } else if (arg == "logall") {
-                args.logall = true;
-            } else if (arg == "debugoverlay") {
-                args.debugoverlay = true;
-            } else if (arg == "glversion") {
-                args.glversion = GL_VERSION_UNK; // TODO Replace
+            if (!value.empty()) {
+                ++i;
             }
+
+            if (arg == "noplugins" || arg == "no-plugins") {
+                args.noplugins = true;
+            } else if (arg == "logall" || arg == "log-all") {
+                args.logall = true;
+            } else if (arg == "debugoverlay" || arg == "doverlay" || arg == "debug-overlay") {
+                args.debugoverlay = true;
+            } else if (arg == "glversion" || arg == "gl-version") {
+                args.glversion = GL_VERSION_UNK; // TODO Replace
+            } else if (arg == "nosplash" || arg == "no-splash") {
+                args.nosplash = true;
+            } else if (arg == "dx11" || arg == "dx-11") {
+                args.dx11 = true;
+            } else if (arg == "dx12" || arg == "dx-12") {
+                args.dx12 = true;
+            } else {
+                rocket::log_error("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), -1, "rocket::argparse", "error");
+                exit = true;
+            }
+        }
+
+        if (exit) {
+            rocket::log_error("one or more errors found in parser", -1, "rocket::argparse", "fatal");
+            if (!additional_exit_message.empty()) {
+                rocket::log_error(additional_exit_message, -1, "rocket::argparse", "fatal");
+            }
+            rocket::exit(1);
         }
 
         util::init_clistate(args);

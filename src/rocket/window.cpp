@@ -96,6 +96,11 @@ namespace rocket {
     }
 
     RGE_STATIC_FUNC_IMPL void window_t::cpl_init() {
+        if (glfwPlatformSupported(GLFW_PLATFORM_WAYLAND) && util::is_wayland()) {
+            rocket::log("Wayland found! Going back to X11...", "window_t", "cpl_init", "debug");
+            window_t::set_forced_platform(platform_type_t::linux_x11);
+        }
+
         if (!glfw_initialized) {
             glfwSetErrorCallback(_cb_glfw_error_cb);
             if (int glfwInit_exc = glfwInit(); !glfwInit_exc) {
@@ -107,7 +112,7 @@ namespace rocket {
         }
     }
 
-    platform_t window_t::get_platform() {
+    RGE_STATIC_FUNC_IMPL platform_t window_t::get_platform() {
         int glfw_platform = glfwGetPlatform();
         platform_t platform;
         std::string glfw_platform_str = platform.name;

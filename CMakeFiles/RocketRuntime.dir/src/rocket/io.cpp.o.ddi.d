@@ -12,7 +12,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o.ddi: \
   /usr/include/gnu/stubs-64.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/pstl_config.h \
-  /usr/lib/clang/20/include/stdint.h /usr/include/stdint.h \
+  /usr/lib/clang/21/include/stdint.h /usr/include/stdint.h \
   /usr/include/bits/libc-header-start.h /usr/include/bits/types.h \
   /usr/include/bits/typesizes.h /usr/include/bits/time64.h \
   /usr/include/bits/wchar.h /usr/include/bits/stdint-intn.h \
@@ -24,15 +24,15 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/exception_ptr.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/exception_defines.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/cxxabi_init_exception.h \
-  /usr/lib/clang/20/include/stddef.h \
-  /usr/lib/clang/20/include/__stddef_header_macro.h \
-  /usr/lib/clang/20/include/__stddef_ptrdiff_t.h \
-  /usr/lib/clang/20/include/__stddef_size_t.h \
-  /usr/lib/clang/20/include/__stddef_wchar_t.h \
-  /usr/lib/clang/20/include/__stddef_null.h \
-  /usr/lib/clang/20/include/__stddef_nullptr_t.h \
-  /usr/lib/clang/20/include/__stddef_max_align_t.h \
-  /usr/lib/clang/20/include/__stddef_offsetof.h \
+  /usr/lib/clang/21/include/stddef.h \
+  /usr/lib/clang/21/include/__stddef_header_macro.h \
+  /usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
+  /usr/lib/clang/21/include/__stddef_size_t.h \
+  /usr/lib/clang/21/include/__stddef_wchar_t.h \
+  /usr/lib/clang/21/include/__stddef_null.h \
+  /usr/lib/clang/21/include/__stddef_nullptr_t.h \
+  /usr/lib/clang/21/include/__stddef_max_align_t.h \
+  /usr/lib/clang/21/include/__stddef_offsetof.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/typeinfo \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/hash_bytes.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/new \
@@ -47,8 +47,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/postypes.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cwchar \
   /usr/include/wchar.h /usr/include/bits/floatn.h \
-  /usr/include/bits/floatn-common.h /usr/lib/clang/20/include/stdarg.h \
-  /usr/lib/clang/20/include/__stdarg___gnuc_va_list.h \
+  /usr/include/bits/floatn-common.h /usr/lib/clang/21/include/stdarg.h \
+  /usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
   /usr/include/bits/types/wint_t.h /usr/include/bits/types/mbstate_t.h \
   /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
   /usr/include/bits/types/FILE.h /usr/include/bits/types/locale_t.h \
@@ -121,14 +121,15 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o.ddi: \
   /usr/include/bits/pthreadtypes-arch.h \
   /usr/include/bits/atomic_wide_counter.h \
   /usr/include/bits/struct_mutex.h /usr/include/bits/struct_rwlock.h \
-  /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
+  /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
+  /usr/include/bits/stdlib-float.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_abs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdio \
   /usr/include/stdio.h /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__fpos64_t.h \
   /usr/include/bits/types/struct_FILE.h \
   /usr/include/bits/types/cookie_io_functions_t.h \
-  /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/stdio.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cerrno \
   /usr/include/errno.h /usr/include/bits/errno.h \
   /usr/include/linux/errno.h /usr/include/asm/errno.h \
@@ -426,7 +427,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/atomic_lockfree_defines.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/atomic_wait.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/climits \
-  /usr/lib/clang/20/include/limits.h /usr/include/limits.h \
+  /usr/lib/clang/21/include/limits.h /usr/include/limits.h \
   /usr/include/bits/posix1_lim.h /usr/include/bits/local_lim.h \
   /usr/include/linux/limits.h /usr/include/bits/posix2_lim.h \
   /usr/include/bits/xopen_lim.h /usr/include/bits/uio_lim.h \
@@ -462,15 +463,15 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o.ddi: \
   /usr/include/SDL2/begin_code.h /usr/include/SDL2/close_code.h \
   /usr/include/SDL2/SDL_config_unix.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/stdlib.h \
-  /usr/lib/clang/20/include/__stdarg_header_macro.h \
-  /usr/lib/clang/20/include/__stdarg_va_list.h \
-  /usr/lib/clang/20/include/__stdarg_va_arg.h \
-  /usr/lib/clang/20/include/__stdarg___va_copy.h \
-  /usr/lib/clang/20/include/__stdarg_va_copy.h /usr/include/string.h \
-  /usr/include/strings.h /usr/lib/clang/20/include/inttypes.h \
+  /usr/lib/clang/21/include/__stdarg_header_macro.h \
+  /usr/lib/clang/21/include/__stdarg_va_list.h \
+  /usr/lib/clang/21/include/__stdarg_va_arg.h \
+  /usr/lib/clang/21/include/__stdarg___va_copy.h \
+  /usr/lib/clang/21/include/__stdarg_va_copy.h /usr/include/string.h \
+  /usr/include/strings.h /usr/lib/clang/21/include/inttypes.h \
   /usr/include/inttypes.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/math.h \
-  /usr/lib/clang/20/include/float.h /usr/include/SDL2/SDL_error.h \
+  /usr/lib/clang/21/include/float.h /usr/include/SDL2/SDL_error.h \
   /usr/include/SDL2/SDL_rwops.h /usr/include/SDL2/SDL_sensor.h \
   /usr/include/SDL2/SDL_joystick.h /usr/include/SDL2/SDL_guid.h \
   /usr/include/SDL2/SDL_mutex.h /usr/include/SDL2/SDL_haptic.h \
@@ -485,127 +486,127 @@ CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o.ddi: \
   /usr/include/SDL2/SDL_assert.h /usr/include/SDL2/SDL_atomic.h \
   /usr/include/SDL2/SDL_audio.h /usr/include/SDL2/SDL_endian.h \
   /usr/include/SDL2/SDL_thread.h /usr/include/SDL2/SDL_clipboard.h \
-  /usr/include/SDL2/SDL_cpuinfo.h /usr/lib/clang/20/include/immintrin.h \
-  /usr/lib/clang/20/include/x86gprintrin.h \
-  /usr/lib/clang/20/include/hresetintrin.h \
-  /usr/lib/clang/20/include/uintrintrin.h \
-  /usr/lib/clang/20/include/usermsrintrin.h \
-  /usr/lib/clang/20/include/crc32intrin.h \
-  /usr/lib/clang/20/include/prfchiintrin.h \
-  /usr/lib/clang/20/include/raointintrin.h \
-  /usr/lib/clang/20/include/cmpccxaddintrin.h \
-  /usr/lib/clang/20/include/mmintrin.h \
-  /usr/lib/clang/20/include/xmmintrin.h \
-  /usr/lib/clang/20/include/mm_malloc.h \
-  /usr/lib/clang/20/include/emmintrin.h \
-  /usr/lib/clang/20/include/pmmintrin.h \
-  /usr/lib/clang/20/include/tmmintrin.h \
-  /usr/lib/clang/20/include/smmintrin.h \
-  /usr/lib/clang/20/include/popcntintrin.h \
-  /usr/lib/clang/20/include/wmmintrin.h \
-  /usr/lib/clang/20/include/__wmmintrin_aes.h \
-  /usr/lib/clang/20/include/__wmmintrin_pclmul.h \
-  /usr/lib/clang/20/include/clflushoptintrin.h \
-  /usr/lib/clang/20/include/clwbintrin.h \
-  /usr/lib/clang/20/include/avxintrin.h \
-  /usr/lib/clang/20/include/avx2intrin.h \
-  /usr/lib/clang/20/include/f16cintrin.h \
-  /usr/lib/clang/20/include/bmiintrin.h \
-  /usr/lib/clang/20/include/bmi2intrin.h \
-  /usr/lib/clang/20/include/lzcntintrin.h \
-  /usr/lib/clang/20/include/fmaintrin.h \
-  /usr/lib/clang/20/include/avx512fintrin.h \
-  /usr/lib/clang/20/include/avx512vlintrin.h \
-  /usr/lib/clang/20/include/avx512bwintrin.h \
-  /usr/lib/clang/20/include/avx512bitalgintrin.h \
-  /usr/lib/clang/20/include/avx512cdintrin.h \
-  /usr/lib/clang/20/include/avx512vpopcntdqintrin.h \
-  /usr/lib/clang/20/include/avx512vpopcntdqvlintrin.h \
-  /usr/lib/clang/20/include/avx512vnniintrin.h \
-  /usr/lib/clang/20/include/avx512vlvnniintrin.h \
-  /usr/lib/clang/20/include/avxvnniintrin.h \
-  /usr/lib/clang/20/include/avx512dqintrin.h \
-  /usr/lib/clang/20/include/avx512vlbitalgintrin.h \
-  /usr/lib/clang/20/include/avx512vlbwintrin.h \
-  /usr/lib/clang/20/include/avx512vlcdintrin.h \
-  /usr/lib/clang/20/include/avx512vldqintrin.h \
-  /usr/lib/clang/20/include/avx512ifmaintrin.h \
-  /usr/lib/clang/20/include/avx512ifmavlintrin.h \
-  /usr/lib/clang/20/include/avxifmaintrin.h \
-  /usr/lib/clang/20/include/avx512vbmiintrin.h \
-  /usr/lib/clang/20/include/avx512vbmivlintrin.h \
-  /usr/lib/clang/20/include/avx512vbmi2intrin.h \
-  /usr/lib/clang/20/include/avx512vlvbmi2intrin.h \
-  /usr/lib/clang/20/include/avx512fp16intrin.h \
-  /usr/lib/clang/20/include/avx512vlfp16intrin.h \
-  /usr/lib/clang/20/include/avx512bf16intrin.h \
-  /usr/lib/clang/20/include/avx512vlbf16intrin.h \
-  /usr/lib/clang/20/include/pkuintrin.h \
-  /usr/lib/clang/20/include/vpclmulqdqintrin.h \
-  /usr/lib/clang/20/include/vaesintrin.h \
-  /usr/lib/clang/20/include/gfniintrin.h \
-  /usr/lib/clang/20/include/avxvnniint8intrin.h \
-  /usr/lib/clang/20/include/avxneconvertintrin.h \
-  /usr/lib/clang/20/include/sha512intrin.h \
-  /usr/lib/clang/20/include/sm3intrin.h \
-  /usr/lib/clang/20/include/sm4intrin.h \
-  /usr/lib/clang/20/include/avxvnniint16intrin.h \
-  /usr/lib/clang/20/include/rtmintrin.h \
-  /usr/lib/clang/20/include/xtestintrin.h \
-  /usr/lib/clang/20/include/shaintrin.h \
-  /usr/lib/clang/20/include/fxsrintrin.h \
-  /usr/lib/clang/20/include/xsaveintrin.h \
-  /usr/lib/clang/20/include/xsaveoptintrin.h \
-  /usr/lib/clang/20/include/xsavecintrin.h \
-  /usr/lib/clang/20/include/xsavesintrin.h \
-  /usr/lib/clang/20/include/cetintrin.h \
-  /usr/lib/clang/20/include/adcintrin.h \
-  /usr/lib/clang/20/include/adxintrin.h \
-  /usr/lib/clang/20/include/rdseedintrin.h \
-  /usr/lib/clang/20/include/wbnoinvdintrin.h \
-  /usr/lib/clang/20/include/cldemoteintrin.h \
-  /usr/lib/clang/20/include/waitpkgintrin.h \
-  /usr/lib/clang/20/include/movdirintrin.h \
-  /usr/lib/clang/20/include/movrsintrin.h \
-  /usr/lib/clang/20/include/movrs_avx10_2intrin.h \
-  /usr/lib/clang/20/include/movrs_avx10_2_512intrin.h \
-  /usr/lib/clang/20/include/pconfigintrin.h \
-  /usr/lib/clang/20/include/sgxintrin.h \
-  /usr/lib/clang/20/include/ptwriteintrin.h \
-  /usr/lib/clang/20/include/invpcidintrin.h \
-  /usr/lib/clang/20/include/keylockerintrin.h \
-  /usr/lib/clang/20/include/amxintrin.h \
-  /usr/lib/clang/20/include/amxfp16intrin.h \
-  /usr/lib/clang/20/include/amxcomplexintrin.h \
-  /usr/lib/clang/20/include/amxfp8intrin.h \
-  /usr/lib/clang/20/include/amxtransposeintrin.h \
-  /usr/lib/clang/20/include/amxmovrsintrin.h \
-  /usr/lib/clang/20/include/amxmovrstransposeintrin.h \
-  /usr/lib/clang/20/include/amxavx512intrin.h \
-  /usr/lib/clang/20/include/amxtf32intrin.h \
-  /usr/lib/clang/20/include/amxtf32transposeintrin.h \
-  /usr/lib/clang/20/include/amxbf16transposeintrin.h \
-  /usr/lib/clang/20/include/amxfp16transposeintrin.h \
-  /usr/lib/clang/20/include/amxcomplextransposeintrin.h \
-  /usr/lib/clang/20/include/avx512vp2intersectintrin.h \
-  /usr/lib/clang/20/include/avx512vlvp2intersectintrin.h \
-  /usr/lib/clang/20/include/avx10_2bf16intrin.h \
-  /usr/lib/clang/20/include/avx10_2convertintrin.h \
-  /usr/lib/clang/20/include/avx10_2copyintrin.h \
-  /usr/lib/clang/20/include/avx10_2minmaxintrin.h \
-  /usr/lib/clang/20/include/avx10_2niintrin.h \
-  /usr/lib/clang/20/include/avx10_2satcvtdsintrin.h \
-  /usr/lib/clang/20/include/avx10_2satcvtintrin.h \
-  /usr/lib/clang/20/include/avx10_2_512bf16intrin.h \
-  /usr/lib/clang/20/include/avx10_2_512convertintrin.h \
-  /usr/lib/clang/20/include/avx10_2_512minmaxintrin.h \
-  /usr/lib/clang/20/include/avx10_2_512niintrin.h \
-  /usr/lib/clang/20/include/avx10_2_512satcvtdsintrin.h \
-  /usr/lib/clang/20/include/avx10_2_512satcvtintrin.h \
-  /usr/lib/clang/20/include/sm4evexintrin.h \
-  /usr/lib/clang/20/include/enqcmdintrin.h \
-  /usr/lib/clang/20/include/serializeintrin.h \
-  /usr/lib/clang/20/include/tsxldtrkintrin.h \
+  /usr/include/SDL2/SDL_cpuinfo.h /usr/lib/clang/21/include/immintrin.h \
+  /usr/lib/clang/21/include/x86gprintrin.h \
+  /usr/lib/clang/21/include/hresetintrin.h \
+  /usr/lib/clang/21/include/uintrintrin.h \
+  /usr/lib/clang/21/include/usermsrintrin.h \
+  /usr/lib/clang/21/include/crc32intrin.h \
+  /usr/lib/clang/21/include/prfchiintrin.h \
+  /usr/lib/clang/21/include/raointintrin.h \
+  /usr/lib/clang/21/include/cmpccxaddintrin.h \
+  /usr/lib/clang/21/include/mmintrin.h \
+  /usr/lib/clang/21/include/xmmintrin.h \
+  /usr/lib/clang/21/include/mm_malloc.h \
+  /usr/lib/clang/21/include/emmintrin.h \
+  /usr/lib/clang/21/include/pmmintrin.h \
+  /usr/lib/clang/21/include/tmmintrin.h \
+  /usr/lib/clang/21/include/smmintrin.h \
+  /usr/lib/clang/21/include/popcntintrin.h \
+  /usr/lib/clang/21/include/wmmintrin.h \
+  /usr/lib/clang/21/include/__wmmintrin_aes.h \
+  /usr/lib/clang/21/include/__wmmintrin_pclmul.h \
+  /usr/lib/clang/21/include/clflushoptintrin.h \
+  /usr/lib/clang/21/include/clwbintrin.h \
+  /usr/lib/clang/21/include/avxintrin.h \
+  /usr/lib/clang/21/include/avx2intrin.h \
+  /usr/lib/clang/21/include/f16cintrin.h \
+  /usr/lib/clang/21/include/bmiintrin.h \
+  /usr/lib/clang/21/include/bmi2intrin.h \
+  /usr/lib/clang/21/include/lzcntintrin.h \
+  /usr/lib/clang/21/include/fmaintrin.h \
+  /usr/lib/clang/21/include/avx512fintrin.h \
+  /usr/lib/clang/21/include/avx512vlintrin.h \
+  /usr/lib/clang/21/include/avx512bwintrin.h \
+  /usr/lib/clang/21/include/avx512bitalgintrin.h \
+  /usr/lib/clang/21/include/avx512cdintrin.h \
+  /usr/lib/clang/21/include/avx512vpopcntdqintrin.h \
+  /usr/lib/clang/21/include/avx512vpopcntdqvlintrin.h \
+  /usr/lib/clang/21/include/avx512vnniintrin.h \
+  /usr/lib/clang/21/include/avx512vlvnniintrin.h \
+  /usr/lib/clang/21/include/avxvnniintrin.h \
+  /usr/lib/clang/21/include/avx512dqintrin.h \
+  /usr/lib/clang/21/include/avx512vlbitalgintrin.h \
+  /usr/lib/clang/21/include/avx512vlbwintrin.h \
+  /usr/lib/clang/21/include/avx512vlcdintrin.h \
+  /usr/lib/clang/21/include/avx512vldqintrin.h \
+  /usr/lib/clang/21/include/avx512ifmaintrin.h \
+  /usr/lib/clang/21/include/avx512ifmavlintrin.h \
+  /usr/lib/clang/21/include/avxifmaintrin.h \
+  /usr/lib/clang/21/include/avx512vbmiintrin.h \
+  /usr/lib/clang/21/include/avx512vbmivlintrin.h \
+  /usr/lib/clang/21/include/avx512vbmi2intrin.h \
+  /usr/lib/clang/21/include/avx512vlvbmi2intrin.h \
+  /usr/lib/clang/21/include/avx512fp16intrin.h \
+  /usr/lib/clang/21/include/avx512vlfp16intrin.h \
+  /usr/lib/clang/21/include/avx512bf16intrin.h \
+  /usr/lib/clang/21/include/avx512vlbf16intrin.h \
+  /usr/lib/clang/21/include/pkuintrin.h \
+  /usr/lib/clang/21/include/vpclmulqdqintrin.h \
+  /usr/lib/clang/21/include/vaesintrin.h \
+  /usr/lib/clang/21/include/gfniintrin.h \
+  /usr/lib/clang/21/include/avxvnniint8intrin.h \
+  /usr/lib/clang/21/include/avxneconvertintrin.h \
+  /usr/lib/clang/21/include/sha512intrin.h \
+  /usr/lib/clang/21/include/sm3intrin.h \
+  /usr/lib/clang/21/include/sm4intrin.h \
+  /usr/lib/clang/21/include/avxvnniint16intrin.h \
+  /usr/lib/clang/21/include/rtmintrin.h \
+  /usr/lib/clang/21/include/xtestintrin.h \
+  /usr/lib/clang/21/include/shaintrin.h \
+  /usr/lib/clang/21/include/fxsrintrin.h \
+  /usr/lib/clang/21/include/xsaveintrin.h \
+  /usr/lib/clang/21/include/xsaveoptintrin.h \
+  /usr/lib/clang/21/include/xsavecintrin.h \
+  /usr/lib/clang/21/include/xsavesintrin.h \
+  /usr/lib/clang/21/include/cetintrin.h \
+  /usr/lib/clang/21/include/adcintrin.h \
+  /usr/lib/clang/21/include/adxintrin.h \
+  /usr/lib/clang/21/include/rdseedintrin.h \
+  /usr/lib/clang/21/include/wbnoinvdintrin.h \
+  /usr/lib/clang/21/include/cldemoteintrin.h \
+  /usr/lib/clang/21/include/waitpkgintrin.h \
+  /usr/lib/clang/21/include/movdirintrin.h \
+  /usr/lib/clang/21/include/movrsintrin.h \
+  /usr/lib/clang/21/include/movrs_avx10_2intrin.h \
+  /usr/lib/clang/21/include/movrs_avx10_2_512intrin.h \
+  /usr/lib/clang/21/include/pconfigintrin.h \
+  /usr/lib/clang/21/include/sgxintrin.h \
+  /usr/lib/clang/21/include/ptwriteintrin.h \
+  /usr/lib/clang/21/include/invpcidintrin.h \
+  /usr/lib/clang/21/include/keylockerintrin.h \
+  /usr/lib/clang/21/include/amxintrin.h \
+  /usr/lib/clang/21/include/amxfp16intrin.h \
+  /usr/lib/clang/21/include/amxcomplexintrin.h \
+  /usr/lib/clang/21/include/amxfp8intrin.h \
+  /usr/lib/clang/21/include/amxtransposeintrin.h \
+  /usr/lib/clang/21/include/amxmovrsintrin.h \
+  /usr/lib/clang/21/include/amxmovrstransposeintrin.h \
+  /usr/lib/clang/21/include/amxavx512intrin.h \
+  /usr/lib/clang/21/include/amxtf32intrin.h \
+  /usr/lib/clang/21/include/amxtf32transposeintrin.h \
+  /usr/lib/clang/21/include/amxbf16transposeintrin.h \
+  /usr/lib/clang/21/include/amxfp16transposeintrin.h \
+  /usr/lib/clang/21/include/amxcomplextransposeintrin.h \
+  /usr/lib/clang/21/include/avx512vp2intersectintrin.h \
+  /usr/lib/clang/21/include/avx512vlvp2intersectintrin.h \
+  /usr/lib/clang/21/include/avx10_2bf16intrin.h \
+  /usr/lib/clang/21/include/avx10_2convertintrin.h \
+  /usr/lib/clang/21/include/avx10_2copyintrin.h \
+  /usr/lib/clang/21/include/avx10_2minmaxintrin.h \
+  /usr/lib/clang/21/include/avx10_2niintrin.h \
+  /usr/lib/clang/21/include/avx10_2satcvtdsintrin.h \
+  /usr/lib/clang/21/include/avx10_2satcvtintrin.h \
+  /usr/lib/clang/21/include/avx10_2_512bf16intrin.h \
+  /usr/lib/clang/21/include/avx10_2_512convertintrin.h \
+  /usr/lib/clang/21/include/avx10_2_512minmaxintrin.h \
+  /usr/lib/clang/21/include/avx10_2_512niintrin.h \
+  /usr/lib/clang/21/include/avx10_2_512satcvtdsintrin.h \
+  /usr/lib/clang/21/include/avx10_2_512satcvtintrin.h \
+  /usr/lib/clang/21/include/sm4evexintrin.h \
+  /usr/lib/clang/21/include/enqcmdintrin.h \
+  /usr/lib/clang/21/include/serializeintrin.h \
+  /usr/lib/clang/21/include/tsxldtrkintrin.h \
   /usr/include/SDL2/SDL_events.h /usr/include/SDL2/SDL_video.h \
   /usr/include/SDL2/SDL_pixels.h /usr/include/SDL2/SDL_rect.h \
   /usr/include/SDL2/SDL_surface.h /usr/include/SDL2/SDL_blendmode.h \

@@ -1,15 +1,15 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /home/noerlol/C-Projects/RocketGE/src/rocket/native.cpp \
-  /usr/include/GLFW/glfw3.h /usr/lib/clang/20/include/stddef.h \
-  /usr/lib/clang/20/include/__stddef_header_macro.h \
-  /usr/lib/clang/20/include/__stddef_ptrdiff_t.h \
-  /usr/lib/clang/20/include/__stddef_size_t.h \
-  /usr/lib/clang/20/include/__stddef_wchar_t.h \
-  /usr/lib/clang/20/include/__stddef_null.h \
-  /usr/lib/clang/20/include/__stddef_nullptr_t.h \
-  /usr/lib/clang/20/include/__stddef_max_align_t.h \
-  /usr/lib/clang/20/include/__stddef_offsetof.h \
-  /usr/lib/clang/20/include/stdint.h /usr/include/stdint.h \
+  /usr/include/GLFW/glfw3.h /usr/lib/clang/21/include/stddef.h \
+  /usr/lib/clang/21/include/__stddef_header_macro.h \
+  /usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
+  /usr/lib/clang/21/include/__stddef_size_t.h \
+  /usr/lib/clang/21/include/__stddef_wchar_t.h \
+  /usr/lib/clang/21/include/__stddef_null.h \
+  /usr/lib/clang/21/include/__stddef_nullptr_t.h \
+  /usr/lib/clang/21/include/__stddef_max_align_t.h \
+  /usr/lib/clang/21/include/__stddef_offsetof.h \
+  /usr/lib/clang/21/include/stdint.h /usr/include/stdint.h \
   /usr/include/bits/libc-header-start.h /usr/include/features.h \
   /usr/include/features-time64.h /usr/include/bits/wordsize.h \
   /usr/include/bits/timesize.h /usr/include/stdc-predef.h \
@@ -26,15 +26,15 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/pstl_config.h \
-  /usr/include/stdio.h /usr/lib/clang/20/include/stdarg.h \
-  /usr/lib/clang/20/include/__stdarg___gnuc_va_list.h \
+  /usr/include/stdio.h /usr/lib/clang/21/include/stdarg.h \
+  /usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
   /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__mbstate_t.h \
   /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
   /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
   /usr/include/bits/types/cookie_io_functions_t.h \
   /usr/include/bits/stdio_lim.h /usr/include/bits/floatn.h \
-  /usr/include/bits/floatn-common.h \
+  /usr/include/bits/floatn-common.h /usr/include/bits/stdio.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstring \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/version.h \
   /usr/include/string.h /usr/include/bits/types/locale_t.h \
@@ -137,7 +137,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/include/bits/pthreadtypes-arch.h \
   /usr/include/bits/atomic_wide_counter.h \
   /usr/include/bits/struct_mutex.h /usr/include/bits/struct_rwlock.h \
-  /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
+  /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
+  /usr/include/bits/stdlib-float.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_abs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/charconv.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/basic_string.tcc \
@@ -438,7 +439,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/atomic_lockfree_defines.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/atomic_wait.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/climits \
-  /usr/lib/clang/20/include/limits.h /usr/include/limits.h \
+  /usr/lib/clang/21/include/limits.h /usr/include/limits.h \
   /usr/include/bits/posix1_lim.h /usr/include/bits/local_lim.h \
   /usr/include/linux/limits.h /usr/include/bits/posix2_lim.h \
   /usr/include/bits/xopen_lim.h /usr/include/bits/uio_lim.h \
@@ -472,12 +473,12 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/include/wayland-client.hpp /usr/include/wayland-version.hpp \
   /usr/include/wayland-client-core.h /usr/include/wayland-util.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/math.h \
-  /usr/lib/clang/20/include/inttypes.h /usr/include/inttypes.h \
-  /usr/lib/clang/20/include/__stdarg_header_macro.h \
-  /usr/lib/clang/20/include/__stdarg_va_list.h \
-  /usr/lib/clang/20/include/__stdarg_va_arg.h \
-  /usr/lib/clang/20/include/__stdarg___va_copy.h \
-  /usr/lib/clang/20/include/__stdarg_va_copy.h \
+  /usr/lib/clang/21/include/inttypes.h /usr/include/inttypes.h \
+  /usr/lib/clang/21/include/__stdarg_header_macro.h \
+  /usr/lib/clang/21/include/__stdarg_va_list.h \
+  /usr/lib/clang/21/include/__stdarg_va_arg.h \
+  /usr/lib/clang/21/include/__stdarg___va_copy.h \
+  /usr/lib/clang/21/include/__stdarg_va_copy.h \
   /usr/include/wayland-version.h /usr/include/wayland-util.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/algorithm \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/ranges_algo.h \
@@ -489,7 +490,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/list \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_list.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/list.tcc \
-  /usr/include/wayland-server-core.h /usr/lib/clang/20/include/stdbool.h \
+  /usr/include/wayland-server-core.h /usr/lib/clang/21/include/stdbool.h \
   /home/noerlol/C-Projects/RocketGE/src/include/rnative/xdg-toplevel-icon-v1-client-protocol.h \
   /usr/include/wayland-client.h /usr/include/wayland-client-protocol.h \
   /usr/include/X11/Xlib.h /usr/include/X11/Xfuncproto.h \

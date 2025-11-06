@@ -177,7 +177,7 @@ namespace rocket {
         void set_icon(std::shared_ptr<rocket::texture_t> icon);
     public:
         /// @brief Gets the current platform
-        platform_t get_platform();
+        static platform_t get_platform();
     public:
         static void __silent_next_constructor();
         /// @brief creates a new window

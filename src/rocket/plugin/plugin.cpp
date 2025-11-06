@@ -58,7 +58,7 @@ namespace rocket {
             api->api_iteration = api_iteration;
             api->api_version = api_version;
             api->log = &rocket::log;
-            api->log_error = &rocket::log_error;
+            api->log_error = &rocket::__log_error_with_id;
         }
 
         if (on_load == nullptr || on_unload == nullptr) {

@@ -14,9 +14,9 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/pstl_config.h \
   /usr/include/string.h /usr/include/bits/libc-header-start.h \
-  /usr/lib/clang/20/include/stddef.h \
-  /usr/lib/clang/20/include/__stddef_size_t.h \
-  /usr/lib/clang/20/include/__stddef_null.h \
+  /usr/lib/clang/21/include/stddef.h \
+  /usr/lib/clang/21/include/__stddef_size_t.h \
+  /usr/lib/clang/21/include/__stddef_null.h \
   /usr/include/bits/types/locale_t.h \
   /usr/include/bits/types/__locale_t.h /usr/include/strings.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/string \
@@ -28,9 +28,9 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cwchar \
   /usr/include/wchar.h /usr/include/bits/floatn.h \
   /usr/include/bits/floatn-common.h \
-  /usr/lib/clang/20/include/__stddef_wchar_t.h \
-  /usr/lib/clang/20/include/stdarg.h \
-  /usr/lib/clang/20/include/__stdarg___gnuc_va_list.h \
+  /usr/lib/clang/21/include/__stddef_wchar_t.h \
+  /usr/lib/clang/21/include/stdarg.h \
+  /usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
   /usr/include/bits/wchar.h /usr/include/bits/types/wint_t.h \
   /usr/include/bits/types/mbstate_t.h \
   /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
@@ -111,14 +111,15 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/include/bits/pthreadtypes-arch.h \
   /usr/include/bits/atomic_wide_counter.h \
   /usr/include/bits/struct_mutex.h /usr/include/bits/struct_rwlock.h \
-  /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
+  /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
+  /usr/include/bits/stdlib-float.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_abs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdio \
   /usr/include/stdio.h /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__fpos64_t.h \
   /usr/include/bits/types/struct_FILE.h \
   /usr/include/bits/types/cookie_io_functions_t.h \
-  /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/stdio.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cerrno \
   /usr/include/errno.h /usr/include/bits/errno.h \
   /usr/include/linux/errno.h /usr/include/asm/errno.h \
@@ -128,11 +129,11 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/basic_string.tcc \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/memory_resource.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstddef \
-  /usr/lib/clang/20/include/__stddef_header_macro.h \
-  /usr/lib/clang/20/include/__stddef_ptrdiff_t.h \
-  /usr/lib/clang/20/include/__stddef_nullptr_t.h \
-  /usr/lib/clang/20/include/__stddef_max_align_t.h \
-  /usr/lib/clang/20/include/__stddef_offsetof.h \
+  /usr/lib/clang/21/include/__stddef_header_macro.h \
+  /usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
+  /usr/lib/clang/21/include/__stddef_nullptr_t.h \
+  /usr/lib/clang/21/include/__stddef_max_align_t.h \
+  /usr/lib/clang/21/include/__stddef_offsetof.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/uses_allocator.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/uses_allocator_args.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tuple \
@@ -185,7 +186,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/atomic_lockfree_defines.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/atomic_wait.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdint \
-  /usr/lib/clang/20/include/stdint.h /usr/include/stdint.h \
+  /usr/lib/clang/21/include/stdint.h /usr/include/stdint.h \
   /usr/include/bits/stdint-uintn.h /usr/include/bits/stdint-least.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/gthr.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/gthr-default.h \
@@ -205,7 +206,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/include/bits/types/struct___jmp_buf_tag.h \
   /usr/include/bits/pthread_stack_min-dynamic.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/climits \
-  /usr/lib/clang/20/include/limits.h /usr/include/limits.h \
+  /usr/lib/clang/21/include/limits.h /usr/include/limits.h \
   /usr/include/bits/posix1_lim.h /usr/include/bits/local_lim.h \
   /usr/include/linux/limits.h /usr/include/bits/posix2_lim.h \
   /usr/include/bits/xopen_lim.h /usr/include/bits/uio_lim.h \
@@ -520,6 +521,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/include/boost/asio/detail/bind_handler.hpp \
   /usr/include/boost/asio/executor_work_guard.hpp \
   /usr/include/boost/asio/this_coro.hpp \
+  /usr/include/boost/asio/impl/awaitable.ipp \
   /usr/include/boost/asio/basic_datagram_socket.hpp \
   /usr/include/boost/asio/basic_socket.hpp \
   /usr/include/boost/asio/detail/io_object_impl.hpp \
@@ -567,306 +569,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/include/boost/asio/detail/reactive_socket_send_op.hpp \
   /usr/include/boost/asio/detail/reactive_wait_op.hpp \
   /usr/include/boost/asio/detail/impl/reactive_socket_service_base.ipp \
-  /usr/include/boost/asio/basic_deadline_timer.hpp \
-  /usr/include/boost/asio/detail/deadline_timer_service.hpp \
-  /usr/include/boost/asio/detail/timer_queue.hpp \
-  /usr/include/boost/asio/detail/date_time_fwd.hpp \
-  /usr/include/boost/asio/detail/timer_queue_ptime.hpp \
-  /usr/include/boost/asio/time_traits.hpp \
-  /usr/include/boost/date_time/posix_time/posix_time_types.hpp \
-  /usr/include/boost/date_time/time_clock.hpp \
-  /usr/include/boost/date_time/c_time.hpp \
-  /usr/include/boost/date_time/compiler_config.hpp \
-  /usr/include/boost/detail/workaround.hpp \
-  /usr/include/boost/date_time/locale_config.hpp /usr/include/sys/time.h \
-  /usr/include/boost/shared_ptr.hpp \
-  /usr/include/boost/smart_ptr/shared_ptr.hpp \
-  /usr/include/boost/smart_ptr/detail/shared_count.hpp \
-  /usr/include/boost/smart_ptr/bad_weak_ptr.hpp \
-  /usr/include/boost/smart_ptr/detail/sp_counted_base.hpp \
-  /usr/include/boost/smart_ptr/detail/sp_has_gcc_intrinsics.hpp \
-  /usr/include/boost/smart_ptr/detail/sp_has_sync_intrinsics.hpp \
-  /usr/include/boost/smart_ptr/detail/deprecated_macros.hpp \
-  /usr/include/boost/config/pragma_message.hpp \
-  /usr/include/boost/smart_ptr/detail/sp_counted_base_gcc_atomic.hpp \
-  /usr/include/boost/smart_ptr/detail/sp_typeinfo_.hpp \
-  /usr/include/boost/smart_ptr/detail/sp_counted_impl.hpp \
-  /usr/include/boost/core/checked_delete.hpp \
-  /usr/include/boost/core/addressof.hpp \
-  /usr/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp \
-  /usr/include/boost/smart_ptr/detail/sp_convertible.hpp \
-  /usr/include/boost/smart_ptr/detail/sp_noexcept.hpp \
-  /usr/include/boost/smart_ptr/detail/spinlock_pool.hpp \
-  /usr/include/boost/smart_ptr/detail/spinlock.hpp \
-  /usr/include/boost/smart_ptr/detail/spinlock_gcc_atomic.hpp \
-  /usr/include/boost/smart_ptr/detail/yield_k.hpp \
-  /usr/include/boost/core/yield_primitives.hpp \
-  /usr/include/boost/core/detail/sp_thread_pause.hpp \
-  /usr/include/boost/core/detail/sp_thread_yield.hpp \
-  /usr/include/boost/core/detail/sp_thread_sleep.hpp \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/algorithm \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/ranges_algo.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_algorithm_defs.h \
-  /usr/include/boost/smart_ptr/detail/local_sp_deleter.hpp \
-  /usr/include/boost/smart_ptr/detail/local_counted_base.hpp \
-  /usr/include/boost/date_time/microsec_time_clock.hpp \
-  /usr/include/boost/date_time/posix_time/ptime.hpp \
-  /usr/include/boost/date_time/posix_time/posix_time_system.hpp \
-  /usr/include/boost/date_time/posix_time/posix_time_config.hpp \
-  /usr/include/boost/limits.hpp \
-  /usr/include/boost/config/no_tr1/cmath.hpp \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cmath \
-  /usr/include/math.h /usr/include/bits/math-vector.h \
-  /usr/include/bits/libm-simd-decl-stubs.h \
-  /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
-  /usr/include/bits/fp-fast.h /usr/include/bits/mathcalls-macros.h \
-  /usr/include/bits/mathcalls-helper-functions.h \
-  /usr/include/bits/mathcalls.h /usr/include/bits/mathcalls-narrow.h \
-  /usr/include/bits/iscanonical.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/specfun.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/gamma.tcc \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/special_function_util.h \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/bessel_function.tcc \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/beta_function.tcc \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/ell_integral.tcc \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/exp_integral.tcc \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/hypergeometric.tcc \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/legendre_function.tcc \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/modified_bessel_func.tcc \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/poly_hermite.tcc \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/poly_laguerre.tcc \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tr1/riemann_zeta.tcc \
-  /usr/include/boost/date_time/time_duration.hpp \
-  /usr/include/boost/core/enable_if.hpp \
-  /usr/include/boost/date_time/special_defs.hpp \
-  /usr/include/boost/date_time/time_defs.hpp \
-  /usr/include/boost/operators.hpp /usr/include/boost/static_assert.hpp \
-  /usr/include/boost/type_traits/is_integral.hpp \
-  /usr/include/boost/type_traits/integral_constant.hpp \
-  /usr/include/boost/date_time/time_resolution_traits.hpp \
-  /usr/include/boost/date_time/int_adapter.hpp \
-  /usr/include/boost/date_time/gregorian/gregorian_types.hpp \
-  /usr/include/boost/date_time/date.hpp \
-  /usr/include/boost/date_time/year_month_day.hpp \
-  /usr/include/boost/date_time/period.hpp \
-  /usr/include/boost/date_time/gregorian/greg_calendar.hpp \
-  /usr/include/boost/date_time/gregorian/greg_weekday.hpp \
-  /usr/include/boost/date_time/constrained_value.hpp \
-  /usr/include/boost/type_traits/conditional.hpp \
-  /usr/include/boost/type_traits/is_base_of.hpp \
-  /usr/include/boost/type_traits/is_base_and_derived.hpp \
-  /usr/include/boost/type_traits/intrinsics.hpp \
-  /usr/include/boost/type_traits/detail/config.hpp \
-  /usr/include/boost/type_traits/remove_cv.hpp \
-  /usr/include/boost/type_traits/is_same.hpp \
-  /usr/include/boost/type_traits/is_class.hpp \
-  /usr/include/boost/date_time/date_defs.hpp \
-  /usr/include/boost/date_time/gregorian/greg_day_of_year.hpp \
-  /usr/include/boost/date_time/gregorian_calendar.hpp \
-  /usr/include/boost/date_time/gregorian_calendar.ipp \
-  /usr/include/boost/date_time/gregorian/greg_ymd.hpp \
-  /usr/include/boost/date_time/gregorian/greg_day.hpp \
-  /usr/include/boost/date_time/gregorian/greg_year.hpp \
-  /usr/include/boost/date_time/gregorian/greg_month.hpp \
-  /usr/include/boost/date_time/gregorian/greg_duration.hpp \
-  /usr/include/boost/date_time/date_duration.hpp \
-  /usr/include/boost/date_time/date_duration_types.hpp \
-  /usr/include/boost/date_time/gregorian/greg_duration_types.hpp \
-  /usr/include/boost/date_time/gregorian/greg_date.hpp \
-  /usr/include/boost/date_time/adjust_functors.hpp \
-  /usr/include/boost/date_time/wrapping_int.hpp \
-  /usr/include/boost/date_time/date_generators.hpp \
-  /usr/include/boost/date_time/date_clock_device.hpp \
-  /usr/include/boost/date_time/date_iterator.hpp \
-  /usr/include/boost/date_time/time_system_split.hpp \
-  /usr/include/boost/date_time/time_system_counted.hpp \
-  /usr/include/boost/date_time/time.hpp \
-  /usr/include/boost/date_time/posix_time/date_duration_operators.hpp \
-  /usr/include/boost/date_time/posix_time/posix_time_duration.hpp \
-  /usr/include/boost/numeric/conversion/cast.hpp \
-  /usr/include/boost/type.hpp \
-  /usr/include/boost/numeric/conversion/converter.hpp \
-  /usr/include/boost/numeric/conversion/conversion_traits.hpp \
-  /usr/include/boost/numeric/conversion/detail/conversion_traits.hpp \
-  /usr/include/boost/type_traits/is_arithmetic.hpp \
-  /usr/include/boost/type_traits/is_floating_point.hpp \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/stdfloat \
-  /usr/include/boost/numeric/conversion/detail/meta.hpp \
-  /usr/include/boost/mpl/if.hpp \
-  /usr/include/boost/mpl/aux_/value_wknd.hpp \
-  /usr/include/boost/mpl/aux_/static_cast.hpp \
-  /usr/include/boost/mpl/aux_/config/workaround.hpp \
-  /usr/include/boost/mpl/aux_/config/integral.hpp \
-  /usr/include/boost/mpl/aux_/config/msvc.hpp \
-  /usr/include/boost/mpl/aux_/config/eti.hpp \
-  /usr/include/boost/mpl/aux_/na_spec.hpp \
-  /usr/include/boost/mpl/lambda_fwd.hpp \
-  /usr/include/boost/mpl/void_fwd.hpp \
-  /usr/include/boost/mpl/aux_/adl_barrier.hpp \
-  /usr/include/boost/mpl/aux_/config/adl.hpp \
-  /usr/include/boost/mpl/aux_/config/intel.hpp \
-  /usr/include/boost/mpl/aux_/config/gcc.hpp \
-  /usr/include/boost/mpl/aux_/na.hpp /usr/include/boost/mpl/bool.hpp \
-  /usr/include/boost/mpl/bool_fwd.hpp \
-  /usr/include/boost/mpl/integral_c_tag.hpp \
-  /usr/include/boost/mpl/aux_/config/static_constant.hpp \
-  /usr/include/boost/mpl/aux_/na_fwd.hpp \
-  /usr/include/boost/mpl/aux_/config/ctps.hpp \
-  /usr/include/boost/mpl/aux_/config/lambda.hpp \
-  /usr/include/boost/mpl/aux_/config/ttp.hpp \
-  /usr/include/boost/mpl/int.hpp /usr/include/boost/mpl/int_fwd.hpp \
-  /usr/include/boost/mpl/aux_/nttp_decl.hpp \
-  /usr/include/boost/mpl/aux_/config/nttp.hpp \
-  /usr/include/boost/mpl/aux_/integral_wrapper.hpp \
-  /usr/include/boost/preprocessor/cat.hpp \
-  /usr/include/boost/preprocessor/config/config.hpp \
-  /usr/include/boost/mpl/aux_/lambda_arity_param.hpp \
-  /usr/include/boost/mpl/aux_/template_arity_fwd.hpp \
-  /usr/include/boost/mpl/aux_/arity.hpp \
-  /usr/include/boost/mpl/aux_/config/dtp.hpp \
-  /usr/include/boost/mpl/aux_/preprocessor/params.hpp \
-  /usr/include/boost/mpl/aux_/config/preprocessor.hpp \
-  /usr/include/boost/preprocessor/comma_if.hpp \
-  /usr/include/boost/preprocessor/punctuation/comma_if.hpp \
-  /usr/include/boost/preprocessor/control/if.hpp \
-  /usr/include/boost/preprocessor/control/iif.hpp \
-  /usr/include/boost/preprocessor/logical/bool.hpp \
-  /usr/include/boost/preprocessor/config/limits.hpp \
-  /usr/include/boost/preprocessor/logical/limits/bool_256.hpp \
-  /usr/include/boost/preprocessor/facilities/empty.hpp \
-  /usr/include/boost/preprocessor/punctuation/comma.hpp \
-  /usr/include/boost/preprocessor/repeat.hpp \
-  /usr/include/boost/preprocessor/repetition/repeat.hpp \
-  /usr/include/boost/preprocessor/debug/error.hpp \
-  /usr/include/boost/preprocessor/detail/auto_rec.hpp \
-  /usr/include/boost/preprocessor/detail/limits/auto_rec_256.hpp \
-  /usr/include/boost/preprocessor/tuple/eat.hpp \
-  /usr/include/boost/preprocessor/repetition/limits/repeat_256.hpp \
-  /usr/include/boost/preprocessor/inc.hpp \
-  /usr/include/boost/preprocessor/arithmetic/inc.hpp \
-  /usr/include/boost/preprocessor/arithmetic/limits/inc_256.hpp \
-  /usr/include/boost/mpl/aux_/preprocessor/enum.hpp \
-  /usr/include/boost/mpl/aux_/preprocessor/def_params_tail.hpp \
-  /usr/include/boost/mpl/limits/arity.hpp \
-  /usr/include/boost/preprocessor/logical/and.hpp \
-  /usr/include/boost/preprocessor/logical/bitand.hpp \
-  /usr/include/boost/preprocessor/identity.hpp \
-  /usr/include/boost/preprocessor/facilities/identity.hpp \
-  /usr/include/boost/preprocessor/empty.hpp \
-  /usr/include/boost/preprocessor/arithmetic/add.hpp \
-  /usr/include/boost/preprocessor/arithmetic/dec.hpp \
-  /usr/include/boost/preprocessor/arithmetic/limits/dec_256.hpp \
-  /usr/include/boost/preprocessor/control/while.hpp \
-  /usr/include/boost/preprocessor/list/fold_left.hpp \
-  /usr/include/boost/preprocessor/list/detail/fold_left.hpp \
-  /usr/include/boost/preprocessor/control/expr_iif.hpp \
-  /usr/include/boost/preprocessor/list/adt.hpp \
-  /usr/include/boost/preprocessor/detail/is_binary.hpp \
-  /usr/include/boost/preprocessor/detail/check.hpp \
-  /usr/include/boost/preprocessor/logical/compl.hpp \
-  /usr/include/boost/preprocessor/list/detail/limits/fold_left_256.hpp \
-  /usr/include/boost/preprocessor/list/limits/fold_left_256.hpp \
-  /usr/include/boost/preprocessor/list/fold_right.hpp \
-  /usr/include/boost/preprocessor/list/detail/fold_right.hpp \
-  /usr/include/boost/preprocessor/list/reverse.hpp \
-  /usr/include/boost/preprocessor/list/detail/limits/fold_right_256.hpp \
-  /usr/include/boost/preprocessor/control/detail/while.hpp \
-  /usr/include/boost/preprocessor/control/detail/limits/while_256.hpp \
-  /usr/include/boost/preprocessor/control/limits/while_256.hpp \
-  /usr/include/boost/preprocessor/logical/bitor.hpp \
-  /usr/include/boost/preprocessor/tuple/elem.hpp \
-  /usr/include/boost/preprocessor/facilities/expand.hpp \
-  /usr/include/boost/preprocessor/facilities/overload.hpp \
-  /usr/include/boost/preprocessor/variadic/size.hpp \
-  /usr/include/boost/preprocessor/facilities/check_empty.hpp \
-  /usr/include/boost/preprocessor/variadic/has_opt.hpp \
-  /usr/include/boost/preprocessor/variadic/detail/has_opt.hpp \
-  /usr/include/boost/preprocessor/facilities/is_empty_variadic.hpp \
-  /usr/include/boost/preprocessor/punctuation/is_begin_parens.hpp \
-  /usr/include/boost/preprocessor/punctuation/detail/is_begin_parens.hpp \
-  /usr/include/boost/preprocessor/facilities/detail/is_empty.hpp \
-  /usr/include/boost/preprocessor/variadic/limits/size_64.hpp \
-  /usr/include/boost/preprocessor/tuple/rem.hpp \
-  /usr/include/boost/preprocessor/tuple/detail/is_single_return.hpp \
-  /usr/include/boost/preprocessor/variadic/elem.hpp \
-  /usr/include/boost/preprocessor/variadic/limits/elem_64.hpp \
-  /usr/include/boost/preprocessor/arithmetic/detail/is_maximum_number.hpp \
-  /usr/include/boost/preprocessor/comparison/equal.hpp \
-  /usr/include/boost/preprocessor/comparison/not_equal.hpp \
-  /usr/include/boost/preprocessor/comparison/limits/not_equal_256.hpp \
-  /usr/include/boost/preprocessor/arithmetic/detail/maximum_number.hpp \
-  /usr/include/boost/preprocessor/arithmetic/detail/is_minimum_number.hpp \
-  /usr/include/boost/preprocessor/logical/not.hpp \
-  /usr/include/boost/preprocessor/arithmetic/sub.hpp \
-  /usr/include/boost/mpl/aux_/config/overload_resolution.hpp \
-  /usr/include/boost/mpl/aux_/lambda_support.hpp \
-  /usr/include/boost/mpl/eval_if.hpp /usr/include/boost/mpl/equal_to.hpp \
-  /usr/include/boost/mpl/aux_/comparison_op.hpp \
-  /usr/include/boost/mpl/aux_/numeric_op.hpp \
-  /usr/include/boost/mpl/numeric_cast.hpp \
-  /usr/include/boost/mpl/apply_wrap.hpp \
-  /usr/include/boost/mpl/aux_/has_apply.hpp \
-  /usr/include/boost/mpl/has_xxx.hpp \
-  /usr/include/boost/mpl/aux_/type_wrapper.hpp \
-  /usr/include/boost/mpl/aux_/yes_no.hpp \
-  /usr/include/boost/mpl/aux_/config/arrays.hpp \
-  /usr/include/boost/mpl/aux_/config/has_xxx.hpp \
-  /usr/include/boost/mpl/aux_/config/msvc_typename.hpp \
-  /usr/include/boost/preprocessor/array/elem.hpp \
-  /usr/include/boost/preprocessor/array/data.hpp \
-  /usr/include/boost/preprocessor/array/size.hpp \
-  /usr/include/boost/preprocessor/repetition/enum_params.hpp \
-  /usr/include/boost/preprocessor/repetition/enum_trailing_params.hpp \
-  /usr/include/boost/mpl/aux_/config/has_apply.hpp \
-  /usr/include/boost/mpl/aux_/msvc_never_true.hpp \
-  /usr/include/boost/mpl/aux_/config/use_preprocessed.hpp \
-  /usr/include/boost/mpl/aux_/include_preprocessed.hpp \
-  /usr/include/boost/mpl/aux_/config/compiler.hpp \
-  /usr/include/boost/preprocessor/stringize.hpp \
-  /usr/include/boost/mpl/aux_/preprocessed/gcc/apply_wrap.hpp \
-  /usr/include/boost/mpl/tag.hpp /usr/include/boost/mpl/void.hpp \
-  /usr/include/boost/mpl/aux_/has_tag.hpp \
-  /usr/include/boost/mpl/aux_/numeric_cast_utils.hpp \
-  /usr/include/boost/mpl/aux_/config/forwarding.hpp \
-  /usr/include/boost/mpl/aux_/msvc_eti_base.hpp \
-  /usr/include/boost/mpl/aux_/is_msvc_eti_arg.hpp \
-  /usr/include/boost/mpl/aux_/preprocessed/gcc/equal_to.hpp \
-  /usr/include/boost/mpl/not.hpp \
-  /usr/include/boost/mpl/aux_/nested_type_wknd.hpp \
-  /usr/include/boost/mpl/and.hpp \
-  /usr/include/boost/mpl/aux_/preprocessed/gcc/and.hpp \
-  /usr/include/boost/mpl/identity.hpp \
-  /usr/include/boost/numeric/conversion/detail/int_float_mixture.hpp \
-  /usr/include/boost/numeric/conversion/int_float_mixture_enum.hpp \
-  /usr/include/boost/numeric/conversion/detail/sign_mixture.hpp \
-  /usr/include/boost/numeric/conversion/sign_mixture_enum.hpp \
-  /usr/include/boost/numeric/conversion/detail/udt_builtin_mixture.hpp \
-  /usr/include/boost/numeric/conversion/udt_builtin_mixture_enum.hpp \
-  /usr/include/boost/numeric/conversion/detail/is_subranged.hpp \
-  /usr/include/boost/mpl/multiplies.hpp /usr/include/boost/mpl/times.hpp \
-  /usr/include/boost/mpl/aux_/arithmetic_op.hpp \
-  /usr/include/boost/mpl/integral_c.hpp \
-  /usr/include/boost/mpl/integral_c_fwd.hpp \
-  /usr/include/boost/mpl/aux_/largest_int.hpp \
-  /usr/include/boost/mpl/aux_/preprocessed/gcc/times.hpp \
-  /usr/include/boost/mpl/aux_/preprocessor/default_params.hpp \
-  /usr/include/boost/mpl/less.hpp \
-  /usr/include/boost/mpl/aux_/preprocessed/gcc/less.hpp \
-  /usr/include/boost/numeric/conversion/converter_policies.hpp \
-  /usr/include/boost/numeric/conversion/detail/converter.hpp \
-  /usr/include/boost/numeric/conversion/bounds.hpp \
-  /usr/include/boost/numeric/conversion/detail/bounds.hpp \
-  /usr/include/boost/numeric/conversion/numeric_cast_traits.hpp \
-  /usr/include/boost/numeric/conversion/detail/numeric_cast_traits.hpp \
-  /usr/include/boost/numeric/conversion/detail/preprocessed/numeric_cast_traits_common.hpp \
-  /usr/include/boost/numeric/conversion/detail/preprocessed/numeric_cast_traits_long_long.hpp \
-  /usr/include/boost/date_time/posix_time/time_period.hpp \
-  /usr/include/boost/date_time/time_iterator.hpp \
-  /usr/include/boost/date_time/dst_rules.hpp \
-  /usr/include/boost/asio/detail/impl/timer_queue_ptime.ipp \
-  /usr/include/boost/asio/detail/timer_scheduler.hpp \
-  /usr/include/boost/asio/detail/timer_scheduler_fwd.hpp \
-  /usr/include/boost/asio/detail/wait_handler.hpp \
   /usr/include/boost/asio/basic_file.hpp \
   /usr/include/boost/asio/basic_io_object.hpp \
   /usr/include/boost/asio/basic_random_access_file.hpp \
@@ -908,9 +610,18 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/basic_waitable_timer.hpp \
   /usr/include/boost/asio/detail/chrono_time_traits.hpp \
+  /usr/include/boost/asio/detail/deadline_timer_service.hpp \
+  /usr/include/boost/asio/detail/timer_queue.hpp \
+  /usr/include/boost/asio/detail/date_time_fwd.hpp \
+  /usr/include/boost/asio/detail/timer_scheduler.hpp \
+  /usr/include/boost/asio/detail/timer_scheduler_fwd.hpp \
+  /usr/include/boost/asio/detail/wait_handler.hpp \
   /usr/include/boost/asio/wait_traits.hpp \
   /usr/include/boost/asio/basic_stream_file.hpp \
   /usr/include/boost/asio/basic_streambuf.hpp \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/algorithm \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/ranges_algo.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_algorithm_defs.h \
   /usr/include/boost/asio/basic_streambuf_fwd.hpp \
   /usr/include/boost/asio/basic_writable_pipe.hpp \
   /usr/include/boost/asio/bind_allocator.hpp \
@@ -962,7 +673,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/include/boost/asio/consign.hpp \
   /usr/include/boost/asio/impl/consign.hpp \
   /usr/include/boost/asio/coroutine.hpp \
-  /usr/include/boost/asio/deadline_timer.hpp \
   /usr/include/boost/asio/defer.hpp \
   /usr/include/boost/asio/detail/initiate_defer.hpp \
   /usr/include/boost/asio/detached.hpp \
@@ -1022,6 +732,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/include/boost/asio/detail/resolve_op.hpp \
   /usr/include/boost/asio/detail/resolve_query_op.hpp \
   /usr/include/boost/asio/detail/resolver_service_base.hpp \
+  /usr/include/boost/asio/detail/resolver_thread_pool.hpp \
+  /usr/include/boost/asio/detail/impl/resolver_thread_pool.ipp \
   /usr/include/boost/asio/detail/impl/resolver_service_base.ipp \
   /usr/include/boost/asio/ip/host_name.hpp \
   /usr/include/boost/asio/ip/impl/host_name.ipp \
@@ -1050,7 +762,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/semaphore_base.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/atomic_timed_wait.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/this_thread_sleep.h \
-  /usr/include/semaphore.h /usr/include/bits/semaphore.h \
+  /usr/include/sys/time.h /usr/include/semaphore.h \
+  /usr/include/bits/semaphore.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/atomic_futex.h \
   /usr/include/boost/asio/placeholders.hpp \
   /usr/include/boost/asio/posix/basic_descriptor.hpp \

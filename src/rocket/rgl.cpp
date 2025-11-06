@@ -391,15 +391,13 @@ namespace rgl {
             "- rGL Features:",
             "   - Context Verifier: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
             "   - Basic Draw Metrics: " + bool_to_str(true),
-            "   - Advanced Draw Metrics: " + bool_to_str(false),
+            "   - Advanced Draw Metrics: " + bool_to_str(sizeof(draw_metrics_t) != 0),
             "   - Precompiled Shader Support: " + bool_to_str(false),
             "- GPU Info:",
             "   - Name: " + gpu_name,
             "   - Vendor: "  + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
             "   - Is Modern: " + bool_to_str(gpu_is_modern),
-            "Viewport Info:",
-            "- Size: " + float_str(viewport_size.x) + "x" + float_str(viewport_size.y),
-            "- Offset (TL): " + float_str(viewport_offset.x) + "x" + float_str(viewport_offset.y)
+            "Viewport: " + float_str(viewport_size.x) + "x" + float_str(viewport_size.y) + " @ " + float_str(viewport_offset.y) + "x" + float_str(viewport_offset.y) + " (TL)",
         };
 
         return logs;
@@ -894,11 +892,6 @@ namespace rgl {
         return tricount;
     }
 
-    draw_metrics_t get_draw_metrics() {
-        rocket::log("[fixme] unimplemented", "rgl", "get_draw_metrics", "fixme");
-        return {};
-    }
-
     rgl::shader_program_t get_fxaa_simplified_shader() {
         const char *vsrc = R"(
             #version 330 core
@@ -1016,5 +1009,38 @@ namespace rgl {
         init_shader(shader_use_t::rect);
         init_shader(shader_use_t::text);
         init_shader(shader_use_t::textured_rect);
+    }
+
+    draw_metrics_t metrics;
+
+    void update_draw_metrics_data(float frametime, float fps) {
+        static int data_obtained = 0;
+        static float max_frametime_so_far = 0;
+        static float min_frametime_so_far = 0;
+        static float min_fps_so_far = 0;
+        static float max_fps_so_far = 0;
+
+        max_frametime_so_far = std::max(max_frametime_so_far, frametime);
+        min_frametime_so_far = std::min(min_frametime_so_far, frametime);
+        min_fps_so_far = std::min(min_fps_so_far, fps);
+        max_fps_so_far = std::max(max_fps_so_far, fps);
+
+        metrics.max_fps = max_fps_so_far;
+        metrics.max_frametime = max_frametime_so_far;
+
+        metrics.min_fps = min_fps_so_far;
+        metrics.min_frametime = min_frametime_so_far;
+
+
+        static float alpha = 0.1f; // 0.1 = smooth, 0.5 = more reactive
+
+        metrics.avg_fps = metrics.avg_fps + alpha * (fps - metrics.avg_fps);
+        metrics.avg_frametime = metrics.avg_frametime + alpha * (frametime - metrics.avg_frametime);
+
+        data_obtained++;
+    }
+
+    draw_metrics_t get_draw_metrics() {
+        return metrics;
     }
 }

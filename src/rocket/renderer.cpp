@@ -29,6 +29,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "binary_stuff/splash_screen.h"
+#include "binary_stuff/splash_sfx.h"
 
 namespace rocket {
     std::vector<shader_t> shader_cache;
@@ -180,6 +181,11 @@ namespace rocket {
     }
 
     void renderer_2d::show_splash() {
+        static auto cli_args = util::get_clistate();
+        if (cli_args.nosplash) {
+            this->splash_shown = true;
+            return;
+        }
         this->splash_shown = true;
 
         glfwHideWindow(this->window->glfw_window);
@@ -187,14 +193,17 @@ namespace rocket {
 
         asset_manager_t am;
         std::vector<uint8_t> splash_screen = std::vector<uint8_t>(splash_screen_png, splash_screen_png + splash_screen_png_len);
-        int duration = 180;
         auto tx = am.get_texture(am.load_texture(splash_screen));
+
+        std::vector<uint8_t> splash_sfx = std::vector<uint8_t>(splash_sfx_ogg, splash_sfx_ogg + splash_sfx_ogg_len);
+        auto aud = am.get_audio(am.load_audio(splash_sfx));
 
         auto old_window = this->window;
         window_t::__silent_next_constructor();
         auto splash_window = new window_t({ 1024, 576 }, old_window->title, {
             .resizable = false,
             .undecorated = true,
+            .window_class_name = "rge-splash",
             .share = old_window,
         });
 
@@ -205,8 +214,9 @@ namespace rocket {
         glfwMakeContextCurrent(splash_window->glfw_window);
 
         int frame = 0;
-        while (frame + 1 != duration && splash_window->is_running()) {
-
+        float duration = get_fps() * 1;
+        aud->play(30);
+        while (frame - 1 != duration && splash_window->is_running()) {
             {
                 this->begin_frame();
                 this->clear();
@@ -215,18 +225,18 @@ namespace rocket {
                     this->draw_texture(tx, { {0,0}, vp_size });
 
                     rocket::fbounding_box loading_bar = {
-                        { 330, 375 },
+                        { 315, 375 },
                         { 395, 10 }
                     };
 
-                    this->draw_rectangle(loading_bar, rgba_color::white());
+                    // this->draw_rectangle(loading_bar, rgba_color::white());
 
                     rocket::fbounding_box loaded_bar = loading_bar;
                     loaded_bar.size.x = (frame / static_cast<float>(duration)) * loading_bar.size.x;
 
-                    this->draw_rectangle(loaded_bar, rgba_color::green());
+                    // this->draw_rectangle(loaded_bar, rgba_color::green());
 
-                    rocket::text_t version_text = { "Version: " ROCKETGE__VERSION, 24, rgb_color::white() };
+                    rocket::text_t version_text = { "Version: " ROCKETGE__VERSION, 24, rgb_color::white(), rGE__FONT_DEFAULT_MONOSPACED };
 
                     this->draw_text(version_text, { 0, vp_size.y - version_text.measure().y });
                 }
@@ -583,7 +593,7 @@ namespace rocket {
 
         const float margin = 8.f;
         const float padding = 8.f;
-        vec2f_t size = { 384, 240 };
+        vec2f_t size = { 384, 262 };
         vec2f_t position = { margin, margin };
 
         const float zx = margin + padding;
@@ -598,7 +608,8 @@ namespace rocket {
             return ss.str();
         };
         static std::shared_ptr<rocket::font_t> font = rGE__FONT_DEFAULT_MONOSPACED;
-        rocket::text_t fps_text = { "FPS: " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
+        rocket::text_t fps_abs_text = { "FPS (abs): " + std::to_string((static_cast<int>(std::round(1.0 / ren->get_delta_time())))), text_size, rgb_color::white(), font };
+        rocket::text_t fps_avg_text = { "FPS (avg): " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
         rocket::text_t frametime_text = { "FrameTime: " + double_to_str(time_took_for_frame * 1000) + "ms", text_size, rgb_color::white(), font };
         rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()) + "s", text_size, rgb_color::white(), font };
         rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(rgl::read_drawcalls()), text_size, rgb_color::white(), font };
@@ -624,13 +635,14 @@ namespace rocket {
         ren->begin_scissor_mode(position, size);
 
         ren->draw_rectangle(position, size, rgba_color::black(), 0., 0.05);
-        ren->draw_text(fps_text, { zx, zy + (0 * text_size) });
-        ren->draw_text(frametime_text, { zx, zy + (1 * text_size) });
-        ren->draw_text(deltatime_text, { zx, zy + (2 * text_size) });
-        ren->draw_text(drawcalls_text, { zx, zy + (3 * text_size) });
-        ren->draw_text(tricount_text, { zx, zy + (4 * text_size) });
-        ren->draw_text(framebuffer_active_text, { zx, zy + (5 * text_size) });
-        ren->draw_text(mouse_pos_text, { zx, zy + (6 * text_size) });
+        ren->draw_text(fps_abs_text, { zx, zy + (0 * text_size) });
+        ren->draw_text(fps_avg_text, { zx, zy + (1 * text_size) });
+        ren->draw_text(frametime_text, { zx, zy + (2 * text_size) });
+        ren->draw_text(deltatime_text, { zx, zy + (3 * text_size) });
+        ren->draw_text(drawcalls_text, { zx, zy + (4 * text_size) });
+        ren->draw_text(tricount_text, { zx, zy + (5 * text_size) });
+        ren->draw_text(framebuffer_active_text, { zx, zy + (6 * text_size) });
+        ren->draw_text(mouse_pos_text, { zx, zy + (7 * text_size) });
 
         rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
         static std::string glmajor, glminor;
@@ -799,6 +811,8 @@ namespace rocket {
 
         double frame_end_time = glfwGetTime();
         double frame_duration = frame_end_time - frame_start_time;
+
+        rgl::update_draw_metrics_data(frame_duration, 1 / this->delta_time);
 
         double frametime_limit = 1.0 / fps;
         if (frame_duration < frametime_limit) {
@@ -1011,7 +1025,8 @@ namespace rocket {
     }
 
     int renderer_2d::get_current_fps() {
-        return static_cast<int>(std::round(1.0 / get_delta_time()));
+        return static_cast<int>(std::round(rgl::get_draw_metrics().avg_fps));
+        // return static_cast<int>(std::round(1.0 / get_delta_time()));
     }
 
     int renderer_2d::get_drawcalls() {

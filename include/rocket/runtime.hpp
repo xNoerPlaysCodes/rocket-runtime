@@ -69,7 +69,7 @@ namespace rocket {
     
     /// @brief Log (Fatal/FatalToFunction/Warning) Callback
     /// @param std::string error
-    /// @param int error_id
+    /// @param @deprecated Do not use this int error_id
     /// @param std::string error_source
     /// @param std::string level
     using log_error_callback_t = std::function<void(
@@ -125,6 +125,11 @@ namespace rocket {
 
     /// @brief Log (Fatal/FatalToFunction/Warning) using RocketLogger or callback
     void log_error(std::string error, int error_id, std::string error_source, std::string level);
+
+    /// @brief Log (Fatal/FatalToFunction/Warning) using RocketLogger or callback
+    void log_error(std::string error, std::string error_source, std::string level);
+
+    void __log_error_with_id(std::string error, int error_id, std::string error_source, std::string level);
 
     /// @brief Log using RocketLogger or callback
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);

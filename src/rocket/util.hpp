@@ -31,6 +31,10 @@ namespace util {
         bool noplugins = false;
         bool logall = false;
         bool debugoverlay = false;
+        bool nosplash = false;
+        bool dx11 = false;
+        bool dx12 = false;
+        bool opengl = true;
         int glversion = GL_VERSION_UNK;
     };
 

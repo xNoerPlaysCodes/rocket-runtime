@@ -12,17 +12,28 @@
 #include <vector>
 #include <iostream>
 
+// should i add this?
+/*
+ *          // file name :: asset id
+ * std::unordered_map<std::string, assetid_t> load_all_textures(std::string path, std::string extension, bool recursive) {
+ *      texmap = std::unordered_map<std::string, assetid_t>();
+ *      for (file_it : dir_it_rec) {
+ *          file = file_it.file();
+ *          if (extension == ".png") {
+ *              id = load_texture(file);
+ *              texmap[fs_absolute_path(file).string()] = id;
+ *          }
+ *      }
+ *      
+ *      return texmap;
+ * }
+*/
+
 #include <AL/al.h>
 #include <AL/alc.h>
 
 template<typename T>
 using asset_map_t = std::unordered_map<std::shared_ptr<T>, std::chrono::time_point<std::chrono::high_resolution_clock>>;
-
-#define ROCKETRUNTIME_LogAssetRemoval(message) std::cout << message << std::endl;
-#ifdef ROCKETRUNTIME_DEBUG
-#undef ROCKETRUNTIME_LogAssetRemoval(message)
-#define ROCKETRUNTIME_LogAssetRemoval(message)
-#endif
 
 #include "util.hpp"
 
@@ -32,7 +43,6 @@ using namespace std::chrono_literals;
 #include "../include/stb_vorbis.h"
 
 namespace rocket {
-    bool openal_initialized;
     bool texture_t::is_ready() {
         return this->glid != 0;
     }
@@ -233,8 +243,9 @@ namespace rocket {
         return nullptr;
     }
 
+    static bool openal_initialized = false;
+
     void asset_manager_t::init_audio_ctx() {
-        static bool openal_initialized = false;
         if (!openal_initialized) {
             ALCdevice *device = alcOpenDevice(nullptr); // Default device
             if (!device) {
@@ -253,6 +264,14 @@ namespace rocket {
             openal_initialized = true;
             rocket::log("Initialized audio context", "asset_manager_t", "init_audio_ctx", "info");
         }
+    }
+
+    void destroy_audio_ctx(void) {
+        ALCcontext *ctx = alcGetCurrentContext();
+        ALCdevice *dvc = alcGetContextsDevice(ctx);
+        alcMakeContextCurrent(nullptr);
+        alcDestroyContext(ctx);
+        alcCloseDevice(dvc);
     }
     
     assetid_t asset_manager_t::load_audio(std::string path) {
@@ -571,7 +590,6 @@ namespace rocket {
                 for (auto &[k, v] : textures) {
                     if (now - v > cleanup_interval) {
                         texture_removes.push_back(k);
-                        ROCKETRUNTIME_LogAssetRemoval("Texture removed with id: " << k->id);
                     }
                 }
 
@@ -584,6 +602,7 @@ namespace rocket {
 
     void asset_manager_t::close() {
         cleanup_running = false;
+        destroy_audio_ctx();
     }
 
     asset_manager_t::~asset_manager_t() {
