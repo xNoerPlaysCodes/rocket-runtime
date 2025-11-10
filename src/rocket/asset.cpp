@@ -1,4 +1,5 @@
 #include "../include/FontDefault.h"
+#include "rocket/audio.hpp"
 #include "../../include/rocket/asset.hpp"
 #include <algorithm>
 #include <chrono>
@@ -11,6 +12,7 @@
 #include <thread>
 #include <vector>
 #include <iostream>
+#include "../rlgl.h"
 
 // should i add this?
 /*
@@ -180,10 +182,11 @@ namespace rocket {
         this->cleanup_interval = cleanup_interval;
 
         if (cleanup_interval.count() != 0) {
+            this->cleanup_running = true;
             this->cleanup_thread = std::thread(&asset_manager_t::cleanup, this);
+            this->cleanup_thread.detach();
         }
         this->current_id = 0;
-        this->cleanup_running = true;
     }
 
     assetid_t asset_manager_t::load_texture(std::string path, texture_color_format_t format) {
@@ -272,6 +275,57 @@ namespace rocket {
         alcMakeContextCurrent(nullptr);
         alcDestroyContext(ctx);
         alcCloseDevice(dvc);
+    }
+
+    assetid_t asset_manager_t::load_sound(std::string path) {
+        assetid_t id = current_id++;
+        std::shared_ptr<audio::sound_t> sound = std::make_shared<audio::sound_t>();
+        sound->id = id;
+
+        int channels, samplerate;
+        int16_t *output;
+        int samples;
+
+        stb_vorbis *vorbis = stb_vorbis_open_filename(path.c_str(), nullptr, nullptr);
+        if (vorbis == nullptr) {
+            rocket::log_error("failed to load sound file from path: " + path, 1, "asset_manager_t::load_sound", "error");
+            current_id--;
+            return -1;
+        }
+
+        stb_vorbis_info info = stb_vorbis_get_info(vorbis);
+        channels = info.channels;
+        samplerate = info.sample_rate;
+        samples = stb_vorbis_stream_length_in_samples(vorbis);
+
+        output = new int16_t[samples * channels];
+
+        int num_samples = stb_vorbis_get_samples_short_interleaved(vorbis, channels, output, samples * channels);
+        stb_vorbis_close(vorbis);
+
+        sound->buffer.samples = std::vector<int16_t>(output, output + num_samples * channels);
+        sound->buffer.sample_rate = samplerate;
+        sound->buffer.format = channels == 1 ? audio::format_t::mono16 : audio::format_t::stereo16;
+
+        delete[] output;
+
+        sounds.insert({sound, std::chrono::high_resolution_clock::now()});
+        return id;
+    }
+
+    assetid_t asset_manager_t::load_sound(std::vector<uint8_t> mem) {
+        assetid_t id = current_id++;
+        std::shared_ptr<audio::sound_t> sound = std::make_shared<audio::sound_t>();
+        sound->id = id;
+
+        int channels, samplerate;
+        int16_t *output;
+        int samples;
+
+        stb_vorbis *vorbis = stb_vorbis_open_memory(mem.data(), mem.size(), nullptr, nullptr);
+
+        sounds.insert({sound, std::chrono::high_resolution_clock::now()});
+        return id;
     }
     
     assetid_t asset_manager_t::load_audio(std::string path) {
@@ -400,6 +454,15 @@ namespace rocket {
 
     std::shared_ptr<audio_t> asset_manager_t::get_audio(assetid_t id) {
         for (auto &[k, v] : audios) {
+            if (k->id == id) {
+                return k;
+            }
+        }
+        return nullptr;
+    }
+
+    std::shared_ptr<audio::sound_t> asset_manager_t::get_sound(assetid_t id) {
+        for (auto &[k, v] : sounds) {
             if (k->id == id) {
                 return k;
             }
@@ -576,6 +639,7 @@ namespace rocket {
     }
 
     void asset_manager_t::cleanup() {
+        this->__thread_cleanup_running = true;
         std::this_thread::sleep_for(3s);
         while (cleanup_running && cleanup_interval.count() != 0) {
             std::this_thread::sleep_for(1s);
@@ -592,16 +656,104 @@ namespace rocket {
                         texture_removes.push_back(k);
                     }
                 }
+            }
 
+            for (auto &tx : texture_removes) {
+                glDeleteTextures(1, &tx->glid);
+                tx->glid = 0;
+                tx->data.clear();
+            }
+
+            {
+                std::lock_guard<std::mutex> _(asset_mutex);
                 for (auto &k : texture_removes) {
                     textures.erase(k);
                 }
             }
+
+            std::vector<std::shared_ptr<font_t>> font_removes;
+            font_removes.reserve(fonts.size());
+
+            {
+                std::lock_guard<std::mutex> _(asset_mutex);
+                for (auto &[k, v] : fonts) {
+                    if (now - v > cleanup_interval) {
+                        font_removes.push_back(k);
+                    }
+                }
+            }
+
+            for (auto &fnt : font_removes) {
+                fnt->unload();
+            }
+
+            {
+                std::lock_guard<std::mutex> _(asset_mutex);
+                for (auto &k : font_removes) {
+                    fonts.erase(k);
+                }
+            }
+
+            std::vector<std::shared_ptr<audio_t>> audio_removes;
+            audio_removes.reserve(audios.size());
+
+            {
+                std::lock_guard<std::mutex> _(asset_mutex);
+                for (auto &[k, v] : audios) {
+                    if (now - v > cleanup_interval) {
+                        audio_removes.push_back(k);
+                    }
+                }
+            }
+
+            for (auto &a : audio_removes) {
+                alDeleteBuffers(1, a->buffer);
+                delete a->buffer;
+                a->playing = false;
+                alDeleteSources(1, &a->source);
+                a->source = 0;
+            }
+
+            {
+                std::lock_guard<std::mutex> _(asset_mutex);
+                for (auto &k : audio_removes) {
+                    audios.erase(k);
+                }
+            }
+
+            std::vector<std::shared_ptr<audio::sound_t>> sound_removes;
+            sound_removes.reserve(sounds.size());
+
+            {
+                std::lock_guard<std::mutex> _(asset_mutex);
+                for (auto &[k, v] : sounds) {
+                    if (now - v > cleanup_interval) {
+                        sound_removes.push_back(k);
+                    }
+                }
+            }
+
+            for (auto &s : sound_removes) {
+                // Ownership required
+            }
+
+            {
+                std::lock_guard<std::mutex> _(asset_mutex);
+                for (auto &k : sound_removes) {
+                    sounds.erase(k);
+                }
+            }
         }
+
+        this->__thread_cleanup_running = false;
     }
 
     void asset_manager_t::close() {
-        cleanup_running = false;
+        if (this->cleanup_running) {
+            cleanup_running = false;
+            rocket::log("Waiting for cleanup thread...", "asset_manager_t", "close", "info");
+            while (this->__thread_cleanup_running) {}
+        }
         destroy_audio_ctx();
     }
 

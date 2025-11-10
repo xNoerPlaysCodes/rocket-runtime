@@ -7,6 +7,7 @@
 #include <SDL2/SDL_gamecontroller.h>
 #include <SDL2/SDL_haptic.h>
 #include <SDL2/SDL_joystick.h>
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -115,7 +116,7 @@ namespace rocket {
         }
 
         rocket::fbounding_box mouse_bbox() {
-            return { io::mouse_pos_f().x, io::mouse_pos_f().y, 1, 1 };
+            return { {io::mouse_pos_f().x, io::mouse_pos_f().y}, {1, 1} };
         }
     }
 
@@ -202,15 +203,19 @@ namespace rocket {
 
         rocket::vec2d_t mouse_pos() {
             rocket::vec2d_t pos = ::util::mouse_pos();
+            pos.x = std::max(0.0, pos.x);
+            pos.y = std::max(0.0, pos.y);
             auto mmevs = ::util::get_simulated_mmevents();
             if (!mmevs.empty()) {
                 return mmevs.back().pos;
             }
+
             return pos;
         }
 
         rocket::vec2f_t mouse_pos_f() {
-            return {static_cast<float>(mouse_pos().x), static_cast<float>(mouse_pos().y)};
+            auto mpos = mouse_pos();
+            return {static_cast<float>(mpos.x), static_cast<float>(mpos.y)};
         }
 
         char get_formatted_char_typed() {

@@ -3,7 +3,7 @@
 	"compiler-frontend-variant" : "GNU",
 	"compiler-id" : "Clang",
 	"compiler-simulate-id" : "",
-	"config" : "Release",
+	"config" : "Debug",
 	"cxx-modules" : {},
 	"database-info" : null,
 	"dir-cur-bld" : "/home/noerlol/C-Projects/RocketGE",

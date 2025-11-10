@@ -16,7 +16,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 #DebugMode
 project(${PROJECT_NAME} CXX)
 
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 
 option(BUILD_SHARED_LIBS "Build Shared" ON)
 option(BUILD_TESTS "Build Tests" ON)
@@ -31,7 +31,7 @@ include_directories(/usr/include/miniz)
 include_directories(src/include)
 
 if (BUILD_QUARK)
-    set(QUARK_SOURCES 
+    set(QUARK_SOURCES
         src/quark/physics.cpp
     )
     add_compile_definitions(ROCKETGE__BUILD_QUARK)
@@ -64,6 +64,7 @@ add_library(${PROJECT_NAME}
     src/rocket/renderer3d.cpp
     src/rocket/io.cpp
     src/rocket/asset.cpp
+    src/rocket/audio.cpp
     src/rocket/types.cpp
     src/rocket/runtime.cpp
 
@@ -126,6 +127,7 @@ if (BUILD_TESTS)
         io_test
         plugin_test
         multithreaded_test
+        sound_engine_test
     )
 
     if (BUILD_ASTRO)

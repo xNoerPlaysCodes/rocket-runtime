@@ -3,7 +3,7 @@
 	"compiler-frontend-variant" : "GNU",
 	"compiler-id" : "Clang",
 	"compiler-simulate-id" : "",
-	"config" : "Release",
+	"config" : "Debug",
 	"cxx-modules" : {},
 	"database-info" : null,
 	"dir-cur-bld" : "/home/noerlol/C-Projects/RocketGE",
@@ -44,6 +44,11 @@
 		{
 			"language" : "CXX",
 			"source" : "/home/noerlol/C-Projects/RocketGE/src/rocket/asset.cpp"
+		},
+		"CMakeFiles/RocketRuntime.dir/src/rocket/audio.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/noerlol/C-Projects/RocketGE/src/rocket/audio.cpp"
 		},
 		"CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o" : 
 		{

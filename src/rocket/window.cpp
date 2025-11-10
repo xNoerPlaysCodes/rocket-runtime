@@ -351,6 +351,10 @@ namespace rocket {
         glfwWindowHint(GLFW_DECORATED, glfwaltGetBoolean(!flags.undecorated));
         glfwWindowHint(GLFW_VISIBLE, glfwaltGetBoolean(!flags.hidden));
 
+        if (!flags.hidden) {
+            glfwWindowHint(GLFW_VISIBLE, false);
+        }
+
         if (flags.minimized) {
             glfwIconifyWindow(glfw_window);
         }

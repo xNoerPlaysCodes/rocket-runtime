@@ -11,6 +11,7 @@
 #include <glm/ext/vector_float3.hpp>
 #include <glm/geometric.hpp>
 #include "asset.hpp"
+#include "rocket/rgl.hpp"
 #include "types.hpp"
 #include "window.hpp"
 #include "shader.hpp"
@@ -52,7 +53,7 @@ namespace rocket {
         double frame_start_time;
         double delta_time;
 
-        uint64_t frame_counter;
+        uint64_t frame_counter = 0;
 
         std::vector<instanced_quad_t> batch;
         bool batched = false;
@@ -211,6 +212,10 @@ namespace rocket {
         /// @brief you should probably call this
         /// @brief after end_frame() or just before
         int get_drawcalls();
+
+        /// @brief Gets the draw metrics
+        ///         contains Avg, Max, Min: FPS, Frametime
+        rgl::draw_metrics_t get_draw_metrics();
     public:
         /// @brief Get Current FPS
         int get_current_fps();

@@ -11,6 +11,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: dyndep
 
 build CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: dyndep
 
+build CMakeFiles/RocketRuntime.dir/src/rocket/audio.cpp.o: dyndep
+
 build CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o: dyndep
 
 build CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o: dyndep

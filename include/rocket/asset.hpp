@@ -1,6 +1,7 @@
 #ifndef ROCKETGE__ASSET_HPP
 #define ROCKETGE__ASSET_HPP
 
+#include "rocket/audio.hpp"
 #include "types.hpp"
 #include "stb_truetype.h"
 #include <AL/al.h>
@@ -186,11 +187,13 @@ namespace rocket {
         std::unordered_map<std::shared_ptr<texture_t>, std::chrono::time_point<std::chrono::high_resolution_clock>> textures;
         std::unordered_map<std::shared_ptr<audio_t>, std::chrono::time_point<std::chrono::high_resolution_clock>> audios;
         std::unordered_map<std::shared_ptr<font_t>, std::chrono::time_point<std::chrono::high_resolution_clock>> fonts;
+        std::unordered_map<std::shared_ptr<audio::sound_t>, std::chrono::time_point<std::chrono::high_resolution_clock>> sounds;
 
         std::thread cleanup_thread;
         assetid_t current_id;
 
-        bool cleanup_running;
+        std::atomic_bool cleanup_running;
+        std::atomic_bool __thread_cleanup_running;
         std::mutex asset_mutex;
 
         std::shared_ptr<audio_context_t> audio_context;
@@ -207,14 +210,25 @@ namespace rocket {
         /// @brief Get a Texture2D from ID
         std::shared_ptr<texture_t> get_texture(assetid_t id);
 
-        /// @brief Initialize the Audio Context
+        /// @brief Initialize the Audio Context [Legacy Interface]
+        [[deprecated("Use rocket::audio::sound_engine_t")]]
         void init_audio_ctx();
-        /// @brief Load an Audio from path
+        /// @brief Load an Audio from path [Legacy Interface]
+        [[deprecated("Use rocket::asset_manager_t::load_sound")]]
         assetid_t load_audio(std::string path);
-        /// @brief Load an Audio from Memory
+        /// @brief Load an Audio from Memory [Legacy Interface]
+        [[deprecated("Use rocket::asset_manager_t::load_sound")]]
         assetid_t load_audio(std::vector<uint8_t> mem);
-        /// @brief Get an Audio from ID
+        /// @brief Get an Audio from ID [Legacy Interface]
+        [[deprecated("Use rocket::asset_manager_t::get_sound")]]
         std::shared_ptr<audio_t> get_audio(assetid_t id);
+
+        /// @brief Load a sound file from path into memory
+        assetid_t load_sound(std::string path);
+        /// @brief Load a sound from memory
+        assetid_t load_sound(std::vector<uint8_t> mem);
+        /// @brief Get a sound from ID
+        std::shared_ptr<audio::sound_t> get_sound(assetid_t id);
 
         /// @brief Load a Font
         assetid_t load_font(int size, std::string path);

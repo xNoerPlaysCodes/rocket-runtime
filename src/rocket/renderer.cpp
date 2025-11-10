@@ -1,3 +1,4 @@
+#include "rocket/audio.hpp"
 #include <GL/glew.h>
 #define RGL_EXPOSE_NATIVE_LIB
 #include "rocket/rgl.hpp"
@@ -173,6 +174,11 @@ namespace rocket {
         if (flags.show_splash && (!this->splash_shown)) {
             this->show_splash();
         }
+        if (this->frame_counter == 0) {
+            if (!window->flags.hidden) {
+                glfwShowWindow(window->glfw_window);
+            }
+        }
         this->frame_started = true;
         start_time = std::chrono::high_resolution_clock::now();
         frame_start_time = glfwGetTime();
@@ -215,7 +221,9 @@ namespace rocket {
 
         int frame = 0;
         float duration = get_fps() * 1;
-        aud->play(30);
+
+        aud->play();
+
         while (frame - 1 != duration && splash_window->is_running()) {
             {
                 this->begin_frame();
@@ -608,9 +616,9 @@ namespace rocket {
             return ss.str();
         };
         static std::shared_ptr<rocket::font_t> font = rGE__FONT_DEFAULT_MONOSPACED;
-        rocket::text_t fps_abs_text = { "FPS (abs): " + std::to_string((static_cast<int>(std::round(1.0 / ren->get_delta_time())))), text_size, rgb_color::white(), font };
-        rocket::text_t fps_avg_text = { "FPS (avg): " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
-        rocket::text_t frametime_text = { "FrameTime: " + double_to_str(time_took_for_frame * 1000) + "ms", text_size, rgb_color::white(), font };
+        auto draw_metrics = ren->get_draw_metrics();
+        rocket::text_t fps_avg_text = { "FPS: " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
+        rocket::text_t frametime_text = { "FrameTime: " + double_to_str(draw_metrics.avg_frametime) + "ms", text_size, rgb_color::white(), font };
         rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()) + "s", text_size, rgb_color::white(), font };
         rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(rgl::read_drawcalls()), text_size, rgb_color::white(), font };
         rocket::text_t tricount_text = { "TriCount: " + std::to_string(rgl::read_tricount()), text_size, rgb_color::white(), font };
@@ -635,14 +643,13 @@ namespace rocket {
         ren->begin_scissor_mode(position, size);
 
         ren->draw_rectangle(position, size, rgba_color::black(), 0., 0.05);
-        ren->draw_text(fps_abs_text, { zx, zy + (0 * text_size) });
-        ren->draw_text(fps_avg_text, { zx, zy + (1 * text_size) });
-        ren->draw_text(frametime_text, { zx, zy + (2 * text_size) });
-        ren->draw_text(deltatime_text, { zx, zy + (3 * text_size) });
-        ren->draw_text(drawcalls_text, { zx, zy + (4 * text_size) });
-        ren->draw_text(tricount_text, { zx, zy + (5 * text_size) });
-        ren->draw_text(framebuffer_active_text, { zx, zy + (6 * text_size) });
-        ren->draw_text(mouse_pos_text, { zx, zy + (7 * text_size) });
+        ren->draw_text(fps_avg_text, { zx, zy + (0 * text_size) });
+        ren->draw_text(frametime_text, { zx, zy + (1 * text_size) });
+        ren->draw_text(deltatime_text, { zx, zy + (2 * text_size) });
+        ren->draw_text(drawcalls_text, { zx, zy + (3 * text_size) });
+        ren->draw_text(tricount_text, { zx, zy + (4 * text_size) });
+        ren->draw_text(framebuffer_active_text, { zx, zy + (5 * text_size) });
+        ren->draw_text(mouse_pos_text, { zx, zy + (6 * text_size) });
 
         rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
         static std::string glmajor, glminor;
@@ -1031,6 +1038,10 @@ namespace rocket {
 
     int renderer_2d::get_drawcalls() {
         return rgl::read_drawcalls();
+    }
+
+    rgl::draw_metrics_t renderer_2d::get_draw_metrics() {
+        return rgl::get_draw_metrics();
     }
 
     void renderer_2d::begin_scissor_mode(rocket::fbounding_box rect) {
