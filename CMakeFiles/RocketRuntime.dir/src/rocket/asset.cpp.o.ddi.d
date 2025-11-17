@@ -289,7 +289,10 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/ranges_algo.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_algorithm_defs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/iostream \
-  /usr/include/miniz/../rlgl.h \
+  /home/noerlol/C-Projects/RocketGE/src/include/rgl.hpp \
+  /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/utility \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_relops.h \
   /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp \
   /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
   /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/constants.hpp \
@@ -462,9 +465,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o.ddi: \
   /usr/include/glm/ext/../ext/vector_relational.inl \
   /usr/include/glm/ext/../ext/../detail/type_float.hpp \
   /usr/include/glm/ext/quaternion_geometric.inl \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/utility \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_relops.h \
   /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
   /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
   /home/noerlol/C-Projects/RocketGE/src/rocket/../include/stb_image.h \

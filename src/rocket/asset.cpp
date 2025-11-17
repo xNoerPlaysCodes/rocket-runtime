@@ -12,7 +12,7 @@
 #include <thread>
 #include <vector>
 #include <iostream>
-#include "../rlgl.h"
+#include "rgl.hpp"
 
 // should i add this?
 /*
