@@ -41,6 +41,11 @@ namespace rocket {
         ///         all over the place... :(
         fxaa
     };
+
+    struct graphics_settings_t {
+        
+    };
+
     class renderer_2d {
     private:
         window_t *window;
@@ -186,6 +191,8 @@ namespace rocket {
         void end_frame();
         /// @brief Check if frame has ended
         bool has_frame_ended();
+        /// @brief Set graphics settings
+        void set_graphics_settings(graphics_settings_t graphics);
         /// @brief Set viewport size
         void set_viewport_size(vec2f_t size);
         /// @brief Set viewport offset
@@ -207,15 +214,15 @@ namespace rocket {
         double get_delta_time();
         /// @brief Get number of frames elapsed since first frame
         uint64_t get_framecount();
-
         /// @brief For proper drawcall tracking,
         /// @brief you should probably call this
         /// @brief after end_frame() or just before
         int get_drawcalls();
-
         /// @brief Gets the draw metrics
         ///         contains Avg, Max, Min: FPS, Frametime
         rgl::draw_metrics_t get_draw_metrics();
+        /// @brief Get graphics settings
+        graphics_settings_t get_graphics_settings();
     public:
         /// @brief Get Current FPS
         int get_current_fps();

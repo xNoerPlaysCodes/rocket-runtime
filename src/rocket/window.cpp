@@ -97,7 +97,7 @@ namespace rocket {
 
     RGE_STATIC_FUNC_IMPL void window_t::cpl_init() {
         if (glfwPlatformSupported(GLFW_PLATFORM_WAYLAND) && util::is_wayland()) {
-            rocket::log("Wayland found! Going back to X11...", "window_t", "cpl_init", "debug");
+            // Set default platform to X11 on Linux
             window_t::set_forced_platform(platform_type_t::linux_x11);
         }
 

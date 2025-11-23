@@ -20,7 +20,8 @@ def get_deps() -> None:
         "OpenGL": ">= 1.1",
         "GLEW": "  >= 1.5",
         "OpenAL": "(OpenAL-soft) any",
-        "miniz": " >= 3.0"
+        "miniz": " >= 3.0",
+        "tweeny": ">= 3.1.0"
     }
 
     for key, value in deps.items():

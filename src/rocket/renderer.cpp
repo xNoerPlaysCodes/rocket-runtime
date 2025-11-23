@@ -195,7 +195,7 @@ namespace rocket {
         }
         this->splash_shown = true;
 
-        float duration = 256;
+        float duration = 16384;
 
         auto tween = tweeny::from(0).to(0).during(duration / 2).via(tweeny::easing::cubicOut);
 
