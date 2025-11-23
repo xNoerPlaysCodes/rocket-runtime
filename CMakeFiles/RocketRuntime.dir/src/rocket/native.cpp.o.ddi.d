@@ -1,5 +1,5 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/native.cpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/native.cpp \
   /usr/include/GLFW/glfw3.h /usr/lib/clang/21/include/stddef.h \
   /usr/lib/clang/21/include/__stddef_header_macro.h \
   /usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
@@ -235,9 +235,9 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/fstream.tcc \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/macros.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/macros.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/runtime.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/renderer.hpp \
   /usr/include/glm/detail/qualifier.hpp \
   /usr/include/glm/detail/setup.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cassert \
@@ -418,9 +418,9 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/include/glm/ext/../ext/vector_relational.inl \
   /usr/include/glm/ext/../ext/../detail/type_float.hpp \
   /usr/include/glm/ext/quaternion_geometric.inl \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/audio.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/asset.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/audio.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/types.hpp \
   /usr/include/AL/alc.h /usr/include/AL/al.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/memory \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_raw_storage_iter.h \
@@ -446,7 +446,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/out_ptr.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_memory_defs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/execution_defs.h \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/stb_truetype.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/atomic \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/chrono \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/chrono_io.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/map \
@@ -457,7 +458,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/unique_lock.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/thread \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/stop_token \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/atomic \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_thread.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/semaphore \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/semaphore_base.h \
@@ -465,14 +465,14 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/this_thread_sleep.h \
   /usr/include/sys/time.h /usr/include/semaphore.h \
   /usr/include/bits/semaphore.h \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/rgl.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/utility \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_relops.h \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/include/native.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/window.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/shader.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/io.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/constants.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/native.hpp \
   /usr/include/wayland-client.hpp /usr/include/wayland-version.hpp \
   /usr/include/wayland-client-core.h /usr/include/wayland-util.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/math.h \
@@ -492,7 +492,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_list.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/list.tcc \
   /usr/include/wayland-server-core.h /usr/lib/clang/21/include/stdbool.h \
-  /home/noerlol/C-Projects/RocketGE/src/include/rnative/xdg-toplevel-icon-v1-client-protocol.h \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/rnative/xdg-toplevel-icon-v1-client-protocol.h \
   /usr/include/wayland-client.h /usr/include/wayland-client-protocol.h \
   /usr/include/X11/Xlib.h /usr/include/X11/Xfuncproto.h \
   /usr/include/X11/Xosdefs.h /usr/include/X11/Xutil.h \

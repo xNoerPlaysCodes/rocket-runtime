@@ -1,7 +1,7 @@
 {
 	"InstallScripts" : 
 	[
-		"/home/noerlol/C-Projects/RocketGE/cmake_install.cmake"
+		"/home/noerlol/C-Projects/Libraries/RocketGE/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

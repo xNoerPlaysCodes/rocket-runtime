@@ -1,6 +1,6 @@
 CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.ddi: \
-  /home/noerlol/C-Projects/RocketGE/src/headeronlyimpl.cpp \
-  /home/noerlol/C-Projects/RocketGE/src/include/stb_image.h \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/headeronlyimpl.cpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/stb_image.h \
   /usr/include/stdio.h /usr/include/bits/libc-header-start.h \
   /usr/include/features.h /usr/include/features-time64.h \
   /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
@@ -120,4 +120,4 @@ CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.ddi: \
   /usr/lib/clang/21/include/xmmintrin.h \
   /usr/lib/clang/21/include/mmintrin.h \
   /usr/lib/clang/21/include/mm_malloc.h \
-  /home/noerlol/C-Projects/RocketGE/src/../include/rocket/stb_truetype.h
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/../include/rocket/stb_truetype.h

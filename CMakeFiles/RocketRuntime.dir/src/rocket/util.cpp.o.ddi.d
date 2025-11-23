@@ -1,7 +1,7 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o.ddi: \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/util.cpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/util.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util.cpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/types.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdint \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -141,8 +141,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/uses_allocator.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/uses_allocator_args.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tuple \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/constants.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/io.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/constants.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/limits \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/functional \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_function.h \
@@ -163,9 +163,9 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/array \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/move_only_function.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/mofunc_impl.h \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/runtime.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/macros.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/runtime.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/macros.hpp \
   /usr/include/glm/detail/qualifier.hpp \
   /usr/include/glm/detail/setup.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cassert \
@@ -332,8 +332,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o.ddi: \
   /usr/include/glm/ext/../ext/vector_relational.inl \
   /usr/include/glm/ext/../ext/../detail/type_float.hpp \
   /usr/include/glm/ext/quaternion_geometric.inl \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/asset.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/audio.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/asset.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/audio.hpp \
   /usr/include/AL/alc.h /usr/include/AL/al.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/memory \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_tempbuf.h \
@@ -404,7 +404,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/out_ptr.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_memory_defs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/execution_defs.h \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/stb_truetype.h \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/stb_truetype.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/atomic \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/chrono \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/chrono.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/ratio \
@@ -446,7 +447,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/unique_lock.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/thread \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/stop_token \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/atomic \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_thread.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/semaphore \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/semaphore_base.h \
@@ -456,11 +456,11 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o.ddi: \
   /usr/include/bits/semaphore.h /usr/include/GLFW/glfw3.h \
   /usr/include/GL/gl.h /usr/include/GL/glext.h \
   /usr/include/KHR/khrplatform.h \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/rgl.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/utility \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_relops.h \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/window.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/shader.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/algorithm \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/ranges_algo.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_algorithm_defs.h \

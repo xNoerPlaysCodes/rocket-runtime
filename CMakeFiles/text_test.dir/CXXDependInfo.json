@@ -6,10 +6,10 @@
 	"config" : "Debug",
 	"cxx-modules" : {},
 	"database-info" : null,
-	"dir-cur-bld" : "/home/noerlol/C-Projects/RocketGE",
-	"dir-cur-src" : "/home/noerlol/C-Projects/RocketGE",
-	"dir-top-bld" : "/home/noerlol/C-Projects/RocketGE",
-	"dir-top-src" : "/home/noerlol/C-Projects/RocketGE",
+	"dir-cur-bld" : "/home/noerlol/C-Projects/Libraries/RocketGE",
+	"dir-cur-src" : "/home/noerlol/C-Projects/Libraries/RocketGE",
+	"dir-top-bld" : "/home/noerlol/C-Projects/Libraries/RocketGE",
+	"dir-top-src" : "/home/noerlol/C-Projects/Libraries/RocketGE",
 	"exports" : [],
 	"forward-modules-from-target-dirs" : [],
 	"include-dirs" : 
@@ -20,13 +20,13 @@
 	],
 	"language" : "CXX",
 	"linked-target-dirs" : [],
-	"module-dir" : "/home/noerlol/C-Projects/RocketGE/CMakeFiles/text_test.dir",
+	"module-dir" : "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/text_test.dir",
 	"sources" : 
 	{
 		"CMakeFiles/text_test.dir/tests/text_test.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/RocketGE/tests/text_test.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/tests/text_test.cpp"
 		}
 	}
 }

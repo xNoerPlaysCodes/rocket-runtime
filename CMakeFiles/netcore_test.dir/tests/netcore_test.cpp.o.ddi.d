@@ -1,5 +1,5 @@
 CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.ddi: \
-  /home/noerlol/C-Projects/RocketGE/tests/netcore_test.cpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/tests/netcore_test.cpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/iostream \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/requires_hosted.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -208,9 +208,9 @@ CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/ostream.tcc \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/istream \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/istream.tcc \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/runtime.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/renderer.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/runtime.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/renderer.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/macros.hpp \
   /usr/include/glm/detail/qualifier.hpp \
   /usr/include/glm/detail/setup.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cassert \
@@ -393,9 +393,9 @@ CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.ddi: \
   /usr/include/glm/ext/../ext/vector_relational.inl \
   /usr/include/glm/ext/../ext/../detail/type_float.hpp \
   /usr/include/glm/ext/quaternion_geometric.inl \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/audio.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/asset.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/audio.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/types.hpp \
   /usr/include/AL/alc.h /usr/include/AL/al.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/memory \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_raw_storage_iter.h \
@@ -427,7 +427,8 @@ CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/out_ptr.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_memory_defs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/execution_defs.h \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/stb_truetype.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/atomic \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/chrono \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/chrono.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/ratio \
@@ -445,7 +446,6 @@ CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/unique_lock.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/thread \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/stop_token \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/atomic \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_thread.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/semaphore \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/semaphore_base.h \
@@ -455,11 +455,11 @@ CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.ddi: \
   /usr/include/bits/semaphore.h /usr/include/GLFW/glfw3.h \
   /usr/include/GL/gl.h /usr/include/GL/glext.h \
   /usr/include/KHR/khrplatform.h \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/rgl.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/utility \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_relops.h \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/window.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/shader.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/io.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/constants.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/net/core.hpp
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/window.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/shader.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/io.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/constants.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/net/core.hpp

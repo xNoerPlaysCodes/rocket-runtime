@@ -1,5 +1,5 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/rgl.cpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/rgl.cpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/chrono \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/chrono.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/ratio \
@@ -239,11 +239,11 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
   /usr/include/glm/ext/../detail/./compute_vector_relational.hpp \
   /usr/include/glm/ext/../detail/./setup.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/iostream \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../include/rgl.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/rgl.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/asset.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/audio.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/types.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../include/rgl.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/rgl.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/asset.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/audio.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/types.hpp \
   /usr/include/AL/alc.h /usr/include/AL/al.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/functional \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_function.h \
@@ -279,7 +279,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/out_ptr.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_memory_defs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/execution_defs.h \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/stb_truetype.h \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/stb_truetype.h \
+  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/atomic \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/map \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_tree.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_map.h \
@@ -288,7 +289,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/unique_lock.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/thread \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/stop_token \
-  /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/atomic \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_thread.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/semaphore \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/semaphore_base.h \
@@ -495,10 +495,10 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstring \
   /usr/include/string.h /usr/include/strings.h \
   /usr/include/glm/gtc/type_ptr.inl \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/runtime.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/macros.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/window.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/shader.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/io.hpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/constants.hpp
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/runtime.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/renderer.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/macros.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/window.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/shader.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/io.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/constants.hpp

@@ -1,7 +1,7 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/net/core.cpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/net/core.hpp \
-  /home/noerlol/C-Projects/RocketGE/include/rocket/macros.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/net/core.cpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/net/core.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/macros.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstring \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/version.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \

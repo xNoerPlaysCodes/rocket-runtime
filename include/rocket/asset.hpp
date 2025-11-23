@@ -5,6 +5,7 @@
 #include "types.hpp"
 #include "stb_truetype.h"
 #include <AL/al.h>
+#include <atomic>
 #include <chrono>
 #include <functional>
 #include <map>

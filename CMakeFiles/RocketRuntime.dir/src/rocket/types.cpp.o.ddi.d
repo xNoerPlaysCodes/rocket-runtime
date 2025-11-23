@@ -1,6 +1,6 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o.ddi: \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/types.cpp \
-  /home/noerlol/C-Projects/RocketGE/src/rocket/../../include/rocket/types.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/types.cpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/types.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdint \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
