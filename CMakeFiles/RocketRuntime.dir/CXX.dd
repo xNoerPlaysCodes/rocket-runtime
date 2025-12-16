@@ -25,6 +25,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: dyndep
 
 build CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: dyndep
 
+build CMakeFiles/RocketRuntime.dir/src/rocket/glfnldr.cpp.o: dyndep
+
 build CMakeFiles/RocketRuntime.dir/src/rocket/threads.cpp.o: dyndep
 
 build CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o: dyndep

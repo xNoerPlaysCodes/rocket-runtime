@@ -1,3 +1,0 @@
-ninja_dyndep_version = 1.0
-build CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o: dyndep
-

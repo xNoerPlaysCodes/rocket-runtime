@@ -25,6 +25,7 @@ option(BUILD_EXAMPLES "Build Examples" ON)
 option(BUILD_QUARK "Build Quark [physics]" ON)
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 option(BUILD_NETWORKING "Build Networking [net]" ON)
+option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
 
 include_directories(include)
 include_directories(/usr/include/miniz)
@@ -51,6 +52,16 @@ if (BUILD_NETWORKING)
     add_compile_definitions(ROCKETGE__BUILD_NETWORKING)
 endif()
 
+if (GLFNLDR_BACKEND STREQUAL "GLEW")
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_GLEW)
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew)
+elseif(GLFNLDR_BACKEND STREQUAL "LIBEPOXY")
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_LIBEPOXY)
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::libepoxy)
+else()
+    message(FATAL_ERROR "Unknown GLfnldr backend: ${GLFNLDR_BACKEND}")
+endif()
+
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(RNATIVE_SOURCES
         src/rnative/xdg-toplevel-icon-v1-client-protocol.c
@@ -74,6 +85,7 @@ add_library(${PROJECT_NAME}
     src/rocket/shader.cpp
 
     src/rocket/rgl.cpp
+    src/rocket/glfnldr.cpp
     src/rocket/threads.cpp
 
     # Plugin Subsystem
@@ -128,6 +140,7 @@ if (BUILD_TESTS)
         plugin_test
         multithreaded_test
         sound_engine_test
+        borderless_windowed_test
     )
 
     if (BUILD_ASTRO)

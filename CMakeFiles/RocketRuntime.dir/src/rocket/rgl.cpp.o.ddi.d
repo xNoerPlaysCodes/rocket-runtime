@@ -501,4 +501,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.ddi: \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/window.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/shader.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/io.hpp \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/constants.hpp
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/constants.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/glfnldr.hpp

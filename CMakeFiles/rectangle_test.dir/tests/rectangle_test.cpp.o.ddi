@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/rectangle_test.dir/tests/rectangle_test.cpp.o"
-    }
-  ],
-  "version": 1
-}

@@ -83,7 +83,7 @@ namespace rgl {
     };
 
 
-    std::vector<std::string> init_gl(const rocket::vec2f_t viewport_size);
+    std::vector<std::string> init_gl(rocket::vec2f_t viewport_size);
     void init_gl_wtd();
     std::pair<vao_t, vbo_t> compile_vo(
         const std::array<float, 12>& square_vertices = std::array<float,12>{

@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/rounded_texture_rectangle_test.dir/tests/rounded_texture_rectangle_test.cpp.o"
-    }
-  ],
-  "version": 1
-}

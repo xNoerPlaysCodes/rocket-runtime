@@ -190,7 +190,8 @@ namespace rocket {
     float get_max_context_gl_version() {
         glfwSetErrorCallback(nullptr);
         GLFWwindow *tg_win;
-        int versions[][19] = {
+        const int len = 19;
+        int versions[][len] = {
             {4,6},
             {4,5},
             {4,4},
@@ -207,6 +208,7 @@ namespace rocket {
             {2,1},
             {2,0},
 
+            // XXX Remove (Obsolete)
             {1,5},
             {1,4},
             {1,3},
@@ -215,8 +217,10 @@ namespace rocket {
             {1,0}
         };
 
-        for (int i = 0; i < 19; i++) {
-            rocket::log("Trying " + std::to_string(versions[i][0]) + "." + std::to_string(versions[i][1]), "RocketGE", "ContextCreator", "debug");
+        static auto cli_args = util::get_clistate();
+
+        for (int i = 0; i < len; i++) {
+            rocket::log("Trying " + std::to_string(versions[i][0]) + "." + std::to_string(versions[i][1]), "window_t", "context_creator", "debug");
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versions[i][0]);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versions[i][1]);
             float ver = (float)versions[i][0] + (float)versions[i][1] / 10.f;
@@ -228,14 +232,22 @@ namespace rocket {
             glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 
             tg_win = glfwCreateWindow(1, 1, "tmp", NULL, NULL);
+            float gl_version = versions[i][0] + (versions[i][1] * 0.1f);
             if (tg_win == nullptr) {
-                if (versions[i][0] == 1 && versions[i][1] == 1) {
+                if (versions[i][0] == 2 && versions[i][1] == 0) {
                     glfwSetErrorCallback(_cb_glfw_error_cb);
-                    rocket::log_error("This graphics driver does not support the minimum OpenGL version of 1.1", 1, "RocketGE::ContextCreator", "fatal");
+                    rocket::log_error("This graphics driver does not support the minimum OpenGL version of 2.0", 1, "window_t::context_creator", "fatal");
                     rocket::exit(0);
-                    return 1.0f;
+                    return 2.0f;
                 }
+
+                continue;
             } else {
+                if (cli_args.glversion != GL_VERSION_UNK) {
+                    if (gl_version > cli_args.glversion) {
+                        continue;
+                    }
+                }
                 glfwSetErrorCallback(_cb_glfw_error_cb);
                 glfwDestroyWindow(tg_win);
 
@@ -307,7 +319,7 @@ namespace rocket {
             if (max_gl_ver == 2 || max_gl_ver == 3 || max_gl_ver == 4) {
                 ss << ".0";
             }
-            rocket::log_error("This version of OpenGL is not supported by this graphics driver, using next available version: " + ss.str(), 1, "RocketGE::PreGL", "warning");
+            rocket::log_error("This version of OpenGL is not supported by this graphics driver, using next available version: " + ss.str(), 1, "window_t::context_creator", "warning");
             glver = max_gl_ver;
         }
 
@@ -317,17 +329,17 @@ namespace rocket {
             if (minglver == 2 || minglver == 3 || minglver == 4) {
                 ss << ".0";
             }
-            rocket::log_error("This version of OpenGL is not supported by this graphics driver, using minimum available version: " + ss.str(), 1, "RocketGE::PreGL", "warning");
+            rocket::log_error("This version of OpenGL is not supported by this graphics driver, using minimum available version: " + ss.str(), 1, "window_t::context_creator", "warning");
             glver = static_cast<float>(ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR) + static_cast<float>(0.1 * ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR);
         }
 
         if (max_gl_ver < 2.0f) {
-            rocket::log_error("OpenGL Version 2.0 or higher must be used", 1, "RocketGE::PreGL", "fatal");
+            rocket::log_error("Minimum OpenGL version 2.0 not supported", 1, "window_t::context_creator", "fatal");
             rocket::exit(0);
         }
 
         if (glver < 3.0f) {
-            rocket::log_error("OpenGL Version 3.0 or higher must be used for a modern environment", 1, "RocketGE::PreGL", "warning");
+            rocket::log_error("OpenGL Version 3.0 or higher must be used for a modern environment", 1, "window_t::context_creator", "warning");
         }
         if (glver > 3.1f) {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -337,7 +349,7 @@ namespace rocket {
             if (glver >= 4.3f) {
                 glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
             } else {
-                rocket::log_error("OpenGL::ContextVerifier requires 4.3 or higher", -5, "RocketGE::PreGL", "warn");
+                rocket::log_error("OpenGL::ContextVerifier requires 4.3 or higher", -5, "window_t::context_creator", "warn");
             }
         }
 
@@ -373,19 +385,13 @@ namespace rocket {
 
         glfwWindowHint(GLFW_SCALE_TO_MONITOR, glfwaltGetBoolean(flags.hidpi));
 
-        using GLFWenum = int;
-        GLFWenum class_name = 0;
-        if (glfw_platform_is_wayland(get_platform())) {
-            class_name = GLFW_WAYLAND_APP_ID;
-        } else if (glfw_platform_is_x11(get_platform())) {
-            class_name = GLFW_X11_CLASS_NAME;
+#ifdef ROCKETGE__Platform_Linux
+        std::string class_name = ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID;
+        if (!this->flags.window_class_name.empty()) {
+            class_name = this->flags.window_class_name;
+            rnative::linux_set_class_name(class_name.c_str());
         }
-
-        std::string class_name_or_id = flags.window_class_name.empty() || flags.window_class_name == ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID ? ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID : flags.window_class_name;
-
-        if (class_name != 0) {
-            glfwWindowHintString(class_name, class_name_or_id.c_str());
-        }
+#endif
 
 #ifdef ROCKETGE__Platform_Windows
         auto to_widestr = [](std::string str) -> std::wstring {
@@ -479,9 +485,9 @@ namespace rocket {
                     "- AstroUI: [DISABLED]",
                 #endif
                 #ifdef ROCKETGE__BUILD_NETWORKING
-                    "- Networking: [ENABLED]",
+                    "- Network: [ENABLED]",
                 #else
-                    "- Networking: [DISABLED]",
+                    "- Network: [DISABLED]",
                 #endif
             };
 

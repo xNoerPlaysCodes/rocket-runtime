@@ -116,9 +116,9 @@ namespace rocket {
     void exit(int status_code) {
         if (exitcb != nullptr) {
             exitcb(status_code);
+        } else {
+            std::exit(status_code);
         }
-
-        std::exit(status_code);
     }
 
     gl_error_callback_t get_opengl_error_callback() {
@@ -130,9 +130,16 @@ namespace rocket {
             return;
         }
 
-        const std::vector<std::string> args_with_values = {};
+        const std::vector<std::string> args_with_values = {
+            "viewport-size", 
+            "viewportsize", 
+            "vp-size", 
+            "vpsize",
+            "framerate",
+        };
         util::global_state_cliargs_t args = {};
         bool exit = false;
+        bool error = false;
         std::string additional_exit_message;
         for (int i = 1; i < argc; ++i) {
             int nexti = i + 1;
@@ -167,6 +174,7 @@ namespace rocket {
 
             if (too_many_prefixes) {
                 exit = true;
+                error = true;
                 rocket::log_error("unexpected argument: " + rawarg, -1, "rocket::argparse", "error");
             }
 
@@ -186,24 +194,106 @@ namespace rocket {
             } else if (arg == "debugoverlay" || arg == "doverlay" || arg == "debug-overlay") {
                 args.debugoverlay = true;
             } else if (arg == "glversion" || arg == "gl-version") {
-                args.glversion = GL_VERSION_UNK; // TODO Replace
+                auto res = std::from_chars(value.data(), value.data() + value.size(), args.glversion);
+                if (res.ec == std::errc::invalid_argument) {
+                    rocket::log_error("invalid value for argument: " + arg, "rocket::argparse", "error");
+                    args.glversion = GL_VERSION_UNK;
+                } else {
+                    if (!util::validate_gl_version_string(value)) {
+                        rocket::log_error("invalid gl version: " + value, "rocket::argparse", "error");
+                        args.glversion = GL_VERSION_UNK;
+                    }
+                }
             } else if (arg == "nosplash" || arg == "no-splash") {
                 args.nosplash = true;
             } else if (arg == "dx11" || arg == "dx-11") {
+                rocket::log_error("argument handler not implemented for " + arg, "rocket::argparse", "error");
                 args.dx11 = true;
             } else if (arg == "dx12" || arg == "dx-12") {
+                rocket::log_error("argument handler not implemented for " + arg, "rocket::argparse", "error");
                 args.dx12 = true;
-            } else {
+            } else if (arg == "vp-size" || arg == "vpsize" || arg == "viewport-size" || arg == "viewportsize") {
+                args.viewport_size = value;
+                args.viewport_size_set = true;
+            } else if (arg == "framerate") {
+                if (value == "unlimited" || value == "nolimit" || value == "infinite" || value == "inf") {
+                    args.framerate = 2147483647;
+                } else {
+                    auto res = std::from_chars(value.data(), value.data() + value.size(), args.framerate);
+                    if (res.ec == std::errc::invalid_argument) {
+                        rocket::log_error("invalid value for argument: " + arg, "rocket::argparse", "error");
+                        args.framerate = -1;
+                    }
+                }
+            }
+            else if (arg == "help") {
+                exit = true;
+
+                std::vector<std::string> lines = {
+                    "Usage: " + std::string(argv[0]) + " [options]",
+                    "",
+                    "Arguments may start with java-style (-), GNU-long-style (--) or windows-style (/) on any platform\n",
+                    "Arguments:",
+                    "   no-plugins, noplugins",
+                    "   -> disable all plugins before startup",
+                    "",
+                    "   log-all, logall",
+                    "   -> logs every message",
+                    "",
+                    "   debug-overlay, debugoverlay, doverlay",
+                    "   -> shows a debug overlay with rendering information",
+                    "",
+                    "*  gl-version, glversion",
+                    "   -> forces an OpenGL version to be used",
+                    "",
+                    "   no-splash, nosplash",
+                    "   -> hides splash from being shown in the beginning",
+                    "",
+                    "W  dx-11, dx11 [[FIXME]]",
+                    "   -> forces to use D3D11 renderer",
+                    "",
+                    "W  dx-12, dx12 [[FIXME]]",
+                    "   -> forces to use D3D12 renderer",
+                    "",
+                    "*  viewport-size, viewportsize, vp-size, vpsize [[FIXME]]",
+                    "   -> forces to use a initial viewport size",
+                    "",
+                    "*  framerate",
+                    "   -> forces to use a set framerate (if reachable)",
+                    "",
+                    "Values to arguments marked with * are mandatory",
+                    "Arguments marked with W are Windows-only",
+                    "Arguments marked with L are Linux-only",
+                    "Arguments marked with M are macOS-only",
+                    "",
+                    "--> Made with RocketGE version " + std::string(ROCKETGE__VERSION),
+                    "--> Powered by RocketGE"
+                };
+
+                for (auto &line : lines) {
+                    std::cout << line << '\n';
+                }
+            }
+            // -- undocumented (do not add to help menu) --
+            else if (arg == "no-text" || arg == "notext") {
+                args.notext = true;
+            }
+            else {
                 rocket::log_error("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), -1, "rocket::argparse", "error");
                 exit = true;
+                error = true;
             }
         }
 
-        if (exit) {
+        if (error && exit) {
             rocket::log_error("one or more errors found in parser", -1, "rocket::argparse", "fatal");
             if (!additional_exit_message.empty()) {
                 rocket::log_error(additional_exit_message, -1, "rocket::argparse", "fatal");
             }
+            rocket::exit(1);
+        }
+
+        if (exit) {
             rocket::exit(1);
         }
 
