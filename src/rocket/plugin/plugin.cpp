@@ -6,7 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include "../util.hpp"
+#include "util.hpp"
 
 #include <miniz.h>
 

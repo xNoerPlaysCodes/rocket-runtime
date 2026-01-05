@@ -1,93 +1,99 @@
 [
 {
   "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/renderer.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/renderer.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/renderer3d.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/renderer3d.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/rgl.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/rgl.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/assets/font.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/assets/font.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/assets/shader.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/assets/shader.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/assets/text.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/assets/text.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/asset.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/asset.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/audio.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/audio.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/glfnldr.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/glfnldr.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/io.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/io.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/native.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/native.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/threads.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/threads.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/types.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/types.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/util.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/util.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
   "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/window.cpp",
   "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/window.cpp",
   "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/renderer.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/renderer.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/renderer3d.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/renderer3d.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/io.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/io.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/asset.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/asset.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/audio.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/audio.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/audio.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/audio.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/audio.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/types.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/types.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
   "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/runtime.cpp",
   "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/runtime.cpp",
   "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/font.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/font.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/text.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/text.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/shader.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/shader.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/rgl.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/rgl.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/glfnldr.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/glfnldr.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/glfnldr.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/glfnldr.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/glfnldr.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/threads.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/threads.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/threads.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/threads.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/threads.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
@@ -100,12 +106,6 @@
   "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/headeronlyimpl.cpp",
   "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/headeronlyimpl.cpp",
   "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o"
-},
-{
-  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",
-  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2 -g -std=gnu++23 -fPIC -O0 @CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o.modmap -o CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/native.cpp",
-  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/native.cpp",
-  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o"
 },
 {
   "directory": "/home/noerlol/C-Projects/Libraries/RocketGE",

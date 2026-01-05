@@ -42,6 +42,7 @@ using asset_map_t = std::unordered_map<std::shared_ptr<T>, std::chrono::time_poi
 using namespace std::chrono_literals;
 
 #include "../include/stb_image.h"
+#define STB_VORBIS_HEADER_ONLY
 #include "../include/stb_vorbis.h"
 
 namespace rocket {

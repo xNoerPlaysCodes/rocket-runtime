@@ -67,7 +67,7 @@ events:
       - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:212 (message)"
       - "CMakeLists.txt:17 (project)"
     message: |
-      The system is: Linux - 6.17.9-arch1-1 - x86_64
+      The system is: Linux - 6.18.2-arch2-1 - x86_64
   -
     kind: "find-v1"
     backtrace:
@@ -460,22 +460,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
-    searched_directories:
-      - "/usr/bin/ld.lld"
-      - "/home/noerlol/.jre/zulu/21/bin/ld.lld"
-      - "/home/noerlol/.local/share/nvim/mason/bin/ld.lld"
-      - "/home/noerlol/.local/share/zinit/polaris/bin/ld.lld"
-      - "/usr/local/sbin/ld.lld"
-      - "/usr/local/bin/ld.lld"
-      - "/var/lib/flatpak/exports/bin/ld.lld"
-      - "/usr/lib/jvm/default/bin/ld.lld"
-      - "/usr/bin/site_perl/ld.lld"
-      - "/usr/bin/vendor_perl/ld.lld"
-      - "/usr/bin/core_perl/ld.lld"
-      - "/opt/rocm/bin/ld.lld"
-      - "/home/noerlol/.scripts/ld.lld"
-      - "/home/noerlol/.local/bin/ld.lld"
-    found: "/usr/bin/ld"
+    found: "/usr/bin/ld.lld"
     search_context:
       ENV{PATH}:
         - "/home/noerlol/.jre/zulu/21/bin"
@@ -1203,8 +1188,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A1HwCX"
-      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A1HwCX"
+      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ"
+      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
       CMAKE_CXX_FLAGS: ""
@@ -1215,10 +1200,10 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A1HwCX'
+        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ'
         
-        Run Build Command(s): /usr/bin/ninja -v cmTC_3a196
-        [1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/ninja -v cmTC_eb494
+        [1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         clang version 21.1.6
         Target: x86_64-pc-linux-gnu
         Thread model: posix
@@ -1231,7 +1216,7 @@ events:
         Selected multilib: .;@m64
         Found HIP installation: /opt/rocm, version 3.5.0
          (in-process)
-         "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A1HwCX -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A1HwCX -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+         "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         clang -cc1 version 21.1.6 based upon LLVM 21.1.6 default target x86_64-pc-linux-gnu
         ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include"
         ignoring nonexistent directory "/include"
@@ -1244,7 +1229,7 @@ events:
          /usr/local/include
          /usr/include
         End of search list.
-        [2/2] : && /usr/bin/clang++  -v -Wl,-v CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_3a196   && :
+        [2/2] : && /usr/bin/clang++  -v -Wl,-v CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_eb494   && :
         clang version 21.1.6
         Target: x86_64-pc-linux-gnu
         Thread model: posix
@@ -1256,7 +1241,7 @@ events:
         Candidate multilib: 32;@m32
         Selected multilib: .;@m64
         Found HIP installation: /opt/rocm, version 3.5.0
-         "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_3a196 /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o
+         "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_eb494 /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o
         GNU ld (GNU Binutils) 2.45.1
         
       exitCode: 0
@@ -1296,10 +1281,10 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A1HwCX']
+        ignore line: [Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_3a196]
-        ignore line: [[1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_eb494]
+        ignore line: [[1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [clang version 21.1.6]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Thread model: posix]
@@ -1315,7 +1300,7 @@ events:
         ignore line: [@m64]
         ignore line: [Found HIP installation: /opt/rocm  version 3.5.0]
         ignore line: [ (in-process)]
-        ignore line: [ "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A1HwCX -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A1HwCX -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [ "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [clang -cc1 version 21.1.6 based upon LLVM 21.1.6 default target x86_64-pc-linux-gnu]
         ignore line: [ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include"]
         ignore line: [ignoring nonexistent directory "/include"]
@@ -1328,7 +1313,7 @@ events:
         ignore line: [ /usr/local/include]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [[2/2] : && /usr/bin/clang++  -v -Wl -v CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_3a196   && :]
+        ignore line: [[2/2] : && /usr/bin/clang++  -v -Wl -v CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_eb494   && :]
         ignore line: [clang version 21.1.6]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Thread model: posix]
@@ -1343,7 +1328,7 @@ events:
         ignore line: [Selected multilib: .]
         ignore line: [@m64]
         ignore line: [Found HIP installation: /opt/rocm  version 3.5.0]
-        link line: [ "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_3a196 /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o]
+        link line: [ "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_eb494 /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o]
           arg [/usr/bin/ld] ==> ignore
           arg [--hash-style=gnu] ==> ignore
           arg [--build-id] ==> ignore
@@ -1354,7 +1339,7 @@ events:
           arg [-dynamic-linker] ==> ignore
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_3a196] ==> ignore
+          arg [cmTC_eb494] ==> ignore
           arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o]
           arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o]
           arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o]
@@ -1365,7 +1350,7 @@ events:
           arg [-L/lib] ==> dir [/lib]
           arg [-L/usr/lib] ==> dir [/usr/lib]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_3a196.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1407,7 +1392,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:408 (find_path)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "path"
     variable: "OPENGL_INCLUDE_DIR"
     description: "Path to a file."
@@ -1504,7 +1489,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:414 (find_path)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "path"
     variable: "OPENGL_GLX_INCLUDE_DIR"
     description: "Path to a file."
@@ -1598,7 +1583,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:415 (find_path)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "path"
     variable: "OPENGL_EGL_INCLUDE_DIR"
     description: "Path to a file."
@@ -1692,7 +1677,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:416 (find_path)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "path"
     variable: "OPENGL_GLES2_INCLUDE_DIR"
     description: "Path to a file."
@@ -1786,7 +1771,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:417 (find_path)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "path"
     variable: "OPENGL_GLES3_INCLUDE_DIR"
     description: "Path to a file."
@@ -1880,7 +1865,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:418 (find_path)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "path"
     variable: "OPENGL_xmesa_INCLUDE_DIR"
     description: "Path to a file."
@@ -1990,7 +1975,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:424 (find_path)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "path"
     variable: "OPENGL_GLU_INCLUDE_DIR"
     description: "Path to a file."
@@ -2084,7 +2069,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:438 (find_library)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "library"
     variable: "OPENGL_opengl_LIBRARY"
     description: "Path to a library."
@@ -2178,7 +2163,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:443 (find_library)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "library"
     variable: "OPENGL_glx_LIBRARY"
     description: "Path to a library."
@@ -2315,7 +2300,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:449 (find_library)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "library"
     variable: "OPENGL_egl_LIBRARY"
     description: "Path to a library."
@@ -2452,7 +2437,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:455 (find_library)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "library"
     variable: "OPENGL_gles2_LIBRARY"
     description: "Path to a library."
@@ -2546,7 +2531,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:460 (find_library)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "library"
     variable: "OPENGL_gles3_LIBRARY"
     description: "Path to a library."
@@ -2667,7 +2652,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:466 (find_library)"
-      - "CMakeLists.txt:112 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     mode: "library"
     variable: "OPENGL_glu_LIBRARY"
     description: "Path to a library."
@@ -2771,12 +2756,12 @@ events:
       - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:93 (find_package)"
       - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:125 (__find_dependency_common)"
       - "/usr/lib/cmake/glfw3/glfw3Config.cmake:2 (find_dependency)"
-      - "CMakeLists.txt:113 (find_package)"
+      - "CMakeLists.txt:119 (find_package)"
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-onKH32"
-      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-onKH32"
+      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-KyYB3L"
+      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-KyYB3L"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
       CMAKE_CXX_FLAGS: ""
@@ -2786,19 +2771,19 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-onKH32'
+        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-KyYB3L'
         
-        Run Build Command(s): /usr/bin/ninja -v cmTC_887d6
-        [1/4] "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -x c++ /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-onKH32/src.cxx -c -o CMakeFiles/cmTC_887d6.dir/src.cxx.o -resource-dir "/usr/lib/clang/21" -MT CMakeFiles/cmTC_887d6.dir/src.cxx.o.ddi -MD -MF CMakeFiles/cmTC_887d6.dir/src.cxx.o.ddi.d > CMakeFiles/cmTC_887d6.dir/src.cxx.o.ddi.tmp && mv CMakeFiles/cmTC_887d6.dir/src.cxx.o.ddi.tmp CMakeFiles/cmTC_887d6.dir/src.cxx.o.ddi
-        [2/4] /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/cmTC_887d6.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=CMakeFiles/cmTC_887d6.dir/CXX.dd @CMakeFiles/cmTC_887d6.dir/CXX.dd.rsp
-        [3/4] /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -MD -MT CMakeFiles/cmTC_887d6.dir/src.cxx.o -MF CMakeFiles/cmTC_887d6.dir/src.cxx.o.d @CMakeFiles/cmTC_887d6.dir/src.cxx.o.modmap -o CMakeFiles/cmTC_887d6.dir/src.cxx.o -c /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-onKH32/src.cxx
-        [4/4] : && /usr/bin/clang++   CMakeFiles/cmTC_887d6.dir/src.cxx.o -o cmTC_887d6   && :
+        Run Build Command(s): /usr/bin/ninja -v cmTC_e03f8
+        [1/4] "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -x c++ /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-KyYB3L/src.cxx -c -o CMakeFiles/cmTC_e03f8.dir/src.cxx.o -resource-dir "/usr/lib/clang/21" -MT CMakeFiles/cmTC_e03f8.dir/src.cxx.o.ddi -MD -MF CMakeFiles/cmTC_e03f8.dir/src.cxx.o.ddi.d > CMakeFiles/cmTC_e03f8.dir/src.cxx.o.ddi.tmp && mv CMakeFiles/cmTC_e03f8.dir/src.cxx.o.ddi.tmp CMakeFiles/cmTC_e03f8.dir/src.cxx.o.ddi
+        [2/4] /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/cmTC_e03f8.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=CMakeFiles/cmTC_e03f8.dir/CXX.dd @CMakeFiles/cmTC_e03f8.dir/CXX.dd.rsp
+        [3/4] /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -MD -MT CMakeFiles/cmTC_e03f8.dir/src.cxx.o -MF CMakeFiles/cmTC_e03f8.dir/src.cxx.o.d @CMakeFiles/cmTC_e03f8.dir/src.cxx.o.modmap -o CMakeFiles/cmTC_e03f8.dir/src.cxx.o -c /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-KyYB3L/src.cxx
+        [4/4] : && /usr/bin/clang++   CMakeFiles/cmTC_e03f8.dir/src.cxx.o -o cmTC_e03f8   && :
         
       exitCode: 0
   -
     kind: "find_package-v1"
     backtrace:
-      - "CMakeLists.txt:113 (find_package)"
+      - "CMakeLists.txt:119 (find_package)"
     name: "glfw3"
     configs:
       -
@@ -2915,7 +2900,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindPkgConfig.cmake:517 (find_program)"
-      - "CMakeLists.txt:114 (find_package)"
+      - "CMakeLists.txt:120 (find_package)"
     mode: "program"
     variable: "PKG_CONFIG_EXECUTABLE"
     description: "pkg-config executable"
@@ -3007,7 +2992,7 @@ events:
     kind: "find_package-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:139 (find_package)"
-      - "CMakeLists.txt:116 (find_package)"
+      - "CMakeLists.txt:122 (find_package)"
     name: "GLEW"
     configs:
       -
@@ -3201,7 +3186,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:224 (find_path)"
-      - "CMakeLists.txt:116 (find_package)"
+      - "CMakeLists.txt:122 (find_package)"
     mode: "path"
     variable: "GLEW_INCLUDE_DIR"
     description: "Path to a file."
@@ -3295,7 +3280,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:244 (find_library)"
-      - "CMakeLists.txt:116 (find_package)"
+      - "CMakeLists.txt:122 (find_package)"
     mode: "library"
     variable: "GLEW_SHARED_LIBRARY_RELEASE"
     description: "Path to a library."
@@ -3731,7 +3716,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:250 (find_library)"
-      - "CMakeLists.txt:116 (find_package)"
+      - "CMakeLists.txt:122 (find_package)"
     mode: "library"
     variable: "GLEW_SHARED_LIBRARY_DEBUG"
     description: "Path to a library."
@@ -4097,7 +4082,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:259 (find_library)"
-      - "CMakeLists.txt:116 (find_package)"
+      - "CMakeLists.txt:122 (find_package)"
     mode: "library"
     variable: "GLEW_STATIC_LIBRARY_RELEASE"
     description: "Path to a library."
@@ -4671,7 +4656,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:265 (find_library)"
-      - "CMakeLists.txt:116 (find_package)"
+      - "CMakeLists.txt:122 (find_package)"
     mode: "library"
     variable: "GLEW_STATIC_LIBRARY_DEBUG"
     description: "Path to a library."
@@ -5037,7 +5022,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenAL.cmake:108 (find_path)"
-      - "CMakeLists.txt:117 (find_package)"
+      - "CMakeLists.txt:123 (find_package)"
     mode: "path"
     variable: "OPENAL_INCLUDE_DIR"
     description: "Path to a file."
@@ -5362,7 +5347,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenAL.cmake:125 (find_library)"
-      - "CMakeLists.txt:117 (find_package)"
+      - "CMakeLists.txt:123 (find_package)"
     mode: "library"
     variable: "OPENAL_LIBRARY"
     description: "Path to a library."
@@ -6143,7 +6128,7 @@ events:
   -
     kind: "find_package-v1"
     backtrace:
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:124 (find_package)"
     name: "miniz"
     configs:
       -
@@ -6259,7 +6244,7 @@ events:
   -
     kind: "find_package-v1"
     backtrace:
-      - "CMakeLists.txt:119 (find_package)"
+      - "CMakeLists.txt:125 (find_package)"
     name: "SDL2"
     configs:
       -

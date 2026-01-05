@@ -1,39 +1,39 @@
 ninja_dyndep_version = 1.0
+build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o: dyndep
+
+build CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o: dyndep
+
 build CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: dyndep
 
-build CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/audio.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o: dyndep
-
 build CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/glfnldr.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/threads.cpp.o: dyndep
 
 build CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o: dyndep
 
 build CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o: dyndep
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o: dyndep
 
 build CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: dyndep
 

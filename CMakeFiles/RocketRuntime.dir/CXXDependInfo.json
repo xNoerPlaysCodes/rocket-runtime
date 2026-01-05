@@ -40,35 +40,45 @@
 			"language" : "CXX",
 			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/quark/physics.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/asset.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/asset.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/renderer.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/audio.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/audio.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/renderer3d.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/font.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/font.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/rgl.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/glfnldr.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/glfnldr.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/asset.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/io.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/io.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/assets/font.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/native.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/native.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/assets/shader.cpp"
+		},
+		"CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/assets/text.cpp"
+		},
+		"CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/audio.cpp"
 		},
 		"CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o" : 
 		{
@@ -80,50 +90,40 @@
 			"language" : "CXX",
 			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/plugin/plugin.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/renderer.cpp.o" : 
-		{
-			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/renderer.cpp"
-		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/renderer3d.cpp.o" : 
-		{
-			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/renderer3d.cpp"
-		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/rgl.cpp.o" : 
-		{
-			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/rgl.cpp"
-		},
 		"CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o" : 
 		{
 			"language" : "CXX",
 			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/runtime.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/shader.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/shader.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/glfnldr.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/text.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/text.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/io.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/threads.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/threads.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/native.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/types.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/types.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/threads.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/util.cpp.o" : 
+		"CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o" : 
 		{
 			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util.cpp"
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/types.cpp"
+		},
+		"CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/util.cpp"
 		},
 		"CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o" : 
 		{

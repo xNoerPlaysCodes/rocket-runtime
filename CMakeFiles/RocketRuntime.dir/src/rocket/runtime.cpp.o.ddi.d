@@ -461,7 +461,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.ddi: \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/shader.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/io.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/constants.hpp \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/util.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/iostream \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/queue \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/deque \

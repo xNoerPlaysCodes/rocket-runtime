@@ -464,4 +464,4 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/utility \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_relops.h \
   /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/shader.hpp \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util.hpp
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/util.hpp

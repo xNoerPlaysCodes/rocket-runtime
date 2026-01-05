@@ -120,4 +120,5 @@ CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.ddi: \
   /usr/lib/clang/21/include/xmmintrin.h \
   /usr/lib/clang/21/include/mmintrin.h \
   /usr/lib/clang/21/include/mm_malloc.h \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/stb_vorbis.h \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/../include/rocket/stb_truetype.h

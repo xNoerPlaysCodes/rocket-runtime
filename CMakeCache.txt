@@ -100,7 +100,7 @@ CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=/home/noerlol/C-Projects/Libraries/Rocke
 CMAKE_INSTALL_PREFIX:PATH=/usr/local
 
 //Path to a program.
-CMAKE_LINKER:FILEPATH=/usr/bin/ld
+CMAKE_LINKER:FILEPATH=/usr/bin/ld.lld
 
 //Program used to build from build.ninja files.
 CMAKE_MAKE_PROGRAM:FILEPATH=/usr/bin/ninja

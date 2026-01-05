@@ -69,24 +69,30 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 endif()
 
 add_library(${PROJECT_NAME}
+    # Graphics
+    src/rocket/gfx/renderer.cpp
+    src/rocket/gfx/renderer3d.cpp
+    src/rocket/gfx/rgl.cpp
+
+    # ManagedAssets
+    src/rocket/managers/assets/font.cpp
+    src/rocket/managers/assets/shader.cpp
+    src/rocket/managers/assets/text.cpp
+    # Managers
+    src/rocket/managers/asset.cpp
+    src/rocket/managers/audio.cpp
+
+    # Utilities
+    src/rocket/util/glfnldr.cpp
+    src/rocket/util/io.cpp
+    src/rocket/util/native.cpp
+    src/rocket/util/threads.cpp
+    src/rocket/util/types.cpp
+    src/rocket/util/util.cpp
+
+    # Master
     src/rocket/window.cpp
-    src/rocket/util.cpp
-    src/rocket/renderer.cpp
-    src/rocket/renderer3d.cpp
-    src/rocket/io.cpp
-    src/rocket/asset.cpp
-    src/rocket/audio.cpp
-    src/rocket/types.cpp
     src/rocket/runtime.cpp
-
-    src/rocket/font.cpp
-    src/rocket/text.cpp
-
-    src/rocket/shader.cpp
-
-    src/rocket/rgl.cpp
-    src/rocket/glfnldr.cpp
-    src/rocket/threads.cpp
 
     # Plugin Subsystem
     src/rocket/plugin/plugin.cpp
@@ -95,7 +101,6 @@ add_library(${PROJECT_NAME}
     src/headeronlyimpl.cpp
 
     # RNative
-    src/rocket/native.cpp
     ${RNATIVE_SOURCES}
 
     # AstroUI

@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o"
+    }
+  ],
+  "version": 1
+}
