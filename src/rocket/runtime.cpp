@@ -225,6 +225,25 @@ namespace rocket {
                         args.framerate = -1;
                     }
                 }
+            } else if (arg == "version") {
+                exit = true;
+                std::vector<std::string> lines = {
+                    "RocketGE (rge) " ROCKETGE__VERSION,
+                    "Copyright (C) 2026 noerlol",
+                    "License MIT: You are free to change and redistribute",
+                    "             but must keep this license",
+                    "",
+                    "Additional Technologies used:",
+                    "> stb_vorbis  (PD)",
+                    "> stb_trutype (PD)",
+                    "> stb_image   (PD)",
+                    "> tweeny      (MIT)",
+                    "",
+                    "Made by noerlol with  ",
+                };
+                for (auto &l : lines) {
+                    std::cout << l << '\n';
+                }
             }
             else if (arg == "help") {
                 exit = true;
@@ -260,6 +279,9 @@ namespace rocket {
                     "",
                     "*  framerate",
                     "   -> forces to use a set framerate (if reachable)",
+                    "",
+                    "   version",
+                    "   -> shows version and attribution",
                     "",
                     "Values to arguments marked with * are mandatory",
                     "Arguments marked with W are Windows-only",
