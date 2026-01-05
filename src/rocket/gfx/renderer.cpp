@@ -389,7 +389,6 @@ namespace rocket {
         stbtt_GetFontVMetrics(&info, &ascent, nullptr, nullptr);
 
         float scale = stbtt_ScaleForPixelHeight(&info, text.size);
-        float line_height = (ascent - text.font->line_height) * scale;
         float baseline = ascent * scale;
         float x = position.x;
         float y = position.y + baseline;
@@ -557,15 +556,12 @@ namespace rocket {
         const float zy = margin + padding;
         const float text_size = 24;
 
-        double end = glfwGetTime();
-        double time_took_for_frame = end - start;
         auto double_to_str = [](double d, int decimal_places = 4) -> std::string {
             std::stringstream ss;
             ss << std::fixed << std::setprecision(decimal_places) << d;
             return ss.str();
         };
         static std::shared_ptr<rocket::font_t> font = rGE__FONT_DEFAULT_MONOSPACED;
-        auto draw_metrics = ren->get_draw_metrics();
         rocket::text_t fps_avg_text = { "FPS: " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
         rocket::text_t frametime_text = { "FrameTime: [[FIXME]]", text_size, rgb_color::white(), font }; // FIXME Get proper (ema avg) frametime
         rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()), text_size, rgb_color::white(), font };
@@ -697,9 +693,7 @@ namespace rocket {
             __rallframeend();
         }
         bool fxaa_on = flags.fxaa_simplified && fxaa_shader != rGL_SHADER_INVALID && std::find(active_render_modes.begin(), active_render_modes.end(), render_mode_t::fxaa) != active_render_modes.end();
-        bool fbo_on = rgl::is_active_any_fbo();
-        auto cur_fbo = rgl::get_active_fbo();
-        if (fxaa_on) {
+        if (fxaa_on) { // [FIXME] Text drawing doesn't work
             vec4f_t nm = this_frame_clear_color.normalize();
             glClearColor(nm.x, nm.y, nm.z, nm.w);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -896,7 +890,7 @@ namespace rocket {
 
         std::vector<batched_quad_t> bquads;
 
-        batch_type type = batch_type::txquad;
+        [[maybe_unused]] batch_type type = batch_type::txquad;
         if (batch.at(0).gltxid == rGL_TXID_INVALID) {
             type = batch_type::quad;
         }
@@ -964,7 +958,7 @@ namespace rocket {
         glBindVertexArray(quadVAO);
 
         // data
-        rgl::shader_location_t aPos = rgl::get_shader_location(pg, "aPos");
+        [[maybe_unused]] rgl::shader_location_t aPos = rgl::get_shader_location(pg, "aPos");
         rgl::shader_location_t iPos = rgl::get_shader_location(pg, "iPos");
         rgl::shader_location_t iSize = rgl::get_shader_location(pg, "iSize");
         rgl::shader_location_t iColor = rgl::get_shader_location(pg, "iColor");

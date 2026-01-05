@@ -27,10 +27,6 @@ option(BUILD_ASTRO "Build Astro [ui]" ON)
 option(BUILD_NETWORKING "Build Networking [net]" ON)
 option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
 
-include_directories(include)
-include_directories(/usr/include/miniz)
-include_directories(src/include)
-
 if (BUILD_QUARK)
     set(QUARK_SOURCES
         src/quark/physics.cpp
@@ -71,7 +67,7 @@ endif()
 add_library(${PROJECT_NAME}
     # Graphics
     src/rocket/gfx/renderer.cpp
-    src/rocket/gfx/renderer3d.cpp
+    # src/rocket/gfx/renderer3d.cpp
     src/rocket/gfx/rgl.cpp
 
     # ManagedAssets
@@ -113,6 +109,10 @@ add_library(${PROJECT_NAME}
     ${NETWORKING_SOURCES}
 )
 
+target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE include)
+target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE /usr/include/miniz)
+target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE src/include)
+
 # Fetch Dependencies
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
@@ -127,7 +127,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1)
-    target_compile_options(${PROJECT_NAME} PRIVATE -O0)
+    target_compile_options(${PROJECT_NAME} PRIVATE -O0 -g -Wall)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -O3)
     set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)

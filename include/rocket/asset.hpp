@@ -212,16 +212,12 @@ namespace rocket {
         std::shared_ptr<texture_t> get_texture(assetid_t id);
 
         /// @brief Initialize the Audio Context [Legacy Interface]
-        [[deprecated("Use rocket::audio::sound_engine_t")]]
         void init_audio_ctx();
         /// @brief Load an Audio from path [Legacy Interface]
-        [[deprecated("Use rocket::asset_manager_t::load_sound")]]
         assetid_t load_audio(std::string path);
         /// @brief Load an Audio from Memory [Legacy Interface]
-        [[deprecated("Use rocket::asset_manager_t::load_sound")]]
         assetid_t load_audio(std::vector<uint8_t> mem);
         /// @brief Get an Audio from ID [Legacy Interface]
-        [[deprecated("Use rocket::asset_manager_t::get_sound")]]
         std::shared_ptr<audio_t> get_audio(assetid_t id);
 
         /// @brief Load a sound file from path into memory

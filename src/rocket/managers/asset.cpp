@@ -314,16 +314,13 @@ namespace rocket {
         return id;
     }
 
+    // [FIXME] add loading sound from memory
     assetid_t asset_manager_t::load_sound(std::vector<uint8_t> mem) {
         assetid_t id = current_id++;
         std::shared_ptr<audio::sound_t> sound = std::make_shared<audio::sound_t>();
         sound->id = id;
 
-        int channels, samplerate;
-        int16_t *output;
-        int samples;
-
-        stb_vorbis *vorbis = stb_vorbis_open_memory(mem.data(), mem.size(), nullptr, nullptr);
+        rocket::log_error("not implemented", "asset_manager_t::load_sound", "fixme");
 
         sounds.insert({sound, std::chrono::high_resolution_clock::now()});
         return id;
@@ -734,7 +731,7 @@ namespace rocket {
                 }
             }
 
-            for (auto &s : sound_removes) {
+            for ([[maybe_unused]] auto &s : sound_removes) {
                 // Ownership required
             }
 

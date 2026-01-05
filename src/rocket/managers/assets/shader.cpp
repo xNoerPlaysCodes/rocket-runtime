@@ -157,7 +157,7 @@ void main() {
         return s.substr(start, end - start + 1);
     }
         
-    shader_t::shader_t(shader_type type, std::string vcode, std::string fcode, std::string name) : type(type), fcode(fcode), vcode(vcode), name(name) {
+    shader_t::shader_t(shader_type type, std::string vcode, std::string fcode, std::string name) : type(type), vcode(vcode), fcode(fcode), name(name) {
         this->shader_init();
     }
 

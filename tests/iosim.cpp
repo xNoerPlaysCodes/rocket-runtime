@@ -24,7 +24,6 @@ int main() {
     while (window.is_running()) {
         r.begin_frame();
         r.clear();
-        constexpr const char *empty = "";
         std::string tx = "";
 
         auto stradd = [](std::string &a, std::string b) {

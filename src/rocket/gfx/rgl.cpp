@@ -495,7 +495,6 @@ namespace rgl {
     }
 
     rgl::shader_program_t load_shader_generic(const char *vsrc, const char *fsrc) {
-        auto start = std::chrono::high_resolution_clock::now();
         GLuint vs = GL_CHECK(glCreateShader(GL_VERTEX_SHADER));
         GL_CHECK(glShaderSource(vs, 1, &vsrc, nullptr));
         GL_CHECK(glCompileShader(vs));
@@ -536,11 +535,7 @@ namespace rgl {
             std::string log(logLen, '\0');
             glGetProgramInfoLog(pg, logLen, nullptr, log.data());
             rocket::log_error("Shader program link failed: " + log, -1, "OpenGL::ShaderCompiler", "error");
-        } else {
-            auto end = std::chrono::high_resolution_clock::now();
-            auto diff = end - start;
-            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(diff).count();
-        }
+        } 
 
         GL_CHECK(glDeleteShader(vs));
         GL_CHECK(glDeleteShader(fs));
@@ -1043,7 +1038,6 @@ namespace rgl {
     draw_metrics_t metrics;
 
     void update_draw_metrics_data(float frametime, float fps) {
-        static int data_obtained = 0;
         static float max_frametime_so_far = 0;
         static float min_frametime_so_far = 0;
         static float min_fps_so_far = 0;
@@ -1065,8 +1059,6 @@ namespace rgl {
 
         metrics.avg_fps = metrics.avg_fps + alpha * (fps - metrics.avg_fps);
         metrics.avg_frametime = metrics.avg_frametime + alpha * (frametime - metrics.avg_frametime);
-
-        data_obtained++;
     }
 
     draw_metrics_t get_draw_metrics() {

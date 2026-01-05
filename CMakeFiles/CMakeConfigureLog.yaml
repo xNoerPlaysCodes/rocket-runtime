@@ -34,6 +34,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/bin/"
     searched_directories:
       - "/home/noerlol/.jre/zulu/21/bin/uname"
@@ -59,15 +60,17 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "message-v1"
     backtrace:
       - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:212 (message)"
       - "CMakeLists.txt:17 (project)"
     message: |
-      The system is: Linux - 6.18.2-arch2-1 - x86_64
+      The system is: Linux - 6.18.3-arch1-1 - x86_64
   -
     kind: "find-v1"
     backtrace:
@@ -103,6 +106,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     searched_directories:
       - "/home/noerlol/.jre/zulu/21/bin/ninja-build"
       - "/home/noerlol/.jre/zulu/21/bin/ninja"
@@ -138,8 +142,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -174,6 +180,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/clang++"
     search_context:
       ENV{PATH}:
@@ -192,8 +199,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -236,8 +245,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "message-v1"
     backtrace:
@@ -295,6 +306,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/llvm-ar"
     search_context:
       ENV{PATH}:
@@ -313,8 +325,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -350,6 +364,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/llvm-ranlib"
     search_context:
       ENV{PATH}:
@@ -368,8 +383,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -405,6 +422,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/llvm-strip"
     search_context:
       ENV{PATH}:
@@ -423,8 +441,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -460,6 +480,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/ld.lld"
     search_context:
       ENV{PATH}:
@@ -478,8 +499,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -515,6 +538,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/llvm-nm"
     search_context:
       ENV{PATH}:
@@ -533,8 +557,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -570,6 +596,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/llvm-objdump"
     search_context:
       ENV{PATH}:
@@ -588,8 +615,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -625,6 +654,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/llvm-objcopy"
     search_context:
       ENV{PATH}:
@@ -643,8 +673,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -680,6 +712,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/llvm-readelf"
     search_context:
       ENV{PATH}:
@@ -698,8 +731,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -735,6 +770,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/llvm-dlltool"
     search_context:
       ENV{PATH}:
@@ -753,8 +789,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -790,6 +828,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     found: "/usr/bin/llvm-addr2line"
     search_context:
       ENV{PATH}:
@@ -808,8 +847,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -844,6 +885,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     searched_directories:
       - "/usr/bin/tapi"
       - "/home/noerlol/.jre/zulu/21/bin/tapi"
@@ -859,6 +901,7 @@ events:
       - "/opt/rocm/bin/tapi"
       - "/home/noerlol/.scripts/tapi"
       - "/home/noerlol/.local/bin/tapi"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/tapi"
     found: false
     search_context:
       ENV{PATH}:
@@ -877,8 +920,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -916,6 +961,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     searched_directories:
       - "/usr/bin/llvm-ar-21.1"
       - "/home/noerlol/.jre/zulu/21/bin/llvm-ar-21.1"
@@ -931,6 +977,7 @@ events:
       - "/opt/rocm/bin/llvm-ar-21.1"
       - "/home/noerlol/.scripts/llvm-ar-21.1"
       - "/home/noerlol/.local/bin/llvm-ar-21.1"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/llvm-ar-21.1"
       - "/usr/bin/llvm-ar-21"
       - "/home/noerlol/.jre/zulu/21/bin/llvm-ar-21"
       - "/home/noerlol/.local/share/nvim/mason/bin/llvm-ar-21"
@@ -945,6 +992,7 @@ events:
       - "/opt/rocm/bin/llvm-ar-21"
       - "/home/noerlol/.scripts/llvm-ar-21"
       - "/home/noerlol/.local/bin/llvm-ar-21"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/llvm-ar-21"
       - "/usr/bin/llvm-ar21"
       - "/home/noerlol/.jre/zulu/21/bin/llvm-ar21"
       - "/home/noerlol/.local/share/nvim/mason/bin/llvm-ar21"
@@ -959,6 +1007,7 @@ events:
       - "/opt/rocm/bin/llvm-ar21"
       - "/home/noerlol/.scripts/llvm-ar21"
       - "/home/noerlol/.local/bin/llvm-ar21"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/llvm-ar21"
     found: "/usr/bin/llvm-ar"
     search_context:
       ENV{PATH}:
@@ -977,8 +1026,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -1016,6 +1067,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     searched_directories:
       - "/usr/bin/llvm-ranlib-21.1"
       - "/home/noerlol/.jre/zulu/21/bin/llvm-ranlib-21.1"
@@ -1031,6 +1083,7 @@ events:
       - "/opt/rocm/bin/llvm-ranlib-21.1"
       - "/home/noerlol/.scripts/llvm-ranlib-21.1"
       - "/home/noerlol/.local/bin/llvm-ranlib-21.1"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/llvm-ranlib-21.1"
       - "/usr/bin/llvm-ranlib-21"
       - "/home/noerlol/.jre/zulu/21/bin/llvm-ranlib-21"
       - "/home/noerlol/.local/share/nvim/mason/bin/llvm-ranlib-21"
@@ -1045,6 +1098,7 @@ events:
       - "/opt/rocm/bin/llvm-ranlib-21"
       - "/home/noerlol/.scripts/llvm-ranlib-21"
       - "/home/noerlol/.local/bin/llvm-ranlib-21"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/llvm-ranlib-21"
       - "/usr/bin/llvm-ranlib21"
       - "/home/noerlol/.jre/zulu/21/bin/llvm-ranlib21"
       - "/home/noerlol/.local/share/nvim/mason/bin/llvm-ranlib21"
@@ -1059,6 +1113,7 @@ events:
       - "/opt/rocm/bin/llvm-ranlib21"
       - "/home/noerlol/.scripts/llvm-ranlib21"
       - "/home/noerlol/.local/bin/llvm-ranlib21"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/llvm-ranlib21"
     found: "/usr/bin/llvm-ranlib"
     search_context:
       ENV{PATH}:
@@ -1077,8 +1132,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -1116,6 +1173,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     searched_directories:
       - "/usr/bin/clang-scan-deps-21.1"
       - "/home/noerlol/.jre/zulu/21/bin/clang-scan-deps-21.1"
@@ -1131,6 +1189,7 @@ events:
       - "/opt/rocm/bin/clang-scan-deps-21.1"
       - "/home/noerlol/.scripts/clang-scan-deps-21.1"
       - "/home/noerlol/.local/bin/clang-scan-deps-21.1"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/clang-scan-deps-21.1"
       - "/usr/bin/clang-scan-deps-21"
       - "/home/noerlol/.jre/zulu/21/bin/clang-scan-deps-21"
       - "/home/noerlol/.local/share/nvim/mason/bin/clang-scan-deps-21"
@@ -1145,6 +1204,7 @@ events:
       - "/opt/rocm/bin/clang-scan-deps-21"
       - "/home/noerlol/.scripts/clang-scan-deps-21"
       - "/home/noerlol/.local/bin/clang-scan-deps-21"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/clang-scan-deps-21"
       - "/usr/bin/clang-scan-deps21"
       - "/home/noerlol/.jre/zulu/21/bin/clang-scan-deps21"
       - "/home/noerlol/.local/share/nvim/mason/bin/clang-scan-deps21"
@@ -1159,6 +1219,7 @@ events:
       - "/opt/rocm/bin/clang-scan-deps21"
       - "/home/noerlol/.scripts/clang-scan-deps21"
       - "/home/noerlol/.local/bin/clang-scan-deps21"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/clang-scan-deps21"
     found: "/usr/bin/clang-scan-deps"
     search_context:
       ENV{PATH}:
@@ -1177,8 +1238,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "try_compile-v1"
     backtrace:
@@ -1188,8 +1251,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ"
-      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ"
+      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-48SaN2"
+      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-48SaN2"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
       CMAKE_CXX_FLAGS: ""
@@ -1200,10 +1263,10 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ'
+        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-48SaN2'
         
-        Run Build Command(s): /usr/bin/ninja -v cmTC_eb494
-        [1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/ninja -v cmTC_d7ca3
+        [1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         clang version 21.1.6
         Target: x86_64-pc-linux-gnu
         Thread model: posix
@@ -1216,7 +1279,7 @@ events:
         Selected multilib: .;@m64
         Found HIP installation: /opt/rocm, version 3.5.0
          (in-process)
-         "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+         "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-48SaN2 -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-48SaN2 -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         clang -cc1 version 21.1.6 based upon LLVM 21.1.6 default target x86_64-pc-linux-gnu
         ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include"
         ignoring nonexistent directory "/include"
@@ -1229,7 +1292,7 @@ events:
          /usr/local/include
          /usr/include
         End of search list.
-        [2/2] : && /usr/bin/clang++  -v -Wl,-v CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_eb494   && :
+        [2/2] : && /usr/bin/clang++  -v -Wl,-v CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_d7ca3   && :
         clang version 21.1.6
         Target: x86_64-pc-linux-gnu
         Thread model: posix
@@ -1241,7 +1304,7 @@ events:
         Candidate multilib: 32;@m32
         Selected multilib: .;@m64
         Found HIP installation: /opt/rocm, version 3.5.0
-         "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_eb494 /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o
+         "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_d7ca3 /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o
         GNU ld (GNU Binutils) 2.45.1
         
       exitCode: 0
@@ -1281,10 +1344,10 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ']
+        ignore line: [Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-48SaN2']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_eb494]
-        ignore line: [[1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_d7ca3]
+        ignore line: [[1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [clang version 21.1.6]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Thread model: posix]
@@ -1300,7 +1363,7 @@ events:
         ignore line: [@m64]
         ignore line: [Found HIP installation: /opt/rocm  version 3.5.0]
         ignore line: [ (in-process)]
-        ignore line: [ "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-ihYdEQ -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [ "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-48SaN2 -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-48SaN2 -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [clang -cc1 version 21.1.6 based upon LLVM 21.1.6 default target x86_64-pc-linux-gnu]
         ignore line: [ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include"]
         ignore line: [ignoring nonexistent directory "/include"]
@@ -1313,7 +1376,7 @@ events:
         ignore line: [ /usr/local/include]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [[2/2] : && /usr/bin/clang++  -v -Wl -v CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_eb494   && :]
+        ignore line: [[2/2] : && /usr/bin/clang++  -v -Wl -v CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_d7ca3   && :]
         ignore line: [clang version 21.1.6]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Thread model: posix]
@@ -1328,7 +1391,7 @@ events:
         ignore line: [Selected multilib: .]
         ignore line: [@m64]
         ignore line: [Found HIP installation: /opt/rocm  version 3.5.0]
-        link line: [ "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_eb494 /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o]
+        link line: [ "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_d7ca3 /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o]
           arg [/usr/bin/ld] ==> ignore
           arg [--hash-style=gnu] ==> ignore
           arg [--build-id] ==> ignore
@@ -1339,7 +1402,7 @@ events:
           arg [-dynamic-linker] ==> ignore
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_eb494] ==> ignore
+          arg [cmTC_d7ca3] ==> ignore
           arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o]
           arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o]
           arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o]
@@ -1350,7 +1413,7 @@ events:
           arg [-L/lib] ==> dir [/lib]
           arg [-L/usr/lib] ==> dir [/usr/lib]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_eb494.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_d7ca3.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1388,11 +1451,15 @@ events:
     message: |
       Running the CXX compiler's linker: "/usr/bin/ld" "-v"
       GNU ld (GNU Binutils) 2.45.1
+...
+
+---
+events:
   -
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:408 (find_path)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "path"
     variable: "OPENGL_INCLUDE_DIR"
     description: "Path to a file."
@@ -1421,6 +1488,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/include/"
       - "/usr/local/"
       - "/usr/include/"
@@ -1451,6 +1519,7 @@ events:
       - "/opt/rocm/bin/GL/gl.h"
       - "/home/noerlol/.scripts/GL/gl.h"
       - "/home/noerlol/.local/bin/GL/gl.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/GL/gl.h"
       - "/usr/local/include/GL/gl.h"
       - "/usr/local/GL/gl.h"
     found: "/usr/include/"
@@ -1471,8 +1540,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -1489,7 +1560,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:414 (find_path)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "path"
     variable: "OPENGL_GLX_INCLUDE_DIR"
     description: "Path to a file."
@@ -1518,6 +1589,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/include/"
       - "/usr/local/"
       - "/usr/include/"
@@ -1545,6 +1617,7 @@ events:
       - "/opt/rocm/bin/GL/glx.h"
       - "/home/noerlol/.scripts/GL/glx.h"
       - "/home/noerlol/.local/bin/GL/glx.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/GL/glx.h"
       - "/usr/local/include/GL/glx.h"
       - "/usr/local/GL/glx.h"
     found: "/usr/include/"
@@ -1565,8 +1638,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -1583,7 +1658,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:415 (find_path)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "path"
     variable: "OPENGL_EGL_INCLUDE_DIR"
     description: "Path to a file."
@@ -1612,6 +1687,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/include/"
       - "/usr/local/"
       - "/usr/include/"
@@ -1639,6 +1715,7 @@ events:
       - "/opt/rocm/bin/EGL/egl.h"
       - "/home/noerlol/.scripts/EGL/egl.h"
       - "/home/noerlol/.local/bin/EGL/egl.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/EGL/egl.h"
       - "/usr/local/include/EGL/egl.h"
       - "/usr/local/EGL/egl.h"
     found: "/usr/include/"
@@ -1659,8 +1736,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -1677,7 +1756,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:416 (find_path)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "path"
     variable: "OPENGL_GLES2_INCLUDE_DIR"
     description: "Path to a file."
@@ -1706,6 +1785,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/include/"
       - "/usr/local/"
       - "/usr/include/"
@@ -1733,6 +1813,7 @@ events:
       - "/opt/rocm/bin/GLES2/gl2.h"
       - "/home/noerlol/.scripts/GLES2/gl2.h"
       - "/home/noerlol/.local/bin/GLES2/gl2.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/GLES2/gl2.h"
       - "/usr/local/include/GLES2/gl2.h"
       - "/usr/local/GLES2/gl2.h"
     found: "/usr/include/"
@@ -1753,8 +1834,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -1771,7 +1854,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:417 (find_path)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "path"
     variable: "OPENGL_GLES3_INCLUDE_DIR"
     description: "Path to a file."
@@ -1800,6 +1883,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/include/"
       - "/usr/local/"
       - "/usr/include/"
@@ -1827,6 +1911,7 @@ events:
       - "/opt/rocm/bin/GLES3/gl3.h"
       - "/home/noerlol/.scripts/GLES3/gl3.h"
       - "/home/noerlol/.local/bin/GLES3/gl3.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/GLES3/gl3.h"
       - "/usr/local/include/GLES3/gl3.h"
       - "/usr/local/GLES3/gl3.h"
     found: "/usr/include/"
@@ -1847,8 +1932,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -1865,7 +1952,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:418 (find_path)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "path"
     variable: "OPENGL_xmesa_INCLUDE_DIR"
     description: "Path to a file."
@@ -1894,6 +1981,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/include/"
       - "/usr/local/"
       - "/usr/include/"
@@ -1924,6 +2012,7 @@ events:
       - "/opt/rocm/bin/GL/xmesa.h"
       - "/home/noerlol/.scripts/GL/xmesa.h"
       - "/home/noerlol/.local/bin/GL/xmesa.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/GL/xmesa.h"
       - "/usr/local/include/GL/xmesa.h"
       - "/usr/local/GL/xmesa.h"
       - "/usr/include/GL/xmesa.h"
@@ -1957,8 +2046,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -1975,7 +2066,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:424 (find_path)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "path"
     variable: "OPENGL_GLU_INCLUDE_DIR"
     description: "Path to a file."
@@ -2004,6 +2095,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/include/"
       - "/usr/local/"
       - "/usr/include/"
@@ -2031,6 +2123,7 @@ events:
       - "/opt/rocm/bin/GL/glu.h"
       - "/home/noerlol/.scripts/GL/glu.h"
       - "/home/noerlol/.local/bin/GL/glu.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/GL/glu.h"
       - "/usr/local/include/GL/glu.h"
       - "/usr/local/GL/glu.h"
     found: "/usr/include/"
@@ -2051,8 +2144,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -2069,7 +2164,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:438 (find_library)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "library"
     variable: "OPENGL_opengl_LIBRARY"
     description: "Path to a library."
@@ -2098,6 +2193,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/"
       - "/usr/local/"
       - "/usr/lib/"
@@ -2125,6 +2221,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/"
       - "/usr/local/"
     found: "/usr/lib/libOpenGL.so"
@@ -2145,8 +2242,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -2163,7 +2262,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:443 (find_library)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "library"
     variable: "OPENGL_glx_LIBRARY"
     description: "Path to a library."
@@ -2206,6 +2305,8 @@ events:
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/libglvnd/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libglvnd/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/libglvnd/"
       - "/usr/local/lib/"
       - "/usr/local/libglvnd/"
@@ -2259,6 +2360,8 @@ events:
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/libglvnd/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libglvnd/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/libglvnd/"
       - "/usr/local/lib/"
       - "/usr/local/libglvnd/"
@@ -2282,8 +2385,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -2300,7 +2405,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:449 (find_library)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "library"
     variable: "OPENGL_egl_LIBRARY"
     description: "Path to a library."
@@ -2343,6 +2448,8 @@ events:
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/libglvnd/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libglvnd/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/libglvnd/"
       - "/usr/local/lib/"
       - "/usr/local/libglvnd/"
@@ -2396,6 +2503,8 @@ events:
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/libglvnd/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libglvnd/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/libglvnd/"
       - "/usr/local/lib/"
       - "/usr/local/libglvnd/"
@@ -2419,8 +2528,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -2437,7 +2548,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:455 (find_library)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "library"
     variable: "OPENGL_gles2_LIBRARY"
     description: "Path to a library."
@@ -2466,6 +2577,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/"
       - "/usr/local/"
       - "/usr/lib/"
@@ -2493,6 +2605,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/"
       - "/usr/local/"
     found: "/usr/lib/libGLESv2.so"
@@ -2513,8 +2626,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -2531,7 +2646,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:460 (find_library)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "library"
     variable: "OPENGL_gles3_LIBRARY"
     description: "Path to a library."
@@ -2561,6 +2676,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/"
       - "/usr/local/"
       - "/usr/lib/"
@@ -2588,6 +2704,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/"
       - "/usr/local/"
       - "/usr/lib/"
@@ -2614,6 +2731,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/"
       - "/usr/local/"
     found: "/usr/lib/libGLESv2.so"
@@ -2634,8 +2752,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -2652,7 +2772,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenGL.cmake:466 (find_library)"
-      - "CMakeLists.txt:118 (find_package)"
+      - "CMakeLists.txt:117 (find_package)"
     mode: "library"
     variable: "OPENGL_glu_LIBRARY"
     description: "Path to a library."
@@ -2682,6 +2802,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/"
       - "/usr/local/"
       - "/usr/lib/"
@@ -2712,6 +2833,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/"
       - "/usr/local/"
     found: "/usr/lib/libGLU.so"
@@ -2732,8 +2854,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -2756,12 +2880,12 @@ events:
       - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:93 (find_package)"
       - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:125 (__find_dependency_common)"
       - "/usr/lib/cmake/glfw3/glfw3Config.cmake:2 (find_dependency)"
-      - "CMakeLists.txt:119 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-KyYB3L"
-      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-KyYB3L"
+      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A7jCgI"
+      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A7jCgI"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
       CMAKE_CXX_FLAGS: ""
@@ -2771,19 +2895,19 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-KyYB3L'
+        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A7jCgI'
         
-        Run Build Command(s): /usr/bin/ninja -v cmTC_e03f8
-        [1/4] "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -x c++ /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-KyYB3L/src.cxx -c -o CMakeFiles/cmTC_e03f8.dir/src.cxx.o -resource-dir "/usr/lib/clang/21" -MT CMakeFiles/cmTC_e03f8.dir/src.cxx.o.ddi -MD -MF CMakeFiles/cmTC_e03f8.dir/src.cxx.o.ddi.d > CMakeFiles/cmTC_e03f8.dir/src.cxx.o.ddi.tmp && mv CMakeFiles/cmTC_e03f8.dir/src.cxx.o.ddi.tmp CMakeFiles/cmTC_e03f8.dir/src.cxx.o.ddi
-        [2/4] /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/cmTC_e03f8.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=CMakeFiles/cmTC_e03f8.dir/CXX.dd @CMakeFiles/cmTC_e03f8.dir/CXX.dd.rsp
-        [3/4] /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -MD -MT CMakeFiles/cmTC_e03f8.dir/src.cxx.o -MF CMakeFiles/cmTC_e03f8.dir/src.cxx.o.d @CMakeFiles/cmTC_e03f8.dir/src.cxx.o.modmap -o CMakeFiles/cmTC_e03f8.dir/src.cxx.o -c /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-KyYB3L/src.cxx
-        [4/4] : && /usr/bin/clang++   CMakeFiles/cmTC_e03f8.dir/src.cxx.o -o cmTC_e03f8   && :
+        Run Build Command(s): /usr/bin/ninja -v cmTC_dfe57
+        [1/4] "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -x c++ /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A7jCgI/src.cxx -c -o CMakeFiles/cmTC_dfe57.dir/src.cxx.o -resource-dir "/usr/lib/clang/21" -MT CMakeFiles/cmTC_dfe57.dir/src.cxx.o.ddi -MD -MF CMakeFiles/cmTC_dfe57.dir/src.cxx.o.ddi.d > CMakeFiles/cmTC_dfe57.dir/src.cxx.o.ddi.tmp && mv CMakeFiles/cmTC_dfe57.dir/src.cxx.o.ddi.tmp CMakeFiles/cmTC_dfe57.dir/src.cxx.o.ddi
+        [2/4] /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/cmTC_dfe57.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=CMakeFiles/cmTC_dfe57.dir/CXX.dd @CMakeFiles/cmTC_dfe57.dir/CXX.dd.rsp
+        [3/4] /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -MD -MT CMakeFiles/cmTC_dfe57.dir/src.cxx.o -MF CMakeFiles/cmTC_dfe57.dir/src.cxx.o.d @CMakeFiles/cmTC_dfe57.dir/src.cxx.o.modmap -o CMakeFiles/cmTC_dfe57.dir/src.cxx.o -c /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-A7jCgI/src.cxx
+        [4/4] : && /usr/bin/clang++   CMakeFiles/cmTC_dfe57.dir/src.cxx.o -o cmTC_dfe57   && :
         
       exitCode: 0
   -
     kind: "find_package-v1"
     backtrace:
-      - "CMakeLists.txt:119 (find_package)"
+      - "CMakeLists.txt:118 (find_package)"
     name: "glfw3"
     configs:
       -
@@ -2884,8 +3008,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -2900,7 +3026,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindPkgConfig.cmake:517 (find_program)"
-      - "CMakeLists.txt:120 (find_package)"
+      - "CMakeLists.txt:119 (find_package)"
     mode: "program"
     variable: "PKG_CONFIG_EXECUTABLE"
     description: "pkg-config executable"
@@ -2930,6 +3056,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/"
@@ -2976,8 +3103,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -2992,7 +3121,7 @@ events:
     kind: "find_package-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:139 (find_package)"
-      - "CMakeLists.txt:122 (find_package)"
+      - "CMakeLists.txt:121 (find_package)"
     name: "GLEW"
     configs:
       -
@@ -3137,6 +3266,14 @@ events:
         mode: "config"
         reason: "no_exist"
       -
+        path: "/home/noerlol/C-Projects/Executables/SMake/GLEWConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/noerlol/C-Projects/Executables/SMake/glew-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
         path: "/GLEWConfig.cmake"
         mode: "config"
         reason: "no_exist"
@@ -3170,8 +3307,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -3186,7 +3325,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:224 (find_path)"
-      - "CMakeLists.txt:122 (find_package)"
+      - "CMakeLists.txt:121 (find_package)"
     mode: "path"
     variable: "GLEW_INCLUDE_DIR"
     description: "Path to a file."
@@ -3215,6 +3354,7 @@ events:
       - "/opt/rocm/bin/"
       - "/home/noerlol/.scripts/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/include/"
       - "/usr/local/"
       - "/usr/include/"
@@ -3242,6 +3382,7 @@ events:
       - "/opt/rocm/bin/GL/glew.h"
       - "/home/noerlol/.scripts/GL/glew.h"
       - "/home/noerlol/.local/bin/GL/glew.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/GL/glew.h"
       - "/usr/local/include/GL/glew.h"
       - "/usr/local/GL/glew.h"
     found: "/usr/include/"
@@ -3262,8 +3403,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -3280,7 +3423,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:244 (find_library)"
-      - "CMakeLists.txt:122 (find_package)"
+      - "CMakeLists.txt:121 (find_package)"
     mode: "library"
     variable: "GLEW_SHARED_LIBRARY_RELEASE"
     description: "Path to a library."
@@ -3367,6 +3510,11 @@ events:
       - "/home/noerlol/.local/bin/libx32/"
       - "/home/noerlol/.local/bin/lib/Release/x64/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/Release/x64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib64/"
       - "/usr/local/lib/libx32/"
@@ -3638,6 +3786,21 @@ events:
       - "/home/noerlol/.local/bin/"
       - "/home/noerlol/.local/bin/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/Release/x64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/Release/x64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/Release/x64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib/"
@@ -3698,8 +3861,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -3716,7 +3881,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:250 (find_library)"
-      - "CMakeLists.txt:122 (find_package)"
+      - "CMakeLists.txt:121 (find_package)"
     mode: "library"
     variable: "GLEW_SHARED_LIBRARY_DEBUG"
     description: "Path to a library."
@@ -3775,6 +3940,9 @@ events:
       - "/home/noerlol/.local/bin/lib/"
       - "/home/noerlol/.local/bin/lib64/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib64/"
       - "/usr/local/lib/"
@@ -3938,6 +4106,15 @@ events:
       - "/home/noerlol/.local/bin/"
       - "/home/noerlol/.local/bin/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib/"
@@ -4064,8 +4241,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -4082,7 +4261,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:259 (find_library)"
-      - "CMakeLists.txt:122 (find_package)"
+      - "CMakeLists.txt:121 (find_package)"
     mode: "library"
     variable: "GLEW_STATIC_LIBRARY_RELEASE"
     description: "Path to a library."
@@ -4169,6 +4348,11 @@ events:
       - "/home/noerlol/.local/bin/libx32/"
       - "/home/noerlol/.local/bin/lib/Release/x64/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/Release/x64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib64/"
       - "/usr/local/lib/libx32/"
@@ -4440,6 +4624,21 @@ events:
       - "/home/noerlol/.local/bin/"
       - "/home/noerlol/.local/bin/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/Release/x64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/Release/x64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/Release/x64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib/"
@@ -4638,8 +4837,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -4656,7 +4857,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindGLEW.cmake:265 (find_library)"
-      - "CMakeLists.txt:122 (find_package)"
+      - "CMakeLists.txt:121 (find_package)"
     mode: "library"
     variable: "GLEW_STATIC_LIBRARY_DEBUG"
     description: "Path to a library."
@@ -4715,6 +4916,9 @@ events:
       - "/home/noerlol/.local/bin/lib/"
       - "/home/noerlol/.local/bin/lib64/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib64/"
       - "/usr/local/lib/"
@@ -4878,6 +5082,15 @@ events:
       - "/home/noerlol/.local/bin/"
       - "/home/noerlol/.local/bin/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib/"
       - "/usr/local/lib/lib/"
@@ -5004,8 +5217,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -5022,7 +5237,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenAL.cmake:108 (find_path)"
-      - "CMakeLists.txt:123 (find_package)"
+      - "CMakeLists.txt:122 (find_package)"
     mode: "path"
     variable: "OPENAL_INCLUDE_DIR"
     description: "Path to a file."
@@ -5121,6 +5336,12 @@ events:
       - "/home/noerlol/.local/bin/AL/"
       - "/home/noerlol/.local/bin/OpenAL/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/include/AL/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/include/OpenAL/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/include/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/AL/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/OpenAL/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/include/include/AL/"
       - "/usr/local/include/include/OpenAL/"
       - "/usr/local/include/include/"
@@ -5296,6 +5517,12 @@ events:
       - "/home/noerlol/.local/bin/AL/al.h"
       - "/home/noerlol/.local/bin/OpenAL/al.h"
       - "/home/noerlol/.local/bin/al.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/include/AL/al.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/include/OpenAL/al.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/include/al.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/AL/al.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/OpenAL/al.h"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/al.h"
       - "/usr/local/include/include/AL/al.h"
       - "/usr/local/include/include/OpenAL/al.h"
       - "/usr/local/include/include/al.h"
@@ -5329,8 +5556,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -5347,7 +5576,7 @@ events:
     kind: "find-v1"
     backtrace:
       - "/usr/share/cmake/Modules/FindOpenAL.cmake:125 (find_library)"
-      - "CMakeLists.txt:123 (find_package)"
+      - "CMakeLists.txt:122 (find_package)"
     mode: "library"
     variable: "OPENAL_LIBRARY"
     description: "Path to a library."
@@ -5463,6 +5692,13 @@ events:
       - "/home/noerlol/.local/bin/libs/"
       - "/home/noerlol/.local/bin/libs/Win64/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs/Win64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/libx32/"
       - "/usr/local/lib/lib64/"
       - "/usr/local/lib/lib/"
@@ -5667,6 +5903,13 @@ events:
       - "/home/noerlol/.local/bin/libs/"
       - "/home/noerlol/.local/bin/libs/Win64/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs/Win64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/libx32/"
       - "/usr/local/lib/lib64/"
       - "/usr/local/lib/lib/"
@@ -5870,6 +6113,13 @@ events:
       - "/home/noerlol/.local/bin/libs/"
       - "/home/noerlol/.local/bin/libs/Win64/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs/Win64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/libx32/"
       - "/usr/local/lib/lib64/"
       - "/usr/local/lib/lib/"
@@ -6073,6 +6323,13 @@ events:
       - "/home/noerlol/.local/bin/libs/"
       - "/home/noerlol/.local/bin/libs/Win64/"
       - "/home/noerlol/.local/bin/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libx32/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/lib/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/libs/Win64/"
+      - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/usr/local/lib/libx32/"
       - "/usr/local/lib/lib64/"
       - "/usr/local/lib/lib/"
@@ -6111,8 +6368,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -6128,7 +6387,7 @@ events:
   -
     kind: "find_package-v1"
     backtrace:
-      - "CMakeLists.txt:124 (find_package)"
+      - "CMakeLists.txt:123 (find_package)"
     name: "miniz"
     configs:
       -
@@ -6229,8 +6488,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -6244,7 +6505,7 @@ events:
   -
     kind: "find_package-v1"
     backtrace:
-      - "CMakeLists.txt:125 (find_package)"
+      - "CMakeLists.txt:124 (find_package)"
     name: "SDL2"
     configs:
       -
@@ -6353,8 +6614,10 @@ events:
         - "/opt/rocm/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
+        - "/home/noerlol/C-Projects/Executables/SMake/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"

@@ -134,7 +134,7 @@ namespace rocket::audio {
             return;
         }
         
-        std::thread t = std::thread([source, buffer, cb]() {
+        std::thread t = std::thread([source, cb]() {
             ALint state;
             alGetSourcei(source->source, AL_SOURCE_STATE, &state);
             while (state == AL_PLAYING) {
@@ -254,7 +254,7 @@ namespace rocket::audio {
         int channels = info.channels;
         int sample_rate = info.sample_rate;
 
-        int samples = stb_vorbis_stream_length_in_samples(vorbis);
+        [[maybe_unused]] int samples = stb_vorbis_stream_length_in_samples(vorbis);
 
         int frames = 1024;
 

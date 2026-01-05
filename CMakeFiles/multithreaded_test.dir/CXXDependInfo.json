@@ -14,9 +14,7 @@
 	"forward-modules-from-target-dirs" : [],
 	"include-dirs" : 
 	[
-		"include",
-		"/usr/include/miniz",
-		"src/include"
+		"include"
 	],
 	"language" : "CXX",
 	"linked-target-dirs" : [],

@@ -38,6 +38,7 @@ namespace rocket::audio {
 
     struct buffer_t {
     private:
+        [[maybe_unused]]
         ALuint handle = 0;
     public:
         format_t format;
@@ -56,7 +57,9 @@ namespace rocket::audio {
 
     struct sound_t {
     private:
+        [[maybe_unused]]
         ALuint handle = 0;
+        [[maybe_unused]]
         bool flat_2d = true;
     public:
         assetid_t id = -1;

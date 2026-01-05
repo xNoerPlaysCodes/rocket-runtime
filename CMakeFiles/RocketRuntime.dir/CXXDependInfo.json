@@ -45,11 +45,6 @@
 			"language" : "CXX",
 			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/renderer.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o" : 
-		{
-			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/renderer3d.cpp"
-		},
 		"CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o" : 
 		{
 			"language" : "CXX",

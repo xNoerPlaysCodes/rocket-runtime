@@ -269,7 +269,7 @@ namespace rocket {
         ~shell_renderer_2d();
     };
 
-    class ROCKETGE__NOT_IMPLEMENTED renderer_3d {
+    class ROCKETGE__NOT_IMPLEMENTED [[deprecated]] renderer_3d {
     private:
         window_t *window;
         int fps;

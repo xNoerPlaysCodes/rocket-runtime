@@ -1,8 +1,6 @@
 ninja_dyndep_version = 1.0
 build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o: dyndep
 
-build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o: dyndep
-
 build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o: dyndep
 
 build CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o: dyndep

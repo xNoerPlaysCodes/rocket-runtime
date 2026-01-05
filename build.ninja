@@ -53,8 +53,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.ddi: CXX_SCAN__
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.ddi.i
 
@@ -63,29 +63,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o: CXX_COMPILER__
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
-  OBJECT_DIR = CMakeFiles/RocketRuntime.dir
-  OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/gfx
-  TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
-  dyndep = CMakeFiles/RocketRuntime.dir/CXX.dd
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o.ddi: CXX_SCAN__RocketRuntime_Debug /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/renderer3d.cpp || cmake_object_order_depends_target_RocketRuntime
-  DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
-  DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o.ddi.d
-  DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
-  OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o
-  PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o.ddi.i
-
-build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o: CXX_COMPILER__RocketRuntime_scanned_Debug /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/gfx/renderer3d.cpp | CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o.modmap || cmake_object_order_depends_target_RocketRuntime CMakeFiles/RocketRuntime.dir/CXX.dd
-  CONFIG = Debug
-  DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
-  DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o.d
-  DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/gfx
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -95,8 +74,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.ddi: CXX_SCAN__Rocke
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.ddi.i
 
@@ -105,8 +84,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o: CXX_COMPILER__Rocke
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/gfx
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -116,8 +95,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.ddi: CX
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.ddi.i
 
@@ -126,8 +105,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o: CXX_CO
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -137,8 +116,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.ddi: 
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.ddi.i
 
@@ -147,8 +126,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o: CXX_
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -158,8 +137,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.ddi: CX
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.ddi.i
 
@@ -168,8 +147,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o: CXX_CO
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -179,8 +158,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.ddi: CXX_SCAN
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.ddi.i
 
@@ -189,8 +168,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o: CXX_COMPILER
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/managers
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -200,8 +179,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.ddi: CXX_SCAN
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.ddi.i
 
@@ -210,8 +189,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o: CXX_COMPILER
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/managers
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -221,8 +200,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.ddi: CXX_SCAN__
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.ddi.i
 
@@ -231,8 +210,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o: CXX_COMPILER__
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/util
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -242,8 +221,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi: CXX_SCAN__Rocke
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi.i
 
@@ -252,8 +231,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o: CXX_COMPILER__Rocke
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/util
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -263,8 +242,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.ddi: CXX_SCAN__R
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.ddi.i
 
@@ -273,8 +252,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o: CXX_COMPILER__R
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/util
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -284,8 +263,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.ddi: CXX_SCAN__
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.ddi.i
 
@@ -294,8 +273,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o: CXX_COMPILER__
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/util
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -305,8 +284,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.ddi: CXX_SCAN__Ro
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.ddi.i
 
@@ -315,8 +294,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o: CXX_COMPILER__Ro
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/util
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -326,8 +305,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.ddi: CXX_SCAN__Roc
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.ddi.i
 
@@ -336,8 +315,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o: CXX_COMPILER__Roc
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/util
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -347,8 +326,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.ddi: CXX_SCAN__Rocket
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.ddi.i
 
@@ -357,8 +336,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o: CXX_COMPILER__Rocket
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -368,8 +347,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.ddi: CXX_SCAN__Rocke
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.ddi.i
 
@@ -378,8 +357,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o: CXX_COMPILER__Rocke
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -389,8 +368,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.ddi: CXX_SCAN_
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.ddi.i
 
@@ -399,8 +378,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o: CXX_COMPILER_
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/plugin
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -410,8 +389,8 @@ build CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.ddi: CXX_SCAN__Rocke
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.ddi.i
 
@@ -420,8 +399,8 @@ build CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o: CXX_COMPILER__Rocke
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -431,8 +410,8 @@ build CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.ddi: CXX_SCAN__Rocket
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.ddi.i
 
@@ -441,8 +420,8 @@ build CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: CXX_COMPILER__Rocket
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/astro
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -452,8 +431,8 @@ build CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.ddi: CXX_SCAN__Rocket
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.ddi.i
 
@@ -462,8 +441,8 @@ build CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o: CXX_COMPILER__Rocket
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/quark
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
@@ -473,8 +452,8 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi: CXX_SCAN__Rock
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJ_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi.i
 
@@ -483,14 +462,14 @@ build CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o: CXX_COMPILER__Rock
   DEFINES = -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_NETWORKING -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -DRocketRuntime_DEBUG=1 -DRocketRuntime_EXPORTS
   DEP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.modmap
-  FLAGS = -g -std=gnu++23 -fPIC -O0
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
+  FLAGS = -g -std=gnu++23 -fPIC -O0 -g -Wall
+  INCLUDES = -isystem /home/noerlol/C-Projects/Libraries/RocketGE/include -isystem /usr/include/miniz -isystem /home/noerlol/C-Projects/Libraries/RocketGE/src/include -isystem /usr/include/AL -isystem /usr/include/SDL2
   OBJECT_DIR = CMakeFiles/RocketRuntime.dir
   OBJECT_FILE_DIR = CMakeFiles/RocketRuntime.dir/src/rocket/net
   TARGET_SUPPORT_DIR = CMakeFiles/RocketRuntime.dir
   dyndep = CMakeFiles/RocketRuntime.dir/CXX.dd
 
-build CMakeFiles/RocketRuntime.dir/CXX.dd | CMakeFiles/RocketRuntime.dir/CXXModules.json CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.modmap: CXX_DYNDEP__RocketRuntime_Debug CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi | /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/CXXDependInfo.json
+build CMakeFiles/RocketRuntime.dir/CXX.dd | CMakeFiles/RocketRuntime.dir/CXXModules.json CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.modmap CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.modmap: CXX_DYNDEP__RocketRuntime_Debug CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o.ddi CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o.ddi | /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/RocketRuntime.dir/CXXDependInfo.json
 
 
 # =============================================================================
@@ -500,7 +479,7 @@ build CMakeFiles/RocketRuntime.dir/CXX.dd | CMakeFiles/RocketRuntime.dir/CXXModu
 #############################################
 # Link the shared library bin/libRocketRuntime.so
 
-build bin/libRocketRuntime.so: CXX_SHARED_LIBRARY_LINKER__RocketRuntime_Debug CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer3d.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o | /usr/lib/libGLEW.so /usr/lib/libglfw.so.3.4 /usr/lib/libopenal.so /usr/lib/libSDL2-2.0.so.0.3200.60 /usr/lib/libGLX.so /usr/lib/libOpenGL.so
+build bin/libRocketRuntime.so: CXX_SHARED_LIBRARY_LINKER__RocketRuntime_Debug CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/gfx/rgl.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/font.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/shader.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/managers/assets/text.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/managers/audio.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/glfnldr.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/native.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/threads.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/types.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/util/util.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/runtime.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o CMakeFiles/RocketRuntime.dir/src/headeronlyimpl.cpp.o CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o | /usr/lib/libGLEW.so /usr/lib/libglfw.so.3.4 /usr/lib/libopenal.so /usr/lib/libSDL2-2.0.so.0.3200.60 /usr/lib/libGLX.so /usr/lib/libOpenGL.so
   CONFIG = Debug
   DEP_FILE = CMakeFiles/RocketRuntime.dir/link.d
   LANGUAGE_COMPILE_FLAGS = -g
@@ -529,7 +508,7 @@ build CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o.ddi: CXX_SCAN
   DEP_FILE = CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o.ddi.i
 
@@ -539,7 +518,7 @@ build CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o: CXX_COMPILER
   DEP_FILE = CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/initializer_test.dir
   OBJECT_FILE_DIR = CMakeFiles/initializer_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/initializer_test.dir
@@ -583,7 +562,7 @@ build CMakeFiles/text_test.dir/tests/text_test.cpp.o.ddi: CXX_SCAN__text_test_De
   DEP_FILE = CMakeFiles/text_test.dir/tests/text_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/text_test.dir/tests/text_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/text_test.dir/tests/text_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/text_test.dir/tests/text_test.cpp.o.ddi.i
 
@@ -593,7 +572,7 @@ build CMakeFiles/text_test.dir/tests/text_test.cpp.o: CXX_COMPILER__text_test_sc
   DEP_FILE = CMakeFiles/text_test.dir/tests/text_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/text_test.dir/tests/text_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/text_test.dir
   OBJECT_FILE_DIR = CMakeFiles/text_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/text_test.dir
@@ -637,7 +616,7 @@ build CMakeFiles/line_test.dir/tests/line_test.cpp.o.ddi: CXX_SCAN__line_test_De
   DEP_FILE = CMakeFiles/line_test.dir/tests/line_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/line_test.dir/tests/line_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/line_test.dir/tests/line_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/line_test.dir/tests/line_test.cpp.o.ddi.i
 
@@ -647,7 +626,7 @@ build CMakeFiles/line_test.dir/tests/line_test.cpp.o: CXX_COMPILER__line_test_sc
   DEP_FILE = CMakeFiles/line_test.dir/tests/line_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/line_test.dir/tests/line_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/line_test.dir
   OBJECT_FILE_DIR = CMakeFiles/line_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/line_test.dir
@@ -691,7 +670,7 @@ build CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o.ddi: CXX_SCAN__gamepa
   DEP_FILE = CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o.ddi.i
 
@@ -701,7 +680,7 @@ build CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o: CXX_COMPILER__gamepa
   DEP_FILE = CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/gamepad_test.dir
   OBJECT_FILE_DIR = CMakeFiles/gamepad_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/gamepad_test.dir
@@ -745,7 +724,7 @@ build CMakeFiles/icon_test.dir/tests/icon_test.cpp.o.ddi: CXX_SCAN__icon_test_De
   DEP_FILE = CMakeFiles/icon_test.dir/tests/icon_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/icon_test.dir/tests/icon_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/icon_test.dir/tests/icon_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/icon_test.dir/tests/icon_test.cpp.o.ddi.i
 
@@ -755,7 +734,7 @@ build CMakeFiles/icon_test.dir/tests/icon_test.cpp.o: CXX_COMPILER__icon_test_sc
   DEP_FILE = CMakeFiles/icon_test.dir/tests/icon_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/icon_test.dir/tests/icon_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/icon_test.dir
   OBJECT_FILE_DIR = CMakeFiles/icon_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/icon_test.dir
@@ -799,7 +778,7 @@ build CMakeFiles/iosim.dir/tests/iosim.cpp.o.ddi: CXX_SCAN__iosim_Debug /home/no
   DEP_FILE = CMakeFiles/iosim.dir/tests/iosim.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/iosim.dir/tests/iosim.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/iosim.dir/tests/iosim.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/iosim.dir/tests/iosim.cpp.o.ddi.i
 
@@ -809,7 +788,7 @@ build CMakeFiles/iosim.dir/tests/iosim.cpp.o: CXX_COMPILER__iosim_scanned_Debug 
   DEP_FILE = CMakeFiles/iosim.dir/tests/iosim.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/iosim.dir/tests/iosim.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/iosim.dir
   OBJECT_FILE_DIR = CMakeFiles/iosim.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/iosim.dir
@@ -853,7 +832,7 @@ build CMakeFiles/io_test.dir/tests/io_test.cpp.o.ddi: CXX_SCAN__io_test_Debug /h
   DEP_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o.ddi.i
 
@@ -863,7 +842,7 @@ build CMakeFiles/io_test.dir/tests/io_test.cpp.o: CXX_COMPILER__io_test_scanned_
   DEP_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/io_test.dir/tests/io_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/io_test.dir
   OBJECT_FILE_DIR = CMakeFiles/io_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/io_test.dir
@@ -907,7 +886,7 @@ build CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o.ddi: CXX_SCAN__plugin_t
   DEP_FILE = CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o.ddi.i
 
@@ -917,7 +896,7 @@ build CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o: CXX_COMPILER__plugin_t
   DEP_FILE = CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/plugin_test.dir/tests/plugin_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/plugin_test.dir
   OBJECT_FILE_DIR = CMakeFiles/plugin_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/plugin_test.dir
@@ -961,7 +940,7 @@ build CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o.ddi: CXX_
   DEP_FILE = CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o.ddi.i
 
@@ -971,7 +950,7 @@ build CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o: CXX_COMP
   DEP_FILE = CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/multithreaded_test.dir
   OBJECT_FILE_DIR = CMakeFiles/multithreaded_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/multithreaded_test.dir
@@ -1015,7 +994,7 @@ build CMakeFiles/sound_engine_test.dir/tests/sound_engine_test.cpp.o.ddi: CXX_SC
   DEP_FILE = CMakeFiles/sound_engine_test.dir/tests/sound_engine_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/sound_engine_test.dir/tests/sound_engine_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/sound_engine_test.dir/tests/sound_engine_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/sound_engine_test.dir/tests/sound_engine_test.cpp.o.ddi.i
 
@@ -1025,7 +1004,7 @@ build CMakeFiles/sound_engine_test.dir/tests/sound_engine_test.cpp.o: CXX_COMPIL
   DEP_FILE = CMakeFiles/sound_engine_test.dir/tests/sound_engine_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/sound_engine_test.dir/tests/sound_engine_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/sound_engine_test.dir
   OBJECT_FILE_DIR = CMakeFiles/sound_engine_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/sound_engine_test.dir
@@ -1069,7 +1048,7 @@ build CMakeFiles/borderless_windowed_test.dir/tests/borderless_windowed_test.cpp
   DEP_FILE = CMakeFiles/borderless_windowed_test.dir/tests/borderless_windowed_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/borderless_windowed_test.dir/tests/borderless_windowed_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/borderless_windowed_test.dir/tests/borderless_windowed_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/borderless_windowed_test.dir/tests/borderless_windowed_test.cpp.o.ddi.i
 
@@ -1079,7 +1058,7 @@ build CMakeFiles/borderless_windowed_test.dir/tests/borderless_windowed_test.cpp
   DEP_FILE = CMakeFiles/borderless_windowed_test.dir/tests/borderless_windowed_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/borderless_windowed_test.dir/tests/borderless_windowed_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/borderless_windowed_test.dir
   OBJECT_FILE_DIR = CMakeFiles/borderless_windowed_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/borderless_windowed_test.dir
@@ -1123,7 +1102,7 @@ build CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o.ddi: CXX_SCAN__ui_ini
   DEP_FILE = CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o.ddi.i
 
@@ -1133,7 +1112,7 @@ build CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o: CXX_COMPILER__ui_ini
   DEP_FILE = CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/ui_init_test.dir
   OBJECT_FILE_DIR = CMakeFiles/ui_init_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/ui_init_test.dir
@@ -1177,7 +1156,7 @@ build CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.ddi: CXX_SCAN__netcor
   DEP_FILE = CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.ddi.i
 
@@ -1187,7 +1166,7 @@ build CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o: CXX_COMPILER__netcor
   DEP_FILE = CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/netcore_test.dir
   OBJECT_FILE_DIR = CMakeFiles/netcore_test.dir/tests
   TARGET_SUPPORT_DIR = CMakeFiles/netcore_test.dir
@@ -1231,7 +1210,7 @@ build CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o.ddi: CXX_SCAN__m
   DEP_FILE = CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic -O3
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o.ddi.i
 
@@ -1241,7 +1220,7 @@ build CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o: CXX_COMPILER__m
   DEP_FILE = CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/moving_circle.dir/examples/moving_circle.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic -O3
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/moving_circle.dir
   OBJECT_FILE_DIR = CMakeFiles/moving_circle.dir/examples
   TARGET_SUPPORT_DIR = CMakeFiles/moving_circle.dir
@@ -1285,7 +1264,7 @@ build CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o.ddi: CXX_SCAN__c
   DEP_FILE = CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic -O3
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o.ddi.i
 
@@ -1295,7 +1274,7 @@ build CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o: CXX_COMPILER__c
   DEP_FILE = CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic -O3
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/custom_shader.dir
   OBJECT_FILE_DIR = CMakeFiles/custom_shader.dir/examples
   TARGET_SUPPORT_DIR = CMakeFiles/custom_shader.dir
@@ -1339,7 +1318,7 @@ build CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o.ddi: CXX
   DEP_FILE = CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o.ddi
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic -O3
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJ_FILE = CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o
   PREPROCESSED_OUTPUT_FILE = CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o.ddi.i
 
@@ -1349,7 +1328,7 @@ build CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o: CXX_COM
   DEP_FILE = CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o.modmap
   FLAGS = -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic -O3
-  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include -I/usr/include/miniz -I/home/noerlol/C-Projects/Libraries/RocketGE/src/include
+  INCLUDES = -I/home/noerlol/C-Projects/Libraries/RocketGE/include
   OBJECT_DIR = CMakeFiles/software_renderer.dir
   OBJECT_FILE_DIR = CMakeFiles/software_renderer.dir/examples
   TARGET_SUPPORT_DIR = CMakeFiles/software_renderer.dir
