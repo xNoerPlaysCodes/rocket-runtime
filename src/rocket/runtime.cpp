@@ -230,8 +230,7 @@ namespace rocket {
                 std::vector<std::string> lines = {
                     "RocketGE (rge) " ROCKETGE__VERSION,
                     "Copyright (C) 2026 noerlol",
-                    "License MIT: You are free to change and redistribute",
-                    "             but must keep this license",
+                    "License MIT: Refer to LICENSE for more",
                     "",
                     "Additional Technologies used:",
                     "> stb_vorbis  (PD)",
