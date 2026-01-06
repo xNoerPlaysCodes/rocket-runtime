@@ -7,14 +7,14 @@ void BKEND_init() {
     glewExperimental = true;
     glewInit();
 
-    rocket::log("BACKEND GLEW INIT", "glfnldr", "BKEND_init", "debug");
+    rocket::log("glew initialized", "glfnldr", "BKEND_init", "debug");
 }
 #endif
 #ifdef ROCKETGE__GLFNLDR_BACKEND_LIBEPOXY
 #include <epoxy/gl.h>
 #include <rocket/runtime.hpp>
 void BKEND_init() {
-    rocket::log("BACKEND LIBEPOXY INIT", "glfnldr", "BKEND_init", "debug");
+    rocket::log("libepoxy initialized", "glfnldr", "BKEND_init", "debug");
 }
 #endif
 
