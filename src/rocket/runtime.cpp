@@ -286,9 +286,6 @@ namespace rocket {
                     "   -> shows version and attribution",
                     "",
                     "Values to arguments marked with * are mandatory",
-                    "Arguments marked with W are Windows-only",
-                    "Arguments marked with L are Linux-only",
-                    "Arguments marked with M are macOS-only",
                     "",
                     "--> Made with RocketGE version " + std::string(ROCKETGE__VERSION),
                     "--> Powered by RocketGE"

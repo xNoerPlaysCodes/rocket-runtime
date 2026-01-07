@@ -1,7 +1,7 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi: \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/util/io.cpp \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../../include/rocket/io.hpp \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../../include/rocket/types.hpp \
+  /usr/include/miniz/../../include/rocket/io.hpp \
+  /usr/include/miniz/../../include/rocket/types.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdint \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -121,15 +121,14 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi: \
   /usr/include/bits/pthreadtypes-arch.h \
   /usr/include/bits/atomic_wide_counter.h \
   /usr/include/bits/struct_mutex.h /usr/include/bits/struct_rwlock.h \
-  /usr/include/alloca.h /usr/include/bits/stdlib-bsearch.h \
-  /usr/include/bits/stdlib-float.h \
+  /usr/include/alloca.h /usr/include/bits/stdlib-float.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_abs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdio \
   /usr/include/stdio.h /usr/include/bits/types/__fpos_t.h \
   /usr/include/bits/types/__fpos64_t.h \
   /usr/include/bits/types/struct_FILE.h \
   /usr/include/bits/types/cookie_io_functions_t.h \
-  /usr/include/bits/stdio_lim.h /usr/include/bits/stdio.h \
+  /usr/include/bits/stdio_lim.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cerrno \
   /usr/include/errno.h /usr/include/bits/errno.h \
   /usr/include/linux/errno.h /usr/include/asm/errno.h \
@@ -142,7 +141,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/uses_allocator.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/uses_allocator_args.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tuple \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../../include/rocket/constants.hpp \
+  /usr/include/miniz/../../include/rocket/constants.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/limits \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/functional \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/std_function.h \
@@ -334,6 +333,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi: \
   /usr/include/glm/ext/quaternion_geometric.inl \
   /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/asset.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/audio.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/types.hpp \
   /usr/include/AL/alc.h /usr/include/AL/al.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/memory \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_tempbuf.h \
@@ -461,7 +461,11 @@ CMakeFiles/RocketRuntime.dir/src/rocket/util/io.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_relops.h \
   /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/window.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/shader.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/io.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/constants.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/include/util.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../../include/rocket/types.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../../include/rocket/io.hpp \
   /usr/include/SDL2/SDL_gamecontroller.h /usr/include/SDL2/SDL_stdinc.h \
   /usr/include/SDL2/SDL_config.h /usr/include/SDL2/SDL_platform.h \
   /usr/include/SDL2/begin_code.h /usr/include/SDL2/close_code.h \
