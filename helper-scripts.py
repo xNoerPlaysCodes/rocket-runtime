@@ -17,7 +17,7 @@ def get_deps() -> None:
     deps: dict = {
         "GLFW": "  >= 3.4",
         "SDL": "   == 2.0",
-        "OpenGL": ">= 1.1",
+        "OpenGL": ">= 2.0",
         "GLEW": "  >= 1.5",
         "OpenAL": "(OpenAL-soft) any",
         "miniz": " >= 3.0",

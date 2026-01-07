@@ -5,6 +5,7 @@
 #include <queue>
 #include <mutex>
 #include <condition_variable>
+#include <rocket/macros.hpp>
 
 namespace rocket {
     void set_log_level(log_level_t level) { util::set_log_level(level); }
@@ -261,22 +262,24 @@ namespace rocket {
                     "   debug-overlay, debugoverlay, doverlay",
                     "   -> shows a debug overlay with rendering information",
                     "",
-                    "*  gl-version, glversion",
+                    "*  gl-version, glversion [2.0 -> 4.6]",
                     "   -> forces an OpenGL version to be used",
                     "",
                     "   no-splash, nosplash",
                     "   -> hides splash from being shown in the beginning",
                     "",
+#ifdef ROCKETGE__Platform_Windows
                     "W  dx-11, dx11 [[FIXME]]",
                     "   -> forces to use D3D11 renderer",
                     "",
                     "W  dx-12, dx12 [[FIXME]]",
                     "   -> forces to use D3D12 renderer",
                     "",
-                    "*  viewport-size, viewportsize, vp-size, vpsize [[FIXME]]",
+#endif
+                    "*  viewport-size, viewportsize, vp-size, vpsize [resolution] [[FIXME]]",
                     "   -> forces to use a initial viewport size",
                     "",
-                    "*  framerate",
+                    "*  framerate [fps]",
                     "   -> forces to use a set framerate (if reachable)",
                     "",
                     "   version",
