@@ -231,9 +231,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/out_ptr.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_memory_defs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/execution_defs.h \
-  /usr/include/miniz/../../include/rocket/asset.hpp \
-  /usr/include/miniz/../../include/rocket/types.hpp \
-  /usr/include/miniz/../../include/rocket/stb_truetype.h \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../../include/rocket/asset.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../../include/rocket/stb_truetype.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/atomic \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/chrono \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/chrono.h \
@@ -292,7 +291,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/iostream \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/include/rgl.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/rgl.hpp \
-  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/asset.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/utility \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/stl_relops.h \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/include/util.hpp \
@@ -467,7 +465,6 @@ CMakeFiles/RocketRuntime.dir/src/rocket/managers/asset.cpp.o.ddi: \
   /usr/include/glm/ext/../ext/vector_relational.inl \
   /usr/include/glm/ext/../ext/../detail/type_float.hpp \
   /usr/include/glm/ext/quaternion_geometric.inl \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../../include/rocket/asset.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../../include/rocket/window.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../../include/rocket/shader.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/include/../include/stb_image.h \

@@ -11,7 +11,6 @@
 /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/sound_engine_test.dir
 /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/borderless_windowed_test.dir
 /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/ui_init_test.dir
-/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/netcore_test.dir
 /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/moving_circle.dir
 /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/custom_shader.dir
 /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/software_renderer.dir

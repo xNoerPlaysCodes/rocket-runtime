@@ -24,7 +24,6 @@ option(BUILD_EXAMPLES "Build Examples" ON)
 
 option(BUILD_QUARK "Build Quark [physics]" ON)
 option(BUILD_ASTRO "Build Astro [ui]" ON)
-option(BUILD_NETWORKING "Build Networking [net]" ON)
 option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
 
 if (BUILD_QUARK)
@@ -39,13 +38,6 @@ if (BUILD_ASTRO)
         src/astro/astroui.cpp
     )
     add_compile_definitions(ROCKETGE__BUILD_ASTRO)
-endif()
-
-if (BUILD_NETWORKING)
-    set(NETWORKING_SOURCES
-        src/rocket/net/core.cpp
-    )
-    add_compile_definitions(ROCKETGE__BUILD_NETWORKING)
 endif()
 
 if (GLFNLDR_BACKEND STREQUAL "GLEW")
@@ -104,9 +96,6 @@ add_library(${PROJECT_NAME}
 
     # Quark
     ${QUARK_SOURCES}
-
-    # Networking
-    ${NETWORKING_SOURCES}
 )
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE include)
@@ -129,7 +118,8 @@ find_package(SDL2 REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) # Legacy definition
+    target_compile_definitions(${PROJECT_NAME} PRIVATE ROCKETGE__DEBUG_BUILD)
     target_compile_options(${PROJECT_NAME} PRIVATE -O0 -g -Wall)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -O3 -flto)
@@ -154,12 +144,6 @@ if (BUILD_TESTS)
     if (BUILD_ASTRO)
         set(TEST_NAMES ${TEST_NAMES}
             ui_init_test
-        )
-    endif()
-
-    if (BUILD_NETWORKING)
-        set(TEST_NAMES ${TEST_NAMES}
-            netcore_test
         )
     endif()
 

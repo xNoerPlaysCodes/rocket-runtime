@@ -25,7 +25,7 @@ namespace rocket {
                 return "info";
             case log_level_t::warn:
                 return "warn";
-            case log_level_t::fatal_to_function: // || error:
+            case log_level_t::error:
                 return "error";
             case log_level_t::fatal:
                 return "fatal";
@@ -85,14 +85,14 @@ namespace rocket {
     std::mutex cout_mutex;
 
     void log_error(std::string error, int error_id, std::string error_source, std::string level) {
-        {
-            std::lock_guard<std::mutex> _(cerr_mutex);
-            std::cerr << util::format_error(error, error_id, error_source, level);
-        }
+        log_error(error, error_source, level);
     }
 
     void log_error(std::string error, std::string error_source, std::string level) {
-        log_error(error, -1, error_source, level);
+        {
+            std::lock_guard<std::mutex> _(cerr_mutex);
+            std::cerr << util::format_error(error, -1, error_source, level);
+        }
     }
 
     void __log_error_with_id(std::string error, int error_id, std::string error_source, std::string level) {
@@ -238,6 +238,17 @@ namespace rocket {
                     "> stb_trutype (PD)",
                     "> stb_image   (PD)",
                     "> tweeny      (MIT)",
+#ifdef ROCKETGE__GLFNLDR_BACKEND_GLEW
+                    "> GLEW        (BSD)",
+#endif
+#ifdef ROCKETGE__GLFNLDR_BACKEND_LIBEPOXY
+                    "> libepoxy    (MIT)",
+#endif
+                    "> OpenGL      (RYLF)",
+                    "> GLFW        (ZLIB)",
+                    "> SDL2        (ZLIB)",
+                    "> OpenAL Soft (LGPL)",
+                    "> miniz       (MIT)",
                     "",
                     "Made by noerlol with  ",
                 };
@@ -251,7 +262,8 @@ namespace rocket {
                 std::vector<std::string> lines = {
                     "Usage: " + std::string(argv[0]) + " [options]",
                     "",
-                    "Arguments may start with java-style (-), GNU-long-style (--) or windows-style (/) on any platform\n",
+                    "Format: [--arg] or [-arg] or [/arg]",
+                    "",
                     "Arguments:",
                     "   no-plugins, noplugins",
                     "   -> disable all plugins before startup",
@@ -285,9 +297,8 @@ namespace rocket {
                     "   version",
                     "   -> shows version and attribution",
                     "",
-                    "Values to arguments marked with * are mandatory",
+                    "* | Value Mandatory",
                     "",
-                    "--> Made with RocketGE version " + std::string(ROCKETGE__VERSION),
                     "--> Powered by RocketGE"
                 };
 
@@ -319,5 +330,9 @@ namespace rocket {
         }
 
         util::init_clistate(args);
+    }
+
+    void set_memory_limit(size_t sz) {
+        util::set_memory_limit(sz);
     }
 }

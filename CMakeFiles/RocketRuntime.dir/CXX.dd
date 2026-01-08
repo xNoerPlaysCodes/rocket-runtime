@@ -37,5 +37,3 @@ build CMakeFiles/RocketRuntime.dir/src/astro/astroui.cpp.o: dyndep
 
 build CMakeFiles/RocketRuntime.dir/src/quark/physics.cpp.o: dyndep
 
-build CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o: dyndep
-

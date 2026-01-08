@@ -104,6 +104,20 @@ namespace util {
     std::vector<std::string> split(const std::string& s, char delim);
 
     bool validate_gl_version_string(std::string string);
+
+    void set_memory_limit(size_t sz);
+
+    template<typename T>
+    T *alloc();
+
+    template<typename T>
+    T *alloc(size_t len);
+
+    template<typename T>
+    void dealloc(T *mem);
+
+    template<typename T>
+    void dealloca(T *mem, size_t len);
 }
 
 #endif

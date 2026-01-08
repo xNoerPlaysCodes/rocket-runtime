@@ -75,11 +75,6 @@
 			"language" : "CXX",
 			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/managers/audio.cpp"
 		},
-		"CMakeFiles/RocketRuntime.dir/src/rocket/net/core.cpp.o" : 
-		{
-			"language" : "CXX",
-			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/net/core.cpp"
-		},
 		"CMakeFiles/RocketRuntime.dir/src/rocket/plugin/plugin.cpp.o" : 
 		{
 			"language" : "CXX",

@@ -33,10 +33,12 @@ std::vector<rocket::io::scroll_offset_event_t> simulated_sevents;
 
 std::stack<char> chars_typed;
 
-namespace util {
+size_t mem_sz_limit = 0;
+size_t mem_used = 0;
 
+namespace util {
     bool is_glinit = false;
-#ifdef RocketRuntime_DEBUG
+#ifdef ROCKETGE__DEBUG_BUILD
     rocket::log_level_t log_level = rocket::log_level_t::all;
 #else
     rocket::log_level_t log_level = rocket::log_level_t::info;
@@ -90,7 +92,7 @@ namespace util {
         } else if (level == "fatal") {
             elevel = rocket::log_level_t::fatal;
         } else if (level == "fatal_to_function" || level == "error" || level == "error") {
-            elevel = rocket::log_level_t::fatal_to_function;
+            elevel = rocket::log_level_t::error;
         } else if (level == "all") {
             elevel = rocket::log_level_t::all;
         } else if (level == "fixme") {
@@ -353,5 +355,44 @@ namespace util {
             (val == 2.0f || val == 2.1f) ||
             (val == 3.0f || val == 3.1f || val == 3.2f || val == 3.3f) ||
             (val == 4.0f || val == 4.1f || val == 4.2f || val == 4.3f || val == 4.4f || val == 4.5f || val == 4.6f);
+    }
+
+    void set_memory_limit(size_t sz) {
+        mem_sz_limit = sz;
+    }
+
+    template<typename T>
+    T *alloc() {
+        if (sizeof(T) + mem_used > mem_sz_limit) {
+            rocket::log_error("not enough memory", "util::alloc", "fatal");
+            rocket::exit(1);
+            return nullptr;
+        }
+
+        mem_used += sizeof(T);
+        return new (std::nothrow) T;
+    }
+
+    template<typename T>
+    T *alloc(size_t sz) {
+        if ((sizeof(T) * sz) + mem_used > mem_sz_limit) {
+            rocket::log_error("not enough memory", "util::alloc", "fatal");
+            rocket::exit(1);
+            return nullptr;
+        }
+
+        mem_used += (sizeof(T) * sz);
+        return new (std::nothrow) T;
+    }
+
+    template<typename T>
+    void dealloc(T *mem) {
+        mem_used -= sizeof(T);
+        delete mem;
+    }
+
+    template<typename T>
+    void dealloca(T *mem, size_t sz) {
+        mem_used -= sizeof(T) * sz;
     }
 }

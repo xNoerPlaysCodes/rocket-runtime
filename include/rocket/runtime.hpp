@@ -32,7 +32,7 @@
 #define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MAJOR 1
 #define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR 1
 
-#define ROCKETGE__FEATURE_GL_LOADER "GLEW"
+#define ROCKETGE__FEATURE_GL_LOADER "GLFNLDR"
 // @brief The CPLWindowingAPI::Desktop/MobilePhone/Embedded
 //            ^^^ Cross-Platform Windowing API
 //              is fixed to GLFW as of now...
@@ -56,8 +56,6 @@ namespace rocket {
         debug = 2,
         info = 3,
         warn = 4,
-        /// DEPRECATED: USE ERROR
-        fatal_to_function = 5,
         error = 5,
         fatal = 6,
         none = 7
@@ -124,7 +122,7 @@ namespace rocket {
     void set_exit_callback(exit_callback_t);
 
     /// @brief Log (Fatal/FatalToFunction/Warning) using RocketLogger or callback
-    void log_error(std::string error, int error_id, std::string error_source, std::string level);
+    [[deprecated("use log_error(std::string, std::string, std::string)")]] void log_error(std::string error, int error_id, std::string error_source, std::string level);
 
     /// @brief Log (Fatal/FatalToFunction/Warning) using RocketLogger or callback
     void log_error(std::string error, std::string error_source, std::string level);
@@ -148,6 +146,11 @@ namespace rocket {
     void set_cli_arguments(int argc, char *argv[]);
     /// @brief Optionally set CLI arguments
     void set_cli_arguments(std::vector<std::string> args);
+
+    /// @brief Set memory limits on RocketGE
+    /// @note Do NOT use this unless you have
+    ///       a good reason to
+    void set_memory_limit(size_t sz);
 }
 
 #endif
