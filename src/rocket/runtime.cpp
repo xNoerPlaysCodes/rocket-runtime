@@ -331,8 +331,4 @@ namespace rocket {
 
         util::init_clistate(args);
     }
-
-    void set_memory_limit(size_t sz) {
-        util::set_memory_limit(sz);
-    }
 }

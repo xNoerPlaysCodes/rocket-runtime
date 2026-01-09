@@ -360,39 +360,4 @@ namespace util {
     void set_memory_limit(size_t sz) {
         mem_sz_limit = sz;
     }
-
-    template<typename T>
-    T *alloc() {
-        if (sizeof(T) + mem_used > mem_sz_limit) {
-            rocket::log_error("not enough memory", "util::alloc", "fatal");
-            rocket::exit(1);
-            return nullptr;
-        }
-
-        mem_used += sizeof(T);
-        return new (std::nothrow) T;
-    }
-
-    template<typename T>
-    T *alloc(size_t sz) {
-        if ((sizeof(T) * sz) + mem_used > mem_sz_limit) {
-            rocket::log_error("not enough memory", "util::alloc", "fatal");
-            rocket::exit(1);
-            return nullptr;
-        }
-
-        mem_used += (sizeof(T) * sz);
-        return new (std::nothrow) T;
-    }
-
-    template<typename T>
-    void dealloc(T *mem) {
-        mem_used -= sizeof(T);
-        delete mem;
-    }
-
-    template<typename T>
-    void dealloca(T *mem, size_t sz) {
-        mem_used -= sizeof(T) * sz;
-    }
 }

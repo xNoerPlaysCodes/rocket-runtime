@@ -146,11 +146,6 @@ namespace rocket {
     void set_cli_arguments(int argc, char *argv[]);
     /// @brief Optionally set CLI arguments
     void set_cli_arguments(std::vector<std::string> args);
-
-    /// @brief Set memory limits on RocketGE
-    /// @note Do NOT use this unless you have
-    ///       a good reason to
-    void set_memory_limit(size_t sz);
 }
 
 #endif
