@@ -1,0 +1,4 @@
+/home/noerlol/C-Projects/Libraries/libquarrel/CMakeFiles/quarrel.dir
+/home/noerlol/C-Projects/Libraries/libquarrel/CMakeFiles/args.dir
+/home/noerlol/C-Projects/Libraries/libquarrel/CMakeFiles/edit_cache.dir
+/home/noerlol/C-Projects/Libraries/libquarrel/CMakeFiles/rebuild_cache.dir

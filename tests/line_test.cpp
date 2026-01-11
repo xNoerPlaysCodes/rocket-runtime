@@ -3,11 +3,16 @@
 #include "rocket/window.hpp"
 #include <rocket/runtime.hpp>
 
-int main() {
+int main(int argc, char **argv) {
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
     rocket::window_t window({ 1280, 720 }, "RocketGE - Line Test");
-    rocket::renderer_2d r(&window);
+    rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
 
-    rocket::log_error("Test Failed: draw_line() is not implemented", -1, "main.cpp::main", "fatal");
+    rocket::log_error("Test Failed: draw_line() is not implemented", "main.cpp::main", "fatal");
     rocket::exit(-1);
 
     while (window.is_running()) {
@@ -25,5 +30,6 @@ int main() {
         }
         r.end_frame();
         window.poll_events();
+        if (test_mode) return 0;
     }
 }

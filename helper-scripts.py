@@ -2,7 +2,8 @@
 import argparse
 import subprocess
 import sys
-
+import shutil
+import os
 
 parser: argparse.ArgumentParser = argparse.ArgumentParser()
 parser.add_argument("--get-deps", action="store_true", help="Shows the \
@@ -11,6 +12,7 @@ parser.add_argument("--build-rnative", action="store_true", help="Builds the \
         dependencies for RNative")
 parser.add_argument("--print-loc", action="store_true", help="Counts lines of \
         code")
+parser.add_argument("--run-tests", action="store_true", help="Runs all tests")
 
 
 def get_deps() -> None:
@@ -21,11 +23,12 @@ def get_deps() -> None:
         "GLEW": "  >= 1.5",
         "OpenAL": "(OpenAL-soft) any",
         "miniz": " >= 3.0",
-        "tweeny": ">= 3.1.0"
     }
 
     for key, value in deps.items():
         print(key + ": " + value)
+    print()
+    print("These are ONLY the dependencies which are needed to be installed separately")
 
 
 def build_rnative() -> int:
@@ -60,7 +63,6 @@ def build_rnative() -> int:
 
 
 def print_loc():
-    import shutil
     command = "cloc"
     if not shutil.which(command):
         print(f"{command} was not found in PATH.")
@@ -72,6 +74,56 @@ def print_loc():
     return 0
 
 
+def is_executable(path):
+    return os.path.isfile(path) and os.access(path, os.X_OK)
+
+
+def run_tests():
+    TEST_DIR = "./bin/tests"
+    if not os.path.isdir(TEST_DIR):
+        print(f"Test dir '{TEST_DIR}' not found")
+        sys.exit(1)
+
+    failed = False
+
+    count = 0.0
+    for name in sorted(os.listdir(TEST_DIR)):
+        count += 1.0
+
+    done = 0.0
+    for name in sorted(os.listdir(TEST_DIR)):
+        path = os.path.join(TEST_DIR, name)
+
+        if not is_executable(path):
+            done += 1
+            continue
+
+        print("\r", end="", flush=True)
+        print("[" + str(int((done / count) * 100)) + "%]", end="", flush=True)
+        if name == "sound_engine_test" \
+                or name == "icon_test" \
+                or name == "plugin_test":
+            # cd bin && tests/sound_engine_test -- --unit-test
+            result = subprocess.run(
+                ["tests/sound_engine_test", "--", "--unit-test"],
+                cwd="bin"
+            )
+        else:
+            result = subprocess.run(
+                [path, "--", "--unit-test"],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            )
+
+        if result.returncode != 0:
+            print()
+            print("FAIL: " + name)
+            failed = True
+        done += 1
+
+    print("\r", end="", flush=True)
+    print("[" + "100" + "%]", flush=True)
+    sys.exit(1 if failed else 0)
+
 def main() -> int:
     args = parser.parse_args()
 
@@ -81,6 +133,8 @@ def main() -> int:
         return build_rnative()
     elif args.print_loc:
         return print_loc()
+    elif args.run_tests:
+        return run_tests()
     else:
         parser.print_help()
         return 1

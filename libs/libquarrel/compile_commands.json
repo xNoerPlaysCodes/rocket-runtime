@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/libquarrel",
+  "command": "/usr/bin/clang++ -Dquarrel_EXPORTS -I/home/noerlol/C-Projects/Libraries/libquarrel/include -g -std=gnu++23 -fPIC @CMakeFiles/quarrel.dir/src/libquarrel.cpp.o.modmap -o CMakeFiles/quarrel.dir/src/libquarrel.cpp.o -c /home/noerlol/C-Projects/Libraries/libquarrel/src/libquarrel.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/libquarrel/src/libquarrel.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/libquarrel/CMakeFiles/quarrel.dir/src/libquarrel.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/libquarrel",
+  "command": "/usr/bin/clang++ -I/home/noerlol/C-Projects/Libraries/libquarrel/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/args.dir/tests/args.cpp.o.modmap -o CMakeFiles/args.dir/tests/args.cpp.o -c /home/noerlol/C-Projects/Libraries/libquarrel/tests/args.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/libquarrel/tests/args.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/libquarrel/CMakeFiles/args.dir/tests/args.cpp.o"
+}
+]

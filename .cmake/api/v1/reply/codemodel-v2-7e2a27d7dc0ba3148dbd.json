@@ -1,0 +1,339 @@
+{
+	"configurations" : 
+	[
+		{
+			"abstractTargets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "GLEW::GLEW::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GLEW__GLEW-Debug-d151fb2702069e47f552.json",
+					"name" : "GLEW::GLEW",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "GLEW::glew::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GLEW__glew-Debug-9ed024467a80c7a9465a.json",
+					"name" : "GLEW::glew",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "OpenAL::OpenAL::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-OpenAL__OpenAL-Debug-f27fd4e8e7ea59ac991a.json",
+					"name" : "OpenAL::OpenAL",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "OpenGL::EGL::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-OpenGL__EGL-Debug-be20e5406d908326f218.json",
+					"name" : "OpenGL::EGL",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "OpenGL::GL::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-OpenGL__GL-Debug-43a67dcec65d71fed10c.json",
+					"name" : "OpenGL::GL",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "OpenGL::GLES2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-OpenGL__GLES2-Debug-82c2c8157d542d4298dd.json",
+					"name" : "OpenGL::GLES2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "OpenGL::GLES3::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-OpenGL__GLES3-Debug-f5bf67fcf4c44f0e0642.json",
+					"name" : "OpenGL::GLES3",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "OpenGL::GLU::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-OpenGL__GLU-Debug-e32ba421a3d78d1ad402.json",
+					"name" : "OpenGL::GLU",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "OpenGL::GLX::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-OpenGL__GLX-Debug-a868bb3d2357667b5088.json",
+					"name" : "OpenGL::GLX",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "OpenGL::OpenGL::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-OpenGL__OpenGL-Debug-050552f235f9f58a6529.json",
+					"name" : "OpenGL::OpenGL",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SDL2::SDL2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SDL2__SDL2-Debug-82bf4689599c9a6a1e53.json",
+					"name" : "SDL2::SDL2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SDL2::SDL2main::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SDL2__SDL2main-Debug-64fceb1b9043570450ab.json",
+					"name" : "SDL2::SDL2main",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Threads::Threads::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Threads__Threads-Debug-a621f23ed1ece6d007f3.json",
+					"name" : "Threads::Threads",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "glfw::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-glfw-Debug-aa757fea19def2320032.json",
+					"name" : "glfw",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "miniz::miniz::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-miniz__miniz-Debug-230e336b0526d5eb2935.json",
+					"name" : "miniz::miniz",
+					"projectIndex" : 0
+				}
+			],
+			"directories" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14
+					],
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-9ad1a58d4644cf6543fa.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.30"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"abstractTargetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "RocketRuntime",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "RocketRuntime::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RocketRuntime-Debug-c484fc5e445890f00471.json",
+					"name" : "RocketRuntime",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "borderless_windowed_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-borderless_windowed_test-Debug-165249148726d4597e19.json",
+					"name" : "borderless_windowed_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "custom_shader::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-custom_shader-Debug-c44ace7cf771279ae34b.json",
+					"name" : "custom_shader",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gamepad_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gamepad_test-Debug-3eb73acbd2a533e2f9fa.json",
+					"name" : "gamepad_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "icon_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-icon_test-Debug-314e1d573321cde1ecd1.json",
+					"name" : "icon_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "initializer_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-initializer_test-Debug-a4b2ffeedd73d3b9adaf.json",
+					"name" : "initializer_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "io_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-io_test-Debug-226b3cc809fba07a2571.json",
+					"name" : "io_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "iosim::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-iosim-Debug-0d8013cefd64e4b5e2b0.json",
+					"name" : "iosim",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "line_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-line_test-Debug-5b6280a8953ece9154e2.json",
+					"name" : "line_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "moving_circle::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-moving_circle-Debug-81f8b1d0b61c8a7ee508.json",
+					"name" : "moving_circle",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "multithreaded_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-multithreaded_test-Debug-b857395d140402d99843.json",
+					"name" : "multithreaded_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "plugin_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-plugin_test-Debug-2e65f4f0eb71b94ad9c2.json",
+					"name" : "plugin_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "software_renderer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-software_renderer-Debug-13e59e3d4ef32eb9d44e.json",
+					"name" : "software_renderer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "sound_engine_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sound_engine_test-Debug-4e5ea4b9364c8bbcd0fd.json",
+					"name" : "sound_engine_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "text_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-text_test-Debug-0226c48392366bf61ac3.json",
+					"name" : "text_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ui_init_test::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ui_init_test-Debug-5868bb050e773b6f22a9.json",
+					"name" : "ui_init_test",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/noerlol/C-Projects/Libraries/RocketGE",
+		"source" : "/home/noerlol/C-Projects/Libraries/RocketGE"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	}
+}

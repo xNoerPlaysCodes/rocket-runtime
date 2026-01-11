@@ -9,14 +9,19 @@
 #include <string>
 #include <thread>
 
-int main() {
+int main(int argc, char **argv) {
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
     rocket::window_t window({ 1280, 720 }, "RocketGE - Multithreaded Test", {
         .resizable = false,
         .gl_version = {4,6},
         .gl_contextverifier = true,
     });
     rocket::renderer_2d r(&window, 60, {
-            .show_splash = true
+            .show_splash = !test_mode
     });
 
     rocket::asset_manager_t am;
@@ -54,6 +59,7 @@ int main() {
         }
         r.end_frame();
         window.poll_events();
+        if (test_mode) return 0;
     }
     window.close();
 }

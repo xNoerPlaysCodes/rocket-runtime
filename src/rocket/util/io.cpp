@@ -57,7 +57,7 @@ namespace rocket {
                 return glfw_key_scancode[scancode];
             }
 
-            rocket::log_error("invalid key, no scancode for key was found", -1, "rocket::io::key_by_scancode", "error");
+            rocket::log_error("invalid key, no scancode for key was found", "rocket::io::key_by_scancode", "error");
             return -1;
         }
 
@@ -155,7 +155,7 @@ namespace rocket {
             } else if (state == keystate_t::make_released()) {
                 return key_released(key);
             }
-            rocket::log_error("[fixme] unimplemented key_state", -1, "rocket::io::key_state", "fixme");
+            rocket::log_error("[fixme] unimplemented key_state", "rocket::io::key_state", "fixme");
             return false;
         }
 
@@ -197,7 +197,7 @@ namespace rocket {
             } else if (state.released()) {
                 return ::util::mouse_released(button);
             }
-            rocket::log_error("[fixme] unimplemented key_state", -1, "rocket::io::mouse_state", "fixme");
+            rocket::log_error("[fixme] unimplemented key_state", "rocket::io::mouse_state", "fixme");
             return false;
         }
 
@@ -230,7 +230,7 @@ namespace rocket {
         }
         gamepad_t get_handle(int id) {
             if (!is_available(id)) {
-                rocket::log_error("Gamepad not available with ID: " + std::to_string(id), -1, "rocket::gpad::get_handle", "warning");
+                rocket::log_error("Gamepad not available with ID: " + std::to_string(id), "rocket::gpad::get_handle", "warning");
                 return 255;
             }
 
@@ -309,7 +309,7 @@ namespace rocket {
 
         std::string get_name(gamepad_t handle) {
             if (!is_available(handle)) {
-                rocket::log_error("Gamepad not available with ID: " + std::to_string(handle), -1, "rocket::gpad::get_name", "warning");
+                rocket::log_error("Gamepad not available with ID: " + std::to_string(handle), "rocket::gpad::get_name", "warning");
                 return "Unknown";
             }
             return glfwGetGamepadName(handle);

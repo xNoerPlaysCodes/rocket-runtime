@@ -5,7 +5,7 @@
 #include "rocket/window.hpp"
 #include "rocket/macros.hpp"
 
-int main() {
+int main(int argc, char **argv) {
 #ifdef ROCKETGE__Platform_Linux
     // --------------------------------------
     // wayland doesn't support window icons!
@@ -15,6 +15,11 @@ int main() {
     // --------------------------------------
     rocket::window_t::set_forced_platform(rocket::platform_type_t::linux_x11);
 #endif
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
     rocket::window_t window = { { 1280, 720 }, "RocketGE - Window Icon Test"};
     rocket::asset_manager_t asset_manager;
     rocket::assetid_t texture = asset_manager.load_texture("resources/window_icon.jpg", rocket::texture_color_format_t::rgba);
@@ -22,6 +27,9 @@ int main() {
 
     while (window.is_running()) {
         window.poll_events();
+        if (test_mode) {
+            return 0;
+        }
     }
 
     window.close();

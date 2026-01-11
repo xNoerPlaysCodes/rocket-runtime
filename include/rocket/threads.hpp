@@ -16,6 +16,9 @@ namespace rocket {
         /// @brief Schedules these calls to be run on the main thread at frame-end
         /// @note Thread-Safe
         static void schedule(std::function<void()> fn);
+        /// @brief Runs them on a new thread NOW
+        /// @note Thread-Safe ONLY if NO OpenGL calls are used
+        static void run(std::function<void()> fn);
 
         /// @brief Get the thread ID (64-bit integer)
         static uint64_t get_thread_id();

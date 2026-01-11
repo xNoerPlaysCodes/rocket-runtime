@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/netcore_test.dir/tests/netcore_test.cpp.o"
-    }
-  ],
-  "version": 1
-}

@@ -5,9 +5,14 @@
 #include <rocket/audio.hpp>
 
 int main(int argc, char **argv) {
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
     rocket::set_cli_arguments(argc, argv);
     rocket::window_t window = { { 1280, 720 }, "RocketGE - Sound Engine Test" };
-    rocket::renderer_2d r(&window, 60);
+    rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
 
     std::vector<rocket::audio::device_t> devices = rocket::audio::get_devices();
 
@@ -30,6 +35,7 @@ int main(int argc, char **argv) {
         }
         r.end_frame();
         window.poll_events();
+        if (test_mode) return 0;
     }
 
     am.close();

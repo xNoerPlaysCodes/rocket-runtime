@@ -7,16 +7,21 @@
 #include <sstream>
 #include <string>
 
-int main() {
+int main(int argc, char **argv) {
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
     rocket::window_t::set_forced_platform(rocket::platform_type_t::linux_x11);
     rocket::window_t window = { { 1280, 720 }, "RocketGE - Gamepads" };
-    rocket::renderer_2d r(&window);
+    rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
 
     rocket::text_t text = { "", 48, rocket::rgb_color::black() };
 
-    int hd = 1;
+    int hd = 0;
     if (!rocket::gpad::is_available(hd)) {
-        rocket::log_error("Gamepad is not available", 1, "main.cpp::main", "fatal");
+        rocket::log_error("Gamepad is not available", "main.cpp::main", "fatal");
         return 1;
     }
     rocket::gpad::gamepad_t gamepad = rocket::gpad::get_handle(hd);
@@ -63,5 +68,9 @@ int main() {
         }
         r.end_frame();
         window.poll_events();
+
+        if (test_mode) {
+            return 0;
+        }
     }
 }

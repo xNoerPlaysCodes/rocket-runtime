@@ -2,8 +2,14 @@
 #include "rocket/runtime.hpp"
 #include "rocket/plugin/plugin.hpp"
 #include "rocket/window.hpp"
+#include <iostream>
 
 int main(int argc, char **argv) {
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
     rocket::set_cli_arguments(argc, argv);
     rocket::set_log_level(rocket::log_level_t::warn);
     auto plugin = rocket::load_plugin("resources/test.plugin");
@@ -12,11 +18,11 @@ int main(int argc, char **argv) {
 
         my_test();
     } else {
-        rocket::log_error("you didn't let it load the plugin!", -1, "main.cpp::main", "warn");
+        rocket::log_error("you didn't let it load the plugin!", "main.cpp::main", "warn");
     }
 
     rocket::window_t window = { { 1280, 720 }, "RocketGE - Plugin Test" };
-    rocket::renderer_2d r(&window);
+    rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
 
     while (window.is_running()) {
         r.begin_frame();
@@ -31,5 +37,7 @@ int main(int argc, char **argv) {
         }
         r.end_frame();
         window.poll_events();
+
+        if (test_mode) return plugin == nullptr;
     }
 }

@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <functional>
 #include <sstream>
 #include <thread>
 #define RGL_EXPOSE_NATIVE_LIB
@@ -15,7 +16,7 @@ namespace rocket {
 
     thread_t::thread_t(std::function<void(void *arg1, void *arg2, void *arg3)> fn, void *arg1, void *arg2, void *arg3) {
         if (fn == nullptr) {
-            rocket::log_error("native thread must be valid ptr", -1, "thread_t::thread_t", "error");
+            rocket::log_error("native thread must be valid ptr", "thread_t::thread_t", "error");
             return;
         }
         this->fn = fn;
@@ -28,11 +29,18 @@ namespace rocket {
         rgl::schedule_gl(fn);
     }
 
+    RGE_STATIC_FUNC_IMPL void thread_t::run(std::function<void()> fn) {
+        std::thread t([&fn]() {
+            fn();
+        });
+        t.detach();
+    }
+
     void thread_t::start() {
         uint64_t thread_id = thread_id_gen();
         auto main_ctx = rgl::__rglexp_get_main_context();
         
-        rocket::log_error("[fixme] does not work", -1, "thread_t::start", "fixme");
+        rocket::log_error("[fixme] does not work", "thread_t::start", "fixme");
 
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         this->ctx = glfwCreateWindow(1, 1, ("rgthread_" + std::to_string(thread_id)).c_str(), nullptr, main_ctx);

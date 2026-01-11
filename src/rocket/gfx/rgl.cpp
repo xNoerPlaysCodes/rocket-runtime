@@ -440,7 +440,7 @@ namespace rgl {
 
     void cleanup_all() {
         if (scheduled.size() > 0) {
-            rocket::log_error("Exiting with pending scheduled operations", -1, "OpenGL", "warn");
+            rocket::log_error("Exiting with pending scheduled operations", "OpenGL", "warn");
         }
     }
 
@@ -465,7 +465,7 @@ namespace rgl {
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fbo.color_tex, 0);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            rocket::log_error("Failed to create custom framebuffer", -1, "OpenGL::Framebuffer", "error");
+            rocket::log_error("Failed to create custom framebuffer", "OpenGL::Framebuffer", "error");
             return rGL_FBO_INVALID;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -720,7 +720,7 @@ namespace rgl {
                 shader_cache[use] = load_shader_textured_rect();
                 break;
             default:
-                rocket::log_error("unknown shader use", -1, "rgl", "error");
+                rocket::log_error("unknown shader use", "rgl", "error");
                 break;
         }
 
@@ -835,7 +835,7 @@ namespace rgl {
                 GL_CHECK(glBindVertexArray(textureVO.first));
                 break;
             default:
-                rocket::log_error("unknown shader use", -1, "rgl", "error");
+                rocket::log_error("unknown shader use", "rgl", "error");
                 break;
         }
 

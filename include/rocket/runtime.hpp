@@ -58,7 +58,7 @@ namespace rocket {
         warn = 4,
         error = 5,
         fatal = 6,
-        none = 7
+        none = 100
     };
 
     /// @brief Sets minimum log level to be printed to the console

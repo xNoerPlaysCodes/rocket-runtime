@@ -20,8 +20,14 @@ BUILD_ASTRO:BOOL=ON
 //Build Examples
 BUILD_EXAMPLES:BOOL=ON
 
-//Build Networking [net]
-BUILD_NETWORKING:BOOL=ON
+//Build Example custom_shader
+BUILD_EXAMPLE_custom_shader:BOOL=ON
+
+//Build Example moving_circle
+BUILD_EXAMPLE_moving_circle:BOOL=ON
+
+//Build Example software_renderer
+BUILD_EXAMPLE_software_renderer:BOOL=ON
 
 //Build Quark [physics]
 BUILD_QUARK:BOOL=ON
@@ -31,6 +37,42 @@ BUILD_SHARED_LIBS:BOOL=ON
 
 //Build Tests
 BUILD_TESTS:BOOL=ON
+
+//Build Test borderless_windowed_test
+BUILD_TEST_borderless_windowed_test:BOOL=ON
+
+//Build Test gamepad_test
+BUILD_TEST_gamepad_test:BOOL=ON
+
+//Build Test icon_test
+BUILD_TEST_icon_test:BOOL=ON
+
+//Build Test initializer_test
+BUILD_TEST_initializer_test:BOOL=ON
+
+//Build Test io_test
+BUILD_TEST_io_test:BOOL=ON
+
+//Build Test iosim
+BUILD_TEST_iosim:BOOL=ON
+
+//Build Test line_test
+BUILD_TEST_line_test:BOOL=ON
+
+//Build Test multithreaded_test
+BUILD_TEST_multithreaded_test:BOOL=ON
+
+//Build Test plugin_test
+BUILD_TEST_plugin_test:BOOL=ON
+
+//Build Test sound_engine_test
+BUILD_TEST_sound_engine_test:BOOL=ON
+
+//Build Test text_test
+BUILD_TEST_text_test:BOOL=ON
+
+//Build Test ui_init_test
+BUILD_TEST_ui_init_test:BOOL=ON
 
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/llvm-addr2line

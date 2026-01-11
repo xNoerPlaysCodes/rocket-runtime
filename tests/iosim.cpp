@@ -7,9 +7,14 @@
 #include <cstring>
 #include <string>
 
-int main() {
+int main(int argc, char **argv) {
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
     rocket::window_t window = { {1280, 720}, "RocketGE - IO Simulation" };
-    rocket::renderer_2d r(&window);
+    rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
     rocket::text_t instructions = {
         "Press the Arrow Keys for WASD",
         24, rocket::rgb_color::black()
@@ -77,5 +82,6 @@ int main() {
 
         r.end_frame();
         window.poll_events();
+        if (test_mode) return 0;
     }
 }

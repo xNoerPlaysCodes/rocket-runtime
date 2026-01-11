@@ -7,12 +7,17 @@
 #include <algorithm>
 #include <iostream>
 
-int main() {
+int main(int argc, char **argv) {
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
     // Initialize a native window
     rocket::window_t window = { {1280, 720}, "Basic Window" };
 
     // Initialize default 2D renderer
-    rocket::renderer_2d r2d(&window);
+    rocket::renderer_2d r2d(&window, 60, {.show_splash = !test_mode});
 
     // The main loop
     while (window.is_running()) {
@@ -40,6 +45,8 @@ int main() {
         r2d.end_frame();
         // Poll window events
         window.poll_events();
+
+        if (test_mode) return 0;
     }
 
     window.close();

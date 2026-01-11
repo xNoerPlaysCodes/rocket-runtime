@@ -148,19 +148,24 @@ if (BUILD_TESTS)
     endif()
 
     foreach(test_name IN LISTS TEST_NAMES)
-        add_executable(${test_name} tests/${test_name}.cpp)
+        option(BUILD_TEST_${test_name} "Build Test ${test_name}" ON)
+        if (BUILD_TEST_${test_name})
+            add_executable(${test_name} tests/${test_name}.cpp)
 
-        set_target_properties(${test_name} PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/tests
-        )
+            set_target_properties(${test_name} PROPERTIES
+                RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/tests
+            )
 
-        target_link_directories(${test_name} PRIVATE bin)
-        target_include_directories(${test_name} PRIVATE include)
+            target_link_directories(${test_name} PRIVATE bin)
+            target_include_directories(${test_name} PRIVATE include)
 
-        target_link_libraries(${test_name} PRIVATE RocketRuntime)
+            target_link_libraries(${test_name} PRIVATE RocketRuntime)
 
-        target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic)
-        set_target_properties(${test_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+            target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic)
+            set_target_properties(${test_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+        else()
+            message("Test skipped: ${test_name}")
+        endif()
     endforeach()
 endif()
 
@@ -172,19 +177,24 @@ if (BUILD_EXAMPLES)
     )
 
     foreach(example_name IN LISTS EXAMPLE_NAMES)
-        add_executable(${example_name} examples/${example_name}.cpp)
+        option(BUILD_EXAMPLE_${example_name} "Build Example ${example_name}" ON)
+        if (BUILD_EXAMPLE_${example_name})
+            add_executable(${example_name} examples/${example_name}.cpp)
 
-        set_target_properties(${example_name} PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/examples
-        )
+            set_target_properties(${example_name} PROPERTIES
+                RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/examples
+            )
 
-        target_link_directories(${example_name} PRIVATE bin)
-        target_include_directories(${example_name} PRIVATE include)
+            target_link_directories(${example_name} PRIVATE bin)
+            target_include_directories(${example_name} PRIVATE include)
 
-        target_link_libraries(${example_name} PRIVATE RocketRuntime)
+            target_link_libraries(${example_name} PRIVATE RocketRuntime)
 
-        target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3)
-        set_target_properties(${example_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+            target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3)
+            set_target_properties(${example_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+        else()
+            message("Skip example: ${example_name}")
+        endif()
     endforeach()
 endif()
 

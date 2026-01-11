@@ -5,9 +5,14 @@
 #include "rocket/types.hpp"
 #include "rocket/window.hpp"
 
-int main() {
+int main(int argc, char **argv) {
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
     rocket::window_t window({1920, 1080}, "RocketGE - Text");
-    rocket::renderer_2d r(&window);
+    rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
 
     rocket::text_t text = {"Hello, Rocket World!", 48, rocket::rgb_color::black()};
 
@@ -22,6 +27,8 @@ int main() {
         }
         r.end_frame();
         window.poll_events();
+
+        if (test_mode) return 0;
     }
 
     r.close();

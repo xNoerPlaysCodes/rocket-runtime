@@ -2,15 +2,21 @@
 #include "rocket/io.hpp"
 #include "rocket/renderer.hpp"
 #include <rocket/window.hpp>
+#include <rocket/runtime.hpp>
 #include <string>
 
 std::string bool_to_str(bool b) {
     return b ? "true" : "false";
 }
 
-int main() {
+int main(int argc, char **argv) {
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
     rocket::window_t window = { { 1280, 720 }, "RocketGE - IO Test" };
-    rocket::renderer_2d r(&window);
+    rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
 
     while (window.is_running()) {
         r.begin_frame();
@@ -48,5 +54,6 @@ int main() {
         }
         r.end_frame();
         window.poll_events();
+        if (test_mode) return 0;
     }
 }

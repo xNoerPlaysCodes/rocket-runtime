@@ -1,4 +1,4 @@
-#include "../../include/rocket/runtime.hpp"
+#include "rocket/runtime.hpp"
 #include "util.hpp"
 #include <iostream>
 #include <string>
@@ -96,7 +96,7 @@ namespace rocket {
     }
 
     void __log_error_with_id(std::string error, int error_id, std::string error_source, std::string level) {
-        log_error(error, error_id, error_source, level);
+        log_error(error, error_source, level);
     }
 
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
@@ -157,17 +157,22 @@ namespace rocket {
             bool argument_detected = false;
             bool too_many_prefixes;
 
+            std::string prefix;
+
             if (arg.starts_with("--")) {
+                prefix = "--";
                 arg = arg.substr(2);
                 too_many_prefixes = argument_detected;
                 argument_detected = true;
             }
             if (arg.starts_with("-")) {
+                prefix = "-";
                 arg = arg.substr(1);
                 too_many_prefixes = argument_detected;
                 argument_detected = true;
             }
             if (arg.starts_with("/")) {
+                prefix = "/";
                 arg = arg.substr(1);
                 too_many_prefixes = argument_detected;
                 argument_detected = true;
@@ -176,16 +181,20 @@ namespace rocket {
             if (too_many_prefixes) {
                 exit = true;
                 error = true;
-                rocket::log_error("unexpected argument: " + rawarg, -1, "rocket::argparse", "error");
+                rocket::log_error("unexpected argument: " + rawarg, "rocket::argparse", "error");
             }
 
             if (value.empty() && std::find(args_with_values.begin(), args_with_values.end(), arg) != args_with_values.end()) {
-                rocket::log_error("argument " + arg + " does not have a value where it is required", -1, "rocket::argparse", "error");
+                rocket::log_error("argument " + arg + " does not have a value where it is required", "rocket::argparse", "error");
                 continue;
             }
 
             if (!value.empty()) {
                 ++i;
+            }
+
+            if (arg == "" && prefix == "--") {
+                break;
             }
 
             if (arg == "noplugins" || arg == "no-plugins") {
@@ -311,16 +320,16 @@ namespace rocket {
                 args.notext = true;
             }
             else {
-                rocket::log_error("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), -1, "rocket::argparse", "error");
+                rocket::log_error("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), "rocket::argparse", "error");
                 exit = true;
                 error = true;
             }
         }
 
         if (error && exit) {
-            rocket::log_error("one or more errors found in parser", -1, "rocket::argparse", "fatal");
+            rocket::log_error("one or more errors found in parser", "rocket::argparse", "fatal");
             if (!additional_exit_message.empty()) {
-                rocket::log_error(additional_exit_message, -1, "rocket::argparse", "fatal");
+                rocket::log_error(additional_exit_message, "rocket::argparse", "fatal");
             }
             rocket::exit(1);
         }
