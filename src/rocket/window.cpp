@@ -98,7 +98,7 @@ namespace rocket {
     }
 
     RGE_STATIC_FUNC_IMPL void window_t::cpl_init() {
-        if (glfwPlatformSupported(GLFW_PLATFORM_WAYLAND) && util::is_wayland()) {
+        if (glfwPlatformSupported(GLFW_PLATFORM_WAYLAND) && util::is_wayland() && (!util::get_clistate().forcewayland)) {
             // Set default platform to X11 on Linux
             window_t::set_forced_platform(platform_type_t::linux_x11);
         }
@@ -456,7 +456,7 @@ namespace rocket {
 
         if (!silent_cons) {
             silent_cons = false;
-            rocket::log("Window created as [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "] " + title, 
+            rocket::log("Window created as [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "]: " + title, 
                 "window_t", "constructor", 
                 "info");
             auto platform = get_platform();

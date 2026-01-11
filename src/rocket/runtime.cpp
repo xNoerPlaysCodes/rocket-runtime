@@ -319,6 +319,9 @@ namespace rocket {
             else if (arg == "no-text" || arg == "notext") {
                 args.notext = true;
             }
+            else if (arg == "force-wayland" || arg == "forcewayland") {
+                args.forcewayland = true;
+            }
             else {
                 rocket::log_error("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), "rocket::argparse", "error");
                 exit = true;

@@ -43,6 +43,7 @@ namespace util {
         int framerate = -1;
 
         bool notext = false;
+        bool forcewayland = false;
     };
 
     std::string format_error(std::string error, int error_id, std::string error_source, std::string level);
@@ -101,7 +102,7 @@ namespace util {
     void init_clistate(global_state_cliargs_t);
     global_state_cliargs_t get_clistate();
 
-    std::vector<std::string> split(const std::string& s, char delim);
+    std::vector<std::string> split(const std::string &s, char delim);
 
     bool validate_gl_version_string(std::string string);
 

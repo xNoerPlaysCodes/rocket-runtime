@@ -4,8 +4,10 @@
 #include "rocket/renderer.hpp"
 #include "rocket/types.hpp"
 #include "rocket/window.hpp"
+#include <chrono>
 #include <iostream>
 #include <memory>
+#include <thread>
 
 rocket::rgba_color clr_gray() {
     return { 128, 128, 128, 255 };
