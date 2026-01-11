@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/quarrel.dir/src/libquarrel.cpp.o"
-    }
-  ],
-  "version": 1
-}

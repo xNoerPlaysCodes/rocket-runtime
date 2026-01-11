@@ -1,3 +1,0 @@
-ninja_dyndep_version = 1.0
-build CMakeFiles/args.dir/tests/args.cpp.o: dyndep
-
