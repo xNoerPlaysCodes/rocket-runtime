@@ -20,9 +20,8 @@ events:
     names:
       - "uname"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -37,16 +36,13 @@ events:
       - "/home/noerlol/C-Projects/Executables/SMake/bin/"
       - "/bin/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/uname"
-      - "/home/noerlol/.local/share/nvim/mason/bin/uname"
       - "/home/noerlol/.local/share/zinit/polaris/bin/uname"
+      - "/home/noerlol/.jre/zulu/21/bin/uname"
       - "/usr/local/sbin/uname"
       - "/usr/local/bin/uname"
     found: "/usr/bin/uname"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -58,9 +54,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -92,9 +85,8 @@ events:
       - "ninja"
       - "samu"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -108,15 +100,12 @@ events:
       - "/home/noerlol/.local/bin/"
       - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/ninja-build"
-      - "/home/noerlol/.jre/zulu/21/bin/ninja"
-      - "/home/noerlol/.jre/zulu/21/bin/samu"
-      - "/home/noerlol/.local/share/nvim/mason/bin/ninja-build"
-      - "/home/noerlol/.local/share/nvim/mason/bin/ninja"
-      - "/home/noerlol/.local/share/nvim/mason/bin/samu"
       - "/home/noerlol/.local/share/zinit/polaris/bin/ninja-build"
       - "/home/noerlol/.local/share/zinit/polaris/bin/ninja"
       - "/home/noerlol/.local/share/zinit/polaris/bin/samu"
+      - "/home/noerlol/.jre/zulu/21/bin/ninja-build"
+      - "/home/noerlol/.jre/zulu/21/bin/ninja"
+      - "/home/noerlol/.jre/zulu/21/bin/samu"
       - "/usr/local/sbin/ninja-build"
       - "/usr/local/sbin/ninja"
       - "/usr/local/sbin/samu"
@@ -127,8 +116,6 @@ events:
     found: "/usr/bin/ninja"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -140,9 +127,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -166,9 +150,8 @@ events:
     names:
       - "/usr/bin/clang++"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -184,8 +167,6 @@ events:
     found: "/usr/bin/clang++"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -197,9 +178,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -230,8 +208,6 @@ events:
     found: "/usr/share/cmake/Modules/CMakeCXXCompilerId.cpp.in"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -243,9 +219,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -293,9 +266,8 @@ events:
       - "ar"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -310,8 +282,6 @@ events:
     found: "/usr/bin/llvm-ar"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -323,9 +293,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -351,9 +318,8 @@ events:
       - "ranlib"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -368,8 +334,6 @@ events:
     found: "/usr/bin/llvm-ranlib"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -381,9 +345,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -409,9 +370,8 @@ events:
       - "strip"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -426,8 +386,6 @@ events:
     found: "/usr/bin/llvm-strip"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -439,9 +397,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -467,9 +422,8 @@ events:
       - "ld"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -484,8 +438,6 @@ events:
     found: "/usr/bin/ld.lld"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -497,9 +449,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -525,9 +474,8 @@ events:
       - "nm"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -542,8 +490,6 @@ events:
     found: "/usr/bin/llvm-nm"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -555,9 +501,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -583,9 +526,8 @@ events:
       - "objdump"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -600,8 +542,6 @@ events:
     found: "/usr/bin/llvm-objdump"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -613,9 +553,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -641,9 +578,8 @@ events:
       - "objcopy"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -658,8 +594,6 @@ events:
     found: "/usr/bin/llvm-objcopy"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -671,9 +605,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -699,9 +630,8 @@ events:
       - "readelf"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -716,8 +646,6 @@ events:
     found: "/usr/bin/llvm-readelf"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -729,9 +657,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -757,9 +682,8 @@ events:
       - "dlltool"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -774,8 +698,6 @@ events:
     found: "/usr/bin/llvm-dlltool"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -787,9 +709,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -815,9 +734,8 @@ events:
       - "addr2line"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -832,8 +750,6 @@ events:
     found: "/usr/bin/llvm-addr2line"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -845,9 +761,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -872,9 +785,8 @@ events:
       - "tapi"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -888,9 +800,8 @@ events:
       - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     searched_directories:
       - "/usr/bin/tapi"
-      - "/home/noerlol/.jre/zulu/21/bin/tapi"
-      - "/home/noerlol/.local/share/nvim/mason/bin/tapi"
       - "/home/noerlol/.local/share/zinit/polaris/bin/tapi"
+      - "/home/noerlol/.jre/zulu/21/bin/tapi"
       - "/usr/local/sbin/tapi"
       - "/usr/local/bin/tapi"
       - "/var/lib/flatpak/exports/bin/tapi"
@@ -905,8 +816,6 @@ events:
     found: false
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -918,9 +827,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -948,9 +854,8 @@ events:
       - "llvm-ar"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -964,9 +869,8 @@ events:
       - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     searched_directories:
       - "/usr/bin/llvm-ar-21.1"
-      - "/home/noerlol/.jre/zulu/21/bin/llvm-ar-21.1"
-      - "/home/noerlol/.local/share/nvim/mason/bin/llvm-ar-21.1"
       - "/home/noerlol/.local/share/zinit/polaris/bin/llvm-ar-21.1"
+      - "/home/noerlol/.jre/zulu/21/bin/llvm-ar-21.1"
       - "/usr/local/sbin/llvm-ar-21.1"
       - "/usr/local/bin/llvm-ar-21.1"
       - "/var/lib/flatpak/exports/bin/llvm-ar-21.1"
@@ -979,9 +883,8 @@ events:
       - "/home/noerlol/.local/bin/llvm-ar-21.1"
       - "/home/noerlol/C-Projects/Executables/SMake/bin/llvm-ar-21.1"
       - "/usr/bin/llvm-ar-21"
-      - "/home/noerlol/.jre/zulu/21/bin/llvm-ar-21"
-      - "/home/noerlol/.local/share/nvim/mason/bin/llvm-ar-21"
       - "/home/noerlol/.local/share/zinit/polaris/bin/llvm-ar-21"
+      - "/home/noerlol/.jre/zulu/21/bin/llvm-ar-21"
       - "/usr/local/sbin/llvm-ar-21"
       - "/usr/local/bin/llvm-ar-21"
       - "/var/lib/flatpak/exports/bin/llvm-ar-21"
@@ -994,9 +897,8 @@ events:
       - "/home/noerlol/.local/bin/llvm-ar-21"
       - "/home/noerlol/C-Projects/Executables/SMake/bin/llvm-ar-21"
       - "/usr/bin/llvm-ar21"
-      - "/home/noerlol/.jre/zulu/21/bin/llvm-ar21"
-      - "/home/noerlol/.local/share/nvim/mason/bin/llvm-ar21"
       - "/home/noerlol/.local/share/zinit/polaris/bin/llvm-ar21"
+      - "/home/noerlol/.jre/zulu/21/bin/llvm-ar21"
       - "/usr/local/sbin/llvm-ar21"
       - "/usr/local/bin/llvm-ar21"
       - "/var/lib/flatpak/exports/bin/llvm-ar21"
@@ -1011,8 +913,6 @@ events:
     found: "/usr/bin/llvm-ar"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -1024,9 +924,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -1054,9 +951,8 @@ events:
       - "llvm-ranlib"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -1070,9 +966,8 @@ events:
       - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     searched_directories:
       - "/usr/bin/llvm-ranlib-21.1"
-      - "/home/noerlol/.jre/zulu/21/bin/llvm-ranlib-21.1"
-      - "/home/noerlol/.local/share/nvim/mason/bin/llvm-ranlib-21.1"
       - "/home/noerlol/.local/share/zinit/polaris/bin/llvm-ranlib-21.1"
+      - "/home/noerlol/.jre/zulu/21/bin/llvm-ranlib-21.1"
       - "/usr/local/sbin/llvm-ranlib-21.1"
       - "/usr/local/bin/llvm-ranlib-21.1"
       - "/var/lib/flatpak/exports/bin/llvm-ranlib-21.1"
@@ -1085,9 +980,8 @@ events:
       - "/home/noerlol/.local/bin/llvm-ranlib-21.1"
       - "/home/noerlol/C-Projects/Executables/SMake/bin/llvm-ranlib-21.1"
       - "/usr/bin/llvm-ranlib-21"
-      - "/home/noerlol/.jre/zulu/21/bin/llvm-ranlib-21"
-      - "/home/noerlol/.local/share/nvim/mason/bin/llvm-ranlib-21"
       - "/home/noerlol/.local/share/zinit/polaris/bin/llvm-ranlib-21"
+      - "/home/noerlol/.jre/zulu/21/bin/llvm-ranlib-21"
       - "/usr/local/sbin/llvm-ranlib-21"
       - "/usr/local/bin/llvm-ranlib-21"
       - "/var/lib/flatpak/exports/bin/llvm-ranlib-21"
@@ -1100,9 +994,8 @@ events:
       - "/home/noerlol/.local/bin/llvm-ranlib-21"
       - "/home/noerlol/C-Projects/Executables/SMake/bin/llvm-ranlib-21"
       - "/usr/bin/llvm-ranlib21"
-      - "/home/noerlol/.jre/zulu/21/bin/llvm-ranlib21"
-      - "/home/noerlol/.local/share/nvim/mason/bin/llvm-ranlib21"
       - "/home/noerlol/.local/share/zinit/polaris/bin/llvm-ranlib21"
+      - "/home/noerlol/.jre/zulu/21/bin/llvm-ranlib21"
       - "/usr/local/sbin/llvm-ranlib21"
       - "/usr/local/bin/llvm-ranlib21"
       - "/var/lib/flatpak/exports/bin/llvm-ranlib21"
@@ -1117,8 +1010,6 @@ events:
     found: "/usr/bin/llvm-ranlib"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -1130,9 +1021,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -1160,9 +1048,8 @@ events:
       - "clang-scan-deps"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/var/lib/flatpak/exports/bin/"
@@ -1176,9 +1063,8 @@ events:
       - "/home/noerlol/C-Projects/Executables/SMake/bin/"
     searched_directories:
       - "/usr/bin/clang-scan-deps-21.1"
-      - "/home/noerlol/.jre/zulu/21/bin/clang-scan-deps-21.1"
-      - "/home/noerlol/.local/share/nvim/mason/bin/clang-scan-deps-21.1"
       - "/home/noerlol/.local/share/zinit/polaris/bin/clang-scan-deps-21.1"
+      - "/home/noerlol/.jre/zulu/21/bin/clang-scan-deps-21.1"
       - "/usr/local/sbin/clang-scan-deps-21.1"
       - "/usr/local/bin/clang-scan-deps-21.1"
       - "/var/lib/flatpak/exports/bin/clang-scan-deps-21.1"
@@ -1191,9 +1077,8 @@ events:
       - "/home/noerlol/.local/bin/clang-scan-deps-21.1"
       - "/home/noerlol/C-Projects/Executables/SMake/bin/clang-scan-deps-21.1"
       - "/usr/bin/clang-scan-deps-21"
-      - "/home/noerlol/.jre/zulu/21/bin/clang-scan-deps-21"
-      - "/home/noerlol/.local/share/nvim/mason/bin/clang-scan-deps-21"
       - "/home/noerlol/.local/share/zinit/polaris/bin/clang-scan-deps-21"
+      - "/home/noerlol/.jre/zulu/21/bin/clang-scan-deps-21"
       - "/usr/local/sbin/clang-scan-deps-21"
       - "/usr/local/bin/clang-scan-deps-21"
       - "/var/lib/flatpak/exports/bin/clang-scan-deps-21"
@@ -1206,9 +1091,8 @@ events:
       - "/home/noerlol/.local/bin/clang-scan-deps-21"
       - "/home/noerlol/C-Projects/Executables/SMake/bin/clang-scan-deps-21"
       - "/usr/bin/clang-scan-deps21"
-      - "/home/noerlol/.jre/zulu/21/bin/clang-scan-deps21"
-      - "/home/noerlol/.local/share/nvim/mason/bin/clang-scan-deps21"
       - "/home/noerlol/.local/share/zinit/polaris/bin/clang-scan-deps21"
+      - "/home/noerlol/.jre/zulu/21/bin/clang-scan-deps21"
       - "/usr/local/sbin/clang-scan-deps21"
       - "/usr/local/bin/clang-scan-deps21"
       - "/var/lib/flatpak/exports/bin/clang-scan-deps21"
@@ -1223,8 +1107,6 @@ events:
     found: "/usr/bin/clang-scan-deps"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -1239,9 +1121,6 @@ events:
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
   -
     kind: "try_compile-v1"
     backtrace:
@@ -1251,8 +1130,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-TlqeE1"
-      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-TlqeE1"
+      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-YLNiq6"
+      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-YLNiq6"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
       CMAKE_CXX_FLAGS: ""
@@ -1263,10 +1142,10 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-TlqeE1'
+        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-YLNiq6'
         
-        Run Build Command(s): /usr/bin/ninja -v cmTC_7dafe
-        [1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/ninja -v cmTC_8d39d
+        [1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         clang version 21.1.6
         Target: x86_64-pc-linux-gnu
         Thread model: posix
@@ -1279,7 +1158,7 @@ events:
         Selected multilib: .;@m64
         Found HIP installation: /opt/rocm, version 3.5.0
          (in-process)
-         "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-TlqeE1 -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-TlqeE1 -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+         "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-YLNiq6 -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-YLNiq6 -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         clang -cc1 version 21.1.6 based upon LLVM 21.1.6 default target x86_64-pc-linux-gnu
         ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include"
         ignoring nonexistent directory "/include"
@@ -1292,7 +1171,7 @@ events:
          /usr/local/include
          /usr/include
         End of search list.
-        [2/2] : && /usr/bin/clang++  -v -Wl,-v CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_7dafe   && :
+        [2/2] : && /usr/bin/clang++  -v -Wl,-v CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_8d39d   && :
         clang version 21.1.6
         Target: x86_64-pc-linux-gnu
         Thread model: posix
@@ -1304,7 +1183,7 @@ events:
         Candidate multilib: 32;@m32
         Selected multilib: .;@m64
         Found HIP installation: /opt/rocm, version 3.5.0
-         "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_7dafe /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o
+         "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_8d39d /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o
         GNU ld (GNU Binutils) 2.45.1
         
       exitCode: 0
@@ -1344,10 +1223,10 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-TlqeE1']
+        ignore line: [Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-YLNiq6']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_7dafe]
-        ignore line: [[1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_8d39d]
+        ignore line: [[1/2] /usr/bin/clang++   -std=gnu++23   -v -MD -MT CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [clang version 21.1.6]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Thread model: posix]
@@ -1363,7 +1242,7 @@ events:
         ignore line: [@m64]
         ignore line: [Found HIP installation: /opt/rocm  version 3.5.0]
         ignore line: [ (in-process)]
-        ignore line: [ "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-TlqeE1 -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-TlqeE1 -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [ "/usr/bin/clang++" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-YLNiq6 -v -fcoverage-compilation-dir=/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-YLNiq6 -resource-dir /usr/lib/clang/21 -dependency-file CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1 -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/backward -internal-isystem /usr/lib/clang/21/include -internal-isystem /usr/local/include -internal-isystem /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include -internal-externc-isystem /include -internal-externc-isystem /usr/include -std=gnu++23 -fdeprecated-macro -ferror-limit 19 -stack-protector 2 -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [clang -cc1 version 21.1.6 based upon LLVM 21.1.6 default target x86_64-pc-linux-gnu]
         ignore line: [ignoring nonexistent directory "/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../x86_64-pc-linux-gnu/include"]
         ignore line: [ignoring nonexistent directory "/include"]
@@ -1376,7 +1255,7 @@ events:
         ignore line: [ /usr/local/include]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [[2/2] : && /usr/bin/clang++  -v -Wl -v CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_7dafe   && :]
+        ignore line: [[2/2] : && /usr/bin/clang++  -v -Wl -v CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_8d39d   && :]
         ignore line: [clang version 21.1.6]
         ignore line: [Target: x86_64-pc-linux-gnu]
         ignore line: [Thread model: posix]
@@ -1391,7 +1270,7 @@ events:
         ignore line: [Selected multilib: .]
         ignore line: [@m64]
         ignore line: [Found HIP installation: /opt/rocm  version 3.5.0]
-        link line: [ "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_7dafe /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o]
+        link line: [ "/usr/bin/ld" --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_8d39d /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64 -L/lib/../lib64 -L/usr/lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crtn.o]
           arg [/usr/bin/ld] ==> ignore
           arg [--hash-style=gnu] ==> ignore
           arg [--build-id] ==> ignore
@@ -1402,7 +1281,7 @@ events:
           arg [-dynamic-linker] ==> ignore
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_7dafe] ==> ignore
+          arg [cmTC_8d39d] ==> ignore
           arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/Scrt1.o]
           arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib64/crti.o]
           arg [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o] ==> obj [/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o]
@@ -1413,7 +1292,7 @@ events:
           arg [-L/lib] ==> dir [/lib]
           arg [-L/usr/lib] ==> dir [/usr/lib]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_7dafe.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_8d39d.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1451,6 +1330,10 @@ events:
     message: |
       Running the CXX compiler's linker: "/usr/bin/ld" "-v"
       GNU ld (GNU Binutils) 2.45.1
+...
+
+---
+events:
   -
     kind: "find-v1"
     backtrace:
@@ -1470,9 +1353,8 @@ events:
     names:
       - "GL/gl.h"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -1501,9 +1383,8 @@ events:
       - "/usr/openwin/share/include/"
       - "/opt/graphics/OpenGL/include/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/GL/gl.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/GL/gl.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/GL/gl.h"
+      - "/home/noerlol/.jre/zulu/21/bin/GL/gl.h"
       - "/usr/local/sbin/GL/gl.h"
       - "/usr/local/bin/GL/gl.h"
       - "/usr/bin/GL/gl.h"
@@ -1521,8 +1402,6 @@ events:
     found: "/usr/include/"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -1534,9 +1413,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -1571,9 +1447,8 @@ events:
     names:
       - "GL/glx.h"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -1599,9 +1474,8 @@ events:
       - "/opt/"
       - "/usr/include/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/GL/glx.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/GL/glx.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/GL/glx.h"
+      - "/home/noerlol/.jre/zulu/21/bin/GL/glx.h"
       - "/usr/local/sbin/GL/glx.h"
       - "/usr/local/bin/GL/glx.h"
       - "/usr/bin/GL/glx.h"
@@ -1619,8 +1493,6 @@ events:
     found: "/usr/include/"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -1632,9 +1504,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -1669,9 +1538,8 @@ events:
     names:
       - "EGL/egl.h"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -1697,9 +1565,8 @@ events:
       - "/opt/"
       - "/usr/include/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/EGL/egl.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/EGL/egl.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/EGL/egl.h"
+      - "/home/noerlol/.jre/zulu/21/bin/EGL/egl.h"
       - "/usr/local/sbin/EGL/egl.h"
       - "/usr/local/bin/EGL/egl.h"
       - "/usr/bin/EGL/egl.h"
@@ -1717,8 +1584,6 @@ events:
     found: "/usr/include/"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -1730,9 +1595,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -1767,9 +1629,8 @@ events:
     names:
       - "GLES2/gl2.h"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -1795,9 +1656,8 @@ events:
       - "/opt/"
       - "/usr/include/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/GLES2/gl2.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/GLES2/gl2.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/GLES2/gl2.h"
+      - "/home/noerlol/.jre/zulu/21/bin/GLES2/gl2.h"
       - "/usr/local/sbin/GLES2/gl2.h"
       - "/usr/local/bin/GLES2/gl2.h"
       - "/usr/bin/GLES2/gl2.h"
@@ -1815,8 +1675,6 @@ events:
     found: "/usr/include/"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -1828,9 +1686,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -1865,9 +1720,8 @@ events:
     names:
       - "GLES3/gl3.h"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -1893,9 +1747,8 @@ events:
       - "/opt/"
       - "/usr/include/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/GLES3/gl3.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/GLES3/gl3.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/GLES3/gl3.h"
+      - "/home/noerlol/.jre/zulu/21/bin/GLES3/gl3.h"
       - "/usr/local/sbin/GLES3/gl3.h"
       - "/usr/local/bin/GLES3/gl3.h"
       - "/usr/bin/GLES3/gl3.h"
@@ -1913,8 +1766,6 @@ events:
     found: "/usr/include/"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -1926,9 +1777,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -1963,9 +1811,8 @@ events:
     names:
       - "GL/xmesa.h"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -1994,9 +1841,8 @@ events:
       - "/usr/openwin/share/include/"
       - "/opt/graphics/OpenGL/include/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/GL/xmesa.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/GL/xmesa.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/GL/xmesa.h"
+      - "/home/noerlol/.jre/zulu/21/bin/GL/xmesa.h"
       - "/usr/local/sbin/GL/xmesa.h"
       - "/usr/local/bin/GL/xmesa.h"
       - "/usr/bin/GL/xmesa.h"
@@ -2027,8 +1873,6 @@ events:
     found: false
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -2040,9 +1884,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -2077,9 +1918,8 @@ events:
     names:
       - "GL/glu.h"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -2105,9 +1945,8 @@ events:
       - "/opt/"
       - "/usr/include/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/GL/glu.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/GL/glu.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/GL/glu.h"
+      - "/home/noerlol/.jre/zulu/21/bin/GL/glu.h"
       - "/usr/local/sbin/GL/glu.h"
       - "/usr/local/bin/GL/glu.h"
       - "/usr/bin/GL/glu.h"
@@ -2125,8 +1964,6 @@ events:
     found: "/usr/include/"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -2138,9 +1975,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -2175,9 +2009,8 @@ events:
     names:
       - "OpenGL"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -2203,9 +2036,8 @@ events:
       - "/opt/"
       - "/usr/lib/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -2223,8 +2055,6 @@ events:
     found: "/usr/lib/libOpenGL.so"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -2236,9 +2066,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -2273,12 +2100,10 @@ events:
     names:
       - "GLX"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/libglvnd/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libglvnd/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libglvnd/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/libglvnd/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/libglvnd/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/libglvnd/"
@@ -2328,12 +2153,10 @@ events:
       - "/usr/lib/X11/libglvnd/"
       - "/usr/lib/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/libglvnd/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libglvnd/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libglvnd/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/libglvnd/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/libglvnd/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/libglvnd/"
@@ -2366,8 +2189,6 @@ events:
     found: "/usr/lib/libGLX.so"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -2379,9 +2200,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -2416,12 +2234,10 @@ events:
     names:
       - "EGL"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/libglvnd/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libglvnd/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libglvnd/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/libglvnd/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/libglvnd/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/libglvnd/"
@@ -2471,12 +2287,10 @@ events:
       - "/usr/lib/X11/libglvnd/"
       - "/usr/lib/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/libglvnd/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libglvnd/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libglvnd/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/libglvnd/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/libglvnd/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/libglvnd/"
@@ -2509,8 +2323,6 @@ events:
     found: "/usr/lib/libEGL.so"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -2522,9 +2334,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -2559,9 +2368,8 @@ events:
     names:
       - "GLESv2"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -2587,9 +2395,8 @@ events:
       - "/opt/"
       - "/usr/lib/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -2607,8 +2414,6 @@ events:
     found: "/usr/lib/libGLESv2.so"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -2620,9 +2425,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -2658,9 +2460,8 @@ events:
       - "GLESv3"
       - "GLESv2"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -2686,9 +2487,8 @@ events:
       - "/opt/"
       - "/usr/lib/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -2713,9 +2513,8 @@ events:
       - "/opt/lib/"
       - "/opt/"
       - "/usr/lib/X11/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -2733,8 +2532,6 @@ events:
     found: "/usr/lib/libGLESv2.so"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -2746,9 +2543,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -2784,9 +2578,8 @@ events:
       - "GLU"
       - "MesaGLU"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -2815,9 +2608,8 @@ events:
       - "/usr/openwin/lib/"
       - "/usr/shlib/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -2835,8 +2627,6 @@ events:
     found: "/usr/lib/libGLU.so"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -2848,9 +2638,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -2880,8 +2667,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-9K6Rtl"
-      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-9K6Rtl"
+      source: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-eHvRiF"
+      binary: "/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-eHvRiF"
     cmakeVariables:
       CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps"
       CMAKE_CXX_FLAGS: ""
@@ -2891,13 +2678,13 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-9K6Rtl'
+        Change Dir: '/home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-eHvRiF'
         
-        Run Build Command(s): /usr/bin/ninja -v cmTC_eb9ea
-        [1/4] "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -x c++ /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-9K6Rtl/src.cxx -c -o CMakeFiles/cmTC_eb9ea.dir/src.cxx.o -resource-dir "/usr/lib/clang/21" -MT CMakeFiles/cmTC_eb9ea.dir/src.cxx.o.ddi -MD -MF CMakeFiles/cmTC_eb9ea.dir/src.cxx.o.ddi.d > CMakeFiles/cmTC_eb9ea.dir/src.cxx.o.ddi.tmp && mv CMakeFiles/cmTC_eb9ea.dir/src.cxx.o.ddi.tmp CMakeFiles/cmTC_eb9ea.dir/src.cxx.o.ddi
-        [2/4] /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/cmTC_eb9ea.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=CMakeFiles/cmTC_eb9ea.dir/CXX.dd @CMakeFiles/cmTC_eb9ea.dir/CXX.dd.rsp
-        [3/4] /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -MD -MT CMakeFiles/cmTC_eb9ea.dir/src.cxx.o -MF CMakeFiles/cmTC_eb9ea.dir/src.cxx.o.d @CMakeFiles/cmTC_eb9ea.dir/src.cxx.o.modmap -o CMakeFiles/cmTC_eb9ea.dir/src.cxx.o -c /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-9K6Rtl/src.cxx
-        [4/4] : && /usr/bin/clang++   CMakeFiles/cmTC_eb9ea.dir/src.cxx.o -o cmTC_eb9ea   && :
+        Run Build Command(s): /usr/bin/ninja -v cmTC_3bb35
+        [1/4] "/usr/bin/clang-scan-deps" -format=p1689 -- /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -x c++ /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-eHvRiF/src.cxx -c -o CMakeFiles/cmTC_3bb35.dir/src.cxx.o -resource-dir "/usr/lib/clang/21" -MT CMakeFiles/cmTC_3bb35.dir/src.cxx.o.ddi -MD -MF CMakeFiles/cmTC_3bb35.dir/src.cxx.o.ddi.d > CMakeFiles/cmTC_3bb35.dir/src.cxx.o.ddi.tmp && mv CMakeFiles/cmTC_3bb35.dir/src.cxx.o.ddi.tmp CMakeFiles/cmTC_3bb35.dir/src.cxx.o.ddi
+        [2/4] /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/cmTC_3bb35.dir/CXXDependInfo.json --lang=CXX --modmapfmt=clang --dd=CMakeFiles/cmTC_3bb35.dir/CXX.dd @CMakeFiles/cmTC_3bb35.dir/CXX.dd.rsp
+        [3/4] /usr/bin/clang++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++23 -MD -MT CMakeFiles/cmTC_3bb35.dir/src.cxx.o -MF CMakeFiles/cmTC_3bb35.dir/src.cxx.o.d @CMakeFiles/cmTC_3bb35.dir/src.cxx.o.modmap -o CMakeFiles/cmTC_3bb35.dir/src.cxx.o -c /home/noerlol/C-Projects/Libraries/RocketGE/CMakeFiles/CMakeScratch/TryCompile-eHvRiF/src.cxx
+        [4/4] : && /usr/bin/clang++   CMakeFiles/cmTC_3bb35.dir/src.cxx.o -o cmTC_3bb35   && :
         
       exitCode: 0
   -
@@ -2944,27 +2731,19 @@ events:
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home/noerlol/.jre/zulu/21/glfw3Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.jre/zulu/21/glfw3-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.local/share/nvim/mason/glfw3Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.local/share/nvim/mason/glfw3-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
         path: "/home/noerlol/.local/share/zinit/polaris/glfw3Config.cmake"
         mode: "config"
         reason: "no_exist"
       -
         path: "/home/noerlol/.local/share/zinit/polaris/glfw3-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/noerlol/.jre/zulu/21/glfw3Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/noerlol/.jre/zulu/21/glfw3-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -2989,8 +2768,6 @@ events:
       version: "3.4.0"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -3002,9 +2779,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -3038,9 +2812,8 @@ events:
       - "pkg-config"
       - "pkgconf"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -3071,12 +2844,10 @@ events:
       - "/opt/sbin/"
       - "/opt/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/pkg-config"
-      - "/home/noerlol/.jre/zulu/21/bin/pkgconf"
-      - "/home/noerlol/.local/share/nvim/mason/bin/pkg-config"
-      - "/home/noerlol/.local/share/nvim/mason/bin/pkgconf"
       - "/home/noerlol/.local/share/zinit/polaris/bin/pkg-config"
       - "/home/noerlol/.local/share/zinit/polaris/bin/pkgconf"
+      - "/home/noerlol/.jre/zulu/21/bin/pkg-config"
+      - "/home/noerlol/.jre/zulu/21/bin/pkgconf"
       - "/usr/local/sbin/pkg-config"
       - "/usr/local/sbin/pkgconf"
       - "/usr/local/bin/pkg-config"
@@ -3084,8 +2855,6 @@ events:
     found: "/usr/bin/pkg-config"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -3097,9 +2866,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -3158,27 +2924,19 @@ events:
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home/noerlol/.jre/zulu/21/GLEWConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.jre/zulu/21/glew-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.local/share/nvim/mason/GLEWConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.local/share/nvim/mason/glew-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
         path: "/home/noerlol/.local/share/zinit/polaris/GLEWConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
         path: "/home/noerlol/.local/share/zinit/polaris/glew-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/noerlol/.jre/zulu/21/GLEWConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/noerlol/.jre/zulu/21/glew-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -3288,8 +3046,6 @@ events:
     found: null
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -3301,9 +3057,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -3336,9 +3089,8 @@ events:
     names:
       - "GL/glew.h"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
@@ -3364,9 +3116,8 @@ events:
       - "/opt/"
       - "/usr/include/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/GL/glew.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/GL/glew.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/GL/glew.h"
+      - "/home/noerlol/.jre/zulu/21/bin/GL/glew.h"
       - "/usr/local/sbin/GL/glew.h"
       - "/usr/local/bin/GL/glew.h"
       - "/usr/bin/GL/glew.h"
@@ -3384,8 +3135,6 @@ events:
     found: "/usr/include/"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -3397,9 +3146,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -3436,21 +3182,16 @@ events:
       - "glew"
       - "glew32"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/Release/x64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libx32/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/Release/x64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib64/"
       - "/usr/local/sbin/libx32/"
@@ -3572,36 +3313,6 @@ events:
       - "/usr/lib/X11/lib/Release/x64/"
       - "/usr/lib/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/Release/x64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/Release/x64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/Release/x64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
@@ -3617,6 +3328,21 @@ events:
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib/"
@@ -3842,8 +3568,6 @@ events:
     found: "/usr/lib/libGLEW.so"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -3855,9 +3579,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -3894,15 +3615,12 @@ events:
       - "glewd"
       - "glew32d"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib64/"
       - "/usr/local/sbin/"
@@ -3976,24 +3694,6 @@ events:
       - "/usr/lib/X11/lib64/"
       - "/usr/lib/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
@@ -4003,6 +3703,15 @@ events:
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib/"
@@ -4222,8 +3931,6 @@ events:
     found: false
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -4235,9 +3942,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -4274,21 +3978,16 @@ events:
       - "glew"
       - "glew32s"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/Release/x64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libx32/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/Release/x64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib64/"
       - "/usr/local/sbin/libx32/"
@@ -4410,36 +4109,6 @@ events:
       - "/usr/lib/X11/lib/Release/x64/"
       - "/usr/lib/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/Release/x64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/Release/x64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/Release/x64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
@@ -4455,6 +4124,21 @@ events:
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/Release/x64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib/"
@@ -4818,8 +4502,6 @@ events:
     found: false
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -4831,9 +4513,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -4870,15 +4549,12 @@ events:
       - "glewds"
       - "glew32ds"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib64/"
       - "/usr/local/sbin/"
@@ -4952,24 +4628,6 @@ events:
       - "/usr/lib/X11/lib64/"
       - "/usr/lib/X11/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
@@ -4979,6 +4637,15 @@ events:
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib/"
       - "/usr/local/sbin/lib/"
@@ -5198,8 +4865,6 @@ events:
     found: false
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -5211,9 +4876,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -5248,24 +4910,18 @@ events:
     names:
       - "al.h"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/include/AL/"
-      - "/home/noerlol/.jre/zulu/21/bin/include/OpenAL/"
-      - "/home/noerlol/.jre/zulu/21/bin/include/"
-      - "/home/noerlol/.jre/zulu/21/bin/AL/"
-      - "/home/noerlol/.jre/zulu/21/bin/OpenAL/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/include/AL/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/include/OpenAL/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/include/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/AL/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/OpenAL/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/include/AL/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/include/OpenAL/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/include/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/AL/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/OpenAL/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/include/AL/"
+      - "/home/noerlol/.jre/zulu/21/bin/include/OpenAL/"
+      - "/home/noerlol/.jre/zulu/21/bin/include/"
+      - "/home/noerlol/.jre/zulu/21/bin/AL/"
+      - "/home/noerlol/.jre/zulu/21/bin/OpenAL/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/include/AL/"
       - "/usr/local/sbin/include/OpenAL/"
       - "/usr/local/sbin/include/"
@@ -5429,24 +5085,18 @@ events:
       - "/opt/OpenAL/"
       - "/opt/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/include/AL/al.h"
-      - "/home/noerlol/.jre/zulu/21/bin/include/OpenAL/al.h"
-      - "/home/noerlol/.jre/zulu/21/bin/include/al.h"
-      - "/home/noerlol/.jre/zulu/21/bin/AL/al.h"
-      - "/home/noerlol/.jre/zulu/21/bin/OpenAL/al.h"
-      - "/home/noerlol/.jre/zulu/21/bin/al.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/include/AL/al.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/include/OpenAL/al.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/include/al.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/AL/al.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/OpenAL/al.h"
-      - "/home/noerlol/.local/share/nvim/mason/bin/al.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/include/AL/al.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/include/OpenAL/al.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/include/al.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/AL/al.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/OpenAL/al.h"
       - "/home/noerlol/.local/share/zinit/polaris/bin/al.h"
+      - "/home/noerlol/.jre/zulu/21/bin/include/AL/al.h"
+      - "/home/noerlol/.jre/zulu/21/bin/include/OpenAL/al.h"
+      - "/home/noerlol/.jre/zulu/21/bin/include/al.h"
+      - "/home/noerlol/.jre/zulu/21/bin/AL/al.h"
+      - "/home/noerlol/.jre/zulu/21/bin/OpenAL/al.h"
+      - "/home/noerlol/.jre/zulu/21/bin/al.h"
       - "/usr/local/sbin/include/AL/al.h"
       - "/usr/local/sbin/include/OpenAL/al.h"
       - "/usr/local/sbin/include/al.h"
@@ -5537,8 +5187,6 @@ events:
     found: "/usr/include/AL/"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -5550,9 +5198,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -5590,20 +5235,6 @@ events:
       - "openal"
       - "OpenAL32"
     candidate_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs64/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs/Win64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs/Win64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libx32/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
@@ -5611,6 +5242,13 @@ events:
       - "/home/noerlol/.local/share/zinit/polaris/bin/libs/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libs/Win64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs64/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs/Win64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/libx32/"
       - "/usr/local/sbin/lib64/"
       - "/usr/local/sbin/lib/"
@@ -5801,20 +5439,6 @@ events:
       - "/opt/libs/Win64/"
       - "/opt/"
     searched_directories:
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs64/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs/Win64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs/Win64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libx32/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
@@ -5822,6 +5446,13 @@ events:
       - "/home/noerlol/.local/share/zinit/polaris/bin/libs/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libs/Win64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs64/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs/Win64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/libx32/"
       - "/usr/local/sbin/lib64/"
       - "/usr/local/sbin/lib/"
@@ -6011,20 +5642,6 @@ events:
       - "/opt/libs/"
       - "/opt/libs/Win64/"
       - "/opt/"
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs64/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs/Win64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs/Win64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libx32/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
@@ -6032,6 +5649,13 @@ events:
       - "/home/noerlol/.local/share/zinit/polaris/bin/libs/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libs/Win64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs64/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs/Win64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/libx32/"
       - "/usr/local/sbin/lib64/"
       - "/usr/local/sbin/lib/"
@@ -6221,20 +5845,6 @@ events:
       - "/opt/libs/"
       - "/opt/libs/Win64/"
       - "/opt/"
-      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
-      - "/home/noerlol/.jre/zulu/21/bin/lib/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs64/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs/"
-      - "/home/noerlol/.jre/zulu/21/bin/libs/Win64/"
-      - "/home/noerlol/.jre/zulu/21/bin/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libx32/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/lib/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/libs/Win64/"
-      - "/home/noerlol/.local/share/nvim/mason/bin/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libx32/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/lib/"
@@ -6242,6 +5852,13 @@ events:
       - "/home/noerlol/.local/share/zinit/polaris/bin/libs/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/libs/Win64/"
       - "/home/noerlol/.local/share/zinit/polaris/bin/"
+      - "/home/noerlol/.jre/zulu/21/bin/libx32/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib64/"
+      - "/home/noerlol/.jre/zulu/21/bin/lib/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs64/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs/"
+      - "/home/noerlol/.jre/zulu/21/bin/libs/Win64/"
+      - "/home/noerlol/.jre/zulu/21/bin/"
       - "/usr/local/sbin/libx32/"
       - "/usr/local/sbin/lib64/"
       - "/usr/local/sbin/lib/"
@@ -6349,8 +5966,6 @@ events:
     found: "/usr/lib/libopenal.so"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -6362,9 +5977,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -6424,27 +6036,19 @@ events:
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home/noerlol/.jre/zulu/21/minizConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.jre/zulu/21/miniz-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.local/share/nvim/mason/minizConfig.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.local/share/nvim/mason/miniz-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
         path: "/home/noerlol/.local/share/zinit/polaris/minizConfig.cmake"
         mode: "config"
         reason: "no_exist"
       -
         path: "/home/noerlol/.local/share/zinit/polaris/miniz-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/noerlol/.jre/zulu/21/minizConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/noerlol/.jre/zulu/21/miniz-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -6469,8 +6073,6 @@ events:
       version: "3.1.0"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -6482,9 +6084,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
@@ -6542,27 +6141,19 @@ events:
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home/noerlol/.jre/zulu/21/SDL2Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.jre/zulu/21/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.local/share/nvim/mason/SDL2Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/noerlol/.local/share/nvim/mason/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
         path: "/home/noerlol/.local/share/zinit/polaris/SDL2Config.cmake"
         mode: "config"
         reason: "no_exist"
       -
         path: "/home/noerlol/.local/share/zinit/polaris/sdl2-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/noerlol/.jre/zulu/21/SDL2Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/noerlol/.jre/zulu/21/sdl2-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
@@ -6595,8 +6186,6 @@ events:
       version: "2.32.60"
     search_context:
       ENV{PATH}:
-        - "/home/noerlol/.jre/zulu/21/bin"
-        - "/home/noerlol/.local/share/nvim/mason/bin"
         - "/home/noerlol/.local/share/zinit/polaris/bin"
         - "/home/noerlol/.jre/zulu/21/bin"
         - "/usr/local/sbin"
@@ -6608,9 +6197,6 @@ events:
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
         - "/opt/rocm/bin"
-        - "/home/noerlol/.scripts"
-        - "/home/noerlol/.local/bin"
-        - "/home/noerlol/C-Projects/Executables/SMake/bin"
         - "/home/noerlol/.scripts"
         - "/home/noerlol/.local/bin"
         - "/home/noerlol/C-Projects/Executables/SMake/bin"
