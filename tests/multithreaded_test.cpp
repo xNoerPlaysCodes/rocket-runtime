@@ -47,6 +47,10 @@ int main(int argc, char **argv) {
 
     t.detach();
 
+    rocket::thread_t::run([]() {
+        rocket::log("Hello, from a new thread", "thread", std::to_string(rocket::thread_t::get_thread_id()), "info");
+    });
+
     while (window.is_running()) {
         r.begin_frame();
         r.clear();
@@ -59,7 +63,7 @@ int main(int argc, char **argv) {
         }
         r.end_frame();
         window.poll_events();
-        if (test_mode) return 0;
+        if (test_mode) return tx == nullptr;
     }
     window.close();
 }

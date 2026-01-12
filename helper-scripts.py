@@ -102,7 +102,8 @@ def run_tests():
         print("[" + str(int((done / count) * 100)) + "%]", end="", flush=True)
         if name == "sound_engine_test" \
                 or name == "icon_test" \
-                or name == "plugin_test":
+                or name == "plugin_test" \
+                or name == "multithreaded_test":
             # cd bin && tests/sound_engine_test -- --unit-test
             result = subprocess.run(
                 ["tests/sound_engine_test", "--", "--unit-test"],

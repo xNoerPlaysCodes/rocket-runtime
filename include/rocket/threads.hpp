@@ -7,6 +7,8 @@
 #include <string>
 #include <thread>
 namespace rocket {
+    /// @brief A OpenGL-compatible thread
+    /// @note Some static functions are not compatible with OpenGL calls
     class thread_t {
     private:
         std::function<void(void *arg1, void *arg2, void *arg3)> fn;
@@ -16,7 +18,7 @@ namespace rocket {
         /// @brief Schedules these calls to be run on the main thread at frame-end
         /// @note Thread-Safe
         static void schedule(std::function<void()> fn);
-        /// @brief Runs them on a new thread NOW
+        /// @brief Runs them on a thread NOW
         /// @note Thread-Safe ONLY if NO OpenGL calls are used
         static void run(std::function<void()> fn);
 

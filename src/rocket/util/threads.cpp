@@ -1,7 +1,9 @@
 #include <cstdint>
 #include <functional>
+#include <mutex>
 #include <sstream>
 #include <thread>
+#include <vector>
 #define RGL_EXPOSE_NATIVE_LIB
 #include <rgl.hpp>
 #include "rocket/runtime.hpp"
@@ -29,7 +31,35 @@ namespace rocket {
         rgl::schedule_gl(fn);
     }
 
+    struct thread_pool_t {
+        bool init = false;
+
+        uint8_t count = 0;
+        uint8_t in_use = 0;
+
+        std::vector<std::thread> threads;
+    };
+
+    std::mutex pool_mutex;
+    thread_pool_t pool;
+
     RGE_STATIC_FUNC_IMPL void thread_t::run(std::function<void()> fn) {
+        // {
+        //     std::lock_guard<std::mutex> _(pool_mutex);
+        //     if (!pool.init) {
+        //         pool.init = true;
+        //         pool.threads.resize(32);
+        //         pool.count = 32;
+        //         pool.in_use = 0;
+        //     }
+        //
+        //     if (pool.in_use == pool.count) {
+        //         while (true) {}
+        //     }
+        //
+        //     pool.in_use++;
+        // }
+
         std::thread t([&fn]() {
             fn();
         });

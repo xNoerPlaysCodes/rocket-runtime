@@ -14,6 +14,7 @@
 namespace rocket::audio {
     device_t default_dvc;
     bool dd_init = false;
+    //   ^^ default_device
 
     RGE_STATIC_FUNC_IMPL device_t *device_t::get_default() {
         if (!dd_init) {
