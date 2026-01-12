@@ -176,13 +176,7 @@ namespace rgl {
     }
 
     std::string bool_to_str(bool b, bool caps = true) { 
-        const std::string ctrue_s = "TRUE";
-        const std::string cfalse_s = "FALSE";
-        const std::string strue_s = "true";
-        const std::string sfalse_s = "false";
-        std::string true_s = caps ? ctrue_s : strue_s;
-        std::string false_s = caps ? cfalse_s : sfalse_s;
-        return std::string("[") + (b ? true_s : false_s) + "]";
+        return b ? "[TRUE]" : "[FALSE]";
     }
 
     std::vector<std::string> dump_gl_state() {
@@ -391,30 +385,30 @@ namespace rgl {
         int loaded_extensions = gl_get_integer(GL_NUM_EXTENSIONS);
 
         std::string gpu_name = std::string(reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
+        std::string gpu_vendor = std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
 
-        gl_main_ctx = glfwGetCurrentContext();
+        gl_main_ctx = glfwGetCurrentContext(); 
 
         // Collect init logs
         std::vector<std::string> logs = {
-            "GL Info:",
-            "- Driver: " + gl_driver_string,
-            "- Version: " + gl_version_string,
-            "- GLSL Version: " + std::string((const char *) glGetString(GL_SHADING_LANGUAGE_VERSION)),
-            "- " + std::to_string(loaded_extensions) + " extensions loaded",
-            "- Activated Functions:",
-            "   Blending: " + bool_to_str(gl_blend),
-            "   Multisampling: " + bool_to_str(gl_multisample) + (gl_samples > 0 ? (" (" + std::to_string(gl_samples) + " samples)") : ""),
-            "   Blend Function: [" + gl_blendfunc + "]",
-            "   FB Colorspace: " + gl_framebuffer_mode,
-            "- rGL Features:",
+            "OpenGL Info:",
+            "Driver: " + gl_driver_string,
+            "Version: " + gl_version_string,
+            "GLSL Version: " + std::string((const char *) glGetString(GL_SHADING_LANGUAGE_VERSION)),
+            "" + std::to_string(loaded_extensions) + " extensions loaded",
+            "Multisampling: " + bool_to_str(gl_multisample) + (gl_samples > 0 ? (" (" + std::to_string(gl_samples) + "x)") : ""),
+            "rGL Features:",
             "   Context Verifier: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
             "   Binary Shaders: " + bool_to_str(false),
-            "- GPU Info:",
+            "GPU Info:",
             "   Name: " + gpu_name,
-            "   Vendor: "  + std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR))),
+            "   Vendor: "  + gpu_vendor,
             "   Modern: " + bool_to_str(gpu_is_modern),
-            "Viewport: " + float_str(viewport_size.x) + "x" + float_str(viewport_size.y) + " @ " + float_str(viewport_offset.y) + "x" + float_str(viewport_offset.y) + " (TL)",
         };
+
+        if (gpu_name.contains("llvmpipe")) {
+            rocket::log_error("using software OpenGL renderer", "rgl::init_gl", "warn");
+        }
 
         return logs;
     }
