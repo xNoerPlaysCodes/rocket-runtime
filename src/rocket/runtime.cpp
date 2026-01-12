@@ -1,4 +1,4 @@
-#include "rocket/runtime.hpp"
+#include <rocket/runtime.hpp>
 #include "util.hpp"
 #include <iostream>
 #include <string>
@@ -322,6 +322,28 @@ namespace rocket {
             else if (arg == "force-wayland" || arg == "forcewayland") {
                 args.forcewayland = true;
             }
+            else if (arg == "build-info" || arg == "buildinfo") {
+#if defined(__clang__)
+                const std::string compiler_name = "Clang";
+#elif defined(__GNUC__) || defined(__GNUG__)
+                const std::string compiler_name = "GCC";
+#elif defined(_MSC_VER)
+                const std::string compiler_name = "MSVC";
+#else
+                const std::string compiler_name = "Unknown";
+#endif
+
+                const std::vector<std::string> lines = {
+                    "RocketGE " ROCKETGE__VERSION,
+                    "Compiled with " + compiler_name,
+                };
+
+                for (auto &l : lines) {
+                    std::cout << l << '\n';
+                }
+
+                exit = true;
+            }
             else {
                 rocket::log_error("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), "rocket::argparse", "error");
                 exit = true;
@@ -338,7 +360,7 @@ namespace rocket {
         }
 
         if (exit) {
-            rocket::exit(1);
+            rocket::exit(0);
         }
 
         util::init_clistate(args);

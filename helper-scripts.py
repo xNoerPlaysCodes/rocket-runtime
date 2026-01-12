@@ -13,6 +13,10 @@ parser.add_argument("--build-rnative", action="store_true", help="Builds the \
 parser.add_argument("--print-loc", action="store_true", help="Counts lines of \
         code")
 parser.add_argument("--run-tests", action="store_true", help="Runs all tests")
+parser.add_argument("--init-cmake", action="store_true", help="Initializes CMake \
+        with necessary flags")
+parser.add_argument("--build", action="store_true", help="Build, all at once, \
+        all in order")
 
 
 def get_deps() -> None:
@@ -125,6 +129,41 @@ def run_tests():
     print("[" + "100" + "%]", flush=True)
     sys.exit(1 if failed else 0)
 
+
+def init_cmake():
+    commands = ["cmake"]
+    for command in commands:
+        if not shutil.which(command):
+            print(f"{command} was not found in PATH.")
+            return 1
+
+    os.makedirs("build", exist_ok=True)
+
+    args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=GLEW", "-B", "build"]
+
+    print("command: " + "cmake" + " " + " ".join(args))
+    subprocess.run(["cmake"] + args)
+    return 0
+
+
+def build():
+    if not os.path.isdir("build"):
+        init_cmake()
+        build_rnative()
+
+    cpus = os.cpu_count()
+
+    if os.path.exists("build/build.ninja"):
+        cpus += 2 # Ninja scales better with 2 extra jobs
+
+    command = "cmake"
+    args = ["--build", "build", "--", "-j" + str(cpus)]
+
+    print("command: " + "cmake" + " " + " ".join(args))
+    subprocess.run(["cmake"] + args)
+
+    return 0
+
 def main() -> int:
     args = parser.parse_args()
 
@@ -136,6 +175,10 @@ def main() -> int:
         return print_loc()
     elif args.run_tests:
         return run_tests()
+    elif args.init_cmake:
+        return init_cmake()
+    elif args.build:
+        return build()
     else:
         parser.print_help()
         return 1
