@@ -5,17 +5,19 @@ import sys
 import shutil
 import os
 
+# -d -r -p -t -i -b 
+
 parser: argparse.ArgumentParser = argparse.ArgumentParser()
-parser.add_argument("--get-deps", action="store_true", help="Shows the \
+parser.add_argument("-d", "--get-deps", action="store_true", help="Shows the \
         dependencies needed to build")
-parser.add_argument("--build-rnative", action="store_true", help="Builds the \
+parser.add_argument("-r", "--build-rnative", action="store_true", help="Builds the \
         dependencies for RNative")
-parser.add_argument("--print-loc", action="store_true", help="Counts lines of \
+parser.add_argument("-p", "--print-loc", action="store_true", help="Counts lines of \
         code")
-parser.add_argument("--run-tests", action="store_true", help="Runs all tests")
-parser.add_argument("--init-cmake", action="store_true", help="Initializes CMake \
+parser.add_argument("-t", "--run-tests", action="store_true", help="Runs all tests")
+parser.add_argument("-i", "--init-cmake", action="store_true", help="Initializes CMake \
         with necessary flags")
-parser.add_argument("--build", action="store_true", help="Build, all at once, \
+parser.add_argument("-b", "--build", action="store_true", help="Build, all at once, \
         all in order")
 
 
@@ -96,6 +98,8 @@ def run_tests():
 
     done = 0.0
     for name in sorted(os.listdir(TEST_DIR)):
+        if name.endswith(".exe"):
+            name = name[:-4]
         path = os.path.join(TEST_DIR, name)
 
         if not is_executable(path):
@@ -120,8 +124,7 @@ def run_tests():
             )
 
         if result.returncode != 0:
-            print()
-            print("FAIL: " + name)
+            print(" FAIL: " + name)
             failed = True
         done += 1
 
@@ -169,16 +172,16 @@ def main() -> int:
 
     if args.get_deps:
         get_deps()
-    elif args.build_rnative:
-        return build_rnative()
     elif args.print_loc:
         return print_loc()
-    elif args.run_tests:
-        return run_tests()
+    elif args.build_rnative:
+        return build_rnative()
     elif args.init_cmake:
         return init_cmake()
     elif args.build:
         return build()
+    elif args.run_tests:
+        return run_tests()
     else:
         parser.print_help()
         return 1

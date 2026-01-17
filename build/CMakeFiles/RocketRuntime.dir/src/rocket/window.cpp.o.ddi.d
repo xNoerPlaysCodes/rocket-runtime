@@ -1,7 +1,7 @@
 CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.ddi: \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/window.cpp \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/window.hpp \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/types.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/window.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/types.hpp \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/cstdint \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -141,8 +141,8 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/uses_allocator.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/uses_allocator_args.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/tuple \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/macros.hpp \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/asset.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/macros.hpp \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/asset.hpp \
   /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/audio.hpp \
   /usr/include/AL/alc.h /usr/include/AL/al.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/array \
@@ -233,7 +233,7 @@ CMakeFiles/RocketRuntime.dir/src/rocket/window.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/out_ptr.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_memory_defs.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/execution_defs.h \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/rocket/../../include/rocket/stb_truetype.h \
+  /home/noerlol/C-Projects/Libraries/RocketGE/include/rocket/stb_truetype.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/atomic \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/chrono \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/chrono.h \

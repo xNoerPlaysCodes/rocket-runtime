@@ -3,7 +3,6 @@
 
 #include <cstdint>
 #include <stdexcept>
-#include <type_traits>
 namespace rocket {
     template<typename T>
     struct vec2 {
@@ -485,7 +484,7 @@ namespace rocket {
                 .w = static_cast<float>(w) / 255.0f
             };
         }
-
+ 
         operator struct rgb_color() const;
     };
 
@@ -534,6 +533,14 @@ namespace rocket {
         operator struct rgba_color() const;
     };
 
+    inline rgba_color::operator rgb_color() const {
+        return { this->x, this->y, this->z };
+    }
+
+    inline rgb_color::operator rgba_color() const {
+        return { this->x, this->y, this->z, 255 };
+    }
+
     using vec2i_t       =       vec2<int32_t>;
     using vec2f_t       =       vec2<float>;
     using vec2d_t       =       vec2<double>;
@@ -546,14 +553,11 @@ namespace rocket {
     using vec4f_t       =       vec4<float>;
     using vec4d_t       =       vec4<double>;
 
-    /// new additions
     using vec2_t = vec2f_t;
     using vec3_t = vec3f_t;
     using vec4_t = vec4f_t;
 
     using assetid_t     =       uint16_t;
-
-    using ldouble_t     =       long double;
 }
 
 #endif

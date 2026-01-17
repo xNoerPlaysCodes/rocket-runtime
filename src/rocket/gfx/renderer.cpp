@@ -33,6 +33,8 @@
 #include "binary_stuff/splash_screen.h"
 #include "binary_stuff/splash_sfx.h"
 
+#include "plugin.hpp"
+
 namespace rocket {
     std::vector<shader_t> shader_cache;
 

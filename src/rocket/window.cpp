@@ -1,4 +1,4 @@
-#include "../../include/rocket/window.hpp"
+#include <rocket/window.hpp>
 #include <GLFW/glfw3.h>
 #include <codecvt>
 #include <cstdlib>

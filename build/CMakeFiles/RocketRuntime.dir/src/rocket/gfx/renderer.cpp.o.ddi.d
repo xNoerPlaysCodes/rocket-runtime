@@ -522,4 +522,5 @@ CMakeFiles/RocketRuntime.dir/src/rocket/gfx/renderer.cpp.o.ddi: \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/bits/ranges_algo.h \
   /usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../include/c++/15.2.1/pstl/glue_algorithm_defs.h \
   /home/noerlol/C-Projects/Libraries/RocketGE/src/include/binary_stuff/splash_screen.h \
-  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/binary_stuff/splash_sfx.h
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/binary_stuff/splash_sfx.h \
+  /home/noerlol/C-Projects/Libraries/RocketGE/src/include/plugin.hpp

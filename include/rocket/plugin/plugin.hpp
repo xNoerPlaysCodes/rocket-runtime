@@ -38,11 +38,6 @@ namespace rocket {
     };
 
     std::shared_ptr<plugin_t> load_plugin(std::filesystem::path plugin);
-
-    /// @brief INTERNAL FUNCTION, DO NOT CALL
-    void __rallframestart();
-    /// @brief INTERNAL FUNCTION, DO NOT CALL
-    void __rallframeend();
 }
 
 #endif // ROCKETGE_SUBSPLUGIN__PLUGIN_HPP

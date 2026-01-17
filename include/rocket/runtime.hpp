@@ -146,6 +146,9 @@ namespace rocket {
     void set_cli_arguments(int argc, char *argv[]);
     /// @brief Optionally set CLI arguments
     void set_cli_arguments(std::vector<std::string> args);
+
+    void init(std::vector<std::string> args = {});
+    void init(int argc = 0, char **argv = nullptr);
 }
 
 #endif
