@@ -1,8 +1,5 @@
 # 🚀 Rocket
-<video controls autoplay muted loop width="640">
-  <source src="https://github.com/xNoerPlaysCodes/rocket-runtime/raw/refs/heads/master/res/splash.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[Watch the video](https://github.com/xNoerPlaysCodes/rocket-runtime/raw/refs/heads/master/res/splash.mp4)
 
 # Included Libraries
 - Rocket
