@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/triangle_drawcall_test.dir/tests/triangle_drawcall_test.cpp.o"
-    }
-  ],
-  "version": 1
-}

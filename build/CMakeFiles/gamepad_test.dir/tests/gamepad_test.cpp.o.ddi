@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/gamepad_test.dir/tests/gamepad_test.cpp.o"
-    }
-  ],
-  "version": 1
-}

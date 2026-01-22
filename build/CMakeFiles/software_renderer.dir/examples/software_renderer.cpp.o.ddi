@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/software_renderer.dir/examples/software_renderer.cpp.o"
-    }
-  ],
-  "version": 1
-}

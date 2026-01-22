@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/sound_engine_test.dir/tests/sound_engine_test.cpp.o"
-    }
-  ],
-  "version": 1
-}

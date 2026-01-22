@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/line_test.dir/tests/line_test.cpp.o"
-    }
-  ],
-  "version": 1
-}

@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/custom_shader.dir/examples/custom_shader.cpp.o"
-    }
-  ],
-  "version": 1
-}

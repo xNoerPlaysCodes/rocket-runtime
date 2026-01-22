@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/multithreaded_test.dir/tests/multithreaded_test.cpp.o"
-    }
-  ],
-  "version": 1
-}

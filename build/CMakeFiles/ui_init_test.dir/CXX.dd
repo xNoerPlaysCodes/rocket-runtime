@@ -1,3 +1,0 @@
-ninja_dyndep_version = 1.0
-build CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o: dyndep
-

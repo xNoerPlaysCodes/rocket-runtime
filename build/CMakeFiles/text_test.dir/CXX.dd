@@ -1,3 +1,0 @@
-ninja_dyndep_version = 1.0
-build CMakeFiles/text_test.dir/tests/text_test.cpp.o: dyndep
-

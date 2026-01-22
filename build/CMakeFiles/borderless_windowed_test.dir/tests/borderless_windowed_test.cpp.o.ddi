@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/borderless_windowed_test.dir/tests/borderless_windowed_test.cpp.o"
-    }
-  ],
-  "version": 1
-}

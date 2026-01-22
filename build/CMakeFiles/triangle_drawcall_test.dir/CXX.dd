@@ -1,3 +1,0 @@
-ninja_dyndep_version = 1.0
-build CMakeFiles/triangle_drawcall_test.dir/tests/triangle_drawcall_test.cpp.o: dyndep
-
