@@ -1,4 +1,4 @@
-# 🚀 Rocket
+# 🚀 RocketGE
 ![Watch the video](https://github.com/xNoerPlaysCodes/rocket-runtime/raw/refs/heads/master/res/splash.gif)
 
 # Included Libraries
