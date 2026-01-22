@@ -41,9 +41,6 @@ BUILD_TESTS:BOOL=ON
 //Build Test borderless_windowed_test
 BUILD_TEST_borderless_windowed_test:BOOL=ON
 
-//Build Test crash_reporter_test
-BUILD_TEST_crash_reporter_test:BOOL=ON
-
 //Build Test gamepad_test
 BUILD_TEST_gamepad_test:BOOL=ON
 
@@ -76,9 +73,6 @@ BUILD_TEST_text_test:BOOL=ON
 
 //Build Test triangle_drawcall_test
 BUILD_TEST_triangle_drawcall_test:BOOL=ON
-
-//Build Test triangle_drawcall_test.cpp
-BUILD_TEST_triangle_drawcall_test.cpp:BOOL=ON
 
 //Build Test ui_init_test
 BUILD_TEST_ui_init_test:BOOL=ON
