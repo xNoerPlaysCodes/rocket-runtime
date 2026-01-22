@@ -4,6 +4,7 @@
 #include "macros.hpp"
 #include <array>
 #include <cstdint>
+#include "glfnldr.hpp"
 #include <glm/detail/qualifier.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
@@ -34,6 +35,9 @@ namespace rocket {
         bool share_renderer_as_global = true;
         /// @brief Show the splash screen
         bool show_splash = true;
+        /// @brief (Advanced) Change Glfnldr backend if available
+        /// @note List available backends with glfnldr::get_backends()
+        glfnldr::backend_t glfnldr_backend = ROCKETGE__GLFNLDR_BACKEND_ENUM;
     };
     enum class render_mode_t {
         /// @brief Enables a preloaded simplified FXAA Shader

@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/crash_reporter_test.dir/tests/crash_reporter_test.cpp.o"
+    }
+  ],
+  "version": 1
+}

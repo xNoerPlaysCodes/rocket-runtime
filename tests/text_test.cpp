@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
-    rocket::window_t window({1920, 1080}, "RocketGE - Text");
+    rocket::window_t window({1920, 1080}, "RocketGE - Text Test");
     rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
 
     rocket::text_t text = {"Hello, Rocket World!", 48, rocket::rgb_color::black()};

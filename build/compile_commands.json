@@ -181,6 +181,12 @@
 },
 {
   "directory": "/home/noerlol/C-Projects/Libraries/RocketGE/build",
+  "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -I/home/noerlol/C-Projects/Libraries/RocketGE/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/triangle_drawcall_test.dir/tests/triangle_drawcall_test.cpp.o.modmap -o CMakeFiles/triangle_drawcall_test.dir/tests/triangle_drawcall_test.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/tests/triangle_drawcall_test.cpp",
+  "file": "/home/noerlol/C-Projects/Libraries/RocketGE/tests/triangle_drawcall_test.cpp",
+  "output": "/home/noerlol/C-Projects/Libraries/RocketGE/build/CMakeFiles/triangle_drawcall_test.dir/tests/triangle_drawcall_test.cpp.o"
+},
+{
+  "directory": "/home/noerlol/C-Projects/Libraries/RocketGE/build",
   "command": "/usr/bin/clang++ -DROCKETGE__BUILD_ASTRO -DROCKETGE__BUILD_QUARK -DROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew -DROCKETGE__GLFNLDR_BACKEND_GLEW -I/home/noerlol/C-Projects/Libraries/RocketGE/include -g -std=gnu++23 -flto=thin -Wall -Wextra -Wpedantic @CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o.modmap -o CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o -c /home/noerlol/C-Projects/Libraries/RocketGE/tests/ui_init_test.cpp",
   "file": "/home/noerlol/C-Projects/Libraries/RocketGE/tests/ui_init_test.cpp",
   "output": "/home/noerlol/C-Projects/Libraries/RocketGE/build/CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o"

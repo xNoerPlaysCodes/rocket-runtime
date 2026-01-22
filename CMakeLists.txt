@@ -139,6 +139,7 @@ if (BUILD_TESTS)
         multithreaded_test
         sound_engine_test
         borderless_windowed_test
+        triangle_drawcall_test
     )
 
     if (BUILD_ASTRO)

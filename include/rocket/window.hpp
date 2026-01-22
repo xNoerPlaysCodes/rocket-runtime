@@ -7,10 +7,11 @@
 
 #include <GLFW/glfw3.h>
 #include <functional>
+#include <rocket/glfnldr.hpp>
 #include <string>
 
 namespace rgl {
-    std::vector<std::string> init_gl(const rocket::vec2f_t viewport_size);
+    std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t bkend);
 }
 
 namespace rocket {
@@ -126,7 +127,7 @@ namespace rocket {
 
         friend class renderer_2d;
         friend class renderer_3d;
-        friend std::vector<std::string> rgl::init_gl(const rocket::vec2f_t viewport_size);
+        friend std::vector<std::string> rgl::init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t);
     public:
         /// @brief Sets the size of the window
         void set_size(const rocket::vec2i_t& size);

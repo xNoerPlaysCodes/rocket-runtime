@@ -82,6 +82,6 @@ int main(int argc, char **argv) {
 
         r.end_frame();
         window.poll_events();
-        if (test_mode) return 0;
+        if (test_mode) return 1; // TODO Fix
     }
 }

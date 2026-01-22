@@ -15,8 +15,8 @@
 #include <iostream>
 #include <unordered_map>
 #include <utility>
-#include "../include/rgl.hpp"
-#include "../../include/rocket/renderer.hpp"
+#include "rgl.hpp"
+#include "rocket/renderer.hpp"
 #include "util.hpp"
 #include <GLFW/glfw3.h>
 #include <glm/detail/qualifier.hpp>

@@ -10,6 +10,7 @@
 /home/noerlol/C-Projects/Libraries/RocketGE/build/CMakeFiles/multithreaded_test.dir
 /home/noerlol/C-Projects/Libraries/RocketGE/build/CMakeFiles/sound_engine_test.dir
 /home/noerlol/C-Projects/Libraries/RocketGE/build/CMakeFiles/borderless_windowed_test.dir
+/home/noerlol/C-Projects/Libraries/RocketGE/build/CMakeFiles/triangle_drawcall_test.dir
 /home/noerlol/C-Projects/Libraries/RocketGE/build/CMakeFiles/ui_init_test.dir
 /home/noerlol/C-Projects/Libraries/RocketGE/build/CMakeFiles/moving_circle.dir
 /home/noerlol/C-Projects/Libraries/RocketGE/build/CMakeFiles/custom_shader.dir

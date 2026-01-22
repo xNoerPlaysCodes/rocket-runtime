@@ -205,7 +205,7 @@ namespace rgl {
     }
 
     static std::unordered_map<rgl::shader_use_t, rgl::shader_program_t> shader_cache;
-    std::vector<std::string> init_gl(rocket::vec2f_t viewport_size) {
+    std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t backend) {
         ::rgl::viewport_size = viewport_size;
         std::unordered_map<rgl::shader_use_t, rgl::shader_program_t>().swap(shader_cache);
 
@@ -227,11 +227,11 @@ namespace rgl {
         }
 
         // Init GLfnldr
-        if (!glfnldr::init(ROCKETGE__GLFNLDR_BACKEND_ENUM)) {
+        if (!glfnldr::init(backend)) {
             rocket::log_error("OpenGL functions could not be loaded", "rgl::init_gl", "fatal");
             rocket::exit(1);
             return {
-                "OpenGL functions couldn't be loaded."
+                "OpenGL functions could not be loaded"
             };
         }
 

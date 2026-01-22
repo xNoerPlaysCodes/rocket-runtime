@@ -1,3 +1,6 @@
+#ifndef ROCKETGE__FontDefault_h
+#define ROCKETGE__FontDefault_h
+
 namespace rocket_font {
 unsigned char FontDefault[] = {
   0x00, 0x01, 0x00, 0x00, 0x00, 0x10, 0x01, 0x00, 0x00, 0x04, 0x00, 0x00,
@@ -20601,3 +20604,5 @@ unsigned char FontDefault_Monospace_ttf[] = {
 unsigned int FontDefault_Monospace_ttf_len = 114904;
 
 }
+
+#endif//ROCKETGE__FontDefault_h

@@ -4,6 +4,7 @@
 #include "rocket/asset.hpp"
 #include "rocket/types.hpp"
 #include <cstdint>
+#include "glfnldr.hpp"
 #include <unordered_map>
 #include <utility>
 #include <string>
@@ -83,7 +84,7 @@ namespace rgl {
     };
 
 
-    std::vector<std::string> init_gl(rocket::vec2f_t viewport_size);
+    std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t bkend = ROCKETGE__GLFNLDR_BACKEND_ENUM);
     void init_gl_wtd();
     std::pair<vao_t, vbo_t> compile_vo(
         const std::array<float, 12>& square_vertices = std::array<float,12>{

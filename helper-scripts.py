@@ -163,9 +163,9 @@ def build():
     args = ["--build", "build", "--", "-j" + str(cpus)]
 
     print("command: " + "cmake" + " " + " ".join(args))
-    subprocess.run(["cmake"] + args)
+    prc = subprocess.run(["cmake"] + args)
 
-    return 0
+    return prc.returncode
 
 def main() -> int:
     args = parser.parse_args()
