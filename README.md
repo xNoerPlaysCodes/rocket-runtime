@@ -1,5 +1,8 @@
 # 🚀 Rocket
-<img src="https://raw.githubusercontent.com/xNoerPlaysCodes/rocket-runtime/refs/heads/master/rocket_white_text_nobg.png">
+<video controls autoplay muted loop width="640">
+  <source src="https://github.com/xNoerPlaysCodes/rocket-runtime/raw/refs/heads/master/res/splash.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 # Included Libraries
 - Rocket
@@ -66,7 +69,7 @@ int main() {
     r2d.close();
 }
 ```
-<img src="https://github.com/xNoerPlaysCodes/rocket-runtime/blob/master/basic_window.png?raw=true">
+<img src="https://github.com/xNoerPlaysCodes/rocket-runtime/blob/master/res/basic_window.png?raw=true">
 
 <i>A basic window created with the above code</i>
 
@@ -132,6 +135,7 @@ int main() {
     window.close();
 }
 ```
-<img src="https://github.com/xNoerPlaysCodes/rocket-runtime/blob/master/custom_shader.png?raw=true">
+<img src="https://github.com/xNoerPlaysCodes/rocket-runtime/blob/master/res/custom_shader.png?raw=true">
 
 <i>Custom Shader created with the 2D Renderer</i>
+
