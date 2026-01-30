@@ -10,3 +10,6 @@ docs/*
 build/*
 bin/*
 !bin/resources/
+
+.idea
+.cache

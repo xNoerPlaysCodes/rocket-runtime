@@ -89,7 +89,12 @@ namespace rocket {
         ::rocket::ovr_clistate = util::get_clistate();
     }
 
-    void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color) {
+    void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color, bool lines) {
+        if (lines) {
+            rocket::log_error("draw_circle(... lines=true) unimplemented", "renderer_2d::draw_circle", "fixme");
+            return;
+        }
+
         rocket::vec2f_t center_pos = {
             .x = pos.x - radius,
             .y = pos.y - radius

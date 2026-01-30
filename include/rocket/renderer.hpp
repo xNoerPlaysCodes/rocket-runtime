@@ -132,7 +132,7 @@ namespace rocket {
         /// @param pos Position
         /// @param radius Radius
         /// @param color Color
-        void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 });
+        void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 }, bool lines = false);
 
         /// @brief Draw a polygon
         /// @param pos Position

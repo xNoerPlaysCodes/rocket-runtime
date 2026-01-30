@@ -1,25 +1,10 @@
 # 🚀 RocketGE
-![Watch the video](https://github.com/xNoerPlaysCodes/rocket-runtime/raw/refs/heads/master/res/splash.gif)
+![RocketGE Splash Gif](https://github.com/xNoerPlaysCodes/rocket-runtime/raw/refs/heads/master/res/splash.gif)
 
-# Included Libraries
-- Rocket
-    - The core rocket runtime, for drawing logic and rendering with GLFW and OpenGL.
-
-- Astro
-    - The All-in-one GUI library for making simple but powerful game GUIs.
-
-- Quark
-    -  [unfinished] The simple but powerful 2D + 3D Physics Library for your Physic(al) needs.
-
-# Features
-- Asset Manager
-    - A powerful and clean asset manager with use timeouts and lazy loading
-- API Stability
-    - A stable API with few breaking changes
-- Human Language
-    - Human-readable function names and classes with flow between each line
-
-<b>and much more ...</b>
+**A lightweight and powerful 2D Game Engine**
+- Make Games with OpenGL and GLFW
+- Make beautiful UIs with Astro or RocketUI
+- Make mathematically-accurate physics with Quark
 
 # Examples
 
@@ -66,6 +51,7 @@ int main() {
     r2d.close();
 }
 ```
+
 <img src="https://github.com/xNoerPlaysCodes/rocket-runtime/blob/master/res/basic_window.png?raw=true">
 
 <i>A basic window created with the above code</i>
@@ -136,3 +122,34 @@ int main() {
 
 <i>Custom Shader created with the 2D Renderer</i>
 
+# Installation
+## Linux / macOS
+### Building from source (recommended)
+
+Packages Needed:
+- `c++` (Any C++ compiler)
+- `cc`  (Any C compiler)
+- `wayland-scanner`
+- `cmake` (3.30+)
+- `python3` (3.12+)
+- `make` (OR)
+- `ninja` (Recommended)
+
+Libraries Needed:
+- `GLFW`   (>= 3.4)
+- `SDL2`   (== 2.0)
+- `OpenGL` (>= 2.0)
+- `GLEW`   (>= 1.5)
+- `OpenAL` (any)
+- `miniz`  (>= 3.0)
+
+Compilation Process:
+- `rm -rf build` Remove any cached builds
+- `python3 ./helper-scripts.py --build` Build the library
+
+After compilation if no errors occur, `libRocketRuntime.so` will be in `bin/`
+
+## Windows
+### Building from source (recommended)
+
+Idk 🤷‍♂️

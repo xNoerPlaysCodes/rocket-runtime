@@ -19,6 +19,9 @@ parser.add_argument("-i", "--init-cmake", action="store_true", help="Initializes
         with necessary flags")
 parser.add_argument("-b", "--build", action="store_true", help="Build, all at once, \
         all in order")
+parser.add_argument("-g", "--glfnldr-backend", action="store", help="Which glfnldr-backend to \
+        use when building", default="GLEW", choices=["GLEW", "LIBEPOXY"])
+
 
 
 def get_deps() -> None:
@@ -133,7 +136,7 @@ def run_tests():
     sys.exit(1 if failed else 0)
 
 
-def init_cmake():
+def init_cmake(args):
     commands = ["cmake"]
     for command in commands:
         if not shutil.which(command):
@@ -142,21 +145,22 @@ def init_cmake():
 
     os.makedirs("build", exist_ok=True)
 
-    args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=GLEW", "-B", "build"]
+    backend = args.glfnldr_backend
+    args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build"]
 
     print("command: " + "cmake" + " " + " ".join(args))
     subprocess.run(["cmake"] + args)
     return 0
 
 
-def build():
+def build(args):
     if not os.path.isdir("build"):
-        init_cmake()
+        init_cmake(args)
         build_rnative()
 
     cpus = os.cpu_count()
 
-    if os.path.exists("build/build.ninja"):
+    if os.path.exists("build/build.ninja") and (cpus + 2 != cpus * 2):
         cpus += 2 # Ninja scales better with 2 extra jobs
 
     command = "cmake"
@@ -177,9 +181,9 @@ def main() -> int:
     elif args.build_rnative:
         return build_rnative()
     elif args.init_cmake:
-        return init_cmake()
+        return init_cmake(args)
     elif args.build:
-        return build()
+        return build(args)
     elif args.run_tests:
         return run_tests()
     else:
