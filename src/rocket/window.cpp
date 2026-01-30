@@ -680,7 +680,7 @@ namespace rocket {
         if (destructor_called) {
             cxf = "destructor";
         }
-        if (silent_desc) {
+        if (!silent_desc) {
             rocket::log("Window closed", "window_t", cxf, "info");
         }
 
