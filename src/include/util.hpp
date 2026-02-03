@@ -106,7 +106,14 @@ namespace util {
 
     bool validate_gl_version_string(std::string string);
 
-    void set_memory_limit(size_t sz);
+    void init_memory_buffer();
+
+    struct membuf_t {
+        void *mem = nullptr;
+        size_t sz = 0;
+    };
+
+    membuf_t *get_memory_buffer();
 }
 
 #endif

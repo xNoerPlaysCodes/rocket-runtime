@@ -20,6 +20,10 @@
 #define ROCKETGE__Platform_macOS
 #endif
 
+#if defined(ROCKETGE__Platform_Linux) || defined(ROCKETGE__Platform_macOS)
+#define ROCKETGE__Platform_UnixCompatible
+#endif
+
 #if defined(__ANDROID__)
 #define ROCKETGE__Platform_Android
 #endif

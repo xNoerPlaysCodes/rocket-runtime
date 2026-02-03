@@ -1,3 +1,6 @@
+#include <crashdump.hpp>
+#include <cstring>
+#include <native.hpp>
 #include <rocket/runtime.hpp>
 #include "util.hpp"
 #include <iostream>
@@ -6,6 +9,41 @@
 #include <mutex>
 #include <condition_variable>
 #include <rocket/macros.hpp>
+
+namespace callback {
+    void bad_memory_access(void *mem_addr) {
+        std::endl(std::cout);
+
+        std::cout << rocket::crash_signal(true, mem_addr, "bad_memory_access", "The program crashed");  
+
+        std::endl(std::cout);
+        rnative::exit_now(1);
+    }
+}
+
+#ifdef ROCKETGE__Platform_UnixCompatible
+
+#include <csignal>
+#include <cstdlib>
+#include <unistd.h>
+
+void __init() {
+    struct sigaction sa;
+    std::memset(&sa, 0, sizeof(sa));
+    sa.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
+        callback::bad_memory_access(info->si_addr);
+    };
+    sa.sa_flags = SA_SIGINFO;
+    sigaction(SIGSEGV, &sa, nullptr);
+    
+    util::init_memory_buffer();
+}
+
+#else
+
+void __init() {}
+
+#endif
 
 namespace rocket {
     void set_log_level(log_level_t level) { util::set_log_level(level); }
@@ -242,7 +280,7 @@ namespace rocket {
                     "Copyright (C) 2026 noerlol",
                     "License MIT: Refer to LICENSE for more",
                     "",
-                    "Additional Technologies used:",
+                    "Attribution:",
                     "> stb_vorbis  (PD)",
                     "> stb_trutype (PD)",
                     "> stb_image   (PD)",
@@ -364,5 +402,22 @@ namespace rocket {
         }
 
         util::init_clistate(args);
+    }
+
+    void set_cli_arguments(std::vector<std::string> args) {
+        std::vector<char *> strbuf;
+        strbuf.reserve(args.size());
+        for (auto &a : args) strbuf.push_back(a.data());
+        set_cli_arguments(args.size(), strbuf.data());
+    }
+
+    void init(std::vector<std::string> args) {
+        set_cli_arguments(args);
+        __init();
+    }
+
+    void init(int argc, char **argv) {
+        set_cli_arguments(argc, argv);
+        __init();
     }
 }

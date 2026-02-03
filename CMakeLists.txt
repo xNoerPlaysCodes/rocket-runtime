@@ -16,7 +16,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 #DebugMode
 project(${PROJECT_NAME} CXX)
 
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 
 option(BUILD_SHARED_LIBS "Build Shared" ON)
 option(BUILD_TESTS "Build Tests" ON)
@@ -76,6 +76,8 @@ add_library(${PROJECT_NAME}
     src/rocket/util/native.cpp
     src/rocket/util/threads.cpp
     src/rocket/util/types.cpp
+    src/rocket/util/crashdump.cpp
+    src/rocket/util/shader_provider.cpp
     src/rocket/util/util.cpp
 
     # Master

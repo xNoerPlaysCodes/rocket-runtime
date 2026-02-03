@@ -52,6 +52,10 @@ namespace linux_backend {
         glfwWindowHintString(GLFW_X11_CLASS_NAME, str);
         glfwWindowHintString(GLFW_X11_INSTANCE_NAME, str);
     }
+
+    void exit_now(int code) {
+        _exit(code);
+    }
 }
 #endif
 
@@ -59,6 +63,10 @@ namespace linux_backend {
 namespace windows_backend {
     void set_class_name(const wchar_t *app_id) {
         SetCurrentProcessExplicitAppUserModelID(app_id);
+    }
+
+    void exit_now(int code) {
+        ExitProcess(code);
     }
 }
 #endif
@@ -109,6 +117,14 @@ namespace rnative {
         return;
 #else
         linux_backend::x11_set_class_name(str);
+#endif
+    }
+
+    void exit_now(int code) {
+#ifdef ROCKETGE__Platform_UnixCompatible
+        linux_backend::exit_now(code);
+#elifdef ROCKETGE__Platform_Windows
+        windows_backend::exit_now(code);
 #endif
     }
 }

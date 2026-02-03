@@ -2,7 +2,7 @@ namespace rocket_resource {
     const char *shader_textured_rectangle_rlsl = R"(
 Version: 1.1
 GL_MinimumVersion: 2.0
-Name: Rectangle
+Name: Textured Rectangle
 
 VertexStart
     #version 330 core
@@ -48,6 +48,5 @@ FragmentStart
         vec4 texColor = texture(u_texture, v_uv);
         FragColor = vec4(texColor.rgb, texColor.a * alpha);
     }
-FragmentEnd
-)";
+FragmentEnd)";
 }

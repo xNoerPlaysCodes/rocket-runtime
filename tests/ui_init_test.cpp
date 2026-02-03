@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
-    rocket::set_cli_arguments(argc, argv);
+    rocket::init(argc, argv);
     rocket::windowflags_t flags;
     flags.resizable = true;
     flags.msaa_samples = 4;

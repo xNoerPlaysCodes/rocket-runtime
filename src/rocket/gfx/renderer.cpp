@@ -801,7 +801,7 @@ namespace rocket {
 
         rgl::update_draw_metrics_data(frame_duration, 1 / this->delta_time);
 
-        double frametime_limit = 1.0 / (fps + 2);
+        double frametime_limit = 1.0 / (fps + 0);
         if (frame_duration < frametime_limit) {
             double sleep_time = frametime_limit - frame_duration;
 
@@ -820,9 +820,9 @@ namespace rocket {
                 return ss.str();
             };
 
-            const double min_diff = 0.05;
-            if (diff > min_diff) {
-                rocket::log("frame took " + double_to_str(diff) + "ms more than expected", "renderer_2d", "end_frame", "debug");
+            const double threshold = 0.05;
+            if (diff > threshold) {
+                rocket::log("frame took " + double_to_str(diff * 1000., 2) + "ms more than expected", "renderer_2d", "end_frame", "debug");
             }
         }
 

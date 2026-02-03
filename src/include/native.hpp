@@ -9,6 +9,8 @@ namespace rnative {
     void windows_set_window_class_name_prewincreate(const wchar_t *str);
     /// @brief Linux Set AppID/WinClass
     void linux_set_class_name(const char *str);
+
+    void exit_now(int code);
 }
 
 #ifdef RNATIVE__INCLUDE_WAYLAND

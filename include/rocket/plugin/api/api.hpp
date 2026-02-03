@@ -6,6 +6,10 @@
 #include <functional>
 #include <string>
 
+namespace rocket {
+    struct plugin_t;
+}
+
 struct plugin_capabilities_t {
     bool is_lazy_loadable = false;
     
@@ -16,8 +20,8 @@ struct plugin_capabilities_t {
 
 namespace rapi {
     struct api_t {
-        std::string api_version = "0.0.0";
-        int api_iteration = -1;
+        const std::string api_header_version = "0.0.1";
+        std::string api_impl_version;
 
         // Logger
         std::function<void(std::string error, int error_id, std::string error_source, std::string level)> log_error;
@@ -28,6 +32,10 @@ namespace rapi {
         /// @note Only callable AFTER on_load()
         /// @note Only defined if plugin_capabilities_t::needs_expo_renderer2d is true
         std::function<rocket::renderer_2d*()> get_renderer2d;
+
+        std::function<std::vector<std::shared_ptr<rocket::plugin_t>>()> get_plugins;
+        std::function<void(std::function<void()>)> schedule_gl;
+        std::function<void(std::function<void()>)> schedule_now;
     };
 }
 

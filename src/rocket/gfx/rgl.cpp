@@ -7,6 +7,7 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <shader_provider.hpp>
 #include <string>
 #include "rocket/rgl.hpp"
 #include "rocket/types.hpp"
@@ -546,159 +547,16 @@ namespace rgl {
         rocket::log("Shader '" + shader_name + "' compiled successfully", "rgl", "lazyshader", "info");
     }
 
-    rgl::shader_program_t load_shader_textured_rect() {
-        const char* vert_src = R"(
-            #version 330 core
-            layout(location = 0) in vec2 aPos;
-            out vec2 v_uv;
-            uniform mat4 u_transform;
-
-            void main() {
-                v_uv = aPos; // 0→1 quad coords
-                gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
-            }
-        )";
-
-        const char* frag_src = R"(
-            #version 330 core
-            in vec2 v_uv;
-            out vec4 FragColor;
-
-            uniform sampler2D u_texture;
-            uniform float u_radius; // fraction 0..1 of min size
-            uniform vec2 u_size;    // rect size in pixels
-
-            void main() {
-                // Convert UV to local pixel space
-                vec2 local_px = v_uv * u_size;
-
-                // Convert fraction to pixel radius
-                float radius_px = u_radius * 0.5 * min(u_size.x, u_size.y);
-
-                // Distance from nearest edge
-                vec2 cornerDist = min(local_px, u_size - local_px);
-
-                // Distance from corner arc
-                float dist = length(cornerDist - vec2(radius_px));
-
-                // Anti-alias edge
-                float edge_thickness = 1.0;
-                float alpha = 1.0;
-
-                float corner_mask = step(cornerDist.x, radius_px) * step(cornerDist.y, radius_px);
-                alpha = mix(alpha, 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist), corner_mask);
-
-                vec4 texColor = texture(u_texture, v_uv);
-                FragColor = vec4(texColor.rgb, texColor.a * alpha);
-            }
-        )";
-
-        shader_program_t pg = load_shader_generic(vert_src, frag_src);
-        log_default_shader_compiled("textured_rect");
-        return pg;
-    }
-
-    rgl::shader_program_t load_shader_rect() {
-        const char* vert_src = R"(
-            #version 330 core
-            layout(location = 0) in vec2 aPos; // 0→1 quad coords
-            uniform mat4 u_transform;
-            out vec2 v_local;
-
-            void main() {
-                v_local = aPos; // normalized quad coordinates
-                gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
-            }
-        )";
-
-        const char* frag_src = R"(
-            #version 330 core
-            in vec2 v_local;
-            out vec4 FragColor;
-
-            uniform vec4 u_color;   // RGBA 0–1
-            uniform float u_radius; // fraction 0..1 of min size
-            uniform vec2 u_size;    // rect size in pixels
-
-            void main() {
-                vec2 local_px = v_local * u_size;
-
-                // Convert fraction to pixel radius
-                float radius_px = u_radius * 0.5 * min(u_size.x, u_size.y);
-
-                // Distance from nearest edge
-                vec2 cornerDist = min(local_px, u_size - local_px);
-
-                // Distance from corner arc
-                float dist = length(cornerDist - vec2(radius_px));
-
-                // Anti-aliased alpha edge
-                float edge_thickness = 1.0; // in pixels
-                float alpha = 1.0;
-
-
-                float corner_mask = step(cornerDist.x, radius_px) * step(cornerDist.y, radius_px);
-                alpha = mix(alpha, 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist), corner_mask);
-
-
-                FragColor = vec4(u_color.rgb, u_color.a * alpha);
-            }
-        )";
-
-        shader_program_t pg = load_shader_generic(vert_src, frag_src);
-        log_default_shader_compiled("rect");
-        return pg;
-    }
-
-    rgl::shader_program_t load_shader_text() {
-        const char* vert_src = R"(
-            #version 330 core
-            layout(location = 0) in vec2 aPos;
-            layout(location = 1) in vec2 aTex;
-            out vec2 TexCoord;
-            void main() {
-                gl_Position = vec4(aPos.xy, 0.0, 1.0);
-                TexCoord = aTex;
-            }
-        )";
-
-        const char* frag_src = R"(
-            #version 330 core
-            in vec2 TexCoord;
-            out vec4 FragColor;
-            uniform vec3 u_color;
-            uniform sampler2D u_texture;
-            void main() {
-                float alpha = texture(u_texture, TexCoord).r;
-                // gamma correct to linear
-                alpha = pow(alpha, 2.2);
-                // sharpen edges
-                alpha = pow(alpha, 0.5);
-                // back to sRGB
-                alpha = pow(alpha, 1.0 / 2.2);
-                vec3 rgb = u_color * alpha;
-                FragColor = vec4(rgb, alpha);
-            }
-        )";
-
-        shader_program_t pg = load_shader_generic(vert_src, frag_src);
-        log_default_shader_compiled("text");
-        return pg;
-    }
-
     rgl::shader_program_t init_shader(rgl::shader_use_t use) {
-        if (shader_cache.find(use) != shader_cache.end()) {
-            return shader_cache[use];
-        }
         switch (use) {
             case rgl::shader_use_t::rect:
-                shader_cache[use] = load_shader_rect();
+                shader_cache[use] = rocket::get_shader(rocket::shader_id_t::rectangle);
                 break;
             case rgl::shader_use_t::text:
-                shader_cache[use] = load_shader_text();
+                shader_cache[use] = rocket::get_shader(rocket::shader_id_t::text);
                 break;
             case rgl::shader_use_t::textured_rect:
-                shader_cache[use] = load_shader_textured_rect();
+                shader_cache[use] = rocket::get_shader(rocket::shader_id_t::textured_rectangle);
                 break;
             default:
                 rocket::log_error("unknown shader use", "rgl", "error");
@@ -898,74 +756,7 @@ namespace rgl {
     }
 
     rgl::shader_program_t get_fxaa_simplified_shader() {
-        const char *vsrc = R"(
-            #version 330 core
-            layout(location = 0) in vec2 aPos;
-            layout(location = 1) in vec2 aTexCoord;
-
-            out vec2 vTexCoord;
-
-            void main() {
-                vTexCoord = aTexCoord;
-                gl_Position = vec4(aPos, 0.0, 1.0);
-            }
-        )";
-        const char *fsrc = R"(
-            #version 330 core
-            in vec2 vTexCoord;
-            out vec4 FragColor;
-
-            uniform sampler2D uScene;
-            uniform vec2 uResolution; // screen width/height
-
-            // FXAA settings
-            #define FXAA_REDUCE_MIN   (1.0/128.0)
-            #define FXAA_REDUCE_MUL   (1.0/8.0)  // was 1/8
-            #define FXAA_SPAN_MAX     8.0       // was 8.0
-
-            void main() {
-                vec3 rgbNW = texture(uScene, vTexCoord + vec2(-1.0, -1.0) / uResolution).rgb;
-                vec3 rgbNE = texture(uScene, vTexCoord + vec2( 1.0, -1.0) / uResolution).rgb;
-                vec3 rgbSW = texture(uScene, vTexCoord + vec2(-1.0,  1.0) / uResolution).rgb;
-                vec3 rgbSE = texture(uScene, vTexCoord + vec2( 1.0,  1.0) / uResolution).rgb;
-                vec3 rgbM  = texture(uScene, vTexCoord).rgb;
-
-                vec3 luma = vec3(0.299, 0.587, 0.114);
-
-                float lumaNW = dot(rgbNW, luma);
-                float lumaNE = dot(rgbNE, luma);
-                float lumaSW = dot(rgbSW, luma);
-                float lumaSE = dot(rgbSE, luma);
-                float lumaM  = dot(rgbM,  luma);
-
-                float lumaMin = min(lumaM, min(min(lumaNW, lumaNE), min(lumaSW, lumaSE)));
-                float lumaMax = max(lumaM, max(max(lumaNW, lumaNE), max(lumaSW, lumaSE)));
-
-                vec2 dir;
-                dir.x = -((lumaNW + lumaNE) - (lumaSW + lumaSE));
-                dir.y =  ((lumaNW + lumaSW) - (lumaNE + lumaSE));
-
-                float dirReduce = max((lumaNW + lumaNE + lumaSW + lumaSE) * (0.25 * FXAA_REDUCE_MUL), FXAA_REDUCE_MIN);
-                float rcpDirMin = 1.0 / (min(abs(dir.x), abs(dir.y)) + dirReduce);
-                dir = clamp(dir * rcpDirMin, vec2(-FXAA_SPAN_MAX), vec2(FXAA_SPAN_MAX)) / uResolution;
-
-                vec3 rgbA = 0.5 * (
-                    texture(uScene, vTexCoord + dir * (1.0/3.0 - 0.5)).rgb +
-                    texture(uScene, vTexCoord + dir * (2.0/3.0 - 0.5)).rgb
-                );
-                vec3 rgbB = rgbA * 0.5 + 0.25 * (
-                    texture(uScene, vTexCoord + dir * -0.5).rgb +
-                    texture(uScene, vTexCoord + dir * 0.5).rgb
-                );
-
-                float lumaB = dot(rgbB, luma);
-                FragColor = vec4((lumaB < lumaMin || lumaB > lumaMax) ? rgbA : rgbB, 1.0);
-            }
-        )";
-
-        shader_program_t pg = load_shader_generic(vsrc, fsrc);
-        log_default_shader_compiled("fxaa_simplified");
-        return pg;
+        return rocket::get_shader(rocket::shader_id_t::fxaa);
     }
 
     rgl::glstate_t save_state() {

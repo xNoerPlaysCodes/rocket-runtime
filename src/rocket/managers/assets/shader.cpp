@@ -145,8 +145,6 @@ void main() {
         gl_check_errors(15);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         gl_check_errors(16);
-
-        rocket::log("(2) Shaders compiled successfully", "shader_t", "constructor", "info");
     }
 
     std::string trim(const std::string& s) {
@@ -161,23 +159,7 @@ void main() {
         this->shader_init();
     }
 
-    shader_t::shader_t(shader_type type, std::string rlsl_shader_path) {
-        this->type = type;
-        std::ifstream istream(rlsl_shader_path);
-        std::filesystem::path shader_workingdir = std::filesystem::path(rlsl_shader_path).parent_path();
-        if (!istream.is_open()) {
-            rocket::log_error("failed to open file path: " + rlsl_shader_path, "shader_t::shader_t(shader_type, std::string)", "error");
-            return;
-        }
-
-        std::vector<std::string> lines;
-        std::string line;
-        while (std::getline(istream, line)) {
-            lines.push_back(line);
-        }
-
-        istream.close();
-        
+    void shader_t::parse(const std::vector<std::string> &lines, std::filesystem::path shader_workingdir) {
         struct rlsl_shader_t {
             std::string version = "unk";
             std::string name = "unk";
@@ -229,7 +211,7 @@ void main() {
             return str;
         };
         for (int i = 0; i < lines.size(); ++i) {
-            std::string &l = lines[i];
+            const std::string &l = lines[i];
             int ln = i + 1;
             if (l.starts_with("//")) {
                 continue;
@@ -307,7 +289,7 @@ void main() {
                     continue;
                 }
                 else {
-                    rocket::log_error("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln), "shader_t::constructor", "warn");
+                    rocket::log_error("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "unknown opcode", "shader_t::constructor", "warn");
                 }
             }
             else if (curmode == mode_t::vertex) {
@@ -401,7 +383,49 @@ void main() {
 
         this->shader_init();
 
-        rocket::log("Loaded RLSL Shader '" + rlsl_shader.name + "' with source from " + rlsl_shader_path, "shader_t", "constructor", "info");
+        rocket::log("Loaded RLSL Shader '" + rlsl_shader.name + "'", "shader_t", "constructor", "info");
+    }
+
+    shader_t::shader_t(shader_type type, std::string rlsl_shader_path) {
+        this->type = type;
+        std::ifstream istream(rlsl_shader_path);
+        std::filesystem::path shader_workingdir = std::filesystem::path(rlsl_shader_path).parent_path();
+        if (!istream.is_open()) {
+            rocket::log_error("failed to open file path: " + rlsl_shader_path, "shader_t::shader_t(shader_type, std::string)", "error");
+            return;
+        }
+
+        std::vector<std::string> lines;
+        std::string line;
+        while (std::getline(istream, line)) {
+            lines.push_back(line);
+        }
+
+        istream.close();
+
+        this->parse(lines, shader_workingdir);
+    }
+
+    shader_t::shader_t() {}
+
+    shader_t shader_t::load_from_rlsl_source(shader_type type, std::string rlsl) {
+        shader_t shader;
+        shader.type = type;
+
+        static auto split = [](std::string str, char delim) -> std::vector<std::string> {
+            std::stringstream ss(str);
+            std::string token;
+            std::vector<std::string> tokens;
+            while (std::getline(ss, token, delim)) {
+                tokens.push_back(token);
+            }
+            return tokens;
+        };
+
+        std::filesystem::path shader_workingdir = std::filesystem::current_path();
+
+        shader.parse(split(rlsl, '\n'), shader_workingdir);
+        return shader;
     }
 
     GLint getloc(std::string name, GLuint glprogram) {

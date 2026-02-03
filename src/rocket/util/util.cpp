@@ -33,8 +33,7 @@ std::vector<rocket::io::scroll_offset_event_t> simulated_sevents;
 
 std::stack<char> chars_typed;
 
-size_t mem_sz_limit = 0;
-size_t mem_used = 0;
+util::membuf_t membuf;
 
 namespace util {
     bool is_glinit = false;
@@ -357,7 +356,13 @@ namespace util {
             (val == 4.0f || val == 4.1f || val == 4.2f || val == 4.3f || val == 4.4f || val == 4.5f || val == 4.6f);
     }
 
-    void set_memory_limit(size_t sz) {
-        mem_sz_limit = sz;
+    void init_memory_buffer() {
+        constexpr size_t sz = 16 * 1024 * 1024;
+        membuf.mem = new uint8_t[sz];
+        membuf.sz = sz;
+    }
+
+    membuf_t *get_memory_buffer() {
+        return &membuf;
     }
 }

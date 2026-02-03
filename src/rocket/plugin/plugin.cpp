@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <fstream>
 #include <iostream>
+#include <rocket/threads.hpp>
 #include <vector>
 #include "util.hpp"
 
@@ -55,10 +56,14 @@ namespace rocket {
 
         if (api == nullptr) {
             api = new rapi::api_t;
-            api->api_iteration = api_iteration;
-            api->api_version = api_version;
+            api->api_impl_version = api_version;
             api->log = &rocket::log;
             api->log_error = &rocket::__log_error_with_id;
+            api->get_plugins = []() -> std::vector<std::shared_ptr<rocket::plugin_t>> {
+                return loaded_plugins;
+            };
+            api->schedule_gl = &thread_t::schedule;
+            api->schedule_now = &thread_t::run;
         }
 
         if (on_load == nullptr || on_unload == nullptr) {

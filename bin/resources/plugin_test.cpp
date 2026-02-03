@@ -12,7 +12,7 @@ extern "C" {
         cap->needs_frame_events = true;
 
         std::stringstream of;
-        of << "Version: " << api->api_version << ", Iteration: " << api->api_iteration;
+        of << "Version: " << api->api_impl_version << ", Iteration: ";
         api->log(of.str(), "plugin_test", "on_load", "warn");
 
         ::api = api;
