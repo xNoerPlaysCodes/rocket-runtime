@@ -75,7 +75,7 @@ namespace rocket {
             std::vector<std::string> log_messages = rgl::init_gl({ static_cast<float>(window->size.x), static_cast<float>(window->size.y) });
 
             for (auto &l : log_messages) {
-                rocket::log(l, "renderer_2d", "constructor", "info");
+                rocket::log(l, "rgl", "init_gl", "info");
             }
         }
         this->flags = flags;
