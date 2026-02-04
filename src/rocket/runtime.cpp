@@ -41,7 +41,10 @@ void __init() {
 
 #else
 
-void __init() {}
+#include <windows.h>
+
+void __init() {
+}
 
 #endif
 
@@ -72,9 +75,6 @@ namespace rocket {
         }
     }
 
-    void set_log_error_callback(log_error_callback_t callback) { 
-        util::set_log_error_callback(callback); 
-    }
     void set_log_callback(log_callback_t callback) { 
         util::set_log_callback(callback); 
     }
@@ -99,43 +99,10 @@ namespace rocket {
         });
     }
 
-    std::mutex log_error_mutex;
-    std::queue<std::string> log_error_queue;
-    std::condition_variable log_error_cv;
-
-    std::atomic<bool> log_error_thread_continue = false;
-    std::thread log_error_thread;
-
-    void log_error_init() {
-        log_error_thread = std::thread([]() {
-            while (log_error_thread_continue) {
-                std::unique_lock<std::mutex> lock(log_error_mutex);
-                log_error_cv.wait(lock, [] { return !log_error_queue.empty() || !log_error_thread_continue; });
-                while (!log_error_queue.empty()) {
-                    std::cerr << log_error_queue.front();
-                    log_error_queue.pop();
-                }
-            }
-        });
-    }
-
     std::mutex cerr_mutex;
     std::mutex cout_mutex;
 
-    void log_error(std::string error, int error_id, std::string error_source, std::string level) {
-        log_error(error, error_source, level);
-    }
-
-    void log_error(std::string error, std::string error_source, std::string level) {
-        {
-            std::lock_guard<std::mutex> _(cerr_mutex);
-            std::cerr << util::format_error(error, -1, error_source, level);
-        }
-    }
-
-    void __log_error_with_id(std::string error, int error_id, std::string error_source, std::string level) {
-        log_error(error, error_source, level);
-    }
+    void log_error(std::string, int, std::string, std::string) {}
 
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
         {
@@ -219,11 +186,11 @@ namespace rocket {
             if (too_many_prefixes) {
                 exit = true;
                 error = true;
-                rocket::log_error("unexpected argument: " + rawarg, "rocket::argparse", "error");
+                rocket::log("unexpected argument: " + rawarg, "rocket", "argparse", "error");
             }
 
             if (value.empty() && std::find(args_with_values.begin(), args_with_values.end(), arg) != args_with_values.end()) {
-                rocket::log_error("argument " + arg + " does not have a value where it is required", "rocket::argparse", "error");
+                rocket::log("argument " + arg + " does not have a value where it is required", "rocket", "argparse", "error");
                 continue;
             }
 
@@ -244,21 +211,21 @@ namespace rocket {
             } else if (arg == "glversion" || arg == "gl-version") {
                 auto res = std::from_chars(value.data(), value.data() + value.size(), args.glversion);
                 if (res.ec == std::errc::invalid_argument) {
-                    rocket::log_error("invalid value for argument: " + arg, "rocket::argparse", "error");
+                    rocket::log("invalid value for argument: " + arg, "rocket", "argparse", "error");
                     args.glversion = GL_VERSION_UNK;
                 } else {
                     if (!util::validate_gl_version_string(value)) {
-                        rocket::log_error("invalid gl version: " + value, "rocket::argparse", "error");
+                        rocket::log("invalid gl version: " + value, "rocket", "argparse", "error");
                         args.glversion = GL_VERSION_UNK;
                     }
                 }
             } else if (arg == "nosplash" || arg == "no-splash") {
                 args.nosplash = true;
             } else if (arg == "dx11" || arg == "dx-11") {
-                rocket::log_error("argument handler not implemented for " + arg, "rocket::argparse", "error");
+                rocket::log("argument handler not implemented for " + arg, "rocket", "argparse", "error");
                 args.dx11 = true;
             } else if (arg == "dx12" || arg == "dx-12") {
-                rocket::log_error("argument handler not implemented for " + arg, "rocket::argparse", "error");
+                rocket::log("argument handler not implemented for " + arg, "rocket", "argparse", "error");
                 args.dx12 = true;
             } else if (arg == "vp-size" || arg == "vpsize" || arg == "viewport-size" || arg == "viewportsize") {
                 args.viewport_size = value;
@@ -269,7 +236,7 @@ namespace rocket {
                 } else {
                     auto res = std::from_chars(value.data(), value.data() + value.size(), args.framerate);
                     if (res.ec == std::errc::invalid_argument) {
-                        rocket::log_error("invalid value for argument: " + arg, "rocket::argparse", "error");
+                        rocket::log("invalid value for argument: " + arg, "rocket", "argparse", "error");
                         args.framerate = -1;
                     }
                 }
@@ -383,16 +350,16 @@ namespace rocket {
                 exit = true;
             }
             else {
-                rocket::log_error("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), "rocket::argparse", "error");
+                rocket::log("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), "rocket", "argparse", "error");
                 exit = true;
                 error = true;
             }
         }
 
         if (error && exit) {
-            rocket::log_error("one or more errors found in parser", "rocket::argparse", "fatal");
+            rocket::log("one or more errors found in parser", "rocket", "argparse", "fatal");
             if (!additional_exit_message.empty()) {
-                rocket::log_error(additional_exit_message, "rocket::argparse", "fatal");
+                rocket::log(additional_exit_message, "rocket", "argparse", "fatal");
             }
             rocket::exit(1);
         }

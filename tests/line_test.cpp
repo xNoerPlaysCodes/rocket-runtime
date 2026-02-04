@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     rocket::window_t window({ 1280, 720 }, "RocketGE - Line Test");
     rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
 
-    rocket::log_error("Test Failed: draw_line() is not implemented", "main.cpp::main", "fatal");
+    rocket::log("Test Failed: draw_line() is not implemented", "main.cpp", "main", "fatal");
     rocket::exit(-1);
 
     while (window.is_running()) {

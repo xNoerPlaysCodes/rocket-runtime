@@ -38,7 +38,7 @@ namespace rocket {
         else if (shid == shader_id_t::fxaa) {
             LOAD_SHADER(fxaa);
         }
-        else {            rocket::log_error("invalid shader_id given", "rocket::get_shader", "error");
+        else {            rocket::log("invalid shader_id given", "rocket", "get_shader", "error");
             return rGL_SHADER_INVALID;
         }
     }

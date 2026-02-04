@@ -32,7 +32,6 @@ namespace rocket {
 
             // Must make sure OpenGL context is current before glewInit
             if (!window || !window->glfw_window) {
-                rocket::log_error("Invalid glfw_window pointer or not initialized", "RocketRuntime", "fatal");
                 rocket::exit(1);
             }
 
@@ -417,7 +416,6 @@ namespace rocket {
 
         auto err = glGetError();
         if (err != GL_NO_ERROR) {
-            rocket::log_error("Unknown", err, "OpenGL", "fatal");
             this->window->close();
             rocket::exit(1);
         }

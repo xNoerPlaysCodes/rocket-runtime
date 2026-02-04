@@ -1,4 +1,4 @@
-# 🚀 RocketGE
+# 🚀 RocketGE (v2.0-dev)
 ![RocketGE Splash Gif](https://github.com/xNoerPlaysCodes/rocket-runtime/raw/refs/heads/master/res/splash.gif)
 
 **A lightweight and powerful 2D Game Engine**

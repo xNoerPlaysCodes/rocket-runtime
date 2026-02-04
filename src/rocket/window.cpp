@@ -18,7 +18,7 @@
 
 namespace callback {
     void glfw_error(int error, const char* description) {
-        rocket::log_error(description, "GLFW::ErrorCallback", "warn");
+        rocket::log(description, "GLFW", "ErrorCallback", "warn");
     }
 }
 
@@ -75,14 +75,14 @@ namespace rocket {
 
     RGE_STATIC_FUNC_IMPL monitor_t monitor_t::of(int idx) {
         if (idx < 0) {
-            rocket::log_error("monitor index out of range (min is 0), using monitor with cursor", "monitor_t::of", "fatal");
+            rocket::log("monitor index out of range (min is 0), using monitor with cursor", "monitor_t", "of", "fatal");
             return monitor_t::with_cursor();
         }
         int count;
         GLFWmonitor **monitors = glfwGetMonitors(&count);
 
         if (idx >= count) {
-            rocket::log_error("monitor index out of range (max is " + std::to_string(count) + ")", "monitor_t::of", "fatal");
+            rocket::log("monitor index out of range (max is " + std::to_string(count) + ")", "monitor_t", "of", "fatal");
             return {};
         }
 
@@ -106,7 +106,7 @@ namespace rocket {
         if (!glfw_initialized) {
             glfwSetErrorCallback(callback::glfw_error);
             if (int glfwInit_exc = glfwInit(); !glfwInit_exc) {
-                rocket::log_error("glfwInit() failed with exit code: " + std::to_string(glfwInit_exc), "GLFW::glfwInit", "fatal");
+                rocket::log("glfwInit() failed with exit code: " + std::to_string(glfwInit_exc), "GLFW", "glfwInit", "fatal");
                 glfw_initialized = false;
                 rocket::exit(1);
             }
@@ -135,7 +135,7 @@ namespace rocket {
             platform.type = platform_type_t::windows;
             platform.os_name = "Windows";
         } else {
-            rocket::log_error("platform unimplemented", "window_t::get_platform", "error");
+            rocket::log("platform unimplemented", "window_t", "get_platform", "error");
             return {};
         }
 
@@ -146,19 +146,19 @@ namespace rocket {
 
     RGE_STATIC_FUNC_IMPL void window_t::set_forced_platform(platform_type_t type) {
         if (glfw_initialized) {
-            rocket::log_error("too late! glfw has already been initialized", "window_t::set_forced_platform", "error");
+            rocket::log("too late! glfw has already been initialized", "window_t", "set_forced_platform", "error");
             return;
         }
 
         if (type == platform_type_t::linux_wayland) {
 #ifndef ROCKETGE__Platform_Linux
-            rocket::log_error("type can only be platform_type_t::linux_wayland when on linux", "window_t::set_forced_platform", "error");
+            rocket::log("type can only be platform_type_t", "linux_wayland when on linux", "window_t", "set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WAYLAND);
 #endif
         } else if (type == platform_type_t::linux_x11) {
 #ifndef ROCKETGE__Platform_Linux
-            rocket::log_error("type can only be platform_type_t::linux_x11 when on linux", "window_t::set_forced_platform", "error");
+            rocket::log("type can only be platform_type_t", "linux_x11 when on linux", "window_t", "set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
 #endif
@@ -166,18 +166,18 @@ namespace rocket {
 
         else if (type == platform_type_t::windows) {
 #ifndef ROCKETGE__Platform_Windows
-            rocket::log_error("type can only be platform_type_t::windows when on windows", "window_t::set_forced_platform", "error");
+            rocket::log("type can only be platform_type_t::windows when on windows", "window_t", "set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WIN32);
 #endif
         } else if (type == platform_type_t::macos_cocoa) {
 #ifndef ROCKETGE__Platform_macOS
-            rocket::log_error("type can only be platform_type_t::macos_cocoa when on macOS", "window_t::set_forced_platform", "error");
+            rocket::log("type can only be platform_type_t::macos_cocoa when on macOS", "window_t", "set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_COCOA);
 #endif
         } else {
-            rocket::log_error("platform is not valid!", "window_t::set_forced_platform", "error");
+            rocket::log("platform is not valid!", "window_t", "set_forced_platform", "error");
         }
     }
 
@@ -230,7 +230,7 @@ namespace rocket {
             if (tg_win == nullptr) {
                 if (versions[i][0] == 2 && versions[i][1] == 0) {
                     glfwSetErrorCallback(callback::glfw_error);
-                    rocket::log_error("This graphics driver does not support the minimum OpenGL version of 2.0", "window_t::context_creator", "fatal");
+                    rocket::log("This graphics driver does not support the minimum OpenGL version of 2.0", "window_t", "context_creator", "fatal");
                     rocket::exit(0);
                     return 2.0f;
                 }
@@ -267,7 +267,7 @@ namespace rocket {
         window_t::cpl_init();
         GLFWmonitor *monitor = glfwGetPrimaryMonitor();
         if (monitor == nullptr && flags.fullscreen) {
-            rocket::log_error("failed to get primary monitor", "GLFW::glfwGetPrimaryMonitor", "fatal");
+            rocket::log("failed to get primary monitor", "GLFW", "glfwGetPrimaryMonitor", "fatal");
             rocket::exit(1);
         }
 
@@ -313,7 +313,7 @@ namespace rocket {
             if (max_gl_ver == 2 || max_gl_ver == 3 || max_gl_ver == 4) {
                 ss << ".0";
             }
-            rocket::log_error("This version of OpenGL is not supported by this graphics driver, using next available version: " + ss.str(), "window_t::context_creator", "warning");
+            rocket::log("This version of OpenGL is not supported by this graphics driver, using next available version: " + ss.str(), "window_t", "context_creator", "warning");
             glver = max_gl_ver;
         }
 
@@ -323,17 +323,17 @@ namespace rocket {
             if (minglver == 2 || minglver == 3 || minglver == 4) {
                 ss << ".0";
             }
-            rocket::log_error("This version of OpenGL is not supported by this graphics driver, using minimum available version: " + ss.str(), "window_t::context_creator", "warning");
+            rocket::log("This version of OpenGL is not supported by this graphics driver, using minimum available version: " + ss.str(), "window_t", "context_creator", "warning");
             glver = static_cast<float>(ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR) + static_cast<float>(0.1 * ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR);
         }
 
         if (max_gl_ver < 2.0f) {
-            rocket::log_error("Minimum OpenGL version 2.0 not supported", "window_t::context_creator", "fatal");
+            rocket::log("Minimum OpenGL version 2.0 not supported", "window_t", "context_creator", "fatal");
             rocket::exit(0);
         }
 
         if (glver < 3.0f) {
-            rocket::log_error("OpenGL Version 3.0 or higher must be used for a modern environment", "window_t::context_creator", "warning");
+            rocket::log("OpenGL Version 3.0 or higher must be used for a modern environment", "window_t", "context_creator", "warning");
         }
         if (glver > 3.1f) {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -343,7 +343,7 @@ namespace rocket {
             if (glver >= 4.3f) {
                 glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
             } else {
-                rocket::log_error("OpenGL::ContextVerifier requires 4.3 or higher", "window_t::context_creator", "warn");
+                rocket::log("OpenGL::ContextVerifier requires 4.3 or higher", "window_t", "context_creator", "warn");
             }
         }
 
@@ -369,7 +369,7 @@ namespace rocket {
         glfwWindowHint(GLFW_FOCUSED, glfwaltGetBoolean(!flags.unfocused));
         glfwWindowHint(GLFW_FLOATING, glfwaltGetBoolean(flags.topmost));
         if (flags.always_run) {
-            rocket::log_error("[fixme] not implemented, windowflags_t::always_run", "window_t::constructor", "fixme");
+            rocket::log("[fixme] not implemented, windowflags_t::always_run", "window_t", "constructor", "fixme");
         }
 
         if (flags.opacity < 1.0f) {
@@ -395,7 +395,7 @@ namespace rocket {
 
         bool is_custom_class_id = !flags.window_class_name.empty() && flags.window_class_name != ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID;
         if (is_custom_class_id) {
-            rocket::log_error("using an untested native API: may break", "window_t::constructor", "warn");
+            rocket::log("using an untested native API: may break", "window_t", "constructor", "warn");
             std::wstring wstr = to_widestr(flags.window_class_name);
             const wchar_t *cwstr = wstr.c_str();
             rnative::windows_set_window_class_name_prewincreate(cwstr);
@@ -415,7 +415,7 @@ namespace rocket {
         }
         this->glfw_window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, share);
         if (this->glfw_window == nullptr) {
-            rocket::log_error("failed to create window", "window_t::constructor", "fatal");
+            rocket::log("failed to create window", "window_t", "constructor", "fatal");
             platform_t platform = this->get_platform();
             std::vector<std::string> log_messages = {
                 "Error String: " + std::string("glfwCreateWindow resulted in a nullptr")
@@ -497,7 +497,7 @@ namespace rocket {
     void window_t::set_icon(std::shared_ptr<rocket::texture_t> texture) {
         if (texture->channels != rGE__TEXTURE_CHANNEL_COUNT_RGBA) {
             std::string channel_count = std::to_string(texture->channels);
-            rocket::log_error("texture must be in RGBA format (try load in texture_color_format_t::rgba), channel count was: " + channel_count, "window_t::set_icon", "error");
+            rocket::log("texture must be in RGBA format (try load in texture_color_format_t::rgba), channel count was: " + channel_count, "window_t", "set_icon", "error");
             return;
         }
         auto pxdata = texture->data.data();
@@ -513,7 +513,7 @@ namespace rocket {
         }
  
         if (get_platform().type == platform_type_t::macos_cocoa) {
-            rocket::log_error("macOS::Cocoa does not support dynamically setting window icons", "window_t::set_icon", "error");
+            rocket::log("macOS::Cocoa does not support dynamically setting window icons", "window_t", "set_icon", "error");
             return;
         }
 
@@ -531,7 +531,7 @@ namespace rocket {
                 if (glfwRawMouseMotionSupported()) {
                     glfwSetInputMode(glfw_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
                 } else {
-                    rocket::log_error("GLFW_RAW_MOUSE_MOTION is not supported on wayland", "window_t::set_cursor_mode", "warning");
+                    rocket::log("GLFW_RAW_MOUSE_MOTION is not supported on wayland", "window_t", "set_cursor_mode", "warning");
                 }
             }
         }
@@ -539,7 +539,7 @@ namespace rocket {
 
     void window_t::set_cursor_position(const rocket::vec2d_t& pos) {
         if (glfw_platform_is_wayland(get_platform())) {
-            rocket::log_error("setting cursor position is not supported on wayland", "window_t::set_cursor_position", "warn");
+            rocket::log("setting cursor position is not supported on wayland", "window_t", "set_cursor_position", "warn");
             return;
         }
         glfwSetCursorPos(glfw_window, pos.x, pos.y);

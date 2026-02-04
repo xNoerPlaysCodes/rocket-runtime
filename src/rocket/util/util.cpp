@@ -13,7 +13,6 @@
 #include <stack>
 #include <thread>
 
-rocket::log_error_callback_t lerror_cb;
 rocket::log_callback_t log_cb;
 
 std::vector<std::function<void()>> on_close_listeners = {};
@@ -80,43 +79,6 @@ namespace util {
         return oss.str();
     }
 
-    std::string format_error(std::string error, int error_id, std::string error_source, std::string level) {
-        if (lerror_cb != nullptr) {
-            lerror_cb(error, error_id, error_source, level);
-            return "";
-        }
-        rocket::log_level_t elevel = rocket::log_level_t::fatal;
-        if (level == "warn" || level == "warning") {
-            elevel = rocket::log_level_t::warn;
-        } else if (level == "fatal") {
-            elevel = rocket::log_level_t::fatal;
-        } else if (level == "fatal_to_function" || level == "error" || level == "error") {
-            elevel = rocket::log_level_t::error;
-        } else if (level == "all") {
-            elevel = rocket::log_level_t::all;
-        } else if (level == "fixme") {
-            elevel = rocket::log_level_t::warn;
-        }
-        else {
-            if (level != "info" && level != "debug" && level != "trace") {
-                return format_error("Unknown Logger Level: " + level, -42, error_source, "error");
-            }
-            return format_log(error, error_source, "", level);
-        }
-        if (!get_clistate().logall) {
-            if (elevel < log_level) {
-                return "";
-            }
-        }
-        std::stringstream ss;
-        ss << '[' << fmtd_time_str() << ']' << ' '
-            << "[" << log_level_to_str(elevel) << "]" << ' '
-            << '(' << error_source << ')' << ' '
-            << error
-            << '\n';
-        return ss.str();
-    }
-
     std::string format_log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
         if (log_cb != nullptr) {
             log_cb(log, class_file_library_source, function_source, level);
@@ -131,8 +93,16 @@ namespace util {
             elvl = rocket::log_level_t::trace;
         } else if (level == "all") {
             elvl = rocket::log_level_t::all;
-        } else {
-            return format_error(log, -1, class_file_library_source + "::" + function_source, level);
+        } else if (level == "warn" || level == "warning") {
+            elvl = rocket::log_level_t::warn;
+        } else if (level == "fatal") {
+            elvl = rocket::log_level_t::fatal;
+        } else if (level == "fatal_to_function" || level == "error" || level == "error") {
+            elvl = rocket::log_level_t::error;
+        } else if (level == "all") {
+            elvl = rocket::log_level_t::all;
+        } else if (level == "fixme") {
+            elvl = rocket::log_level_t::warn;
         }
         if (!get_clistate().logall) {
             if (elvl < log_level) {
@@ -150,10 +120,6 @@ namespace util {
 
     void set_log_callback(rocket::log_callback_t callback) {
         log_cb = callback;
-    }
-
-    void set_log_error_callback(rocket::log_error_callback_t callback) {
-        lerror_cb = callback;
     }
 
     void close_callback() {

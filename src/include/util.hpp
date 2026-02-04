@@ -46,10 +46,8 @@ namespace util {
         bool forcewayland = false;
     };
 
-    std::string format_error(std::string error, int error_id, std::string error_source, std::string level);
     std::string format_log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);
 
-    void set_log_error_callback(rocket::log_error_callback_t);
     void set_log_callback(rocket::log_callback_t);
 
     void close_callback();

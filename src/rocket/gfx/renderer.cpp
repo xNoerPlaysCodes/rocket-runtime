@@ -49,7 +49,7 @@ namespace rocket {
 
         auto cli_args = util::get_clistate();
         if (cli_args.dx11 || cli_args.dx12) {
-            rocket::log_error("D3D11/12 backend not supported", "renderer_2d::constructor", "fatal");
+            rocket::log("D3D11/12 backend not supported", "renderer_2d", "constructor", "fatal");
             rocket::exit(1);
         }
 
@@ -68,7 +68,7 @@ namespace rocket {
             util::glinit(true);
 
             if (!window || !window->glfw_window) {
-                rocket::log_error("Invalid window ptr", "renderer_2d::constructor", "error");
+                rocket::log("Invalid window ptr", "renderer_2d", "constructor", "error");
                 return;
             }
             glfwMakeContextCurrent(window->glfw_window);
@@ -91,7 +91,7 @@ namespace rocket {
 
     void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color, bool lines) {
         if (lines) {
-            rocket::log_error("draw_circle(... lines=true) unimplemented", "renderer_2d::draw_circle", "fixme");
+            rocket::log("draw_circle(... lines=true) unimplemented", "renderer_2d", "draw_circle", "fixme");
             return;
         }
 
@@ -180,7 +180,7 @@ namespace rocket {
 
     void renderer_2d::draw_line(rocket::vec2f_t start, rocket::vec2f_t end, rocket::rgba_color color, float thickness) {
         // Yeah I'm not making this
-        rocket::log_error("Implementation not finished", "renderer_2d::draw_line", "error");
+        rocket::log("Implementation not finished", "renderer_2d", "draw_line", "error");
     }
 
     void renderer_2d::draw_rectangle(rocket::vec2f_t pos, rocket::vec2f_t size, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
@@ -275,13 +275,13 @@ namespace rocket {
             }
             active_render_modes.push_back(mode);
         } else {
-            rocket::log_error("Not Implemented Yet!", "renderer_2d::begin_render_mode", "info");
+            rocket::log("Not Implemented Yet!", "renderer_2d", "begin_render_mode", "info");
         }
     }
 
     void renderer_2d::begin_batch() {
         this->batched = true;
-        rocket::log_error("Batching is not implemented yet", "renderer_2d", "info");
+        rocket::log("Batching is not implemented yet", "renderer_2d", "begin_batch", "info");
     }
 
     void renderer_2d::clear(rocket::rgba_color color) {
@@ -313,7 +313,7 @@ namespace rocket {
 
     void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation, float roundedness) {
         if (texture == nullptr) {
-            rocket::log_error("texture is null", "renderer_2d::draw_texture", "error");
+            rocket::log("texture is null", "renderer_2d", "draw_texture", "error");
             return;
         }
         rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(rect.pos, rect.size, rotation, roundedness);
@@ -545,7 +545,7 @@ namespace rocket {
                 rgl::reset_to_default_fbo();
             }
         } else {
-            rocket::log_error("Not Implemented Yet!", "renderer_2d::end_render_mode", "info");
+            rocket::log("Not Implemented Yet!", "renderer_2d", "end_render_mode", "info");
         }
     }
 
@@ -719,11 +719,11 @@ namespace rocket {
         glfwSwapBuffers(this->window->glfw_window);
         int drawcalls = rgl::reset_drawcalls();
         if (drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
-            rocket::log_error("Too many drawcalls! (" + std::to_string(drawcalls) + ") Frames may suffer", "renderer_2d::end_frame", "warning");
+            rocket::log("Too many drawcalls! (" + std::to_string(drawcalls) + ") Frames may suffer", "renderer_2d", "end_frame", "warning");
         }
         int tricount = rgl::reset_tricount();
         if (tricount > rGL_MAX_RECOMMENDED_TRICOUNT) {
-            rocket::log_error("Too many triangles! (" + std::to_string(tricount) + ") Frames may suffer", "renderer_2d::end_frame", "warning");
+            rocket::log("Too many triangles! (" + std::to_string(tricount) + ") Frames may suffer", "renderer_2d", "end_frame", "warning");
         }
 
         rocket::vec2f_t final_viewport_position = {  0,  0 };
