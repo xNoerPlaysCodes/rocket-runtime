@@ -102,8 +102,6 @@ namespace rocket {
     std::mutex cerr_mutex;
     std::mutex cout_mutex;
 
-    void log_error(std::string, int, std::string, std::string) {}
-
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
         {
             std::lock_guard<std::mutex> _(cout_mutex);
