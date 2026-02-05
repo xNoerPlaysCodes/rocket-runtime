@@ -383,7 +383,7 @@ void main() {
 
         this->shader_init();
 
-        rocket::log("Loaded RLSL Shader '" + rlsl_shader.name + "'", "shader_t", "constructor", "info");
+        rocket::log("Loaded RLSL Shader: " + rlsl_shader.name, "shader_t", "constructor", "info");
     }
 
     shader_t::shader_t(shader_type type, std::string rlsl_shader_path) {

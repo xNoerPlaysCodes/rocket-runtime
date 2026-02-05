@@ -132,7 +132,8 @@ namespace rocket {
         /// @param pos Position
         /// @param radius Radius
         /// @param color Color
-        void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 }, bool lines = false);
+        /// @param thickness <=0 if solid, >0 if ring
+        void draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 }, int thickness = 0);
 
         /// @brief Draw a polygon
         /// @param pos Position
@@ -140,13 +141,6 @@ namespace rocket {
         /// @param color Color
         /// @note Uses [sides] many triangles
         void draw_polygon(rocket::vec2f_t pos, float radius, rocket::rgba_color color = { 0, 0, 0, 255 }, int sides = 3, float rotation = 0.f);
-
-        /// @brief Draw a line
-        /// @param p1 Point 1
-        /// @param p2 Point 2
-        /// @param color Color
-        /// @param thickness Thickness
-        void draw_line(rocket::vec2f_t p1, rocket::vec2f_t p2, rocket::rgba_color color = { 0, 0, 0, 255 }, float thickness = 1.f);
 
         /// @brief Draw a texture
         /// @param texture Texture

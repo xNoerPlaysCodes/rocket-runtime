@@ -426,10 +426,6 @@ namespace rocket {
 
         monitor = glfwaltGetMonitorWithCursor();
 
-        glfwSetFramebufferSizeCallback(this->glfw_window, [](GLFWwindow*, int width, int height) {
-            glViewport(0, 0, width, height);
-        });
-
         glfwSetCharModsCallback(this->glfw_window, [](GLFWwindow*, unsigned int codepoint, int /* mods */) {
             char c = static_cast<char>(codepoint);
             ::util::push_formatted_char_typed(c);
@@ -464,9 +460,8 @@ namespace rocket {
 
             std::vector<std::string> logs = {
                 "Engine Version: " ROCKETGE__VERSION,
-                "Backend Windowing: GLFW",
-                "Native Windowing: " + glfw_platform_str,
-                "Engine Platform: " + platform.rge_name,
+                "Windowing: GLFW + " + glfw_platform_str,
+                "Platform: " + platform.rge_name,
                 "Modules:",
                 #ifdef ROCKETGE__BUILD_QUARK
                     "- Quark: [ENABLED]",

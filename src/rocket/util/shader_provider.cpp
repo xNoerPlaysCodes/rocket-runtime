@@ -6,9 +6,10 @@
 #include <resources/shader_rectangle.h>
 #include <resources/shader_text.h>
 #include <resources/shader_textured_rectangle.h>
+#include <resources/shader_circle_lines.h>
 
 namespace rocket {
-    static std::unordered_map<shader_id_t, shader_t> shader_map;
+    static thread_local std::unordered_map<shader_id_t, shader_t> shader_map;
 
     rgl::shader_program_t get_shader(shader_id_t shid) {
         if (shader_map.find(shid) != shader_map.end()) {
@@ -38,7 +39,11 @@ namespace rocket {
         else if (shid == shader_id_t::fxaa) {
             LOAD_SHADER(fxaa);
         }
-        else {            rocket::log("invalid shader_id given", "rocket", "get_shader", "error");
+        else if (shid == shader_id_t::circle_lines) {
+            LOAD_SHADER(circle_lines);
+        }
+        else {
+            rocket::log("invalid shader_id given", "rocket", "get_shader", "error");
             return rGL_SHADER_INVALID;
         }
     }

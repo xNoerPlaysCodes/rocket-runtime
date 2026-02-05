@@ -1,5 +1,6 @@
 #include "rocket/audio.hpp"
 #include <GL/glew.h>
+#include <shader_provider.hpp>
 #define RGL_EXPOSE_NATIVE_LIB
 #include "rocket/rgl.hpp"
 #include "rocket/asset.hpp"
@@ -75,7 +76,10 @@ namespace rocket {
             std::vector<std::string> log_messages = rgl::init_gl({ static_cast<float>(window->size.x), static_cast<float>(window->size.y) });
 
             for (auto &l : log_messages) {
-                rocket::log(l, "rgl", "init_gl", "info");
+                if (l.starts_with('!')) 
+                    rocket::log(l.substr(1), "rgl", "init_gl", "warn");
+                else
+                    rocket::log(l, "rgl", "init_gl", "info");
             }
         }
         this->flags = flags;
@@ -89,19 +93,41 @@ namespace rocket {
         ::rocket::ovr_clistate = util::get_clistate();
     }
 
-    void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color, bool lines) {
-        if (lines) {
-            rocket::log("draw_circle(... lines=true) unimplemented", "renderer_2d", "draw_circle", "fixme");
-            return;
-        }
-
+    void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int thickness) {
         rocket::vec2f_t center_pos = {
             .x = pos.x - radius,
             .y = pos.y - radius
         };
+
+        if (thickness > 0) {
+            rgl::shader_program_t pg = rocket::get_shader(shader_id_t::circle_lines);
+            rocket::vec2f_t viewport_size = rgl::get_viewport_size();
+            glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
+
+            float cx = center_pos.x + radius * 2 * 0.5f;
+            float cy = center_pos.y + radius * 2 * 0.5f;
+
+            glm::mat4 transform = projection
+                * glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
+                * glm::rotate(glm::mat4(1.0f), glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f))
+                * glm::translate(glm::mat4(1.0f), glm::vec3(-radius * 2 * 0.5f, -radius * 2 * 0.5f, 0.0f))
+                * glm::scale(glm::mat4(1.0f), glm::vec3(radius * 2, radius * 2, 1.0f));
+
+            auto nm = color.normalize();
+
+            glUseProgram(pg);
+            glUniformMatrix4fv(glGetUniformLocation(pg, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
+            glUniform4f(glGetUniformLocation(pg, "u_color"), nm.x, nm.y, nm.z, nm.w);
+            glUniform2f(glGetUniformLocation(pg, "u_size"), radius * 2, radius * 2);
+            glUniform1f(glGetUniformLocation(pg, "u_radius"), 1);
+            glUniform1f(glGetUniformLocation(pg, "u_thickness"), thickness);
+            auto vos = rgl::compile_vo();
+            rgl::draw_shader(pg, vos.first, vos.second);
+            return;
+        }
+
         this->draw_rectangle({ center_pos, { radius * 2, radius * 2 } }, color, 0, 1);
     }
- 
 
     void renderer_2d::draw_polygon(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int segments, float rotation) {
         const char *vsrc = R"(
@@ -176,11 +202,6 @@ namespace rocket {
 
     void renderer_2d::draw_pixel(rocket::vec2f_t pos, rocket::rgba_color color) {
         this->draw_rectangle({ pos, { 1, 1 } }, color, 0, 0, 0);
-    }
-
-    void renderer_2d::draw_line(rocket::vec2f_t start, rocket::vec2f_t end, rocket::rgba_color color, float thickness) {
-        // Yeah I'm not making this
-        rocket::log("Implementation not finished", "renderer_2d", "draw_line", "error");
     }
 
     void renderer_2d::draw_rectangle(rocket::vec2f_t pos, rocket::vec2f_t size, rocket::rgba_color color, float rotation, float roundedness, bool lines) {

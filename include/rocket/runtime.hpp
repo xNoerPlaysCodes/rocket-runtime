@@ -107,9 +107,6 @@ namespace rocket {
     /// @brief Set exit callback
     void set_exit_callback(exit_callback_t);
 
-    /// @brief Log (Fatal/FatalToFunction/Warning) using RocketLogger or callback
-    [[deprecated("use log_error(std::string, std::string, std::string)")]] void log_error(std::string error, int error_id, std::string error_source, std::string level);
-
     /// @brief Log using RocketLogger or callback
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);
 
@@ -122,11 +119,10 @@ namespace rocket {
     /// @brief Get OpenGL Error callback
     gl_error_callback_t get_opengl_error_callback();
 
-
     /// @brief Optionally set CLI arguments
-    void set_cli_arguments(int argc, char *argv[]);
+    [[deprecated("Use init(...)")]] void set_cli_arguments(int argc, char *argv[]);
     /// @brief Optionally set CLI arguments
-    void set_cli_arguments(std::vector<std::string> args);
+    [[deprecated("Use init(...)")]] void set_cli_arguments(std::vector<std::string> args);
 
     void init(std::vector<std::string> args = {});
     void init(int argc = 0, char **argv = nullptr);

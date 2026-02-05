@@ -30,6 +30,7 @@ namespace util {
     struct global_state_cliargs_t {
         bool noplugins = false;
         bool logall = false;
+        bool lognone = false;
         bool debugoverlay = false;
         bool nosplash = false;
         bool dx11 = false;

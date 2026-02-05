@@ -1,5 +1,6 @@
 #include <crashdump.hpp>
 #include <cstring>
+#include <limits>
 #include <native.hpp>
 #include <rocket/runtime.hpp>
 #include "util.hpp"
@@ -11,13 +12,24 @@
 #include <rocket/macros.hpp>
 
 namespace callback {
-    void bad_memory_access(void *mem_addr) {
+    void bad_memory_access(void *mem_addr, int code) {
         std::endl(std::cout);
 
-        std::cout << rocket::crash_signal(true, mem_addr, "bad_memory_access", "The program crashed");  
+        std::cout << rocket::crash_signal(true, mem_addr, "bad_memory_access", "Invalid pointer dereference or memory access");
 
         std::endl(std::cout);
-        rnative::exit_now(1);
+
+        rnative::exit_now(code);
+    }
+
+    void invalid_memory_operation(void *mem_addr, int code) {
+        std::endl(std::cout);
+
+        std::cout << rocket::crash_signal(true, mem_addr, "invalid_memory_operation", "Operation unexecutable on this memory buffer");
+
+        std::endl(std::cout);
+        
+        rnative::exit_now(code);
     }
 }
 
@@ -31,12 +43,23 @@ void __init() {
     struct sigaction sa;
     std::memset(&sa, 0, sizeof(sa));
     sa.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
-        callback::bad_memory_access(info->si_addr);
+        callback::bad_memory_access(info->si_addr, info->si_code);
     };
     sa.sa_flags = SA_SIGINFO;
     sigaction(SIGSEGV, &sa, nullptr);
+
+    struct sigaction sbus;
+    sbus.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
+        callback::invalid_memory_operation(info->si_addr, info->si_code);
+    };
+    sbus.sa_flags = SA_SIGINFO;
+    sigaction(SIGBUS, &sbus, nullptr);
+
+    rocket::log("Hooked SIGBUS & SIGSEGV", "rocket", "init", "debug");
     
     util::init_memory_buffer();
+
+    rocket::log("Emergency memory buffer initialized with size " + std::format("{} MiB", util::get_memory_buffer()->sz / 1024 / 1024), "rocket", "init", "debug");
 }
 
 #else
@@ -103,6 +126,8 @@ namespace rocket {
     std::mutex cout_mutex;
 
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
+        static auto cli_args = util::get_clistate();
+        if (cli_args.lognone) return;
         {
             std::lock_guard<std::mutex> _(cout_mutex);
             std::cout << util::format_log(log, class_file_library_source, function_source, level);
@@ -204,6 +229,8 @@ namespace rocket {
                 args.noplugins = true;
             } else if (arg == "logall" || arg == "log-all") {
                 args.logall = true;
+            } else if (arg == "lognone" || arg == "log-none") {
+                args.lognone = true;
             } else if (arg == "debugoverlay" || arg == "doverlay" || arg == "debug-overlay") {
                 args.debugoverlay = true;
             } else if (arg == "glversion" || arg == "gl-version") {
@@ -230,7 +257,7 @@ namespace rocket {
                 args.viewport_size_set = true;
             } else if (arg == "framerate") {
                 if (value == "unlimited" || value == "nolimit" || value == "infinite" || value == "inf") {
-                    args.framerate = 2147483647;
+                    args.framerate = std::numeric_limits<int>::max();
                 } else {
                     auto res = std::from_chars(value.data(), value.data() + value.size(), args.framerate);
                     if (res.ec == std::errc::invalid_argument) {
@@ -280,8 +307,8 @@ namespace rocket {
                     "   no-plugins, noplugins",
                     "   -> disable all plugins before startup",
                     "",
-                    "   log-all, logall",
-                    "   -> logs every message",
+                    "   log-all, logall / log-none, lognone",
+                    "   -> logs every / no message(s)",
                     "",
                     "   debug-overlay, debugoverlay, doverlay",
                     "   -> shows a debug overlay with rendering information",
