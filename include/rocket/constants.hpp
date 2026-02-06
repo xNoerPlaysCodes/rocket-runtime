@@ -6,7 +6,7 @@
 
 /// @brief Constants
 namespace rocket::cst {
-    constexpr int failure = -1;
+    constexpr int       failure     = -1;
     constexpr uint8_t   unknown_u8  = std::numeric_limits<uint8_t>::max();
     constexpr uint16_t  unknown_u16 = std::numeric_limits<uint16_t>::max();
     constexpr uint32_t  unknown_u32 = std::numeric_limits<uint32_t>::max();

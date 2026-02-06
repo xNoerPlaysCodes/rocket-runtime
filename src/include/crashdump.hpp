@@ -5,7 +5,7 @@
 namespace rocket {
     struct crash_info_t {};
 
-    std::string crash_signal(bool fatal, void *mem_addr, std::string signal, std::string message);
+    char* crash_signal(bool fatal, void *mem_addr, const char *signal, const char *message);
 }
 
 #endif//ROCKETGE__CRASHDUMP_HPP

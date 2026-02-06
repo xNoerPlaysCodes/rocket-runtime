@@ -8,9 +8,9 @@
 #include "window.hpp"
 #include "shader.hpp"
 
-#define ROCKETGE__MAJOR_VERSION  1
-#define ROCKETGE__MINOR_VERSION  1
-#define ROCKETGE__BUILD          "stable"
+#define ROCKETGE__MAJOR_VERSION  2
+#define ROCKETGE__MINOR_VERSION  0
+#define ROCKETGE__BUILD          "dev"
 #define ROCKETGE__STRX_(x)       #x
 #define ROCKETGE__STRX(x)        ROCKETGE__STRX_(x)
 #define ROCKETGE__VERSION        ROCKETGE__STRX(ROCKETGE__MAJOR_VERSION) "." ROCKETGE__STRX(ROCKETGE__MINOR_VERSION) "-" ROCKETGE__BUILD
@@ -64,24 +64,10 @@ namespace rocket {
     /// @brief Sets minimum log level to be printed to the console
     /// @brief or callback
     void set_log_level(log_level_t level);
-    
-    /// @brief Log (Fatal/FatalToFunction/Warning) Callback
-    /// @param std::string error
-    /// @param @deprecated Do not use this int error_id
-    /// @param std::string error_source
-    /// @param std::string level
-    using log_error_callback_t = std::function<void(
-            std::string error, 
-            int error_id, 
-            std::string error_source, 
-            std::string level)>;
 
     /// @brief Converts log level to string
     /// @note lowercase
     std::string log_level_to_str(log_level_t level);
-
-    /// @brief Sets log error callback
-    void set_log_error_callback(log_error_callback_t);
 
     /// @brief Log Callback
     /// @param std::string log_message
@@ -121,14 +107,6 @@ namespace rocket {
     /// @brief Set exit callback
     void set_exit_callback(exit_callback_t);
 
-    /// @brief Log (Fatal/FatalToFunction/Warning) using RocketLogger or callback
-    [[deprecated("use log_error(std::string, std::string, std::string)")]] void log_error(std::string error, int error_id, std::string error_source, std::string level);
-
-    /// @brief Log (Fatal/FatalToFunction/Warning) using RocketLogger or callback
-    void log_error(std::string error, std::string error_source, std::string level);
-
-    void __log_error_with_id(std::string error, int error_id, std::string error_source, std::string level);
-
     /// @brief Log using RocketLogger or callback
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);
 
@@ -141,11 +119,10 @@ namespace rocket {
     /// @brief Get OpenGL Error callback
     gl_error_callback_t get_opengl_error_callback();
 
-
     /// @brief Optionally set CLI arguments
-    void set_cli_arguments(int argc, char *argv[]);
+    [[deprecated("Use init(...)")]] void set_cli_arguments(int argc, char *argv[]);
     /// @brief Optionally set CLI arguments
-    void set_cli_arguments(std::vector<std::string> args);
+    [[deprecated("Use init(...)")]] void set_cli_arguments(std::vector<std::string> args);
 
     void init(std::vector<std::string> args = {});
     void init(int argc = 0, char **argv = nullptr);

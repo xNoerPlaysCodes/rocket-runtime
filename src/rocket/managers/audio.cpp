@@ -57,8 +57,8 @@ namespace rocket::audio {
         std::vector<device_t> dvcl;
 
         if (!alcIsExtensionPresent(nullptr, "ALC_ENUMERATION_EXT")) {
-            rocket::log_error("Device enumeration not supported by OpenAL implementation",
-                              "OpenAL::alcIsExtensionPresent", "error");
+            rocket::log("Device enumeration not supported by OpenAL implementation",
+                              "OpenAL", "alcIsExtensionPresent", "error");
             return dvcl;
         }
 
@@ -115,7 +115,7 @@ namespace rocket::audio {
     void sound_engine_t::play(sound_t &sound, bool loop, sound_finish_callback_t cb) {
         source_t *source = fetch_source(this->sources);
         if (source == nullptr) {
-            rocket::log_error("sound sources exhausted", "sound_engine_t::play", "error");
+            rocket::log("sound sources exhausted", "sound_engine_t", "play", "error");
             return;
         }
 
@@ -168,7 +168,7 @@ namespace rocket::audio {
     //         int error;
     //         this->vorbis = stb_vorbis_open_filename(this->file_path.c_str(), &error, nullptr);
     //         if (!this->vorbis) {
-    //             rocket::log_error("streaming sound failed: could not open audio file", "streaming_sound_t::next_frame", "error");
+    //             rocket::log("streaming sound failed: could not open audio file", "streaming_sound_t", "next_frame", "error");
     //             return;
     //         }
     //     }
@@ -220,7 +220,7 @@ namespace rocket::audio {
     //
     //     source_t *source = fetch_source(this->sources);
     //     if (source == nullptr) {
-    //         rocket::log_error("sound sources exhausted", "sound_engine_t::play_frame", "error");
+    //         rocket::log("sound sources exhausted", "sound_engine_t", "play_frame", "error");
     //         return;
     //     }
     //
@@ -245,7 +245,7 @@ namespace rocket::audio {
 
         stb_vorbis *vorbis = stb_vorbis_open_filename(sound->file_path.c_str(), nullptr, nullptr);
         if (!vorbis) {
-            rocket::log_error("streaming sound failed: could not open audio file", "sound_engine_t::play", "error");
+            rocket::log("streaming sound failed: could not open audio file", "sound_engine_t", "play", "error");
             return;
         }
 
@@ -283,7 +283,7 @@ namespace rocket::audio {
             source_t *source = fetch_source(this->sources);
             sound->source = source;
             if (source == nullptr) {
-                rocket::log_error("sound sources exhausted", "sound_engine_t::play", "error");
+                rocket::log("sound sources exhausted", "sound_engine_t", "play", "error");
                 return;
             }
 

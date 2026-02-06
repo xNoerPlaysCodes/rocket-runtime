@@ -12,7 +12,7 @@ namespace rocket {
     void gl_check_errors(int step) {
         GLenum err;
         while ((err = glGetError()) != GL_NO_ERROR) {
-            rocket::log_error("OpenGL error at step " + std::to_string(step), "OpenGL", "warning");
+            rocket::log("OpenGL error at step " + std::to_string(step), "OpenGL", "glGetError", "warning");
         }
     }
 
@@ -22,8 +22,8 @@ namespace rocket {
         if (!success) {
             char infoLog[1024];
             glGetShaderInfoLog(shader, sizeof(infoLog), nullptr, infoLog);
-            rocket::log_error(std::string(shader_type) + " " + "compilation error", "OpenGL::ShaderCompiler", "error");
-            rocket::log_error(std::string(infoLog), "OpenGL::ShaderCompiler", "error");
+            rocket::log(std::string(shader_type) + " " + "compilation error", "OpenGL", "ShaderCompiler", "error");
+            rocket::log(std::string(infoLog), "OpenGL", "ShaderCompiler", "error");
             return false;
         }
         return true;
@@ -35,8 +35,8 @@ namespace rocket {
         if (!success) {
             char infoLog[1024];
             glGetProgramInfoLog(program, sizeof(infoLog), nullptr, infoLog);
-            rocket::log_error("link error", "OpenGL::ShaderLinker", "error");
-            rocket::log_error(std::string(infoLog), "OpenGL::ShaderLinker", "error");
+            rocket::log("link error", "OpenGL", "ShaderLinker", "error");
+            rocket::log(std::string(infoLog), "OpenGL", "ShaderLinker", "error");
             return false;
         }
         return true;
@@ -75,7 +75,7 @@ void main() {
         glShaderSource(glshaderv, 1, &vsrc, nullptr);
         glCompileShader(glshaderv);
         if (!check_shader_compile(glshaderv, "Vertex")) {
-            rocket::log_error("Cannot continue with failed compilation", "shader_t::constructor", "error");
+            rocket::log("Cannot continue with failed compilation", "shader_t", "constructor", "error");
             this->glprogram = rgl::nocache_compile_shader(default_vcode, default_fcode);
             this->fcode = default_fcode;
             this->vcode = default_vcode;
@@ -86,7 +86,7 @@ void main() {
         glShaderSource(glshaderf, 1, &fsrc, nullptr);
         glCompileShader(glshaderf);
         if (!check_shader_compile(glshaderf, "Fragment")) {
-            rocket::log_error("Cannot continue with failed compilation", "shader_t::constructor", "error");
+            rocket::log("Cannot continue with failed compilation", "shader_t", "constructor", "error");
             this->glprogram = rgl::nocache_compile_shader(default_vcode, default_fcode);
             this->fcode = default_fcode;
             this->vcode = default_vcode;
@@ -103,7 +103,7 @@ void main() {
 
         glLinkProgram(glprogram);
         if (!check_program_link(glprogram)) {
-            rocket::log_error("Cannot continue with failed linking", "shader_t::constructor", "error");
+            rocket::log("Cannot continue with failed linking", "shader_t", "constructor", "error");
             return;
         }
         gl_check_errors(5);
@@ -184,7 +184,7 @@ void main() {
         static auto load_file = [&shader_workingdir](std::string path) -> std::vector<std::string> {
             std::ifstream file(shader_workingdir / path);
             if (!file.is_open()) {
-                rocket::log_error("failed to open file path: " + (shader_workingdir / path).string(), "shader_t::constructor", "error");
+                rocket::log("failed to open file path: " + (shader_workingdir / path).string(), "shader_t", "constructor", "error");
                 return {};
             }
 
@@ -227,7 +227,7 @@ void main() {
                     std::string args = trim(l.substr(15));
                     std::vector<std::string> args_split = split(args, ' ');
                     if (args_split.size() != 2) {
-                        rocket::log_error("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln), "shader_t::constructor", "warn");
+                        rocket::log("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln), "shader_t", "constructor", "warn");
                         continue;
                     }
 
@@ -246,13 +246,13 @@ void main() {
                         }
                     }
                     else {
-                        rocket::log_error("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "unknown shader type '" + type + "'", "shader_t::constructor", "warn");
+                        rocket::log("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "unknown shader type '" + type + "'", "shader_t", "constructor", "warn");
                         continue;
                     }
                 } else if (l.starts_with("IncludeHeader:")) {
                     std::vector<std::string> args = split(trim(l.substr(14)), ' ');
                     if (args.size() != 3) {
-                        rocket::log_error("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": IncludeHeader takes 3 arguments!", "shader_t::constructor", "warn");
+                        rocket::log("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": IncludeHeader takes 3 arguments!", "shader_t", "constructor", "warn");
                         continue;
                     }
 
@@ -273,13 +273,13 @@ void main() {
 
                 else if (l.starts_with("VertexStart")) {
                     if (!rlsl_shader.vcode.empty()) {
-                        rocket::log_error("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "vertex shader already defined, cannot redefine vertex shader", "shader_t::constructor", "warn");
+                        rocket::log("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "vertex shader already defined, cannot redefine vertex shader", "shader_t", "constructor", "warn");
                         continue;
                     }
                     curmode = mode_t::vertex;
                 } else if (l.starts_with("FragmentStart")) {
                     if (!rlsl_shader.fcode.empty()) {
-                        rocket::log_error("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "fragment shader already defined, cannot redefine fragment shader", "shader_t::constructor", "warn");
+                        rocket::log("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "fragment shader already defined, cannot redefine fragment shader", "shader_t", "constructor", "warn");
                         continue;
                     }
                     curmode = mode_t::fragment;
@@ -289,7 +289,7 @@ void main() {
                     continue;
                 }
                 else {
-                    rocket::log_error("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "unknown opcode", "shader_t::constructor", "warn");
+                    rocket::log("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "unknown opcode", "shader_t", "constructor", "warn");
                 }
             }
             else if (curmode == mode_t::vertex) {
@@ -308,7 +308,7 @@ void main() {
         }
 
         if (rlsl_shader.vcode.empty() || rlsl_shader.fcode.empty()) {
-            rocket::log_error("failed to parse RLSL Shader: critical shader code missing", "shader_t::constructor", "error");
+            rocket::log("failed to parse RLSL Shader: critical shader code missing", "shader_t", "constructor", "error");
             return;
         }
 
@@ -356,7 +356,7 @@ void main() {
         rlsl_shader.fcode = constructed_fcode;
 
         if (rlsl_shader.version == "unk" || rlsl_shader.name == "unk") {
-            rocket::log_error("issue while parsing RLSL Shader: shader metadata incomplete", "shader_t::constructor", "warn");
+            rocket::log("issue while parsing RLSL Shader: shader metadata incomplete", "shader_t", "constructor", "warn");
         }
 
         int major, minor;
@@ -370,10 +370,10 @@ void main() {
         int rlsl_minor = std::stoi(split(rlsl_shader.version, '.')[1]);
         if (rlsl_major != ROCKETGE__FEATURE_MAX_RLSL_VERSION_MAJOR 
                 || rlsl_minor != ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR) {
-            rocket::log_error("This version of RLSL (" + std::to_string(rlsl_major) + "." + std::to_string(rlsl_minor) + " > " + std::to_string(ROCKETGE__FEATURE_MAX_RLSL_VERSION_MAJOR) + "." + std::to_string(ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR) + ") is not supported", "shader_t::constructor", "warn");
+            rocket::log("This version of RLSL (" + std::to_string(rlsl_major) + "." + std::to_string(rlsl_minor) + " > " + std::to_string(ROCKETGE__FEATURE_MAX_RLSL_VERSION_MAJOR) + "." + std::to_string(ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR) + ") is not supported", "shader_t", "constructor", "warn");
         }
         if (glver < rlsl_shader.gl_minimumversion) {
-            rocket::log_error("issue while parsing RLSL Shader: Loaded OpenGL Version lower than Minimum OpenGL Version (" + std::to_string(major) + "." + std::to_string(minor) + " < " + std::to_string(rlmajor) + "." + std::to_string(rlminor) + + ")", "shader_t::constructor", "warn");
+            rocket::log("issue while parsing RLSL Shader: Loaded OpenGL Version lower than Minimum OpenGL Version (" + std::to_string(major) + "." + std::to_string(minor) + " < " + std::to_string(rlmajor) + "." + std::to_string(rlminor) + + ")", "shader_t", "constructor", "warn");
         }
 
         this->vcode = rlsl_shader.vcode;
@@ -383,7 +383,7 @@ void main() {
 
         this->shader_init();
 
-        rocket::log("Loaded RLSL Shader '" + rlsl_shader.name + "'", "shader_t", "constructor", "info");
+        rocket::log("Loaded RLSL Shader: " + rlsl_shader.name, "shader_t", "constructor", "info");
     }
 
     shader_t::shader_t(shader_type type, std::string rlsl_shader_path) {
@@ -391,7 +391,7 @@ void main() {
         std::ifstream istream(rlsl_shader_path);
         std::filesystem::path shader_workingdir = std::filesystem::path(rlsl_shader_path).parent_path();
         if (!istream.is_open()) {
-            rocket::log_error("failed to open file path: " + rlsl_shader_path, "shader_t::shader_t(shader_type, std::string)", "error");
+            rocket::log("failed to open file path: " + rlsl_shader_path, "shader_t::shader_t(shader_type, std", "string)", "error");
             return;
         }
 

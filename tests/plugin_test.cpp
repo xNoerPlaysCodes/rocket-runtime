@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
 
         my_test();
     } else {
-        rocket::log_error("you didn't let it load the plugin!", "main.cpp::main", "warn");
+        rocket::log("you didn't let it load the plugin!", "main.cpp", "main", "warn");
     }
 
     rocket::window_t window = { { 1280, 720 }, "RocketGE - Plugin Test" };

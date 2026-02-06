@@ -11,9 +11,8 @@ namespace rocket {
     /// @note Some static functions are not compatible with OpenGL calls
     class thread_t {
     private:
-        std::function<void(void *arg1, void *arg2, void *arg3)> fn;
+        std::function<void()> fn;
         GLFWwindow *ctx;
-        void *arg1, *arg2, *arg3;
     public:
         /// @brief Schedules these calls to be run on the main thread at frame-end
         /// @note Thread-Safe
@@ -29,7 +28,7 @@ namespace rocket {
         /// @note [FIXME] DOESNT WORK
         void start();
     public:
-        thread_t(std::function<void(void *arg1, void *arg2, void *arg3)> fn, void *arg1 = nullptr, void *arg2 = nullptr, void *arg3 = nullptr);
+        thread_t(std::function<void()> fn);
     public:
         ~thread_t();
     };

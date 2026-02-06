@@ -42,12 +42,6 @@ namespace rgl {
     using blend_src_t = GLenum;
     using blend_dst_t = GLenum;
 
-#ifdef RGL_EXPOSE_NATIVE_LIB
-    GLFWwindow *__rglexp_get_main_context();
-    void schedule_gl(std::function<void()> fn);
-    void cleanup_all();
-#endif
-
 #ifdef rGL__FEATURE_SUPPORT_FBO
     struct fbo_t {
         GLuint fbo;

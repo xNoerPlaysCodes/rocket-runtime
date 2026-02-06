@@ -53,7 +53,7 @@ namespace rgl {
 
     GLFWwindow *gl_main_ctx;
 
-    GLFWwindow *__rglexp_get_main_context() {
+    GLFWwindow *get_main_context() {
         return gl_main_ctx;
     }
 
@@ -229,7 +229,7 @@ namespace rgl {
 
         // Init GLfnldr
         if (!glfnldr::init(backend)) {
-            rocket::log_error("OpenGL functions could not be loaded", "rgl::init_gl", "fatal");
+            rocket::log("OpenGL functions could not be loaded", "rgl", "init_gl", "fatal");
             rocket::exit(1);
             return {
                 "OpenGL functions could not be loaded"
@@ -326,10 +326,10 @@ namespace rgl {
                 std::vector<std::string> log_messages2 = dump_gl_state();
 
                 for (auto &l : log_messages) {
-                    rocket::log_error(l, -5, "OpenGL::ContextVerifier", "error");
+                    rocket::log(l, "OpenGL", "ContextVerifier", "error");
                 }
                 for (auto &l : log_messages2) {
-                    rocket::log_error(l, -5, "OpenGL::ContextVerifier", "error");
+                    rocket::log(l, "OpenGL", "ContextVerifier", "error");
                 }
                 rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
             }, nullptr);
@@ -398,17 +398,18 @@ namespace rgl {
             "GLSL Version: " + std::string((const char *) glGetString(GL_SHADING_LANGUAGE_VERSION)),
             "" + std::to_string(loaded_extensions) + " extensions loaded",
             "Multisampling: " + bool_to_str(gl_multisample) + (gl_samples > 0 ? (" (" + std::to_string(gl_samples) + "x)") : ""),
-            "rGL Features:",
-            "   Context Verifier: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
-            "   Binary Shaders: " + bool_to_str(false),
-            "GPU Info:",
-            "   Name: " + gpu_name,
-            "   Vendor: "  + gpu_vendor,
-            "   Modern: " + bool_to_str(gpu_is_modern),
+            "Context Verifier: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
+            "GPU:",
+            "  Name: " + gpu_name,
+            "  Vendor: "  + gpu_vendor,
         };
 
+        if (!gpu_is_modern) {
+            logs.push_back("!GPU In-use is not spec-compliant or new enough, performance may be impacted and bugs may occur");
+        }
+
         if (gpu_name.contains("llvmpipe")) {
-            rocket::log_error("using software OpenGL renderer", "rgl::init_gl", "warn");
+            logs.push_back("!using software OpenGL renderer");
         }
 
         return logs;
@@ -422,7 +423,7 @@ namespace rgl {
 
     void cleanup_all() {
         if (scheduled.size() > 0) {
-            rocket::log_error("Exiting with pending scheduled operations", "OpenGL", "warn");
+            rocket::log("Exiting with pending scheduled operations", "rgl", "cleanup_all", "warn");
         }
     }
 
@@ -447,7 +448,7 @@ namespace rgl {
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fbo.color_tex, 0);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            rocket::log_error("Failed to create custom framebuffer", "OpenGL::Framebuffer", "error");
+            rocket::log("Failed to create custom framebuffer", "OpenGL", "Framebuffer", "error");
             return rGL_FBO_INVALID;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -488,7 +489,7 @@ namespace rgl {
             glGetShaderiv(vs, GL_INFO_LOG_LENGTH, &logLen);
             std::string log(logLen, '\0');
             glGetShaderInfoLog(vs, logLen, nullptr, log.data());
-            rocket::log_error("Vertex shader compile failed: " + log, -1, "OpenGL::ShaderCompiler", "error");
+            rocket::log("Vertex shader compile failed: " + log, "OpenGL", "ShaderCompiler", "error");
         }
 
         GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
@@ -502,7 +503,7 @@ namespace rgl {
             glGetShaderiv(fs, GL_INFO_LOG_LENGTH, &logLen);
             std::string log(logLen, '\0');
             glGetShaderInfoLog(fs, logLen, nullptr, log.data());
-            rocket::log_error("Fragment shader compile failed: " + log, -1, "OpenGL::ShaderCompiler", "error");
+            rocket::log("Fragment shader compile failed: " + log, "OpenGL", "ShaderCompiler", "error");
         }
 
         rgl::shader_program_t pg = glCreateProgram();
@@ -516,7 +517,7 @@ namespace rgl {
             glGetProgramiv(pg, GL_INFO_LOG_LENGTH, &logLen);
             std::string log(logLen, '\0');
             glGetProgramInfoLog(pg, logLen, nullptr, log.data());
-            rocket::log_error("Shader program link failed: " + log, -1, "OpenGL::ShaderCompiler", "error");
+            rocket::log("Shader program link failed: " + log, "OpenGL", "ShaderCompiler", "error");
         } 
 
         glDeleteShader(vs);
@@ -559,7 +560,7 @@ namespace rgl {
                 shader_cache[use] = rocket::get_shader(rocket::shader_id_t::textured_rectangle);
                 break;
             default:
-                rocket::log_error("unknown shader use", "rgl", "error");
+                rocket::log("unknown shader use", "rgl", "init_shader", "error");
                 break;
         }
 
@@ -674,7 +675,7 @@ namespace rgl {
                 glBindVertexArray(textureVO.first);
                 break;
             default:
-                rocket::log_error("unknown shader use", "rgl", "error");
+                rocket::log("unknown shader use", "rgl", "draw_shader", "error");
                 break;
         }
 
@@ -695,7 +696,7 @@ namespace rgl {
 
     void update_viewport(const rocket::vec2f_t &offset, const rocket::vec2f_t &size) {
         if (viewport_size != size) {
-            rocket::log("Viewport size changed: [" + std::to_string((int) viewport_size.x) + "x" + std::to_string((int)viewport_size.y) + "] to [" + std::to_string((int) size.x) + "x" + std::to_string((int) size.y) + "]", "rgl", "update_viewport", "debug");
+            rocket::log("Viewport size changed: [" + std::to_string((int) viewport_size.x) + "x" + std::to_string((int)viewport_size.y) + "] to [" + std::to_string((int) size.x) + "x" + std::to_string((int) size.y) + "]", "rgl", "update_viewport", "trace");
         }
         viewport_size   = size;
         viewport_offset = offset;
@@ -827,7 +828,7 @@ namespace rgl {
         metrics.min_frametime = min_frametime_so_far;
 
 
-        static float alpha = 1.f; // 0.1 = smooth, 0.5 = more reactive
+        static float alpha = 0.1; // 0.1 = smooth, 0.5 = more reactive
 
         metrics.avg_fps = metrics.avg_fps + alpha * (fps - metrics.avg_fps);
         metrics.avg_frametime = metrics.avg_frametime + alpha * (frametime - metrics.avg_frametime);
