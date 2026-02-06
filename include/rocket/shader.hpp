@@ -32,7 +32,7 @@ namespace rocket {
         std::string name = "NON_RLSL_SHADER";
         std::string rlsl_version = "NOT_COMPILED_BY_RLSL";
 
-        GLuint vao, vbo;
+        GLuint vao{0}, vbo{0};
         
         friend class renderer_2d;
         friend class renderer_3d;

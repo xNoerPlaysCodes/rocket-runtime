@@ -117,8 +117,9 @@ def run_tests():
                 or name == "multithreaded_test":
             # cd bin && tests/sound_engine_test -- --unit-test
             result = subprocess.run(
-                ["tests/sound_engine_test", "--", "--unit-test"],
-                cwd="bin"
+                ["tests/" + name, "--", "--unit-test"],
+                cwd="bin",
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
             )
         else:
             result = subprocess.run(

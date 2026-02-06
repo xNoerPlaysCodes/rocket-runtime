@@ -1,6 +1,7 @@
 #include "rocket/asset.hpp"
 #include "rocket/renderer.hpp"
 #include "rocket/rgl.hpp"
+#include <chrono>
 #include <rocket/runtime.hpp>
 #include "rocket/types.hpp"
 #include "rocket/window.hpp"
@@ -51,6 +52,8 @@ int main(int argc, char **argv) {
         rocket::log("Hello, from a new thread", "thread", std::to_string(rocket::thread_t::get_thread_id()), "info");
     });
 
+    std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
+
     while (window.is_running()) {
         r.begin_frame();
         r.clear();
@@ -63,7 +66,14 @@ int main(int argc, char **argv) {
         }
         r.end_frame();
         window.poll_events();
-        if (test_mode) return tx == nullptr;
+        auto end = std::chrono::high_resolution_clock::now();
+        if (test_mode) {
+            if (end - start > std::chrono::seconds(5) && tx == nullptr) {
+                return 1;
+            } else {
+                return tx == nullptr; // FIXME
+            }
+        }
     }
     window.close();
 }

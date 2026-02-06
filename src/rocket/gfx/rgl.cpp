@@ -828,7 +828,7 @@ namespace rgl {
         metrics.min_frametime = min_frametime_so_far;
 
 
-        static float alpha = 1.f; // 0.1 = smooth, 0.5 = more reactive
+        static float alpha = 0.1; // 0.1 = smooth, 0.5 = more reactive
 
         metrics.avg_fps = metrics.avg_fps + alpha * (fps - metrics.avg_fps);
         metrics.avg_frametime = metrics.avg_frametime + alpha * (frametime - metrics.avg_frametime);

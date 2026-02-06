@@ -78,6 +78,7 @@ add_library(${PROJECT_NAME}
     src/rocket/util/types.cpp
     src/rocket/util/crashdump.cpp
     src/rocket/util/shader_provider.cpp
+    src/rocket/util/persistence.cpp
     src/rocket/util/util.cpp
 
     # Master
@@ -132,7 +133,6 @@ if (BUILD_TESTS)
     set(TEST_NAMES
         initializer_test
         text_test
-        line_test
         gamepad_test
         icon_test
         iosim
@@ -143,6 +143,7 @@ if (BUILD_TESTS)
         borderless_windowed_test
         triangle_drawcall_test
         default_shader_test
+        persistence_test
     )
 
     if (BUILD_ASTRO)
