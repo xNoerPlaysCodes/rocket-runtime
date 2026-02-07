@@ -136,12 +136,15 @@ Packages Needed:
 - `ninja` (Recommended)
 
 Libraries Needed:
-- `GLFW`   (>= 3.4)
-- `SDL2`   (== 2.0)
-- `OpenGL` (>= 2.0)
-- `GLEW`   (>= 1.5)
-- `OpenAL` (any)
-- `miniz`  (>= 3.0)
+- `GLFW`    (>= 3.4)
+- `SDL2`    (== 2.0)
+- `OpenGL`  (>= 2.0)
+- `GLEW`    (>= 1.5)
+- `OpenAL`  (any)
+- `miniz`   (>= 3.0)
+- `GLM`     ()
+- `pybind11`
+- `python`  (>= 3.12)
 
 Compilation Process:
 - `rm -rf build` Remove any cached builds
