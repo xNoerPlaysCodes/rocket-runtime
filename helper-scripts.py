@@ -99,6 +99,7 @@ def run_tests():
         count += 1.0
 
     done = 0.0
+    passed = 0.0
     for name in sorted(os.listdir(TEST_DIR)):
         if name.endswith(".exe"):
             name = name[:-4]
@@ -129,10 +130,13 @@ def run_tests():
         if result.returncode != 0:
             print(" FAIL: " + name)
             failed = True
+        else:
+            passed += 1
         done += 1
 
     print("\r", end="", flush=True)
     print("[" + "100" + "%]", flush=True)
+    print(str(int(passed)) + "/" + str(int(done)) + " tests passed")
     sys.exit(1 if failed else 0)
 
 

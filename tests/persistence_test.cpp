@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     int h = variant_to_int(height, 720);
 
     rocket::window_t window = { { w, h }, "RocketGE - Persistence Test" };
-    rocket::renderer_2d r = &window;
+    rocket::renderer_2d r = { &window, 60, { .show_splash = !test_mode } };
 
     while (window.is_running()) {
         r.begin_frame();
@@ -39,6 +39,8 @@ int main(int argc, char **argv) {
         }
         r.end_frame();
         window.poll_events();
+
+        if (test_mode) return 0;
     }
 
     rocket::storage::store("window_width", window.get_size().x);

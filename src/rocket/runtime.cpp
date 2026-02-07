@@ -31,6 +31,16 @@ namespace callback {
         
         rnative::exit_now(code);
     }
+
+    void aborted(void *mem_addr, int code) {
+        std::endl(std::cout);
+
+        std::cout << rocket::crash_signal(true, mem_addr, "aborted", "Program aborted by libc");
+
+        std::endl(std::cout);
+
+        rnative::exit_now(code);
+    }
 }
 
 #ifdef ROCKETGE__Platform_UnixCompatible
@@ -55,7 +65,15 @@ void __init() {
     sbus.sa_flags = SA_SIGINFO;
     sigaction(SIGBUS, &sbus, nullptr);
 
-    rocket::log("Hooked SIGBUS & SIGSEGV", "rocket", "init", "debug");
+    struct sigaction sigiot;
+    sigiot.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
+        callback::aborted(info->si_addr, info->si_code);
+    };
+    sigiot.sa_flags = SA_SIGINFO;
+    sigaction(SIGIOT, &sigiot, nullptr);
+    sigaction(SIGABRT, &sigiot, nullptr);
+
+    rocket::log("Hooked SIGBUS, SIGSEGV, SIGIOT, SIGABRT", "rocket", "init", "debug");
     
     util::init_memory_buffer();
 

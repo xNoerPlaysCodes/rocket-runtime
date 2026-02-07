@@ -68,11 +68,12 @@ int main(int argc, char **argv) {
         window.poll_events();
         auto end = std::chrono::high_resolution_clock::now();
         if (test_mode) {
-            if (end - start > std::chrono::seconds(5) && tx == nullptr) {
+            bool has_been_5_seconds = (end - start) >= std::chrono::seconds(5);
+            if (has_been_5_seconds && tx == nullptr) {
                 return 1;
-            } else {
-                return tx == nullptr; // FIXME
             }
+
+            if (tx != nullptr) return 0;
         }
     }
     window.close();
