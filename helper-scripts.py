@@ -23,7 +23,6 @@ parser.add_argument("-g", "--glfnldr-backend", action="store", help="Which glfnl
         use when building", default="GLEW", choices=["GLEW", "LIBEPOXY"])
 
 
-
 def get_deps() -> None:
     deps: dict = {
         "GLFW": "  >= 3.4",
@@ -167,10 +166,12 @@ def build(args):
     command = "cmake"
     args = ["--build", "build", "--", "-j" + str(cpus)]
 
-    print("command: " + "cmake" + " " + " ".join(args))
+    print("> command: " + "cmake" + " " + " ".join(args))
     prc = subprocess.run(["cmake"] + args)
 
-    return prc.returncode
+    cmake_code = prc.returncode
+
+    return cmake_code
 
 def main() -> int:
     args = parser.parse_args()

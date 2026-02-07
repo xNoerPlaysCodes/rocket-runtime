@@ -273,21 +273,25 @@ namespace rocket {
                     "License MIT: Refer to LICENSE for more",
                     "",
                     "Attribution:",
-                    "> stb_vorbis  (PD)",
-                    "> stb_trutype (PD)",
-                    "> stb_image   (PD)",
-                    "> tweeny      (MIT)",
+                    "> stb_vorbis    (PD)",
+                    "> stb_trutype   (PD)",
+                    "> stb_image     (PD)",
+                    "> tweeny       (MIT)",
 #ifdef ROCKETGE__GLFNLDR_BACKEND_GLEW
-                    "> GLEW        (BSD)",
+                    "> GLEW         (BSD)",
 #endif
 #ifdef ROCKETGE__GLFNLDR_BACKEND_LIBEPOXY
-                    "> libepoxy    (MIT)",
+                    "> libepoxy     (MIT)",
 #endif
                     "> OpenGL      (RYLF)",
+                    "> glm          (MIT)",
                     "> GLFW        (ZLIB)",
                     "> SDL2        (ZLIB)",
                     "> OpenAL Soft (LGPL)",
-                    "> miniz       (MIT)",
+                    "> miniz        (MIT)",
+                    "> nlohmannJSON (MIT)",
+                    "> pybind11     (BSD)",
+                    "> python3      (PSF)",
                     "",
                     "Made by noerlol with  ",
                 };

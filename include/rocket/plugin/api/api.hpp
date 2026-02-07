@@ -24,7 +24,6 @@ namespace rapi {
         std::string api_impl_version;
 
         // Logger
-        std::function<void(std::string error, int error_id, std::string error_source, std::string level)> log_error;
         std::function<void(std::string error, std::string class_file_library_source, std::string function_source, std::string level)> log;
 
         /// @brief Get User-Exposed Renderer 2D

@@ -79,6 +79,7 @@ add_library(${PROJECT_NAME}
     src/rocket/util/crashdump.cpp
     src/rocket/util/shader_provider.cpp
     src/rocket/util/persistence.cpp
+    src/rocket/util/scripting.cpp
     src/rocket/util/util.cpp
 
     # Master
@@ -117,8 +118,10 @@ endif()
 find_package(OpenAL REQUIRED)
 find_package(miniz REQUIRED) # miniz may not be installed
 find_package(SDL2 REQUIRED)
+find_package(pybind11 REQUIRED)
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) # Legacy definition
@@ -144,6 +147,7 @@ if (BUILD_TESTS)
         triangle_drawcall_test
         default_shader_test
         persistence_test
+        scripting_test
     )
 
     if (BUILD_ASTRO)
@@ -164,7 +168,7 @@ if (BUILD_TESTS)
             target_link_directories(${test_name} PRIVATE bin)
             target_include_directories(${test_name} PRIVATE include)
 
-            target_link_libraries(${test_name} PRIVATE RocketRuntime)
+            target_link_libraries(${test_name} PRIVATE RocketRuntime Python3::Python)
 
             target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic)
             set_target_properties(${test_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
