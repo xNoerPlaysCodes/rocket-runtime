@@ -126,7 +126,7 @@ namespace rocket {
     std::mutex cout_mutex;
 
     void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
-        static auto cli_args = util::get_clistate();
+        static thread_local auto cli_args = util::get_clistate();
         if (cli_args.lognone) return;
         {
             std::lock_guard<std::mutex> _(cout_mutex);
