@@ -114,7 +114,8 @@ def run_tests():
         if name == "sound_engine_test" \
                 or name == "icon_test" \
                 or name == "plugin_test" \
-                or name == "multithreaded_test":
+                or name == "multithreaded_test" \
+                or name == "scripting_test":
             # cd bin && tests/sound_engine_test -- --unit-test
             result = subprocess.run(
                 ["tests/" + name, "--", "--unit-test"],
