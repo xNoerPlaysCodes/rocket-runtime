@@ -237,6 +237,15 @@ namespace rocket {
             return static_cast<gamepad_t>(id);
         }
 
+        std::vector<gamepad_t> get_available_gamepads() {
+            std::vector<gamepad_t> gpads;
+            for (int i = 0; i <= GLFW_JOYSTICK_LAST; ++i) {
+                if (is_available(i)) gpads.push_back(static_cast<gamepad_t>(i));
+            }
+
+            return gpads;
+        }
+
         std::string get_human_readable_name(button_t button, style_t style) {
             using enum button_t;
             const std::unordered_map<std::pair<button_t, style_t>, std::string> button_names = {

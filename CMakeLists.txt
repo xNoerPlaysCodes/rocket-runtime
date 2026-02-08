@@ -16,7 +16,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 #DebugMode
 project(${PROJECT_NAME} CXX)
 
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
 option(BUILD_SHARED_LIBS "Build Shared" ON)
 option(BUILD_TESTS "Build Tests" ON)
@@ -138,7 +138,7 @@ if (BUILD_TESTS)
         text_test
         gamepad_test
         icon_test
-        iosim
+        io_simulation_test
         io_test
         plugin_test
         multithreaded_test

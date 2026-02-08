@@ -253,6 +253,7 @@ namespace rocket {
         bool is_available(int id = 0);
         /// @brief Get Gamepad Handle from ID
         gamepad_t get_handle(int id = 0);
+        std::vector<gamepad_t> get_available_gamepads();
 
         /// @brief Get Human Readable Name
         std::string get_human_readable_name(button_t, style_t);

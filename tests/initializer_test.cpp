@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
         test_mode = true;
     }
     // Initialize a native window
-    rocket::window_t window = { {1280, 720}, "Basic Window" };
+    rocket::window_t window = { {1280, 720}, "RocketGE - Initializer Test" };
 
     // Initialize default 2D renderer
     rocket::renderer_2d r2d(&window, 60, {.show_splash = !test_mode});

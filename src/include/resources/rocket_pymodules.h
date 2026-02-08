@@ -11,8 +11,15 @@
 
 namespace py = pybind11;
 
-std::string get_version() {
-    return ROCKETGE__VERSION;
+std::string get_macro_value(std::string value) {
+#define RETMAC(val) if (value == val) return val;
+    RETMAC("ROCKETGE__MAJOR_VERSION");
+    RETMAC("ROCKETGE__MINOR_VERSION");
+    RETMAC("ROCKETGE__BUILD");
+    RETMAC("ROCKETGE__VERSION");
+    RETMAC("ROCKETGE__PLATFORM");
+    RETMAC("ROCKETGE__FEATURE_GL_LOADER");
+    return "UNKNOWN_MACRO";
 }
 
 template<typename T>
@@ -36,7 +43,7 @@ void __bind(py::module_ &m) {
     m.doc() = "The RocketGE Python Scripting API";
 
     m.def("__devtest", &__devtest, "(Dev Builds only) Test");
-    m.def("get_version", &get_version, "Returns the version");
+    m.def("get_macro_value", &get_macro_value, "Returns the RocketGE macro");
     m.def("log", &rocket::log, "Log a message using RocketLogger");
     m.def("get_renderer2d", &util::get_global_renderer_2d, "Get a user-exposed renderer2d (May be None)", py::return_value_policy::reference);
     m.def("schedule_gl", &rocket::thread_t::schedule, "Run OpenGL code on the main-thread at frame-end");
@@ -68,6 +75,8 @@ void __bind(py::module_ &m) {
 
     py::class_<rocket::renderer_2d>(m, "renderer_2d")
         .def("clear", &rocket::renderer_2d::clear)
+        .def("begin_frame", &rocket::renderer_2d::begin_frame)
+        .def("end_frame", &rocket::renderer_2d::end_frame)
         .def("draw_rectangle", 
                 py::overload_cast<rocket::fbounding_box, 
                 rocket::rgba_color, 
@@ -105,8 +114,6 @@ void __bind(py::module_ &m) {
 }
 
 int __devtest() {
-    get_version();
-
     return 0;
 }
 

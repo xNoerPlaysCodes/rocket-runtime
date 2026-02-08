@@ -20,6 +20,10 @@ int main(int argc, char **argv) {
     rocket::text_t text = { "", 48, rocket::rgb_color::black() };
 
     int hd = 0;
+    if (auto gpads = rocket::gpad::get_available_gamepads(); gpads.size() > 0) {
+        hd = gpads.at(0);
+    }
+
     if (!rocket::gpad::is_available(hd)) {
         rocket::log("Gamepad is not available", "main.cpp", "main", "fatal");
         return 1;
@@ -36,6 +40,10 @@ int main(int argc, char **argv) {
             logstr = "LMB";
         } else if (event.button == rocket::io::mouse_button::right) {
             logstr = "RMB";
+        } else if (event.button == rocket::io::mouse_button::middle) {
+            logstr = "MMB";
+        } else {
+            logstr = "???";
         }
         rocket::log(logstr, "main.cpp", "mouse_listener", "info");
     });

@@ -1,6 +1,8 @@
 #include "rocket/renderer.hpp"
+#include "rocket/types.hpp"
 #include "rocket/window.hpp"
 #include <chrono>
+#include <iostream>
 #include <rocket/runtime.hpp>
 #include <rocket/scripting.hpp> 
 #include <thread>
@@ -17,38 +19,29 @@ int main(int argc, char **argv) {
 
     rocket::script::init();
     rocket::script::environment_t env;
-    std::string code = R"(
-import rocket
 
-r2d = rocket.get_renderer2d()
-color = rocket.rgba_color()
-color.x = 14
-color.y = 14
-color.z = 14
-
-r2d.clear(color)
-pos = rocket.vec2f(100, 100)
-size = rocket.vec2f(200, 200)
-r2d.draw_rectangle(pos, size)
-rocket.log("Hello, world!")
-)";
-
-    r.begin_frame();
-    r.clear();
-    bool success = env.exec(code);
-    r.end_frame();
-
-    if (success)
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+    bool success = env.load_exec(std::filesystem::path("resources") / "update_rect_position.py");
+    rocket::script::initialize_file_watcher([&env]() {
+        rocket::log("Script changed, reloading...", "rocket::script", "initialize_file_watcher", "info");
+        env.load_exec(std::filesystem::path("resources") / "update_rect_position.py");
+    }, std::filesystem::path("resources") / "update_rect_position.py");
 
     while (window.is_running()) {
         r.begin_frame();
         r.clear();
         {
+            env.call("update");
+
+            pybind11::object py_position = env.globals["cur_position"];
+            rocket::vec2f_t position = py_position.cast<rocket::vec2f_t>();
+
+            r.draw_rectangle(position, { 200, 200 });
+
+            r.draw_fps();
         }
         r.end_frame();
         window.poll_events();
 
-        if (test_mode) return success;
+        if (test_mode) return !success;
     }
 }

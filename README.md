@@ -5,6 +5,7 @@
 - Make Games with OpenGL and GLFW
 - Make beautiful UIs with Astro or RocketUI
 - Make mathematically-accurate physics with Quark
+- Have your ideas come to life quickly with Python scripting
 
 # Examples
 
