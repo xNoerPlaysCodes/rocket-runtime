@@ -143,9 +143,9 @@ Libraries Needed:
 - `GLEW`    (>= 1.5)
 - `OpenAL`  (any)
 - `miniz`   (>= 3.0)
-- `GLM`     ()
+- `GLM`     (>= 1.0)
 - `pybind11`
-- `python`  (>= 3.12)
+- `python`  (== 3.14)
 
 Compilation Process:
 - `rm -rf build` Remove any cached builds
@@ -156,4 +156,4 @@ After compilation if no errors occur, `libRocketRuntime.so` will be in `bin/`
 ## Windows
 ### Building from source (recommended)
 
-Idk 🤷‍♂️
+👀 Coming Soon...

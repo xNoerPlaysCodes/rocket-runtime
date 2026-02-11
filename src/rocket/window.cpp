@@ -199,20 +199,20 @@ namespace rocket {
             {4,3},
             {4,2},
             {4,1},
-            {4,0},
+            {4,0}, // 7
 
             {3,3},
             {3,2},
             {3,1},
-            {3,0},
+            {3,0}, // 4
 
             {2,1},
-            {2,0},
+            {2,0}, // 2
         };
 
         static auto cli_args = util::get_clistate();
 
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < 13; i++) {
             rocket::log("Trying " + std::to_string(versions[i][0]) + "." + std::to_string(versions[i][1]), "window_t", "context_creator", "debug");
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versions[i][0]);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versions[i][1]);

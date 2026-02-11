@@ -11,7 +11,7 @@
 
 #include <miniz.h>
 
-#error fix windows GetProcAddress returns FARPROC
+// #error fix windows GetProcAddress returns FARPROC
 #ifdef ROCKETGE__Platform_Windows
 #include <windows.h>
 #define load_lib(name) LoadLibraryA(name)
@@ -28,8 +28,7 @@ constexpr std::string dll_extension = ".dll";
 constexpr std::string dll_extension = ".so";
 #endif
 
-constexpr std::string   api_version     = "1.0-dev";
-constexpr int           api_iteration   = 1;
+constexpr std::string   api_version     = "0.0.1";
 
 #define CALL_FUN_NOARG(p, ret, nm) ((ret (*)())(p->get_function(nm)))();
 
