@@ -142,7 +142,7 @@ def run_tests():
 
 
 def init_cmake(args):
-    commands = ["cmake"]
+    commands = ["cmake", "git"]
     for command in commands:
         if not shutil.which(command):
             print(f"{command} was not found in PATH.")
@@ -150,8 +150,36 @@ def init_cmake(args):
 
     os.makedirs("build", exist_ok=True)
 
+    if sys.platform == "win32":
+        if not os.path.isdir("windeps"):
+            print("installation of dependencies required")
+            if not os.path.isdir(".gitwindeps"):
+                os.mkdir(".gitwindeps")
+            cmd = ["git"]
+            args = ["clone", "https://github.com/NOERLOL-Mirrors/rocket-runtime-windeps", "--depth", "1", ".gitwindeps"]
+            print("command: " + "git" + " " + " ".join(args))
+            # subprocess.run(cmd + args, check=True)
+            src = ".gitwindeps/windeps"
+            dst = "."
+            if os.path.isdir(src):
+                for item in os.listdir(src):
+                    s = os.path.join(src, item)
+                    d = os.path.join(dst, item)
+                    # Move each file/folder
+                    if os.path.exists(d):
+                        print(f"overwrite {d}")
+                        if os.path.isdir(d):
+                            shutil.rmtree(d)
+                        else:
+                            os.remove(d)
+                    shutil.move(s, d)
+
     backend = args.glfnldr_backend
     args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build"]
+
+    if sys.platform == "win32":
+        args.append("-DBUILD_SHARED_LIBS=OFF")
+        args.append("-D__rge_WINDOWS__=ON")
 
     print("command: " + "cmake" + " " + " ".join(args))
     subprocess.run(["cmake"] + args)

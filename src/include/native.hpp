@@ -2,6 +2,7 @@
 #define ROCKETGE__RNATIVE_HPP
 
 #include <GLFW/glfw3.h>
+#include <rocket/macros.hpp>
 namespace rnative {
     void wayland_set_window_icon(GLFWwindow *window, GLFWimage &image);
     /// @brief Pre window creation
@@ -42,5 +43,12 @@ namespace rnative {
 #include <shobjidl.h>
 
 #endif // RNATIVE__INCLUDE_WINDOWS
+
+#ifdef ROCKETGE__Platform_Linux
+#define native_gmtime(x, y) gmtime_r(x, y)
+#endif
+#ifdef ROCKETGE__Platform_Windows
+#define native_gmtime(x, y) gmtime_s(y, x)
+#endif
 
 #endif // ROCKETGE__RNATIVE_HPP

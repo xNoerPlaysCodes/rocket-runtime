@@ -1,5 +1,4 @@
 #include <GLFW/glfw3.h>
-#include <X11/X.h>
 #include <cstdio>
 #include <cstring>
 #include <filesystem>

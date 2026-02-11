@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <sstream>
 #include <util.hpp>
+#include <native.hpp>
 
 namespace rocket {
     template<typename T>
@@ -46,7 +47,8 @@ namespace rocket {
     char* get_time_string() {
         std::time_t t = std::time(nullptr);
         std::tm tm{};
-        gmtime_r(&t, &tm);
+
+        native_gmtime(&t, &tm);
 
         static char *buf = char_allocator.allocate(64);
         for (int i = 0; i < 64; ++i) buf[i] = 0;

@@ -21,6 +21,7 @@ set(CMAKE_BUILD_TYPE Release)
 option(BUILD_SHARED_LIBS "Build Shared" ON)
 option(BUILD_TESTS "Build Tests" ON)
 option(BUILD_EXAMPLES "Build Examples" ON)
+option(__rge_WINDOWS__ OFF)
 
 option(BUILD_QUARK "Build Quark [physics]" ON)
 option(BUILD_ASTRO "Build Astro [ui]" ON)
@@ -107,19 +108,51 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE /usr/include/miniz)
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE src/include)
 
 # Fetch Dependencies
-find_package(OpenGL REQUIRED)
-find_package(glfw3 REQUIRED)
-find_package(PkgConfig REQUIRED)
-if (GLFNLDR_BACKEND STREQUAL "GLEW")
-    find_package(GLEW REQUIRED)
-elseif(GLFNLDR_BACKEND STREQUAL "LIBEPOXY")
-    pkg_check_modules(EPOXY REQUIRED epoxy)
+if (__rge_WINDOWS__)
+    target_link_directories(${PROJECT_NAME} PRIVATE
+        ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
+        ${CMAKE_SOURCE_DIR}/windeps/glfw/src
+        ${CMAKE_SOURCE_DIR}/windeps/miniz
+        ${CMAKE_SOURCE_DIR}/windeps/openal-soft
+        ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
+    )
+
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/include
+        ${CMAKE_SOURCE_DIR}/windeps/glfw/include
+        ${CMAKE_SOURCE_DIR}/windeps/miniz
+        ${CMAKE_SOURCE_DIR}/windeps/openal-soft/include
+        ${CMAKE_SOURCE_DIR}/windeps/SDL2/include
+        ${CMAKE_SOURCE_DIR}/windeps/python/install/include
+        ${CMAKE_SOURCE_DIR}/windeps/pybind11/include
+        ${CMAKE_SOURCE_DIR}/windeps/nlohmann-json/include
+        ${CMAKE_SOURCE_DIR}/windeps/glm
+    )
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        opengl32
+        glew32
+        glfw3dll
+        OpenAL32
+        miniz
+        SDL2
+        python314
+    )
+else()
+    find_package(OpenGL REQUIRED)
+    find_package(glfw3 REQUIRED)
+    find_package(PkgConfig REQUIRED)
+    if (GLFNLDR_BACKEND STREQUAL "GLEW")
+        find_package(GLEW REQUIRED)
+    elseif(GLFNLDR_BACKEND STREQUAL "LIBEPOXY")
+        pkg_check_modules(EPOXY REQUIRED epoxy)
+    endif()
+    find_package(OpenAL REQUIRED)
+    find_package(miniz REQUIRED) # miniz may not be installed
+    find_package(SDL2 REQUIRED)
+    find_package(pybind11 REQUIRED)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 endif()
-find_package(OpenAL REQUIRED)
-find_package(miniz REQUIRED) # miniz may not be installed
-find_package(SDL2 REQUIRED)
-find_package(pybind11 REQUIRED)
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python)
 

@@ -152,13 +152,13 @@ namespace rocket {
 
         if (type == platform_type_t::linux_wayland) {
 #ifndef ROCKETGE__Platform_Linux
-            rocket::log("type can only be platform_type_t", "linux_wayland when on linux", "window_t", "set_forced_platform", "error");
+            rocket::log("type can only be platform_type_t::linux_wayland when on linux", "window_t", "set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WAYLAND);
 #endif
         } else if (type == platform_type_t::linux_x11) {
 #ifndef ROCKETGE__Platform_Linux
-            rocket::log("type can only be platform_type_t", "linux_x11 when on linux", "window_t", "set_forced_platform", "error");
+            rocket::log("type can only be platform_type_t::linux_x11 when on linux", "window_t", "set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
 #endif
@@ -192,8 +192,7 @@ namespace rocket {
     float get_max_context_gl_version() {
         glfwSetErrorCallback(nullptr);
         GLFWwindow *tg_win;
-        const int len = 19;
-        int versions[][len] = {
+        int versions[][2] = {
             {4,6},
             {4,5},
             {4,4},
