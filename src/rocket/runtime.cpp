@@ -41,6 +41,16 @@ namespace callback {
 
         rnative::exit_now(code);
     }
+
+    void __windows_crash_handler(void *mem_addr) {
+        std::endl(std::cout);
+
+        std::cout << rocket::crash_signal(true, mem_addr, "crashed", "Generic Windows Program Crash");
+
+        std::endl(std::cout);
+
+        rnative::exit_now(1);
+    }
 }
 
 #ifdef ROCKETGE__Platform_UnixCompatible
@@ -84,7 +94,45 @@ void __init() {
 
 #include <windows.h>
 
+static volatile bool g_shutdown_requested = false;
+
+BOOL WINAPI console_ctrl_handler(DWORD type)
+{
+    if (type == CTRL_C_EVENT ||
+        type == CTRL_BREAK_EVENT ||
+        type == CTRL_CLOSE_EVENT)
+    {
+        g_shutdown_requested = true;
+        rnative::exit_now(0);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+LONG CALLBACK crash_handler(EXCEPTION_POINTERS *info) {
+#ifdef _M_X64
+    void* ip = (void*)info->ContextRecord->Rip;
+#elif _M_IX86
+    void* ip = (void*)info->ContextRecord->Eip;
+#else
+    void* ip = nullptr;
+#endif
+
+    if (g_shutdown_requested)
+        return EXCEPTION_CONTINUE_SEARCH;
+
+    callback::__windows_crash_handler(ip);
+
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+
 void __init() {
+    // AddVectoredExceptionHandler(1, &crash_handler);
+    // SetConsoleCtrlHandler(console_ctrl_handler, TRUE);
+    util::init_memory_buffer();
+
+    rocket::log("Emergency memory buffer initialized with size " + std::format("{} MiB", util::get_memory_buffer()->sz / 1024 / 1024), "rocket", "init", "debug");
 }
 
 #endif
@@ -264,12 +312,6 @@ namespace rocket {
                 }
             } else if (arg == "nosplash" || arg == "no-splash") {
                 args.nosplash = true;
-            } else if (arg == "dx11" || arg == "dx-11") {
-                rocket::log("argument handler not implemented for " + arg, "rocket", "argparse", "error");
-                args.dx11 = true;
-            } else if (arg == "dx12" || arg == "dx-12") {
-                rocket::log("argument handler not implemented for " + arg, "rocket", "argparse", "error");
-                args.dx12 = true;
             } else if (arg == "vp-size" || arg == "vpsize" || arg == "viewport-size" || arg == "viewportsize") {
                 args.viewport_size = value;
                 args.viewport_size_set = true;
@@ -311,7 +353,11 @@ namespace rocket {
                     "> pybind11     (BSD)",
                     "> python3      (PSF)",
                     "",
+#ifdef ROCKETGE__Platform_UnixCompatible
                     "Made by noerlol with  ",
+#else
+                    "Made by noerlol with love",
+#endif
                 };
                 for (auto &l : lines) {
                     std::cout << l << '\n';
@@ -341,14 +387,6 @@ namespace rocket {
                     "   no-splash, nosplash",
                     "   -> hides splash from being shown in the beginning",
                     "",
-#ifdef ROCKETGE__Platform_Windows
-                    "W  dx-11, dx11 [[FIXME]]",
-                    "   -> forces to use D3D11 renderer",
-                    "",
-                    "W  dx-12, dx12 [[FIXME]]",
-                    "   -> forces to use D3D12 renderer",
-                    "",
-#endif
                     "*  viewport-size, viewportsize, vp-size, vpsize [resolution] [[FIXME]]",
                     "   -> forces to use a initial viewport size",
                     "",
@@ -427,11 +465,13 @@ namespace rocket {
 
     void init(std::vector<std::string> args) {
         set_cli_arguments(args);
+        rnative::init();
         __init();
     }
 
     void init(int argc, char **argv) {
         set_cli_arguments(argc, argv);
+        rnative::init();
         __init();
     }
 }

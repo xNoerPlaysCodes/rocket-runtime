@@ -1,3 +1,7 @@
+#include "rocket/macros.hpp"
+#ifdef ROCKETGE__Platform_Windows
+#define GL_STATIC_DRAW 0x88E4
+#endif
 #include "../include/FontDefault.h"
 #include "rocket/audio.hpp"
 #include "../../include/rocket/asset.hpp"
@@ -92,14 +96,12 @@ namespace rocket {
             return;
         }
 
-        // Wait until the audio actually starts playing
         ALint state;
         do {
             alGetSourcei(source, AL_SOURCE_STATE, &state);
             std::this_thread::sleep_for(16ms);
         } while (state != AL_PLAYING);
 
-        // Start monitoring thread
         finish_thread = std::thread([this, on_finish, loop]() {
             ALint state;
             do {

@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
-    rocket::set_cli_arguments(argc, argv);
+    rocket::init(argc, argv);
     rocket::window_t window = { { 1280, 720 }, "RocketGE - Sound Engine Test" };
     rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
 

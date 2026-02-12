@@ -1,6 +1,11 @@
 #ifndef ROCKETGE__RUNTIME_HPP
 #define ROCKETGE__RUNTIME_HPP
 
+#include "rocket/macros.hpp"
+#ifdef ROCKETGE__Platform_Windows
+#define GL_STATIC_DRAW 0x88E4
+#endif
+
 #include "renderer.hpp"
 #include "asset.hpp"
 #include "io.hpp"
@@ -118,11 +123,6 @@ namespace rocket {
 
     /// @brief Get OpenGL Error callback
     gl_error_callback_t get_opengl_error_callback();
-
-    /// @brief Optionally set CLI arguments
-    [[deprecated("Use init(...)")]] void set_cli_arguments(int argc, char *argv[]);
-    /// @brief Optionally set CLI arguments
-    [[deprecated("Use init(...)")]] void set_cli_arguments(std::vector<std::string> args);
 
     void init(std::vector<std::string> args = {});
     void init(int argc = 0, char **argv = nullptr);

@@ -13,6 +13,7 @@ int main(int argc, char **argv) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
+    rocket::init(argc, argv);
     // Initialize a native window
     rocket::window_t window = { {1280, 720}, "RocketGE - Initializer Test" };
 

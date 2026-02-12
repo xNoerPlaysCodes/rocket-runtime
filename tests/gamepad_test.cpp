@@ -13,6 +13,7 @@ int main(int argc, char **argv) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
+    rocket::init(argc, argv);
     rocket::window_t::set_forced_platform(rocket::platform_type_t::linux_x11);
     rocket::window_t window = { { 1280, 720 }, "RocketGE - Gamepads" };
     rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});

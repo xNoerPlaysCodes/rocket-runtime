@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
+    rocket::init(argc, argv);
     rocket::window_t window = { { 1280, 720 }, "RocketGE - Window Icon Test"};
     rocket::asset_manager_t asset_manager;
     rocket::assetid_t texture = asset_manager.load_texture("resources/window_icon.jpg", rocket::texture_color_format_t::rgba);

@@ -6,7 +6,7 @@
 #include "rocket/window.hpp"
 
 int main(int argc, char **argv) {
-    rocket::set_cli_arguments(argc, argv);
+    rocket::init(argc, argv);
     bool test_mode = false;
     if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
         rocket::set_log_level(rocket::log_level_t::none);

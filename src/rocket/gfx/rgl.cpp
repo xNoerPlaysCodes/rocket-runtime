@@ -42,6 +42,13 @@ namespace glutil {
 }
 
 namespace rgl {
+    scoped_gl_texture_t::scoped_gl_texture_t() {
+        glGenTextures(1, &id);
+        cleanup = { nullptr, [this](void*) { glDeleteTextures(1, &id); } };
+    }
+}
+
+namespace rgl {
     std::pair<vao_t, vbo_t> rectVO = {0, 0};
     std::pair<vao_t, vbo_t> textureVO = {0, 0};
     std::pair<vao_t, vbo_t> textVO = {0, 0};
@@ -227,7 +234,6 @@ namespace rgl {
             };
         }
 
-        // Init GLfnldr
         if (!glfnldr::init(backend)) {
             rocket::log("OpenGL functions could not be loaded", "rgl", "init_gl", "fatal");
             rocket::exit(1);
@@ -236,16 +242,12 @@ namespace rgl {
             };
         }
 
-        // Setup viewport
         glViewport(0, 0, viewport_size.x, viewport_size.y);
         init_vo_all();
 
-        // Clear GL errors
         while (glGetError() != GL_NO_ERROR) {};
 
-        // GL state toggles
         glEnable(GL_BLEND);
-        bool gl_blend = true;
 
         auto *win = reinterpret_cast<rocket::window_t*>(glfwGetWindowUserPointer(glfwGetCurrentContext()));
         bool gl_multisample = false;
@@ -406,6 +408,8 @@ namespace rgl {
 
         if (!gpu_is_modern) {
             logs.push_back("!GPU In-use is not spec-compliant or new enough, performance may be impacted and bugs may occur");
+            logs.push_back("!MAX_TX_UNITS: " + std::to_string(max_available_tx_units));
+            logs.push_back("!MAX_TX_SIZE: " + std::to_string(max_tx_size));
         }
 
         if (gpu_name.contains("llvmpipe")) {

@@ -67,6 +67,16 @@ namespace windows_backend {
     void exit_now(int code) {
         ExitProcess(code);
     }
+
+    void init() {
+        timeBeginPeriod(1);
+        TIMECAPS tc;
+        timeGetDevCaps(&tc, sizeof(tc));
+        printf("Timer min: %u ms, max: %u ms\n", tc.wPeriodMin, tc.wPeriodMax);
+
+        MMRESULT r = timeBeginPeriod(1);
+        printf("timeBeginPeriod result: %u\n", r);
+    }
 }
 #endif
 
@@ -124,6 +134,14 @@ namespace rnative {
         linux_backend::exit_now(code);
 #elifdef ROCKETGE__Platform_Windows
         windows_backend::exit_now(code);
+#endif
+    }
+
+    void init() {
+#ifdef ROCKETGE__Platform_Linux
+#elifdef ROCKETGE__Platform_macOS
+#elifdef ROCKETGE__Platform_Windows
+        windows_backend::init();
 #endif
     }
 }

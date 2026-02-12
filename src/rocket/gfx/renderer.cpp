@@ -464,6 +464,10 @@ namespace rocket {
         this->fps = fps;
     }
 
+    void renderer_2d::set_graphics_settings(graphics_settings_t settings) {
+        this->graphics_settings = settings;
+    }
+
     void renderer_2d::set_viewport_size(vec2f_t size) {
         this->override_viewport_size = size;
     }
@@ -807,7 +811,7 @@ namespace rocket {
 
         this->active_render_modes.clear();
 
-        if (this->fps == RGE_FPS_UNCAPPED) {
+        if (this->fps == rocket::fps_uncapped) {
             this->delta_time = glfwGetTime() - frame_start_time;
             return;
         }
@@ -826,9 +830,8 @@ namespace rocket {
         if (frame_duration < frametime_limit) {
             double sleep_time = frametime_limit - frame_duration;
 
-            // sleep for most of it
-            if (sleep_time > 0.002) // leave ~2ms for busy-wait
-                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - 0.002));
+            if (sleep_time > 0.012)
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - 0.012));
 
             // busy wait for the rest
             while ((glfwGetTime() - frame_start_time) < frametime_limit) {}
@@ -1043,6 +1046,27 @@ namespace rocket {
 
     rgl::draw_metrics_t renderer_2d::get_draw_metrics() {
         return rgl::get_draw_metrics();
+    }
+
+    const graphics_settings_t &renderer_2d::get_graphics_settings() {
+        return this->graphics_settings;
+    }
+
+    rgl::scoped_gl_texture_t renderer_2d::get_framebuffer_texture() {
+        rgl::scoped_gl_texture_t t;
+        glBindTexture(GL_TEXTURE_2D, t.id);
+
+        int w = rgl::get_viewport_size().x;
+        int h = rgl::get_viewport_size().y;
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+        glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, w, h);
+
+        return t;
     }
 
     void renderer_2d::begin_scissor_mode(rocket::fbounding_box rect) {

@@ -1,6 +1,10 @@
 #ifndef RocketGL__HPP
 #define RocketGL__HPP
 
+#include "rocket/macros.hpp"
+#ifdef ROCKETGE__Platform_Windows
+#define GL_STATIC_DRAW 0x88E4
+#endif
 #include "rocket/asset.hpp"
 #include "rocket/types.hpp"
 #include <cstdint>
@@ -77,6 +81,14 @@ namespace rgl {
         blend_mode_t blend_mode;
     };
 
+    struct scoped_gl_texture_t {
+    private:
+        std::unique_ptr<void, std::function<void(void*)>> cleanup;
+    public:
+        GLuint id = rGL_TXID_INVALID;
+    public:
+        scoped_gl_texture_t();
+    };
 
     std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t bkend = ROCKETGE__GLFNLDR_BACKEND_ENUM);
     void init_gl_wtd();

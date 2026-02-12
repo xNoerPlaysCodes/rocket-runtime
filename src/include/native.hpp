@@ -12,6 +12,8 @@ namespace rnative {
     void linux_set_class_name(const char *str);
 
     void exit_now(int code);
+
+    void init();
 }
 
 #ifdef RNATIVE__INCLUDE_WAYLAND
@@ -40,6 +42,7 @@ namespace rnative {
 #ifdef RNATIVE__INCLUDE_WINDOWS
 
 #include <windows.h>
+#include <timeapi.h>
 #include <shobjidl.h>
 
 #endif // RNATIVE__INCLUDE_WINDOWS

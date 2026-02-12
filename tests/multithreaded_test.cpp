@@ -16,6 +16,7 @@ int main(int argc, char **argv) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
+    rocket::init(argc, argv);
     rocket::window_t window({ 1280, 720 }, "RocketGE - Multithreaded Test", {
         .resizable = false,
         .gl_version = {4,6},
