@@ -7,6 +7,7 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <mutex>
 #include <shader_provider.hpp>
 #include <string>
 #include "rocket/rgl.hpp"
@@ -415,8 +416,10 @@ namespace rgl {
     }
 
     std::vector<std::function<void()>> scheduled;
+    std::mutex scheduled_mutex;
 
     void schedule_gl(std::function<void()> fn) {
+        std::lock_guard<std::mutex> _(scheduled_mutex);
         scheduled.push_back(fn);
     }
 
