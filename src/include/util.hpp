@@ -14,10 +14,12 @@
 #define GL_VERSION_UNK 0
 #define GL_VERSION_20 2.0f
 #define GL_VERSION_21 2.1f
+
 #define GL_VERSION_30 3.0f
 #define GL_VERSION_31 3.1f
 #define GL_VERSION_32 3.2f
 #define GL_VERSION_33 3.3f
+
 #define GL_VERSION_40 4.0f
 #define GL_VERSION_41 4.1f
 #define GL_VERSION_42 4.2f

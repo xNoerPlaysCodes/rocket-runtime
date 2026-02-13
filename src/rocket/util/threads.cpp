@@ -28,6 +28,13 @@ namespace rocket {
         rgl::schedule_gl(fn);
     }
 
+    RGE_STATIC_FUNC_IMPL void thread_t::schedule_async(std::function<void()> fn, std::chrono::milliseconds start_after) {
+        std::thread([fn = std::move(fn), start_after]() {
+            std::this_thread::sleep_for(start_after);
+            fn();
+        }).detach();
+    }
+
     struct thread_pool_t {
         bool init = false;
 

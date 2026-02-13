@@ -78,6 +78,8 @@ namespace rocket {
             for (auto &l : log_messages) {
                 if (l.starts_with('!')) 
                     rocket::log(l.substr(1), "rgl", "init_gl", "warn");
+                else if (l.starts_with('?'))
+                    rocket::log(l.substr(1), "rgl", "init_gl", "error");
                 else
                     rocket::log(l, "rgl", "init_gl", "info");
             }
@@ -826,12 +828,17 @@ namespace rocket {
 
         rgl::update_draw_metrics_data(frame_duration, 1 / this->delta_time);
 
+        if (fps == 0) {
+            rocket::log("Target FPS 0 is too low", "renderer_2d", "end_frame", "fatal");
+            rocket::exit(1);
+        }
+
         double frametime_limit = 1.0 / (fps + 0);
         if (frame_duration < frametime_limit) {
             double sleep_time = frametime_limit - frame_duration;
 
-            if (sleep_time > 0.012)
-                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - 0.012));
+            if (sleep_time > 0.002)
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - 0.002));
 
             // busy wait for the rest
             while ((glfwGetTime() - frame_start_time) < frametime_limit) {}

@@ -334,7 +334,7 @@ namespace rocket {
                     "",
                     "Attribution:",
                     "> stb_vorbis    (PD)",
-                    "> stb_trutype   (PD)",
+                    "> stb_truetype  (PD)",
                     "> stb_image     (PD)",
                     "> tweeny       (MIT)",
 #ifdef ROCKETGE__GLFNLDR_BACKEND_GLEW

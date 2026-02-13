@@ -70,12 +70,6 @@ namespace windows_backend {
 
     void init() {
         timeBeginPeriod(1);
-        TIMECAPS tc;
-        timeGetDevCaps(&tc, sizeof(tc));
-        printf("Timer min: %u ms, max: %u ms\n", tc.wPeriodMin, tc.wPeriodMax);
-
-        MMRESULT r = timeBeginPeriod(1);
-        printf("timeBeginPeriod result: %u\n", r);
     }
 }
 #endif

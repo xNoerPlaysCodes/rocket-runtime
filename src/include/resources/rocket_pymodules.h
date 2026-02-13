@@ -1,4 +1,5 @@
 #include "rocket/threads.hpp"
+#include <rocket/persistence.hpp>
 #include <rocket/renderer.hpp>
 #include <rocket/runtime.hpp>
 #include <rocket/types.hpp>
