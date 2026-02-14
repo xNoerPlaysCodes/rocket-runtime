@@ -87,6 +87,7 @@ def is_executable(path):
 
 
 def run_tests():
+    import time
     TEST_DIR = "./bin/tests"
     if not os.path.isdir(TEST_DIR):
         print(f"Test dir '{TEST_DIR}' not found")
@@ -100,6 +101,7 @@ def run_tests():
 
     done = 0.0
     passed = 0.0
+    failed_tests = []
     for name in sorted(os.listdir(TEST_DIR)):
         if name.endswith(".exe"):
             name = name[:-4]
@@ -109,8 +111,19 @@ def run_tests():
             done += 1
             continue
 
-        print("\r", end="", flush=True)
-        print("[" + str(int((done / count) * 100)) + "%]", end="", flush=True)
+        # print("[" + str(int((done / count) * 100)) + "%]", end="", flush=True)
+        
+        print("\r\033[K", end="")
+        print("\r" + " " * 24, end="")
+        print("\r[", end="")
+        progress = int((done / count) * 20)
+        remaining = 20 - progress
+        print("=" * progress, end="")
+        print(" " * remaining, end="")
+        print("]", end="")
+        print(" " + "Running: " + name, end="")
+
+        print(end="", flush=True)
         if name == "sound_engine_test" \
                 or name == "icon_test" \
                 or name == "plugin_test" \
@@ -129,15 +142,27 @@ def run_tests():
             )
 
         if result.returncode != 0:
-            print(" FAIL: " + name)
             failed = True
+            failed_tests.append(name)
         else:
             passed += 1
         done += 1
 
-    print("\r", end="", flush=True)
-    print("[" + "100" + "%]", flush=True)
-    print(str(int(passed)) + "/" + str(int(done)) + " tests passed")
+    print("\r\033[K", end="")
+    print("\r" + " " * 24, end="")
+    print("\r[", end="")
+    progress = int((done / count) * 20)
+    remaining = 20 - progress
+    print("=" * progress, end="")
+    print(" " * remaining, end="")
+    print("]", end="")
+    print(" " + str(int(passed)) + "/" + str(int(done)) + " tests")
+    if failed:
+        print("FAIL: ", end="")
+        for test in failed_tests:
+            print(test, end=" ")
+        print()
+    # print(str(int(passed)) + "/" + str(int(done)) + " tests passed")
     sys.exit(1 if failed else 0)
 
 
@@ -176,7 +201,7 @@ def init_cmake(args):
 
     backend = args.glfnldr_backend
     args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build"]
-
+ 
     if sys.platform == "win32":
         args.append("-DBUILD_SHARED_LIBS=OFF")
         args.append("-D__rge_WINDOWS__=ON")
