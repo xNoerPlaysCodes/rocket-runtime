@@ -130,6 +130,7 @@ LONG CALLBACK crash_handler(EXCEPTION_POINTERS *info) {
 void __init() {
     // AddVectoredExceptionHandler(1, &crash_handler);
     // SetConsoleCtrlHandler(console_ctrl_handler, TRUE);
+    rocket::log("windows_platform initialization not implemented", "rocket", "init", "fixme");
     util::init_memory_buffer();
 
     rocket::log("Emergency memory buffer initialized with size " + std::format("{} MiB", util::get_memory_buffer()->sz / 1024 / 1024), "rocket", "init", "debug");

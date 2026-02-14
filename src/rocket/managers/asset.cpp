@@ -2,9 +2,9 @@
 #ifdef ROCKETGE__Platform_Windows
 #define GL_STATIC_DRAW 0x88E4
 #endif
-#include "../include/FontDefault.h"
+#include "binary_stuff/default_fonts.h"
 #include "rocket/audio.hpp"
-#include "../../include/rocket/asset.hpp"
+#include "rocket/asset.hpp"
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
@@ -481,14 +481,14 @@ namespace rocket {
     std::shared_ptr<font_t> font_t::font_default(int fsize) {
         if (fonts_default.find(fsize) == fonts_default.end()) {
             std::shared_ptr<font_t> font = std::make_shared<font_t>();
-            font->ttf_data = std::vector<uint8_t>(rocket_font::FontDefault, rocket_font::FontDefault + rocket_font::FontDefault_len);
+            font->ttf_data = std::vector<uint8_t>(rocket_binary::FontDefault, rocket_binary::FontDefault + rocket_binary::FontDefault_len);
             font->id = -1;
             font->size = fsize;
             std::vector<unsigned char> bitmap(font->sttex_size.x * font->sttex_size.y);
-            stbtt_BakeFontBitmap(rocket_font::FontDefault, 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
+            stbtt_BakeFontBitmap(rocket_binary::FontDefault, 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
 
             stbtt_fontinfo info;
-            if (!stbtt_InitFont(&info, rocket_font::FontDefault, 0)) {
+            if (!stbtt_InitFont(&info, rocket_binary::FontDefault, 0)) {
                 rocket::log("failed to init font", "stbtt", "InitFont", "error");
                 return nullptr;
             }
@@ -517,14 +517,14 @@ namespace rocket {
     std::shared_ptr<font_t> font_t::font_default_monospace(int fsize) {
         if (fonts_monospaced.find(fsize) == fonts_monospaced.end()) {
             std::shared_ptr<font_t> font = std::make_shared<font_t>();
-            font->ttf_data = std::vector<uint8_t>(rocket_font::FontDefault_Monospace_ttf, rocket_font::FontDefault_Monospace_ttf + rocket_font::FontDefault_Monospace_ttf_len);
+            font->ttf_data = std::vector<uint8_t>(rocket_binary::FontDefault_Monospace_ttf, rocket_binary::FontDefault_Monospace_ttf + rocket_binary::FontDefault_Monospace_ttf_len);
             font->id = -1;
             font->size = fsize;
             std::vector<unsigned char> bitmap(font->sttex_size.x * font->sttex_size.y);
-            stbtt_BakeFontBitmap(rocket_font::FontDefault_Monospace_ttf, 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
+            stbtt_BakeFontBitmap(rocket_binary::FontDefault_Monospace_ttf, 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
 
             stbtt_fontinfo info;
-            if (!stbtt_InitFont(&info, rocket_font::FontDefault_Monospace_ttf, 0)) {
+            if (!stbtt_InitFont(&info, rocket_binary::FontDefault_Monospace_ttf, 0)) {
                 rocket::log("failed to init font", "stbtt", "InitFont", "error");
                 return nullptr;
             }
@@ -558,7 +558,7 @@ namespace rocket {
         stbtt_BakeFontBitmap(mem.data(), 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
 
         stbtt_fontinfo info;
-        if (!stbtt_InitFont(&info, rocket_font::FontDefault, 0)) {
+        if (!stbtt_InitFont(&info, rocket_binary::FontDefault, 0)) {
             rocket::log("failed to init font", "stbtt", "InitFont", "error");
             current_id--;
             return -1;

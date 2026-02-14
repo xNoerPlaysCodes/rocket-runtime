@@ -8,6 +8,7 @@
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <mutex>
+#include <queue>
 #include <shader_provider.hpp>
 #include <string>
 #include "rocket/rgl.hpp"
@@ -420,15 +421,16 @@ namespace rgl {
         return logs;
     }
 
-    std::vector<std::function<void()>> scheduled;
+    std::queue<std::function<void()>> scheduled;
     std::mutex scheduled_mutex;
 
     void schedule_gl(std::function<void()> fn) {
         std::lock_guard<std::mutex> _(scheduled_mutex);
-        scheduled.push_back(fn);
+        scheduled.push(fn);
     }
 
     void cleanup_all() {
+        std::lock_guard<std::mutex> _(scheduled_mutex);
         if (scheduled.size() > 0) {
             rocket::log("Exiting with pending scheduled operations", "rgl", "cleanup_all", "warn");
         }
@@ -734,11 +736,17 @@ namespace rgl {
     }
 
     void run_all_scheduled_gl() {
-        for (auto &fn : scheduled) {
-            fn();
-            glFinish();
+        std::queue<std::function<void()>> local;
+        {
+            std::lock_guard<std::mutex> _(scheduled_mutex);
+            std::swap(local, scheduled);
         }
-        scheduled.clear();
+
+        while (local.size() > 0) {
+            auto fn = local.front();
+            fn();
+            local.pop();
+        }
     }
 
     int reset_drawcalls() {

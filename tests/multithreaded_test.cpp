@@ -47,8 +47,6 @@ int main(int argc, char **argv) {
         });
     });
 
-    t.detach();
-
     rocket::thread_t::run([]() {
         rocket::log("Hello, from a new thread", "thread", std::to_string(rocket::thread_t::get_thread_id()), "info");
     });
@@ -77,5 +75,9 @@ int main(int argc, char **argv) {
             if (tx != nullptr) return 0;
         }
     }
+
+    while (!t.joinable()) {}
+    t.join();
+
     window.close();
 }
