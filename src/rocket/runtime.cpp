@@ -13,40 +13,40 @@
 #include <rocket/macros.hpp>
 
 namespace callback {
-    void bad_memory_access(void *mem_addr, int code) {
+    void bad_memory_access(void *mem_addr, int) {
         std::endl(std::cout);
 
-        std::cout << rocket::crash_signal(true, mem_addr, "bad_memory_access", "Invalid pointer dereference or memory access");
+        std::cout << rocket::crash_signal(true, mem_addr, "bad_memory_access", "Invalid Memory Access");
 
         std::endl(std::cout);
 
-        rnative::exit_now(code);
+        rnative::exit_now(1);
     }
 
-    void invalid_memory_operation(void *mem_addr, int code) {
+    void invalid_memory_operation(void *mem_addr, int) {
         std::endl(std::cout);
 
-        std::cout << rocket::crash_signal(true, mem_addr, "invalid_memory_operation", "Operation unexecutable on this memory buffer");
+        std::cout << rocket::crash_signal(true, mem_addr, "invalid_memory_operation", "Invalid Operation on Memory Buffer");
 
         std::endl(std::cout);
         
-        rnative::exit_now(code);
+        rnative::exit_now(1);
     }
 
-    void aborted(void *mem_addr, int code) {
+    void aborted(void *mem_addr, int) {
         std::endl(std::cout);
 
-        std::cout << rocket::crash_signal(true, mem_addr, "aborted", "Program aborted by libc");
+        std::cout << rocket::crash_signal(true, mem_addr, "aborted", "Unhandled Exception (or std::abort)");
 
         std::endl(std::cout);
 
-        rnative::exit_now(code);
+        rnative::exit_now(1);
     }
 
     void __windows_crash_handler(void *mem_addr) {
         std::endl(std::cout);
 
-        std::cout << rocket::crash_signal(true, mem_addr, "crashed", "Generic Windows Program Crash");
+        std::cout << rocket::crash_signal(true, mem_addr, "crashed", "Generic Windows Crash");
 
         std::endl(std::cout);
 
@@ -199,7 +199,7 @@ namespace rocket {
     bool log_to_stdouterr = false;
 
     void log(const std::string &log, const std::string &class_file_library_source, const std::string &function_source, const std::string &level) {
-        static thread_local auto cli_args = util::get_clistate();
+        static const auto cli_args = util::get_clistate();
         if (cli_args.lognone) return;
         std::ofstream *out = &std_outstm;
         std::mutex *mtx = &cout_mutex;

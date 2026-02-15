@@ -3,6 +3,7 @@
 #include <shader_provider.hpp>
 #define RGL_EXPOSE_NATIVE_LIB
 #include "rocket/rgl.hpp"
+#include "rgl.hpp"
 #include "rocket/asset.hpp"
 #include "rocket/io.hpp"
 #include "rocket/plugin/plugin.hpp"
@@ -829,6 +830,8 @@ namespace rocket {
             this->delta_time = glfwGetTime() - frame_start_time;
             return; // We're done here
         }
+
+        rgl::run_all_scheduled_gl();
 
         double frame_end_time = glfwGetTime();
         double frame_duration = frame_end_time - frame_start_time;

@@ -16,6 +16,9 @@ namespace rocket::storage {
             path = std::filesystem::path(home) / "AppData" / "Roaming";
         } else if (char *home = getenv("HOME"); home != nullptr) {
             path = std::filesystem::path(home) / ".config";
+        } else {
+            rocket::log("Could not determine data storage path", "rocket::storage", "get_data_storage_path", "error");
+            path = std::filesystem::current_path();
         }
 
         return path;

@@ -23,16 +23,17 @@ int main(int argc, char **argv) {
         .gl_contextverifier = true,
     });
     rocket::renderer_2d r(&window, 60, {
-            .show_splash = !test_mode
+        .show_splash = !test_mode
     });
 
     rocket::asset_manager_t am;
     std::shared_ptr<rocket::texture_t> tx = nullptr;
 
-    std::thread t([&] () {
+    std::thread ([&] () {
         std::string thread_id = std::to_string(rocket::thread_t::get_thread_id());
         rocket::log("simulating real work...", "thread", thread_id, "info");
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        int32_t foo = 0;
+        while (foo != 2147483647) foo++;
 
         // Load the file from disk on any thread
         tx = am.get_texture(am.load_texture("resources/window_icon.jpg"));
@@ -45,7 +46,7 @@ int main(int argc, char **argv) {
             r.make_ready_texture(tx);
             rocket::log("Ready texture", "thread", thread_id, "info");
         });
-    });
+    }).detach();
 
     rocket::thread_t::run([]() {
         rocket::log("Hello, from a new thread", "thread", std::to_string(rocket::thread_t::get_thread_id()), "info");
@@ -75,9 +76,6 @@ int main(int argc, char **argv) {
             if (tx != nullptr) return 0;
         }
     }
-
-    while (!t.joinable()) {}
-    t.join();
 
     window.close();
 }

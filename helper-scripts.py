@@ -87,8 +87,11 @@ def is_executable(path):
 
 
 def run_tests():
-    import time
     TEST_DIR = "./bin/tests"
+    TEST_ENV = "./bin"
+    print("RocketGE: Test Runner")
+    print("Tests from: " + TEST_DIR)
+    print("Test Env: " + TEST_ENV)
     if not os.path.isdir(TEST_DIR):
         print(f"Test dir '{TEST_DIR}' not found")
         sys.exit(1)
@@ -118,28 +121,17 @@ def run_tests():
         print("\r[", end="")
         progress = int((done / count) * 20)
         remaining = 20 - progress
-        print("=" * progress, end="")
+        print("#" * progress, end="")
         print(" " * remaining, end="")
         print("]", end="")
         print(" " + "Running: " + name, end="")
 
         print(end="", flush=True)
-        if name == "sound_engine_test" \
-                or name == "icon_test" \
-                or name == "plugin_test" \
-                or name == "multithreaded_test" \
-                or name == "scripting_test":
-            # cd bin && tests/sound_engine_test -- --unit-test
-            result = subprocess.run(
-                ["tests/" + name, "--", "--unit-test"],
-                cwd="bin",
-                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-            )
-        else:
-            result = subprocess.run(
-                [path, "--", "--unit-test"],
-                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-            )
+        result = subprocess.run(
+            ["../" + TEST_DIR + "/" + name, "--", "--unit-test"],
+            cwd=TEST_ENV,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        )
 
         if result.returncode != 0:
             failed = True
@@ -153,14 +145,14 @@ def run_tests():
     print("\r[", end="")
     progress = int((done / count) * 20)
     remaining = 20 - progress
-    print("=" * progress, end="")
+    print("#" * progress, end="")
     print(" " * remaining, end="")
     print("]", end="")
     print(" " + str(int(passed)) + "/" + str(int(done)) + " tests")
     if failed:
         print("FAIL: ", end="")
         for test in failed_tests:
-            print(test, end=" ")
+            print(test, end=", ")
         print()
     # print(str(int(passed)) + "/" + str(int(done)) + " tests passed")
     sys.exit(1 if failed else 0)
@@ -233,25 +225,22 @@ def build(args):
 
 def main() -> int:
     args = parser.parse_args()
+    return_codes = []
 
     if args.get_deps:
         get_deps()
-    elif args.print_loc:
-        return print_loc()
-    elif args.build_rnative:
-        return build_rnative()
-    elif args.init_cmake:
-        return init_cmake(args)
-    elif args.build:
-        return build(args)
-    elif args.run_tests:
-        return run_tests()
-    else:
-        parser.print_help()
-        return 1
+    if args.print_loc:
+        return_codes.append(print_loc())
+    if args.build_rnative:
+        return_codes.append(build_rnative())
+    if args.init_cmake:
+        return_codes.append(init_cmake(args))
+    if args.build:
+        return_codes.append(build(args))
+    if args.run_tests:
+        return_codes.append(run_tests())
 
-    return 0
-
+    return max(return_codes, default=1)
 
 if __name__ == "__main__":
     exit(main())

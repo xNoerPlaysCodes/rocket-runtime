@@ -742,7 +742,7 @@ namespace rgl {
             std::swap(local, scheduled);
         }
 
-        while (local.size() > 0) {
+        while (!local.empty()) {
             auto fn = local.front();
             fn();
             local.pop();
@@ -750,8 +750,6 @@ namespace rgl {
     }
 
     int reset_drawcalls() {
-        run_all_scheduled_gl();
-
         int ret = read_drawcalls();
         drawcalls = 0;
         return ret;
