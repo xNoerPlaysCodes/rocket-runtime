@@ -2,6 +2,7 @@
 #define ROCKETGE__RUNTIME_HPP
 
 #include "rocket/macros.hpp"
+#include <filesystem>
 #ifdef ROCKETGE__Platform_Windows
 #define GL_STATIC_DRAW 0x88E4
 #endif
@@ -113,7 +114,10 @@ namespace rocket {
     void set_exit_callback(exit_callback_t);
 
     /// @brief Log using RocketLogger or callback
-    void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);
+    void log(const std::string &log, const std::string &class_file_library_source, const std::string &function_source, const std::string &level);
+
+    /// @brief Flushes the output buffer for RocketLogger
+    void logger_flush();
 
     /// @brief Exit using RocketExit or callback
     void exit(int status_code = 1);
@@ -124,8 +128,13 @@ namespace rocket {
     /// @brief Get OpenGL Error callback
     gl_error_callback_t get_opengl_error_callback();
 
+    /// @brief Initializes Rocket Runtime
     void init(std::vector<std::string> args = {});
+    /// @brief Initializes Rocket Runtime
     void init(int argc = 0, char **argv = nullptr);
+
+    /// @brief Set the file output (if any) for RocketLogger
+    void set_logger_file_output(const std::filesystem::path &path);
 }
 
 #endif

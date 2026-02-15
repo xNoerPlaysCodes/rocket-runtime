@@ -1,7 +1,9 @@
 #ifndef ROCKETGE__CONSTANTS_HPP
 #define ROCKETGE__CONSTANTS_HPP
 
+#include <filesystem>
 #include <limits>
+#include <rocket/macros.hpp>
 #include "types.hpp"
 
 /// @brief Constants
@@ -20,6 +22,22 @@ namespace rocket::cst {
     /// @brief rocket::io magic number to set [var: vec2] to
     ///         current mouse position
     constexpr float io_mn_set_to_current_mpos = 1.7186765875;
+
+#ifdef ROCKETGE__Platform_UnixCompatible
+    const std::filesystem::path std_out = "/dev/stdout";
+#endif
+
+#ifdef ROCKETGE__Platform_Windows
+    const std::filesystem::path std_out = "CON";
+#endif
+
+#ifdef ROCKETGE__Platform_Windows
+    const std::filesystem::path std_err = std_out;
+#endif
+
+#ifdef ROCKETGE__Platform_UnixCompatible
+    const std::filesystem::path std_err = "/dev/stderr";
+#endif
 }
 
 #endif // ROCKETGE__CONSTANTS_HPP

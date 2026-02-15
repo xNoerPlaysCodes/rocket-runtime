@@ -43,7 +43,7 @@ namespace util {
 #endif
 
     bool is_wayland() {
-#ifdef __linux__
+#ifdef ROCKETGE__Platform_Linux
         if (const char *session = std::getenv("XDG_SESSION_TYPE")) {
             return std::string(session) == "wayland";
         }

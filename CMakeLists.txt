@@ -23,16 +23,8 @@ option(BUILD_TESTS "Build Tests" ON)
 option(BUILD_EXAMPLES "Build Examples" ON)
 option(__rge_WINDOWS__ OFF)
 
-option(BUILD_QUARK "Build Quark [physics]" ON)
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
-
-if (BUILD_QUARK)
-    set(QUARK_SOURCES
-        src/quark/physics.cpp
-    )
-    add_compile_definitions(ROCKETGE__BUILD_QUARK)
-endif()
 
 if (BUILD_ASTRO)
     set(ASTRO_SOURCES
@@ -98,9 +90,6 @@ add_library(${PROJECT_NAME}
 
     # AstroUI
     ${ASTRO_SOURCES}
-
-    # Quark
-    ${QUARK_SOURCES}
 )
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE include)
@@ -256,5 +245,4 @@ if (BUILD_EXAMPLES)
         message("  ${example_name}")
     endforeach()
 endif()
-message("Build Quark: ${BUILD_QUARK}")
 message("Build Astro: ${BUILD_ASTRO}")

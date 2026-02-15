@@ -50,9 +50,12 @@ namespace rocket {
         
     };
 
+    struct camera_2d;
+
     class renderer_2d {
     private:
-        window_t *window;
+        window_t *window = nullptr;
+        camera_2d *cam = nullptr;
         int fps = 60;
         bool wireframe = false;
         bool vsync = false;
@@ -169,11 +172,12 @@ namespace rocket {
     public:
         /// @brief All drawcalls will be redirected to an internal buffer
         /// @brief and be drawn later
+        /// @note Unimplemented
         ROCKETGE__NOT_IMPLEMENTED void begin_batch();
 
         /// @brief All drawcalls that have been stored in the buffer will
         /// @brief be drawn now
-        /// @note Unsupported
+        /// @note Unimplemented
         ROCKETGE__NOT_IMPLEMENTED void end_batch(size_t max_batch_size = 2048);
     public:
         /// @brief Draw FPS at the top left
@@ -200,6 +204,9 @@ namespace rocket {
         /// @brief Set viewport offset
         /// @param zero_pos The offset (zero position)
         void set_viewport_offset(vec2f_t zero_pos);
+        /// @brief Sets the camera
+        /// @note Unimplemented
+        ROCKETGE__NOT_IMPLEMENTED void set_camera(camera_2d *cam);
         /// @brief Close the renderer2d
         /// @note Does not close the OpenGL Context fully
         void close();
@@ -229,6 +236,10 @@ namespace rocket {
         /// @brief Is stored on GPU only 
         /// @brief Lifetime managed automatically
         rgl::scoped_gl_texture_t get_framebuffer_texture();
+        /// @brief Get the active camera
+        /// @note may return nullptr
+        /// @note Unimplemented
+        ROCKETGE__NOT_IMPLEMENTED camera_2d *get_camera();
     public:
         /// @brief Get Current FPS
         int get_current_fps();
@@ -239,6 +250,14 @@ namespace rocket {
         renderer_2d(window_t *window, int fps = 60, renderer_flags_t flags = {});
     public:
         ~renderer_2d();
+    };
+
+    /// @brief 2D camera
+    struct camera_2d {
+        /// @brief Zoom multiplier
+        float zoom = 1.f;
+        /// @brief Offset from 0, 0 (Top left)
+        vec2<float> offset;
     };
 }
 

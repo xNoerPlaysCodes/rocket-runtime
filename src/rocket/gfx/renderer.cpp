@@ -42,7 +42,7 @@ namespace rocket {
     rgl::fbo_t fxaa_fbo = rGL_FBO_INVALID;
     rgl::shader_program_t fxaa_shader;
     
-    util::global_state_cliargs_t ovr_clistate = {};
+    util::global_state_cliargs_t ovr_clistate;
 
     renderer_2d::renderer_2d(window_t *window, int fps, renderer_flags_t flags) {
         this->window = window;
@@ -83,13 +83,15 @@ namespace rocket {
                 else
                     rocket::log(l, "rgl", "init_gl", "info");
             }
+
+            rocket::logger_flush();
         }
         this->flags = flags;
         if (flags.fxaa_simplified) {
             fxaa_fbo = rgl::create_fbo();
             fxaa_shader = rgl::get_fxaa_simplified_shader();
         }
-        // replacement for gl_setup_ortho
+
         glViewport(0, 0, window->size.x, window->size.y);
 
         ::rocket::ovr_clistate = util::get_clistate();
@@ -476,6 +478,11 @@ namespace rocket {
 
     void renderer_2d::set_viewport_offset(vec2f_t offset) {
         this->override_viewport_offset = offset;
+    }
+
+    void renderer_2d::set_camera(camera_2d *cam) {
+        rocket::log("cameras are not implemented", "renderer_2d", "set_camera", "fixme");
+        this->cam = cam;
     }
 
     void renderer_2d::draw_fps(vec2f_t pos) {
@@ -1074,6 +1081,11 @@ namespace rocket {
         glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, w, h);
 
         return t;
+    }
+
+    camera_2d* renderer_2d::get_camera() {
+        rocket::log("cameras are not implemented", "renderer_2d", "get_camera", "fixme");
+        return this->cam;
     }
 
     void renderer_2d::begin_scissor_mode(rocket::fbounding_box rect) {

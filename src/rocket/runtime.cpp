@@ -1,5 +1,6 @@
 #include <crashdump.hpp>
 #include <cstring>
+#include <fstream>
 #include <limits>
 #include <native.hpp>
 #include <rocket/runtime.hpp>
@@ -190,15 +191,36 @@ namespace rocket {
     }
 
     std::mutex cerr_mutex;
-    std::mutex cout_mutex;
+    std::ofstream std_outstm;
 
-    void log(std::string log, std::string class_file_library_source, std::string function_source, std::string level) {
+    std::mutex cout_mutex;
+    std::ofstream std_errstm;
+
+    bool log_to_stdouterr = false;
+
+    void log(const std::string &log, const std::string &class_file_library_source, const std::string &function_source, const std::string &level) {
         static thread_local auto cli_args = util::get_clistate();
         if (cli_args.lognone) return;
-        {
-            std::lock_guard<std::mutex> _(cout_mutex);
-            std::cout << util::format_log(log, class_file_library_source, function_source, level);
+        std::ofstream *out = &std_outstm;
+        std::mutex *mtx = &cout_mutex;
+        if (level == "error" || level == "warn" || level == "fatal" || level == "fixme") {
+            out = &std_errstm;
+            mtx = &cerr_mutex;
         }
+        {
+            std::lock_guard<std::mutex> _(*mtx);
+            *out << util::format_log(log, class_file_library_source, function_source, level);
+            if (!log_to_stdouterr)
+                out->flush();
+        }
+    }
+
+    void logger_flush() {
+        std::lock_guard<std::mutex> _1(cout_mutex);
+        std::lock_guard<std::mutex> _2(cerr_mutex);
+
+        std_outstm.flush();
+        std_errstm.flush();
     }
 
     void set_opengl_error_callback(gl_error_callback_t cb) {
@@ -464,15 +486,35 @@ namespace rocket {
         set_cli_arguments(args.size(), strbuf.data());
     }
 
+    void global_init() {
+        std::lock_guard<std::mutex> _1(cout_mutex);
+        std::lock_guard<std::mutex> _2(cerr_mutex);
+
+        std_outstm.open(rocket::cst::std_out);
+        std_errstm.open(rocket::cst::std_err);
+    }
+
     void init(std::vector<std::string> args) {
         set_cli_arguments(args);
         rnative::init();
         __init();
+        global_init();
     }
 
     void init(int argc, char **argv) {
         set_cli_arguments(argc, argv);
         rnative::init();
         __init();
+        global_init();
+    }
+
+    void set_logger_file_output(const std::filesystem::path &path) {
+        std::lock_guard<std::mutex> _1(cout_mutex);
+        std::lock_guard<std::mutex> _2(cerr_mutex);
+
+        log_to_stdouterr = (path == rocket::cst::std_out || path == rocket::cst::std_err);
+
+        std_outstm.open(path);
+        std_errstm.open(path);
     }
 }

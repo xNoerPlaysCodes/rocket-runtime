@@ -3,6 +3,7 @@
 
 #include <GLFW/glfw3.h>
 #include <rocket/macros.hpp>
+#include <string>
 namespace rnative {
     void wayland_set_window_icon(GLFWwindow *window, GLFWimage &image);
     /// @brief Pre window creation
