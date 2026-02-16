@@ -61,7 +61,7 @@ namespace callback {
 #include <unistd.h>
 
 void __init() {
-    struct sigaction sa;
+    struct sigaction sa = {};
     std::memset(&sa, 0, sizeof(sa));
     sa.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
         callback::bad_memory_access(info->si_addr, info->si_code);
@@ -69,14 +69,14 @@ void __init() {
     sa.sa_flags = SA_SIGINFO;
     sigaction(SIGSEGV, &sa, nullptr);
 
-    struct sigaction sbus;
+    struct sigaction sbus = {};
     sbus.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
         callback::invalid_memory_operation(info->si_addr, info->si_code);
     };
     sbus.sa_flags = SA_SIGINFO;
     sigaction(SIGBUS, &sbus, nullptr);
 
-    struct sigaction sigiot;
+    struct sigaction sigiot = {};
     sigiot.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
         callback::aborted(info->si_addr, info->si_code);
     };

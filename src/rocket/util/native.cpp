@@ -91,6 +91,7 @@ namespace rnative {
         }
 
         wl_surface *surface = glfwGetWaylandWindow(window);
+
         if (surface == nullptr) {
             rocket::log("failed to get wayland surface", "rnative", "wayland_set_window_icon", "error");
             return;

@@ -30,7 +30,7 @@ namespace rocket {
             uintptr_t end  = (uintptr_t)buf->mem + buf->sz;
 
             if (next > end) {
-                throw std::bad_alloc{};
+                rnative::exit_now(234);
             }
 
             buf->mem = (void*)next;

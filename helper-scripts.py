@@ -49,10 +49,10 @@ def build_rnative() -> int:
                       "src/include/rnative/xdg-toplevel-icon-v1-client-protocol.h"]  # How am i supposed to split a path???
         gen_source = ["wayland-scanner", "private-code", "/usr/share/wayland-protocols/staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml", "src/rnative/xdg-toplevel-icon-v1-client-protocol.c"]
 
-        print("command: " + " ".join(gen_header))
+        print("> command: " + " ".join(gen_header))
         subprocess.run(gen_header)
 
-        print("command: " + " ".join(gen_source))
+        print("> command: " + " ".join(gen_source))
         subprocess.run(gen_source)
 
         print("complete.")
