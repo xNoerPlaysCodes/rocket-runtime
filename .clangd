@@ -1,5 +1,5 @@
 CompileFlags:
   Add: [
     "-I/usr/include/miniz",
-    "-std=c++23"
+    "-std=gnu++23"
   ]

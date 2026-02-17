@@ -18,9 +18,6 @@ int main(int argc, char **argv) {
     }
     rocket::init(argc, argv);
     rocket::window_t window({ 1280, 720 }, "RocketGE - Multithreaded Test", {
-        .resizable = false,
-        .gl_version = {4,6},
-        .gl_contextverifier = true,
     });
     rocket::renderer_2d r(&window, 60, {
         .show_splash = !test_mode

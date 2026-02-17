@@ -131,6 +131,7 @@ LONG CALLBACK crash_handler(EXCEPTION_POINTERS *info) {
 void __init() {
     // AddVectoredExceptionHandler(1, &crash_handler);
     // SetConsoleCtrlHandler(console_ctrl_handler, TRUE);
+    rocket::log("Hooked VEH, CTRL_C, CTRL_BREAK, CTRL_CLOSE", "rocket", "init", "debug");
     rocket::log("windows_platform initialization not implemented", "rocket", "init", "fixme");
     util::init_memory_buffer();
 
@@ -243,6 +244,18 @@ namespace rocket {
         return glerror_cb == nullptr ? glerror_cb_default : glerror_cb;
     }
 
+    void global_init() {
+        static bool initialized = false;
+        if (initialized) return;
+        initialized = true;
+
+        std::lock_guard<std::mutex> _1(cout_mutex);
+        std::lock_guard<std::mutex> _2(cerr_mutex);
+
+        std_outstm.open(rocket::cst::std_out);
+        std_errstm.open(rocket::cst::std_err);
+    }
+
     void set_cli_arguments(int argc, char *argv[]) {
         if (argc < 0) {
             return;
@@ -254,10 +267,12 @@ namespace rocket {
             "vp-size", 
             "vpsize",
             "framerate",
+            "logfile",
         };
         util::global_state_cliargs_t args = {};
         bool exit = false;
         bool error = false;
+        bool logfile_overwrite = false;
         std::string additional_exit_message;
         for (int i = 1; i < argc; ++i) {
             int nexti = i + 1;
@@ -302,7 +317,9 @@ namespace rocket {
             }
 
             if (value.empty() && std::find(args_with_values.begin(), args_with_values.end(), arg) != args_with_values.end()) {
-                rocket::log("argument " + arg + " does not have a value where it is required", "rocket", "argparse", "error");
+                additional_exit_message = "argument " + arg + " does not have a value where it is required";
+                exit = true;
+                error = true;
                 continue;
             }
 
@@ -346,9 +363,34 @@ namespace rocket {
                     if (res.ec == std::errc::invalid_argument) {
                         rocket::log("invalid value for argument: " + arg, "rocket", "argparse", "error");
                         args.framerate = -1;
+                        exit = true;
+                        error = true;
                     }
                 }
-            } else if (arg == "version") {
+            } else if (arg == "logfile") {
+                if (std::filesystem::exists(value) && !logfile_overwrite) {
+                    additional_exit_message = "file already exists, cannot overwrite without logfile-overwrite";
+                    exit = true;
+                    error = true;
+                } else {
+                    if (value == "stdnull" || value == "devnull" || value == "discard") {
+                        set_logger_file_output(rocket::cst::stdnull);
+                    } else {
+                        if (value.starts_with('!')) value = value.substr(1);
+                        set_logger_file_output(value);
+                        {
+                            std::lock_guard<std::mutex> _1(cout_mutex);
+                            std::lock_guard<std::mutex> _2(cerr_mutex);
+                            
+                            std_outstm << "--- RocketGE Logger Output to File ---\n";
+                            std_outstm.flush();
+                        }
+                    }
+                }
+            } else if (arg == "logfile-overwrite") {
+                logfile_overwrite = true;
+            }
+            else if (arg == "version") {
                 exit = true;
                 std::vector<std::string> lines = {
                     "RocketGE (rge) " ROCKETGE__VERSION,
@@ -400,6 +442,9 @@ namespace rocket {
                     "",
                     "   log-all, logall / log-none, lognone",
                     "   -> logs every / no message(s)",
+                    "",
+                    "*  logfile [file_path] (!path if path starts with /)",
+                    "   -> logs messages",
                     "",
                     "   debug-overlay, debugoverlay, doverlay",
                     "   -> shows a debug overlay with rendering information",
@@ -466,7 +511,7 @@ namespace rocket {
 
         if (error && exit) {
             rocket::log("one or more errors found in parser", "rocket", "argparse", "fatal");
-            if (!additional_exit_message.empty()) {
+            if (!(additional_exit_message.empty())) {
                 rocket::log(additional_exit_message, "rocket", "argparse", "fatal");
             }
             rocket::exit(1);
@@ -486,26 +531,20 @@ namespace rocket {
         set_cli_arguments(args.size(), strbuf.data());
     }
 
-    void global_init() {
-        std::lock_guard<std::mutex> _1(cout_mutex);
-        std::lock_guard<std::mutex> _2(cerr_mutex);
-
-        std_outstm.open(rocket::cst::std_out);
-        std_errstm.open(rocket::cst::std_err);
-    }
-
     void init(std::vector<std::string> args) {
-        set_cli_arguments(args);
+        global_init();
         rnative::init();
         __init();
-        global_init();
+
+        set_cli_arguments(args);
     }
 
     void init(int argc, char **argv) {
-        set_cli_arguments(argc, argv);
+        global_init();
         rnative::init();
         __init();
-        global_init();
+
+        set_cli_arguments(argc, argv);
     }
 
     void set_logger_file_output(const std::filesystem::path &path) {
@@ -513,6 +552,9 @@ namespace rocket {
         std::lock_guard<std::mutex> _2(cerr_mutex);
 
         log_to_stdouterr = (path == rocket::cst::std_out || path == rocket::cst::std_err);
+
+        std_outstm.close();
+        std_errstm.close();
 
         std_outstm.open(path);
         std_errstm.open(path);

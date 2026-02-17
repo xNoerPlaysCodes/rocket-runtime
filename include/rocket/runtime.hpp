@@ -38,10 +38,7 @@
 #define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MAJOR 1
 #define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR 1
 
-#define ROCKETGE__FEATURE_GL_LOADER "GLFNLDR"
-// @brief The CPLWindowingAPI::Desktop/MobilePhone/Embedded
-//            ^^^ Cross-Platform Windowing API
-//              is fixed to GLFW as of now...
+#define ROCKETGE__FEATURE_GL_LOADER "GLfnldr"
 #define ROCKETGE__PLATFORM "GLFW::Desktop"
 
 #define ROCKETGE__FEATURE_SHADER_SUPPORT_VERT_FRAG

@@ -45,4 +45,8 @@
 #define ROCKETGE__Platform_Mobile
 #endif
 
+#if defined(__ANDROID__)
+#define ROCKETGE__Platform_Android
+#endif
+
 #endif // ROCKETGE__MACROS_HPP

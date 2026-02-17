@@ -752,7 +752,8 @@ namespace rocket {
         if (this->cleanup_running) {
             cleanup_running = false;
             rocket::log("Waiting for cleanup thread...", "asset_manager_t", "close", "info");
-            while (this->__thread_cleanup_running) {}
+            while (this->__thread_cleanup_running) {
+            }
         }
         destroy_audio_ctx();
     }

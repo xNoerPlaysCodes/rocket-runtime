@@ -38,6 +38,14 @@ namespace rocket::cst {
 #ifdef ROCKETGE__Platform_UnixCompatible
     const std::filesystem::path std_err = "/dev/stderr";
 #endif
+
+#ifdef ROCKETGE__Platform_Windows
+    const std::filesystem::path stdnull = "NUL";
+#endif
+
+#ifdef ROCKETGE__Platform_UnixCompatible
+    const std::filesystem::path stdnull = "/dev/null";
+#endif
 }
 
 #endif // ROCKETGE__CONSTANTS_HPP
