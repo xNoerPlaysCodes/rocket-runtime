@@ -73,6 +73,7 @@ add_library(${PROJECT_NAME}
     src/rocket/util/shader_provider.cpp
     src/rocket/util/persistence.cpp
     src/rocket/util/scripting.cpp
+    src/rocket/util/data_structures.cpp
     src/rocket/util/util.cpp
 
     # Master
@@ -90,6 +91,9 @@ add_library(${PROJECT_NAME}
 
     # AstroUI
     ${ASTRO_SOURCES}
+
+    # External Libraries
+    src/lib/lzf/lzf_c.c
 )
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE include)
