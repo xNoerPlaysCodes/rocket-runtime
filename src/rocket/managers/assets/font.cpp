@@ -1,4 +1,5 @@
 #include "../../include/rocket/asset.hpp"
+#include <internal_types.hpp>
 
 namespace rocket {
     struct font_character_t {
@@ -9,7 +10,9 @@ namespace rocket {
         int advance;
     };
 
-    font_t::font_t() {}
+    font_t::font_t() {
+        this->cdata = new rocket::internal_cdata;
+    }
 
     float font_t::get_line_height() const {
         return this->line_height;

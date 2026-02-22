@@ -106,8 +106,8 @@ def run_tests():
     passed = 0.0
     failed_tests = []
     for name in sorted(os.listdir(TEST_DIR)):
-        if name.endswith(".exe"):
-            name = name[:-4]
+        if (sys.platform == "win32" or os.path.exists("toolchain.cmake")) and not name.endswith(".exe"):
+            continue
         path = os.path.join(TEST_DIR, name)
 
         if not is_executable(path):
@@ -116,6 +116,9 @@ def run_tests():
 
         # print("[" + str(int((done / count) * 100)) + "%]", end="", flush=True)
         
+        name_strip = name
+        if name.endswith(".exe"):
+            name_strip = name[:-4]
         print("\r\033[K", end="")
         print("\r" + " " * 24, end="")
         print("\r[", end="")
@@ -124,7 +127,7 @@ def run_tests():
         print("#" * progress, end="")
         print(" " * remaining, end="")
         print("]", end="")
-        print(" " + "Running: " + name, end="")
+        print(" " + "Running: " + name_strip, end="")
 
         print(end="", flush=True)
         result = subprocess.run(
@@ -168,28 +171,30 @@ def init_cmake(args):
     os.makedirs("build", exist_ok=True)
 
     if sys.platform == "win32":
-        if not os.path.isdir("windeps"):
-            print("installation of dependencies required")
-            if not os.path.isdir(".gitwindeps"):
-                os.mkdir(".gitwindeps")
-            cmd = ["git"]
-            args = ["clone", "https://github.com/NOERLOL-Mirrors/rocket-runtime-windeps", "--depth", "1", ".gitwindeps"]
-            print("command: " + "git" + " " + " ".join(args))
-            # subprocess.run(cmd + args, check=True)
-            src = ".gitwindeps/windeps"
-            dst = "."
-            if os.path.isdir(src):
-                for item in os.listdir(src):
-                    s = os.path.join(src, item)
-                    d = os.path.join(dst, item)
-                    # Move each file/folder
-                    if os.path.exists(d):
-                        print(f"overwrite {d}")
-                        if os.path.isdir(d):
-                            shutil.rmtree(d)
-                        else:
-                            os.remove(d)
-                    shutil.move(s, d)
+        print("run build.sh")
+        return 1
+    #     if not os.path.isdir("windeps"):
+    #         print("installation of dependencies required")
+    #         if not os.path.isdir(".gitwindeps"):
+    #             os.mkdir(".gitwindeps")
+    #         cmd = ["git"]
+    #         args = ["clone", "https://github.com/NOERLOL-Mirrors/rocket-runtime-windeps", "--depth", "1", ".gitwindeps"]
+    #         print("command: " + "git" + " " + " ".join(args))
+    #         # subprocess.run(cmd + args, check=True)
+    #         src = ".gitwindeps/windeps"
+    #         dst = "."
+    #         if os.path.isdir(src):
+    #             for item in os.listdir(src):
+    #                 s = os.path.join(src, item)
+    #                 d = os.path.join(dst, item)
+    #                 # Move each file/folder
+    #                 if os.path.exists(d):
+    #                     print(f"overwrite {d}")
+    #                     if os.path.isdir(d):
+    #                         shutil.rmtree(d)
+    #                     else:
+    #                         os.remove(d)
+    #                 shutil.move(s, d)
 
     backend = args.glfnldr_backend
     args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build"]

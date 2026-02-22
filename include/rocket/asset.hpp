@@ -3,7 +3,6 @@
 
 #include "rocket/audio.hpp"
 #include "types.hpp"
-#include "stb_truetype.h"
 #include <AL/al.h>
 #include <atomic>
 #include <chrono>
@@ -104,12 +103,14 @@ namespace rocket {
     class text_t;
     class renderer_2d;
 
+    struct internal_cdata;
+
     class font_t {
     private:
         /// INNER
         GLuint glid = 0;
         rocket::vec2i_t sttex_size = { 512, 512 };
-        stbtt_bakedchar cdata[96];
+        internal_cdata *cdata;
         std::vector<uint8_t> ttf_data;
         /// INNER
         float line_height;

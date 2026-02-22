@@ -9,6 +9,7 @@ namespace rocket {
         // Primitive
         rectangle = 0,
         textured_rectangle,
+        atlas_textured_rectangle,
         circle_lines,
         text,
 

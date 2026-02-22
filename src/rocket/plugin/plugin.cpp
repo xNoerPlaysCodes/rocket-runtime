@@ -28,7 +28,7 @@ constexpr std::string dll_extension = ".dll";
 constexpr std::string dll_extension = ".so";
 #endif
 
-constexpr std::string   api_version     = "0.0.1";
+constexpr std::string   api_version     = "0.0.2";
 
 #define CALL_FUN_NOARG(p, ret, nm) ((ret (*)())(p->get_function(nm)))();
 

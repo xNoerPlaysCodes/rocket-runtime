@@ -1,5 +1,6 @@
 #include "../../include/rocket/asset.hpp"
-#include <iostream>
+#include "lib/stb/stb_truetype.h"
+#include "internal_types.hpp"
 
 namespace rocket {
     text_t::text_t(std::string text, float size, rgb_color color, std::shared_ptr<font_t> font) {
@@ -28,7 +29,7 @@ namespace rocket {
         stbtt_aligned_quad q;
         for (char c : text) {
             if (c >= 32 && c <= 127) {
-                stbtt_GetBakedQuad(font->cdata, 512, 512, c - 32, &x, &y, &q, 1);
+                stbtt_GetBakedQuad(font->cdata->a, 512, 512, c - 32, &x, &y, &q, 1);
             }
         }
         // for (const char* p = text.c_str(); *p; ++p) {

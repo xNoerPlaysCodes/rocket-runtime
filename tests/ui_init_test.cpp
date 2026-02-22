@@ -45,6 +45,7 @@ int main(int argc, char **argv) {
         test_mode = true;
     }
     rocket::init(argc, argv);
+    
     rocket::windowflags_t flags;
     flags.resizable = true;
     flags.msaa_samples = 4;

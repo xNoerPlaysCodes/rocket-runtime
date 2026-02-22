@@ -7,12 +7,15 @@
 #define GL_STATIC_DRAW 0x88E4
 #endif
 
+#ifndef ROCKETGE__RUNTIME_SKIP_HEADER_INCLUSION
 #include "renderer.hpp"
 #include "asset.hpp"
 #include "io.hpp"
 #include "types.hpp"
 #include "window.hpp"
 #include "shader.hpp"
+#include "constants.hpp"
+#endif
 
 #define ROCKETGE__MAJOR_VERSION  2
 #define ROCKETGE__MINOR_VERSION  0
@@ -49,8 +52,6 @@
 //  #define ROCKETGE__DEPRECATED [[deprecated]]
 #define ROCKETGE__DEPRECATED
 
-#include "constants.hpp"
-
 namespace rocket {
     /// @brief Log Level
     enum class log_level_t : int {
@@ -62,6 +63,11 @@ namespace rocket {
         error = 5,
         fatal = 6,
         none = 100
+    };
+
+    enum class logger_state_t : int {
+        flush_always = 0,
+        flush_never,
     };
 
     /// @brief Sets minimum log level to be printed to the console
@@ -116,7 +122,15 @@ namespace rocket {
     /// @brief Flushes the output buffer for RocketLogger
     void logger_flush();
 
+    /// @brief Push Logger State
+    void logger_push(logger_state_t state);
+
+    /// @brief Pop Logger State
+    void logger_pop(logger_state_t state);
+
     /// @brief Exit using RocketExit or callback
+    /// @note Treat as if it does NOT exit
+    /// @note Overridable
     void exit(int status_code = 1);
 
     /// @brief Set OpenGL Error callback

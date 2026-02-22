@@ -9,7 +9,7 @@
 #include <rocket/runtime.hpp>
 
 #define STB_VORBIS_HEADER_ONLY
-#include <stb_vorbis.h>
+#include <lib/stb/stb_vorbis.h>
 
 namespace rocket::audio {
     device_t default_dvc;

@@ -45,9 +45,12 @@ using asset_map_t = std::unordered_map<std::shared_ptr<T>, std::chrono::time_poi
 
 using namespace std::chrono_literals;
 
-#include "../include/stb_image.h"
+#include "lib/stb/stb_truetype.h"
+#include "lib/stb/stb_image.h"
 #define STB_VORBIS_HEADER_ONLY
-#include "../include/stb_vorbis.h"
+#include "lib/stb/stb_vorbis.h"
+
+#include "internal_types.hpp"
 
 namespace rocket {
     bool texture_t::is_ready() {
@@ -59,6 +62,9 @@ namespace rocket {
     audio_t::audio_t() {}
     
     void audio_t::play(float vol, bool loop, std::function<void(audio_t *)> on_finish) {
+        if (this == nullptr) {
+            return;
+        }
         if (this->playing) {
             rocket::log("audio is already playing", "audio_t", "play", "error");
             return;
@@ -485,7 +491,7 @@ namespace rocket {
             font->id = -1;
             font->size = fsize;
             std::vector<unsigned char> bitmap(font->sttex_size.x * font->sttex_size.y);
-            stbtt_BakeFontBitmap(rocket_binary::FontDefault, 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
+            stbtt_BakeFontBitmap(rocket_binary::FontDefault, 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata->a);
 
             stbtt_fontinfo info;
             if (!stbtt_InitFont(&info, rocket_binary::FontDefault, 0)) {
@@ -521,7 +527,7 @@ namespace rocket {
             font->id = -1;
             font->size = fsize;
             std::vector<unsigned char> bitmap(font->sttex_size.x * font->sttex_size.y);
-            stbtt_BakeFontBitmap(rocket_binary::FontDefault_Monospace_ttf, 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
+            stbtt_BakeFontBitmap(rocket_binary::FontDefault_Monospace_ttf, 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata->a);
 
             stbtt_fontinfo info;
             if (!stbtt_InitFont(&info, rocket_binary::FontDefault_Monospace_ttf, 0)) {
@@ -555,7 +561,7 @@ namespace rocket {
         font->id = current_id++;
         std::vector<unsigned char> bitmap(font->sttex_size.x * font->sttex_size.y);
         font->ttf_data = mem;
-        stbtt_BakeFontBitmap(mem.data(), 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
+        stbtt_BakeFontBitmap(mem.data(), 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata->a);
 
         stbtt_fontinfo info;
         if (!stbtt_InitFont(&info, rocket_binary::FontDefault, 0)) {
@@ -601,7 +607,7 @@ namespace rocket {
         font->ttf_data = ttf_buffer;
 
         std::vector<unsigned char> bitmap(font->sttex_size.x * font->sttex_size.y);
-        stbtt_BakeFontBitmap(ttf_buffer.data(), 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata);
+        stbtt_BakeFontBitmap(ttf_buffer.data(), 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata->a);
 
         stbtt_fontinfo info;
         if (!stbtt_InitFont(&info, ttf_buffer.data(), 0)) {

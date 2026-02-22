@@ -727,11 +727,9 @@ namespace rgl {
         return get_shader_location(sp, name.c_str());
     }
 
-    static int drawcalls = 0;
-    static int tricount = 0;
     void gl_draw_arrays(GLenum mode, GLint first, GLsizei count) {
-        drawcalls++;
-        tricount += count / 3;
+        add_frame_metrics_data_drawcalls(1);
+        add_frame_metrics_data_tricount(count / 3);
         glDrawArrays(mode, first, count);
     }
 
@@ -747,26 +745,6 @@ namespace rgl {
             fn();
             local.pop();
         }
-    }
-
-    int reset_drawcalls() {
-        int ret = read_drawcalls();
-        drawcalls = 0;
-        return ret;
-    }
-
-    int read_drawcalls() {
-        return drawcalls;
-    }
-
-    int reset_tricount() {
-        int ret = read_tricount();
-        tricount = 0;
-        return ret;
-    }
-
-    int read_tricount() {
-        return tricount;
     }
 
     rgl::shader_program_t get_fxaa_simplified_shader() {
@@ -845,6 +823,27 @@ namespace rgl {
 
         metrics.avg_fps = metrics.avg_fps + alpha * (fps - metrics.avg_fps);
         metrics.avg_frametime = metrics.avg_frametime + alpha * (frametime - metrics.avg_frametime);
+    }
+
+    frame_metrics_t fmetrics;
+
+    void update_frame_metrics_data(frame_metrics_t metrics) {
+        fmetrics = metrics;
+    }
+    void add_frame_metrics_data_drawcalls(int n) {
+        fmetrics.drawcalls += n;
+    }
+    void add_frame_metrics_data_tricount(int n) {
+        fmetrics.tricount += n;
+    }
+    void add_frame_metrics_data_skipped_drawcalls(int n) {
+        fmetrics.skipped_drawcalls += n;
+    }
+    frame_metrics_t get_frame_metrics() {
+        return fmetrics;
+    }
+    void reset_frame_metrics() {
+        fmetrics = {};
     }
 
     draw_metrics_t get_draw_metrics() {

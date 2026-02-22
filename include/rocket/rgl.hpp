@@ -157,13 +157,6 @@ namespace rgl {
 
     void gl_draw_arrays(GLenum mode, GLint first, GLsizei count);
 
-    int reset_drawcalls();
-    int read_drawcalls();
-
-    int reset_tricount();
-    int read_tricount();
-
-    // TODO Implement!
     struct draw_metrics_t {
         float avg_frametime = 0;
         float avg_fps = 0;
@@ -175,8 +168,21 @@ namespace rgl {
         float max_fps = 0;
     };
 
+    struct frame_metrics_t {
+        int drawcalls = 0;
+        int tricount = 0;
+        int skipped_drawcalls = 0;
+    };
+
     void update_draw_metrics_data(float frametime, float fps);
     draw_metrics_t get_draw_metrics();
+
+    void update_frame_metrics_data(frame_metrics_t metrics);
+    void add_frame_metrics_data_drawcalls(int);
+    void add_frame_metrics_data_tricount(int);
+    void add_frame_metrics_data_skipped_drawcalls(int);
+    frame_metrics_t get_frame_metrics();
+    void reset_frame_metrics();
 
     rgl::shader_program_t get_fxaa_simplified_shader();
 

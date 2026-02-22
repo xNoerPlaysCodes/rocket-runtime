@@ -374,7 +374,6 @@ namespace rocket {
                 gc = itc->second;
                 haptic = haptics[gc];
             } else {
-                // open SDL_GameController from GLFW GUID
                 SDL_JoystickGUID tgt = SDL_JoystickGetGUIDFromString(glfwGetJoystickGUID(gp));
                 int n = SDL_NumJoysticks();
                 for (int i = 0; i < n; ++i) {
@@ -393,7 +392,8 @@ namespace rocket {
                 }
             }
 
-            if (!gc || !haptic) return;
+            if (gc == nullptr || haptic == nullptr)
+                return;
 
             SDL_HapticRumblePlay(haptic, strength, static_cast<int>(duration_ms));
         }

@@ -1,5 +1,7 @@
 CompileFlags:
   Add: [
     "-I/usr/include/miniz",
-    "-std=gnu++23"
+    "-std=gnu++23",
+    "-Wall",
+    "-Wpedantic"
   ]

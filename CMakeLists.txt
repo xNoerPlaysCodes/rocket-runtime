@@ -16,7 +16,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 #DebugMode
 project(${PROJECT_NAME} CXX)
 
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
 option(BUILD_SHARED_LIBS "Build Shared" ON)
 option(BUILD_TESTS "Build Tests" ON)
@@ -83,17 +83,14 @@ add_library(${PROJECT_NAME}
     # Plugin Subsystem
     src/rocket/plugin/plugin.cpp
 
-    # Header-Only Libraries Implementation
-    src/headeronlyimpl.cpp
+    # Special Cases
+    src/special_cases.cpp
 
     # RNative
     ${RNATIVE_SOURCES}
 
     # AstroUI
     ${ASTRO_SOURCES}
-
-    # External Libraries
-    src/lib/lzf/lzf_c.c
 )
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE include)
@@ -174,6 +171,7 @@ if (BUILD_TESTS)
         default_shader_test
         persistence_test
         scripting_test
+        texture_atlas_test
     )
 
     if (BUILD_ASTRO)

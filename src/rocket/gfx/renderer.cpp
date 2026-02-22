@@ -35,6 +35,9 @@
 #include "binary_stuff/splash_screen.h"
 #include "binary_stuff/splash_sfx.h"
 
+#include "lib/stb/stb_truetype.h"
+#include "internal_types.hpp"
+
 #include "plugin.hpp"
 
 namespace rocket {
@@ -97,8 +100,16 @@ namespace rocket {
 
         ::rocket::ovr_clistate = util::get_clistate();
     }
+    
+    renderer_2d::gfx_chk_result renderer_2d::check_graphics_settings() {
+        return gfx_chk_result::drawable; // [FIXME] Check OutOfBounds drawings
+    }
 
     void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int thickness) {
+        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
         rocket::vec2f_t center_pos = {
             .x = pos.x - radius,
             .y = pos.y - radius
@@ -126,7 +137,7 @@ namespace rocket {
             glUniform2f(glGetUniformLocation(pg, "u_size"), radius * 2, radius * 2);
             glUniform1f(glGetUniformLocation(pg, "u_radius"), 1);
             glUniform1f(glGetUniformLocation(pg, "u_thickness"), thickness);
-            auto vos = rgl::compile_vo();
+            static auto vos = rgl::compile_vo();
             rgl::draw_shader(pg, vos.first, vos.second);
             return;
         }
@@ -135,6 +146,10 @@ namespace rocket {
     }
 
     void renderer_2d::draw_polygon(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int segments, float rotation) {
+        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
         const char *vsrc = R"(
             #version 330 core
             layout (location = 0) in vec2 aPos;
@@ -206,10 +221,18 @@ namespace rocket {
     }
 
     void renderer_2d::draw_pixel(rocket::vec2f_t pos, rocket::rgba_color color) {
+        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
         this->draw_rectangle({ pos, { 1, 1 } }, color, 0, 0, 0);
     }
 
     void renderer_2d::draw_rectangle(rocket::vec2f_t pos, rocket::vec2f_t size, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
+        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
         rocket::fbounding_box box = {pos, size};
         this->draw_rectangle(box, color, rotation, roundedness, lines);
     }
@@ -299,10 +322,9 @@ namespace rocket {
                 glClearColor(color_nm.x, color_nm.y, color_nm.z, color_nm.w);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             }
-            active_render_modes.push_back(mode);
-        } else {
-            rocket::log("Not Implemented Yet!", "renderer_2d", "begin_render_mode", "info");
         }
+
+        active_render_modes.push_back(mode);
     }
 
     void renderer_2d::begin_batch() {
@@ -332,12 +354,23 @@ namespace rocket {
                          texture->channels == 4 ? GL_RGBA : GL_RGB,
                          GL_UNSIGNED_BYTE, texture->data.data());
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            if (std::find(this->active_render_modes.begin(), this->active_render_modes.end(), render_mode_t::texture_filter_none) != this->active_render_modes.end()) {
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            } else {
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            }
         }
     }
 
     void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation, float roundedness) {
+        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
+
         if (texture == nullptr) {
             rocket::log("texture is null", "renderer_2d", "draw_texture", "error");
             return;
@@ -350,7 +383,65 @@ namespace rocket {
         rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
     }
 
+    void renderer_2d::draw_atlas_texture(
+        std::shared_ptr<rocket::texture_t> atlas,
+        rocket::fbounding_box rect,              // quad position & size on screen
+        rocket::vec2f_t sprite_pos_in_atlas,     // top-left pixel of sprite inside atlas
+        rocket::vec2f_t sprite_size_in_atlas,    // width/height of the sprite inside atlas
+        float rotation,
+        float roundedness
+    ) {
+        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
+
+        if (!atlas) {
+            rocket::log("texture is null", "renderer_2d", "draw_texture", "error");
+            return;
+        }
+
+        rgl::shader_program_t pg = rocket::get_shader(shader_id_t::atlas_textured_rectangle);
+        rocket::vec2f_t viewport_size = this->get_viewport_size();
+
+        glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
+
+        rocket::vec2f_t size = rect.size;
+        rocket::vec2f_t pos  = rect.pos;
+        float cx = pos.x + size.x * 0.5f;
+        float cy = pos.y + size.y * 0.5f;
+
+        glm::mat4 transform = projection
+            * glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
+            * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
+            * glm::translate(glm::mat4(1.0f), glm::vec3(-size.x * 0.5f, -size.y * 0.5f, 0.0f))
+            * glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
+
+        glUseProgram(pg);
+        glUniformMatrix4fv(glGetUniformLocation(pg, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
+        glUniform2f(glGetUniformLocation(pg, "u_size"), size.x, size.y);
+        glUniform1f(glGetUniformLocation(pg, "u_radius"), roundedness);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, atlas->glid);
+        this->make_ready_texture(atlas);
+        glUniform1i(glGetUniformLocation(pg, "u_texture"), 0);
+
+        rocket::vec2f_t atlas_size{ 1.f * atlas->size.x, 1.f * atlas->size.y };
+        rocket::vec2f_t uv_tex_pos  = sprite_pos_in_atlas / atlas_size;
+        rocket::vec2f_t uv_tex_size = sprite_size_in_atlas / atlas_size;
+
+        glUniform2f(glGetUniformLocation(pg, "u_texPos"), uv_tex_pos.x, uv_tex_pos.y);
+        glUniform2f(glGetUniformLocation(pg, "u_texSize"), uv_tex_size.x, uv_tex_size.y);
+
+        static auto vos = rgl::compile_vo();
+        rgl::draw_shader(pg, vos.first, vos.second);
+    }
     void renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
+        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
         rgl::shader_program_t pg = rgl::get_paramaterized_quad(rect.pos, rect.size, color, rotation, roundedness);
         if (lines) {
             rocket::vec2f_t pos = rect.pos;
@@ -380,7 +471,11 @@ namespace rocket {
         rgl::draw_shader(pg, rgl::shader_use_t::rect);
     }
    
-    void renderer_2d::draw_text(rocket::text_t &text, rocket::vec2f_t position) {
+    void renderer_2d::draw_text(const rocket::text_t &text, rocket::vec2f_t position) {
+        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
         static auto cli_args = util::get_clistate();
         if (cli_args.notext) {
             return;
@@ -429,7 +524,7 @@ namespace rocket {
 
         for (char c : text.text) {
             stbtt_aligned_quad q;
-            stbtt_GetBakedQuad(text.font->cdata, 512, 512, c - 32, &x, &y, &q, 1);
+            stbtt_GetBakedQuad(text.font->cdata->a, 512, 512, c - 32, &x, &y, &q, 1);
 
             float x0 = (q.x0 / screen_w) * 2.0f - 1.0f;
             float y0 = 1.0f - (q.y0 / screen_h) * 2.0f;
@@ -452,6 +547,10 @@ namespace rocket {
     }
 
     void renderer_2d::draw_shader(shader_t shader) {
+        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
         rgl::draw_shader(shader.glprogram, shader.vao, shader.vbo);
     }
 
@@ -487,6 +586,10 @@ namespace rocket {
     }
 
     void renderer_2d::draw_fps(vec2f_t pos) {
+        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
         std::string fps_text = "FPS: " + std::to_string(get_current_fps());
 
         static rocket::text_t fps = rocket::text_t(fps_text, 24, rocket::rgb_color::green());
@@ -516,7 +619,7 @@ namespace rocket {
         return fb_pixels[key];
     }
 
-    void renderer_2d::push_framebuffer(std::vector<rgba_color> &framebuffer) {
+    void renderer_2d::push_framebuffer(const std::vector<rgba_color> &framebuffer) {
         static GLuint framebuffer_tx = rGL_TXID_INVALID;
         if (framebuffer_tx == rGL_TXID_INVALID) {
             glGenTextures(1, &framebuffer_tx);
@@ -579,8 +682,13 @@ namespace rocket {
             if (rgl::is_active_any_fbo()) {
                 rgl::reset_to_default_fbo();
             }
-        } else {
-            rocket::log("Not Implemented Yet!", "renderer_2d", "end_render_mode", "info");
+        }
+
+        for (auto it = this->active_render_modes.begin(); it != this->active_render_modes.end(); it++) {
+            if (*it == mode) {
+                this->active_render_modes.erase(it);
+                break;
+            }
         }
     }
 
@@ -602,17 +710,18 @@ namespace rocket {
             return ss.str();
         };
         static std::shared_ptr<rocket::font_t> font = rGE__FONT_DEFAULT_MONOSPACED;
+        rgl::frame_metrics_t fmetrics = rgl::get_frame_metrics();
         rocket::text_t fps_avg_text = { "FPS: " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
-        rocket::text_t frametime_text = { "FrameTime: [[FIXME]]", text_size, rgb_color::white(), font }; // FIXME Get proper (ema avg) frametime
+        rocket::text_t frametime_text = { "FrameTime: " + double_to_str(ren->get_draw_metrics().avg_frametime * 1000) + "ms", text_size, rgb_color::white(), font }; // FIXME Get proper (ema avg) frametime
         rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()), text_size, rgb_color::white(), font };
-        rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(rgl::read_drawcalls()), text_size, rgb_color::white(), font };
-        rocket::text_t tricount_text = { "TriCount: " + std::to_string(rgl::read_tricount()), text_size, rgb_color::white(), font };
+        rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(fmetrics.drawcalls), text_size, rgb_color::white(), font };
+        rocket::text_t tricount_text = { "TriCount: " + std::to_string(fmetrics.tricount), text_size, rgb_color::white(), font };
 
-        if (rgl::read_drawcalls() > rGL_MAX_RECOMMENDED_DRAWCALLS) {
+        if (fmetrics.drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
             drawcalls_text.text += " (danger)";
         }
 
-        if (rgl::read_tricount() > rGL_MAX_RECOMMENDED_TRICOUNT) {
+        if (fmetrics.drawcalls > rGL_MAX_RECOMMENDED_TRICOUNT) {
             tricount_text.text += " (danger)";
         }
 
@@ -752,14 +861,17 @@ namespace rocket {
         draw_debug_overlay(util::get_clistate().debugoverlay, this, frame_start_time);
 
         glfwSwapBuffers(this->window->glfw_window);
-        int drawcalls = rgl::reset_drawcalls();
+        rgl::frame_metrics_t fmetrics = rgl::get_frame_metrics();
+        int drawcalls = fmetrics.drawcalls;
         if (drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
             rocket::log("Too many drawcalls! (" + std::to_string(drawcalls) + ") Frames may suffer", "renderer_2d", "end_frame", "warning");
         }
-        int tricount = rgl::reset_tricount();
+        int tricount = fmetrics.tricount;
         if (tricount > rGL_MAX_RECOMMENDED_TRICOUNT) {
             rocket::log("Too many triangles! (" + std::to_string(tricount) + ") Frames may suffer", "renderer_2d", "end_frame", "warning");
         }
+
+        rgl::reset_frame_metrics();
 
         rocket::vec2f_t final_viewport_position = {  0,  0 };
         rocket::vec2f_t final_viewport_size     = { -1, -1 };
@@ -818,8 +930,6 @@ namespace rocket {
         glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, final_viewport_size.x, final_viewport_size.y);
 
         frame_counter++;
-
-        this->active_render_modes.clear();
 
         if (this->fps == rocket::fps_uncapped) {
             this->delta_time = glfwGetTime() - frame_start_time;
@@ -1058,7 +1168,7 @@ namespace rocket {
     }
 
     int renderer_2d::get_drawcalls() {
-        return rgl::read_drawcalls();
+        return rgl::get_frame_metrics().drawcalls;
     }
 
     rgl::draw_metrics_t renderer_2d::get_draw_metrics() {

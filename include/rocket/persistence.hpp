@@ -5,7 +5,6 @@
 #include <string>
 #include <unordered_map>
 #include <variant>
-#include <vector>
 namespace rocket::storage {
     using variable_t = std::variant<
         std::nullptr_t,

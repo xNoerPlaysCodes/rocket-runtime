@@ -2,7 +2,6 @@
 #define ROCKETGE__RENDERER_HPP
 
 #include "macros.hpp"
-#include <array>
 #include <cstdint>
 #include "glfnldr.hpp"
 #include <glm/detail/qualifier.hpp>
@@ -18,7 +17,6 @@
 #include "shader.hpp"
 #include <chrono>
 #include <memory>
-#include <string>
 #include <vector>
 
 namespace rocket {
@@ -43,11 +41,13 @@ namespace rocket {
         /// @brief Enables a preloaded simplified FXAA Shader
         /// @note HEAVILY BROKEN, rendering with this is just
         ///         all over the place... :(
-        fxaa
+        fxaa,
+
+        texture_filter_none,
     };
 
     struct graphics_settings_t {
-        
+        bool viewport_visibility_checks = false;
     };
 
     struct camera_2d;
@@ -85,6 +85,12 @@ namespace rocket {
 
         friend class renderer_3d;
         friend class font_t;
+    private:
+        enum class gfx_chk_result {
+            not_drawable,
+            drawable,
+        };
+        gfx_chk_result check_graphics_settings();
     public:
         /// @brief Check if frame has begun
         bool has_frame_began();
@@ -101,7 +107,7 @@ namespace rocket {
         /// @brief Push a contiguous block of pixels
         /// @brief adjusted to viewport size
         /// @brief ONLY for SOFTWARE rendering
-        void push_framebuffer(std::vector<rgba_color> &framebuffer);
+        void push_framebuffer(const std::vector<rgba_color> &framebuffer);
         /// @brief Get the size of the viewport
         vec2f_t get_viewport_size();
         /// @brief Begin scissor mode
@@ -156,6 +162,15 @@ namespace rocket {
         /// @param roundedness Roundedness [0-1]
         void draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation = 0.f, float roundedness = 0.f);
 
+        /// @brief Draw a texture using atlas
+        /// @param texture Texture Atlas
+        /// @param rect Rectangle
+        /// @param texture_position_in_atlas Texture Position
+        /// @param texture_size_in_atlas Texture Size
+        /// @param rotation Rotation in degrees
+        /// @param roundedness Roundedness [0-1]
+        void draw_atlas_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, rocket::vec2f_t texture_position_in_atlas, rocket::vec2f_t texture_size_in_atlas, float rotation = 0.f, float roundedness = 0.f);
+
         /// @brief Make a texture ready for drawing
         /// @note Not needed to be called before drawing
         void make_ready_texture(std::shared_ptr<rocket::texture_t> texture);
@@ -163,7 +178,7 @@ namespace rocket {
         /// @brief Draw text
         /// @param text Text
         /// @param position Position
-        void draw_text(rocket::text_t &text, vec2f_t position);
+        void draw_text(const rocket::text_t &text, vec2f_t position);
 
         /// @brief Draw a singular pixel
         /// @param pos Position

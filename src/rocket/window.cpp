@@ -458,20 +458,9 @@ namespace rocket {
             std::string glfw_platform_str = platform.name;
 
             std::vector<std::string> logs = {
-                "Engine Version: " ROCKETGE__VERSION,
+                "RocketGE v" ROCKETGE__VERSION,
                 "Windowing: GLFW + " + glfw_platform_str,
                 "Platform: " + platform.rge_name,
-                "Modules:",
-                #ifdef ROCKETGE__BUILD_QUARK
-                    "- Quark: [ENABLED]",
-                #else
-                    "- Quark: [DISABLED]",
-                #endif
-                #ifdef ROCKETGE__BUILD_ASTRO
-                    "- AstroUI: [ENABLED]",
-                #else
-                    "- AstroUI: [DISABLED]",
-                #endif
             };
 
             for (auto &l : logs) {

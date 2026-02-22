@@ -67,9 +67,16 @@ namespace rocket {
     }
 
     char* crash_signal(bool fatal, void *mem_addr, const char *signal, const char *message) {
+        char mem_addr_str[128] = {};
+        if (mem_addr == nullptr) {
+            std::snprintf(mem_addr_str, 128, "0x0");
+        } else {
+            std::snprintf(mem_addr_str, 128, "%p", mem_addr);
+        }
+
         if (util::get_memory_buffer()->mem == nullptr) {
             static char buf[1024] = {};
-            for (int i = 0; i < 1024; ++i) buf[i] = 0;
+            std::memset(buf, 0, 1024);
 
             if (std::strlen(message) + std::strlen(signal) > 512) {
                 std::snprintf(buf, 1024, "%s", "OOM! Not enough memory to write crash dump");
@@ -81,9 +88,9 @@ namespace rocket {
                 "Signal|Message|MemAddr\n"
                 "%s\n"
                 "%s\n"
-                "%p",
+                "%s",
 
-                signal, message, mem_addr
+                signal, message, mem_addr_str
             );
             return buf;
         }
@@ -95,14 +102,14 @@ namespace rocket {
             "Generated on %s\n"
             "%s occurred.\n"
             "\n"
-            "%s @ [%p]\n"
+            "%s @ [%s]\n"
             "%s\n"
             "\n"
             "%s",
 
             get_time_string(),
             fatal ? "A fatal exception" : "An exception",
-            signal, mem_addr,
+            signal, mem_addr_str,
             message,
             fatal ? "The program will now exit" : ""
         );

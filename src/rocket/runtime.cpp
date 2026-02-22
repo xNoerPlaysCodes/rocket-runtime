@@ -46,7 +46,7 @@ namespace callback {
     void __windows_crash_handler(void *mem_addr) {
         std::endl(std::cout);
 
-        std::cout << rocket::crash_signal(true, mem_addr, "crashed", "Generic Windows Crash");
+        std::cout << rocket::crash_signal(true, mem_addr, "crashed", "Generic Windows Exception");
 
         std::endl(std::cout);
 
@@ -120,8 +120,10 @@ LONG CALLBACK crash_handler(EXCEPTION_POINTERS *info) {
     void* ip = nullptr;
 #endif
 
-    if (g_shutdown_requested)
+    if (g_shutdown_requested) {
+        rocket::exit(0);
         return EXCEPTION_CONTINUE_SEARCH;
+    }
 
     callback::__windows_crash_handler(ip);
 
@@ -130,6 +132,7 @@ LONG CALLBACK crash_handler(EXCEPTION_POINTERS *info) {
 
 void __init() {
     // AddVectoredExceptionHandler(1, &crash_handler);
+    SetUnhandledExceptionFilter(&crash_handler);
     // SetConsoleCtrlHandler(console_ctrl_handler, TRUE);
     rocket::log("Hooked VEH, CTRL_C, CTRL_BREAK, CTRL_CLOSE", "rocket", "init", "debug");
     rocket::log("windows_platform initialization not implemented", "rocket", "init", "fixme");
@@ -178,6 +181,9 @@ namespace rocket {
     std::atomic<bool> log_thread_continue = false;
     std::thread log_thread;
 
+    std::vector<logger_state_t> logger_state;
+    std::mutex logger_state_mutex;
+
     void log_init() {
         log_thread = std::thread([]() {
             while (log_thread_continue) {
@@ -209,10 +215,13 @@ namespace rocket {
             mtx = &cerr_mutex;
         }
         {
-            std::lock_guard<std::mutex> _(*mtx);
+            std::lock_guard<std::mutex> _1(*mtx);
+            std::lock_guard<std::mutex> _2(logger_state_mutex);
             *out << util::format_log(log, class_file_library_source, function_source, level);
-            if (!log_to_stdouterr)
+            if (std::find(logger_state.begin(), logger_state.end(), logger_state_t::flush_never) != logger_state.end()) return;
+            if (!log_to_stdouterr || std::find(logger_state.begin(), logger_state.end(), logger_state_t::flush_always) != logger_state.end()) {
                 out->flush();
+            }
         }
     }
 
@@ -254,6 +263,22 @@ namespace rocket {
 
         std_outstm.open(rocket::cst::std_out);
         std_errstm.open(rocket::cst::std_err);
+    }
+
+    void logger_push(logger_state_t state) {
+        std::lock_guard<std::mutex> _(logger_state_mutex);
+        if (std::find(logger_state.begin(), logger_state.end(), state) != logger_state.end()) return;
+        logger_state.push_back(state);
+    }
+
+    void logger_pop(logger_state_t state) {
+        std::lock_guard<std::mutex> _(logger_state_mutex);
+        for (auto it = logger_state.begin(); it != logger_state.end(); ++it) {
+            if (*it == state) {
+                logger_state.erase(it);
+                break;
+            }
+        }
     }
 
     void set_cli_arguments(int argc, char *argv[]) {
@@ -346,7 +371,9 @@ namespace rocket {
                     args.glversion = GL_VERSION_UNK;
                 } else {
                     if (!util::validate_gl_version_string(value)) {
-                        rocket::log("invalid gl version: " + value, "rocket", "argparse", "error");
+                        rocket::log("invalid gl version: " + value, "rocket", "argparse", "fatal");
+                        error = true;
+                        exit = true;
                         args.glversion = GL_VERSION_UNK;
                     }
                 }
@@ -393,9 +420,9 @@ namespace rocket {
             else if (arg == "version") {
                 exit = true;
                 std::vector<std::string> lines = {
-                    "RocketGE (rge) " ROCKETGE__VERSION,
+                    "RocketGE v" ROCKETGE__VERSION,
                     "Copyright (C) 2026 noerlol",
-                    "License MIT: Refer to LICENSE for more",
+                    "License: MIT, Refer to LICENSE for more",
                     "",
                     "Attribution:",
                     "> stb_vorbis    (PD)",
@@ -417,6 +444,7 @@ namespace rocket {
                     "> nlohmannJSON (MIT)",
                     "> pybind11     (BSD)",
                     "> python3      (PSF)",
+                    "> lzf          (BSD)",
                     "",
 #ifdef ROCKETGE__Platform_UnixCompatible
                     "Made by noerlol with  ",

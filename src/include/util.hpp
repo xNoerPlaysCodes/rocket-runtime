@@ -56,9 +56,6 @@ namespace util {
     void close_callback();
     std::vector<std::function<void()>> &get_on_close_listeners();
 
-    rocket::vec4<float> glify_a(rocket::rgba_color);
-    rocket::vec3<float> glify(rocket::rgb_color);
-
     std::vector<std::function<void(rocket::io::key_event_t)>> &key_listeners();
     std::vector<std::function<void(rocket::io::mouse_event_t)>> &mouse_listeners();
     std::vector<std::function<void(rocket::io::mouse_move_event_t)>> &mouse_move_listeners();

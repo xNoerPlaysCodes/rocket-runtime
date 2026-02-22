@@ -4,7 +4,6 @@
 #include <filesystem>
 #include <limits>
 #include <rocket/macros.hpp>
-#include "types.hpp"
 
 /// @brief Constants
 namespace rocket::cst {
@@ -19,9 +18,9 @@ namespace rocket::cst {
     constexpr int32_t   unknown_i32 = std::numeric_limits<int32_t>::max();
     constexpr int64_t   unknown_i64 = std::numeric_limits<int64_t>::max();
 
-    /// @brief rocket::io magic number to set [var: vec2] to
+    /// @brief rocket::io::simulate magic number to set [var: vec2] to
     ///         current mouse position
-    constexpr float io_mn_set_to_current_mpos = 1.7186765875;
+    constexpr float io_mn_set_to_current_mpos = std::numeric_limits<float>::infinity();
 
 #ifdef ROCKETGE__Platform_UnixCompatible
     const std::filesystem::path std_out = "/dev/stdout";
