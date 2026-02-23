@@ -208,6 +208,8 @@ namespace rocket {
 
             {2,1},
             {2,0}, // 2
+                   // ==
+                   // 13
         };
 
         static auto cli_args = util::get_clistate();
@@ -250,12 +252,6 @@ namespace rocket {
 
         glfwSetErrorCallback(callback::glfw_error);
         return 4.6f;
-    }
-
-    bool silent_cons = false;
-
-    RGE_STATIC_FUNC_IMPL void window_t::__silent_next_constructor() {
-        silent_cons = true;
     }
 
     window_t::window_t(const rocket::vec2i_t& size,
@@ -449,23 +445,20 @@ namespace rocket {
             glfwWaitEvents();
         });
 
-        if (!silent_cons) {
-            silent_cons = false;
-            rocket::log("Window created as [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "]: " + title, 
-                "window_t", "constructor", 
-                "info");
-            auto platform = get_platform();
-            std::string glfw_platform_str = platform.name;
+        rocket::log("Window created as [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "]: " + title, 
+            "window_t", "constructor", 
+            "info");
+        auto platform = get_platform();
+        std::string glfw_platform_str = platform.name;
 
-            std::vector<std::string> logs = {
-                "RocketGE v" ROCKETGE__VERSION,
-                "Windowing: GLFW + " + glfw_platform_str,
-                "Platform: " + platform.rge_name,
-            };
+        std::vector<std::string> logs = {
+            "RocketGE v" ROCKETGE__VERSION,
+            "Windowing: GLFW + " + glfw_platform_str,
+            "Platform: " + platform.rge_name,
+        };
 
-            for (auto &l : logs) {
-                rocket::log(l, "window_t", "constructor", "info");
-            }
+        for (auto &l : logs) {
+            rocket::log(l, "window_t", "constructor", "info");
         }
     }
 
@@ -609,7 +602,7 @@ namespace rocket {
         return this->size;
     }
 
-    rocket::vec2d_t window_t::get_cursor_position() {
+    rocket::vec2d_t window_t::get_cursor_position() const {
         double x, y;
         glfwGetCursorPos(glfw_window, &x, &y);
         return { x, y };
@@ -638,13 +631,8 @@ namespace rocket {
         return icon;
     }
 
-    cursor_mode_t window_t::get_cursor_mode() {
+    cursor_mode_t window_t::get_cursor_mode() const {
         return this->mode;
-    }
-
-    bool silent_desc = false;
-    RGE_STATIC_FUNC_IMPL void window_t::__silent_next_close() {
-        silent_desc = true;
     }
 
     void window_t::close() {
@@ -654,7 +642,7 @@ namespace rocket {
         glfwDestroyWindow(glfw_window);
         glfw_window = nullptr;
 
-        if (glfw_initialized && !silent_desc) {
+        if (glfw_initialized) {
             glfwTerminate();
             glfw_initialized = false;
         }
@@ -663,11 +651,7 @@ namespace rocket {
         if (destructor_called) {
             cxf = "destructor";
         }
-        if (!silent_desc) {
-            rocket::log("Window closed", "window_t", cxf, "info");
-        }
-
-        silent_desc = false;
+        rocket::log("Window closed", "window_t", cxf, "info");
     }
 
     window_t::~window_t() {

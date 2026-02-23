@@ -154,10 +154,10 @@ namespace rocket {
         rocket::vec2i_t get_size() const;
 
         /// @brief Gets the cursor mode
-        cursor_mode_t get_cursor_mode();
+        cursor_mode_t get_cursor_mode() const;
 
         /// @brief Gets the cursor position
-        rocket::vec2d_t get_cursor_position();
+        rocket::vec2d_t get_cursor_position() const;
 
         /// @brief Checks if the window is running
         bool is_running() const;
@@ -180,7 +180,6 @@ namespace rocket {
         /// @brief Gets the current platform
         static platform_t get_platform();
     public:
-        static void __silent_next_constructor();
         /// @brief creates a new window
         window_t(const rocket::vec2i_t& size = { 800, 600 }, 
                 const std::string& title = "rGE - Example Window", 
@@ -193,7 +192,6 @@ namespace rocket {
         /// @brief Initialize the CPL Windowing Library before-hand
         static void cpl_init();
     public:
-        static void __silent_next_close();
         /// @brief closes the window
         /// @brief called by destructor
         void close();
