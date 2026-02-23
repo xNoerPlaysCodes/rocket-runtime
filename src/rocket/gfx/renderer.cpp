@@ -698,7 +698,6 @@ namespace rocket {
 
         const float margin = 8.f;
         const float padding = 8.f;
-        vec2f_t size = { 384, 262 };
         vec2f_t position = { margin, margin };
 
         const float zx = margin + padding;
@@ -715,7 +714,7 @@ namespace rocket {
         rocket::text_t fps_avg_text = { "FPS: " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
         rocket::text_t frametime_text = { "FrameTime: " + double_to_str(ren->get_draw_metrics().avg_frametime * 1000) + "ms", text_size, rgb_color::white(), font }; // FIXME Get proper (ema avg) frametime
         rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()), text_size, rgb_color::white(), font };
-        rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(fmetrics.drawcalls), text_size, rgb_color::white(), font };
+        rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(fmetrics.drawcalls) + " (" + std::to_string(fmetrics.skipped_drawcalls) + " skipped)", text_size, rgb_color::white(), font };
         rocket::text_t tricount_text = { "TriCount: " + std::to_string(fmetrics.tricount), text_size, rgb_color::white(), font };
 
         if (fmetrics.drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
@@ -736,6 +735,7 @@ namespace rocket {
         rocket::text_t mouse_pos_text = { "Cursor Pos: " + std::to_string(mpos.x) + ", " + std::to_string(mpos.y), text_size, rgb_color::white(), font };
 
         rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
+    
         static std::string glmajor, glminor;
         static int mj = -1, mn = -1;
         if (mj == -1 || mn == -1) {
@@ -805,21 +805,36 @@ namespace rocket {
         }
         rocket::text_t opengl_version_text = { "OpenGL Version: " + gl_version, text_size, rgb_color::white(), font };
 
+        vec2f_t size = { 384, 262 };
         auto last_text_position = zy + size.y - text_size - padding - margin;
 
-        static float max_width = std::max({fps_avg_text.measure().x, frametime_text.measure().x, deltatime_text.measure().x, drawcalls_text.measure().x,
-                    tricount_text.measure().x, framebuffer_active_text.measure().x, mouse_pos_text.measure().x, rocket_version_text.measure().x, opengl_version_text.measure().x});
+        std::vector<rocket::text_t> texts = {
+            fps_avg_text,
+            frametime_text,
+            deltatime_text,
+            drawcalls_text,
+            tricount_text,
+            framebuffer_active_text,
+            mouse_pos_text,
+        };
+
+        float max_width = 0;
+        if (max_width == 0) {
+            for (auto &txt : texts) {
+                auto sz = txt.measure();
+                max_width = std::max(max_width, sz.x);
+            }
+        }
+
         size.x = max_width + 24.f;
+        size.y = texts.at(0).measure().y * texts.size() + 20.f + 24.f + (opengl_version_text.measure().y + rocket_version_text.measure().y);
         ren->draw_rectangle(position, size, rgba_color::black(), 0., 0.);
         ren->draw_rectangle(position, size, rgba_color::white(), 0., 0., true);
         ren->begin_scissor_mode(position, size);
-        ren->draw_text(fps_avg_text, { zx, zy + (0 * text_size) });
-        ren->draw_text(frametime_text, { zx, zy + (1 * text_size) });
-        ren->draw_text(deltatime_text, { zx, zy + (2 * text_size) });
-        ren->draw_text(drawcalls_text, { zx, zy + (3 * text_size) });
-        ren->draw_text(tricount_text, { zx, zy + (4 * text_size) });
-        ren->draw_text(framebuffer_active_text, { zx, zy + (5 * text_size) });
-        ren->draw_text(mouse_pos_text, { zx, zy + (6 * text_size) });
+
+        for (int i = 0; i < texts.size(); ++i) {
+            ren->draw_text(texts.at(i), { zx, zy + (i * text_size) });
+        }
 
         ren->draw_text(rocket_version_text, { zx, last_text_position });
         ren->draw_text(opengl_version_text, { zx, last_text_position - text_size });
@@ -947,8 +962,6 @@ namespace rocket {
         double frame_end_time = glfwGetTime();
         double frame_duration = frame_end_time - frame_start_time;
 
-        rgl::update_draw_metrics_data(frame_duration, 1 / this->delta_time);
-
         if (fps == 0) {
             rocket::log("Target FPS 0 is too low", "renderer_2d", "end_frame", "fatal");
             rocket::exit(1);
@@ -977,6 +990,8 @@ namespace rocket {
                 rocket::log("frame took " + double_to_str(diff * 1000., 2) + "ms more than expected", "renderer_2d", "end_frame", "debug");
             }
         }
+
+        rgl::update_draw_metrics_data(frame_duration + (glfwGetTime() - frame_end_time), 1 / this->delta_time);
 
         this->delta_time = glfwGetTime() - frame_start_time;
     }

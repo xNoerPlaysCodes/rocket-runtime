@@ -29,7 +29,7 @@
 #include <GLFW/glfw3.h>
 #endif
 
-// types
+// Unstable API & ABI, use at your own risk
 namespace rgl {
     using vao_t = GLuint;
     using vbo_t = GLuint;
@@ -155,6 +155,8 @@ namespace rgl {
 
     rocket::vec2f_t get_viewport_size();
 
+    /// @brief Use this as an alternative to glDrawArrays(...)
+    /// @note Tracks Triangle Count and Drawcalls
     void gl_draw_arrays(GLenum mode, GLint first, GLsizei count);
 
     struct draw_metrics_t {
