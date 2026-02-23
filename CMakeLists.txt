@@ -16,7 +16,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 #DebugMode
 project(${PROJECT_NAME} CXX)
 
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 
 option(BUILD_SHARED_LIBS "Build Shared" ON)
 option(BUILD_TESTS "Build Tests" ON)
@@ -142,9 +142,9 @@ else()
     find_package(SDL2 REQUIRED)
     find_package(pybind11 REQUIRED)
     find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
-endif()
 
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python)
+    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python)
+endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) # Legacy definition
@@ -192,7 +192,13 @@ if (BUILD_TESTS)
             target_link_directories(${test_name} PRIVATE bin)
             target_include_directories(${test_name} PRIVATE include)
 
-            target_link_libraries(${test_name} PRIVATE RocketRuntime Python3::Python)
+            target_link_libraries(${test_name} PRIVATE RocketRuntime)
+
+            if (__rge_WINDOWS__)
+                target_link_libraries(${test_name} PRIVATE python314)
+            else()
+                target_link_libraries(${test_name} PRIVATE Python3::Python)
+            endif()
 
             target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic)
             set_target_properties(${test_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)

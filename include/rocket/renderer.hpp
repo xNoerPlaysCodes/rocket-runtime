@@ -173,6 +173,7 @@ namespace rocket {
 
         /// @brief Make a texture ready for drawing
         /// @note Not needed to be called before drawing
+        /// @note Pass render_mode_t::texture_filter_none for GL_NEAREST texture filtering
         void make_ready_texture(std::shared_ptr<rocket::texture_t> texture);
 
         /// @brief Draw text

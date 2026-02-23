@@ -106,7 +106,7 @@ def run_tests():
     passed = 0.0
     failed_tests = []
     for name in sorted(os.listdir(TEST_DIR)):
-        if (sys.platform == "win32" or os.path.exists("toolchain.cmake")) and not name.endswith(".exe"):
+        if (sys.platform == "win32" or os.path.exists("WinDeps")) and not name.endswith(".exe"):
             continue
         path = os.path.join(TEST_DIR, name)
 

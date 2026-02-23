@@ -2,7 +2,7 @@
 #include <data_structures.hpp>
 #include <rocket/runtime.hpp>
 #include <vector>
-#include <lzf.h>
+#include <lib/lzf/lzf.h>
 
 namespace rocket {
     compressed_data_t::compressed_data_t() = default;

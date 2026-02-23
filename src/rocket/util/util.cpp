@@ -34,6 +34,11 @@ std::stack<char> chars_typed;
 
 util::membuf_t membuf;
 
+void* (*new_op)(std::size_t) = ::operator new;
+void* (*newarr_op)(std::size_t) = ::operator new[];
+void (*del_op)(void*) = ::operator delete;
+void (*delarr_op)(void*) = ::operator delete[];
+
 namespace util {
     bool is_glinit = false;
 #ifdef ROCKETGE__DEBUG_BUILD
@@ -332,3 +337,75 @@ namespace util {
         return &membuf;
     }
 }
+
+// struct alignas(std::max_align_t) memory_header_t {
+//     size_t size_bytes;
+// };
+//
+// std::atomic<int> allocations = 0;
+// std::atomic<int> allocated_bytes = 0;
+//
+// void *operator new(std::size_t sz) {
+//     memory_header_t *header = (memory_header_t*) malloc(sizeof(memory_header_t) + sz);
+//     header->size_bytes = sz;
+//
+//     allocations++;
+//     allocated_bytes += sz;
+//
+//     return header + 1;
+// }
+//
+// void *operator new[](std::size_t sz) {
+//     memory_header_t *header = (memory_header_t*) malloc(sizeof(memory_header_t) + sz);
+//     header->size_bytes = sz;
+//
+//     allocations++;
+//     allocated_bytes += sz;
+//
+//     return header + 1;
+// }
+//
+// void operator delete(void *mem) noexcept {
+//     if (mem == nullptr) return;
+//     memory_header_t *header = (memory_header_t*) (((uint8_t*)mem) - sizeof(memory_header_t));
+//
+//     allocated_bytes -= header->size_bytes;
+//     allocations--;
+//
+//     free(header);
+// }
+//
+// void operator delete[](void* mem) noexcept {
+//     if (mem == nullptr) return;
+//     memory_header_t *header = (memory_header_t*) (((uint8_t*)mem) - sizeof(memory_header_t));
+//
+//     allocated_bytes -= header->size_bytes;
+//     allocations--;
+//
+//     free(header);
+// }
+//
+// void operator delete(void* mem, std::size_t sz) noexcept {
+//     if (!mem) return;
+//     memory_header_t* header = (memory_header_t*)((uint8_t*)mem - sizeof(memory_header_t));
+//     allocated_bytes -= header->size_bytes;
+//     allocations--;
+//     free(header);
+// }
+//
+// void operator delete[](void* mem, std::size_t sz) noexcept {
+//     if (!mem) return;
+//     memory_header_t* header = (memory_header_t*)((uint8_t*)mem - sizeof(memory_header_t));
+//     allocated_bytes -= header->size_bytes;
+//     allocations--;
+//     free(header);
+// }
+//
+// void* operator new(std::size_t sz, const std::nothrow_t&) noexcept {
+//     try { return ::operator new(sz); }
+//     catch(...) { return nullptr; }
+// }
+//
+// void operator delete(void* mem, const std::nothrow_t&) noexcept {
+//     ::operator delete(mem);
+// }
