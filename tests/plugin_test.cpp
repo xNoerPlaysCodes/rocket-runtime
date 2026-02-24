@@ -11,8 +11,12 @@ int main(int argc, char **argv) {
         test_mode = true;
     }
     rocket::init(argc, argv);    
-    rocket::set_log_level(rocket::log_level_t::warn);
+    rocket::set_log_level(rocket::log_level_t::info);
+#ifdef ROCKETGE__Platform_Windows
+    auto plugin = rocket::load_plugin("resources/test.plugin.win32");
+#else
     auto plugin = rocket::load_plugin("resources/test.plugin");
+#endif
     if (plugin != nullptr) {
         void (*my_test)() = reinterpret_cast<void(*)()>(plugin->get_function("my_test"));
 

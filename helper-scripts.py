@@ -100,6 +100,8 @@ def run_tests():
 
     count = 0.0
     for name in sorted(os.listdir(TEST_DIR)):
+        if (sys.platform == "win32" or os.path.exists("WinDeps")) and not name.endswith(".exe"):
+            continue
         count += 1.0
 
     done = 0.0

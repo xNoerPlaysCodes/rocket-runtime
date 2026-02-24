@@ -6,6 +6,9 @@
 #include <sstream>
 #include <util.hpp>
 #include <native.hpp>
+#include <rocket/macros.hpp>
+
+#include <stacktrace>
 
 namespace rocket {
     template<typename T>
@@ -66,12 +69,69 @@ namespace rocket {
         return buf;
     }
 
+    int construct_stack_trace(char* buf, size_t len) {
+#ifdef ROCKETGE__Platform_UnixCompatible
+        if (len == 0) return 0;
+
+        auto st = std::stacktrace::current();
+        size_t st_size = st.size();
+
+        if (st_size > 1000) {
+            return std::snprintf(buf, len, "Stack trace too big (%zu > 1000)\n", st_size);
+        }
+
+        // compute width for index column
+        int index_width = 1;
+        if (st_size >= 10)   index_width = 2;
+        if (st_size >= 100)  index_width = 3;
+        if (st_size >= 1000) index_width = 4;
+
+        size_t remaining = len;
+        char* out = buf;
+        int total_written = 0;
+
+        for (size_t i = 0; i < st_size; ++i) {
+            const auto& frame = st[i];
+
+            int written = std::snprintf(
+                out,
+                remaining,
+                "%*zu. [%u] %s\n",
+                index_width, i,
+                static_cast<unsigned>(frame.source_line()),
+                frame.source_file().c_str()
+            );
+
+            if (written < 0) break;  // encoding error
+
+            if (static_cast<size_t>(written) >= remaining) {
+                // truncated — clamp and stop
+                total_written += remaining - 1;
+                break;
+            }
+
+            out += written;
+            remaining -= written;
+            total_written += written;
+        }
+
+        return total_written;
+
+#else
+        return std::snprintf(buf, len, "Platform doesn't support std::stacktrace\n");
+#endif
+    }
+
     char* crash_signal(bool fatal, void *mem_addr, const char *signal, const char *message) {
         char mem_addr_str[128] = {};
         if (mem_addr == nullptr) {
             std::snprintf(mem_addr_str, 128, "0x0");
         } else {
+#ifdef ROCKETGE__Platform_Windows
+            std::snprintf(mem_addr_str, 128, "0x%p", mem_addr);
+#else
             std::snprintf(mem_addr_str, 128, "%p", mem_addr);
+#endif
         }
 
         if (util::get_memory_buffer()->mem == nullptr) {
@@ -95,17 +155,17 @@ namespace rocket {
             return buf;
         }
 
-        constexpr size_t size = 4 * 1024 * 1024;
+        constexpr size_t size = 1 * 1024 * 1024;
         char *buf = char_allocator.allocate(size);
         std::memset(buf, 0, size);
-        std::snprintf(buf, size,
+        int written = std::snprintf(buf, size,
             "Generated on %s\n"
             "%s occurred.\n"
             "\n"
             "%s @ [%s]\n"
             "%s\n"
             "\n"
-            "%s",
+            "%s\n\n",
 
             get_time_string(),
             fatal ? "A fatal exception" : "An exception",
@@ -113,6 +173,8 @@ namespace rocket {
             message,
             fatal ? "The program will now exit" : ""
         );
+
+        written += construct_stack_trace(buf + written, size - written);
         return buf;
     }
 }

@@ -328,13 +328,57 @@ namespace util {
     }
 
     void init_memory_buffer() {
-        constexpr size_t sz = 16 * 1024 * 1024;
+        constexpr size_t sz = 4 * 1024 * 1024;
         membuf.mem = new uint8_t[sz];
         membuf.sz = sz;
     }
 
     membuf_t *get_memory_buffer() {
         return &membuf;
+    }
+
+    timer_t::timer_t(bool start) {
+        if (start) this->start();
+    }
+
+    void timer_t::start() {
+        start_time = glfwGetTime();
+    }
+
+    void timer_t::stop() {
+        end_time = glfwGetTime();
+    }
+
+    double timer_t::elapsed() {
+        if (this->end_time == 0.) {
+            return glfwGetTime() - this->start_time;
+        }
+        return this->end_time - this->start_time;
+    }
+
+    double timer_t::ms() {
+        return elapsed() * 1000;
+    }
+
+    double timer_t::us() {
+        return elapsed() * 1000 * 1000;
+    }
+
+    double timer_t::sec() {
+        return elapsed();
+    }
+
+    double timer_t::min() {
+        return elapsed() / 60;
+    }
+
+    double timer_t::hr() {
+        return elapsed() / (60 * 60);
+    }
+
+    void segfault() {
+        volatile int *p = (int*) 0x1;
+        std::cout << *p;
     }
 }
 

@@ -15,7 +15,7 @@
 #ifdef ROCKETGE__Platform_Windows
 #include <windows.h>
 #define load_lib(name) LoadLibraryA(name)
-#define get_func(handle, func) (void*) GetProcAddress(handle, func)
+#define get_func(handle, func) ((void*) GetProcAddress(handle, func))
 #define close_lib(handle) FreeLibrary(handle)
 
 constexpr std::string dll_extension = ".dll";

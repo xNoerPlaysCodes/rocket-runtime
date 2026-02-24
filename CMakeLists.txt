@@ -119,6 +119,8 @@ if (__rge_WINDOWS__)
         ${CMAKE_SOURCE_DIR}/windeps/glm
     )
 
+    message("Building for Win32")
+    
     target_link_libraries(${PROJECT_NAME} PRIVATE
         opengl32
         glew32
@@ -127,6 +129,9 @@ if (__rge_WINDOWS__)
         miniz
         SDL2
         python314
+
+        winmm
+        stdc++exp
     )
 else()
     find_package(OpenGL REQUIRED)
@@ -143,7 +148,7 @@ else()
     find_package(pybind11 REQUIRED)
     find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 
-    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python)
+    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python stdc++exp)
 endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -196,6 +201,13 @@ if (BUILD_TESTS)
 
             if (__rge_WINDOWS__)
                 target_link_libraries(${test_name} PRIVATE python314)
+                target_link_directories(${test_name} PRIVATE
+                    ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
+                    ${CMAKE_SOURCE_DIR}/windeps/glfw/src
+                    ${CMAKE_SOURCE_DIR}/windeps/miniz
+                    ${CMAKE_SOURCE_DIR}/windeps/openal-soft
+                    ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
+                )
             else()
                 target_link_libraries(${test_name} PRIVATE Python3::Python)
             endif()
@@ -228,6 +240,16 @@ if (BUILD_EXAMPLES)
             target_include_directories(${example_name} PRIVATE include)
 
             target_link_libraries(${example_name} PRIVATE RocketRuntime)
+
+            if (__rge_WINDOWS__)
+                target_link_directories(${example_name} PRIVATE
+                    ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
+                    ${CMAKE_SOURCE_DIR}/windeps/glfw/src
+                    ${CMAKE_SOURCE_DIR}/windeps/miniz
+                    ${CMAKE_SOURCE_DIR}/windeps/openal-soft
+                    ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
+                )
+            endif()
 
             target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3)
             set_target_properties(${example_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)

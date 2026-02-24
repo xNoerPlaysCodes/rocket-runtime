@@ -112,6 +112,25 @@ namespace util {
     };
 
     membuf_t *get_memory_buffer();
+
+    struct timer_t {
+    private:
+        double start_time = 0;
+        double end_time = 0;
+
+        double elapsed();
+    public:
+        timer_t(bool start = true);
+        void start();
+        void stop();
+        double ms();
+        double us();
+        double sec();
+        double min();
+        double hr();
+    };
+
+    void segfault();
 }
 
 #endif

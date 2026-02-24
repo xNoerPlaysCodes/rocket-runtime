@@ -70,6 +70,7 @@ namespace rocket {
         this->vsync = window->flags.vsync;
 
         if (!util::glinitialized()) {
+            util::timer_t gl_init_timer;
             util::glinit(true);
 
             if (!window || !window->glfw_window) {
@@ -89,6 +90,8 @@ namespace rocket {
             }
 
             rocket::logger_flush();
+            gl_init_timer.stop();
+            rocket::log("OpenGL Initialized in " + std::to_string((int) gl_init_timer.ms()) + "ms", "renderer_2d", "constructor", "trace");
         }
         this->flags = flags;
         if (flags.fxaa_simplified) {
@@ -102,6 +105,7 @@ namespace rocket {
     }
     
     renderer_2d::gfx_chk_result renderer_2d::check_graphics_settings() {
+        if (!this->frame_started) return gfx_chk_result::not_drawable;
         return gfx_chk_result::drawable; // [FIXME] Check OutOfBounds drawings
     }
 
@@ -712,7 +716,7 @@ namespace rocket {
         static std::shared_ptr<rocket::font_t> font = rGE__FONT_DEFAULT_MONOSPACED;
         rgl::frame_metrics_t fmetrics = rgl::get_frame_metrics();
         rocket::text_t fps_avg_text = { "FPS: " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
-        rocket::text_t frametime_text = { "FrameTime: " + double_to_str(ren->get_draw_metrics().avg_frametime * 1000) + "ms", text_size, rgb_color::white(), font }; // FIXME Get proper (ema avg) frametime
+        rocket::text_t frametime_text = { "FrameTime: " + double_to_str(ren->get_draw_metrics().avg_frametime * 1000) + "ms", text_size, rgb_color::white(), font };
         rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()), text_size, rgb_color::white(), font };
         rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(fmetrics.drawcalls) + " (" + std::to_string(fmetrics.skipped_drawcalls) + " skipped)", text_size, rgb_color::white(), font };
         rocket::text_t tricount_text = { "TriCount: " + std::to_string(fmetrics.tricount), text_size, rgb_color::white(), font };
@@ -808,7 +812,7 @@ namespace rocket {
         vec2f_t size = { 384, 262 };
         auto last_text_position = zy + size.y - text_size - padding - margin;
 
-        std::vector<rocket::text_t> texts = {
+        rocket::text_t texts[] = {
             fps_avg_text,
             frametime_text,
             deltatime_text,
@@ -817,6 +821,8 @@ namespace rocket {
             framebuffer_active_text,
             mouse_pos_text,
         };
+
+        int len = sizeof(texts) / sizeof(rocket::text_t);
 
         float max_width = 0;
         if (max_width == 0) {
@@ -827,13 +833,13 @@ namespace rocket {
         }
 
         size.x = max_width + 24.f;
-        size.y = texts.at(0).measure().y * texts.size() + 20.f + 24.f + (opengl_version_text.measure().y + rocket_version_text.measure().y);
+        size.y = texts[0].measure().y * len + 20.f + 24.f + (opengl_version_text.measure().y + rocket_version_text.measure().y);
         ren->draw_rectangle(position, size, rgba_color::black(), 0., 0.);
         ren->draw_rectangle(position, size, rgba_color::white(), 0., 0., true);
         ren->begin_scissor_mode(position, size);
 
-        for (int i = 0; i < texts.size(); ++i) {
-            ren->draw_text(texts.at(i), { zx, zy + (i * text_size) });
+        for (int i = 0; i < len; ++i) {
+            ren->draw_text(texts[i], { zx, zy + (i * text_size) });
         }
 
         ren->draw_text(rocket_version_text, { zx, last_text_position });

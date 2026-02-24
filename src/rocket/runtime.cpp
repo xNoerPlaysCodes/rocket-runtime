@@ -60,29 +60,29 @@ namespace callback {
 #include <cstdlib>
 #include <unistd.h>
 
-void __init() {
+void __hook(int signal, void(*func)(int, siginfo_t *, void *)) {
     struct sigaction sa = {};
-    std::memset(&sa, 0, sizeof(sa));
-    sa.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
-        callback::bad_memory_access(info->si_addr, info->si_code);
-    };
     sa.sa_flags = SA_SIGINFO;
-    sigaction(SIGSEGV, &sa, nullptr);
+    sa.sa_sigaction = func;
+    sigaction(signal, &sa, nullptr);
+}
 
-    struct sigaction sbus = {};
-    sbus.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
+void __init() {
+    __hook(SIGSEGV, [](int sig, siginfo_t *info, void *ctx) {
+        callback::bad_memory_access(info->si_addr, info->si_code);
+    });
+
+    __hook(SIGBUS, [](int sig, siginfo_t *info, void *ctx) {
         callback::invalid_memory_operation(info->si_addr, info->si_code);
-    };
-    sbus.sa_flags = SA_SIGINFO;
-    sigaction(SIGBUS, &sbus, nullptr);
+    });
 
-    struct sigaction sigiot = {};
-    sigiot.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
+    __hook(SIGIOT, [](int sig, siginfo_t *info, void *ctx) {
         callback::aborted(info->si_addr, info->si_code);
-    };
-    sigiot.sa_flags = SA_SIGINFO;
-    sigaction(SIGIOT, &sigiot, nullptr);
-    sigaction(SIGABRT, &sigiot, nullptr);
+    });
+
+    __hook(SIGABRT, [](int sig, siginfo_t *info, void *ctx) {
+        callback::aborted(info->si_addr, info->si_code);
+    });
 
     rocket::log("Hooked SIGBUS, SIGSEGV, SIGIOT, SIGABRT", "rocket", "init", "debug");
     
@@ -133,9 +133,8 @@ LONG CALLBACK crash_handler(EXCEPTION_POINTERS *info) {
 void __init() {
     // AddVectoredExceptionHandler(1, &crash_handler);
     SetUnhandledExceptionFilter(&crash_handler);
-    // SetConsoleCtrlHandler(console_ctrl_handler, TRUE);
-    rocket::log("Hooked VEH, CTRL_C, CTRL_BREAK, CTRL_CLOSE", "rocket", "init", "debug");
-    rocket::log("windows_platform initialization not implemented", "rocket", "init", "fixme");
+    SetConsoleCtrlHandler(console_ctrl_handler, TRUE);
+    rocket::log("Hooked SEH, CTRL_C, CTRL_BREAK, CTRL_CLOSE", "rocket", "init", "debug");
     util::init_memory_buffer();
 
     rocket::log("Emergency memory buffer initialized with size " + std::format("{} MiB", util::get_memory_buffer()->sz / 1024 / 1024), "rocket", "init", "debug");
@@ -566,6 +565,8 @@ namespace rocket {
 
         set_cli_arguments(args);
     }
+    
+    void x() { x(); }
 
     void init(int argc, char **argv) {
         global_init();
