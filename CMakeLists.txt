@@ -259,19 +259,6 @@ if (BUILD_EXAMPLES)
     endforeach()
 endif()
 
-add_executable(RGEditor
-    src/editor/main.cpp
-    src/editor/page/main_menu.cpp
-    src/editor/page/create_project.cpp
-)
-
-target_link_directories(RGEditor PRIVATE bin)
-target_include_directories(RGEditor PRIVATE src/include include)
-#target_include_directories(RGEditor PRIVATE src/include)
-
-target_link_libraries(RGEditor PRIVATE RocketRuntime)
-
-
 message("Build Type: ${CMAKE_BUILD_TYPE}")
 message("Build Shared: ${BUILD_SHARED_LIBS}")
 message("Build Tests: ${BUILD_TESTS}")
