@@ -1,0 +1,7 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/RGEditor.dir/src/editor/main.cpp.o: dyndep
+
+build CMakeFiles/RGEditor.dir/src/editor/page/main_menu.cpp.o: dyndep
+
+build CMakeFiles/RGEditor.dir/src/editor/page/create_project.cpp.o: dyndep
+

@@ -1,0 +1,47 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "Clang",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "/home/noerlol/C-Projects/Libraries/RocketGE/build",
+	"dir-cur-src" : "/home/noerlol/C-Projects/Libraries/RocketGE",
+	"dir-top-bld" : "/home/noerlol/C-Projects/Libraries/RocketGE/build",
+	"dir-top-src" : "/home/noerlol/C-Projects/Libraries/RocketGE",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"/home/noerlol/C-Projects/Libraries/RocketGE/src/include",
+		"/home/noerlol/C-Projects/Libraries/RocketGE/include",
+		"RGEditor_autogen/include",
+		"/usr/include/qt6/QtWidgets",
+		"/usr/include/qt6",
+		"/usr/include/qt6/QtCore",
+		"/usr/lib/qt6/mkspecs/linux-g++",
+		"/usr/include/qt6/QtGui"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "/home/noerlol/C-Projects/Libraries/RocketGE/build/CMakeFiles/RGEditor.dir",
+	"sources" : 
+	{
+		"CMakeFiles/RGEditor.dir/src/editor/main.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/editor/main.cpp"
+		},
+		"CMakeFiles/RGEditor.dir/src/editor/page/create_project.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/editor/page/create_project.cpp"
+		},
+		"CMakeFiles/RGEditor.dir/src/editor/page/main_menu.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/noerlol/C-Projects/Libraries/RocketGE/src/editor/page/main_menu.cpp"
+		}
+	}
+}

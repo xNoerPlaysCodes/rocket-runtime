@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/initializer_test.dir/tests/initializer_test.cpp.o"
+    }
+  ],
+  "version": 1
+}

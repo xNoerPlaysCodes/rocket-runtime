@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/scripting_test.dir/tests/scripting_test.cpp.o"
+    }
+  ],
+  "version": 1
+}

@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/default_shader_test.dir/tests/default_shader_test.cpp.o"
+    }
+  ],
+  "version": 1
+}

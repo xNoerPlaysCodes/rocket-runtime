@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/texture_atlas_test.dir/tests/texture_atlas_test.cpp.o"
+    }
+  ],
+  "version": 1
+}

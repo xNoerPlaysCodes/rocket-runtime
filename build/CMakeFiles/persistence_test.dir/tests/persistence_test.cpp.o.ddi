@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/persistence_test.dir/tests/persistence_test.cpp.o"
+    }
+  ],
+  "version": 1
+}

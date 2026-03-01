@@ -1,0 +1,3 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/borderless_windowed_test.dir/tests/borderless_windowed_test.cpp.o: dyndep
+

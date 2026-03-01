@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/ui_init_test.dir/tests/ui_init_test.cpp.o"
+    }
+  ],
+  "version": 1
+}
