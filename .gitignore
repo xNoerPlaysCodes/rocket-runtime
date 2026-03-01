@@ -1,0 +1,15 @@
+# Doxygen output
+docs/*
+
+# OS/editor junk
+*.swp
+*.swo
+*~
+.DS_Store
+
+build/*
+bin/*
+!bin/resources/
+
+.idea
+.cache
