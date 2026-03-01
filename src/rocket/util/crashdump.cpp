@@ -159,6 +159,7 @@ namespace rocket {
         char *buf = char_allocator.allocate(size);
         std::memset(buf, 0, size);
         int written = std::snprintf(buf, size,
+            (fatal) ? ">- RocketGE has crashed! -<\n" : ""
             "Generated on %s\n"
             "%s occurred.\n"
             "\n"
@@ -171,10 +172,12 @@ namespace rocket {
             fatal ? "A fatal exception" : "An exception",
             signal, mem_addr_str,
             message,
-            fatal ? "The program will now exit" : ""
+            fatal ? "The program will now dump the stack trace" : ""
         );
 
         written += construct_stack_trace(buf + written, size - written);
+        written += std::snprintf(buf + written, size - written, 
+            "\n>- Please report with all details to the RocketGE Github Maintainer -<");
         return buf;
     }
 }

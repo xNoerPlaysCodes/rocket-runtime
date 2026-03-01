@@ -80,7 +80,7 @@ namespace astro {
     };
 
     class dialog_t {
-    private:
+    public:
         std::string text = "";
         rocket::vec2f_t pos = { 0, 0 };
         rocket::vec2f_t tpos = { 0, 0 };

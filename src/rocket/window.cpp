@@ -98,6 +98,7 @@ namespace rocket {
     }
 
     RGE_STATIC_FUNC_IMPL void window_t::cpl_init() {
+        util::timer_t glfw_init_timer;
         if (glfwPlatformSupported(GLFW_PLATFORM_WAYLAND) && util::is_wayland() && (!util::get_clistate().forcewayland)) {
             // Set default platform to X11 on Linux
             window_t::set_forced_platform(platform_type_t::linux_x11);
@@ -112,6 +113,8 @@ namespace rocket {
             }
             glfw_initialized = true;
         }
+        glfw_init_timer.stop();
+        rocket::log("GLFW Initialized in " + std::to_string((int) glfw_init_timer.ms()) + "ms", "window_t", "cpl_init", "trace");
     }
 
     RGE_STATIC_FUNC_IMPL platform_t window_t::get_platform() {
@@ -258,6 +261,19 @@ namespace rocket {
             const std::string& title,
             windowflags_t flags) {
         this->size = size;
+        auto cli_args = util::get_clistate();
+        int cli_w, cli_h;
+        bool cli_args_w_h_set = false;
+        if (cli_args.viewport_size_set) {
+            auto parts = util::split(cli_args.viewport_size, 'x');
+            cli_w = std::stoi(parts.at(0));
+            cli_h = std::stoi(parts.at(1));
+            cli_args_w_h_set = true;
+        }
+
+        if (cli_args_w_h_set) {
+            this->size = { cli_w, cli_h };
+        }
         this->title = title;
         window_t::cpl_init();
         GLFWmonitor *monitor = glfwGetPrimaryMonitor();
@@ -408,7 +424,7 @@ namespace rocket {
         if (flags.share) {
             share = flags.share->glfw_window;
         }
-        this->glfw_window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, share);
+        this->glfw_window = glfwCreateWindow(this->size.x, this->size.y, title.c_str(), nullptr, share);
         if (this->glfw_window == nullptr) {
             rocket::log("failed to create window", "window_t", "constructor", "fatal");
             platform_t platform = this->get_platform();

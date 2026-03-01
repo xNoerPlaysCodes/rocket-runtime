@@ -87,6 +87,10 @@ namespace rgl {
     public:
         GLuint id = rGL_TXID_INVALID;
     public:
+        /// @brief Binds the texture to an available
+        ///        texture unit (if available)
+        int bind();
+    public:
         scoped_gl_texture_t();
     };
 

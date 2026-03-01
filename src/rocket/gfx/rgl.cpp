@@ -21,7 +21,10 @@
 namespace glutil {
     std::string glenum_str(GLenum e) {
         switch (e) {
-            default: return "GLENUM_STR__CASE_NOT_HANDLED";
+            default: {
+                rocket::log("case not handled", "glutil", "glenum_str", "error");
+                return "GLENUM_STR__CASE_NOT_HANDLED";
+            }
             // Blend Stuff
             case GL_ZERO: return "GL_ZERO";
             case GL_SRC_COLOR: return "GL_SRC_COLOR";
@@ -47,6 +50,15 @@ namespace rgl {
     scoped_gl_texture_t::scoped_gl_texture_t() {
         glGenTextures(1, &id);
         cleanup = { nullptr, [this](void*) { glDeleteTextures(1, &id); } };
+    }
+
+    int scoped_gl_texture_t::bind() {
+        const int slot = 1;
+        const int gl_slot = GL_TEXTURE0 + slot;
+        glActiveTexture(gl_slot);
+        glBindTexture(GL_TEXTURE_2D, this->id);
+
+        return slot;
     }
 }
 
@@ -220,21 +232,6 @@ namespace rgl {
         std::unordered_map<rgl::shader_use_t, rgl::shader_program_t>().swap(shader_cache);
 
         auto cli_args = util::get_clistate();
-        int cli_w, cli_h;
-        bool cli_args_w_h_set = false;
-        if (cli_args.viewport_size_set) {
-            auto parts = util::split(cli_args.viewport_size, 'x');
-            cli_w = std::stoi(parts.at(0));
-            cli_h = std::stoi(parts.at(1));
-            cli_args_w_h_set = true;
-        }
-
-        if (cli_args_w_h_set) {
-            viewport_size = {
-                static_cast<float>(cli_w),
-                static_cast<float>(cli_h)
-            };
-        }
 
         if (!glfnldr::init(backend)) {
             rocket::log("OpenGL functions could not be loaded", "rgl", "init_gl", "fatal");
@@ -324,7 +321,7 @@ namespace rgl {
                     "   ID: " + std::to_string(id),
                     "   Message: " + std::string(message),
                     "   Source: " + srcStr,
-                    ""
+                    "Dumping GL state:"
                 };
 
                 std::vector<std::string> log_messages2 = dump_gl_state();

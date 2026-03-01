@@ -41,8 +41,6 @@
 #include "plugin.hpp"
 
 namespace rocket {
-    std::vector<shader_t> shader_cache;
-
     rgl::fbo_t fxaa_fbo = rGL_FBO_INVALID;
     rgl::shader_program_t fxaa_shader;
     
@@ -924,9 +922,7 @@ namespace rocket {
         rgl::fbo_t fbo = rgl::get_active_fbo();
         rgl::reset_to_default_fbo();
 
-        if (!cli_args.viewport_size_set) {
-            rgl::update_viewport(final_viewport_position, final_viewport_size);
-        }
+        rgl::update_viewport(final_viewport_position, final_viewport_size);
 
         if (fbo != rGL_FBO_INVALID) {
             rgl::use_fbo(fbo);

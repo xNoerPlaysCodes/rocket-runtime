@@ -117,6 +117,7 @@ namespace rocket {
     void set_exit_callback(exit_callback_t);
 
     /// @brief Log using RocketLogger or callback
+    /// @note Thread Safe
     void log(const std::string &log, const std::string &class_file_library_source, const std::string &function_source, const std::string &level);
 
     /// @brief Flushes the output buffer for RocketLogger
