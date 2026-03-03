@@ -169,6 +169,10 @@ def init_cmake(args):
         if not shutil.which(command):
             print(f"{command} was not found in PATH.")
             return 1
+    linker = "ld.lld" # Preferred
+    if not shutil.which(linker):
+        print("[fallback] using ld instead of ld.lld")
+        linker = "ld"
 
     os.makedirs("build", exist_ok=True)
 
@@ -199,7 +203,7 @@ def init_cmake(args):
     #                 shutil.move(s, d)
 
     backend = args.glfnldr_backend
-    args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build"]
+    args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build", "-DCMAKE_C_COMPILER_LAUNCHER=ccache", "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache", "-DCMAKE_LINKER=" + linker]
  
     if sys.platform == "win32":
         args.append("-DBUILD_SHARED_LIBS=OFF")

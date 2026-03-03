@@ -12,6 +12,7 @@
 #include <condition_variable>
 #include <rocket/macros.hpp>
 #include <rocket/glfnldr.hpp>
+#include <sys/types.h>
 
 namespace callback {
     void bad_memory_access(void *mem_addr, int) {
@@ -71,8 +72,6 @@ namespace callback {
 #include <cstdlib>
 #include <unistd.h>
 
-stack_t ss;
-
 void __hook(int signal, void(*func)(int, siginfo_t *, void *)) {
     struct sigaction sa = {};
     sa.sa_flags = SA_SIGINFO;
@@ -84,19 +83,6 @@ void __init() {
     __hook(SIGSEGV, [](int sig, siginfo_t *info, void *ctx) {
         callback::bad_memory_access(info->si_addr, info->si_code);
     });
-
-    // ss.ss_sp = malloc(SIGSTKSZ);
-    // ss.ss_size = SIGSTKSZ;
-    // ss.ss_flags = 0;
-    // sigaltstack(&ss, nullptr);
-    //
-    // struct sigaction sa{};
-    // sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
-    // sa.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
-    //     callback::stack_overflow(nullptr, 0);
-    // };
-    // sigemptyset(&sa.sa_mask);
-    // sigaction(SIGSEGV, &sa, nullptr);
 
     __hook(SIGBUS, [](int sig, siginfo_t *info, void *ctx) {
         callback::invalid_memory_operation(info->si_addr, info->si_code);
@@ -312,10 +298,7 @@ namespace rocket {
         }
 
         const std::vector<std::string> args_with_values = {
-            "viewport-size", 
-            "viewportsize", 
-            "vp-size", 
-            "vpsize",
+            "viewport-size", "viewportsize", "vp-size", "vpsize",
             "framerate",
             "logfile",
         };
@@ -426,7 +409,7 @@ namespace rocket {
                     exit = true;
                     error = true;
                 } else {
-                    if (value == "stdnull" || value == "devnull" || value == "discard") {
+                    if (value == "stdnull" || value == "devnull" || value == "discard" || value == "NUL") {
                         set_logger_file_output(rocket::cst::stdnull);
                     } else {
                         if (value.starts_with('!')) value = value.substr(1);
