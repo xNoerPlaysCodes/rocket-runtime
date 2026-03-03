@@ -96,10 +96,11 @@ namespace rocket {
             int written = std::snprintf(
                 out,
                 remaining,
-                "%*zu. [%u] %s\n",
+                "%*zu. %s:%u\n",
+
                 index_width, i,
-                static_cast<unsigned>(frame.source_line()),
-                frame.source_file().c_str()
+                frame.source_file().c_str(),
+                static_cast<unsigned>(frame.source_line())
             );
 
             if (written < 0) break;  // encoding error

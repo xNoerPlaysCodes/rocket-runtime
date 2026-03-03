@@ -24,7 +24,14 @@ namespace rocket {
     void font_t::unload() {
         glDeleteTextures(1, &this->glid);
         this->glid = 0;
-        this->line_height = 0;
+    }
+
+    void font_t::set_unloaded() {
+        this->loaded = false;
+    }
+
+    void font_t::reload() {
+        this->loaded = true;
     }
 
     font_t::~font_t() {

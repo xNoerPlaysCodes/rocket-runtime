@@ -11,6 +11,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <rocket/macros.hpp>
+#include <rocket/glfnldr.hpp>
 
 namespace callback {
     void bad_memory_access(void *mem_addr, int) {
@@ -84,18 +85,18 @@ void __init() {
         callback::bad_memory_access(info->si_addr, info->si_code);
     });
 
-    ss.ss_sp = malloc(SIGSTKSZ);
-    ss.ss_size = SIGSTKSZ;
-    ss.ss_flags = 0;
-    sigaltstack(&ss, nullptr);
-
-    struct sigaction sa{};
-    sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
-    sa.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
-        callback::stack_overflow(nullptr, 0);
-    };
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGSEGV, &sa, nullptr);
+    // ss.ss_sp = malloc(SIGSTKSZ);
+    // ss.ss_size = SIGSTKSZ;
+    // ss.ss_flags = 0;
+    // sigaltstack(&ss, nullptr);
+    //
+    // struct sigaction sa{};
+    // sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
+    // sa.sa_sigaction = [](int sig, siginfo_t *info, void *ctx) {
+    //     callback::stack_overflow(nullptr, 0);
+    // };
+    // sigemptyset(&sa.sa_mask);
+    // sigaction(SIGSEGV, &sa, nullptr);
 
     __hook(SIGBUS, [](int sig, siginfo_t *info, void *ctx) {
         callback::invalid_memory_operation(info->si_addr, info->si_code);
@@ -544,9 +545,23 @@ namespace rocket {
                 const std::string compiler_name = "Unknown";
 #endif
 
+                std::vector<glfnldr::backend_t> backends = glfnldr::get_backends();
+                std::string backends_str;
+                for (int i = 0; i < backends.size(); ++i) {
+                    std::string str;
+                    if (backends[i] == glfnldr::backend_t::null) {
+                        str = "null";
+                    } else if (backends[i] == glfnldr::backend_t::glad) {
+                        str = "glad";
+                    } else if (backends[i] == glfnldr::backend_t::glew) {
+                        str = "glew";
+                    }
+                    backends_str += str + " ";
+                }
                 const std::vector<std::string> lines = {
                     "RocketGE " ROCKETGE__VERSION,
                     "Compiled with " + compiler_name,
+                    "GLfnldr Backends: " + backends_str
                 };
 
                 for (auto &l : lines) {
@@ -554,6 +569,8 @@ namespace rocket {
                 }
 
                 exit = true;
+            } else if (arg == "software-frame-timer") {
+                args.software_frame_timer = true;
             }
             else {
                 rocket::log("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), "rocket", "argparse", "error");

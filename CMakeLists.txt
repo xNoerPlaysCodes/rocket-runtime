@@ -64,7 +64,9 @@ add_library(${PROJECT_NAME}
     src/rocket/managers/audio.cpp
 
     # Utilities
-    src/rocket/util/glfnldr.cpp
+    src/rocket/util/glfnldr/glfnldr.cpp
+    src/rocket/util/glfnldr/glad.cpp
+    src/rocket/util/glfnldr/glew.cpp
     src/rocket/util/io.cpp
     src/rocket/util/native.cpp
     src/rocket/util/threads.cpp
@@ -74,6 +76,7 @@ add_library(${PROJECT_NAME}
     src/rocket/util/persistence.cpp
     src/rocket/util/scripting.cpp
     src/rocket/util/data_structures.cpp
+    src/rocket/util/memory.cpp
     src/rocket/util/util.cpp
 
     # Master

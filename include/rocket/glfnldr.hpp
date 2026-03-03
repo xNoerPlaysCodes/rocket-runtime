@@ -10,9 +10,8 @@
 namespace glfnldr {
     enum class backend_t : int {
         null = 0,
+        glad,
         glew,
-        libepoxy,
-        glfw // Unsupported FIXME
     };
 
     std::vector<backend_t> get_backends();

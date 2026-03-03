@@ -47,6 +47,7 @@ namespace util {
 
         bool notext = false;
         bool forcewayland = false;
+        bool software_frame_timer = false;
     };
 
     std::string format_log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);

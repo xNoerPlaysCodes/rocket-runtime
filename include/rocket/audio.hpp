@@ -63,6 +63,9 @@ namespace rocket::audio {
         bool flat_2d = true;
     public:
         assetid_t id = -1;
+        bool loaded = false;
+        void reload();
+        void set_unloaded();
     public:
         buffer_t buffer;
     };

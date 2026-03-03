@@ -161,6 +161,14 @@ namespace rocket::audio {
         return strsound;
     }
 
+    void sound_t::set_unloaded() {
+        this->loaded = false;
+    }
+
+    void sound_t::reload() {
+        this->loaded = true;
+    }
+
     // void streaming_sound_t::next_frame() {
     //     bool was_uninitialized = false;
     //     if (!this->vorbis) {

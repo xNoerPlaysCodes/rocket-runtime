@@ -1,4 +1,5 @@
 #include "rocket/macros.hpp"
+#include <rocket/threads.hpp>
 #ifdef ROCKETGE__Platform_Windows
 #define GL_STATIC_DRAW 0x88E4
 #endif
@@ -57,9 +58,23 @@ namespace rocket {
         return this->glid != 0;
     }
     texture_t::texture_t() {}
+    void texture_t::set_unloaded() {
+        this->loaded = false;
+    }
+    void texture_t::reload() {
+        this->loaded = true;
+    }
     texture_t::~texture_t() {}
 
     audio_t::audio_t() {}
+
+    void audio_t::set_unloaded() {
+        this->loaded = false;
+    }
+
+    void audio_t::reload() {
+        this->loaded = true;
+    }
     
     void audio_t::play(float vol, bool loop, std::function<void(audio_t *)> on_finish) {
         if (this == nullptr) {
@@ -202,6 +217,7 @@ namespace rocket {
         assetid_t id = current_id++;
         std::shared_ptr<texture_t> texture = std::make_shared<texture_t>();
         texture->id = id;
+        texture->loaded = true;
         
         uint8_t *img_data = stbi_load(path.c_str(), &texture->size.x, &texture->size.y, &texture->channels, static_cast<int>(format));
 
@@ -225,6 +241,7 @@ namespace rocket {
         assetid_t id = current_id++;
         std::shared_ptr<texture_t> texture = std::make_shared<texture_t>();
         texture->id = id;
+        texture->loaded = true;
 
         uint8_t *file_data = data.data();
         size_t len = data.size();
@@ -249,6 +266,7 @@ namespace rocket {
     std::shared_ptr<texture_t> asset_manager_t::get_texture(assetid_t id) {
         for (auto &[k, v] : textures) {
             if (k->id == id) {
+                if (!k->loaded) k->reload();
                 return k;
             }
         }
@@ -290,6 +308,7 @@ namespace rocket {
         assetid_t id = current_id++;
         std::shared_ptr<audio::sound_t> sound = std::make_shared<audio::sound_t>();
         sound->id = id;
+        sound->loaded = true;
 
         int channels, samplerate;
         int16_t *output;
@@ -327,11 +346,12 @@ namespace rocket {
         assetid_t id = current_id++;
         std::shared_ptr<audio::sound_t> sound = std::make_shared<audio::sound_t>();
         sound->id = id;
+        sound->loaded = true;
 
         rocket::log("not implemented", "asset_manager_t", "load_sound", "fixme");
 
-        sounds.insert({sound, std::chrono::high_resolution_clock::now()});
-        return id;
+        // sounds.insert({sound, std::chrono::high_resolution_clock::now()});
+        return -1;
     }
     
     assetid_t asset_manager_t::load_audio(std::string path) {
@@ -340,8 +360,10 @@ namespace rocket {
         assetid_t id = current_id++;
         std::shared_ptr<audio_t> audio = std::make_shared<audio_t>();
         audio->id = id;
+        audio->loaded = true;
 
         audio->buffer = new ALuint;
+        audio->loaded = true;
         alGenBuffers(1, audio->buffer);
 
         ALenum error = alGetError();
@@ -402,6 +424,7 @@ namespace rocket {
         assetid_t id = current_id++;
         std::shared_ptr<audio_t> audio = std::make_shared<audio_t>();
         audio->id = id;
+        audio->loaded = true;
 
         audio->buffer = new ALuint;
         alGenBuffers(1, audio->buffer);
@@ -461,6 +484,7 @@ namespace rocket {
     std::shared_ptr<audio_t> asset_manager_t::get_audio(assetid_t id) {
         for (auto &[k, v] : audios) {
             if (k->id == id) {
+                if (!k->loaded) k->reload();
                 return k;
             }
         }
@@ -470,6 +494,7 @@ namespace rocket {
     std::shared_ptr<audio::sound_t> asset_manager_t::get_sound(assetid_t id) {
         for (auto &[k, v] : sounds) {
             if (k->id == id) {
+                if (!k->loaded) k->reload();
                 return k;
             }
         }
@@ -562,6 +587,7 @@ namespace rocket {
         std::vector<unsigned char> bitmap(font->sttex_size.x * font->sttex_size.y);
         font->ttf_data = mem;
         stbtt_BakeFontBitmap(mem.data(), 0, fsize, bitmap.data(), font->sttex_size.x, font->sttex_size.y, 32, 96, font->cdata->a);
+        font->loaded = true;
 
         stbtt_fontinfo info;
         if (!stbtt_InitFont(&info, rocket_binary::FontDefault, 0)) {
@@ -595,6 +621,7 @@ namespace rocket {
         font->id = current_id++;
         FILE* f = fopen(path.c_str(), "rb");
         if (!f) return false;
+        font->loaded = true;
 
         fseek(f, 0, SEEK_END);
         int size = ftell(f);
@@ -638,6 +665,7 @@ namespace rocket {
     std::shared_ptr<font_t> asset_manager_t::get_font(assetid_t id) {
         for (auto &[k, v] : fonts) {
             if (k->id == id) {
+                if (!k->loaded) k->reload();
                 return k;
             }
         }
@@ -665,16 +693,12 @@ namespace rocket {
             }
 
             for (auto &tx : texture_removes) {
-                glDeleteTextures(1, &tx->glid);
-                tx->glid = 0;
-                tx->data.clear();
-            }
-
-            {
-                std::lock_guard<std::mutex> _(asset_mutex);
-                for (auto &k : texture_removes) {
-                    textures.erase(k);
-                }
+                thread_t::schedule([tx]() {
+                    glDeleteTextures(1, &tx->glid);
+                    tx->glid = 0;
+                    tx->data.clear();
+                    tx->set_unloaded();
+                });
             }
 
             std::vector<std::shared_ptr<font_t>> font_removes;
@@ -690,14 +714,10 @@ namespace rocket {
             }
 
             for (auto &fnt : font_removes) {
-                fnt->unload();
-            }
-
-            {
-                std::lock_guard<std::mutex> _(asset_mutex);
-                for (auto &k : font_removes) {
-                    fonts.erase(k);
-                }
+                thread_t::schedule([fnt] () {
+                    glDeleteTextures(1, &fnt->glid);
+                    fnt->set_unloaded();
+                });
             }
 
             std::vector<std::shared_ptr<audio_t>> audio_removes;
@@ -713,18 +733,12 @@ namespace rocket {
             }
 
             for (auto &a : audio_removes) {
-                alDeleteBuffers(1, a->buffer);
-                delete a->buffer;
-                a->playing = false;
-                alDeleteSources(1, &a->source);
-                a->source = 0;
-            }
-
-            {
-                std::lock_guard<std::mutex> _(asset_mutex);
-                for (auto &k : audio_removes) {
-                    audios.erase(k);
-                }
+                thread_t::schedule([a] () {
+                    alDeleteBuffers(1, a->buffer);
+                    delete a->buffer;
+                    alDeleteSources(1, &a->source);
+                    a->set_unloaded();
+                });
             }
 
             std::vector<std::shared_ptr<audio::sound_t>> sound_removes;
@@ -741,13 +755,6 @@ namespace rocket {
 
             for ([[maybe_unused]] auto &s : sound_removes) {
                 // Ownership required
-            }
-
-            {
-                std::lock_guard<std::mutex> _(asset_mutex);
-                for (auto &k : sound_removes) {
-                    sounds.erase(k);
-                }
             }
         }
 

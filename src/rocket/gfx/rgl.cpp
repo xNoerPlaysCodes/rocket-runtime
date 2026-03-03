@@ -233,11 +233,19 @@ namespace rgl {
 
         auto cli_args = util::get_clistate();
 
-        if (!glfnldr::init(backend)) {
+        if (!glfnldr::init(glfnldr::backend_t::glew)) {
             rocket::log("OpenGL functions could not be loaded", "rgl", "init_gl", "fatal");
             rocket::exit(1);
             return {
                 "?OpenGL functions could not be loaded"
+            };
+        }
+
+        if (glGenBuffers == nullptr) {
+            rocket::log("OpenGL functions could not be loaded (RUNTIME FAILURE)", "rgl", "init_gl", "fatal");
+            rocket::exit(1);
+            return {
+                "?OpenGL functions could not be loaded (RUNTIME FAILURE)"
             };
         }
 

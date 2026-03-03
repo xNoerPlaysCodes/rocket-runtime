@@ -120,21 +120,21 @@ namespace rocket {
     RGE_STATIC_FUNC_IMPL platform_t window_t::get_platform() {
         int glfw_platform = glfwGetPlatform();
         platform_t platform;
-        std::string glfw_platform_str = platform.name;
+        std::string windowing_platform = platform.name;
         if (glfw_platform == GLFW_PLATFORM_X11) {
-            glfw_platform_str = "X11";
+            windowing_platform = "X11";
             platform.type = platform_type_t::linux_x11;
             platform.os_name = "Linux";
         } else if (glfw_platform == GLFW_PLATFORM_WAYLAND) {
-            glfw_platform_str = "Wayland";
+            windowing_platform = "Wayland";
             platform.type = platform_type_t::linux_wayland;
             platform.os_name = "Linux";
         } else if (glfw_platform == GLFW_PLATFORM_COCOA) {
-            glfw_platform_str = "Cocoa";
+            windowing_platform = "Cocoa";
             platform.type = platform_type_t::macos_cocoa;
             platform.os_name = "macOS";
         } else if (glfw_platform == GLFW_PLATFORM_WIN32) {
-            glfw_platform_str = "Win32";
+            windowing_platform = "Win32";
             platform.type = platform_type_t::windows;
             platform.os_name = "Windows";
         } else {
@@ -142,7 +142,7 @@ namespace rocket {
             return {};
         }
 
-        platform.name = glfw_platform_str;
+        platform.name = windowing_platform;
         platform.rge_name = std::string(ROCKETGE__PLATFORM);
         return platform;
     }
@@ -465,11 +465,11 @@ namespace rocket {
             "window_t", "constructor", 
             "info");
         auto platform = get_platform();
-        std::string glfw_platform_str = platform.name;
+        std::string windowing_platform = platform.name;
 
         std::vector<std::string> logs = {
             "RocketGE v" ROCKETGE__VERSION,
-            "Windowing: GLFW + " + glfw_platform_str,
+            "Windowing: GLFW + " + windowing_platform,
             "Platform: " + platform.rge_name,
         };
 

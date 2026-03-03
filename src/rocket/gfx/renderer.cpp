@@ -1,5 +1,6 @@
 #include "rocket/audio.hpp"
 #include <GL/glew.h>
+#include <emmintrin.h>
 #include <shader_provider.hpp>
 #define RGL_EXPOSE_NATIVE_LIB
 #include "rocket/rgl.hpp"
@@ -973,11 +974,13 @@ namespace rocket {
         if (frame_duration < frametime_limit) {
             double sleep_time = frametime_limit - frame_duration;
 
-            if (sleep_time > 0.002)
+            if (sleep_time > 0.002 && !cli_args.software_frame_timer)
                 std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - 0.002));
 
             // busy wait for the rest
-            while ((glfwGetTime() - frame_start_time) < frametime_limit) {}
+            while ((glfwGetTime() - frame_start_time) < frametime_limit) {
+                _mm_pause();
+            }
         } /*else*/ {
             double diff = frame_duration - frametime_limit;
 

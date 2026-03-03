@@ -43,6 +43,10 @@ namespace rocket {
         friend class asset_manager_t;
         friend class renderer_2d;
         friend class renderer_3d;
+    private:
+        bool loaded = false;
+        void reload();
+        void set_unloaded();
     public:
         /// @brief Texture Size
         /// @modify Do not modify
@@ -69,6 +73,8 @@ namespace rocket {
 
         friend class asset_manager_t;
 
+        bool loaded = false;
+
         bool playing = false;
         std::thread finish_thread;
     public:
@@ -79,6 +85,9 @@ namespace rocket {
         /// @note Usually don't need to do this as
         /// @note asset manager does it
         void set_context(std::shared_ptr<audio_context_t> context);
+
+        void reload();
+        void set_unloaded();
     public:
         /// @brief Play an audio (async)
         /// @param vol Volume 0-100 [+100 is allowed]
@@ -114,10 +123,15 @@ namespace rocket {
         std::vector<uint8_t> ttf_data;
         /// INNER
         float line_height;
+        
+        bool loaded = false;
 
         friend class renderer_2d;
         friend class asset_manager_t;
         friend class text_t;
+    private:
+        void reload();
+        void set_unloaded();
     public:
         /// @brief The Font Size
         /// @modify Do not Modify
