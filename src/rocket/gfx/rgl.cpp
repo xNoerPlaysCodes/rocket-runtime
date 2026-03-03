@@ -17,6 +17,7 @@
 #include "rocket/window.hpp"
 #include "util.hpp"
 #include "glfnldr.hpp"
+#include <cpuid.h>
 
 namespace glutil {
     std::string glenum_str(GLenum e) {
@@ -222,8 +223,19 @@ namespace rgl {
     }
 
     void init_gl_wtd() {
+        glewInit();
         glViewport(0, 0, viewport_size.x, viewport_size.y);
         init_vo_all();
+    }
+
+    
+    std::string get_cpu_name() {
+        char cpu[64] = {};
+        unsigned int info[4];
+        __get_cpuid(0x80000002, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu, info, 16);
+        __get_cpuid(0x80000003, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+16, info, 16);
+        __get_cpuid(0x80000004, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+32, info, 16);
+        return std::string(cpu);
     }
 
     static std::unordered_map<rgl::shader_use_t, rgl::shader_program_t> shader_cache;
@@ -411,6 +423,7 @@ namespace rgl {
             "GPU:",
             "  Name: " + gpu_name,
             "  Vendor: "  + gpu_vendor,
+            "CPU: " + get_cpu_name() + " " + "(" + std::to_string(std::thread::hardware_concurrency()) + ")"
         };
 
         if (!gpu_is_modern) {

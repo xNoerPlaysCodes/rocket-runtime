@@ -10,6 +10,8 @@ namespace rocket {
         uint8_t *ogbuffer = nullptr;
         size_t size = 0;
         bool ownership = false;
+
+        friend void init_allocator();
     public:
         uint8_t *allocate(size_t size, size_t alignment = 32);
         void clear();

@@ -180,6 +180,7 @@ if (BUILD_TESTS)
         persistence_test
         scripting_test
         texture_atlas_test
+        argument_test
     )
 
     if (BUILD_ASTRO)

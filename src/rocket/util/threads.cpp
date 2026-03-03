@@ -64,10 +64,7 @@ namespace rocket {
         //     pool.in_use++;
         // }
 
-        std::thread t([&fn]() {
-            fn();
-        });
-        t.detach();
+        std::thread(fn).detach();
     }
 
     void thread_t::start() {
@@ -84,11 +81,10 @@ namespace rocket {
 
             fn();
 
+            glFlush();
             glFinish();
             glfwMakeContextCurrent(nullptr);
         });
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
         t.detach();
     }

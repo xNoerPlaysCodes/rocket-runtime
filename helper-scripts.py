@@ -176,9 +176,8 @@ def init_cmake(args):
 
     os.makedirs("build", exist_ok=True)
 
-    if sys.platform == "win32":
-        print("run build.sh")
-        return 1
+    if (sys.platform == "win32" or os.path.exists("WinDeps")):
+        pass
     #     if not os.path.isdir("windeps"):
     #         print("installation of dependencies required")
     #         if not os.path.isdir(".gitwindeps"):
@@ -205,9 +204,11 @@ def init_cmake(args):
     backend = args.glfnldr_backend
     args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build", "-DCMAKE_C_COMPILER_LAUNCHER=ccache", "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache", "-DCMAKE_LINKER=" + linker]
  
-    if sys.platform == "win32":
+    if (sys.platform == "win32" or os.path.exists("WinDeps")):
         args.append("-DBUILD_SHARED_LIBS=OFF")
         args.append("-D__rge_WINDOWS__=ON")
+        args.append("--toolchain")
+        args.append("./toolchain.cmake")
 
     print("command: " + "cmake" + " " + " ".join(args))
     subprocess.run(["cmake"] + args)

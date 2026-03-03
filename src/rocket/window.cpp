@@ -315,8 +315,11 @@ namespace rocket {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, flags.gl_version.x);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, flags.gl_version.y);
         glfwWindowHint(GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_ANY_RELEASE_BEHAVIOR);
-        float glver = static_cast<float>(flags.gl_version.x) + static_cast<float>(0.1 * flags.gl_version.y);
         float max_gl_ver = get_max_context_gl_version();
+        float glver = static_cast<float>(flags.gl_version.x) + static_cast<float>(0.1 * flags.gl_version.y);
+        if (flags.gl_version == rocket::vec2i_t{ 0, 0 }) {
+            glver = max_gl_ver;
+        }
 
         if (glver > max_gl_ver) {
             std::ostringstream ss;
@@ -324,7 +327,8 @@ namespace rocket {
             if (max_gl_ver == 2 || max_gl_ver == 3 || max_gl_ver == 4) {
                 ss << ".0";
             }
-            rocket::log("This version of OpenGL is not supported by this graphics driver, using next available version: " + ss.str(), "window_t", "context_creator", "warning");
+            rocket::log("Requested OpenGL version couldn't be matched", "window_t", "constructor", "fatal");
+            rocket::exit(1);
             glver = max_gl_ver;
         }
 
@@ -379,9 +383,6 @@ namespace rocket {
         glfwWindowHint(GLFW_MAXIMIZED, glfwaltGetBoolean(flags.maximized));
         glfwWindowHint(GLFW_FOCUSED, glfwaltGetBoolean(!flags.unfocused));
         glfwWindowHint(GLFW_FLOATING, glfwaltGetBoolean(flags.topmost));
-        if (flags.always_run) {
-            rocket::log("[fixme] not implemented, windowflags_t::always_run", "window_t", "constructor", "fixme");
-        }
 
         if (flags.opacity < 1.0f) {
             glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, glfwaltGetBoolean(true));

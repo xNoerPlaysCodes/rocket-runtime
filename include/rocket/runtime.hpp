@@ -3,6 +3,7 @@
 
 #include "rocket/macros.hpp"
 #include <filesystem>
+#include <string>
 #ifdef ROCKETGE__Platform_Windows
 #define GL_STATIC_DRAW 0x88E4
 #endif
@@ -139,6 +140,14 @@ namespace rocket {
 
     /// @brief Get OpenGL Error callback
     gl_error_callback_t get_opengl_error_callback();
+
+    /// @brief Registers an argument with callback with NO value
+    /// @note Must be called before init
+    void register_argument(std::string arg, std::function<void()> cb, std::string description);
+
+    /// @brief Registers an argument with callback with a value
+    /// @note Must be called before init
+    void register_argument(std::string arg, std::function<void(std::string value)> cb, std::string description, std::string value_type);
 
     /// @brief Initializes Rocket Runtime
     void init(std::vector<std::string> args = {});

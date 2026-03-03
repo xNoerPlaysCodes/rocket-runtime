@@ -57,13 +57,11 @@ namespace rocket {
         /// @note 0 means Fully Transparent
         /// @note 1 means Fully Opaque
         float opacity = 1;
-        bool always_run = false;
         bool hidpi = false;
         bool interlacing = false;
 
         /// --- OpenGL Context ---
-        /// @brief 4.3
-        rocket::vec2i_t gl_version = { 4, 3 };
+        rocket::vec2i_t gl_version = {};
         bool gl_contextverifier = true;
 
         /// --- Advanced ---

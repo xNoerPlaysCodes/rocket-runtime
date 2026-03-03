@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
     flags.msaa_samples = 4;
     rocket::window_t window({ 1280, 720 }, "RocketGE - UI Init Test", flags);
     rocket::renderer_2d r(&window, 60, {
-        .show_splash = !test_mode
+        .show_splash = !test_mode,
     });
 
     astro::set_renderer(&r);

@@ -146,7 +146,7 @@ void __init() {
     // AddVectoredExceptionHandler(1, &crash_handler);
     SetUnhandledExceptionFilter(&crash_handler);
     SetConsoleCtrlHandler(console_ctrl_handler, TRUE);
-    rocket::log("Hooked SEH, CTRL_C, CTRL_BREAK, CTRL_CLOSE", "rocket", "init", "debug");
+    rocket::log("Hooked SEH", "rocket", "init", "debug");
     util::init_memory_buffer();
 
     rocket::log("Emergency memory buffer initialized with size " + std::format("{} MiB", util::get_memory_buffer()->sz / 1024 / 1024), "rocket", "init", "debug");
@@ -218,7 +218,6 @@ namespace rocket {
 
     void log(const std::string &log, const std::string &class_file_library_source, const std::string &function_source, const std::string &level) {
         static const auto cli_args = util::get_clistate();
-        if (cli_args.lognone) return;
         std::ofstream *out = &std_outstm;
         std::mutex *mtx = &cout_mutex;
         if (level == "error" || level == "warn" || level == "fatal" || level == "fixme") {
@@ -292,11 +291,17 @@ namespace rocket {
         }
     }
 
-    void set_cli_arguments(int argc, char *argv[]) {
-        if (argc < 0) {
-            return;
-        }
+    struct custom_argument_t {
+        std::string arg;
+        std::string description;
+        std::string value_type;
+        bool value;
+        std::function<void(std::optional<std::string>)> cb;
+    };
 
+    std::vector<custom_argument_t> registered_arguments;
+
+    void set_cli_arguments(int argc, char *argv[]) {
         const std::vector<std::string> args_with_values = {
             "viewport-size", "viewportsize", "vp-size", "vpsize",
             "framerate",
@@ -321,7 +326,7 @@ namespace rocket {
             std::string rawarg = arg;
 
             bool argument_detected = false;
-            bool too_many_prefixes;
+            bool too_many_prefixes = false;
 
             std::string prefix;
 
@@ -369,8 +374,6 @@ namespace rocket {
                 args.noplugins = true;
             } else if (arg == "logall" || arg == "log-all") {
                 args.logall = true;
-            } else if (arg == "lognone" || arg == "log-none") {
-                args.lognone = true;
             } else if (arg == "debugoverlay" || arg == "doverlay" || arg == "debug-overlay") {
                 args.debugoverlay = true;
             } else if (arg == "glversion" || arg == "gl-version") {
@@ -477,7 +480,7 @@ namespace rocket {
                     "   no-plugins, noplugins",
                     "   -> disable all plugins before startup",
                     "",
-                    "   log-all, logall / log-none, lognone",
+                    "   log-all, logall",
                     "   -> logs every / no message(s)",
                     "",
                     "*  logfile [file_path] (!path if path starts with /)",
@@ -492,8 +495,8 @@ namespace rocket {
                     "   no-splash, nosplash",
                     "   -> hides splash from being shown in the beginning",
                     "",
-                    "*  viewport-size, viewportsize, vp-size, vpsize [resolution] [[FIXME]]",
-                    "   -> forces to use a initial viewport size",
+                    "*  viewport-size, viewportsize, vp-size, vpsize [width]x[height]",
+                    "   -> forces to use a initial viewport (and window) size",
                     "",
                     "*  framerate [fps]",
                     "   -> forces to use a set framerate (if reachable)",
@@ -501,10 +504,24 @@ namespace rocket {
                     "   version",
                     "   -> shows version and attribution",
                     "",
-                    "* | Value Mandatory",
-                    "",
-                    "--> Powered by RocketGE"
                 };
+
+                if (registered_arguments.size() > 0) {
+                    lines.push_back("Game Specific:");
+                }
+
+                for (auto &a : registered_arguments) {
+                    if (a.value)
+                        lines.push_back("*  " + a.arg + " [" + a.value_type + "]");
+                    else
+                        lines.push_back("   " + a.arg);
+                    lines.push_back("   -> " + a.description);
+                    lines.push_back("");
+                }
+
+                lines.push_back("* | Value Mandatory");
+                lines.push_back("");
+                lines.push_back("--> Powered by RocketGE");
 
                 for (auto &line : lines) {
                     std::cout << line << '\n';
@@ -556,9 +573,33 @@ namespace rocket {
                 args.software_frame_timer = true;
             }
             else {
-                rocket::log("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), "rocket", "argparse", "error");
-                exit = true;
-                error = true;
+                bool found = false;
+                for (auto &a : registered_arguments) {
+                    if (a.arg != arg) {
+                        continue;
+                    }
+
+                    if (a.value && value.empty()) {
+                        additional_exit_message = "argument " + arg + " does not have a value where it is required";
+                        exit = true;
+                        error = true;
+                        continue;
+                    }
+
+                    found = true;
+
+                    if (a.value) {
+                        a.cb(value);
+                    } else {
+                        a.cb(std::nullopt);
+                    }
+                }
+
+                if (!found) {
+                    rocket::log("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), "rocket", "argparse", "error");
+                    exit = true;
+                    error = true;
+                }
             }
         }
 
@@ -621,5 +662,28 @@ namespace rocket {
 
         std_outstm.open(path);
         std_errstm.open(path);
+    }
+
+    void register_argument(std::string arg, std::function<void()> cb, std::string description) {
+        custom_argument_t a;
+        a.arg = arg;
+        a.cb = [cb](std::optional<std::string> v) {
+            cb();
+        };
+        a.description = description;
+        a.value = false;
+        registered_arguments.push_back(a);
+    }
+
+    void register_argument(std::string arg, std::function<void(std::string value)> cb, std::string description, std::string value_type) {
+        custom_argument_t a;
+        a.arg = arg;
+        a.cb = [cb](std::optional<std::string> v) {
+            cb(*v);
+        };
+        a.description = description;
+        a.value_type = value_type;
+        a.value = true;
+        registered_arguments.push_back(a);
     }
 }

@@ -3,6 +3,7 @@
 #include <cstring>
 #include <format>
 #include <iomanip>
+#include <rocket/memory.hpp>
 #include <sstream>
 #include <util.hpp>
 #include <native.hpp>
@@ -11,41 +12,20 @@
 #include <stacktrace>
 
 namespace rocket {
-    template<typename T>
-    struct emerg_alloc {
-        using value_type = T;
+    thread_local frame_allocator_t *char_allocator;
+    alignas(frame_allocator_t) thread_local uint8_t _char_allocator_buf[sizeof(frame_allocator_t)] = {};
+    thread_local bool allocator_initialized = false;
 
-        emerg_alloc() = default;
-
-        template<class U>
-        constexpr emerg_alloc(const emerg_alloc<U>&) {}
-
-        T* allocate(std::size_t n) {
-            auto* buf = util::get_memory_buffer();
-
-            size_t bytes = n * sizeof(T);
-
-            uintptr_t curr = (uintptr_t)buf->mem;
-            uintptr_t aligned =
-                (curr + alignof(T) - 1) & ~(uintptr_t(alignof(T) - 1));
-
-            uintptr_t next = aligned + bytes;
-            uintptr_t end  = (uintptr_t)buf->mem + buf->sz;
-
-            if (next > end) {
-                rnative::exit_now(234);
-            }
-
-            buf->mem = (void*)next;
-            return (T*)aligned;
-        }
-
-        void deallocate(T* p, std::size_t) noexcept {
-            ::operator delete(p);
-        }
-    };
-
-    thread_local emerg_alloc<char> char_allocator;
+    void init_allocator() {
+        if (allocator_initialized) return;
+        char_allocator = (frame_allocator_t*) _char_allocator_buf;
+        util::membuf_t *buf = util::get_memory_buffer();
+        char_allocator->buffer = (uint8_t*) buf->mem;
+        char_allocator->ogbuffer = (uint8_t*) buf->mem;
+        char_allocator->size = buf->sz;
+        char_allocator->ownership = false;
+        allocator_initialized = true;
+    }
 
     char* get_time_string() {
         std::time_t t = std::time(nullptr);
@@ -53,7 +33,7 @@ namespace rocket {
 
         native_gmtime(&t, &tm);
 
-        static char *buf = char_allocator.allocate(64);
+        static char *buf = (char*) char_allocator->allocate(64);
         for (int i = 0; i < 64; ++i) buf[i] = 0;
 
         int written = std::snprintf(
@@ -77,7 +57,7 @@ namespace rocket {
         size_t st_size = st.size();
 
         if (st_size > 1000) {
-            return std::snprintf(buf, len, "Stack trace too big (%zu > 1000)\n", st_size);
+            return std::snprintf(buf, len, "Stack trace too big (%zu > 1000) (Stack overflow?)\n", st_size);
         }
 
         // compute width for index column
@@ -124,6 +104,7 @@ namespace rocket {
     }
 
     char* crash_signal(bool fatal, void *mem_addr, const char *signal, const char *message) {
+        init_allocator();
         char mem_addr_str[128] = {};
         if (mem_addr == nullptr) {
             std::snprintf(mem_addr_str, 128, "0x0");
@@ -157,7 +138,7 @@ namespace rocket {
         }
 
         constexpr size_t size = 1 * 1024 * 1024;
-        char *buf = char_allocator.allocate(size);
+        char *buf = (char*) char_allocator->allocate(size);
         std::memset(buf, 0, size);
         int written = std::snprintf(buf, size,
             (fatal) ? ">- RocketGE has crashed! -<\n" : ""
