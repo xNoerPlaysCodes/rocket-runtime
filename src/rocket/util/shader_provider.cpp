@@ -52,4 +52,8 @@ namespace rocket {
             return rGL_SHADER_INVALID;
         }
     }
+
+    void shader_provider_reset() {
+        shader_map.clear();
+    }
 }

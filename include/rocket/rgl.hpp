@@ -111,6 +111,23 @@ namespace rgl {
         int stride_size = 2
     );
 
+    std::pair<vao_t, vbo_t> cache_compile_vo(
+        std::string use,
+        const std::array<float, 12>& square_vertices = std::array<float,12>{
+            0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+            0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
+        },
+        GLenum draw_type = GL_STATIC_DRAW,
+        int stride_size = 2 
+    );
+
+    std::pair<vao_t, vbo_t> cache_compile_vo(
+        std::string use,
+        const std::vector<float> &vertices,
+        GLenum draw_type = GL_STATIC_DRAW,
+        int stride_size = 2
+    );
+
     shader_program_t get_paramaterized_quad(
         const rocket::vec2f_t &pos,
         const rocket::vec2f_t &size,
@@ -198,6 +215,8 @@ namespace rgl {
     /// @brief Compiles all default shaders
     /// @note Can take a variable amount of time
     void compile_all_default_shaders();
+
+    void reset();
 }
 
 #endif

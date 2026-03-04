@@ -186,6 +186,48 @@ namespace rgl {
         return { vao, vbo };
     }
 
+    static std::unordered_map<std::string, std::pair<vao_t, vbo_t>> cached_square_vertices_vos;
+
+    std::pair<vao_t, vbo_t> cache_compile_vo(
+        std::string use,
+        const std::array<float, 12>& square_vertices,
+        GLenum draw_type,
+        int stride_size
+    ) {
+        std::string key = use;
+
+        auto it = cached_square_vertices_vos.find(key);
+        if (it != cached_square_vertices_vos.end()) {
+            return it->second;
+        } else {
+            rocket::log("VO cache miss, compiling...", "rgl", "cache_compile_vo", "debug");
+            auto vo = rgl::compile_vo(square_vertices, draw_type, stride_size);
+            cached_square_vertices_vos[key];
+            return vo;
+        }
+    }
+
+    static std::unordered_map<std::string, std::pair<vao_t, vbo_t>> cached_float_vertices_vos;
+
+    std::pair<vao_t, vbo_t> cache_compile_vo(
+        std::string use,
+        const std::vector<float> &vertices,
+        GLenum draw_type,
+        int stride_size
+    ) {
+        std::string key = use;
+
+        auto it = cached_float_vertices_vos.find(key);
+        if (it != cached_float_vertices_vos.end()) {
+            return it->second;
+        } else {
+            rocket::log("VO cache miss, compiling...", "rgl", "cache_compile_vo", "debug");
+            auto vo = rgl::compile_vo(vertices, draw_type, stride_size);
+            cached_float_vertices_vos[key];
+            return vo;
+        }
+    }
+
     std::pair<vao_t, vbo_t> get_text_vos() {
         return textVO;
     }
@@ -552,17 +594,18 @@ namespace rgl {
         return pg;
     }
 
+    std::unordered_map<std::string, rgl::shader_program_t> cachecmp_shader_cache;
+
     rgl::shader_program_t cache_compile_shader(const char *vsrc, const char *fsrc) {
         std::string key = std::string(vsrc) + "#" + fsrc;
-        static std::unordered_map<std::string, rgl::shader_program_t> shader_cache;
 
-        auto it = shader_cache.find(key);
-        if (it != shader_cache.end()) {
+        auto it = cachecmp_shader_cache.find(key);
+        if (it != cachecmp_shader_cache.end()) {
             return it->second;
         } else {
             rocket::log("Shader cache miss, compiling...", "rgl", "cache_compile_shader", "debug");
             rgl::shader_program_t pg = load_shader_generic(vsrc, fsrc);
-            shader_cache[vsrc] = pg;
+            cachecmp_shader_cache[key] = pg;
             return pg;
         }
     }
@@ -605,7 +648,7 @@ namespace rgl {
         float rotation,
         float roundedness
     ) {
-        static rgl::shader_program_t pg = init_shader(rgl::shader_use_t::rect);
+        rgl::shader_program_t pg = init_shader(rgl::shader_use_t::rect);
 
         glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
 
@@ -635,7 +678,7 @@ namespace rgl {
         float rotation,
         float roundedness
     ) {
-        static rgl::shader_program_t pg = init_shader(rgl::shader_use_t::textured_rect);
+        rgl::shader_program_t pg = init_shader(rgl::shader_use_t::textured_rect);
 
         glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
 
@@ -866,5 +909,27 @@ namespace rgl {
 
     draw_metrics_t get_draw_metrics() {
         return metrics;
+    }
+
+    void reset() {
+        gl_main_ctx = nullptr;
+        fmetrics = {};
+        metrics = {};
+
+        rectVO = {};
+        textureVO = {};
+        textVO = {};
+        active_fbo = rGL_FBO_INVALID;
+        viewport_size = {};
+        viewport_offset = {};
+        max_tx_size = 0;
+        
+        shader_cache.clear();
+        cachecmp_shader_cache.clear();
+        cached_square_vertices_vos.clear();
+        cached_float_vertices_vos.clear();
+
+        std::lock_guard<std::mutex> _(scheduled_mutex);
+        while (scheduled.size() != 0) scheduled.pop();
     }
 }

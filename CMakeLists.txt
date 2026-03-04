@@ -181,6 +181,7 @@ if (BUILD_TESTS)
         scripting_test
         texture_atlas_test
         argument_test
+        state_reset_test
     )
 
     if (BUILD_ASTRO)

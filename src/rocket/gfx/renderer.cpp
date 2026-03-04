@@ -140,7 +140,8 @@ namespace rocket {
             glUniform2f(glGetUniformLocation(pg, "u_size"), radius * 2, radius * 2);
             glUniform1f(glGetUniformLocation(pg, "u_radius"), 1);
             glUniform1f(glGetUniformLocation(pg, "u_thickness"), thickness);
-            static auto vos = rgl::compile_vo();
+
+            auto vos = rgl::cache_compile_vo("circle");
             rgl::draw_shader(pg, vos.first, vos.second);
             return;
         }
@@ -210,7 +211,7 @@ namespace rocket {
             
             vo = rgl::compile_vo(verts);
         }
-        static rgl::shader_program_t pg = rgl::cache_compile_shader(vsrc, fsrc);
+        rgl::shader_program_t pg = rgl::cache_compile_shader(vsrc, fsrc);
 
         auto color_nm = color.normalize();
         rgl::shader_location_t color_loc = rgl::get_shader_location(pg, "uColor");
@@ -438,7 +439,7 @@ namespace rocket {
         glUniform2f(glGetUniformLocation(pg, "u_texPos"), uv_tex_pos.x, uv_tex_pos.y);
         glUniform2f(glGetUniformLocation(pg, "u_texSize"), uv_tex_size.x, uv_tex_size.y);
 
-        static auto vos = rgl::compile_vo();
+        auto vos = rgl::cache_compile_vo("atlas_texture");
         rgl::draw_shader(pg, vos.first, vos.second);
     }
     void renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
@@ -596,7 +597,7 @@ namespace rocket {
         }
         std::string fps_text = "FPS: " + std::to_string(get_current_fps());
 
-        static rocket::text_t fps = rocket::text_t(fps_text, 24, rocket::rgb_color::green());
+        rocket::text_t fps = rocket::text_t(fps_text, 24, rocket::rgb_color::green());
         fps.text = fps_text;
         this->draw_text(fps, pos);
     }
@@ -1253,6 +1254,9 @@ namespace rocket {
         }
 
         rgl::cleanup_all();
+        rgl::reset();
+        shader_provider_reset();
+        util::glinit(false);
     }
 
     renderer_2d::~renderer_2d() {
