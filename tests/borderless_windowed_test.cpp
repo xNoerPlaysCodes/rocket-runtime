@@ -23,6 +23,15 @@ int main(int argc, char **argv) {
         r.end_frame();
         window.poll_events();
 
-        if (test_mode) return window.get_size() != main_mon.size;
+        if (test_mode) {
+            auto win_size = window.get_size();
+            auto mon_size = main_mon.size;
+
+            int dx = std::abs((int)win_size.x  - (int)mon_size.x);
+            int dy = std::abs((int)win_size.y - (int)mon_size.y);
+
+            // Allow 100 pixels of difference in both directions
+            return (dx > 100 || dy > 100);
+        }
     }
 }

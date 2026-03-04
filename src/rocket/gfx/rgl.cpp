@@ -388,13 +388,13 @@ namespace rgl {
 
                 std::vector<std::string> log_messages2 = dump_gl_state();
 
+                rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
                 for (auto &l : log_messages) {
                     rocket::log(l, "OpenGL", "ContextVerifier", "error");
                 }
                 for (auto &l : log_messages2) {
                     rocket::log(l, "OpenGL", "ContextVerifier", "error");
                 }
-                rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
             }, nullptr);
         }
 #ifdef RocketRuntime_VerifyShaderLoading

@@ -4,6 +4,8 @@
 #include "rocket/renderer.hpp"
 #include "rocket/types.hpp"
 #include "rocket/window.hpp"
+#include <iostream>
+
 
 int main(int argc, char **argv) {
     rocket::init(argc, argv);
@@ -13,18 +15,21 @@ int main(int argc, char **argv) {
         test_mode = true;
     }
     rocket::window_t window({1920, 1080}, "RocketGE - State Reset Test");
-    rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
+    rocket::renderer_2d r(&window, 60, {.show_splash = true});
 
     rocket::text_t text = {"Hello, Rocket World!", 48, rocket::rgb_color::black()};
+
+    bool error = false;
+    rocket::set_opengl_error_callback([&error, test_mode] (std::string, std::string, int, std::string, std::string) {
+        error = true;
+        std::exit(1);
+    });
 
     int i = 0;
     while (window.is_running() && i < 20) {
         r.begin_frame();
         r.clear();
-        {
-        }
-        {
-        }
+        {}
         r.end_frame();
         window.poll_events();
         ++i;
@@ -33,6 +38,7 @@ int main(int argc, char **argv) {
     r.close();
     window.close();
 
+    i = 0;
     {
         rocket::window_t w2 = {};
         rocket::renderer_2d r2 = &w2;
@@ -44,6 +50,8 @@ int main(int argc, char **argv) {
             }
             r2.end_frame();
             w2.poll_events();
+
+            ++i;
         }
     }
 }

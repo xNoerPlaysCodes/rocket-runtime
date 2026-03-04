@@ -157,9 +157,8 @@ void __init() {
 namespace rocket {
     void set_log_level(log_level_t level) { util::set_log_level(level); }
 
-    gl_error_callback_t glerror_cb_default = [](std::string, std::string, int, std::string, std::string) {};
+    gl_error_callback_t glerror_cb = [](std::string, std::string, int, std::string, std::string) {};
 
-    gl_error_callback_t glerror_cb = nullptr;
     exit_callback_t exitcb = nullptr;
 
     std::string log_level_to_str(log_level_t level) {
@@ -260,7 +259,7 @@ namespace rocket {
     }
 
     gl_error_callback_t get_opengl_error_callback() {
-        return glerror_cb == nullptr ? glerror_cb_default : glerror_cb;
+        return glerror_cb;
     }
 
     void global_init() {
