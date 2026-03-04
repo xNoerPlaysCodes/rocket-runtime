@@ -73,15 +73,26 @@ namespace rocket {
         for (size_t i = 0; i < st_size; ++i) {
             const auto& frame = st[i];
 
-            int written = std::snprintf(
-                out,
-                remaining,
-                "%*zu. %s:%u\n",
+            int written;
+            if (frame.source_file().size() > 0) {
+                written = std::snprintf(
+                    out,
+                    remaining,
+                    "%*zu. %s:%u\n",
 
-                index_width, i,
-                frame.source_file().c_str(),
-                static_cast<unsigned>(frame.source_line())
-            );
+                    index_width, i,
+                    frame.source_file().c_str(),
+                    static_cast<unsigned>(frame.source_line())
+                );
+            } else {
+                written = std::snprintf(
+                    out,
+                    remaining,
+                    "%*zu. ???\n",
+
+                    index_width, i
+                );
+            }
 
             if (written < 0) break;  // encoding error
 
