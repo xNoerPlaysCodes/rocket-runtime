@@ -265,7 +265,7 @@ namespace rgl {
     }
 
     void init_gl_wtd() {
-        glewInit();
+        glfnldr::init(glfnldr::backend_t::glew);
         glViewport(0, 0, viewport_size.x, viewport_size.y);
         init_vo_all();
     }
@@ -287,7 +287,7 @@ namespace rgl {
 
         auto cli_args = util::get_clistate();
 
-        if (!glfnldr::init(glfnldr::backend_t::glew)) {
+        if (!glfnldr::init(backend)) {
             rocket::log("OpenGL functions could not be loaded", "rgl", "init_gl", "fatal");
             rocket::exit(1);
             return {

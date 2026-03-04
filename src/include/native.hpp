@@ -12,9 +12,12 @@ namespace rnative {
     /// @brief Linux Set AppID/WinClass
     void linux_set_class_name(const char *str);
 
-    void exit_now(int code);
 
+    void exit_now(int code);
     void init();
+
+    /// @brief On Posix Systems name may only be 15 bytes and 1 NULL long
+    void set_thread_name(const char *name);
 }
 
 #ifdef RNATIVE__INCLUDE_WAYLAND

@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <functional>
 #include <chrono>
+#include <string>
 
 namespace rocket {
     /// @brief A OpenGL-compatible thread
@@ -25,6 +26,9 @@ namespace rocket {
         static void run(std::function<void()> fn);
         /// @brief Get the thread ID (64-bit integer)
         static uint64_t get_thread_id();
+        /// @brief Set the thread name for current thread
+        /// @note On Linux MAX 15 chars only
+        static void set_thread_name(std::string name);
     public:
         /// @brief Starts the thread
         /// @note [FIXME] DOESNT WORK

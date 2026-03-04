@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <functional>
 #include <mutex>
+#include <native.hpp>
 #include <sstream>
 #include <thread>
 #include <vector>
@@ -65,6 +66,10 @@ namespace rocket {
         // }
 
         std::thread(fn).detach();
+    }
+
+    RGE_STATIC_FUNC_IMPL void thread_t::set_thread_name(std::string name) {
+        rnative::set_thread_name(name.c_str());
     }
 
     void thread_t::start() {

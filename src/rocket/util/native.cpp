@@ -51,9 +51,20 @@ namespace linux_backend {
         glfwWindowHintString(GLFW_X11_CLASS_NAME, str);
         glfwWindowHintString(GLFW_X11_INSTANCE_NAME, str);
     }
+}
+#endif
 
+#ifdef ROCKETGE__Platform_UnixCompatible
+namespace unix_backend {
     void exit_now(int code) {
         _exit(code);
+    }
+
+    void set_thread_name(const char *_name) {
+        char name[16];
+        strncpy(name, _name, 15);
+        name[15] = '\0';
+        pthread_setname_np(pthread_self(), name);
     }
 }
 #endif
@@ -69,7 +80,18 @@ namespace windows_backend {
     }
 
     void init() {
+        // Set scheduler time period to 1ms
+        // its 15.625ms normally
         timeBeginPeriod(1);
+    }
+
+    void set_thread_name(const char *name) {
+        std::wstring wide(name, name + strlen(name));
+        HANDLE thread = GetCurrentThread();
+        HRESULT hr = SetThreadDescription(thread, wide.c_str());
+        if (FAILED(hr)) {
+            rocket::log("SetThreadDescription failed", "rnative", "[windows_backend]", "error");
+        }
     }
 }
 #endif
@@ -126,7 +148,7 @@ namespace rnative {
 
     void exit_now(int code) {
 #ifdef ROCKETGE__Platform_UnixCompatible
-        linux_backend::exit_now(code);
+        unix_backend::exit_now(code);
 #elifdef ROCKETGE__Platform_Windows
         windows_backend::exit_now(code);
 #endif
@@ -137,6 +159,14 @@ namespace rnative {
 #elifdef ROCKETGE__Platform_macOS
 #elifdef ROCKETGE__Platform_Windows
         windows_backend::init();
+#endif
+    }
+
+    void set_thread_name(const char *name) {
+#ifdef ROCKETGE__Platform_UnixCompatible
+        unix_backend::set_thread_name(name);
+#elifdef ROCKETGE__Platform_Windows
+        windows_backend::set_thread_name(name);
 #endif
     }
 }
