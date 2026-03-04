@@ -4,6 +4,7 @@
 #include "rocket/runtime.hpp"
 #include "rocket/io.hpp"
 #include "rocket/window.hpp"
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -52,7 +53,12 @@ int main(int argc, char **argv) {
     while (window.is_running()) {
         r.begin_frame();
         r.clear();
+        bool can_dpy_controller_disconnected = false;
         {
+            if (!rocket::gpad::is_available(hd)) {
+                can_dpy_controller_disconnected = true;
+                goto controller_disconnected;
+            }
             std::stringstream ss;
             ss << "L2: " + std::to_string(rocket::gpad::get_axis_state(gamepad, rocket::gpad::axis_t::l2)) << " && ";
             ss << "R2: " + std::to_string(rocket::gpad::get_axis_state(gamepad, rocket::gpad::axis_t::r2));
@@ -74,6 +80,16 @@ int main(int argc, char **argv) {
             r.draw_fps();
 
             rocket::gpad::set_vibration(gamepad, 1.0f, 1000);
+        }
+        controller_disconnected: {
+            if (can_dpy_controller_disconnected) {
+                text.text = "Controller Disconnected!";
+                rocket::vec2f_t screen_size = r.get_viewport_size();
+                rocket::vec2f_t text_size = text.measure();
+
+                rocket::vec2f_t position = (screen_size / 2.0f) - (text_size / 2.0f);
+                r.draw_text(text, position);
+            }
         }
         r.end_frame();
         window.poll_events();
