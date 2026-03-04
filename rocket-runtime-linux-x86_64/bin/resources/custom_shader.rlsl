@@ -1,9 +1,0 @@
-Version: 1.1
-GL_MinimumVersion: 3.3
-Name: ColorWheel
-
-//              line  vt/fg  source
-IncludeHeader: 4 Fragment custom_shader_hsvutil.glsl
-
-ExternalSource: Vertex custom_shader_vert.glsl
-ExternalSource: Fragment custom_shader_frag.glsl
