@@ -1,6 +1,7 @@
 #include <crashdump.hpp>
 #include <cstdio>
 #include <cstring>
+#include <filesystem>
 #include <format>
 #include <iomanip>
 #include <rocket/memory.hpp>
@@ -81,7 +82,7 @@ namespace rocket {
                     "%*zu. %s:%u\n",
 
                     index_width, i,
-                    frame.source_file().c_str(),
+                    std::filesystem::path(frame.source_file()).filename().string().c_str(),
                     static_cast<unsigned>(frame.source_line())
                 );
             } else {
