@@ -4,12 +4,6 @@
 #include "macros.hpp"
 #include <cstdint>
 #include "glfnldr.hpp"
-#include <glm/detail/qualifier.hpp>
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/quaternion_geometric.hpp>
-#include <glm/ext/vector_float3.hpp>
-#include <glm/geometric.hpp>
 #include "asset.hpp"
 #include "rocket/rgl.hpp"
 #include "types.hpp"

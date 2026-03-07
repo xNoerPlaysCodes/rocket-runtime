@@ -18,6 +18,10 @@ namespace rnative {
 
     /// @brief On Posix Systems name may only be 15 bytes and 1 NULL long
     void set_thread_name(const char *name);
+
+    typedef void (*proc_address_t)(void);
+
+    proc_address_t load_proc_address(const char *name);
 }
 
 #ifdef RNATIVE__INCLUDE_WAYLAND
@@ -40,6 +44,8 @@ namespace rnative {
 #include <linux/input.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <GL/glx.h>
+#include <dlfcn.h>
 
 #endif // X11 or WAYLAND
 

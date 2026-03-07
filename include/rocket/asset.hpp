@@ -3,11 +3,9 @@
 
 #include "rocket/audio.hpp"
 #include "types.hpp"
-#include <AL/al.h>
 #include <atomic>
 #include <chrono>
 #include <functional>
-#include <map>
 #include <mutex>
 #include <string>
 #include <thread>
@@ -66,8 +64,8 @@ namespace rocket {
     class audio_t {
     private:
         std::shared_ptr<audio_context_t> context;
-        ALuint *buffer = nullptr;
-        ALuint source = 0;
+        unsigned int *buffer = nullptr;
+        unsigned int source = 0;
         std::string path;
 
         friend class asset_manager_t;

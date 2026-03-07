@@ -7,6 +7,7 @@
 #include <rocket/runtime.hpp>
 #include <memory>
 #include <rocket/rgl.hpp>
+#include <cmath>
 
 /// @brief Contiguous
 using framebuffer_t = std::vector<rocket::rgba_color>;

@@ -2,12 +2,12 @@
 #define GLAD_GL_IMPLEMENTATION
 #include <lib/glad/glad.h>
 #include <rocket/runtime.hpp>
+#include <native.hpp>
 bool BKEND_glad_init() {
-    return false;
+    int ver = gladLoadGL(rnative::load_proc_address);
 
-#warning Implement rgl_get_proc_address using rnative
-//    int ver = gladLoadGL(glfwGetProcAddress);
+    printf("%d\n", ver);
 
     rocket::log("glad initialized", "glfnldr", "BKEND_init", "debug");
-    return 0 != 0;
+    return ver != 0;
 }

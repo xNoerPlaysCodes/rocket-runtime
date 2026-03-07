@@ -2,7 +2,6 @@
 #define ROCKETGE_SUBSPLUGIN__API_HPP
 
 #include "rocket/renderer.hpp"
-#include <chrono>
 #include <functional>
 #include <string>
 

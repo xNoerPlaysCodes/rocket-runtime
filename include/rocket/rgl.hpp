@@ -1,16 +1,12 @@
 #ifndef RocketGL__HPP
 #define RocketGL__HPP
 
-#include "rocket/macros.hpp"
 #include <rocket/modularity/window_backend.hpp>
 #ifndef GL_STATIC_DRAW 
 #define GL_STATIC_DRAW 0x88E4
 #endif
-#include "rocket/asset.hpp"
 #include "rocket/types.hpp"
-#include <cstdint>
 #include "glfnldr.hpp"
-#include <unordered_map>
 #include <utility>
 #include <string>
 #include <vector>

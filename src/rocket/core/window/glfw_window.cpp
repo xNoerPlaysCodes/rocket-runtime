@@ -114,7 +114,7 @@ namespace rocket {
             glfw_initialized = true;
         }
         glfw_init_timer.stop();
-        rocket::log("GLFW Initialized in " + std::to_string((int) glfw_init_timer.ms()) + "ms", "glfw_window_t", "glfw_cpl_init", "trace");
+        rocket::log("GLFW Initialized in " + std::to_string((int) glfw_init_timer.ms()) + "ms", "glfw_window_t", "cpl_init", "trace");
     }
 
     platform_t glfw_window_t::get_platform() const {

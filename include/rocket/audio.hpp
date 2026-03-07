@@ -2,8 +2,6 @@
 #define ROCKETGE__AUDIO_HPP
 
 #include "rocket/types.hpp"
-#include <AL/alc.h>
-#include <AL/al.h>
 #include <array>
 #include <functional>
 #include <memory>
@@ -11,6 +9,9 @@
 #include <vector>
 
 struct stb_vorbis;
+
+extern "C" struct ALCdevice;
+extern "C" struct ALCcontext;
 
 namespace rocket::audio {
     enum class capabilities_t {
@@ -39,7 +40,7 @@ namespace rocket::audio {
     struct buffer_t {
     private:
         [[maybe_unused]]
-        ALuint handle = 0;
+        unsigned int handle = 0;
     public:
         format_t format;
         std::vector<int16_t> samples;
@@ -58,7 +59,7 @@ namespace rocket::audio {
     struct sound_t {
     private:
         [[maybe_unused]]
-        ALuint handle = 0;
+        unsigned int handle = 0;
         [[maybe_unused]]
         bool flat_2d = true;
     public:
@@ -72,7 +73,7 @@ namespace rocket::audio {
 
     struct source_t {
         bool in_use = false;
-        ALuint source = 0;
+        unsigned int source = 0;
     };
 
     using sound_finish_callback_t = std::function<void()>;
@@ -80,7 +81,7 @@ namespace rocket::audio {
     struct streaming_sound_t {
     private:
         stb_vorbis *vorbis = nullptr;
-        std::array<ALuint, 4> buffers;
+        std::array<unsigned int, 4> buffers;
         friend class sound_engine_t;
     public:
         bool loop = false;
