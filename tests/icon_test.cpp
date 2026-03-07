@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
     // wayland also needs a valid framebuffer
     // before showing the window
     // --------------------------------------
-    rocket::window_t::set_forced_platform(rocket::platform_type_t::linux_x11);
+    rocket::window::set_forced_platform(rocket::platform_type_t::linux_x11);
 #endif
     bool test_mode = false;
     if (argc >= 3 && std::string(argv[2]) == "--unit-test") {

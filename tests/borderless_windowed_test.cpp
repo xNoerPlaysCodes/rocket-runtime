@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
         test_mode = true;
     }
 
-    rocket::window_t::cpl_init();
+    rocket::window::cpl_init();
     rocket::monitor_t main_mon = rocket::monitor_t::of(0);
     rocket::window_t window = { main_mon.size, "RocketGE - Borderless Windowed" };
     rocket::renderer_2d r = { &window, 60, { .show_splash = !test_mode } };

@@ -25,7 +25,7 @@ namespace rocket {
         vec2f_t pos = {0,0};
         vec2f_t size = {0,0};
 
-        GLuint gltxid = 0;
+        unsigned int gltxid = 0;
         rgba_color color = {0,0,0,0};
     };
     struct renderer_flags_t {
@@ -54,21 +54,21 @@ namespace rocket {
 
     class renderer_2d {
     private:
-        window_t *window = nullptr;
+        window_backend_i *window = nullptr;
         camera_2d *cam = nullptr;
         int fps = 60;
         bool wireframe = false;
         bool vsync = false;
 
-        std::chrono::time_point<std::chrono::high_resolution_clock> start_time;
-        double last_time;
-        double frame_start_time;
+        using clock = std::chrono::steady_clock;
+        template<typename Clock>
+        using time_point = std::chrono::time_point<Clock>;
+
+        time_point<clock> frame_start_time;
+        time_point<clock> last_time;
         double delta_time;
 
         uint64_t frame_counter = 0;
-
-        std::vector<instanced_quad_t> batch;
-        bool batched = false;
 
         bool frame_started = false;
 
@@ -263,7 +263,7 @@ namespace rocket {
         /// @brief Initialize the renderer
         /// @param window Window
         /// @param fps FPS = 60
-        renderer_2d(window_t *window, int fps = 60, renderer_flags_t flags = {});
+        renderer_2d(window_backend_i *window, int fps = 60, renderer_flags_t flags = {});
     public:
         ~renderer_2d();
     };

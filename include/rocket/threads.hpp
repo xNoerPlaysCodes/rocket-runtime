@@ -1,19 +1,19 @@
 #ifndef ROCKETGE__THREADS_HPP
 #define ROCKETGE__THREADS_HPP
 
-#include <GLFW/glfw3.h>
 #include <cstdint>
 #include <functional>
 #include <chrono>
 #include <string>
 
 namespace rocket {
+    struct native_window_t;
     /// @brief A OpenGL-compatible thread
     /// @note Some static functions are not compatible with OpenGL calls
     class thread_t {
     private:
         std::function<void()> fn;
-        GLFWwindow *ctx;
+        native_window_t *ctx;
     public:
         /// @brief Schedules these calls to be run on the main thread at frame-end
         /// @note Thread-Safe

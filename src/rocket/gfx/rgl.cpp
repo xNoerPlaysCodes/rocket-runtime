@@ -9,6 +9,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <mutex>
 #include <queue>
+#include <rocket/modularity/window_backend.hpp>
 #include <shader_provider.hpp>
 #include <string>
 #include "rocket/rgl.hpp"
@@ -18,6 +19,7 @@
 #include "util.hpp"
 #include "glfnldr.hpp"
 #include <cpuid.h>
+#include "internal_types.hpp"
 
 namespace glutil {
     std::string glenum_str(GLenum e) {
@@ -73,9 +75,9 @@ namespace rgl {
     rocket::vec2f_t viewport_offset = { 0, 0 };
     int max_tx_size = 0;
 
-    GLFWwindow *gl_main_ctx;
+    rocket::native_window_t *gl_main_ctx;
 
-    GLFWwindow *get_main_context() {
+    rocket::native_window_t *get_main_context() {
         return gl_main_ctx;
     }
 
@@ -281,7 +283,7 @@ namespace rgl {
     }
 
     static std::unordered_map<rgl::shader_use_t, rgl::shader_program_t> shader_cache;
-    std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t backend) {
+    std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t backend, rocket::window_backend_i *win) {
         ::rgl::viewport_size = viewport_size;
         std::unordered_map<rgl::shader_use_t, rgl::shader_program_t>().swap(shader_cache);
 
@@ -310,7 +312,6 @@ namespace rgl {
 
         glEnable(GL_BLEND);
 
-        auto *win = reinterpret_cast<rocket::window_t*>(glfwGetWindowUserPointer(glfwGetCurrentContext()));
         bool gl_multisample = false;
         int gl_samples = 0;
         if (win->flags.msaa_samples > 0) {
@@ -451,7 +452,7 @@ namespace rgl {
         std::string gpu_name = std::string(reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
         std::string gpu_vendor = std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
 
-        gl_main_ctx = glfwGetCurrentContext(); 
+        gl_main_ctx = win->handle;
 
         // Collect init logs
         std::vector<std::string> logs = {

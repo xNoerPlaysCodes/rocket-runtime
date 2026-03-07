@@ -5,8 +5,9 @@
 bool BKEND_glad_init() {
     return false;
 
-    int ver = gladLoadGL(glfwGetProcAddress);
+#warning Implement rgl_get_proc_address using rnative
+//    int ver = gladLoadGL(glfwGetProcAddress);
 
     rocket::log("glad initialized", "glfnldr", "BKEND_init", "debug");
-    return ver != 0;
+    return 0 != 0;
 }

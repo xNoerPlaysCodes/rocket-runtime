@@ -14,7 +14,6 @@
 #include <unordered_map>
 #include <vector>
 #include <memory>
-#include <GLFW/glfw3.h>
 
 #define rGE__TEXTURE_CHANNEL_COUNT_RGBA     4
 #define rGE__TEXTURE_CHANNEL_COUNT_RGB      3
@@ -39,7 +38,7 @@ namespace rocket {
     public:
         /// @brief OpenGL Texture ID
         /// @modify Do not modify
-        GLuint glid = 0;
+        unsigned int glid = 0;
         friend class asset_manager_t;
         friend class renderer_2d;
         friend class renderer_3d;
@@ -117,7 +116,7 @@ namespace rocket {
     class font_t {
     private:
         /// INNER
-        GLuint glid = 0;
+        unsigned int glid = 0;
         rocket::vec2i_t sttex_size = { 512, 512 };
         internal_cdata *cdata;
         std::vector<uint8_t> ttf_data;
