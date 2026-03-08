@@ -5,9 +5,6 @@
 #include <native.hpp>
 bool BKEND_glad_init() {
     int ver = gladLoadGL(rnative::load_proc_address);
-
-    printf("%d\n", ver);
-
-    rocket::log("glad initialized", "glfnldr", "BKEND_init", "debug");
+    rocket::log("glad initialized with exit code " + std::to_string(ver), "glfnldr", "BKEND_init", "debug");
     return ver != 0;
 }

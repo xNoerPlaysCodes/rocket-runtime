@@ -21,6 +21,7 @@ set(CMAKE_BUILD_TYPE Debug)
 option(BUILD_SHARED_LIBS "Build Shared" ON)
 option(BUILD_TESTS "Build Tests" ON)
 option(BUILD_EXAMPLES "Build Examples" ON)
+option(BUILD_EDITOR "Build Editor" OFF)
 option(__rge_WINDOWS__ OFF)
 
 option(BUILD_ASTRO "Build Astro [ui]" ON)
@@ -266,6 +267,24 @@ if (BUILD_EXAMPLES)
     endforeach()
 endif()
 
+if (BUILD_EDITOR)
+    find_package(Qt6 REQUIRED COMPONENTS Widgets OpenGL Svg)
+
+    add_executable(RGEditor 
+        src/editor/main.cpp
+        src/editor/code_generator.cpp
+    )
+    target_link_directories(RGEditor PRIVATE ${CMAKE_SOURCE_DIR}/bin)
+    target_include_directories(RGEditor PRIVATE src/include include)
+    target_link_libraries(RGEditor PRIVATE RocketRuntime Qt6::Widgets Qt6OpenGL Qt6OpenGLWidgets Qt6::Svg)
+
+    set_target_properties(RGEditor PROPERTIES
+        AUTOMOC ON
+        AUTOUIC ON
+        AUTORCC ON
+    )
+endif()
+
 message("Build Type: ${CMAKE_BUILD_TYPE}")
 message("Build Shared: ${BUILD_SHARED_LIBS}")
 message("Build Tests: ${BUILD_TESTS}")
@@ -283,3 +302,4 @@ if (BUILD_EXAMPLES)
     endforeach()
 endif()
 message("Build Astro: ${BUILD_ASTRO}")
+message("Build Editor: ${BUILD_EDITOR}")

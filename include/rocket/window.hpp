@@ -96,7 +96,7 @@ namespace rocket {
         std::shared_ptr<rocket::texture_t> get_icon() const override;
 
         /// @brief Sets the window icon
-        void set_icon(std::shared_ptr<rocket::texture_t> icon) const override;
+        void set_icon(std::shared_ptr<rocket::texture_t> icon) override;
     public:
         /// @brief Sets the current VSync state
         void set_vsync(bool vsync) override;

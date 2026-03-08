@@ -33,6 +33,9 @@ namespace rocket {
         /// @brief Texture Raw Pixel Data
         /// @modify Do not modify (advanced)
         std::vector<uint8_t> data;
+
+        /// @brief Texture Loaded from which Path
+        std::string path;
     public:
         /// @brief OpenGL Texture ID
         /// @modify Do not modify

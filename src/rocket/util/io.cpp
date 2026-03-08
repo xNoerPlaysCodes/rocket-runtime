@@ -3,7 +3,6 @@
 #include "rocket/types.hpp"
 #include "util.hpp"
 
-#include <GLFW/glfw3.h>
 #include <SDL2/SDL_gamecontroller.h>
 #include <SDL2/SDL_haptic.h>
 #include <SDL2/SDL_joystick.h>

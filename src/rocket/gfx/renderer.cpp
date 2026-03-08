@@ -19,7 +19,6 @@
 #include "rgl.hpp"
 #include "rocket/renderer.hpp"
 #include "util.hpp"
-#include <GLFW/glfw3.h>
 #include <glm/detail/qualifier.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <string>
@@ -725,7 +724,6 @@ namespace rocket {
         rocket::text_t mouse_pos_text = { "Cursor Pos: " + std::to_string(mpos.x) + ", " + std::to_string(mpos.y), text_size, rgb_color::white(), font };
 
         rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
-    
         static std::string glmajor, glminor;
         static int mj = -1, mn = -1;
         if (mj == -1 || mn == -1) {

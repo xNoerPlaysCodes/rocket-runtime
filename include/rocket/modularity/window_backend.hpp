@@ -7,8 +7,6 @@
 #include "rocket/asset.hpp"
 #include <rocket/glfnldr.hpp>
 #include <string>
-#define ROCKET_Cat(x, y) x##y
-#define ROCKET_Cat3(x, y, z) ROCKET_Cat(x, ROCKET_Cat(y, z))
 
 namespace rgl {
     std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t bkend);
@@ -58,7 +56,7 @@ namespace rocket {
         virtual void poll_events() = 0;
     public:
         virtual std::shared_ptr<rocket::texture_t> get_icon() const = 0;
-        virtual void set_icon(std::shared_ptr<rocket::texture_t> icon) const = 0;
+        virtual void set_icon(std::shared_ptr<rocket::texture_t> icon) = 0;
     public:
         virtual void close() = 0;
     };}

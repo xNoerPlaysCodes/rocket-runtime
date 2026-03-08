@@ -143,7 +143,7 @@ namespace rocket {
         }
 
         platform.name = windowing_platform;
-        platform.rge_name = std::string(ROCKETGE__PLATFORM);
+        platform.rge_name = std::string("GLFW::Desktop");
         return platform;
     }
 
@@ -493,7 +493,7 @@ namespace rocket {
         glfwSetWindowAttrib((GLFWwindow*)glfw_window->w, GLFW_FLOATING,  state.floating);
     }
 
-    void glfw_window_t::set_icon(std::shared_ptr<rocket::texture_t> texture) const {
+    void glfw_window_t::set_icon(std::shared_ptr<rocket::texture_t> texture) {
         if (texture->channels != rGE__TEXTURE_CHANNEL_COUNT_RGBA) {
             std::string channel_count = std::to_string(texture->channels);
             rocket::log("texture must be in RGBA format (try load in texture_color_format_t::rgba), channel count was: " + channel_count, "glfw_window_t", "set_icon", "error");

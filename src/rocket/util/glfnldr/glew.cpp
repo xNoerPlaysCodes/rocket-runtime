@@ -5,7 +5,7 @@ bool BKEND_init() {
     glewExperimental = true;
     GLenum status = glewInit();
 
-    rocket::log("glew initialized", "glfnldr", "BKEND_init", "debug");
+    rocket::log("glew initialized with exit code " + std::to_string(status), "glfnldr", "BKEND_init", "debug");
     return status == GLEW_OK;
 }
 #endif

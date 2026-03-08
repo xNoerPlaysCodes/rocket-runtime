@@ -21,6 +21,8 @@ parser.add_argument("-b", "--build", action="store_true", help="Build, all at on
         all in order")
 parser.add_argument("-g", "--glfnldr-backend", action="store", help="Which glfnldr-backend to \
         use when building", default="GLEW", choices=["GLEW", "LIBEPOXY"])
+parser.add_argument("--build-editor", action="store_true", help="Whether to build editor \
+        (Very finicky and requires Qt)")
 
 
 def get_deps() -> None:
@@ -202,16 +204,19 @@ def init_cmake(args):
     #                 shutil.move(s, d)
 
     backend = args.glfnldr_backend
-    args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build", "-DCMAKE_C_COMPILER_LAUNCHER=ccache", "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache", "-DCMAKE_LINKER=" + linker]
+    cmake_args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build", "-DCMAKE_C_COMPILER_LAUNCHER=ccache", "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache", "-DCMAKE_LINKER=" + linker]
+
+    if args.build_editor:
+        cmake_args.append("-DBUILD_EDITOR=ON")
  
     if (sys.platform == "win32" or os.path.exists("WinDeps")):
-        args.append("-DBUILD_SHARED_LIBS=OFF")
-        args.append("-D__rge_WINDOWS__=ON")
-        args.append("--toolchain")
-        args.append("./toolchain.cmake")
+        cmake_args.append("-DBUILD_SHARED_LIBS=OFF")
+        cmake_args.append("-D__rge_WINDOWS__=ON")
+        cmake_args.append("--toolchain")
+        cmake_args.append("./toolchain.cmake")
 
-    print("command: " + "cmake" + " " + " ".join(args))
-    subprocess.run(["cmake"] + args)
+    print("command: " + "cmake" + " " + " ".join(cmake_args))
+    subprocess.run(["cmake"] + cmake_args)
     return 0
 
 

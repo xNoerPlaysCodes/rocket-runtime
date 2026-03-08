@@ -231,6 +231,7 @@ namespace rocket {
             texture->channels = static_cast<int>(format);
         }
         texture->data.assign(img_data, img_data + texture->size.x * texture->size.y * texture->channels); 
+        texture->path = path;
 
         textures.insert({texture, std::chrono::high_resolution_clock::now()});
 
@@ -259,6 +260,7 @@ namespace rocket {
             texture->channels = static_cast<int>(format);
         }
         texture->data.assign(img_data, img_data + texture->size.x * texture->size.y * texture->channels);
+        texture->path = "[memory]";
         textures.insert({texture, std::chrono::high_resolution_clock::now()});
         return id;
     }
