@@ -220,22 +220,6 @@ struct command_history_t {
 
 command_history_t history;
 
-struct data_1_t {};
-struct data_2_t {};
-
-struct game_object_t {
-    int id = -1;
-    std::string name = "Newly Created Game Object";
-    rocket::vec2f_t position;
-    rocket::vec2f_t size;
-    rocket::rgba_color color;
-    float rotation   = 0;
-    int draw_order   = 0;
-    std::shared_ptr<rocket::texture_t> texture = nullptr;
-    data_1_t *data_1 = nullptr;
-    data_2_t *data_2 = nullptr;
-};
-
 struct object_snapshot_cmd_t : command_t {
     std::vector<game_object_t> *game_objects;
     game_object_t before, after;
@@ -558,7 +542,7 @@ int main(int argc, char *argv[]) {
             game_object_t &o = game_objects[obj_idx];
             o.texture = am->get_texture(am->load_texture(path.toStdString()));
             texture_field->setText(path);
-            viewport->replace_drawcall("draw_obj_with_id=" + std::to_string(o.id), o.draw_order,
+            viewport->replace_drawcall("draw_obj_with_id" + std::to_string(o.id), o.draw_order,
                 [&game_objects, obj_idx](rocket::renderer_2d *ren, rocket::window_backend_i *win) {
                     const game_object_t &obj = game_objects[obj_idx];
                     if (obj.texture) ren->draw_texture(obj.texture, {obj.position, obj.size}, obj.rotation);
@@ -574,10 +558,11 @@ int main(int argc, char *argv[]) {
             if (!picked.isValid()) return;
             o.color = { (uint8_t)picked.red(), (uint8_t)picked.green(), (uint8_t)picked.blue(), (uint8_t)picked.alpha() };
             color_btn->setStyleSheet(make_color_style(o.color));
-            viewport->replace_drawcall("draw_obj_with_id=" + std::to_string(o.id), o.draw_order,
+            viewport->register_drawcall("draw_obj_with_id" + std::to_string(o.id), o.draw_order,
                 [&game_objects, obj_idx](rocket::renderer_2d *ren, rocket::window_backend_i *win) {
                     const game_object_t &obj = game_objects[obj_idx];
-                    if (!obj.texture) ren->draw_rectangle(obj.position, obj.size, obj.color, obj.rotation);
+                    if (obj.texture) ren->draw_texture(obj.texture, {obj.position, obj.size}, obj.rotation);
+                    else             ren->draw_rectangle(obj.position, obj.size, obj.color, obj.rotation);
                 });
         });
 
@@ -625,7 +610,7 @@ int main(int argc, char *argv[]) {
                 btn_undo->setEnabled(history.can_undo());
                 btn_redo->setEnabled(history.can_redo());
 
-                viewport->replace_drawcall("draw_obj_with_id=" + std::to_string(o.id), o.draw_order,
+                viewport->replace_drawcall("draw_obj_with_id" + std::to_string(o.id), o.draw_order,
                     [&game_objects, obj_idx](rocket::renderer_2d *ren, rocket::window_backend_i *win) {
                         const game_object_t &obj = game_objects[obj_idx];
                         if (obj.texture) ren->draw_texture(obj.texture, {obj.position, obj.size}, obj.rotation);
@@ -667,7 +652,7 @@ int main(int argc, char *argv[]) {
             cmd->saved = saved;
 
             cmd->on_remove = [=, &game_objects](int id) {
-                viewport->remove_drawcall("draw_obj_with_id=" + std::to_string(id));
+                viewport->remove_drawcall("draw_obj_with_id" + std::to_string(id));
                 auto it = std::find_if(game_objects.begin(), game_objects.end(),
                     [id](const game_object_t &o) { return o.id == id; });
                 if (it != game_objects.end()) game_objects.erase(it);
@@ -676,7 +661,7 @@ int main(int argc, char *argv[]) {
 
             cmd->on_restore = [=, &game_objects](const game_object_t &obj) {
                 game_objects.push_back(obj);
-                viewport->register_drawcall("draw_obj_with_id=" + std::to_string(obj.id), obj.draw_order,
+                viewport->register_drawcall("draw_obj_with_id" + std::to_string(obj.id), obj.draw_order,
                     [=, &game_objects](rocket::renderer_2d *ren, rocket::window_backend_i *win) {
                         auto it = std::find_if(game_objects.begin(), game_objects.end(),
                             [&obj](const game_object_t &o) { return o.id == obj.id; });
@@ -694,9 +679,11 @@ int main(int argc, char *argv[]) {
 
         objects_layout->insertWidget(0, section);
 
-        viewport->register_drawcall("draw_obj_with_id=" + std::to_string(obj.id), obj.draw_order,
-            [obj](rocket::renderer_2d *ren, rocket::window_backend_i *win) {
-                if (!obj.texture) ren->draw_rectangle(obj.position, obj.size, obj.color, obj.rotation);
+        viewport->register_drawcall("draw_obj_with_id" + std::to_string(obj.id), obj.draw_order,
+            [&game_objects, obj_idx](rocket::renderer_2d *ren, rocket::window_backend_i *win) {
+                const game_object_t &obj = game_objects[obj_idx];
+                if (obj.texture) ren->draw_texture(obj.texture, {obj.position, obj.size}, obj.rotation);
+                else             ren->draw_rectangle(obj.position, obj.size, obj.color, obj.rotation);
             });
 
         return game_objects.size() - 1;
@@ -723,7 +710,7 @@ int main(int argc, char *argv[]) {
         }
 
         for (auto &obj : game_objects)
-            viewport->remove_drawcall("draw_obj_with_id=" + std::to_string(obj.id));
+            viewport->remove_drawcall("draw_obj_with_id" + std::to_string(obj.id));
         game_objects.clear();
         history.undo_stack.clear();
         history.redo_stack.clear();
@@ -862,7 +849,7 @@ int main(int argc, char *argv[]) {
     // -------------------------
     QObject::connect(btn_new, &QToolButton::clicked, [&]() {
         for (auto &obj : game_objects)
-            viewport->remove_drawcall("draw_obj_with_id=" + std::to_string(obj.id));
+            viewport->remove_drawcall("draw_obj_with_id" + std::to_string(obj.id));
         game_objects.clear();
         global_id = 0;
         current_scene_path = "";
@@ -976,7 +963,7 @@ int main(int argc, char *argv[]) {
     });
 
     QObject::connect(btn_codegen, &QToolButton::clicked, [&]() {
-        rgeditor::generated_code_t *code = rgeditor::gen();
+        rgeditor::generated_code_t *code = rgeditor::gen(game_objects);
 
         QDialog *dialog = new QDialog(&window);
         dialog->setWindowTitle("Generated Code");
