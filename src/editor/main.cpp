@@ -1004,6 +1004,8 @@ int main(int argc, char *argv[]) {
         layout->addWidget(tabs, 1);
         layout->addWidget(close_btn);
 
+        delete code;
+
         dialog->exec();
     });
 

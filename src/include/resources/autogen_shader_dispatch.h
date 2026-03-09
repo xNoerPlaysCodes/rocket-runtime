@@ -1,0 +1,6 @@
+SHADER_DISPATCH_ENTRY(atlas_textured_rectangle)
+SHADER_DISPATCH_ENTRY(circle_lines)
+SHADER_DISPATCH_ENTRY(fxaa)
+SHADER_DISPATCH_ENTRY(rectangle)
+SHADER_DISPATCH_ENTRY(text)
+SHADER_DISPATCH_ENTRY(textured_rectangle)

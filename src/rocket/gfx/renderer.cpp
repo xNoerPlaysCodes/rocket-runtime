@@ -865,6 +865,7 @@ namespace rocket {
         }
 
         draw_debug_overlay(util::get_clistate().debugoverlay, this);
+        auto frame_end_time = clock::now();
         this->window->swap_buffers();
         rgl::frame_metrics_t fmetrics = rgl::get_frame_metrics();
         int drawcalls = fmetrics.drawcalls;
@@ -946,7 +947,6 @@ namespace rocket {
 
         rgl::run_all_scheduled_gl();
 
-        auto frame_end_time = clock::now();
         double frame_duration = std::chrono::duration<double>(frame_end_time - frame_start_time).count();
 
         if (fps == 0) {
@@ -955,17 +955,35 @@ namespace rocket {
         }
 
         double frametime_limit = 1.0 / (fps + 0);
+
         if (frame_duration < frametime_limit) {
             double sleep_time = frametime_limit - frame_duration;
-
-            if (sleep_time > 0.002 && !cli_args.software_frame_timer)
-                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - 0.002));
+#ifdef ROCKETGE__Platform_Windows
+            constexpr double spin_wait_time = 0.005;
+#else
+            constexpr double spin_wait_time = 0.002;
+#endif
+#ifdef ROCKETGE__Platform_Windows
+                while
+#else
+                if
+#endif
+                (sleep_time > spin_wait_time && !cli_args.software_frame_timer) {
+#ifdef ROCKETGE__Platform_Windows
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time / 10));
+                sleep_time /= 10;
+#else
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - spin_wait_time));
+#endif
+            }
 
             // busy wait for the rest
             while (std::chrono::duration<double>(clock::now() - frame_start_time).count() < frametime_limit) {
                 _mm_pause();
             }
-        } /*else*/ {
+        }
+
+        {
             double diff = frame_duration - frametime_limit;
 
             auto double_to_str = [](double d, int decimal_places = 6) -> std::string {

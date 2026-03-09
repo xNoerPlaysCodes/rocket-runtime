@@ -1,5 +1,5 @@
-#ifndef ROCKETGE__INT_MODULARY_WINDOW_BACKEND_HPP
-#define ROCKETGE__INT_MODULARY_WINDOW_BACKEND_HPP
+#ifndef ROCKETGE__MODULARY_WINDOW_BACKEND_HPP
+#define ROCKETGE__MODULARY_WINDOW_BACKEND_HPP
 
 #include <rocket/types.hpp>
 #include <functional>
@@ -59,6 +59,7 @@ namespace rocket {
         virtual void set_icon(std::shared_ptr<rocket::texture_t> icon) = 0;
     public:
         virtual void close() = 0;
-    };}
+    };
+}
 
-#endif//ROCKETGE__INT_MODULARY_WINDOW_BACKEND_HPP
+#endif//ROCKETGE__MODULARY_WINDOW_BACKEND_HPP

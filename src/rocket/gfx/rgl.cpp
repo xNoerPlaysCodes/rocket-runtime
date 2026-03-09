@@ -854,11 +854,8 @@ namespace rgl {
             glBlendFuncSeparate(state.blend_mode.src_rgb, state.blend_mode.dst_rgb, state.blend_mode.src_alpha, state.blend_mode.dst_alpha);
         }
     }
-
     void compile_all_default_shaders() {
-        init_shader(shader_use_t::rect);
-        init_shader(shader_use_t::text);
-        init_shader(shader_use_t::textured_rect);
+        rocket::shader_provider_compile_all();
     }
 
     draw_metrics_t metrics;
