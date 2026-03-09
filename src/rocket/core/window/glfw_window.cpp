@@ -264,8 +264,10 @@ namespace rocket {
     glfw_window_t::glfw_window_t(const rocket::vec2i_t& size,
             const std::string& title,
             windowflags_t flags) {
+        this->impl = new glfw_window_impl_t;
         this->handle = new native_window_t;
         this->handle->backend = window_backend_t::glfw;
+        native_window_t::set_instance(this->handle);
         this->glfw_window = this->handle;
         this->size = size;
         auto cli_args = util::get_clistate();
@@ -683,6 +685,10 @@ namespace rocket {
         std::string cxf = "close"; // does anyone know what cxf is?
         if (destructor_called) {
             cxf = "destructor";
+        }
+        if (this->impl != nullptr) {
+            delete this->impl;
+            this->impl = nullptr;
         }
         rocket::log("Window closed", "glfw_window_t", cxf, "info");
     }

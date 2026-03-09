@@ -39,6 +39,8 @@ namespace rocket {
         void register_cpl_init_callback(std::function<void(window_backend_t bk)> fn);
     }
 
+    struct glfw_window_impl_t;
+
     class glfw_window_t : public window_backend_i {
     private:
         /// @brief GLFW Implementation
@@ -47,6 +49,8 @@ namespace rocket {
         io::keystate_t keys[348 + 1] = {};
         io::keystate_t buttons[7 + 1] = {};
         bool shown = false;
+
+        glfw_window_impl_t *impl = nullptr;
     protected:
         void swap_buffers() const override;
     public:

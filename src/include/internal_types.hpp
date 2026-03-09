@@ -3,15 +3,43 @@
 
 #include "lib/stb/stb_truetype.h"
 #include <rocket/window.hpp>
+#include <util.hpp>
+
+#define MkFuncPtr0(ret_type, name) ret_type (*name)()
+#define MkFuncPtr(ret_type, name, ...) ret_type (*name)(__VA_ARGS__)
 
 namespace rocket {
     struct internal_cdata {
         stbtt_bakedchar a[96];
     };
 
+    /// @brief Handle to a Native Window
     struct native_window_t {
+        /// @brief Window Ptr
         void *w;
+        /// @brief Window Backend Type
         window_backend_t backend;
+
+        static native_window_t *bound;
+
+        static void set_instance(native_window_t *window);
+        static native_window_t *get_instance();
+    };
+
+    class renderer_2d;
+    class glfw_window_t;
+    class asset_manager_t;
+
+    struct renderer_2d_impl_t {
+        renderer_2d *obj;
+    };
+
+    struct glfw_window_impl_t {
+        glfw_window_t *obj;
+    };
+
+    struct asset_manager_impl_t {
+        asset_manager_t *obj;
     };
 }
 

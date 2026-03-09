@@ -113,6 +113,7 @@ namespace rocket {
     class renderer_2d;
 
     struct internal_cdata;
+    struct asset_manager_impl_t;
 
     class font_t {
     private:
@@ -215,6 +216,7 @@ namespace rocket {
         std::shared_ptr<audio_context_t> audio_context;
 
         std::chrono::seconds cleanup_interval;
+        asset_manager_impl_t *impl = nullptr;
     private:
         friend class std::thread;
         void cleanup();

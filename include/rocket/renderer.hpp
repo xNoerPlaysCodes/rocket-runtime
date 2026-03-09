@@ -45,6 +45,7 @@ namespace rocket {
     };
 
     struct camera_2d;
+    struct renderer_2d_impl_t;
 
     class renderer_2d {
     private:
@@ -75,7 +76,9 @@ namespace rocket {
 
         bool splash_shown = false;
 
-        graphics_settings_t graphics_settings;
+        graphics_settings_t graphics_settings; 
+
+        renderer_2d_impl_t *impl = nullptr;
 
         friend class renderer_3d;
         friend class font_t;
@@ -252,7 +255,7 @@ namespace rocket {
         ROCKETGE__NOT_IMPLEMENTED camera_2d *get_camera();
     public:
         /// @brief Get Current FPS
-        int get_current_fps();
+        float get_current_fps();
     public:
         /// @brief Initialize the renderer
         /// @param window Window

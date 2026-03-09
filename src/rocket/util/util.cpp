@@ -261,6 +261,7 @@ namespace util {
     }
 
     void io_update_end_frame() {
+        if (glfwGetCurrentContext()) goto cleanup;
         for (auto &k : kstates) {
             k.second.previous = k.second.current;
             k.second.current = glfwGetKey(glfwGetCurrentContext(), static_cast<int>(k.first)) == GLFW_PRESS;
@@ -270,6 +271,7 @@ namespace util {
             m.second.current = glfwGetMouseButton(glfwGetCurrentContext(), static_cast<int>(m.first)) == GLFW_PRESS;
         }
 
+cleanup:
         simulated_kevents.clear();
         simulated_mevents.clear();
         simulated_mmevents.clear();

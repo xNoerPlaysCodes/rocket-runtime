@@ -13,7 +13,7 @@ namespace rocket {
     class thread_t {
     private:
         std::function<void()> fn;
-        native_window_t *ctx;
+        native_window_t *ctx = nullptr;
     public:
         /// @brief Schedules these calls to be run on the main thread at frame-end
         /// @note Thread-Safe

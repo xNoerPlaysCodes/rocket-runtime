@@ -12,6 +12,7 @@
 #include <rocket/threads.hpp>
 #include "intl_macros.hpp"
 #include "internal_types.hpp"
+#include <GLFW/glfw3.h>
 
 namespace rocket {
     uint64_t thread_id_gen() {
@@ -75,22 +76,23 @@ namespace rocket {
     }
 
     void thread_t::start() {
-        rocket::log("[fixme] does not work", "thread_t", "start", "fixme");
-        return;
-        /*
         uint64_t thread_id = thread_id_gen();
         auto main_ctx = rgl::get_main_context();
-        
-        rocket::log("[fixme] does not work", "thread_t", "start", "fixme");
 
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        if (this->ctx != nullptr) {
+            if (this->ctx->w != nullptr && this->ctx->backend == window_backend_t::glfw) {
+                glfwDestroyWindow((GLFWwindow*) this->ctx->w);
+            }
+        }
+        this->ctx = new native_window_t;
         if (this->ctx->backend != window_backend_t::glfw && main_ctx->backend != window_backend_t::glfw) {
             rocket::log("only GLFW backend can have GL threads", "thread_t", "start", "fixme");
             return;
         }
-        this->ctx->w = (GLFWwindow*) glfwCreateWindow(1, 1, ("rgthread_" + std::to_string(thread_id)).c_str(), nullptr, main_ctx->w);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        this->ctx->w = (GLFWwindow*) glfwCreateWindow(1, 1, ("rgthread_" + std::to_string(thread_id)).c_str(), nullptr, (GLFWwindow*) main_ctx->w);
         std::thread t([ctx=this->ctx, fn=this->fn]() {
-            glfwMakeContextCurrent(ctx->w);
+            glfwMakeContextCurrent((GLFWwindow*) ctx->w);
             rgl::init_gl_wtd();
 
             fn();
@@ -101,7 +103,6 @@ namespace rocket {
         });
 
         t.detach();
-        */
     }
 
     RGE_STATIC_FUNC_IMPL uint64_t thread_t::get_thread_id() {

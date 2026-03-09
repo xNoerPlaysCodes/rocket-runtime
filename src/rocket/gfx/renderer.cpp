@@ -51,6 +51,7 @@ namespace rocket {
     util::global_state_cliargs_t ovr_clistate;
 
     renderer_2d::renderer_2d(window_backend_i *window, int fps, renderer_flags_t flags) {
+        this->impl = new renderer_2d_impl_t;
         this->window = window;
         this->fps = fps;
 
@@ -580,10 +581,9 @@ namespace rocket {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
-        std::string fps_text = "FPS: " + std::to_string(get_current_fps());
+        std::string fps_text = "FPS: " + std::to_string(static_cast<int>(std::round(get_current_fps())));
 
         rocket::text_t fps = rocket::text_t(fps_text, 24, rocket::rgb_color::green());
-        fps.text = fps_text;
         this->draw_text(fps, pos);
     }
 }
@@ -1036,8 +1036,8 @@ namespace rocket {
         return wireframe;
     }
 
-    int renderer_2d::get_current_fps() {
-        return static_cast<int>(std::round(rgl::get_draw_metrics().avg_fps));
+    float renderer_2d::get_current_fps() {
+        return rgl::get_draw_metrics().avg_fps;
         // return static_cast<int>(std::round(1.0 / get_delta_time()));
     }
 
@@ -1108,6 +1108,10 @@ namespace rocket {
         rgl::cleanup_all();
         rgl::reset();
         shader_provider_reset();
+        if (this->impl != nullptr) {
+            delete this->impl;
+            this->impl = nullptr;
+        }
         util::glinit(false);
     }
 

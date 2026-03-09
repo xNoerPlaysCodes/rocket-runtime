@@ -80,6 +80,9 @@ add_library(${PROJECT_NAME}
     src/rocket/util/memory.cpp
     src/rocket/util/util.cpp
 
+    # Internal
+    src/rocket/internal/internal_types.cpp
+
     # Core
     src/rocket/core/window/glfw_window.cpp
     src/rocket/core/window/null.cpp
