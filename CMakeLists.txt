@@ -227,6 +227,7 @@ if (BUILD_TESTS)
         texture_atlas_test
         argument_test
         state_reset_test
+        test_generator_test
     )
 
     if (BUILD_ASTRO)
@@ -246,6 +247,7 @@ if (BUILD_TESTS)
 
             target_link_directories(${test_name} PRIVATE bin)
             target_include_directories(${test_name} PRIVATE include)
+            target_include_directories(${test_name} PRIVATE src/include)
 
             target_link_libraries(${test_name} PRIVATE RocketRuntime)
 

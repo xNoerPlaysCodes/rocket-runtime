@@ -120,6 +120,54 @@ namespace rocket {
         ~glfw_window_t();
     };
 
+    class null_window_t : public window_backend_i {
+    private:
+    protected:
+        void swap_buffers() const override;
+    public:
+        void set_size(const rocket::vec2i_t& size) override;
+        void set_title(const std::string& title) override;
+
+        void register_on_close(std::function<void()>) override;
+
+        void set_cursor_mode(cursor_mode_t) override;
+
+        void set_cursor_position(const rocket::vec2d_t& pos) const override;
+
+        void poll_events() override;
+    public:
+        std::string get_title() const override;
+        rocket::vec2i_t get_size() const override;
+
+        cursor_mode_t get_cursor_mode() const override;
+
+        rocket::vec2d_t get_cursor_position() const override;
+
+        bool is_running() const override;
+
+        double get_time() const override;
+    public:
+        window_state_t get_window_state() const override;
+
+        void set_window_state(window_state_t state) const override;
+    public:
+        std::shared_ptr<rocket::texture_t> get_icon() const override;
+
+        void set_icon(std::shared_ptr<rocket::texture_t> icon) override;
+    public:
+        void set_vsync(bool vsync) override;
+    public:
+        platform_t get_platform() const override;
+    public:
+        null_window_t(const rocket::vec2i_t& size = { 800, 600 }, 
+                const std::string& title = "rGE - Example Window", 
+                windowflags_t flags = windowflags_t());
+    public:
+    public:
+        void close() override;
+        ~null_window_t();
+    };
+
     /// @brief Backwards Compatibility
     /// @note Alias for glfw_window_t
     using window_t = glfw_window_t;

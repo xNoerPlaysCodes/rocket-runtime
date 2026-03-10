@@ -261,7 +261,7 @@ namespace util {
     }
 
     void io_update_end_frame() {
-        if (glfwGetCurrentContext()) goto cleanup;
+        if (glfwGetCurrentContext() == nullptr) goto cleanup;
         for (auto &k : kstates) {
             k.second.previous = k.second.current;
             k.second.current = glfwGetKey(glfwGetCurrentContext(), static_cast<int>(k.first)) == GLFW_PRESS;
