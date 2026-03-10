@@ -1,8 +1,6 @@
-#include "rocket/audio.hpp"
 #include <GL/glew.h>
 #include <emmintrin.h>
 #include <shader_provider.hpp>
-#define RGL_EXPOSE_NATIVE_LIB
 #include "rocket/rgl.hpp"
 #include "rgl.hpp"
 #include "rocket/asset.hpp"
@@ -21,12 +19,17 @@
 #include "rgl.hpp"
 #include "rocket/renderer.hpp"
 #include "util.hpp"
-#include <GLFW/glfw3.h>
 #include <glm/detail/qualifier.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <string>
 #include <thread>
 #include <vector>
+#include <glm/detail/qualifier.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/quaternion_geometric.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/geometric.hpp>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -47,7 +50,8 @@ namespace rocket {
     
     util::global_state_cliargs_t ovr_clistate;
 
-    renderer_2d::renderer_2d(window_t *window, int fps, renderer_flags_t flags) {
+    renderer_2d::renderer_2d(window_backend_i *window, int fps, renderer_flags_t flags) {
+        this->impl = new renderer_2d_impl_t;
         this->window = window;
         this->fps = fps;
 
@@ -65,19 +69,17 @@ namespace rocket {
             util::set_global_renderer_2d(this);
         }
 
-        glfwMakeContextCurrent(window->glfw_window);
         this->vsync = window->flags.vsync;
 
         if (!util::glinitialized()) {
             util::timer_t gl_init_timer;
             util::glinit(true);
 
-            if (!window || !window->glfw_window) {
+            if (window == nullptr) {
                 rocket::log("Invalid window ptr", "renderer_2d", "constructor", "error");
                 return;
             }
-            glfwMakeContextCurrent(window->glfw_window);
-            std::vector<std::string> log_messages = rgl::init_gl({ static_cast<float>(window->size.x), static_cast<float>(window->size.y) });
+            std::vector<std::string> log_messages = rgl::init_gl({ static_cast<float>(window->size.x), static_cast<float>(window->size.y) }, ROCKETGE__GLFNLDR_BACKEND_ENUM, this->window);
 
             for (auto &l : log_messages) {
                 if (l.starts_with('!')) 
@@ -245,15 +247,9 @@ namespace rocket {
         if (flags.show_splash && (!this->splash_shown)) {
             this->show_splash();
         }
-        if (this->frame_counter == 0) {
-            if (!window->flags.hidden) {
-                glfwShowWindow(window->glfw_window);
-            }
-        }
         this->frame_started = true;
-        start_time = std::chrono::high_resolution_clock::now();
-        frame_start_time = glfwGetTime();
-        delta_time = frame_start_time - last_time;
+        frame_start_time = clock::now();
+        delta_time = std::chrono::duration<double>(frame_start_time - last_time).count();
         last_time = frame_start_time;
     }
 
@@ -332,7 +328,6 @@ namespace rocket {
     }
 
     void renderer_2d::begin_batch() {
-        this->batched = true;
         rocket::log("Batching is not implemented yet", "renderer_2d", "begin_batch", "info");
     }
 
@@ -463,15 +458,6 @@ namespace rocket {
 
             return;
         }
-        if (this->batched) {
-            instanced_quad_t i;
-            i.pos = rect.pos;
-            i.size = rect.size;
-            i.color = color;
-            i.gltxid = rGL_TXID_INVALID;
-            this->batch.push_back(i);
-            return;
-        }
         
         rgl::draw_shader(pg, rgl::shader_use_t::rect);
     }
@@ -566,7 +552,7 @@ namespace rocket {
 
     void renderer_2d::set_vsync(bool x) {
         this->vsync = x;
-        glfwSwapInterval(x ? 1 : 0);
+        this->window->set_vsync(x);
     }
 
     void renderer_2d::set_fps(int fps) {
@@ -595,10 +581,9 @@ namespace rocket {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
-        std::string fps_text = "FPS: " + std::to_string(get_current_fps());
+        std::string fps_text = "FPS: " + std::to_string(static_cast<int>(std::round(get_current_fps())));
 
         rocket::text_t fps = rocket::text_t(fps_text, 24, rocket::rgb_color::green());
-        fps.text = fps_text;
         this->draw_text(fps, pos);
     }
 }
@@ -697,7 +682,7 @@ namespace rocket {
         }
     }
 
-    void draw_debug_overlay(bool draw, renderer_2d *ren, double start) {
+    void draw_debug_overlay(bool draw, renderer_2d *ren) {
         if (!draw) { return; }
 
         const float margin = 8.f;
@@ -739,7 +724,6 @@ namespace rocket {
         rocket::text_t mouse_pos_text = { "Cursor Pos: " + std::to_string(mpos.x) + ", " + std::to_string(mpos.y), text_size, rgb_color::white(), font };
 
         rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
-    
         static std::string glmajor, glminor;
         static int mj = -1, mn = -1;
         if (mj == -1 || mn == -1) {
@@ -880,9 +864,9 @@ namespace rocket {
             draw_fullscreen_quad();
         }
 
-        draw_debug_overlay(util::get_clistate().debugoverlay, this, frame_start_time);
-
-        glfwSwapBuffers(this->window->glfw_window);
+        draw_debug_overlay(util::get_clistate().debugoverlay, this);
+        auto frame_end_time = clock::now();
+        this->window->swap_buffers();
         rgl::frame_metrics_t fmetrics = rgl::get_frame_metrics();
         int drawcalls = fmetrics.drawcalls;
         if (drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
@@ -952,19 +936,18 @@ namespace rocket {
         frame_counter++;
 
         if (this->fps == rocket::fps_uncapped) {
-            this->delta_time = glfwGetTime() - frame_start_time;
+            delta_time = std::chrono::duration<double>(frame_start_time - last_time).count();
             return;
         }
 
         if (this->vsync) {
-            this->delta_time = glfwGetTime() - frame_start_time;
+            delta_time = std::chrono::duration<double>(frame_start_time - last_time).count();
             return; // We're done here
         }
 
         rgl::run_all_scheduled_gl();
 
-        double frame_end_time = glfwGetTime();
-        double frame_duration = frame_end_time - frame_start_time;
+        double frame_duration = std::chrono::duration<double>(frame_end_time - frame_start_time).count();
 
         if (fps == 0) {
             rocket::log("Target FPS 0 is too low", "renderer_2d", "end_frame", "fatal");
@@ -972,17 +955,35 @@ namespace rocket {
         }
 
         double frametime_limit = 1.0 / (fps + 0);
+
         if (frame_duration < frametime_limit) {
             double sleep_time = frametime_limit - frame_duration;
-
-            if (sleep_time > 0.002 && !cli_args.software_frame_timer)
-                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - 0.002));
+#ifdef ROCKETGE__Platform_Windows
+            constexpr double spin_wait_time = 0.005;
+#else
+            constexpr double spin_wait_time = 0.002;
+#endif
+#ifdef ROCKETGE__Platform_Windows
+                while
+#else
+                if
+#endif
+                (sleep_time > spin_wait_time && !cli_args.software_frame_timer) {
+#ifdef ROCKETGE__Platform_Windows
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time / 10));
+                sleep_time /= 10;
+#else
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - spin_wait_time));
+#endif
+            }
 
             // busy wait for the rest
-            while ((glfwGetTime() - frame_start_time) < frametime_limit) {
+            while (std::chrono::duration<double>(clock::now() - frame_start_time).count() < frametime_limit) {
                 _mm_pause();
             }
-        } /*else*/ {
+        }
+
+        {
             double diff = frame_duration - frametime_limit;
 
             auto double_to_str = [](double d, int decimal_places = 6) -> std::string {
@@ -997,9 +998,9 @@ namespace rocket {
             }
         }
 
-        rgl::update_draw_metrics_data(frame_duration + (glfwGetTime() - frame_end_time), 1 / this->delta_time);
+        rgl::update_draw_metrics_data(frame_duration + std::chrono::duration<double>(clock::now() - frame_end_time).count(), 1 / this->delta_time);
 
-        this->delta_time = glfwGetTime() - frame_start_time;
+        delta_time = std::chrono::duration<double>(frame_start_time - last_time).count();
     }
 
     struct batched_quad_t {
@@ -1010,158 +1011,9 @@ namespace rocket {
     };
 
     void init_batch_renderer(rgl::vao_t quadVAO, rgl::vbo_t quadVBO, rgl::vbo_t instanceVBO) {
-        // Base quad (two triangles, 0..1 range)
-        float quadVertices[] = {
-            0.0f, 0.0f,
-            1.0f, 0.0f,
-            1.0f, 1.0f,
-
-            0.0f, 0.0f,
-            1.0f, 1.0f,
-            0.0f, 1.0f
-        };
-
-        glGenVertexArrays(1, &quadVAO);
-        glGenBuffers(1, &quadVBO);
-        glGenBuffers(1, &instanceVBO);
-
-        glBindVertexArray(quadVAO);
-
-        // base quad VBO
-        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-
-        // instance VBO (empty init)
-        glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-        glBufferData(GL_ARRAY_BUFFER, 2048 /* max batch size */ * sizeof(batched_quad_t), nullptr, GL_DYNAMIC_DRAW);
-
-        // iPos
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, pos));
-        glVertexAttribDivisor(1, 1);
-
-        // iSize
-        glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, size));
-        glVertexAttribDivisor(2, 1);
-
-        // iColor
-        glEnableVertexAttribArray(3);
-        glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, color));
-        glVertexAttribDivisor(3, 1);
-
-        glBindVertexArray(0);
     }
 
     void renderer_2d::end_batch(size_t max_batch_size) {
-        if (batch.size() > max_batch_size || batch.size() == 0) {
-            this->batch.clear();
-            return;
-        }
-
-        enum class batch_type {
-            quad = 0,
-            txquad = 1
-        };
-
-        std::vector<batched_quad_t> bquads;
-
-        [[maybe_unused]] batch_type type = batch_type::txquad;
-        if (batch.at(0).gltxid == rGL_TXID_INVALID) {
-            type = batch_type::quad;
-        }
-
-        static rgl::vao_t quadVAO;
-        static rgl::vbo_t quadVBO;
-        static rgl::vbo_t instanceVBO;
-
-        if (quadVAO == 0) {
-            init_batch_renderer(quadVAO, quadVBO, instanceVBO);
-        }
-
-        for (auto &i : batch) {
-            batched_quad_t bq;
-            vec2f_t nmpos = {};
-            vec2f_t nmsize = {};
-
-            nmpos.x = i.pos.x / window->size.x;
-            nmpos.y = i.pos.y / window->size.y;
-            nmsize.x = i.size.x / window->size.x;
-            nmsize.y = i.size.y / window->size.y;
-
-            bq.pos = nmpos;
-            bq.size = nmsize;
-
-            bq.color = i.color.normalize();
-            bq.gltxid = i.gltxid;
-            bquads.push_back(bq);
-        }
-
-        static rgl::shader_program_t pg = 0;
-        if (pg == 0) {
-            const char *vsrc = R"(
-                #version 330 core
-                in vec2 aPos;        // quad vertex
-                in vec2 iPos;        // instance position
-                in vec2 iSize;       // instance size
-                in vec4 iColor;      // instance color
-
-                out vec4 vColor;
-
-                void main() {
-                    vec2 pos = aPos * iSize + iPos;
-                    gl_Position = vec4(pos * 2.0 - 1.0, 0.0, 1.0);
-                    vColor = iColor;
-                }
-            )";
-
-            const char *fsrc = R"(
-                #version 330 core
-                in vec4 vColor;
-                out vec4 FragColor;
-                void main() {
-                    FragColor = vColor;
-                }
-            )";
-            pg = rgl::cache_compile_shader(vsrc, fsrc);
-        }
-
-
-        // glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-        // glBufferSubData(GL_ARRAY_BUFFER, 0, batch.size() * sizeof(batched_quad_t), bquads.data());
-
-        glUseProgram(pg);
-        glBindVertexArray(quadVAO);
-
-        // data
-        [[maybe_unused]] rgl::shader_location_t aPos = rgl::get_shader_location(pg, "aPos");
-        rgl::shader_location_t iPos = rgl::get_shader_location(pg, "iPos");
-        rgl::shader_location_t iSize = rgl::get_shader_location(pg, "iSize");
-        rgl::shader_location_t iColor = rgl::get_shader_location(pg, "iColor");
-
-        glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-        glBufferData(GL_ARRAY_BUFFER, bquads.size() * sizeof(batched_quad_t), bquads.data(), GL_DYNAMIC_DRAW);
-
-        // iPos
-        glEnableVertexAttribArray(iPos);
-        glVertexAttribPointer(iPos, 2, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, pos));
-        glVertexAttribDivisor(iPos, 1);
-
-        // iSize
-        glEnableVertexAttribArray(iSize);
-        glVertexAttribPointer(iSize, 2, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, size));
-        glVertexAttribDivisor(iSize, 1);
-
-        // iColor
-        glEnableVertexAttribArray(iColor);
-        glVertexAttribPointer(iColor, 4, GL_FLOAT, GL_FALSE, sizeof(batched_quad_t), (void*)offsetof(batched_quad_t, color));
-        glVertexAttribDivisor(iColor, 1);
-
-        glDrawArraysInstanced(GL_TRIANGLES, 0, 6, bquads.size());
-
-        glDrawArraysInstanced(GL_TRIANGLES, 0, 6, batch.size());
     }
 
     double renderer_2d::get_delta_time() {
@@ -1184,8 +1036,8 @@ namespace rocket {
         return wireframe;
     }
 
-    int renderer_2d::get_current_fps() {
-        return static_cast<int>(std::round(rgl::get_draw_metrics().avg_fps));
+    float renderer_2d::get_current_fps() {
+        return rgl::get_draw_metrics().avg_fps;
         // return static_cast<int>(std::round(1.0 / get_delta_time()));
     }
 
@@ -1256,6 +1108,10 @@ namespace rocket {
         rgl::cleanup_all();
         rgl::reset();
         shader_provider_reset();
+        if (this->impl != nullptr) {
+            delete this->impl;
+            this->impl = nullptr;
+        }
         util::glinit(false);
     }
 

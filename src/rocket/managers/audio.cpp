@@ -3,6 +3,8 @@
 #include <memory>
 #include <rocket/audio.hpp>
 #include <thread>
+#include <AL/al.h>
+#include <AL/alc.h>
 #include "intl_macros.hpp"
 
 #define ALC_DEVICE_NAME_DEFAULT nullptr

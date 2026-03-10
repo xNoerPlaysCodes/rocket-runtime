@@ -4,12 +4,6 @@
 #include "macros.hpp"
 #include <cstdint>
 #include "glfnldr.hpp"
-#include <glm/detail/qualifier.hpp>
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/quaternion_geometric.hpp>
-#include <glm/ext/vector_float3.hpp>
-#include <glm/geometric.hpp>
 #include "asset.hpp"
 #include "rocket/rgl.hpp"
 #include "types.hpp"
@@ -25,7 +19,7 @@ namespace rocket {
         vec2f_t pos = {0,0};
         vec2f_t size = {0,0};
 
-        GLuint gltxid = 0;
+        unsigned int gltxid = 0;
         rgba_color color = {0,0,0,0};
     };
     struct renderer_flags_t {
@@ -51,24 +45,25 @@ namespace rocket {
     };
 
     struct camera_2d;
+    struct renderer_2d_impl_t;
 
     class renderer_2d {
     private:
-        window_t *window = nullptr;
+        window_backend_i *window = nullptr;
         camera_2d *cam = nullptr;
         int fps = 60;
         bool wireframe = false;
         bool vsync = false;
 
-        std::chrono::time_point<std::chrono::high_resolution_clock> start_time;
-        double last_time;
-        double frame_start_time;
+        using clock = std::chrono::steady_clock;
+        template<typename Clock>
+        using time_point = std::chrono::time_point<Clock>;
+
+        time_point<clock> frame_start_time;
+        time_point<clock> last_time;
         double delta_time;
 
         uint64_t frame_counter = 0;
-
-        std::vector<instanced_quad_t> batch;
-        bool batched = false;
 
         bool frame_started = false;
 
@@ -81,7 +76,9 @@ namespace rocket {
 
         bool splash_shown = false;
 
-        graphics_settings_t graphics_settings;
+        graphics_settings_t graphics_settings; 
+
+        renderer_2d_impl_t *impl = nullptr;
 
         friend class renderer_3d;
         friend class font_t;
@@ -258,12 +255,12 @@ namespace rocket {
         ROCKETGE__NOT_IMPLEMENTED camera_2d *get_camera();
     public:
         /// @brief Get Current FPS
-        int get_current_fps();
+        float get_current_fps();
     public:
         /// @brief Initialize the renderer
         /// @param window Window
         /// @param fps FPS = 60
-        renderer_2d(window_t *window, int fps = 60, renderer_flags_t flags = {});
+        renderer_2d(window_backend_i *window, int fps = 60, renderer_flags_t flags = {});
     public:
         ~renderer_2d();
     };

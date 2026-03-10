@@ -1,0 +1,62 @@
+#include <QtCore/QVariant>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
+#include <QtWidgets/QScrollBar>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QStackedWidget>
+#include <QtWidgets/QTabWidget>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
+#include "collapsiblesection.h"
+#include "ui.h"
+
+class GLWidget : public QOpenGLWidget {
+    Q_OBJECT
+public:
+    GLWidget(QWidget* parent = nullptr) : QOpenGLWidget(parent) {}
+
+protected:
+    void initializeGL() override {
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    }
+
+    void resizeGL(int w, int h) override {
+        glViewport(0, 0, w, h);
+    }
+
+    void paintGL() override {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+};
+
+class MainWindow : public QMainWindow {
+    Q_OBJECT
+public:
+    explicit MainWindow(QWidget* parent = nullptr)
+        : QMainWindow(parent)
+    {
+        ui.setupUi(this); // this populates the window with widgets from Designer
+        connect(ui.pushButton_2, &QPushButton::clicked, this, [this]() {
+            ui.stackedWidget->setCurrentWidget(ui.editor);
+            // ui.openGLWidget = new GLWidget;
+        });
+    }
+
+    Ui::MainWindow ui; // generated UI class instance
+};
+
+int main(int argc, char* argv[]) {
+    QApplication app(argc, argv);
+    MainWindow window;
+    window.resize({ 1600, 900 });
+    window.show();
+    return app.exec();
+}
+
+#include "main.moc"

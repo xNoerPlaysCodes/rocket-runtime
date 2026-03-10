@@ -3,18 +3,15 @@
 
 #include "rocket/audio.hpp"
 #include "types.hpp"
-#include <AL/al.h>
 #include <atomic>
 #include <chrono>
 #include <functional>
-#include <map>
 #include <mutex>
 #include <string>
 #include <thread>
 #include <unordered_map>
 #include <vector>
 #include <memory>
-#include <GLFW/glfw3.h>
 
 #define rGE__TEXTURE_CHANNEL_COUNT_RGBA     4
 #define rGE__TEXTURE_CHANNEL_COUNT_RGB      3
@@ -36,10 +33,13 @@ namespace rocket {
         /// @brief Texture Raw Pixel Data
         /// @modify Do not modify (advanced)
         std::vector<uint8_t> data;
+
+        /// @brief Texture Loaded from which Path
+        std::string path;
     public:
         /// @brief OpenGL Texture ID
         /// @modify Do not modify
-        GLuint glid = 0;
+        unsigned int glid = 0;
         friend class asset_manager_t;
         friend class renderer_2d;
         friend class renderer_3d;
@@ -67,8 +67,8 @@ namespace rocket {
     class audio_t {
     private:
         std::shared_ptr<audio_context_t> context;
-        ALuint *buffer = nullptr;
-        ALuint source = 0;
+        unsigned int *buffer = nullptr;
+        unsigned int source = 0;
         std::string path;
 
         friend class asset_manager_t;
@@ -113,11 +113,12 @@ namespace rocket {
     class renderer_2d;
 
     struct internal_cdata;
+    struct asset_manager_impl_t;
 
     class font_t {
     private:
         /// INNER
-        GLuint glid = 0;
+        unsigned int glid = 0;
         rocket::vec2i_t sttex_size = { 512, 512 };
         internal_cdata *cdata;
         std::vector<uint8_t> ttf_data;
@@ -215,6 +216,7 @@ namespace rocket {
         std::shared_ptr<audio_context_t> audio_context;
 
         std::chrono::seconds cleanup_interval;
+        asset_manager_impl_t *impl = nullptr;
     private:
         friend class std::thread;
         void cleanup();

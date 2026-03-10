@@ -6,6 +6,7 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/trigonometric.hpp>
+#include <internal_types.hpp>
 #include <iostream>
 #include <mutex>
 #include <queue>
@@ -187,7 +188,11 @@ namespace util {
 
     rocket::vec2<double> mouse_pos() {
         double x, y;
-        glfwGetCursorPos(glfwGetCurrentContext(), &x, &y);
+        if (glfwGetCurrentContext() == nullptr) {
+            return { 0, 0 };
+        } else {
+            glfwGetCursorPos(glfwGetCurrentContext(), &x, &y);
+        }
         return { x, y };
     }
 
@@ -256,6 +261,7 @@ namespace util {
     }
 
     void io_update_end_frame() {
+        if (glfwGetCurrentContext() == nullptr) goto cleanup;
         for (auto &k : kstates) {
             k.second.previous = k.second.current;
             k.second.current = glfwGetKey(glfwGetCurrentContext(), static_cast<int>(k.first)) == GLFW_PRESS;
@@ -265,6 +271,7 @@ namespace util {
             m.second.current = glfwGetMouseButton(glfwGetCurrentContext(), static_cast<int>(m.first)) == GLFW_PRESS;
         }
 
+cleanup:
         simulated_kevents.clear();
         simulated_mevents.clear();
         simulated_mmevents.clear();

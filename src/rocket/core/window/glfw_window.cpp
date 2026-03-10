@@ -1,5 +1,5 @@
-#include <rocket/window.hpp>
 #include <GLFW/glfw3.h>
+#include <rocket/window.hpp>
 #include <codecvt>
 #include <cstdlib>
 #include <iostream>
@@ -15,6 +15,9 @@
 #include "rocket/runtime.hpp"
 #include "rocket/types.hpp"
 #include "util.hpp"
+#include <GLFW/glfw3.h>
+#include "internal_types.hpp"
+#include "window.hpp"
 
 namespace callback {
     void glfw_error(int error, const char* description) {
@@ -24,9 +27,6 @@ namespace callback {
 
 namespace rocket {
     static bool glfw_initialized = false;
-
-    io::keystate_t keys[GLFW_KEY_LAST + 1] = {};
-    io::keystate_t buttons[GLFW_MOUSE_BUTTON_LAST + 1] = {};
 
     GLFWmonitor* glfwaltGetMonitorWithCursor() {
         int count;
@@ -97,11 +97,11 @@ namespace rocket {
         return m;
     }
 
-    RGE_STATIC_FUNC_IMPL void window_t::cpl_init() {
+    void window::glfw_cpl_init() {
         util::timer_t glfw_init_timer;
         if (glfwPlatformSupported(GLFW_PLATFORM_WAYLAND) && util::is_wayland() && (!util::get_clistate().forcewayland)) {
             // Set default platform to X11 on Linux
-            window_t::set_forced_platform(platform_type_t::linux_x11);
+            window::set_forced_platform(platform_type_t::linux_x11);
         }
 
         if (!glfw_initialized) {
@@ -114,10 +114,10 @@ namespace rocket {
             glfw_initialized = true;
         }
         glfw_init_timer.stop();
-        rocket::log("GLFW Initialized in " + std::to_string((int) glfw_init_timer.ms()) + "ms", "window_t", "cpl_init", "trace");
+        rocket::log("GLFW Initialized in " + std::to_string((int) glfw_init_timer.ms()) + "ms", "glfw_window_t", "cpl_init", "trace");
     }
 
-    RGE_STATIC_FUNC_IMPL platform_t window_t::get_platform() {
+    platform_t glfw_window_t::get_platform() const {
         int glfw_platform = glfwGetPlatform();
         platform_t platform;
         std::string windowing_platform = platform.name;
@@ -138,30 +138,34 @@ namespace rocket {
             platform.type = platform_type_t::windows;
             platform.os_name = "Windows";
         } else {
-            rocket::log("platform unimplemented", "window_t", "get_platform", "error");
+            rocket::log("platform unimplemented", "glfw_window_t", "get_platform", "error");
             return {};
         }
 
         platform.name = windowing_platform;
-        platform.rge_name = std::string(ROCKETGE__PLATFORM);
+        platform.rge_name = std::string("GLFW::Desktop");
         return platform;
     }
 
-    RGE_STATIC_FUNC_IMPL void window_t::set_forced_platform(platform_type_t type) {
+    void glfw_window_t::set_vsync(bool vsync) {
+        glfwSwapInterval(vsync ? 1 : 0);
+    }
+
+    void window::set_forced_platform(platform_type_t type) {
         if (glfw_initialized) {
-            rocket::log("too late! glfw has already been initialized", "window_t", "set_forced_platform", "error");
+            rocket::log("too late! glfw has already been initialized", "glfw_window_t", "set_forced_platform", "error");
             return;
         }
 
         if (type == platform_type_t::linux_wayland) {
 #ifndef ROCKETGE__Platform_Linux
-            rocket::log("type can only be platform_type_t::linux_wayland when on linux", "window_t", "set_forced_platform", "error");
+            rocket::log("type can only be platform_type_t::linux_wayland when on linux", "glfw_window_t", "set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WAYLAND);
 #endif
         } else if (type == platform_type_t::linux_x11) {
 #ifndef ROCKETGE__Platform_Linux
-            rocket::log("type can only be platform_type_t::linux_x11 when on linux", "window_t", "set_forced_platform", "error");
+            rocket::log("type can only be platform_type_t::linux_x11 when on linux", "glfw_window_t", "set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
 #endif
@@ -169,18 +173,18 @@ namespace rocket {
 
         else if (type == platform_type_t::windows) {
 #ifndef ROCKETGE__Platform_Windows
-            rocket::log("type can only be platform_type_t::windows when on windows", "window_t", "set_forced_platform", "error");
+            rocket::log("type can only be platform_type_t::windows when on windows", "glfw_window_t", "set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_WIN32);
 #endif
         } else if (type == platform_type_t::macos_cocoa) {
 #ifndef ROCKETGE__Platform_macOS
-            rocket::log("type can only be platform_type_t::macos_cocoa when on macOS", "window_t", "set_forced_platform", "error");
+            rocket::log("type can only be platform_type_t::macos_cocoa when on macOS", "glfw_window_t", "set_forced_platform", "error");
 #else
             glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_COCOA);
 #endif
         } else {
-            rocket::log("platform is not valid!", "window_t", "set_forced_platform", "error");
+            rocket::log("platform is not valid!", "glfw_window_t", "set_forced_platform", "error");
         }
     }
 
@@ -218,7 +222,7 @@ namespace rocket {
         static auto cli_args = util::get_clistate();
 
         for (int i = 0; i < 13; i++) {
-            rocket::log("Trying " + std::to_string(versions[i][0]) + "." + std::to_string(versions[i][1]), "window_t", "context_creator", "debug");
+            rocket::log("Trying " + std::to_string(versions[i][0]) + "." + std::to_string(versions[i][1]), "glfw_window_t", "context_creator", "debug");
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versions[i][0]);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versions[i][1]);
             float ver = (float)versions[i][0] + (float)versions[i][1] / 10.f;
@@ -234,7 +238,7 @@ namespace rocket {
             if (tg_win == nullptr) {
                 if (versions[i][0] == 2 && versions[i][1] == 0) {
                     glfwSetErrorCallback(callback::glfw_error);
-                    rocket::log("This graphics driver does not support the minimum OpenGL version of 2.0", "window_t", "context_creator", "fatal");
+                    rocket::log("This graphics driver does not support the minimum OpenGL version of 2.0", "glfw_window_t", "context_creator", "fatal");
                     rocket::exit(0);
                     return 2.0f;
                 }
@@ -257,9 +261,14 @@ namespace rocket {
         return 4.6f;
     }
 
-    window_t::window_t(const rocket::vec2i_t& size,
+    glfw_window_t::glfw_window_t(const rocket::vec2i_t& size,
             const std::string& title,
             windowflags_t flags) {
+        this->impl = new glfw_window_impl_t;
+        this->handle = new native_window_t;
+        this->handle->backend = window_backend_t::glfw;
+        native_window_t::set_instance(this->handle);
+        this->glfw_window = this->handle;
         this->size = size;
         auto cli_args = util::get_clistate();
         int cli_w, cli_h;
@@ -275,7 +284,7 @@ namespace rocket {
             this->size = { cli_w, cli_h };
         }
         this->title = title;
-        window_t::cpl_init();
+        window::glfw_cpl_init();
         GLFWmonitor *monitor = glfwGetPrimaryMonitor();
         if (monitor == nullptr && flags.fullscreen) {
             rocket::log("failed to get primary monitor", "GLFW", "glfwGetPrimaryMonitor", "fatal");
@@ -327,7 +336,7 @@ namespace rocket {
             if (max_gl_ver == 2 || max_gl_ver == 3 || max_gl_ver == 4) {
                 ss << ".0";
             }
-            rocket::log("Requested OpenGL version couldn't be matched", "window_t", "constructor", "fatal");
+            rocket::log("Requested OpenGL version couldn't be matched", "glfw_window_t", "constructor", "fatal");
             rocket::exit(1);
             glver = max_gl_ver;
         }
@@ -338,17 +347,17 @@ namespace rocket {
             if (minglver == 2 || minglver == 3 || minglver == 4) {
                 ss << ".0";
             }
-            rocket::log("This version of OpenGL is not supported by this graphics driver, using minimum available version: " + ss.str(), "window_t", "context_creator", "warning");
+            rocket::log("This version of OpenGL is not supported by this graphics driver, using minimum available version: " + ss.str(), "glfw_window_t", "context_creator", "warning");
             glver = static_cast<float>(ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR) + static_cast<float>(0.1 * ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR);
         }
 
         if (max_gl_ver < 2.0f) {
-            rocket::log("Minimum OpenGL version 2.0 not supported", "window_t", "context_creator", "fatal");
+            rocket::log("Minimum OpenGL version 2.0 not supported", "glfw_window_t", "context_creator", "fatal");
             rocket::exit(0);
         }
 
         if (glver < 3.0f) {
-            rocket::log("OpenGL Version 3.0 or higher must be used for a modern environment", "window_t", "context_creator", "warning");
+            rocket::log("OpenGL Version 3.0 or higher must be used for a modern environment", "glfw_window_t", "context_creator", "warning");
         }
         if (glver > 3.1f) {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -358,7 +367,7 @@ namespace rocket {
             if (glver >= 4.3f) {
                 glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
             } else {
-                rocket::log("OpenGL::ContextVerifier requires 4.3 or higher", "window_t", "context_creator", "warn");
+                rocket::log("OpenGL::ContextVerifier requires 4.3 or higher", "glfw_window_t", "context_creator", "warn");
             }
         }
 
@@ -377,7 +386,7 @@ namespace rocket {
         }
 
         if (flags.minimized) {
-            glfwIconifyWindow(glfw_window);
+            glfwIconifyWindow((GLFWwindow*)glfw_window->w);
         }
 
         glfwWindowHint(GLFW_MAXIMIZED, glfwaltGetBoolean(flags.maximized));
@@ -386,7 +395,7 @@ namespace rocket {
 
         if (flags.opacity < 1.0f) {
             glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, glfwaltGetBoolean(true));
-            glfwSetWindowOpacity(glfw_window, flags.opacity);
+            glfwSetWindowOpacity((GLFWwindow*) glfw_window, flags.opacity);
         }
 
         glfwWindowHint(GLFW_SCALE_TO_MONITOR, glfwaltGetBoolean(flags.hidpi));
@@ -407,7 +416,7 @@ namespace rocket {
 
         bool is_custom_class_id = !flags.window_class_name.empty() && flags.window_class_name != ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID;
         if (is_custom_class_id) {
-            rocket::log("using an untested native API: may break", "window_t", "constructor", "warn");
+            rocket::log("using an untested native API: may break", "glfw_window_t", "constructor", "warn");
             std::wstring wstr = to_widestr(flags.window_class_name);
             const wchar_t *cwstr = wstr.c_str();
             rnative::windows_set_window_class_name_prewincreate(cwstr);
@@ -422,48 +431,45 @@ namespace rocket {
         this->flags = flags;
         glfwWindowHint(GLFW_SAMPLES, flags.msaa_samples);
         GLFWwindow *share = nullptr;
-        if (flags.share) {
-            share = flags.share->glfw_window;
-        }
-        this->glfw_window = glfwCreateWindow(this->size.x, this->size.y, title.c_str(), nullptr, share);
+        this->glfw_window->w = (GLFWwindow*) glfwCreateWindow(this->size.x, this->size.y, title.c_str(), nullptr, share);
         if (this->glfw_window == nullptr) {
-            rocket::log("failed to create window", "window_t", "constructor", "fatal");
+            rocket::log("failed to create window", "glfw_window_t", "constructor", "fatal");
             platform_t platform = this->get_platform();
             std::vector<std::string> log_messages = {
                 "Error String: " + std::string("glfwCreateWindow resulted in a nullptr")
             };
             rocket::exit(1);
         }
-        glfwMakeContextCurrent(glfw_window);
+        glfwMakeContextCurrent((GLFWwindow*)glfw_window->w);
 
         monitor = glfwaltGetMonitorWithCursor();
 
-        glfwSetCharModsCallback(this->glfw_window, [](GLFWwindow*, unsigned int codepoint, int /* mods */) {
+        glfwSetCharModsCallback((GLFWwindow*)this->glfw_window->w, [](GLFWwindow*, unsigned int codepoint, int /* mods */) {
             char c = static_cast<char>(codepoint);
             ::util::push_formatted_char_typed(c);
         });
 
-        glfwSetScrollCallback(this->glfw_window, [](GLFWwindow*, double xoffset, double yoffset) {
+        glfwSetScrollCallback((GLFWwindow*)this->glfw_window->w, [](GLFWwindow*, double xoffset, double yoffset) {
             rocket::io::scroll_offset_event_t event;
             event.offset = { xoffset, yoffset };
             util::dispatch_event(event);
         });
 
         if (auto mode = glfwGetVideoMode(glfwaltGetMonitorWithCursor()); !glfw_platform_is_wayland(get_platform())) {
-            glfwSetWindowPos(glfw_window, (mode->width - size.x) / 2, (mode->height - size.y) / 2);
+            glfwSetWindowPos((GLFWwindow*)glfw_window->w, (mode->width - size.x) / 2, (mode->height - size.y) / 2);
         }
-        glfwSetWindowUserPointer(glfw_window, this);
-        glfwSetWindowSizeCallback(glfw_window, [](GLFWwindow* window, int width, int height) {
-            window_t *w = static_cast<window_t*>(glfwGetWindowUserPointer(window));
+        glfwSetWindowUserPointer((GLFWwindow*)glfw_window->w, this);
+        glfwSetWindowSizeCallback((GLFWwindow*)glfw_window->w, [](GLFWwindow* window, int width, int height) {
+            glfw_window_t *w = static_cast<glfw_window_t*>(glfwGetWindowUserPointer(window));
             w->size = { width, height };
         });
 
-        glfwSetWindowIconifyCallback(this->glfw_window, [](GLFWwindow*, int) {
+        glfwSetWindowIconifyCallback((GLFWwindow*)this->glfw_window->w, [](GLFWwindow*, int) {
             glfwWaitEvents();
         });
 
         rocket::log("Window created as [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "]: " + title, 
-            "window_t", "constructor", 
+            "glfw_window_t", "constructor", 
             "info");
         auto platform = get_platform();
         std::string windowing_platform = platform.name;
@@ -475,22 +481,24 @@ namespace rocket {
         };
 
         for (auto &l : logs) {
-            rocket::log(l, "window_t", "constructor", "info");
+            rocket::log(l, "glfw_window_t", "constructor", "info");
         }
+
+        glfwMakeContextCurrent((GLFWwindow*)this->glfw_window->w);
     }
 
-    void window_t::set_window_state(window_state_t state) {
-        glfwSetWindowAttrib(glfw_window, GLFW_FOCUSED,   state.focused);
-        glfwSetWindowAttrib(glfw_window, GLFW_VISIBLE,   state.visible);
-        glfwSetWindowAttrib(glfw_window, GLFW_ICONIFIED, state.iconified);
-        glfwSetWindowAttrib(glfw_window, GLFW_MAXIMIZED, state.maximized);
-        glfwSetWindowAttrib(glfw_window, GLFW_FLOATING,  state.floating);
+    void glfw_window_t::set_window_state(window_state_t state) const {
+        glfwSetWindowAttrib((GLFWwindow*)glfw_window->w, GLFW_FOCUSED,   state.focused);
+        glfwSetWindowAttrib((GLFWwindow*)glfw_window->w, GLFW_VISIBLE,   state.visible);
+        glfwSetWindowAttrib((GLFWwindow*)glfw_window->w, GLFW_ICONIFIED, state.iconified);
+        glfwSetWindowAttrib((GLFWwindow*)glfw_window->w, GLFW_MAXIMIZED, state.maximized);
+        glfwSetWindowAttrib((GLFWwindow*)glfw_window->w, GLFW_FLOATING,  state.floating);
     }
 
-    void window_t::set_icon(std::shared_ptr<rocket::texture_t> texture) {
+    void glfw_window_t::set_icon(std::shared_ptr<rocket::texture_t> texture) {
         if (texture->channels != rGE__TEXTURE_CHANNEL_COUNT_RGBA) {
             std::string channel_count = std::to_string(texture->channels);
-            rocket::log("texture must be in RGBA format (try load in texture_color_format_t::rgba), channel count was: " + channel_count, "window_t", "set_icon", "error");
+            rocket::log("texture must be in RGBA format (try load in texture_color_format_t::rgba), channel count was: " + channel_count, "glfw_window_t", "set_icon", "error");
             return;
         }
         auto pxdata = texture->data.data();
@@ -501,58 +509,62 @@ namespace rocket {
         image.height = texture->size.y;
 
         if (int platform = glfwGetPlatform(); platform == GLFW_PLATFORM_WAYLAND) {
-            rnative::wayland_set_window_icon(this->glfw_window, image);
+            rnative::wayland_set_window_icon((GLFWwindow*)this->glfw_window->w, image);
             return;
         }
  
         if (get_platform().type == platform_type_t::macos_cocoa) {
-            rocket::log("macOS::Cocoa does not support dynamically setting window icons", "window_t", "set_icon", "error");
+            rocket::log("macOS::Cocoa does not support dynamically setting window icons", "glfw_window_t", "set_icon", "error");
             return;
         }
 
-        glfwSetWindowIcon(this->glfw_window, 1, &image);
+        glfwSetWindowIcon((GLFWwindow*)this->glfw_window->w, 1, &image);
     }
 
-    void window_t::set_cursor_mode(cursor_mode_t m) {
+    void glfw_window_t::set_cursor_mode(cursor_mode_t m) {
         this->mode = m;
         if (m == cursor_mode_t::normal) {
-            glfwSetInputMode(glfw_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); 
+            glfwSetInputMode((GLFWwindow*)glfw_window->w, GLFW_CURSOR, GLFW_CURSOR_NORMAL); 
         } else if (m == cursor_mode_t::hidden) {
-            glfwSetInputMode(glfw_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+            glfwSetInputMode((GLFWwindow*)glfw_window->w, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
             if (glfw_platform_is_wayland(get_platform())) {
-                glfwSetInputMode(glfw_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                glfwSetInputMode((GLFWwindow*)glfw_window->w, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
                 if (glfwRawMouseMotionSupported()) {
-                    glfwSetInputMode(glfw_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+                    glfwSetInputMode((GLFWwindow*)glfw_window->w, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
                 } else {
-                    rocket::log("GLFW_RAW_MOUSE_MOTION is not supported on wayland", "window_t", "set_cursor_mode", "warning");
+                    rocket::log("GLFW_RAW_MOUSE_MOTION is not supported on wayland", "glfw_window_t", "set_cursor_mode", "warning");
                 }
             }
         }
     }
 
-    void window_t::set_cursor_position(const rocket::vec2d_t& pos) {
+    void glfw_window_t::set_cursor_position(const rocket::vec2d_t& pos) const {
         if (glfw_platform_is_wayland(get_platform())) {
-            rocket::log("setting cursor position is not supported on wayland", "window_t", "set_cursor_position", "warn");
+            rocket::log("setting cursor position is not supported on wayland", "glfw_window_t", "set_cursor_position", "warn");
             return;
         }
-        glfwSetCursorPos(glfw_window, pos.x, pos.y);
+        glfwSetCursorPos((GLFWwindow*)glfw_window->w, pos.x, pos.y);
     }
 
-    void window_t::set_size(const rocket::vec2i_t& size) {
-        glfwSetWindowSize(glfw_window, size.x, size.y);
+    void glfw_window_t::swap_buffers() const {
+        glfwSwapBuffers((GLFWwindow*)this->glfw_window->w);
+    }
+
+    void glfw_window_t::set_size(const rocket::vec2i_t& size) {
+        glfwSetWindowSize((GLFWwindow*)glfw_window->w, size.x, size.y);
         this->size = size;
     }
 
-    void window_t::set_title(const std::string& title) {
-        glfwSetWindowTitle(glfw_window, title.c_str());
+    void glfw_window_t::set_title(const std::string& title) {
+        glfwSetWindowTitle((GLFWwindow*)glfw_window->w, title.c_str());
         this->title = title;
     }
 
-    void window_t::register_on_close(std::function<void()> listener) {
+    void glfw_window_t::register_on_close(std::function<void()> listener) {
         util::get_on_close_listeners().push_back(listener);
     }
 
-    void window_t::poll_events() {
+    void glfw_window_t::poll_events() {
         static bool first_init = false;
         if (!first_init) {
             if (flags.vsync) {
@@ -562,14 +574,20 @@ namespace rocket {
             }
             first_init = true;
         }
+        if (!this->shown) {
+            if (!this->flags.hidden) {
+                glfwShowWindow((GLFWwindow*)this->glfw_window->w);
+            }
+            this->shown = true;
+        }
         glfwPollEvents();
         int w, h;
-        glfwGetFramebufferSize(glfw_window, &w, &h);
+        glfwGetFramebufferSize((GLFWwindow*)glfw_window->w, &w, &h);
         this->size = { w, h };
 
         for (int i = static_cast<int>(io::keyboard_key::first_key); i <= static_cast<int>(io::keyboard_key::last_key); ++i) {
             keys[i].previous = keys[i].current;
-            keys[i].current = glfwGetKey(glfw_window, i) == GLFW_PRESS;
+            keys[i].current = glfwGetKey((GLFWwindow*)glfw_window->w, i) == GLFW_PRESS;
 
             io::key_event_t event;
             event.key = static_cast<io::keyboard_key>(i);
@@ -579,7 +597,7 @@ namespace rocket {
         }
         
         for (int i = static_cast<int>(io::mouse_button::first); i <= static_cast<int>(io::mouse_button::last); ++i) {
-            bool new_state = glfwGetMouseButton(glfw_window, i) == GLFW_PRESS;
+            bool new_state = glfwGetMouseButton((GLFWwindow*)glfw_window->w, i) == GLFW_PRESS;
             if (buttons[i].current != new_state) {
                 buttons[i].previous = buttons[i].current;
                 buttons[i].current = new_state;
@@ -591,14 +609,14 @@ namespace rocket {
             event.button = static_cast<io::mouse_button>(i);
             event.state = buttons[i];
             event.position = {};
-            glfwGetCursorPos(glfw_window, &event.position.x, &event.position.y);
+            glfwGetCursorPos((GLFWwindow*)glfw_window->w, &event.position.x, &event.position.y);
 
             util::dispatch_event(event);
         }
 
         static double last_mouse_x{0}, last_mouse_y{0};
         double mouse_x{0}, mouse_y{0};
-        glfwGetCursorPos(glfw_window, &mouse_x, &mouse_y);
+        glfwGetCursorPos((GLFWwindow*)glfw_window->w, &mouse_x, &mouse_y);
         if (mouse_x != last_mouse_x || mouse_y != last_mouse_y) {
             io::mouse_move_event_t event;
             event.pos = { mouse_x, mouse_y };
@@ -611,52 +629,52 @@ namespace rocket {
         util::io_update_end_frame();
     }
 
-    std::string window_t::get_title() const {
+    std::string glfw_window_t::get_title() const {
         return this->title;
     }
 
-    rocket::vec2i_t window_t::get_size() const {
+    rocket::vec2i_t glfw_window_t::get_size() const {
         return this->size;
     }
 
-    rocket::vec2d_t window_t::get_cursor_position() const {
+    rocket::vec2d_t glfw_window_t::get_cursor_position() const {
         double x, y;
-        glfwGetCursorPos(glfw_window, &x, &y);
+        glfwGetCursorPos((GLFWwindow*)glfw_window->w, &x, &y);
         return { x, y };
     }
 
-    bool window_t::is_running() const {
-        return !glfwWindowShouldClose(glfw_window);
+    bool glfw_window_t::is_running() const {
+        return !glfwWindowShouldClose((GLFWwindow*)glfw_window->w);
     }
 
-    double window_t::get_time() const {
+    double glfw_window_t::get_time() const {
         return glfwGetTime();
     }
 
-    window_state_t window_t::get_window_state() {
+    window_state_t glfw_window_t::get_window_state() const {
         window_state_t state;
-        state.focused = glfwGetWindowAttrib(this->glfw_window, GLFW_FOCUSED);
-        state.visible = glfwGetWindowAttrib(this->glfw_window, GLFW_VISIBLE);
-        state.iconified = glfwGetWindowAttrib(this->glfw_window, GLFW_ICONIFIED);
-        state.maximized = glfwGetWindowAttrib(this->glfw_window, GLFW_MAXIMIZED);
-        state.floating = glfwGetWindowAttrib(this->glfw_window, GLFW_FLOATING);
-        state.hovering = glfwGetWindowAttrib(this->glfw_window, GLFW_HOVERED);
+        state.focused = glfwGetWindowAttrib((GLFWwindow*)this->glfw_window->w, GLFW_FOCUSED);
+        state.visible = glfwGetWindowAttrib((GLFWwindow*)this->glfw_window->w, GLFW_VISIBLE);
+        state.iconified = glfwGetWindowAttrib((GLFWwindow*)this->glfw_window->w, GLFW_ICONIFIED);
+        state.maximized = glfwGetWindowAttrib((GLFWwindow*)this->glfw_window->w, GLFW_MAXIMIZED);
+        state.floating = glfwGetWindowAttrib((GLFWwindow*)this->glfw_window->w, GLFW_FLOATING);
+        state.hovering = glfwGetWindowAttrib((GLFWwindow*)this->glfw_window->w, GLFW_HOVERED);
         return state;
     }
 
-    std::shared_ptr<texture_t> window_t::get_icon() {
+    std::shared_ptr<texture_t> glfw_window_t::get_icon() const {
         return icon;
     }
 
-    cursor_mode_t window_t::get_cursor_mode() const {
+    cursor_mode_t glfw_window_t::get_cursor_mode() const {
         return this->mode;
     }
 
-    void window_t::close() {
+    void glfw_window_t::close() {
         if (glfw_window == nullptr) {
             return;
         }
-        glfwDestroyWindow(glfw_window);
+        glfwDestroyWindow((GLFWwindow*)glfw_window->w);
         glfw_window = nullptr;
 
         if (glfw_initialized) {
@@ -668,10 +686,14 @@ namespace rocket {
         if (destructor_called) {
             cxf = "destructor";
         }
-        rocket::log("Window closed", "window_t", cxf, "info");
+        if (this->impl != nullptr) {
+            delete this->impl;
+            this->impl = nullptr;
+        }
+        rocket::log("Window closed", "glfw_window_t", cxf, "info");
     }
 
-    window_t::~window_t() {
+    glfw_window_t::~glfw_window_t() {
         destructor_called = true;
         close();
         destructor_called = false;

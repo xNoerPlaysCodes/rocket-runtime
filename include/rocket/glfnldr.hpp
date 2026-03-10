@@ -12,6 +12,7 @@ namespace glfnldr {
         null = 0,
         glad,
         glew,
+        libepoxy
     };
 
     std::vector<backend_t> get_backends();

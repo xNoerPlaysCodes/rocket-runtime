@@ -2,7 +2,6 @@
 #define ROCKETGE__SHADERTOOL_HPP
 
 #include "types.hpp"
-#include <GLFW/glfw3.h>
 #include <filesystem>
 #include <rocket/rgl.hpp>
 #include <string>
@@ -22,9 +21,9 @@ namespace rocket {
 
     class shader_t {
     private:
-        GLuint glshaderv = 0;
-        GLuint glshaderf = 0;
-        GLuint glprogram = 0;
+        unsigned int glshaderv = 0;
+        unsigned int glshaderf = 0;
+        unsigned int glprogram = 0;
         shader_type type;
         std::string vcode = "";
         std::string fcode = "";
@@ -32,7 +31,7 @@ namespace rocket {
         std::string name = "NON_RLSL_SHADER";
         std::string rlsl_version = "NOT_COMPILED_BY_RLSL";
 
-        GLuint vao{0}, vbo{0};
+        unsigned int vao{0}, vbo{0};
         
         friend class renderer_2d;
         friend class renderer_3d;
@@ -48,7 +47,7 @@ namespace rocket {
         void set_uniform(std::string name, vec3f_t value);
         void set_uniform(std::string name, vec4f_t value);
         void set_uniform(std::string name, mat4 value);
-        void set_uniform_raw(std::string name, GLenum type, const void* data, GLsizei count);
+        void set_uniform_raw(std::string name, unsigned int type, const void* data, int count);
     public:
         bool operator==(const shader_t &other) const {
             return glprogram == other.glprogram;

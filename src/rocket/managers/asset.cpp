@@ -203,12 +203,12 @@ namespace rocket {
     };
 
     asset_manager_t::asset_manager_t(std::chrono::seconds cleanup_interval) {
+        this->impl = new asset_manager_impl_t;
         this->cleanup_interval = cleanup_interval;
 
         if (cleanup_interval.count() != 0) {
             this->cleanup_running = true;
             this->cleanup_thread = std::thread(&asset_manager_t::cleanup, this);
-            this->cleanup_thread.detach();
         }
         this->current_id = 0;
     }
@@ -231,6 +231,7 @@ namespace rocket {
             texture->channels = static_cast<int>(format);
         }
         texture->data.assign(img_data, img_data + texture->size.x * texture->size.y * texture->channels); 
+        texture->path = path;
 
         textures.insert({texture, std::chrono::high_resolution_clock::now()});
 
@@ -259,6 +260,7 @@ namespace rocket {
             texture->channels = static_cast<int>(format);
         }
         texture->data.assign(img_data, img_data + texture->size.x * texture->size.y * texture->channels);
+        texture->path = "[memory]";
         textures.insert({texture, std::chrono::high_resolution_clock::now()});
         return id;
     }
@@ -765,10 +767,14 @@ namespace rocket {
         if (this->cleanup_running) {
             cleanup_running = false;
             rocket::log("Waiting for cleanup thread...", "asset_manager_t", "close", "info");
-            while (this->__thread_cleanup_running) {
-            }
+            if (this->cleanup_thread.joinable())
+                this->cleanup_thread.join();
         }
         destroy_audio_ctx();
+        if (this->impl != nullptr) {
+            delete this->impl;
+            this->impl = nullptr;
+        }
     }
 
     asset_manager_t::~asset_manager_t() {

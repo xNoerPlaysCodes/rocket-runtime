@@ -3,13 +3,14 @@
 #include "rocket/types.hpp"
 #include "util.hpp"
 
-#include <GLFW/glfw3.h>
 #include <SDL2/SDL_gamecontroller.h>
 #include <SDL2/SDL_haptic.h>
 #include <SDL2/SDL_joystick.h>
 #include <algorithm>
 #include <fstream>
+#include <internal_types.hpp>
 #include <iostream>
+#include <rocket/window.hpp>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -42,7 +43,14 @@ namespace std {
 namespace rocket {
     namespace io {
         int scancode_by_key(keyboard_key key) {
-            return glfwGetKeyScancode(static_cast<int>(key));
+            native_window_t *window = native_window_t::get_instance();
+            if (window->backend == window_backend_t::glfw) {
+                return glfwGetKeyScancode(static_cast<int>(key));
+            } else {
+                rocket::log("GLFW Input Layer called on Non-GLFW Window", "rocket::io", "scancode_by_key", "fatal");
+                rocket::exit(1);
+                return 0;
+            }
         }
 
         int key_by_scancode(int scancode) {

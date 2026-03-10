@@ -51,6 +51,16 @@ namespace linux_backend {
         glfwWindowHintString(GLFW_X11_CLASS_NAME, str);
         glfwWindowHintString(GLFW_X11_INSTANCE_NAME, str);
     }
+
+    void *get_proc_address(const char *name) {
+        void *ptr = (void*) glXGetProcAddress((const GLubyte*) name);
+        if (ptr != nullptr) return ptr;
+
+        // Legacy path
+        static void *libGL = dlopen("libGL.so.1", RTLD_LAZY | RTLD_GLOBAL);
+        if (libGL == nullptr) return nullptr;
+        return dlsym(libGL, name);
+    }
 }
 #endif
 
@@ -92,6 +102,16 @@ namespace windows_backend {
         if (FAILED(hr)) {
             rocket::log("SetThreadDescription failed", "rnative", "[windows_backend]", "error");
         }
+    }
+
+    void *get_proc_address(const char *name) {
+        void *ptr = (void*) wglGetProcAddress(name);
+        if (ptr != nullptr) return ptr;
+
+        // Legacy path
+        static HMODULE module = LoadLibraryA("opengl32.dll");
+        if (module == nullptr) return nullptr;
+        return (void*) GetProcAddress(module, name);
     }
 }
 #endif
@@ -167,6 +187,16 @@ namespace rnative {
         unix_backend::set_thread_name(name);
 #elifdef ROCKETGE__Platform_Windows
         windows_backend::set_thread_name(name);
+#endif
+    }
+
+    proc_address_t load_proc_address(const char *name) {
+#ifdef ROCKETGE__Platform_Linux
+        return reinterpret_cast<proc_address_t>(linux_backend::get_proc_address(name));
+#elifdef ROCKETGE__Platform_Windows
+        return reinterpret_cast<proc_address_t>(windows_backend::get_proc_address(name));
+#else
+        return nullptr;
 #endif
     }
 }

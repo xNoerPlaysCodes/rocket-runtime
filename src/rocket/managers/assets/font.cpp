@@ -1,9 +1,11 @@
 #include "../../include/rocket/asset.hpp"
 #include <internal_types.hpp>
 
+extern "C" { void glDeleteTextures(int n, const unsigned int *textures); }
+
 namespace rocket {
     struct font_character_t {
-        GLuint glid;
+        unsigned int glid;
 
         vec2i_t size;
         vec2i_t bearing;

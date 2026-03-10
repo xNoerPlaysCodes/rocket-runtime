@@ -11,20 +11,17 @@
 #include <rocket/macros.hpp>
 
 #include <stacktrace>
+#include <new>
 
 namespace rocket {
-    thread_local frame_allocator_t *char_allocator;
-    alignas(frame_allocator_t) thread_local uint8_t _char_allocator_buf[sizeof(frame_allocator_t)] = {};
+    thread_local frame_allocator_t *char_allocator = nullptr;
+    alignas(frame_allocator_t) thread_local uint8_t _char_allocator[sizeof(frame_allocator_t)] = {};
     thread_local bool allocator_initialized = false;
 
     void init_allocator() {
         if (allocator_initialized) return;
-        char_allocator = (frame_allocator_t*) _char_allocator_buf;
         util::membuf_t *buf = util::get_memory_buffer();
-        char_allocator->buffer = (uint8_t*) buf->mem;
-        char_allocator->ogbuffer = (uint8_t*) buf->mem;
-        char_allocator->size = buf->sz;
-        char_allocator->ownership = false;
+        char_allocator = new (_char_allocator) frame_allocator_t((uint8_t*) buf->mem, buf->sz);
         allocator_initialized = true;
     }
 
@@ -117,10 +114,13 @@ namespace rocket {
 
     char* crash_signal(bool fatal, void *mem_addr, const char *signal, const char *message) {
         init_allocator();
+        // Go back to buf[0]
+        char_allocator->clear();
         char mem_addr_str[128] = {};
         if (mem_addr == nullptr) {
             std::snprintf(mem_addr_str, 128, "0x0");
         } else {
+            // Platform Specific
 #ifdef ROCKETGE__Platform_Windows
             std::snprintf(mem_addr_str, 128, "0x%p", mem_addr);
 #else
@@ -153,7 +153,7 @@ namespace rocket {
         char *buf = (char*) char_allocator->allocate(size);
         std::memset(buf, 0, size);
         int written = std::snprintf(buf, size,
-            (fatal) ? ">- RocketGE has crashed! -<\n" : ""
+            (fatal) ? ">- RocketGE has crashed! -<\n" : ">- RocketGE has encountered a non-fatal crash -<\n"
             "Generated on %s\n"
             "%s occurred.\n"
             "\n"
@@ -166,7 +166,7 @@ namespace rocket {
             fatal ? "A fatal exception" : "An exception",
             signal, mem_addr_str,
             message,
-            fatal ? "The program will now dump the stack trace" : ""
+            "The program will now dump the stack trace"
         );
 
         written += construct_stack_trace(buf + written, size - written);

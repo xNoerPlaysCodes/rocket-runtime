@@ -1,15 +1,12 @@
 #ifndef RocketGL__HPP
 #define RocketGL__HPP
 
-#include "rocket/macros.hpp"
-#ifdef ROCKETGE__Platform_Windows
+#include <rocket/modularity/window_backend.hpp>
+#ifndef GL_STATIC_DRAW 
 #define GL_STATIC_DRAW 0x88E4
 #endif
-#include "rocket/asset.hpp"
 #include "rocket/types.hpp"
-#include <cstdint>
 #include "glfnldr.hpp"
-#include <unordered_map>
 #include <utility>
 #include <string>
 #include <vector>
@@ -31,25 +28,25 @@
 
 // Unstable API & ABI, use at your own risk
 namespace rgl {
-    using vao_t = GLuint;
-    using vbo_t = GLuint;
+    using vao_t = unsigned int;
+    using vbo_t = unsigned int;
 
-    using texture_id_t = GLuint;
-    using texture_unit_t = GLint;
+    using texture_id_t = unsigned int;
+    using texture_unit_t = int;
 
-    using shader_location_t = GLint;
+    using shader_location_t = int;
 
-    using shader_program_t = GLuint;
-    using cp_vert_shader_t = GLuint;
-    using cp_frag_shader_t = GLuint;
+    using shader_program_t = unsigned int;
+    using cp_vert_shader_t = unsigned int;
+    using cp_frag_shader_t = unsigned int;
 
-    using blend_src_t = GLenum;
-    using blend_dst_t = GLenum;
+    using blend_src_t = unsigned int;
+    using blend_dst_t = unsigned int;
 
 #ifdef rGL__FEATURE_SUPPORT_FBO
     struct fbo_t {
-        GLuint fbo;
-        GLuint color_tex;
+        unsigned int fbo;
+        unsigned int color_tex;
 
         bool operator==(const fbo_t &other) const {
             return fbo == other.fbo;
@@ -85,7 +82,7 @@ namespace rgl {
     private:
         std::unique_ptr<void, std::function<void(void*)>> cleanup;
     public:
-        GLuint id = rGL_TXID_INVALID;
+        unsigned int id = rGL_TXID_INVALID;
     public:
         /// @brief Binds the texture to an available
         ///        texture unit (if available)
@@ -94,20 +91,20 @@ namespace rgl {
         scoped_gl_texture_t();
     };
 
-    std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t bkend = ROCKETGE__GLFNLDR_BACKEND_ENUM);
+    std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t bkend = ROCKETGE__GLFNLDR_BACKEND_ENUM, rocket::window_backend_i *win = nullptr);
     void init_gl_wtd();
     std::pair<vao_t, vbo_t> compile_vo(
         const std::array<float, 12>& square_vertices = std::array<float,12>{
             0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
             0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
         },
-        GLenum draw_type = GL_STATIC_DRAW,
+        unsigned int draw_type = GL_STATIC_DRAW,
         int stride_size = 2
     );
 
     std::pair<vao_t, vbo_t> compile_vo(
         const std::vector<float> &vertices,
-        GLenum draw_type = GL_STATIC_DRAW,
+        unsigned int draw_type = GL_STATIC_DRAW,
         int stride_size = 2
     );
 
@@ -117,14 +114,14 @@ namespace rgl {
             0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
             0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
         },
-        GLenum draw_type = GL_STATIC_DRAW,
+        unsigned int draw_type = GL_STATIC_DRAW,
         int stride_size = 2 
     );
 
     std::pair<vao_t, vbo_t> cache_compile_vo(
         std::string use,
         const std::vector<float> &vertices,
-        GLenum draw_type = GL_STATIC_DRAW,
+        unsigned int draw_type = GL_STATIC_DRAW,
         int stride_size = 2
     );
 
@@ -178,7 +175,7 @@ namespace rgl {
 
     /// @brief Use this as an alternative to glDrawArrays(...)
     /// @note Tracks Triangle Count and Drawcalls
-    void gl_draw_arrays(GLenum mode, GLint first, GLsizei count);
+    void gl_draw_arrays(unsigned int mode, int first, int count);
 
     struct draw_metrics_t {
         float avg_frametime = 0;
