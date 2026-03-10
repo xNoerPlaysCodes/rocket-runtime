@@ -11,20 +11,17 @@
 #include <rocket/macros.hpp>
 
 #include <stacktrace>
+#include <new>
 
 namespace rocket {
-    thread_local frame_allocator_t *char_allocator;
-    alignas(frame_allocator_t) thread_local uint8_t _char_allocator_buf[sizeof(frame_allocator_t)] = {};
+    thread_local frame_allocator_t *char_allocator = nullptr;
+    alignas(frame_allocator_t) thread_local uint8_t _char_allocator[sizeof(frame_allocator_t)] = {};
     thread_local bool allocator_initialized = false;
 
     void init_allocator() {
         if (allocator_initialized) return;
-        char_allocator = (frame_allocator_t*) _char_allocator_buf;
         util::membuf_t *buf = util::get_memory_buffer();
-        char_allocator->buffer = (uint8_t*) buf->mem;
-        char_allocator->ogbuffer = (uint8_t*) buf->mem;
-        char_allocator->size = buf->sz;
-        char_allocator->ownership = false;
+        char_allocator = new (_char_allocator) frame_allocator_t((uint8_t*) buf->mem, buf->sz);
         allocator_initialized = true;
     }
 
