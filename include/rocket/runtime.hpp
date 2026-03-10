@@ -34,8 +34,8 @@
 /// @note Versions less than 3.0 do not operate
 ///         stably and may result in crashes
 ///         and/or unintended behavior
-#define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 2
-#define ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR 0
+#define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 3
+#define ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR 3
 
 /// @brief The max RLSL version supported
 ///                ^^^^ -> RocketShaderLanguage

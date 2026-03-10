@@ -1,7 +1,7 @@
 namespace rocket_resource {
     const char *shader_rectangle_rlsl = R"(
 Version: 1.1
-GL_MinimumVersion: 2.0
+GL_MinimumVersion: 3.3
 Name: Rectangle
 
 VertexStart

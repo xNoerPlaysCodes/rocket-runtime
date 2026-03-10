@@ -359,8 +359,8 @@ void main() {
             rocket::log("issue while parsing RLSL Shader: shader metadata incomplete", "shader_t", "constructor", "warn");
         }
 
-        int major, minor;
-        float glver;
+        int major{}, minor{};
+        float glver{};
         glGetIntegerv(GL_MAJOR_VERSION, &major);
         glGetIntegerv(GL_MINOR_VERSION, &minor);
         glver = major + minor / 10.f;

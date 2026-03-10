@@ -209,14 +209,6 @@ namespace rocket {
             {4,0}, // 7
 
             {3,3},
-            {3,2},
-            {3,1},
-            {3,0}, // 4
-
-            {2,1},
-            {2,0}, // 2
-                   // ==
-                   // 13
         };
 
         static auto cli_args = util::get_clistate();
@@ -233,14 +225,14 @@ namespace rocket {
             }
             glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 
-            tg_win = glfwCreateWindow(1, 1, "tmp", NULL, NULL);
+            tg_win = glfwCreateWindow(1, 1, "tmp", nullptr, nullptr);
             float gl_version = versions[i][0] + (versions[i][1] * 0.1f);
             if (tg_win == nullptr) {
-                if (versions[i][0] == ROCKETGE__FEATURE_MAX_GL_VERSION_MAJOR && versions[i][1] == ROCKETGE__FEATURE_MAX_GL_VERSION_MINOR) {
+                if (versions[i][0] == 3 && versions[i][1] == 3) {
                     glfwSetErrorCallback(callback::glfw_error);
-                    rocket::log("This graphics driver does not support the minimum OpenGL version of 2.0", "glfw_window_t", "context_creator", "fatal");
+                    rocket::log("This graphics driver does not support the minimum OpenGL version of 3.3", "glfw_window_t", "context_creator", "fatal");
                     rocket::exit(0);
-                    return 2.0f;
+                    return 3.3f;
                 }
 
                 continue;
