@@ -2,6 +2,8 @@
 #define ROCKETGE__INTL_INTERNAL_TYPES_HPP
 
 #include "lib/stb/stb_truetype.h"
+#include <glm/glm.hpp>
+#include <rocket/io.hpp>
 #include <rocket/window.hpp>
 #include <util.hpp>
 
@@ -26,12 +28,20 @@ namespace rocket {
         static native_window_t *get_instance();
     };
 
+    // [TODO] Implement
+    namespace native_io {
+        void            get_cursor_position(native_window_t *win, double *x, double *y);
+        io::keystate_t  get_key_state(native_window_t *win, io::keyboard_key k);
+        io::keystate_t  get_btn_state(native_window_t *win, io::mouse_button b);
+    }
+
     class renderer_2d;
     class glfw_window_t;
     class asset_manager_t;
 
     struct renderer_2d_impl_t {
         renderer_2d *obj;
+        glm::mat4 camera_transform = glm::mat4(1.0f);
     };
 
     struct glfw_window_impl_t {

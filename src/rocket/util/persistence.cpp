@@ -6,7 +6,6 @@
 #include <rocket/persistence.hpp>
 #include <rocket/runtime.hpp>
 #include <nlohmann/json.hpp>
-// FIXME crossplatform
 
 namespace nm = nlohmann;
 namespace rocket::storage {

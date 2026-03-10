@@ -204,6 +204,7 @@ namespace rocket {
 
     asset_manager_t::asset_manager_t(std::chrono::seconds cleanup_interval) {
         this->impl = new asset_manager_impl_t;
+        this->impl->obj = this;
         this->cleanup_interval = cleanup_interval;
 
         if (cleanup_interval.count() != 0) {

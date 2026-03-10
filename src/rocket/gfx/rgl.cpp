@@ -204,7 +204,7 @@ namespace rgl {
         } else {
             rocket::log("VO cache miss, compiling...", "rgl", "cache_compile_vo", "debug");
             auto vo = rgl::compile_vo(square_vertices, draw_type, stride_size);
-            cached_square_vertices_vos[key];
+            cached_square_vertices_vos[key] = vo;
             return vo;
         }
     }
@@ -225,7 +225,7 @@ namespace rgl {
         } else {
             rocket::log("VO cache miss, compiling...", "rgl", "cache_compile_vo", "debug");
             auto vo = rgl::compile_vo(vertices, draw_type, stride_size);
-            cached_float_vertices_vos[key];
+            cached_float_vertices_vos[key] = vo;
             return vo;
         }
     }

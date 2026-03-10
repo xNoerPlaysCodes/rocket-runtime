@@ -52,6 +52,7 @@ namespace rocket {
 
     renderer_2d::renderer_2d(window_backend_i *window, int fps, renderer_flags_t flags) {
         this->impl = new renderer_2d_impl_t;
+        this->impl->obj = this;
         this->window = window;
         this->fps = fps;
 
@@ -105,20 +106,30 @@ namespace rocket {
         ::rocket::ovr_clistate = util::get_clistate();
     }
     
-    renderer_2d::gfx_chk_result renderer_2d::check_graphics_settings() {
+    renderer_2d::gfx_chk_result renderer_2d::check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t sz) {
         if (!this->frame_started) return gfx_chk_result::not_drawable;
-        return gfx_chk_result::drawable; // [FIXME] Check OutOfBounds drawings
+
+        if (pos == rocket::vec2f_t{-1,-1} || sz == rocket::vec2f_t{-1,-1})
+            return gfx_chk_result::drawable;
+
+        rocket::fbounding_box obj = {pos, sz};
+        rocket::fbounding_box vp = {{0,0}, this->get_viewport_size()};
+
+        if (!obj.intersects(vp))
+            return gfx_chk_result::not_drawable;
+
+        return gfx_chk_result::drawable;
     }
 
     void renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int thickness) {
-        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
-            rgl::add_frame_metrics_data_skipped_drawcalls(1);
-            return;
-        }
         rocket::vec2f_t center_pos = {
             .x = pos.x - radius,
             .y = pos.y - radius
         };
+        if (this->check_graphics_settings(center_pos, {radius*2, radius*2}) == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
 
         if (thickness > 0) {
             rgl::shader_program_t pg = rocket::get_shader(shader_id_t::circle_lines);
@@ -152,7 +163,7 @@ namespace rocket {
     }
 
     void renderer_2d::draw_polygon(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int segments, float rotation) {
-        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+        if (this->check_graphics_settings(pos, {radius*2,radius*2}) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
@@ -227,7 +238,7 @@ namespace rocket {
     }
 
     void renderer_2d::draw_pixel(rocket::vec2f_t pos, rocket::rgba_color color) {
-        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+        if (this->check_graphics_settings(pos, {1,1}) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
@@ -235,7 +246,7 @@ namespace rocket {
     }
 
     void renderer_2d::draw_rectangle(rocket::vec2f_t pos, rocket::vec2f_t size, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
-        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+        if (this->check_graphics_settings(pos, size) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
@@ -324,6 +335,18 @@ namespace rocket {
             }
         }
 
+        if (mode == render_mode_t::camera && this->cam != nullptr) {
+            vec2f_t viewport = get_viewport_size();
+
+            glm::mat4 projection = glm::ortho(0.0f, viewport.x, viewport.y, 0.0f, -1.0f, 1.0f);
+
+            glm::mat4 view = glm::mat4(1.0f);
+            view = glm::translate(view, glm::vec3(-cam->offset.x, -cam->offset.y, 0.0f));
+            view = glm::rotate(view, glm::radians(-cam->rotation), glm::vec3(0,0,1));
+            view = glm::scale(view, glm::vec3(cam->zoom, cam->zoom, 1.0f));
+
+            this->impl->camera_transform = projection * view;
+        }
         active_render_modes.push_back(mode);
     }
 
@@ -365,7 +388,7 @@ namespace rocket {
     }
 
     void renderer_2d::draw_texture(std::shared_ptr<rocket::texture_t> texture, rocket::fbounding_box rect, float rotation, float roundedness) {
-        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+        if (this->check_graphics_settings(rect.pos, rect.size) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
@@ -391,7 +414,7 @@ namespace rocket {
         float rotation,
         float roundedness
     ) {
-        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+        if (this->check_graphics_settings(rect.pos, rect.size) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
@@ -434,11 +457,12 @@ namespace rocket {
         glUniform2f(glGetUniformLocation(pg, "u_texPos"), uv_tex_pos.x, uv_tex_pos.y);
         glUniform2f(glGetUniformLocation(pg, "u_texSize"), uv_tex_size.x, uv_tex_size.y);
 
-        auto vos = rgl::cache_compile_vo("atlas_texture");
+        static auto vos = rgl::cache_compile_vo("atlas_texture");
+        if (!vos.first || !vos.second) std::terminate();
         rgl::draw_shader(pg, vos.first, vos.second);
     }
     void renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
-        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+        if (this->check_graphics_settings(rect.pos, rect.size) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
@@ -462,8 +486,9 @@ namespace rocket {
         rgl::draw_shader(pg, rgl::shader_use_t::rect);
     }
    
-    void renderer_2d::draw_text(const rocket::text_t &text, rocket::vec2f_t position) {
-        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+    void renderer_2d::draw_text(const rocket::text_t &text_, rocket::vec2f_t position) {
+        rocket::text_t text = text_;
+        if (this->check_graphics_settings(position, text.measure()) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
@@ -538,7 +563,7 @@ namespace rocket {
     }
 
     void renderer_2d::draw_shader(shader_t shader) {
-        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
+        if (this->check_graphics_settings({-1,-1}, {-1,-1}) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
@@ -577,10 +602,6 @@ namespace rocket {
     }
 
     void renderer_2d::draw_fps(vec2f_t pos) {
-        if (this->check_graphics_settings() == gfx_chk_result::not_drawable) {
-            rgl::add_frame_metrics_data_skipped_drawcalls(1);
-            return;
-        }
         std::string fps_text = "FPS: " + std::to_string(static_cast<int>(std::round(get_current_fps())));
 
         rocket::text_t fps = rocket::text_t(fps_text, 24, rocket::rgb_color::green());
@@ -672,6 +693,10 @@ namespace rocket {
             if (rgl::is_active_any_fbo()) {
                 rgl::reset_to_default_fbo();
             }
+        }
+
+        if (mode == render_mode_t::camera) {
+            this->impl->camera_transform = glm::mat4(1.0f);
         }
 
         for (auto it = this->active_render_modes.begin(); it != this->active_render_modes.end(); it++) {
@@ -843,7 +868,6 @@ namespace rocket {
     }
 
     void renderer_2d::end_frame() {
-        this->frame_started = false;
         if (flags.share_renderer_as_global) {
             __rallframeend();
         }
@@ -865,6 +889,7 @@ namespace rocket {
         }
 
         draw_debug_overlay(util::get_clistate().debugoverlay, this);
+        this->frame_started = false;
         auto frame_end_time = clock::now();
         this->window->swap_buffers();
         rgl::frame_metrics_t fmetrics = rgl::get_frame_metrics();

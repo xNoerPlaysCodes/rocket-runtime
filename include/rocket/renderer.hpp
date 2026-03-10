@@ -38,6 +38,7 @@ namespace rocket {
         fxaa,
 
         texture_filter_none,
+        camera
     };
 
     struct graphics_settings_t {
@@ -76,7 +77,7 @@ namespace rocket {
 
         bool splash_shown = false;
 
-        graphics_settings_t graphics_settings; 
+        graphics_settings_t graphics_settings;
 
         renderer_2d_impl_t *impl = nullptr;
 
@@ -87,7 +88,7 @@ namespace rocket {
             not_drawable,
             drawable,
         };
-        gfx_chk_result check_graphics_settings();
+        gfx_chk_result check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t sz);
     public:
         /// @brief Check if frame has begun
         bool has_frame_began();
@@ -218,8 +219,7 @@ namespace rocket {
         /// @param zero_pos The offset (zero position)
         void set_viewport_offset(vec2f_t zero_pos);
         /// @brief Sets the camera
-        /// @note Unimplemented
-        ROCKETGE__NOT_IMPLEMENTED void set_camera(camera_2d *cam);
+        void set_camera(camera_2d *cam);
         /// @brief Close the renderer2d
         /// @note Does not close the OpenGL Context fully
         void close();
@@ -251,8 +251,11 @@ namespace rocket {
         rgl::scoped_gl_texture_t get_framebuffer_texture();
         /// @brief Get the active camera
         /// @note may return nullptr
-        /// @note Unimplemented
-        ROCKETGE__NOT_IMPLEMENTED camera_2d *get_camera();
+        camera_2d *get_camera();
+        /// @brief Get the active camera (if any) matrix
+        /// @note Returned type is a glm::mat4*
+        /// @note may return nullptr
+        void* get_camera_matrix();
     public:
         /// @brief Get Current FPS
         float get_current_fps();
@@ -271,6 +274,11 @@ namespace rocket {
         float zoom = 1.f;
         /// @brief Offset from 0, 0 (Top left)
         vec2<float> offset;
+        /// @brief Rotation
+        float rotation = 0.f;
+
+        rocket::vec2f_t world_to_screen(rocket::vec2f_t world);
+        rocket::vec2f_t screen_to_world(rocket::vec2f_t screen);
     };
 }
 

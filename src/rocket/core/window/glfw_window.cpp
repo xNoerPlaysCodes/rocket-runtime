@@ -265,6 +265,7 @@ namespace rocket {
             const std::string& title,
             windowflags_t flags) {
         this->impl = new glfw_window_impl_t;
+        this->impl->obj = this;
         this->handle = new native_window_t;
         this->handle->backend = window_backend_t::glfw;
         native_window_t::set_instance(this->handle);

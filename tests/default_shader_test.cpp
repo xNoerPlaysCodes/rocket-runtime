@@ -20,6 +20,8 @@ int main(int argc, char **argv) {
     std::shared_ptr<rocket::texture_t> tx = am.get_texture(txid);
 
     r.begin_render_mode(rocket::render_mode_t::texture_filter_none);
+    r.make_ready_texture(tx);
+    r.end_render_mode(rocket::render_mode_t::texture_filter_none);
 
     int th = 0;
     while (window.is_running()) {

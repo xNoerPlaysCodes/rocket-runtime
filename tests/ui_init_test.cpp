@@ -65,6 +65,8 @@ int main(int argc, char **argv) {
     };
     astro::dialog_t dialog("Do you agree?", text_pos, { 200, 200 }, { 400, 400 }, &b1, &b2);
 
+    rocket::vec2f_t circle = { 1000, 500 };
+
     while (window.is_running()) {
         r.begin_frame();
         r.clear(rocket::rgba_color::black());
@@ -96,6 +98,9 @@ int main(int argc, char **argv) {
             }
         }
         astro::end_ui();
+        for (int i = 0; i < 10000; ++i)
+            r.draw_circle(circle, 96, rocket::rgba_color::red());
+        circle += { 2, 0 };
         r.draw_fps();
         r.end_frame();
         window.poll_events();
