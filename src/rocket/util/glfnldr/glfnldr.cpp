@@ -1,6 +1,6 @@
 #include "glfnldr.hpp"
 
-bool BKEND_init();
+bool BKEND_glew_init();
 bool BKEND_glad_init();
 
 namespace glfnldr {
@@ -10,7 +10,7 @@ namespace glfnldr {
         }
 
         if (b == backend_t::glew) {
-            return BKEND_init();
+            return BKEND_glew_init();
         }
 
         if (b == backend_t::glad) {

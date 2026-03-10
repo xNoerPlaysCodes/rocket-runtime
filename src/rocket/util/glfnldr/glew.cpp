@@ -1,7 +1,7 @@
 #ifdef ROCKETGE__GLFNLDR_BACKEND_GLEW
 #include <GL/glew.h>
 #include <rocket/runtime.hpp>
-bool BKEND_init() {
+bool BKEND_glew_init() {
     glewExperimental = true;
     GLenum status = glewInit();
 

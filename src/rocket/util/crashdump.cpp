@@ -114,10 +114,13 @@ namespace rocket {
 
     char* crash_signal(bool fatal, void *mem_addr, const char *signal, const char *message) {
         init_allocator();
+        // Go back to buf[0]
+        char_allocator->clear();
         char mem_addr_str[128] = {};
         if (mem_addr == nullptr) {
             std::snprintf(mem_addr_str, 128, "0x0");
         } else {
+            // Platform Specific
 #ifdef ROCKETGE__Platform_Windows
             std::snprintf(mem_addr_str, 128, "0x%p", mem_addr);
 #else
@@ -150,7 +153,7 @@ namespace rocket {
         char *buf = (char*) char_allocator->allocate(size);
         std::memset(buf, 0, size);
         int written = std::snprintf(buf, size,
-            (fatal) ? ">- RocketGE has crashed! -<\n" : ""
+            (fatal) ? ">- RocketGE has crashed! -<\n" : ">- RocketGE has encountered a non-fatal crash -<\n"
             "Generated on %s\n"
             "%s occurred.\n"
             "\n"
@@ -163,7 +166,7 @@ namespace rocket {
             fatal ? "A fatal exception" : "An exception",
             signal, mem_addr_str,
             message,
-            fatal ? "The program will now dump the stack trace" : ""
+            "The program will now dump the stack trace"
         );
 
         written += construct_stack_trace(buf + written, size - written);
