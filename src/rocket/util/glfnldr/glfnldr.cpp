@@ -2,20 +2,21 @@
 
 bool BKEND_glew_init();
 bool BKEND_glad_init();
+bool BKEND_libepoxy_init();
 
 namespace glfnldr {
     bool init(backend_t b) {
-        if (b == backend_t::null) {
+        if (b == backend_t::null)
             return false;
-        }
 
-        if (b == backend_t::glew) {
+        if (b == backend_t::glew)
             return BKEND_glew_init();
-        }
 
-        if (b == backend_t::glad) {
+        if (b == backend_t::glad)
             return BKEND_glad_init();
-        }
+
+        if (b == backend_t::libepoxy)
+            return BKEND_libepoxy_init();
 
         return false;
     }
@@ -23,7 +24,6 @@ namespace glfnldr {
     std::vector<glfnldr::backend_t> get_backends() {
         return {
             backend_t::null,
-            backend_t::glad,
 #ifdef ROCKETGE__GLFNLDR_BACKEND_GLEW
             backend_t::glew,
 #endif

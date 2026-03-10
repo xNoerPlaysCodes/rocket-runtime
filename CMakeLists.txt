@@ -68,6 +68,7 @@ add_library(${PROJECT_NAME}
     src/rocket/util/glfnldr/glfnldr.cpp
     src/rocket/util/glfnldr/glad.cpp
     src/rocket/util/glfnldr/glew.cpp
+    src/rocket/util/glfnldr/libepoxy.cpp
     src/rocket/util/io.cpp
     src/rocket/util/native.cpp
     src/rocket/util/threads.cpp
