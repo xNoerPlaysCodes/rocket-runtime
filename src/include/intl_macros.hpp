@@ -2,6 +2,6 @@
 #define INTL__MACROS_HPP
 
 // @brief A semantic helper for static function implementations
-#define RGE_STATIC_FUNC_IMPL
+#define r_static
 
 #endif // INTL__MACROS_HPP

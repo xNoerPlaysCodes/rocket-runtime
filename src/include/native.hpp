@@ -59,9 +59,11 @@ namespace rnative {
 
 #ifdef ROCKETGE__Platform_Linux
 #define native_gmtime(x, y) gmtime_r(x, y)
+#define native_localtime(x, y) localtime_r(x, y)
 #endif
 #ifdef ROCKETGE__Platform_Windows
 #define native_gmtime(x, y) gmtime_s(y, x)
+#define native_localtime(x, y) localtime_s(y, x)
 #endif
 
 #endif // ROCKETGE__RNATIVE_HPP

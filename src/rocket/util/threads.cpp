@@ -28,11 +28,11 @@ namespace rocket {
         this->fn = fn;
     }
 
-    RGE_STATIC_FUNC_IMPL void thread_t::schedule(std::function<void()> fn) {
+    r_static void thread_t::schedule(std::function<void()> fn) {
         rgl::schedule_gl(fn);
     }
 
-    RGE_STATIC_FUNC_IMPL void thread_t::schedule_async(std::function<void()> fn, std::chrono::milliseconds start_after) {
+    r_static void thread_t::schedule_async(std::function<void()> fn, std::chrono::milliseconds start_after) {
         std::thread([fn = std::move(fn), start_after]() {
             std::this_thread::sleep_for(start_after);
             fn();
@@ -51,7 +51,7 @@ namespace rocket {
     std::mutex pool_mutex;
     thread_pool_t pool;
 
-    RGE_STATIC_FUNC_IMPL void thread_t::run(std::function<void()> fn) {
+    r_static void thread_t::run(std::function<void()> fn) {
         // {
         //     std::lock_guard<std::mutex> _(pool_mutex);
         //     if (!pool.init) {
@@ -71,7 +71,7 @@ namespace rocket {
         std::thread(fn).detach();
     }
 
-    RGE_STATIC_FUNC_IMPL void thread_t::set_thread_name(std::string name) {
+    r_static void thread_t::set_thread_name(std::string name) {
         rnative::set_thread_name(name.c_str());
     }
 
@@ -105,7 +105,7 @@ namespace rocket {
         t.detach();
     }
 
-    RGE_STATIC_FUNC_IMPL uint64_t thread_t::get_thread_id() {
+    r_static uint64_t thread_t::get_thread_id() {
         std::stringstream ss;
         ss << std::this_thread::get_id();
         return std::stoull(ss.str());

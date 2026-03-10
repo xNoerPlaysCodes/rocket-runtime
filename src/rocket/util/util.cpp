@@ -13,6 +13,7 @@
 #include <sstream>
 #include <stack>
 #include <thread>
+#include "native.hpp"
 
 rocket::log_callback_t log_cb;
 
@@ -73,6 +74,8 @@ namespace util {
     std::string fmtd_time_str() {
         std::time_t now = std::time(nullptr);
         std::tm local_tm;
+
+        native_localtime(&now, &local_tm);
 
         #ifdef ROCKETGE__Platform_Windows
             localtime_s(&local_tm, &now);   // Windows secure version

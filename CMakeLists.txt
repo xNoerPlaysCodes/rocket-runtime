@@ -240,7 +240,11 @@ if (BUILD_TESTS)
     foreach(test_name IN LISTS TEST_NAMES)
         option(BUILD_TEST_${test_name} "Build Test ${test_name}" ON)
         if (BUILD_TEST_${test_name})
-            add_executable(${test_name} tests/${test_name}.cpp)
+            if (__rge_WINDOWS__)
+                add_executable(${test_name} WIN32 tests/${test_name}.cpp)
+            else()
+                add_executable(${test_name} tests/${test_name}.cpp)
+            endif()
 
             set_target_properties(${test_name} PROPERTIES
                 RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/tests
@@ -283,7 +287,11 @@ if (BUILD_EXAMPLES)
     foreach(example_name IN LISTS EXAMPLE_NAMES)
         option(BUILD_EXAMPLE_${example_name} "Build Example ${example_name}" ON)
         if (BUILD_EXAMPLE_${example_name})
-            add_executable(${example_name} examples/${example_name}.cpp)
+            if (__rge_WINDOWS__)
+                add_executable(${example_name} WIN32 examples/${example_name}.cpp)
+            else()
+                add_executable(${example_name} examples/${example_name}.cpp)
+            endif()
 
             set_target_properties(${example_name} PROPERTIES
                 RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/examples

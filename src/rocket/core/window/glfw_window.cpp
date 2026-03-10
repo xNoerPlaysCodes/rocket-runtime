@@ -54,7 +54,7 @@ namespace rocket {
         return static_cast<int>(b);
     }
 
-    RGE_STATIC_FUNC_IMPL monitor_t monitor_t::with_cursor() {
+    r_static monitor_t monitor_t::with_cursor() {
         monitor_t m;
         GLFWmonitor *glfwm = glfwaltGetMonitorWithCursor();
         const GLFWvidmode *glfwvm = glfwGetVideoMode(glfwm);
@@ -67,13 +67,13 @@ namespace rocket {
         return m;
     }
 
-    RGE_STATIC_FUNC_IMPL int monitor_t::get_count() {
+    r_static int monitor_t::get_count() {
         int count;
         glfwGetMonitors(&count);
         return count;
     }
 
-    RGE_STATIC_FUNC_IMPL monitor_t monitor_t::of(int idx) {
+    r_static monitor_t monitor_t::of(int idx) {
         if (idx < 0) {
             rocket::log("monitor index out of range (min is 0), using monitor with cursor", "monitor_t", "of", "fatal");
             return monitor_t::with_cursor();
@@ -236,7 +236,7 @@ namespace rocket {
             tg_win = glfwCreateWindow(1, 1, "tmp", NULL, NULL);
             float gl_version = versions[i][0] + (versions[i][1] * 0.1f);
             if (tg_win == nullptr) {
-                if (versions[i][0] == 2 && versions[i][1] == 0) {
+                if (versions[i][0] == ROCKETGE__FEATURE_MAX_GL_VERSION_MAJOR && versions[i][1] == ROCKETGE__FEATURE_MAX_GL_VERSION_MINOR) {
                     glfwSetErrorCallback(callback::glfw_error);
                     rocket::log("This graphics driver does not support the minimum OpenGL version of 2.0", "glfw_window_t", "context_creator", "fatal");
                     rocket::exit(0);
