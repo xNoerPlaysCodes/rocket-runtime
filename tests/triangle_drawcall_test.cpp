@@ -27,10 +27,10 @@ int main(int argc, char **argv) {
         r.begin_frame();
         r.clear();
         {
-            if (r.get_framecount() > 15) {
-                if (r.get_current_fps() > (r.get_fps() <= 5 ? 0 : r.get_fps() / 2) && !fin)  {
+            if (r.get_framecount() > static_cast<size_t>(r.get_fps() / 4)) {
+                if (r.get_current_fps() > (r.get_fps() <= 5 ? 0 : r.get_fps() / 2) && !fin) {
                     for (int i = 0; i < max_while_60_fps_hit; ++i) {
-                        r.draw_rectangle({ {256, 256}, {128, 128} }, rocket::rgba_color::red() );
+                        r.draw_rectangle({ {256, 256}, {128, 128} }, rocket::rgba_color::red());
                     }
                     max_while_60_fps_hit *= 1.05;
                 } else {
@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
                 }
             }
 
-            rocket::text_t fps = { fin ? ("Max: " + std::to_string((int) max_while_60_fps_hit) + " rectangles") : "Testing...", 48, rocket::rgb_color::black(), rGE__FONT_DEFAULT_MONOSPACED };
+            rocket::text_t fps = { fin ? ("Max: " + std::to_string(static_cast<int>(max_while_60_fps_hit)) + " rectangles") : "Testing...", 48, rocket::rgb_color::black(), rGE__FONT_DEFAULT_MONOSPACED };
             r.draw_text(fps, r.get_viewport_size() / 2 - fps.measure() / 2);
 
             rocket::text_t text = { "Drawcalls: " + std::to_string(r.get_drawcalls()), 24, rocket::rgb_color::black(), rGE__FONT_DEFAULT_MONOSPACED };

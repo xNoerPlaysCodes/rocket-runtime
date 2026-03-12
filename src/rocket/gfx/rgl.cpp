@@ -430,15 +430,7 @@ namespace rgl {
 
         std::string gl_version_string = std::to_string(major) + "." + std::to_string(minor);
 
-        if (major >= 4 && minor > 6) {
-            gl_version_string = "< 3.0";
-        }
-
         std::string gl_driver_string = std::string(reinterpret_cast<const char*>(glGetString(GL_VERSION)));
-
-        if (gl_version_string == "< 3.0" || gl_version_string == "0.0") {
-            gl_version_string = gl_driver_string.substr(0, 3);
-        }
 
         int max_available_tx_units = gl_get_integer(GL_MAX_TEXTURE_IMAGE_UNITS);
 
@@ -468,6 +460,9 @@ namespace rgl {
             "  Vendor: "  + gpu_vendor,
             "CPU: " + get_cpu_name() + " " + "(" + std::to_string(std::thread::hardware_concurrency()) + ")"
         };
+
+        // !LogMessage: Warning
+        // ?LogMessage: Error
 
         if (!gpu_is_modern) {
             logs.push_back("!GPU In-use is not spec-compliant or new enough, performance may be impacted and bugs may occur");

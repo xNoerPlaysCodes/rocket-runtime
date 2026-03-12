@@ -198,6 +198,13 @@ namespace rocket {
     bool log_to_stdouterr = false;
 
     void log(const std::string &log, const std::string &class_file_library_source, const std::string &function_source, const std::string &level) {
+        static bool cli_init = false;
+        if (!cli_init && !std_outstm.is_open() && !std_errstm.is_open()) {
+            cli_init = true;
+            std_outstm.open(cst::std_out);
+            std_errstm.open(cst::std_err);
+            rocket::log("rocket::init was not called, runtime features may be limited", "rocket", "log", "error");
+        }
         static const auto cli_args = util::get_clistate();
         std::ofstream *out = &std_outstm;
         std::mutex *mtx = &cout_mutex;
@@ -481,7 +488,7 @@ namespace rocket {
                     "   debug-overlay, debugoverlay, doverlay",
                     "   -> shows a debug overlay with rendering information",
                     "",
-                    "*  gl-version, glversion [2.0 -> 4.6]",
+                    "*  gl-version, glversion [3.3 -> 4.6]",
                     "   -> forces an OpenGL version to be used",
                     "",
                     "   no-splash, nosplash",
@@ -592,7 +599,7 @@ namespace rocket {
                 }
 
                 if (!found) {
-                    rocket::log("unexpected argument: " + arg + (value.empty() ? "" : " with value: " + value), "rocket", "argparse", "error");
+                    rocket::log("unexpected argument: " + (arg.empty() ? "(empty)" : arg) + (value.empty() ? "" : " with value: " + value), "rocket", "argparse", "error");
                     exit = true;
                     error = true;
                 }

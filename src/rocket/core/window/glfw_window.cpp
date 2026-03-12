@@ -213,7 +213,7 @@ namespace rocket {
 
         static auto cli_args = util::get_clistate();
 
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 8; i++) {
             rocket::log("Trying " + std::to_string(versions[i][0]) + "." + std::to_string(versions[i][1]), "glfw_window_t", "context_creator", "debug");
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versions[i][0]);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versions[i][1]);

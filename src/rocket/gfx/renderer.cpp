@@ -769,7 +769,7 @@ namespace rocket {
             glmajor = std::to_string(mj);
             glminor = std::to_string(mn);
         }
-        int versions[][19] = {
+        int versions[][2] = {
             {4,6},
             {4,5},
             {4,4},
@@ -779,19 +779,6 @@ namespace rocket {
             {4,0},
 
             {3,3},
-            {3,2},
-            {3,1},
-            {3,0},
-
-            {2,1},
-            {2,0},
-
-            {1,5},
-            {1,4},
-            {1,3},
-            {1,2},
-            {1,1},
-            {1,0}
         };
 
         static auto cli_args = util::get_clistate();
@@ -812,19 +799,11 @@ namespace rocket {
         static std::string gl_version;
         if (!gl_version_set) {
             gl_version_set = true;
-            if (may_use_gl_major_minor_version) {
-                gl_version = glmajor + "." + glminor + " (core)";
-            } else {
-                gl_version = gl_rpt_version_string + " (compat)";
-            }
+            gl_version = glmajor + "." + glminor + " (core)";
 
             if (cli_args.glversion != GL_VERSION_UNK) {
                 gl_version = double_to_str(cli_args.glversion, 1);
-                if (cli_args.glversion < 3.0) {
-                    gl_version += " (compat)";
-                } else {
-                    gl_version += " (core)";
-                }
+                gl_version += " (core)";
             }
         }
         rocket::text_t opengl_version_text = { "OpenGL Version: " + gl_version, text_size, rgb_color::white(), font };
