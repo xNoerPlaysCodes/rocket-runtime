@@ -866,8 +866,6 @@ namespace rocket {
         ren->end_scissor_mode();
     }
 
-    std::unordered_map<std::pair<float, float>, rgl::texture_id_t> scraped_vps;
-
     bool renderer_2d::has_frame_began() {
         return this->frame_started;
     }
@@ -950,22 +948,6 @@ namespace rocket {
                 rgl::update_viewport(final_viewport_position, final_viewport_size);
             }
         }
-
-        if (scraped_vps.size() > 16) {
-            scraped_vps.clear();
-        }
-
-        auto it = scraped_vps.find({ final_viewport_size.x, final_viewport_size.y });
-        if (it == scraped_vps.end()) {
-            std::pair<float, float> key = { final_viewport_size.x, final_viewport_size.y };
-            rgl::texture_id_t tex;
-            glGenTextures(1, &tex);
-        }
-
-        auto tx = scraped_vps[{ final_viewport_size.x, final_viewport_size.y }];
-        glBindTexture(GL_TEXTURE_2D, tx);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, final_viewport_size.x, final_viewport_size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-        glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, final_viewport_size.x, final_viewport_size.y);
 
         frame_counter++;
 
@@ -1079,7 +1061,6 @@ namespace rocket {
 
     float renderer_2d::get_current_fps() {
         return rgl::get_draw_metrics().avg_fps;
-        // return static_cast<int>(std::round(1.0 / get_delta_time()));
     }
 
     int renderer_2d::get_drawcalls() {
@@ -1108,7 +1089,7 @@ namespace rocket {
 
         glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, w, h);
 
-        return t;
+        return t; // Implicit move
     }
 
     camera_2d* renderer_2d::get_camera() {
