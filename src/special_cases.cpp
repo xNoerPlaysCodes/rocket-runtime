@@ -25,3 +25,9 @@
 // License: Public Domain
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "lib/stb/stb_truetype.h"
+
+// [External Library]
+// Name: tweeny
+// Author: mobius3
+// License: MIT
+// -- Already included in renderer.cpp --

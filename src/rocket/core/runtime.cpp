@@ -12,7 +12,7 @@
 #include <condition_variable>
 #include <rocket/macros.hpp>
 #include <rocket/glfnldr.hpp>
-#include <sys/types.h>
+#include <cstdlib>
 
 namespace callback {
     void bad_memory_access(void *mem_addr, int) {
@@ -145,6 +145,7 @@ LONG CALLBACK crash_handler(EXCEPTION_POINTERS *info) {
 
 void __init() {
     // AddVectoredExceptionHandler(1, &crash_handler);
+    // SEH Handler
     SetUnhandledExceptionFilter(&crash_handler);
     SetConsoleCtrlHandler(console_ctrl_handler, TRUE);
     rocket::log("Hooked SEH", "rocket", "init", "debug");
@@ -185,28 +186,8 @@ namespace rocket {
         util::set_log_callback(callback); 
     }
 
-    std::mutex log_mutex;
-    std::queue<std::string> log_queue;
-    std::condition_variable log_cv;
-
-    std::atomic<bool> log_thread_continue = false;
-    std::thread log_thread;
-
     std::vector<logger_state_t> logger_state;
     std::mutex logger_state_mutex;
-
-    void log_init() {
-        log_thread = std::thread([]() {
-            while (log_thread_continue) {
-                std::unique_lock<std::mutex> lock(log_mutex);
-                log_cv.wait(lock, [] { return !log_queue.empty() || !log_thread_continue; });
-                while (!log_queue.empty()) {
-                    std::cout << log_queue.front();
-                    log_queue.pop();
-                }
-            }
-        });
-    }
 
     std::mutex cerr_mutex;
     std::ofstream std_outstm;
@@ -299,7 +280,13 @@ namespace rocket {
         std::function<void(std::optional<std::string>)> cb;
     };
 
+    struct library_attribution_t {
+        std::string name;
+        std::string license;
+    };
+
     std::vector<custom_argument_t> registered_arguments;
+    std::vector<library_attribution_t> registered_libattributions;
 
     void set_cli_arguments(int argc, char *argv[]) {
         const std::vector<std::string> args_with_values = {
@@ -458,12 +445,17 @@ namespace rocket {
                     "> python3      (PSF)",
                     "> lzf          (BSD)",
                     "",
-#ifdef ROCKETGE__Platform_UnixCompatible
-                    "Made by noerlol with  ",
-#else
-                    "Made by noerlol with love",
-#endif
                 };
+                if (registered_libattributions.size() > 0)
+                    lines.push_back("Game Specific:");
+                for (const auto &libattribution : registered_libattributions) {
+                    lines.push_back("> " + libattribution.name + ": " + libattribution.license);
+                }
+#ifdef ROCKETGE__Platform_UnixCompatible
+                    lines.push_back("Made by noerlol with  ");
+#else
+                    lines.push_back("Made by noerlol with love");
+#endif
                 for (auto &l : lines) {
                     std::cout << l << '\n';
                 }
@@ -571,6 +563,10 @@ namespace rocket {
                 exit = true;
             } else if (arg == "software-frame-timer") {
                 args.software_frame_timer = true;
+            } else if (arg == "mesa-software") {
+#ifdef ROCKETGE__Platform_Linux
+                setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
+#endif
             }
             else {
                 bool found = false;
@@ -685,5 +681,9 @@ namespace rocket {
         a.value_type = value_type;
         a.value = true;
         registered_arguments.push_back(a);
+    }
+
+    void register_libattribution(std::string lib, std::string license) {
+        registered_libattributions.push_back({ lib, license });
     }
 }

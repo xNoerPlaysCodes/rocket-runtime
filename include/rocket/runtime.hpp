@@ -148,6 +148,9 @@ namespace rocket {
     /// @note Must be called before init
     void register_argument(std::string arg, std::function<void(std::string value)> cb, std::string description, std::string value_type);
 
+    /// @brief Registers a library to be attributed on CLI flag --version
+    void register_libattribution(std::string lib, std::string license);
+
     /// @brief Initializes Rocket Runtime
     void init(std::vector<std::string> args = {});
     /// @brief Initializes Rocket Runtime

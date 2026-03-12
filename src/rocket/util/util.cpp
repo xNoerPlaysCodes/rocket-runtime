@@ -133,13 +133,14 @@ namespace util {
 
     void close_callback() {
         for (auto l : on_close_listeners) {
+            if (l == nullptr) return;
             l();
         }
     }
 
     std::vector<std::function<void()>> &get_on_close_listeners() {
         return on_close_listeners;
-    }
+    } 
 
     rocket::vec4<float> glify_a(rocket::rgba_color color) {
         return { color.x / 255.0f, color.y / 255.0f, color.z / 255.0f, color.w / 255.0f };
@@ -328,13 +329,17 @@ cleanup:
         return out;
     }
 
-    bool validate_gl_version_string(std::string string) {
-        float val = std::stof(string);
-        return 
-            (val == 1.0f || val == 1.1f || val == 1.2f || val == 1.3f || val == 1.4f || val == 1.5f) ||
-            (val == 2.0f || val == 2.1f) ||
-            (val == 3.0f || val == 3.1f || val == 3.2f || val == 3.3f) ||
-            (val == 4.0f || val == 4.1f || val == 4.2f || val == 4.3f || val == 4.4f || val == 4.5f || val == 4.6f);
+    bool validate_gl_version_string(std::string s) {
+        int major, minor;
+        if (sscanf(s.c_str(), "%d.%d", &major, &minor) != 2)
+            return false;
+        switch (major) {
+            case 1: return minor >= 0 && minor <= 5;
+            case 2: return minor == 0 || minor == 1;
+            case 3: return minor >= 0 && minor <= 3;
+            case 4: return minor >= 0 && minor <= 6;
+            default: return false;
+        }
     }
 
     void init_memory_buffer() {
@@ -352,38 +357,87 @@ cleanup:
     }
 
     void timer_t::start() {
-        start_time = glfwGetTime();
+        start_time = clock::now();
     }
 
     void timer_t::stop() {
-        end_time = glfwGetTime();
+        end_time = clock::now();
     }
 
-    double timer_t::elapsed() {
-        if (this->end_time == 0.) {
-            return glfwGetTime() - this->start_time;
-        }
+    timer_t::clock::duration timer_t::elapsed() {
         return this->end_time - this->start_time;
     }
 
     double timer_t::ms() {
-        return elapsed() * 1000;
+        return std::chrono::duration<double, std::milli>(elapsed()).count();
     }
 
     double timer_t::us() {
-        return elapsed() * 1000 * 1000;
+        return std::chrono::duration<double, std::micro>(elapsed()).count();
     }
 
     double timer_t::sec() {
-        return elapsed();
+        return std::chrono::duration<double>(elapsed()).count();
     }
 
     double timer_t::min() {
-        return elapsed() / 60;
+        return std::chrono::duration<double, std::ratio<60>>(elapsed()).count();
     }
 
     double timer_t::hr() {
-        return elapsed() / (60 * 60);
+        return std::chrono::duration<double, std::ratio<3600>>(elapsed()).count();
+    }
+
+    std::string timer_t::to_str(unit_flag_t flag) {
+        std::ostringstream oss;
+
+        double total_us = this->us();
+
+        int days = 0, hrs = 0, mins = 0, secs = 0, ms = 0, us = 0;
+
+        constexpr auto has_flag = [](unit_flag_t flag, unit_flag_t other) -> bool {
+            return static_cast<uint8_t>(flag) & static_cast<uint8_t>(other);
+        };
+
+        if (has_flag(flag, unit_flag_t::day)) {
+            days = static_cast<int>(total_us / (1000.0 * 1000 * 60 * 60 * 24));
+            total_us -= days * 1000.0 * 1000 * 60 * 60 * 24;
+        }
+
+        if (has_flag(flag, unit_flag_t::hr)) {
+            hrs = static_cast<int>(total_us / (1000.0 * 1000 * 60 * 60));
+            total_us -= hrs * 1000.0 * 1000 * 60 * 60;
+        }
+
+        if (has_flag(flag, unit_flag_t::min)) {
+            mins = static_cast<int>(total_us / (1000.0 * 1000 * 60));
+            total_us -= mins * 1000.0 * 1000 * 60;
+        }
+
+        if (has_flag(flag, unit_flag_t::sec)) {
+            secs = static_cast<int>(total_us / (1000.0 * 1000));
+            total_us -= secs * 1000.0 * 1000;
+        }
+
+        if (has_flag(flag, unit_flag_t::ms)) {
+            ms = static_cast<int>(total_us / 1000.0);
+            total_us -= ms * 1000;
+        }
+
+        if (has_flag(flag, unit_flag_t::us)) {
+            us = static_cast<int>(total_us);
+        }
+
+        if (days) oss << days << "days, ";
+        if (hrs)  oss << hrs << "hrs, ";
+        if (mins) oss << mins << "mins, ";
+        if (secs) oss << secs << "secs, ";
+        if (ms)   oss << ms << "ms, ";
+        if (us)   oss << us << "us, ";
+
+        std::string result = oss.str();
+        if (!result.empty()) result.erase(result.size() - 2); // remove trailing ", "
+        return result.empty() ? "0us" : result;
     }
 
     void segfault() {

@@ -1,7 +1,6 @@
 #ifndef ROCKETGE__CRASHDUMP_HPP
 #define ROCKETGE__CRASHDUMP_HPP
 
-#include <string>
 namespace rocket {
     struct crash_info_t {};
 

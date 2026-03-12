@@ -1,5 +1,6 @@
 # 🚀 RocketGE
 
+# Notice: Deprecated
 |Release Type           |Cadence      |
 |-----------------------|-------------|
 |Stable Release         | 1 month     |

@@ -34,7 +34,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "tweeny.hpp"
+#include "lib/tweeny/tweeny.h"
 
 #include "binary_stuff/splash_screen.h"
 #include "binary_stuff/splash_sfx.h"
@@ -93,7 +93,16 @@ namespace rocket {
 
             rocket::logger_flush();
             gl_init_timer.stop();
-            rocket::log("OpenGL Initialized in " + std::to_string((int) gl_init_timer.ms()) + "ms", "renderer_2d", "constructor", "trace");
+            int gl_init_timer_ms;
+            std::string unit;
+            if (gl_init_timer.ms() > 1) {
+                gl_init_timer_ms = static_cast<int>(std::round(gl_init_timer.ms()));
+                unit = "ms";
+            } else {
+                gl_init_timer_ms = static_cast<int>(gl_init_timer.us());
+                unit = "us";
+            }
+            rocket::log("OpenGL Initialized in " + std::to_string(gl_init_timer_ms) + unit, "renderer_2d", "constructor", "trace");
         }
         this->flags = flags;
         if (flags.fxaa_simplified) {
@@ -132,7 +141,7 @@ namespace rocket {
         }
 
         if (thickness > 0) {
-            rgl::shader_program_t pg = rocket::get_shader(shader_id_t::circle_lines);
+    rgl::shader_program_t pg = rocket::get_shader(shader_id_t::circle_lines);
             rocket::vec2f_t viewport_size = rgl::get_viewport_size();
             glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
 
@@ -982,6 +991,13 @@ namespace rocket {
         double frametime_limit = 1.0 / (fps + 0);
 
         if (frame_duration < frametime_limit) {
+            // Dynamically wait on Unix vs Win32
+            // (Scheduler Differences)
+            // Do not modify, took a very long time to tune it
+            // and it works good enough
+            //
+            // ~60 FPS on both Win32 and Unix
+            // ~118 FPS while target is 120 FPS
             double sleep_time = frametime_limit - frame_duration;
 #ifdef ROCKETGE__Platform_Windows
             constexpr double spin_wait_time = 0.005;
@@ -1011,13 +1027,13 @@ namespace rocket {
         {
             double diff = frame_duration - frametime_limit;
 
-            auto double_to_str = [](double d, int decimal_places = 6) -> std::string {
+            constexpr static auto double_to_str = [](double d, int decimal_places = 6) -> std::string {
                 std::stringstream ss;
                 ss << std::fixed << std::setprecision(decimal_places) << d;
                 return ss.str();
             };
 
-            const double threshold = 0.05;
+            const double threshold = 0.003;
             if (diff > threshold) {
                 rocket::log("frame took " + double_to_str(diff * 1000., 2) + "ms more than expected", "renderer_2d", "end_frame", "debug");
             }
