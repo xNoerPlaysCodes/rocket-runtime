@@ -467,10 +467,11 @@ namespace rocket {
         glUniform2f(glGetUniformLocation(pg, "u_texPos"), uv_tex_pos.x, uv_tex_pos.y);
         glUniform2f(glGetUniformLocation(pg, "u_texSize"), uv_tex_size.x, uv_tex_size.y);
 
-        static auto vos = rgl::cache_compile_vo("atlas_texture");
+        static const auto vos = rgl::cache_compile_vo("atlas_texture");
         if (!vos.first || !vos.second) std::terminate();
         rgl::draw_shader(pg, vos.first, vos.second);
     }
+
     void renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
         if (this->check_graphics_settings(rect.pos, rect.size) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
@@ -480,7 +481,7 @@ namespace rocket {
         if (lines) {
             rocket::vec2f_t pos = rect.pos;
             rocket::vec2f_t size = rect.size;
-            float thickness = 1.f; // hardcode TODO
+            constexpr float thickness = 1.f;
             // top
             draw_rectangle({ pos, { size.x, thickness } }, color);
             // bottom

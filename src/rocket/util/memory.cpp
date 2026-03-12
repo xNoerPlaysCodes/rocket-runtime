@@ -32,7 +32,8 @@ namespace rocket {
 
     frame_allocator_t::~frame_allocator_t() {
         if (this->ownership) {
-            delete[] this->buffer;
+            delete[] this->ogbuffer;
+            this->ogbuffer = nullptr;
             this->buffer = nullptr;
         }
     }

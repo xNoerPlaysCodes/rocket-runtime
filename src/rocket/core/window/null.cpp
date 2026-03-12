@@ -25,6 +25,8 @@ namespace rocket {
         this->handle = new native_window_t;
         this->handle->w = nullptr;
         this->handle->backend = window_backend_t::null;
+        this->wbi_impl = new window_backend_i_impl_t;
+        this->wbi_impl->obj = this;
         native_window_t::set_instance(this->handle);
 
         this->size = size;
@@ -99,6 +101,11 @@ namespace rocket {
         if (this->handle != nullptr) {
             delete this->handle;
             this->handle = nullptr;
+        }
+
+        if (this->wbi_impl != nullptr) {
+            delete this->wbi_impl;
+            this->wbi_impl = nullptr;
         }
     }
 
