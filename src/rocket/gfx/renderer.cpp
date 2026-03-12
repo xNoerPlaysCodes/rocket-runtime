@@ -46,13 +46,14 @@
 
 namespace rocket {
     rgl::fbo_t fxaa_fbo = rGL_FBO_INVALID;
-    rgl::shader_program_t fxaa_shader;
+    rgl::shader_program_t fxaa_shader = rGL_SHADER_INVALID;
     
     util::global_state_cliargs_t ovr_clistate;
 
     renderer_2d::renderer_2d(window_backend_i *window, int fps, renderer_flags_t flags) {
         this->impl = new renderer_2d_impl_t;
         this->impl->obj = this;
+        window->wbi_impl->bound_renderer2d = this;
         this->window = window;
         this->fps = fps;
 
@@ -1121,6 +1122,16 @@ namespace rocket {
     }
 
     void renderer_2d::close() {
+        if (window == nullptr) return;
+        if (window->wbi_impl != nullptr) {
+            if (window->wbi_impl->bound_renderer2d == this) {
+                window->wbi_impl->bound_renderer2d = nullptr;
+            }
+        } else {
+            rocket::log("window destructor ran before renderer_2d destructor, incorrect order of deletion",
+                    "renderer_2d", "close", "warn");
+        }
+
         window = nullptr; // unbind window
 
         if (util::get_global_renderer_2d() == this) {
@@ -1134,6 +1145,8 @@ namespace rocket {
             delete this->impl;
             this->impl = nullptr;
         }
+        fxaa_shader = rGL_SHADER_INVALID;
+        fxaa_fbo = rGL_FBO_INVALID;
         util::glinit(false);
     }
 

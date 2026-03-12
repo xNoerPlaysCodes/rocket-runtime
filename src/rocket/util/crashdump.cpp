@@ -112,7 +112,7 @@ namespace rocket {
     char* crash_signal(bool fatal, void *mem_addr, const char *signal, const char *message) {
         init_allocator();
         // Go back to buf[0]
-        char_allocator->clear();
+        // char_allocator->clear();
         char mem_addr_str[128] = {};
         if (mem_addr == nullptr) {
             std::snprintf(mem_addr_str, 128, "0x0");
@@ -149,8 +149,12 @@ namespace rocket {
         constexpr size_t size = 1 * 1024 * 1024;
         char *buf = (char*) char_allocator->allocate(size);
         std::memset(buf, 0, size);
+        const char* header = fatal
+            ? ">- RocketGE has crashed! -<\n"
+            : ">- RocketGE has encountered a non-fatal crash -<\n";
+
         int written = std::snprintf(buf, size,
-            (fatal) ? ">- RocketGE has crashed! -<\n" : ">- RocketGE has encountered a non-fatal crash -<\n"
+            "%s"
             "Generated on %s\n"
             "%s occurred.\n"
             "\n"
@@ -159,6 +163,7 @@ namespace rocket {
             "\n"
             "%s\n\n",
 
+            header,
             get_time_string(),
             fatal ? "A fatal exception" : "An exception",
             signal, mem_addr_str,

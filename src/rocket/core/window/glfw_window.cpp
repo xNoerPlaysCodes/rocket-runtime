@@ -258,6 +258,9 @@ namespace rocket {
             windowflags_t flags) {
         this->impl = new glfw_window_impl_t;
         this->impl->obj = this;
+        this->wbi_impl = new window_backend_i_impl_t;
+        this->wbi_impl->obj = this;
+
         this->handle = new native_window_t;
         this->handle->backend = window_backend_t::glfw;
         native_window_t::set_instance(this->handle);
@@ -682,6 +685,10 @@ namespace rocket {
         if (this->impl != nullptr) {
             delete this->impl;
             this->impl = nullptr;
+        }
+        if (this->wbi_impl != nullptr) {
+            delete this->wbi_impl;
+            this->wbi_impl = nullptr;
         }
         rocket::log("Window closed", "glfw_window_t", cxf, "info");
     }

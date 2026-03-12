@@ -48,6 +48,11 @@ namespace rocket {
         glfw_window_t *obj;
     };
 
+    struct window_backend_i_impl_t {
+        window_backend_i *obj;
+        renderer_2d *bound_renderer2d = nullptr;
+    };
+
     struct asset_manager_impl_t {
         asset_manager_t *obj;
     };

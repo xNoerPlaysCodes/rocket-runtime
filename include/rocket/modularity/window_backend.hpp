@@ -13,10 +13,12 @@ namespace rgl {
 }
 
 namespace rocket {
+    struct window_backend_i_impl_t;
     struct native_window_t;
     class window_backend_i {
     public:
-        native_window_t *handle;
+        native_window_t *handle = nullptr;
+        window_backend_i_impl_t *wbi_impl = nullptr;
         rocket::vec2i_t size = { 0, 0 };
         std::string title = "Null";
 
