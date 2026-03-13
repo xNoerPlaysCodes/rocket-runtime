@@ -6,7 +6,7 @@
 
 #include <string_view>
 #include <rocket/runtime.hpp>
-#include <exception>
+#include <native.hpp>
 
 #if defined(_MSC_VER)
 #define r_FuncSig __FUNCSIG__
@@ -41,7 +41,7 @@ namespace r {
         if (!(x)) { \
             constexpr std::string_view fn = r_FuncSig; \
             rocket::log("Assertion Failed: " r_Stringify(x), std::string(r::class_or_file(fn, __FILE__)), __func__, "fatal"); \
-            std::terminate(); \
+            rnative::exit_now(1); \
         } \
     } while (0)
 #else
