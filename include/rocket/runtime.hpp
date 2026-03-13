@@ -28,10 +28,12 @@
 #define ROCKETGE__FEATURE_MAX_GL_VERSION_MAJOR 4
 #define ROCKETGE__FEATURE_MAX_GL_VERSION_MINOR 6
 
+#define ROCKETGE__FEATURE_RECOMMENDED_GL_VERSION_MAJOR 4
+#define ROCKETGE__FEATURE_RECOMMENDED_GL_VERSION_MINOR 1
 
 /// @brief The minimum OpenGL version required for
 ///     operation
-/// @note Versions less than 3.0 do not operate
+/// @note Versions less than this do not operate
 ///         stably and may result in crashes
 ///         and/or unintended behavior
 #define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 3

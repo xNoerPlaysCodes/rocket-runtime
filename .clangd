@@ -3,5 +3,6 @@ CompileFlags:
     "-I/usr/include/miniz",
     "-std=gnu++23",
     "-Wall",
-    "-Wpedantic"
+    "-Wpedantic",
+    "-Wc++11-narrowing"
   ]

@@ -10,7 +10,7 @@
 #include <utility>
 #include <string>
 #include <vector>
-#define rGL_TXID_INVALID 0
+#define rGL_TXID_INVALID (4294967295U)
 #define rGL_SHADERLOC_INVALID -1
 #define rGL_SHADER_INVALID 0
 #define rGL_VAO_INVALID 0
@@ -78,18 +78,51 @@ namespace rgl {
         blend_mode_t blend_mode;
     };
 
+    struct texture_unit_handle_t {
+        unsigned int unit = -1;
+    };
+
     struct scoped_gl_texture_t {
     private:
-        std::unique_ptr<void, std::function<void(void*)>> cleanup;
+        texture_unit_handle_t unit_handle;
+        bool had_allocd_unit_handle = false;
     public:
         unsigned int id = rGL_TXID_INVALID;
     public:
         /// @brief Binds the texture to an available
         ///        texture unit (if available)
+        /// @return int texture_unit (GL_TEXTUREn)
+        ///         -1 if allocation for texture unit failed
         int bind();
     public:
         scoped_gl_texture_t();
+        ~scoped_gl_texture_t();
+
+        scoped_gl_texture_t(const scoped_gl_texture_t&) = delete;
+        scoped_gl_texture_t& operator=(const scoped_gl_texture_t&) = delete;
+
+        // move constructor
+        scoped_gl_texture_t(scoped_gl_texture_t&& other) noexcept
+            : id(other.id) {
+            other.id = rGL_TXID_INVALID; // invalidate source
+        }
+
+        scoped_gl_texture_t& operator=(scoped_gl_texture_t&& other) noexcept {
+            if (this != &other) {
+                id = other.id;
+                other.id = rGL_TXID_INVALID; // invalidate source
+            }
+            return *this;
+        }
     };
+
+    /// @brief Allocate Texture Unit
+    /// @param dst Unit to write to
+    /// @return bool success
+    bool alloc_texture_unit(texture_unit_handle_t &dst);
+    /// @brief Free Texture Unit
+    /// @param dst Which unit
+    void free_texture_unit(texture_unit_handle_t &dst);
 
     std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t bkend = ROCKETGE__GLFNLDR_BACKEND_ENUM, rocket::window_backend_i *win = nullptr);
     void init_gl_wtd();

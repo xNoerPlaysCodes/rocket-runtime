@@ -1,5 +1,4 @@
 #include <crashdump.hpp>
-#include <cstring>
 #include <fstream>
 #include <limits>
 #include <native.hpp>
@@ -7,12 +6,11 @@
 #include "util.hpp"
 #include <iostream>
 #include <string>
-#include <queue>
 #include <mutex>
-#include <condition_variable>
 #include <rocket/macros.hpp>
 #include <rocket/glfnldr.hpp>
 #include <cstdlib>
+#include <intl_macros.hpp>
 
 namespace callback {
     void bad_memory_access(void *mem_addr, int) {

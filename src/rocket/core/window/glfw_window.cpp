@@ -199,7 +199,8 @@ namespace rocket {
     float get_max_context_gl_version() {
         glfwSetErrorCallback(nullptr);
         GLFWwindow *tg_win;
-        int versions[][2] = {
+        constexpr int len = 8;
+        int versions[len][2] = {
             {4,6},
             {4,5},
             {4,4},
@@ -213,11 +214,11 @@ namespace rocket {
 
         static auto cli_args = util::get_clistate();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < len; i++) {
             rocket::log("Trying " + std::to_string(versions[i][0]) + "." + std::to_string(versions[i][1]), "glfw_window_t", "context_creator", "debug");
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, versions[i][0]);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, versions[i][1]);
-            float ver = (float)versions[i][0] + (float)versions[i][1] / 10.f;
+            float ver = static_cast<float>(versions[i][0]) + static_cast<float>(versions[i][1]) / 10.f;
             if (ver >= 3.2) {
                 glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
             } else {

@@ -7,6 +7,7 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <limits>
 #include <mutex>
 #include <queue>
 #include <rocket/modularity/window_backend.hpp>
@@ -20,13 +21,15 @@
 #include "glfnldr.hpp"
 #include <cpuid.h>
 #include "internal_types.hpp"
+#include "intl_macros.hpp"
 
 namespace glutil {
     std::string glenum_str(GLenum e) {
         switch (e) {
             default: {
-                rocket::log("case not handled", "glutil", "glenum_str", "error");
+                rocket::log("case not handled", "glutil", "glenum_str", "fatal");
                 return "GLENUM_STR__CASE_NOT_HANDLED";
+                r_assert(false);
             }
             // Blend Stuff
             case GL_ZERO: return "GL_ZERO";
@@ -52,16 +55,21 @@ namespace glutil {
 namespace rgl {
     scoped_gl_texture_t::scoped_gl_texture_t() {
         glGenTextures(1, &id);
-        cleanup = { nullptr, [this](void*) { glDeleteTextures(1, &id); } };
     }
 
     int scoped_gl_texture_t::bind() {
-        const int slot = 1;
-        const int gl_slot = GL_TEXTURE0 + slot;
-        glActiveTexture(gl_slot);
+        this->had_allocd_unit_handle = true;
+        alloc_texture_unit(this->unit_handle);
+        glActiveTexture(this->unit_handle.unit);
         glBindTexture(GL_TEXTURE_2D, this->id);
 
-        return slot;
+        return this->unit_handle.unit;
+    }
+
+    scoped_gl_texture_t::~scoped_gl_texture_t() {
+        glDeleteTextures(1, &this->id);
+        if (this->had_allocd_unit_handle)
+            free_texture_unit(this->unit_handle);
     }
 }
 
@@ -79,6 +87,33 @@ namespace rgl {
 
     rocket::native_window_t *get_main_context() {
         return gl_main_ctx;
+    }
+
+    struct {
+        bool freelist[32] = {1};
+        uint8_t max_idx = 0;
+        std::mutex freelist_mutex;
+    } texture_unit_pool;
+
+    bool alloc_texture_unit(texture_unit_handle_t &dst) {
+        std::lock_guard<std::mutex> _(texture_unit_pool.freelist_mutex);
+        for (uint8_t i = 0; i < texture_unit_pool.max_idx; ++i) {
+            if (texture_unit_pool.freelist[i]) {
+                texture_unit_pool.freelist[i] = false;
+                dst = texture_unit_handle_t { static_cast<unsigned int>(GL_TEXTURE0) + i };
+                
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void free_texture_unit(texture_unit_handle_t &dst) {
+        std::lock_guard<std::mutex> _(texture_unit_pool.freelist_mutex);
+        r_assert(texture_unit_pool.freelist[dst.unit - GL_TEXTURE0] == false);
+        texture_unit_pool.freelist[dst.unit - GL_TEXTURE0] = false;
+        dst.unit = std::numeric_limits<unsigned int>::max();
     }
 
     std::string float_str(float value) {
@@ -463,6 +498,9 @@ namespace rgl {
 
         // !LogMessage: Warning
         // ?LogMessage: Error
+
+        texture_unit_pool.max_idx = max_available_tx_units;
+        std::fill(std::begin(texture_unit_pool.freelist), std::begin(texture_unit_pool.freelist) + max_available_tx_units, true);
 
         if (!gpu_is_modern) {
             logs.push_back("!GPU In-use is not spec-compliant or new enough, performance may be impacted and bugs may occur");
@@ -922,7 +960,15 @@ namespace rgl {
         cached_square_vertices_vos.clear();
         cached_float_vertices_vos.clear();
 
-        std::lock_guard<std::mutex> _(scheduled_mutex);
-        while (scheduled.size() != 0) scheduled.pop();
+        {
+            std::lock_guard<std::mutex> _(texture_unit_pool.freelist_mutex);
+            texture_unit_pool.max_idx = 0;
+            std::fill(std::begin(texture_unit_pool.freelist), std::end(texture_unit_pool.freelist), false);
+        }
+
+        {
+            std::lock_guard<std::mutex> _(scheduled_mutex);
+            while (scheduled.size() != 0) scheduled.pop();
+        }
     }
 }

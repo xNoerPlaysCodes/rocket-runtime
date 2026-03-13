@@ -43,6 +43,7 @@
 #include "internal_types.hpp"
 
 #include "plugin.hpp"
+#include <intl_macros.hpp>
 
 namespace rocket {
     rgl::fbo_t fxaa_fbo = rGL_FBO_INVALID;
@@ -51,6 +52,10 @@ namespace rocket {
     util::global_state_cliargs_t ovr_clistate;
 
     renderer_2d::renderer_2d(window_backend_i *window, int fps, renderer_flags_t flags) {
+        r_assert(window != nullptr);
+        r_assert(fps != 0);
+        r_assert(flags.fxaa_simplified == false);
+
         this->impl = new renderer_2d_impl_t;
         this->impl->obj = this;
         window->wbi_impl->bound_renderer2d = this;
@@ -177,7 +182,7 @@ namespace rocket {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
-        const char *vsrc = R"(
+        constexpr const char *vsrc = R"(
             #version 330 core
             layout (location = 0) in vec2 aPos;
 
@@ -190,7 +195,7 @@ namespace rocket {
             }
         )";
 
-        const char *fsrc = R"(
+        constexpr const char *fsrc = R"(
             #version 330 core
             in vec4 vColor;
             out vec4 FragColor;
@@ -500,7 +505,7 @@ namespace rocket {
     void renderer_2d::draw_text(const rocket::text_t &text_, rocket::vec2f_t position) {
         rocket::text_t text = text_;
         if (this->check_graphics_settings(position, text.measure()) == gfx_chk_result::not_drawable) {
-            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            rgl::add_frame_metrics_data_skipped_drawcalls(text.text.size());
             return;
         }
         static auto cli_args = util::get_clistate();
@@ -516,7 +521,7 @@ namespace rocket {
         glUseProgram(shader_program);
 
         // Set uniform color
-        rgl::shader_location_t color_loc = glGetUniformLocation(shader_program, "u_color");
+        static const rgl::shader_location_t color_loc = glGetUniformLocation(shader_program, "u_color");
         glUniform3f(color_loc,
             text.color.x / 255.0f,
             text.color.y / 255.0f,
