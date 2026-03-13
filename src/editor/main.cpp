@@ -43,8 +43,15 @@
 #include <optional>
 #include <QSvgRenderer>
 #include <QClipboard>
+#include <internal_types.hpp>
 
 #include "code_generator.hpp"
+namespace rocket {
+class qt_widget_t;
+}
+struct qt_widget_impl_t {
+    rocket::qt_widget_t *obj;
+};
 
 struct drawcall_t {
     int order;
@@ -133,6 +140,14 @@ protected:
             "Windowing: " + platform.name,
             "Platform: "  + platform.rge_name,
         }) rocket::log(l, "qt_widget_t", "constructor", "info");
+        this->impl = new qt_widget_impl_t;
+        this->impl->obj = this;
+        this->wbi_impl = new window_backend_i_impl_t;
+        this->wbi_impl->obj = this;
+
+        this->handle = new native_window_t;
+        this->handle->backend = window_backend_t::glfw;
+        native_window_t::set_instance(this->handle);
         ren = new renderer_2d(this, 60, { .show_splash = false });
     }
 
@@ -179,6 +194,8 @@ protected:
 
 public:
     bool paused = false;
+private:
+    qt_widget_impl_t *impl = nullptr;
 };
 
 } // namespace rocket

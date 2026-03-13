@@ -408,10 +408,7 @@ namespace rocket {
             return;
         }
 
-        if (texture == nullptr) {
-            rocket::log("texture is null", "renderer_2d", "draw_texture", "error");
-            return;
-        }
+        r_assert(texture != nullptr);
 
         rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(rect.pos, rect.size, rotation, roundedness);
         glActiveTexture(GL_TEXTURE0);
