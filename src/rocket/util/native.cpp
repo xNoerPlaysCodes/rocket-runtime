@@ -3,6 +3,7 @@
 #include <cstring>
 #include <filesystem>
 #include <fstream>
+#include <exception>
 #include "../../include/rocket/macros.hpp"
 #include "rocket/runtime.hpp"
 
@@ -66,7 +67,7 @@ namespace linux_backend {
 
 #ifdef ROCKETGE__Platform_UnixCompatible
 namespace unix_backend {
-    void exit_now(int code) {
+    [[noreturn]] void exit_now(int code) {
         _exit(code);
     }
 
@@ -85,7 +86,7 @@ namespace windows_backend {
         SetCurrentProcessExplicitAppUserModelID(app_id);
     }
 
-    void exit_now(int code) {
+    [[noreturn]] void exit_now(int code) {
         ExitProcess(code);
     }
 
@@ -171,6 +172,9 @@ namespace rnative {
         unix_backend::exit_now(code);
 #elifdef ROCKETGE__Platform_Windows
         windows_backend::exit_now(code);
+#else
+        (void) code;
+        std::terminate();
 #endif
     }
 

@@ -33,7 +33,7 @@
 #endif
 
 // Groups
-#if defined(__linux__) || defined(__linux) || defined(__APPLE__) || defined(__MACH__) || defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+#if defined(ROCKETGE__Platform_Linux) || defined(ROCKETGE__Platform_macOS) || defined(ROCKETGE__Platform_Windows)
 #define ROCKETGE__Platform_Desktop
 #endif
 

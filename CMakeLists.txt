@@ -203,7 +203,7 @@ endif()
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) # Legacy definition
     target_compile_definitions(${PROJECT_NAME} PRIVATE ROCKETGE__DEBUG_BUILD)
-    target_compile_options(${PROJECT_NAME} PRIVATE -O0 -g -Wall)
+    target_compile_options(${PROJECT_NAME} PRIVATE -O0 -g -Wall -Wextra -Wpedantic)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -O3 -flto)
     set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)

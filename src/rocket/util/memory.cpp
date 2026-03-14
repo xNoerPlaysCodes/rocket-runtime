@@ -1,4 +1,5 @@
 #include <rocket/memory.hpp>
+#include <intl_macros.hpp>
 
 namespace rocket {
     frame_allocator_t::frame_allocator_t(uint8_t *buffer, size_t sz) {
@@ -23,6 +24,7 @@ namespace rocket {
         size = aligned(size, alignment);
         uint8_t *buf = this->buffer;
         this->buffer += size;
+        r_assert(this->buffer - this->ogbuffer <= this->size);
         return buf;
     }
 

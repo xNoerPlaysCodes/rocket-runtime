@@ -77,12 +77,6 @@ namespace util {
 
         native_localtime(&now, &local_tm);
 
-        #ifdef ROCKETGE__Platform_Windows
-            localtime_s(&local_tm, &now);   // Windows secure version
-        #else
-            localtime_r(&now, &local_tm);   // POSIX thread-safe version
-        #endif
-
         std::ostringstream oss;
         oss << std::put_time(&local_tm, "%H:%M:%S");
         return oss.str();
@@ -133,7 +127,7 @@ namespace util {
 
     void close_callback() {
         for (auto l : on_close_listeners) {
-            if (l == nullptr) return;
+            if (l == nullptr) continue;
             l();
         }
     }
@@ -362,9 +356,11 @@ cleanup:
 
     void timer_t::stop() {
         end_time = clock::now();
+        this->ended = true;
     }
 
     timer_t::clock::duration timer_t::elapsed() {
+        if (!this->ended) return clock::now() - this->start_time;
         return this->end_time - this->start_time;
     }
 

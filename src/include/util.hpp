@@ -124,6 +124,8 @@ namespace util {
         time_point<clock> start_time;
         time_point<clock> end_time;
 
+        bool ended = false;
+
         clock::duration elapsed();
     public:
         timer_t(bool start = true);

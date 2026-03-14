@@ -854,9 +854,9 @@ namespace rgl {
         state.bound_texture_unit = active_txunit;
 
         rgl::vao_t vao;
-        glGetIntegerv(GL_VERTEX_ARRAY_BINDING, reinterpret_cast<GLint*>(&vao));
+        glGetIntegerv(GL_VERTEX_ARRAY_BINDING, std::bit_cast<GLint*>(&vao));
         rgl::vbo_t vbo;
-        glGetIntegerv(GL_ARRAY_BUFFER_BINDING, reinterpret_cast<GLint*>(&vbo));
+        glGetIntegerv(GL_ARRAY_BUFFER_BINDING, std::bit_cast<GLint*>(&vbo));
         state.bound_vo = std::make_pair(vao, vbo);
 
         glGetIntegerv(GL_CURRENT_PROGRAM, reinterpret_cast<GLint*>(&state.active_shader));

@@ -13,7 +13,7 @@ namespace rnative {
     void linux_set_class_name(const char *str);
 
 
-    void exit_now(int code);
+    [[noreturn]] void exit_now(int code);
     void init();
 
     /// @brief On Posix Systems name may only be 15 bytes and 1 NULL long

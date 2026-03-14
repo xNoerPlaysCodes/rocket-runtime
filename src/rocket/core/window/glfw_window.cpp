@@ -18,6 +18,7 @@
 #include <GLFW/glfw3.h>
 #include "internal_types.hpp"
 #include "window.hpp"
+#include "intl_macros.hpp"
 
 namespace callback {
     void glfw_error(int error, const char* description) {
@@ -74,17 +75,11 @@ namespace rocket {
     }
 
     r_static monitor_t monitor_t::of(int idx) {
-        if (idx < 0) {
-            rocket::log("monitor index out of range (min is 0), using monitor with cursor", "monitor_t", "of", "fatal");
-            return monitor_t::with_cursor();
-        }
+        r_assert(idx > 0);
         int count;
         GLFWmonitor **monitors = glfwGetMonitors(&count);
 
-        if (idx >= count) {
-            rocket::log("monitor index out of range (max is " + std::to_string(count) + ")", "monitor_t", "of", "fatal");
-            return {};
-        }
+        r_assert(idx < count);
 
         monitor_t m;
         m.idx = idx;

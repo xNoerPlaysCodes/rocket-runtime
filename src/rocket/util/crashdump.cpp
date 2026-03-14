@@ -28,7 +28,7 @@ namespace rocket {
 
         native_gmtime(&t, &tm);
 
-        static char *buf = (char*) char_allocator->allocate(64);
+        char *buf = (char*) char_allocator->allocate(64);
         for (int i = 0; i < 64; ++i) buf[i] = 0;
 
         int written = std::snprintf(
