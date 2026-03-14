@@ -1,4 +1,4 @@
-#ifndef RocketGE__scripting_hpp
+#if !defined(RocketGE__scripting_hpp) && defined(ROCKETGE__BUILD_SCRIPTING)
 #define RocketGE__scripting_hpp
 
 #include <filesystem>

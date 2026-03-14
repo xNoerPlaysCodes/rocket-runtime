@@ -6,6 +6,12 @@
 - Make beautiful UIs with Astro or RocketUI
 - Have your ideas come to life quickly with Python scripting
 
+**Supported Platforms:**
+    - Windows
+    - macOS
+    - Linux
+    - Android (COMING SOON!)
+
 # Examples
 
 ## `basic window`

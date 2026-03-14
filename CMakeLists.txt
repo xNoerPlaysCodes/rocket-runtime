@@ -25,6 +25,7 @@ option(BUILD_EDITOR "Build Editor" OFF)
 option(__rge_WINDOWS__ OFF)
 
 option(BUILD_ASTRO "Build Astro [ui]" ON)
+option(BUILD_SCRIPTING "Build Scripting [py]" ON)
 option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
 
 if (BUILD_ASTRO)
@@ -32,6 +33,13 @@ if (BUILD_ASTRO)
         src/astro/astroui.cpp
     )
     add_compile_definitions(ROCKETGE__BUILD_ASTRO)
+endif()
+
+if (BUILD_SCRIPTING)
+    set(SCRIPTING_SOURCES
+        src/rocket/util/scripting.cpp
+    )
+    add_compile_definitions(ROCKETGE__BUILD_SCRIPTING)
 endif()
 
 if (GLFNLDR_BACKEND STREQUAL "GLEW")
@@ -76,7 +84,6 @@ add_library(${PROJECT_NAME}
     src/rocket/util/crashdump.cpp
     src/rocket/util/shader_provider.cpp
     src/rocket/util/persistence.cpp
-    src/rocket/util/scripting.cpp
     src/rocket/util/data_structures.cpp
     src/rocket/util/memory.cpp
     src/rocket/util/util.cpp
@@ -101,6 +108,9 @@ add_library(${PROJECT_NAME}
 
     # AstroUI
     ${ASTRO_SOURCES}
+
+    # Python Scripting
+    ${SCRIPTING_SOURCES}
 )
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE include)
@@ -225,7 +235,6 @@ if (BUILD_TESTS)
         triangle_drawcall_test
         default_shader_test
         persistence_test
-        scripting_test
         texture_atlas_test
         argument_test
         state_reset_test
@@ -235,6 +244,12 @@ if (BUILD_TESTS)
     if (BUILD_ASTRO)
         set(TEST_NAMES ${TEST_NAMES}
             ui_init_test
+        )
+    endif()
+
+    if (BUILD_SCRIPTING)
+        set(TEST_NAMES ${TEST_NAMES}
+            scripting_test
         )
     endif()
 
@@ -358,4 +373,5 @@ if (BUILD_EXAMPLES)
     endforeach()
 endif()
 message("Build Astro: ${BUILD_ASTRO}")
+message("Build Scripting: ${BUILD_SCRIPTING}")
 message("Build Editor: ${BUILD_EDITOR}")
