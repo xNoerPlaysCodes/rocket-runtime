@@ -154,8 +154,8 @@ if (__rge_WINDOWS__)
         ${CMAKE_SOURCE_DIR}/windeps/miniz
         ${CMAKE_SOURCE_DIR}/windeps/openal-soft
         ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
+        ${CMAKE_SOURCE_DIR}/windeps/angle/lib        # ADD
     )
-
     include_directories(
         ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/include
         ${CMAKE_SOURCE_DIR}/windeps/glfw/include
@@ -166,19 +166,20 @@ if (__rge_WINDOWS__)
         ${CMAKE_SOURCE_DIR}/windeps/pybind11/include
         ${CMAKE_SOURCE_DIR}/windeps/nlohmann-json/include
         ${CMAKE_SOURCE_DIR}/windeps/glm
+        ${CMAKE_SOURCE_DIR}/windeps/angle/include     # ADD
     )
-
     message("Building for Win32")
     
     target_link_libraries(${PROJECT_NAME} PRIVATE
         opengl32
         glew32
+        libEGL.dll.lib
+        libGLESv2.dll.lib
         glfw3dll
         OpenAL32
         miniz
         SDL2
         python314
-
         winmm
         stdc++exp
     )
@@ -264,6 +265,7 @@ if (BUILD_TESTS)
                     ${CMAKE_SOURCE_DIR}/windeps/miniz
                     ${CMAKE_SOURCE_DIR}/windeps/openal-soft
                     ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
+                    ${CMAKE_SOURCE_DIR}/windeps/angle/lib
                 )
             else()
                 target_link_libraries(${test_name} PRIVATE Python3::Python)
@@ -309,6 +311,7 @@ if (BUILD_EXAMPLES)
                     ${CMAKE_SOURCE_DIR}/windeps/miniz
                     ${CMAKE_SOURCE_DIR}/windeps/openal-soft
                     ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
+                    ${CMAKE_SOURCE_DIR}/windeps/angle/lib
                 )
             endif()
 

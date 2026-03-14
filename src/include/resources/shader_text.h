@@ -5,7 +5,8 @@ GL_MinimumVersion: 3.3
 Name: Text
 
 VertexStart
-    #version 330 core
+    #version 300 es
+    precision highp float;
     layout(location = 0) in vec2 aPos;
     layout(location = 1) in vec2 aTex;
     out vec2 TexCoord;
@@ -16,7 +17,8 @@ VertexStart
 VertexEnd
 
 FragmentStart
-    #version 330 core
+    #version 300 es
+    precision highp float;
     in vec2 TexCoord;
     out vec4 FragColor;
     uniform vec3 u_color;

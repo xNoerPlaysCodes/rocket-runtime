@@ -5,7 +5,7 @@ GL_MinimumVersion: 3.3
 Name: FXAA
 
 VertexStart
-    #version 330 core
+    #version 300 es
     layout(location = 0) in vec2 aPos;
     layout(location = 1) in vec2 aTexCoord;
 
@@ -18,7 +18,7 @@ VertexStart
 VertexEnd
 
 FragmentStart
-    #version 330 core
+    #version 300 es
     in vec2 vTexCoord;
     out vec4 FragColor;
 

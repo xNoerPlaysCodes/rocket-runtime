@@ -5,7 +5,8 @@ GL_MinimumVersion: 3.3
 Name: Texture Atlas
 
 VertexStart
-    #version 330 core
+    #version 300 es
+    precision highp float;
     layout(location = 0) in vec2 aPos;
     out vec2 v_uv;
     uniform mat4 u_transform;
@@ -17,7 +18,8 @@ VertexStart
 VertexEnd
 
 FragmentStart
-    #version 330 core
+    #version 300 es
+    precision highp float;
     in vec2 v_uv;
     out vec4 FragColor;
 
