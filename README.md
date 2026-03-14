@@ -7,10 +7,10 @@
 - Have your ideas come to life quickly with Python scripting
 
 **Supported Platforms:**
-    - Windows
-    - macOS
-    - Linux
-    - Android (COMING SOON!)
+- Windows
+- macOS
+- Linux
+- Android (COMING SOON!)
 
 # Examples
 
