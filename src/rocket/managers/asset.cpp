@@ -76,10 +76,7 @@ namespace rocket {
         this->loaded = true;
     }
     
-    void audio_t::play(float vol, bool loop, std::function<void(audio_t *)> on_finish) {
-        if (this == nullptr) {
-            return;
-        }
+    void audio_t::play(float vol, bool loop, std::function<void()> on_finish) {
         if (this->playing) {
             rocket::log("audio is already playing", "audio_t", "play", "error");
             return;
@@ -123,16 +120,18 @@ namespace rocket {
             std::this_thread::sleep_for(16ms);
         } while (state != AL_PLAYING);
 
-        finish_thread = std::thread([this, on_finish, loop]() {
+        unsigned int src_cpy = this->source;
+
+        finish_thread = std::thread([on_finish, loop, src_cpy]() {
             ALint state;
             do {
-                alGetSourcei(this->source, AL_SOURCE_STATE, &state);
+                alGetSourcei(src_cpy, AL_SOURCE_STATE, &state);
                 std::this_thread::sleep_for(16ms);
             } while (state == AL_PLAYING);
 
             if (!loop) {
-                this->playing = false;
-                on_finish(this);
+                // [TODO] Somehow make this->playing false
+                on_finish();
             }
         });
 

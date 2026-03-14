@@ -93,7 +93,7 @@ namespace rocket {
         /// @param vol Volume 0-100 [+100 is allowed]
         /// @param loop Loop audio
         /// @param on_finish Callback when audio finishes
-        void play(float vol = 30.f, bool loop = false, std::function<void(audio_t *)> on_finish = nullptr);
+        void play(float vol = 30.f, bool loop = false, std::function<void()> on_finish = nullptr);
 
         /// @brief If audio is already playing,
         /// @brief seeks the audio to the given time
@@ -207,7 +207,7 @@ namespace rocket {
         std::unordered_map<std::shared_ptr<audio::sound_t>, std::chrono::time_point<std::chrono::high_resolution_clock>> sounds;
 
         std::thread cleanup_thread;
-        assetid_t current_id;
+        std::atomic<assetid_t> current_id;
 
         std::atomic_bool cleanup_running;
         std::atomic_bool __thread_cleanup_running;

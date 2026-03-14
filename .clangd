@@ -1,8 +1,0 @@
-CompileFlags:
-  Add: [
-    "-I/usr/include/miniz",
-    "-std=gnu++23",
-    "-Wall",
-    "-Wpedantic",
-    "-Wc++11-narrowing"
-  ]

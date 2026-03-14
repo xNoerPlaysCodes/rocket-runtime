@@ -557,7 +557,7 @@ namespace rocket {
     using vec3_t = vec3f_t;
     using vec4_t = vec4f_t;
 
-    using assetid_t     =       uint16_t;
+    using assetid_t     =       uint32_t;
 }
 
 #endif
