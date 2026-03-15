@@ -10,7 +10,7 @@
 - Windows
 - macOS
 - Linux
-- Android (COMING SOON!)
+- Android
 
 # Examples
 
