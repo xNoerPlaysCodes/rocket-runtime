@@ -59,6 +59,13 @@
 #include <shader_provider.hpp>
 #include <unordered_map>
 #include <resources/autogen_shader_includes.h>
+#include "rocket/macros.hpp"
+#if defined(ROCKETGE__Platform_Android)
+    #include <GLES3/gl32.h>
+    #include <EGL/egl.h>
+#else
+    #include <GL/glew.h>
+#endif
 // NOTE: no autogen_shader_dispatch.h up here
 
 namespace rocket {
@@ -94,6 +101,11 @@ namespace rocket {
     }
 
     void shader_provider_reset() {
+        for (auto &[k, v] : shader_map) {
+            if (v.glprogram != rGL_SHADER_INVALID) {
+                glDeleteShader(v.glprogram);
+            }
+        }
         shader_map.clear();
     }
 }

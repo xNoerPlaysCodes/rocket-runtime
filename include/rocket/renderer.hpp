@@ -38,7 +38,8 @@ namespace rocket {
         fxaa,
 
         texture_filter_none,
-        camera
+        camera,
+        render_cache
     };
 
     struct graphics_settings_t {

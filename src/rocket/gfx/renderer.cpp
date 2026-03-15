@@ -1173,6 +1173,7 @@ namespace rocket {
         }
         fxaa_shader = rGL_SHADER_INVALID;
         fxaa_fbo = rGL_FBO_INVALID;
+        this->impl->render_cache_fbo = rGL_FBO_INVALID;
         util::glinit(false);
     }
 
