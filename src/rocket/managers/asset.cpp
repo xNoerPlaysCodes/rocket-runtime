@@ -349,17 +349,56 @@ namespace rocket {
         return id;
     }
 
-    // [FIXME] add loading sound from memory
     assetid_t asset_manager_t::load_sound(std::vector<uint8_t> mem) {
+        init_audio_ctx();
         assetid_t id = current_id++;
-        std::shared_ptr<audio::sound_t> sound = std::make_shared<audio::sound_t>();
-        sound->id = id;
-        sound->loaded = true;
-
-        rocket::log("not implemented", "asset_manager_t", "load_sound", "fixme");
-
-        // sounds.insert({sound, std::chrono::high_resolution_clock::now()});
-        return -1;
+        std::shared_ptr<audio_t> audio = std::make_shared<audio_t>();
+        audio->id = id;
+        audio->loaded = true;
+        audio->buffer = new ALuint;
+        audio->loaded = true;
+        alGenBuffers(1, audio->buffer);
+        ALenum error = alGetError();
+        if (error != AL_NO_ERROR) {
+            rocket::log("failed to generate OpenAL buffer", "OpenAL", "alGenBuffers", "error");
+            delete audio->buffer;
+            audio->buffer = nullptr;
+            current_id--;
+            return -1;
+        }
+        int channels, samplerate;
+        short *output;
+        int samples;
+        stb_vorbis* vorbis = stb_vorbis_open_memory(mem.data(), (int)mem.size(), nullptr, nullptr);
+        if (!vorbis) {
+            rocket::log("failed to load sound from memory", "stb_vorbis", "stb_vorbis_open_memory", "error");
+            delete audio->buffer;
+            audio->buffer = nullptr;
+            current_id--;
+            return -1;
+        }
+        stb_vorbis_info info = stb_vorbis_get_info(vorbis);
+        channels = info.channels;
+        samplerate = info.sample_rate;
+        samples = stb_vorbis_stream_length_in_samples(vorbis);
+        output = new short[samples * channels];
+        int numSamples = stb_vorbis_get_samples_short_interleaved(vorbis, channels, output, samples * channels);
+        stb_vorbis_close(vorbis);
+        ALenum format = (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+        alBufferData(*audio->buffer, format, output, numSamples * sizeof(short) * channels, samplerate);
+        delete[] output;
+        error = alGetError();
+        if (error != AL_NO_ERROR) {
+            rocket::log("failed to load sound from memory properly", "OpenAL", "alBufferData", "error");
+            alDeleteBuffers(1, audio->buffer);
+            delete audio->buffer;
+            audio->buffer = nullptr;
+            current_id--;
+            return -1;
+        }
+        audio->path = "[memory]";
+        audios.insert({audio, std::chrono::high_resolution_clock::now()});
+        return id;
     }
     
     assetid_t asset_manager_t::load_audio(std::string path) {

@@ -176,15 +176,65 @@ int rocket_main(int argc, char **argv, rocket_arguments_t);
 #include <android_native_app_glue.h>
 #include <android/asset_manager.h>
 #include <android/log.h>
+#include <android/native_activity.h>
+#include <android/window.h>
 #include <fstream>
 #include <jni.h>
+/**
+ * @def ROCKETGE__ANDROID_NOTRUEFULLSCREEN
+ * @brief Define this macro to disable rendering behind the display notch/cutout on Android.
+ *
+ * By default, RocketGE renders in true fullscreen mode, extending into the notch/cutout area.
+ * Defining this macro before including this header will instead leave a black bar where the
+ * notch is, ensuring no game content is obscured by the cutout.
+ *
+ * Usage:
+ * @code
+ * #define ROCKETGE__ANDROID_NOTRUEFULLSCREEN
+ * #include <rocket/runtime.hpp>
+ * @endcode
+ */
+#ifndef ROCKETGE__ANDROID_NOTRUEFULLSCREEN
+#define ROCKETGE__INT_JNICUTOUTLOGIC \
+    jmethodID getAttributes = env->GetMethodID(windowClass, "getAttributes", "()Landroid/view/WindowManager$LayoutParams;"); \
+    jobject attrs = env->CallObjectMethod(window, getAttributes); \
+    jclass attrsClass = env->GetObjectClass(attrs); \
+    jfieldID cutoutField = env->GetFieldID(attrsClass, "layoutInDisplayCutoutMode", "I"); \
+    env->SetIntField(attrs, cutoutField, 3); \
+    jmethodID setAttributes = env->GetMethodID(windowClass, "setAttributes", "(Landroid/view/WindowManager$LayoutParams;)V"); \
+    env->CallVoidMethod(window, setAttributes, attrs);
+#else
+#define ROCKETGE__INT_JNICUTOUTLOGIC
+#endif
 #define DEFINE_PLATFORM_MAIN \
     android_app *g_android_app = nullptr; \
+    extern "C" void RocketGE_hide_navigation(android_app* app) { \
+        JNIEnv* env; \
+        app->activity->vm->AttachCurrentThread(&env, nullptr); \
+        jobject activity = app->activity->clazz; \
+        jclass activityClass = env->GetObjectClass(activity); \
+        jmethodID getWindow = env->GetMethodID(activityClass, "getWindow", "()Landroid/view/Window;"); \
+        jobject window = env->CallObjectMethod(activity, getWindow); \
+        jclass windowClass = env->GetObjectClass(window); \
+        jmethodID getInsetsController = env->GetMethodID(windowClass, "getInsetsController", "()Landroid/view/WindowInsetsController;"); \
+        jobject controller = env->CallObjectMethod(window, getInsetsController); \
+        jclass controllerClass = env->GetObjectClass(controller); \
+        jmethodID hide = env->GetMethodID(controllerClass, "hide", "(I)V"); \
+        env->CallVoidMethod(controller, hide, 0x02); \
+        jmethodID setBehavior = env->GetMethodID(controllerClass, "setSystemBarsBehavior", "(I)V"); \
+        env->CallVoidMethod(controller, setBehavior, 2); \
+        \
+        ROCKETGE__INT_JNICUTOUTLOGIC \
+        app->activity->vm->DetachCurrentThread(); \
+    } \
     extern "C" void android_main(android_app *app) { \
         const char *argv[] = { "RocketGE", "--debug-overlay", nullptr }; \
         int argc = 2; \
         g_android_app = app; \
         app->onAppCmd = [](android_app *app, int32_t cmd) {}; \
+        ANativeActivity_setWindowFlags(app->activity, \
+            AWINDOW_FLAG_LAYOUT_IN_SCREEN | AWINDOW_FLAG_LAYOUT_NO_LIMITS, 0); \
+        RocketGE_hide_navigation(app); \
         while (app->window == nullptr) { \
             int events; \
             android_poll_source *src; \
