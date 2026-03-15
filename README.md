@@ -18,7 +18,11 @@
 ```cpp
 #include <rocket/runtime.hpp>
 
-int main() {
+// Make sure to use rocket_main instead of main
+// with extra rocket_arguments_t argument
+int rocket_main(int argc, char **argv, rocket_arguments_t) {
+    // Initialize the RocketGE Library
+    rocket::init(argc, argv);
     // Initialize a native window
     rocket::window_t window = { {1280, 720}, "Basic Window" };
 
@@ -56,6 +60,10 @@ int main() {
     window.close();
     r2d.close();
 }
+
+// RocketGE will handle platform-specific main functions for you
+// and make your game cross-platform!
+DEFINE_PLATFORM_MAIN
 ```
 
 <img src="https://github.com/xNoerPlaysCodes/rocket-runtime/blob/master/res/basic_window.png?raw=true">
@@ -70,7 +78,10 @@ int main() {
 #include "rocket/window.hpp"
 #include <chrono>
 
-int main() {
+// Make sure to use rocket_main instead of main
+// with extra rocket_arguments_t argument
+int rocket_main(int argc, char **argv, rocket_arguments_t) {
+    rocket::init(argc, argv);
     rocket::window_t window({1280, 720}, "rgeExample - Custom Shader");
     rocket::renderer_2d r(&window, 60);
 
@@ -123,6 +134,10 @@ int main() {
     r.close();
     window.close();
 }
+
+// RocketGE will handle platform-specific main functions for you
+// and make your game cross-platform!
+DEFINE_PLATFORM_MAIN
 ```
 <img src="https://github.com/xNoerPlaysCodes/rocket-runtime/blob/master/res/custom_shader.png?raw=true">
 
