@@ -87,8 +87,8 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
     rocket::window_t window({1280, 720}, "rgeExample - Custom Shader");
     rocket::renderer_2d r(&window, 60);
 
-    const char *vcode = R"(
-        #version 300 es
+    const char *vcode = R"(#version 300 es
+        precision mediump float;
         layout(location = 0) in vec2 aPos;
     
         out vec2 fragPos;
@@ -98,8 +98,8 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
             gl_Position = vec4(aPos, 0.0, 1.0);
         }
     )";
-    const char *fcode = R"(
-        #version 300 es
+    const char *fcode = R"(#version 300 es
+        precision mediump float;
         out vec4 FragColor;
         in vec2 fragPos;
 

@@ -2,7 +2,6 @@
 #include "rocket/shader.hpp"
 #include "rocket/types.hpp"
 #include "rocket/window.hpp"
-#include <chrono>
 
 // Make sure to use rocket_main instead of main
 // with extra rocket_arguments_t argument
@@ -10,20 +9,21 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
     rocket::init(argc, argv);
     rocket::window_t window({1280, 720}, "rgeExample - Custom Shader");
     rocket::renderer_2d r(&window, 60);
+    // ASD
 
-    const char *vcode = R"(
-        #version 330 core
+    const char *vcode = R"(#version 300 es
+        precision mediump float;
         layout(location = 0) in vec2 aPos;
-    
+
         out vec2 fragPos;
-    
+
         void main() {
             fragPos = aPos;
             gl_Position = vec4(aPos, 0.0, 1.0);
         }
     )";
-    const char *fcode = R"(
-        #version 330 core
+    const char *fcode = R"(#version 300 es
+        precision mediump float;
         out vec4 FragColor;
         in vec2 fragPos;
 

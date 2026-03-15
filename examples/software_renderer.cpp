@@ -38,7 +38,7 @@ void render(framebuffer_t *fb, rocket::renderer_2d *r) {
 }
 
 
-int main() {
+int rocket_main(int argc, char **argv, rocket_arguments_t) {
     rocket::window_t window({1280, 720}, "rgeExample - Software Renderer", {
         .resizable = false
     });
@@ -67,3 +67,5 @@ int main() {
         window.poll_events();
     }
 }
+
+DEFINE_PLATFORM_MAIN

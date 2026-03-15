@@ -3,23 +3,6 @@
 #include "rocket/window.hpp"
 #include <rocket/runtime.hpp>
 
-#include "rocket/macros.hpp"
-#ifdef ROCKETGE__Platform_Android
-#include <android/log.h>
-
-#define LOG_TAG "RocketGE"
-
-// Log levels: ANDROID_LOG_DEBUG, ANDROID_LOG_INFO, ANDROID_LOG_WARN, ANDROID_LOG_ERROR
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
-#else
-#define LOGI(...) (void)0
-#define LOGE(...) (void)0
-#define LOGD(...) (void)0
-#endif
-
-
 int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     rocket::init(argc, argv);
     bool test_mode = false;
