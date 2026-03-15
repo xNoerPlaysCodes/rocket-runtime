@@ -309,19 +309,24 @@ namespace rocket {
         if (!this->impl->surface)
             return;
 
-        eglMakeCurrent(
-            this->impl->display,
-            EGL_NO_SURFACE,
-            EGL_NO_SURFACE,
-            EGL_NO_CONTEXT
-        );
+        if (this->impl->display != EGL_NO_DISPLAY) {
+            if (!eglMakeCurrent(this->impl->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT)) {
+                int err = eglGetError();
+                rocket::log("eglMakeCurrent failed: " + std::to_string(err), "android_app_t", "destroy_surface", "error");
+            }
 
-        eglDestroySurface(
-            this->impl->display,
-            this->impl->surface
-        );
+            if (!eglDestroySurface(this->impl->display, this->impl->surface)) {
+                int err = eglGetError();
+                rocket::log("eglDestroySurface failed: " + std::to_string(err), "android_app_t", "destroy_surface", "error");
+            }
+        }
 
         this->impl->surface = EGL_NO_SURFACE;
+
+        if (g_android_app->window) {
+            ANativeWindow_release(g_android_app->window);
+            g_android_app->window = nullptr;
+        }
 #endif
     }
 

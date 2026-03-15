@@ -430,9 +430,6 @@ namespace rocket {
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             }
-
-            GLenum err = glGetError();
-rocket::log("texture upload err: " + std::to_string(err) + " glid: " + std::to_string(texture->glid) + " size: " + std::to_string(texture->size.x) + "x" + std::to_string(texture->size.y) + " channels: " + std::to_string(texture->channels), "renderer", "make_ready_texture", "debug");
         }
     }
 

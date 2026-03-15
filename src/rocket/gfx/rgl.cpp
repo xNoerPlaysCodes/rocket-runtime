@@ -27,6 +27,8 @@
 #include "glfnldr.hpp"
 #ifdef ROCKETGE__Platform_Desktop
 #include <cpuid.h>
+#else
+#include <sys/system_properties.h>
 #endif
 #include "internal_types.hpp"
 #include "intl_macros.hpp"
@@ -326,6 +328,10 @@ namespace rgl {
         __get_cpuid(0x80000003, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+16, info, 16);
         __get_cpuid(0x80000004, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+32, info, 16);
         return std::string(cpu);
+#elifdef ROCKETGE__Platform_Android
+        char value[PROP_VALUE_MAX];
+        __system_property_get("ro.soc.model", value);
+        return std::string(value);
 #endif
         return std::string("Querying CPU Name is not supported on this platform");
     }

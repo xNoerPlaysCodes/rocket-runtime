@@ -6,10 +6,21 @@
 #include <rocket/persistence.hpp>
 #include <rocket/runtime.hpp>
 #include <nlohmann/json.hpp>
+#include <intl_macros.hpp>
+
+#ifdef ROCKETGE__Platform_Android
+#include <android/log.h>
+#include <android/native_window.h>
+#include <android_native_app_glue.h>
+#include <android/input.h>
+
+extern android_app* g_android_app;
+#endif
 
 namespace nm = nlohmann;
 namespace rocket::storage {
     std::filesystem::path get_data_storage_path() {
+#ifndef ROCKETGE__Platform_Android
         std::filesystem::path path;
         if (char *home = getenv("USERPROFILE"); home != nullptr) {
             path = std::filesystem::path(home) / "AppData" / "Roaming";
@@ -21,6 +32,10 @@ namespace rocket::storage {
         }
 
         return path;
+#else
+        r_assert(g_android_app != nullptr);
+        return std::filesystem::path(g_android_app->activity->internalDataPath);
+#endif
     }
 
     std::filesystem::path data_path;
@@ -92,7 +107,12 @@ namespace rocket::storage {
 
             if (buffer.size() == 0) return;
 
-            j = nm::json::from_cbor(buffer);
+            try {
+                j = nm::json::from_cbor(buffer);
+            } catch (...) {
+                rocket::log("Persistent storage corrupted", "rocket::storage", "init", "error");
+                return;
+            }
 
             f.close();
 

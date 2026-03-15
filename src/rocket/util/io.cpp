@@ -186,7 +186,7 @@ namespace rocket {
 #ifdef ROCKETGE__Platform_Android
             if (button == mouse_button::finger) {
                 auto state = ::util::get_last_touch_state();
-                return state.pressed();
+                return state.down();
             }
 #endif
             bool cur_actual = ::util::mouse_pressed(button);
@@ -225,9 +225,9 @@ namespace rocket {
         }
 
         bool mouse_state(mouse_button button, keystate_t state) {
-            if (state.down()) return ::util::mouse_down(button);
-            else if (state.pressed()) return ::util::mouse_pressed(button);
-            else if (state.released()) return ::util::mouse_released(button);
+            if (state.down()) return mouse_down(button);
+            else if (state.pressed()) return mouse_pressed(button);
+            else if (state.released()) return mouse_released(button);
             rocket::log("[fixme] unimplemented key_state", "rocket::io", "mouse_state", "fixme");
             return false;
         }
