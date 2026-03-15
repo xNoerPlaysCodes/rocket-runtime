@@ -25,10 +25,12 @@
 #include "rocket/window.hpp"
 #include "util.hpp"
 #include "glfnldr.hpp"
-#ifdef ROCKETGE__Platform_Desktop
+#ifdef ROCKETGE__Platform_Linux
 #include <cpuid.h>
 #else
+#ifdef ROCKETGE__Platform_Android
 #include <sys/system_properties.h>
+#endif
 #endif
 #include "internal_types.hpp"
 #include "intl_macros.hpp"
@@ -321,7 +323,7 @@ namespace rgl {
 
     
     std::string get_cpu_name() {
-#ifdef ROCKETGE__Platform_Desktop
+#ifdef ROCKETGE__Platform_Linux
         char cpu[64] = {};
         unsigned int info[4];
         __get_cpuid(0x80000002, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu, info, 16);

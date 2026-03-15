@@ -24,10 +24,10 @@
 extern android_app *g_android_app;
 rocket::android_app_impl_t *g_android_app_impl = nullptr;
 
-#endif
-
 #include <EGL/egl.h>
 #include <GLES3/gl32.h>
+
+#endif
 
 #ifndef EGL_GL_COLORSPACE_KHR
 #define EGL_GL_COLORSPACE_KHR           0x309D

@@ -80,7 +80,7 @@ namespace rocket {
         uint64_t thread_id = thread_id_gen();
         auto main_ctx = rgl::get_main_context();
 
-#ifdef ROCKETGE__Platform_Desktop
+#ifdef ROCKETGE__Platform_Linux
 
         if (this->ctx != nullptr) {
             if (this->ctx->w != nullptr && this->ctx->backend == window_backend_t::glfw) {

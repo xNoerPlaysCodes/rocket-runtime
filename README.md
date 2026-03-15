@@ -2,7 +2,7 @@
 ![RocketGE Splash Gif](https://github.com/xNoerPlaysCodes/rocket-runtime/raw/refs/heads/master/res/splash.gif)
 
 **A lightweight and powerful 2D Game Engine**
-- Make Games with OpenGL
+- Make Games with OpenGL (ES)
 - Make beautiful UIs with Astro or RocketUI
 - Have your ideas come to life quickly with Python scripting
 

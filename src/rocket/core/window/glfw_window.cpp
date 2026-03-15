@@ -501,7 +501,9 @@ namespace rocket {
         image.height = texture->size.y;
 
         if (int platform = glfwGetPlatform(); platform == GLFW_PLATFORM_WAYLAND) {
+#ifdef ROCKETGE__Platform_Linux
             rnative::wayland_set_window_icon((GLFWwindow*)this->glfw_window->w, image);
+#endif
             return;
         }
  
