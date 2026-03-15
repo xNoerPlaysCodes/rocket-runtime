@@ -382,8 +382,7 @@ namespace rocket {
 
 #ifdef ROCKETGE__Platform_Android
     r_static monitor_t monitor_t::with_cursor() {
-        monitor_t m;
-        return m;
+        return monitor_t::of(0);
     }
 
     r_static int monitor_t::get_count() {
@@ -393,6 +392,15 @@ namespace rocket {
 
     r_static monitor_t monitor_t::of(int idx) {
         monitor_t m;
+        ANativeWindow *w = g_android_app->window;
+        int32_t width = ANativeWindow_getWidth(w);
+        int32_t height= ANativeWindow_getHeight(w);
+
+        m.size = { width, height };
+        m.bluebits = 8;
+        m.redbits = 8;
+        m.greenbits = 8;
+        m.refreshrate = 60; // TODO Get from Choreographer Callback?
         return m;
     }
 #endif

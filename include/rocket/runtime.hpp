@@ -228,7 +228,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t);
         app->activity->vm->DetachCurrentThread(); \
     } \
     extern "C" void android_main(android_app *app) { \
-        const char *argv[] = { "RocketGE", "--debug-overlay", nullptr }; \
+        const char *argv[] = { "RocketGE", "--", nullptr }; \
         int argc = 2; \
         g_android_app = app; \
         app->onAppCmd = [](android_app *app, int32_t cmd) {}; \
