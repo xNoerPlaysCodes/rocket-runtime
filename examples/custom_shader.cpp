@@ -59,6 +59,8 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
 
     r.close();
     window.close();
+
+    return 0;
 }
 
 // RocketGE will handle platform-specific main functions for you

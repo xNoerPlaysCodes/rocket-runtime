@@ -88,7 +88,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
     rocket::renderer_2d r(&window, 60);
 
     const char *vcode = R"(
-        #version 330 core
+        #version 300 es
         layout(location = 0) in vec2 aPos;
     
         out vec2 fragPos;
@@ -99,7 +99,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
         }
     )";
     const char *fcode = R"(
-        #version 330 core
+        #version 300 es
         out vec4 FragColor;
         in vec2 fragPos;
 
