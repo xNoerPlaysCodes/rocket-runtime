@@ -22,10 +22,6 @@
 #define rGL_MAX_RECOMMENDED_DRAWCALLS 5000
 #define rGL_MAX_RECOMMENDED_TRICOUNT 5000
 
-#ifdef RGL_EXPOSE_NATIVE_LIB
-#include <GLFW/glfw3.h>
-#endif
-
 // Unstable API & ABI, use at your own risk
 namespace rgl {
     using vao_t = unsigned int;

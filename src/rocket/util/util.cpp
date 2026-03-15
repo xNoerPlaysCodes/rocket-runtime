@@ -13,7 +13,12 @@
 #include <sstream>
 #include <stack>
 #include <thread>
-#include "native.hpp"
+#ifndef ROCKETGE__Platform_Android
+#include <GLFW/glfw3.h>
+#endif
+#include "intl_macros.hpp"
+#include <native.hpp>
+#include "rocket/macros.hpp"
 
 rocket::log_callback_t log_cb;
 
@@ -40,6 +45,9 @@ void* (*new_op)(std::size_t) = ::operator new;
 void* (*newarr_op)(std::size_t) = ::operator new[];
 void (*del_op)(void*) = ::operator delete;
 void (*delarr_op)(void*) = ::operator delete[];
+
+static rocket::vec2d_t last_touch_pos = {0, 0};
+static rocket::io::keystate_t last_touch_state = {false, false};
 
 namespace util {
     bool is_glinit = false;
@@ -185,6 +193,7 @@ namespace util {
     }
 
     rocket::vec2<double> mouse_pos() {
+#ifndef ROCKETGE__Platform_Android
         double x, y;
         if (glfwGetCurrentContext() == nullptr) {
             return { 0, 0 };
@@ -192,41 +201,49 @@ namespace util {
             glfwGetCursorPos(glfwGetCurrentContext(), &x, &y);
         }
         return { x, y };
+#endif
+        // bool sdl2_get_touch_position = false;
+        // r_assert(sdl2_get_touch_position);
+        return {0, 0};
     }
 
     void dispatch_event(rocket::io::key_event_t event, bool addsm) {
         for (auto l : _key_listeners) {
             l(event);
-            if (addsm) {
-                simulated_kevents.push_back(event);
-            }
+        }
+
+
+        if (addsm) {
+            simulated_kevents.push_back(event);
         }
     }
 
     void dispatch_event(rocket::io::mouse_event_t event, bool addsm) {
         for (auto l : _mouse_listeners) {
             l(event);
-            if (addsm) {
-                simulated_mevents.push_back(event);
-            }
+        }
+        if (addsm) {
+            simulated_mevents.push_back(event);
         }
     }
 
     void dispatch_event(rocket::io::mouse_move_event_t event, bool addsm) {
         for (auto l : _mouse_move_listeners) {
             l(event);
-            if (addsm) {
-                simulated_mmevents.push_back(event);
-            }
+        }
+
+        if (addsm) {
+            simulated_mmevents.push_back(event);
         }
     }
 
     void dispatch_event(rocket::io::scroll_offset_event_t event, bool addsm) {
         for (auto l : _scroll_offset_listeners) {
             l(event);
-            if (addsm) {
-                simulated_sevents.push_back(event);
-            }
+        }
+
+        if (addsm) {
+            simulated_sevents.push_back(event);
         }
     }
 
@@ -246,6 +263,12 @@ namespace util {
         return simulated_sevents;
     }
 
+    rocket::vec2d_t get_last_touch_pos() { return last_touch_pos; }
+    void set_last_touch_pos(rocket::vec2d_t pos) { last_touch_pos = pos; }
+
+    rocket::io::keystate_t get_last_touch_state() { return last_touch_state; }
+    void set_last_touch_state(rocket::io::keystate_t state) { last_touch_state = state; }
+
     bool glinitialized() {
         return is_glinit;
     }
@@ -259,6 +282,7 @@ namespace util {
     }
 
     void io_update_end_frame() {
+#ifndef ROCKETGE__Platform_Android
         if (glfwGetCurrentContext() == nullptr) goto cleanup;
         for (auto &k : kstates) {
             k.second.previous = k.second.current;
@@ -268,6 +292,9 @@ namespace util {
             m.second.previous = m.second.current;
             m.second.current = glfwGetMouseButton(glfwGetCurrentContext(), static_cast<int>(m.first)) == GLFW_PRESS;
         }
+#endif
+
+        goto cleanup;
 
 cleanup:
         simulated_kevents.clear();

@@ -12,7 +12,7 @@
 #define ROCKETGE__Platform_Windows
 #endif
 
-#if defined(__linux__) || defined(__linux)
+#if (defined(__linux__) || defined(__linux)) && !defined(__ANDROID__)
 #define ROCKETGE__Platform_Linux
 #endif
 

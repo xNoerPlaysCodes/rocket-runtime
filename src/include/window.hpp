@@ -12,6 +12,7 @@ namespace rocket {
         void null_cpl_init();
         void glfw_cpl_init();
         void embedded_cpl_init();
+        void android_cpl_init();
     }
 }
 

@@ -6,8 +6,11 @@
 #include <util.hpp>
 #include <native.hpp>
 #include <rocket/macros.hpp>
+#include <native.hpp>
 
+#ifdef ROCKETGE__Platform_Desktop
 #include <stacktrace>
+#endif
 #include <new>
 
 namespace rocket {
@@ -45,7 +48,7 @@ namespace rocket {
     }
 
     int construct_stack_trace(char* buf, size_t len) {
-#ifdef ROCKETGE__Platform_UnixCompatible
+#if defined(ROCKETGE__Platform_UnixCompatible) && defined(ROCKETGE__Platform_Desktop)
         if (len == 0) return 0;
 
         auto st = std::stacktrace::current();

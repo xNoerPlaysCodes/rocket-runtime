@@ -14,7 +14,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 
 #DebugMode
-project(${PROJECT_NAME} CXX)
+project(${PROJECT_NAME} CXX C)
 
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -23,6 +23,7 @@ option(BUILD_TESTS "Build Tests" ON)
 option(BUILD_EXAMPLES "Build Examples" ON)
 option(BUILD_EDITOR "Build Editor" OFF)
 option(__rge_WINDOWS__ OFF)
+option(__rge_ANDROID__ OFF)
 
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 option(BUILD_SCRIPTING "Build Scripting [py]" ON)
@@ -48,6 +49,9 @@ if (GLFNLDR_BACKEND STREQUAL "GLEW")
 elseif(GLFNLDR_BACKEND STREQUAL "LIBEPOXY")
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_LIBEPOXY)
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::libepoxy)
+elseif(GLFNLDR_BACKEND STREQUAL "ANDROID")
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ANDROID)
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::android)
 else()
     message(FATAL_ERROR "Unknown GLfnldr backend: ${GLFNLDR_BACKEND}, you must compile with 1 valid backend")
 endif()
@@ -55,6 +59,28 @@ endif()
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(RNATIVE_SOURCES
         src/rnative/xdg-toplevel-icon-v1-client-protocol.c
+        src/rnative/xdg-shell-client-protocol.c
+    )
+endif()
+
+set(WINDOWING_SOURCES
+    src/rocket/core/window/glfw_window.cpp
+    src/rocket/core/window/android_app.cpp
+)
+
+set(GLFNLDR_SOURCES
+    src/rocket/util/glfnldr/glad.cpp
+    src/rocket/util/glfnldr/glew.cpp
+    src/rocket/util/glfnldr/libepoxy.cpp
+)
+
+if (__rge_ANDROID__)
+    set(WINDOWING_SOURCES
+       src/rocket/core/window/android_app.cpp
+    )
+
+    set(GLFNLDR_SOURCES
+        src/rocket/util/glfnldr/android.cpp
     )
 endif()
 
@@ -74,9 +100,7 @@ add_library(${PROJECT_NAME}
 
     # Utilities
     src/rocket/util/glfnldr/glfnldr.cpp
-    src/rocket/util/glfnldr/glad.cpp
-    src/rocket/util/glfnldr/glew.cpp
-    src/rocket/util/glfnldr/libepoxy.cpp
+    ${GLFNLDR_SOURCES}
     src/rocket/util/io.cpp
     src/rocket/util/native.cpp
     src/rocket/util/threads.cpp
@@ -92,7 +116,7 @@ add_library(${PROJECT_NAME}
     src/rocket/internal/internal_types.cpp
 
     # Core
-    src/rocket/core/window/glfw_window.cpp
+    ${WINDOWING_SOURCES}
     src/rocket/core/window/null.cpp
     src/rocket/core/window.cpp
     src/rocket/core/runtime.cpp
@@ -112,6 +136,18 @@ add_library(${PROJECT_NAME}
     # Python Scripting
     ${SCRIPTING_SOURCES}
 )
+
+if (__rge_ANDROID__)
+    add_library(native_app_glue STATIC
+        ${ANDROID_NDK}/sources/android/native_app_glue/android_native_app_glue.c
+    )
+    set_target_properties(native_app_glue PROPERTIES
+        LANGUAGE C
+    )
+    target_include_directories(native_app_glue PUBLIC
+        ${ANDROID_NDK}/sources/android/native_app_glue
+    )
+endif()
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE include)
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE /usr/include/miniz)
@@ -164,7 +200,6 @@ if (__rge_WINDOWS__)
         ${CMAKE_SOURCE_DIR}/windeps/miniz
         ${CMAKE_SOURCE_DIR}/windeps/openal-soft
         ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
-        ${CMAKE_SOURCE_DIR}/windeps/angle/lib        # ADD
     )
     include_directories(
         ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/include
@@ -176,15 +211,12 @@ if (__rge_WINDOWS__)
         ${CMAKE_SOURCE_DIR}/windeps/pybind11/include
         ${CMAKE_SOURCE_DIR}/windeps/nlohmann-json/include
         ${CMAKE_SOURCE_DIR}/windeps/glm
-        ${CMAKE_SOURCE_DIR}/windeps/angle/include     # ADD
     )
     message("Building for Win32")
     
     target_link_libraries(${PROJECT_NAME} PRIVATE
         opengl32
         glew32
-        libEGL.dll.lib
-        libGLESv2.dll.lib
         glfw3dll
         OpenAL32
         miniz
@@ -193,6 +225,23 @@ if (__rge_WINDOWS__)
         winmm
         stdc++exp
     )
+    message("RocketGE Platform: Desktop-GLFW-Win32")
+elseif (__rge_ANDROID__)
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libopenal.a
+        ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libSDL2.a
+        ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libminiz.a
+        android
+        log
+        EGL
+        GLESv3
+        OpenSLES
+    )
+    target_include_directories(${PROJECT_NAME} PRIVATE
+        ${CMAKE_SOURCE_DIR}/androiddeps/include
+        ${ANDROID_NDK}/sources/android/native_app_glue
+    )
+    message("RocketGE Platform: Desktop-Embedded-Android")
 else()
     find_package(OpenGL REQUIRED)
     find_package(glfw3 REQUIRED)
@@ -207,8 +256,9 @@ else()
     find_package(SDL2 REQUIRED)
     find_package(pybind11 REQUIRED)
     find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+    pkg_check_modules(WAYLAND REQUIRED wayland-client)
 
-    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python stdc++exp)
+    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python stdc++exp ${WAYLAND_LIBRARIES})
 endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -220,18 +270,18 @@ else()
     set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
 
+target_link_options(${PROJECT_NAME} PRIVATE    -Wl,-z,max-page-size=16384)
+
 if (BUILD_TESTS)
     set(TEST_NAMES
         initializer_test
         text_test
-        gamepad_test
         icon_test
         io_simulation_test
         io_test
         plugin_test
         multithreaded_test
         sound_engine_test
-        borderless_windowed_test
         triangle_drawcall_test
         default_shader_test
         persistence_test
@@ -240,6 +290,15 @@ if (BUILD_TESTS)
         state_reset_test
         test_generator_test
     )
+
+    if (NOT __rge_ANDROID__)
+        set(TEST_NAMES ${TEST_NAMES}
+            gamepad_test
+            borderless_windowed_test
+        )
+    endif()
+
+
 
     if (BUILD_ASTRO)
         set(TEST_NAMES ${TEST_NAMES}
@@ -256,15 +315,21 @@ if (BUILD_TESTS)
     foreach(test_name IN LISTS TEST_NAMES)
         option(BUILD_TEST_${test_name} "Build Test ${test_name}" ON)
         if (BUILD_TEST_${test_name})
-            if (__rge_WINDOWS__)
-                add_executable(${test_name} tests/${test_name}.cpp)
+            if (__rge_ANDROID__)
+                add_library(${test_name} SHARED tests/${test_name}.cpp)
             else()
                 add_executable(${test_name} tests/${test_name}.cpp)
             endif()
 
-            set_target_properties(${test_name} PROPERTIES
-                RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/tests
-            )
+            if (__rge_ANDROID__)
+                set_target_properties(${test_name} PROPERTIES
+                    CMAKE_LIBRARY_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/tests
+                )
+            else()
+                set_target_properties(${test_name} PROPERTIES
+                    RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/tests
+                )
+            endif()
 
             target_link_directories(${test_name} PRIVATE bin)
             target_include_directories(${test_name} PRIVATE include)
@@ -281,6 +346,31 @@ if (BUILD_TESTS)
                     ${CMAKE_SOURCE_DIR}/windeps/openal-soft
                     ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
                     ${CMAKE_SOURCE_DIR}/windeps/angle/lib
+                )
+            elseif (__rge_ANDROID__)
+                target_link_libraries(${test_name} PRIVATE
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libopenal.a
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libSDL2.a
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libminiz.a
+                    android
+                    log
+                    EGL
+                    GLESv3
+                    OpenSLES
+                    native_app_glue
+                )
+                target_include_directories(${test_name} PRIVATE
+                    ${CMAKE_SOURCE_DIR}/androiddeps/include
+                )
+
+                target_link_options(${test_name} PRIVATE
+                    -Wl,--whole-archive
+                    $<TARGET_FILE:native_app_glue>
+                    -Wl,--no-whole-archive
+                    -Wl,--export-dynamic
+                    -Wl,--defsym=stdout=0
+                    -Wl,--defsym=stderr=0
+                    -Wl,-z,max-page-size=16384
                 )
             else()
                 target_link_libraries(${test_name} PRIVATE Python3::Python)
@@ -304,15 +394,21 @@ if (BUILD_EXAMPLES)
     foreach(example_name IN LISTS EXAMPLE_NAMES)
         option(BUILD_EXAMPLE_${example_name} "Build Example ${example_name}" ON)
         if (BUILD_EXAMPLE_${example_name})
-            if (__rge_WINDOWS__)
-                add_executable(${example_name} examples/${example_name}.cpp)
+            if (__rge_ANDROID__)
+                add_library(${example_name} SHARED examples/${example_name}.cpp)
             else()
                 add_executable(${example_name} examples/${example_name}.cpp)
             endif()
 
-            set_target_properties(${example_name} PROPERTIES
-                RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/examples
-            )
+            if (__rge_ANDROID__)
+                set_target_properties(${example_name} PROPERTIES
+                    CMAKE_LIBRARY_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/examples
+                )
+            else()
+                set_target_properties(${example_name} PROPERTIES
+                    RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/tests
+                )
+            endif()
 
             target_link_directories(${example_name} PRIVATE bin)
             target_include_directories(${example_name} PRIVATE include)
@@ -328,6 +424,32 @@ if (BUILD_EXAMPLES)
                     ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
                     ${CMAKE_SOURCE_DIR}/windeps/angle/lib
                 )
+            elseif (__rge_ANDROID__)
+                target_link_libraries(${example_name} PRIVATE
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libopenal.a
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libSDL2.a
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libminiz.a
+                    android
+                    log
+                    EGL
+                    GLESv3
+                    OpenSLES
+                    native_app_glue
+                )
+                target_include_directories(${example_name} PRIVATE
+                    ${CMAKE_SOURCE_DIR}/androiddeps/include
+                )
+
+                target_link_options(${example_name} PRIVATE
+                    -Wl,--whole-archive
+                    $<TARGET_FILE:native_app_glue>
+                    -Wl,--no-whole-archive
+                    -Wl,--export-dynamic
+                    -Wl,--defsym=stdout=0
+                    -Wl,--defsym=stderr=0
+                    -Wl,-z,max-page-size=16384
+                )
+
             endif()
 
             target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3)

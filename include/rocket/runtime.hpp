@@ -42,7 +42,7 @@
 /// @brief The max RLSL version supported
 ///                ^^^^ -> RocketShaderLanguage
 #define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MAJOR 1
-#define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR 1
+#define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR 2
 
 #define ROCKETGE__FEATURE_GL_LOADER "GLfnldr"
 
@@ -161,5 +161,62 @@ namespace rocket {
     /// @brief Set the file output (if any) for RocketLogger
     void set_logger_file_output(const std::filesystem::path &path);
 }
+
+/// @brief Rocket Main Arguments
+struct rocket_arguments_t {
+    std::string working_dir = "./";
+};
+
+/// @brief Rocket Main function
+/// @note Platform-Independent Main
+/// @note Look at docs on how to use
+int rocket_main(int argc, char **argv, rocket_arguments_t);
+
+#ifdef ROCKETGE__Platform_Android
+#include <android_native_app_glue.h>
+#include <android/asset_manager.h>
+#include <android/log.h>
+#include <fstream>
+#include <jni.h>
+#define DEFINE_PLATFORM_MAIN \
+    android_app *g_android_app = nullptr; \
+    extern "C" void android_main(android_app *app) { \
+        const char *argv[] = { "RocketGE", "--debug-overlay", nullptr }; \
+        int argc = 2; \
+        g_android_app = app; \
+        app->onAppCmd = [](android_app *app, int32_t cmd) {}; \
+        while (app->window == nullptr) { \
+            int events; \
+            android_poll_source *src; \
+            ALooper_pollOnce(100, nullptr, &events, (void**)&src); \
+            if (src != nullptr) src->process(app, src); \
+            if (app->destroyRequested) return; \
+        } \
+        AAssetManager* mgr = app->activity->assetManager; \
+        std::string internal = std::string(app->activity->internalDataPath) + "/"; \
+        std::filesystem::create_directories(internal + "resources"); \
+        AAssetDir* dir = AAssetManager_openDir(mgr, "resources"); \
+        const char* filename; \
+        while ((filename = AAssetDir_getNextFileName(dir)) != nullptr) { \
+            std::string src_path = std::string("resources/") + filename; \
+            std::string dst_path = internal + "resources/" + filename; \
+            AAsset* asset = AAssetManager_open(mgr, src_path.c_str(), AASSET_MODE_BUFFER); \
+            if (!asset) continue; \
+            size_t size = AAsset_getLength(asset); \
+            std::vector<uint8_t> buf(size); \
+            AAsset_read(asset, buf.data(), size); \
+            AAsset_close(asset); \
+            std::ofstream f(dst_path, std::ios::binary); \
+            f.write((char*)buf.data(), size); \
+        } \
+        AAssetDir_close(dir); \
+        rocket_main(argc, (char**) argv, {std::string(g_android_app->activity->internalDataPath) + "/"}); \
+    }
+#else
+#define DEFINE_PLATFORM_MAIN \
+    int main(int argc, char **argv) { \
+        return rocket_main(argc, argv, {}); \
+    }
+#endif
 
 #endif

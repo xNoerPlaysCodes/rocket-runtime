@@ -1,4 +1,6 @@
+#ifdef ROCKETGE__Platform_Desktop
 #include <GLFW/glfw3.h>
+#endif
 #include <cstdint>
 #include <functional>
 #include <mutex>
@@ -12,7 +14,6 @@
 #include <rocket/threads.hpp>
 #include "intl_macros.hpp"
 #include "internal_types.hpp"
-#include <GLFW/glfw3.h>
 
 namespace rocket {
     uint64_t thread_id_gen() {
@@ -79,6 +80,8 @@ namespace rocket {
         uint64_t thread_id = thread_id_gen();
         auto main_ctx = rgl::get_main_context();
 
+#ifdef ROCKETGE__Platform_Desktop
+
         if (this->ctx != nullptr) {
             if (this->ctx->w != nullptr && this->ctx->backend == window_backend_t::glfw) {
                 glfwDestroyWindow((GLFWwindow*) this->ctx->w);
@@ -103,6 +106,7 @@ namespace rocket {
         });
 
         t.detach();
+#endif
     }
 
     r_static uint64_t thread_t::get_thread_id() {

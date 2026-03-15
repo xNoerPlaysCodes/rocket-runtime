@@ -4,10 +4,6 @@
 #include "rocket/renderer.hpp"
 #include "rocket/types.hpp"
 #include "rocket/window.hpp"
-#include <chrono>
-#include <iostream>
-#include <memory>
-#include <thread>
 
 rocket::rgba_color clr_gray() {
     return { 128, 128, 128, 255 };
@@ -38,7 +34,7 @@ void draw_info_util(astro::button_t &button, astro::draw_info_t &info) {
     }
 }
 
-int main(int argc, char **argv) {
+int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     bool test_mode = false;
     if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
         rocket::set_log_level(rocket::log_level_t::none);
@@ -48,6 +44,7 @@ int main(int argc, char **argv) {
 
     rocket::windowflags_t flags;
     flags.resizable = true;
+
     flags.msaa_samples = 4;
     rocket::window_t window({ 1280, 720 }, "RocketGE - UI Init Test", flags);
     rocket::renderer_2d r(&window, 60, {
@@ -105,4 +102,8 @@ int main(int argc, char **argv) {
 
     r.close();
     window.close();
+
+    return 0;
 }
+
+DEFINE_PLATFORM_MAIN

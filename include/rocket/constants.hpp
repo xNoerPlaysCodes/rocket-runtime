@@ -22,7 +22,7 @@ namespace rocket::cst {
     ///         current mouse position
     constexpr float io_mn_set_to_current_mpos = std::numeric_limits<float>::infinity();
 
-#ifdef ROCKETGE__Platform_UnixCompatible
+#if defined(ROCKETGE__Platform_UnixCompatible) || defined(ROCKETGE__Platform_Android)
     const std::filesystem::path std_out = "/dev/stdout";
 #endif
 
@@ -34,7 +34,7 @@ namespace rocket::cst {
     const std::filesystem::path std_err = std_out;
 #endif
 
-#ifdef ROCKETGE__Platform_UnixCompatible
+#if defined(ROCKETGE__Platform_UnixCompatible) || defined(ROCKETGE__Platform_Android)
     const std::filesystem::path std_err = "/dev/stderr";
 #endif
 
@@ -42,7 +42,7 @@ namespace rocket::cst {
     const std::filesystem::path stdnull = "NUL";
 #endif
 
-#ifdef ROCKETGE__Platform_UnixCompatible
+#if defined(ROCKETGE__Platform_UnixCompatible) || defined(ROCKETGE__Platform_Android)
     const std::filesystem::path stdnull = "/dev/null";
 #endif
 }

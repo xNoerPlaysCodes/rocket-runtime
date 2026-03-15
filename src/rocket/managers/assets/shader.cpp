@@ -1,4 +1,10 @@
-#include <GL/glew.h>
+#include "rocket/macros.hpp"
+#if defined(ROCKETGE__Platform_Android)
+    #include <GLES3/gl32.h>
+    #include <EGL/egl.h>
+#else
+    #include <GL/glew.h>
+#endif
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -167,6 +173,7 @@ void main() {
             std::string fcode = "";
 
             float gl_minimumversion = 4.3;
+            float gles_minimumversion = 0.0;
         };
         enum class mode_t {
             rlsl,
@@ -223,6 +230,8 @@ void main() {
                     rlsl_shader.name = trim(l.substr(5));
                 } else if (l.starts_with("GL_MinimumVersion:")) {
                     rlsl_shader.gl_minimumversion = std::stof(trim(l.substr(18)));
+                } else if (l.starts_with("GLES_MinimumVersion:")) {
+                    rlsl_shader.gles_minimumversion = std::stof(trim(l.substr(20)));
                 } else if (l.starts_with("ExternalSource:")) {
                     std::string args = trim(l.substr(15));
                     std::vector<std::string> args_split = split(args, ' ');
@@ -372,7 +381,11 @@ void main() {
                 || rlsl_minor != ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR) {
             rocket::log("This version of RLSL (" + std::to_string(rlsl_major) + "." + std::to_string(rlsl_minor) + " > " + std::to_string(ROCKETGE__FEATURE_MAX_RLSL_VERSION_MAJOR) + "." + std::to_string(ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR) + ") is not supported", "shader_t", "constructor", "warn");
         }
-        if (glver < rlsl_shader.gl_minimumversion) {
+        if (rlsl_shader.gles_minimumversion > 0.0) {
+            if (glver < rlsl_shader.gles_minimumversion) {
+                rocket::log("issue while parsing RLSL Shader: Loaded OpenGL ES Version lower than Minimum OpenGL ES Version (" + std::to_string(major) + "." + std::to_string(minor) + " < " + std::to_string(rlmajor) + "." + std::to_string(rlminor) + + ")", "shader_t", "constructor", "warn");
+            }
+        } else if (glver < rlsl_shader.gl_minimumversion) {
             rocket::log("issue while parsing RLSL Shader: Loaded OpenGL Version lower than Minimum OpenGL Version (" + std::to_string(major) + "." + std::to_string(minor) + " < " + std::to_string(rlmajor) + "." + std::to_string(rlminor) + + ")", "shader_t", "constructor", "warn");
         }
 

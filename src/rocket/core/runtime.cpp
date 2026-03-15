@@ -12,8 +12,16 @@
 #include <cstdlib>
 #include <intl_macros.hpp>
 
+#ifdef ROCKETGE__Platform_Android
+#include <android/log.h>
+#endif
+
 namespace callback {
     void bad_memory_access(void *mem_addr, int) {
+#ifdef ROCKETGE__Platform_Android
+        __android_log_print(ANDROID_LOG_INFO, "RocketGE", "%s", rocket::crash_signal(true, mem_addr, "bad_memory_access", "Invalid Memory Access"));
+        rnative::exit_now(1);
+#endif
         std::endl(std::cout);
 
         std::cout << rocket::crash_signal(true, mem_addr, "bad_memory_access", "Invalid Memory Access");
@@ -24,6 +32,10 @@ namespace callback {
     }
 
     void stack_overflow(void*, int) {
+#ifdef ROCKETGE__Platform_Android
+        __android_log_print(ANDROID_LOG_INFO, "RocketGE", "%s", "FATAL! Stack Overflow\n");
+        rnative::exit_now(1);
+#endif
         std::endl(std::cout);
 
         std::cout << "FATAL! Stack Overflow\n";
@@ -34,6 +46,11 @@ namespace callback {
     }
 
     void invalid_memory_operation(void *mem_addr, int) {
+#ifdef ROCKETGE__Platform_Android
+        __android_log_print(ANDROID_LOG_INFO, "RocketGE", "%s", rocket::crash_signal(true, mem_addr, "invalid_memory_operation", "Invalid Operation on Memory Buffer"));
+        rnative::exit_now(1);
+#endif
+
         std::endl(std::cout);
 
         std::cout << rocket::crash_signal(true, mem_addr, "invalid_memory_operation", "Invalid Operation on Memory Buffer");
@@ -44,6 +61,11 @@ namespace callback {
     }
 
     void aborted(void *mem_addr, int) {
+#ifdef ROCKETGE__Platform_Android
+        __android_log_print(ANDROID_LOG_INFO, "RocketGE", "%s", rocket::crash_signal(true, mem_addr, "aborted", "Unhandled Exception (or std::abort)"));
+        rnative::exit_now(1);
+#endif
+
         std::endl(std::cout);
 
         std::cout << rocket::crash_signal(true, mem_addr, "aborted", "Unhandled Exception (or std::abort)");
@@ -64,7 +86,7 @@ namespace callback {
     }
 }
 
-#ifdef ROCKETGE__Platform_UnixCompatible
+#if defined(ROCKETGE__Platform_UnixCompatible) || defined(ROCKETGE__Platform_Android)
 
 #include <csignal>
 #include <cstdlib>
@@ -102,7 +124,7 @@ void __init() {
     rocket::log("Emergency memory buffer initialized with size " + std::format("{} MiB", util::get_memory_buffer()->sz / 1024 / 1024), "rocket", "init", "debug");
 }
 
-#else
+#elif defined(ROCKETGE__Platform_Windows) && defined(ROCKETGE__Platform_Desktop)
 
 #include <windows.h>
 
@@ -196,6 +218,11 @@ namespace rocket {
     bool log_to_stdouterr = false;
 
     void log(const std::string &log, const std::string &class_file_library_source, const std::string &function_source, const std::string &level) {
+#ifdef ROCKETGE__Platform_Android
+        std::string formatted = util::format_log(log, class_file_library_source, function_source, level);
+        __android_log_print(ANDROID_LOG_INFO, "RocketGE", "%s", formatted.c_str());
+        return;
+#else
         static bool cli_init = false;
         if (!cli_init && !std_outstm.is_open() && !std_errstm.is_open()) {
             cli_init = true;
@@ -219,6 +246,7 @@ namespace rocket {
                 out->flush();
             }
         }
+#endif
     }
 
     void logger_flush() {
@@ -369,6 +397,7 @@ namespace rocket {
             } else if (arg == "debugoverlay" || arg == "doverlay" || arg == "debug-overlay") {
                 args.debugoverlay = true;
             } else if (arg == "glversion" || arg == "gl-version") {
+#ifdef ROCKETGE__Platform_Desktop
                 auto res = std::from_chars(value.data(), value.data() + value.size(), args.glversion);
                 if (res.ec == std::errc::invalid_argument) {
                     rocket::log("invalid value for argument: " + arg, "rocket", "argparse", "error");
@@ -381,6 +410,9 @@ namespace rocket {
                         args.glversion = GL_VERSION_UNK;
                     }
                 }
+#else
+                args.glversion = std::stof(std::string(value));
+#endif
             } else if (arg == "nosplash" || arg == "no-splash") {
                 args.nosplash = true;
             } else if (arg == "vp-size" || arg == "vpsize" || arg == "viewport-size" || arg == "viewportsize") {
@@ -390,6 +422,7 @@ namespace rocket {
                 if (value == "unlimited" || value == "nolimit" || value == "infinite" || value == "inf") {
                     args.framerate = std::numeric_limits<int>::max();
                 } else {
+#ifdef ROCKETGE__Platform_Desktop
                     auto res = std::from_chars(value.data(), value.data() + value.size(), args.framerate);
                     if (res.ec == std::errc::invalid_argument) {
                         rocket::log("invalid value for argument: " + arg, "rocket", "argparse", "error");
@@ -397,6 +430,9 @@ namespace rocket {
                         exit = true;
                         error = true;
                     }
+#else
+                    args.framerate = std::stoi(std::string(value.data(), value.size()));
+#endif
                 }
             } else if (arg == "logfile") {
                 if (std::filesystem::exists(value) && !logfile_overwrite) {
@@ -627,9 +663,15 @@ namespace rocket {
     }
 
     void init(std::vector<std::string> args) {
+#ifdef ROCKETGE__Platform_Android
+        __init();
+        global_init();
+        rnative::init();
+#else
         global_init();
         rnative::init();
         __init();
+#endif
 
         set_cli_arguments(args);
     }
@@ -645,9 +687,15 @@ namespace rocket {
 #pragma GCC diagnostic pop
 
     void init(int argc, char **argv) {
+#ifdef ROCKETGE__Platform_Android
+        __init();
+        global_init();
+        rnative::init();
+#else
         global_init();
         rnative::init();
         __init();
+#endif
 
         set_cli_arguments(argc, argv);
     }

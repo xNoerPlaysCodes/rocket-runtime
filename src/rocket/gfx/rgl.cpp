@@ -1,5 +1,11 @@
 #include <chrono>
-#include <GL/glew.h>
+#include "rocket/macros.hpp"
+#if defined(ROCKETGE__Platform_Android)
+    #include <GLES3/gl32.h>
+    #include <EGL/egl.h>
+#else
+    #include <GL/glew.h>
+#endif
 #include <glm/ext/vector_float2.hpp>
 #include <iostream>
 
@@ -19,7 +25,9 @@
 #include "rocket/window.hpp"
 #include "util.hpp"
 #include "glfnldr.hpp"
+#ifdef ROCKETGE__Platform_Desktop
 #include <cpuid.h>
+#endif
 #include "internal_types.hpp"
 #include "intl_macros.hpp"
 
@@ -46,8 +54,10 @@ namespace glutil {
             case GL_ONE_MINUS_CONSTANT_COLOR: return "GL_ONE_MINUS_CONSTANT_COLOR";
             case GL_CONSTANT_ALPHA: return "GL_CONSTANT_ALPHA";
             case GL_ONE_MINUS_CONSTANT_ALPHA: return "GL_ONE_MINUS_CONSTANT_ALPHA";
+#ifdef ROCKETGE__Platform_Desktop
             case GL_SRC1_COLOR: return "GL_SRC1_COLOR";
             case GL_ONE_MINUS_SRC1_COLOR: return "GL_ONE_MINUS_SRC1_COLOR";
+#endif
         }
     }
 }
@@ -309,12 +319,15 @@ namespace rgl {
 
     
     std::string get_cpu_name() {
+#ifdef ROCKETGE__Platform_Desktop
         char cpu[64] = {};
         unsigned int info[4];
         __get_cpuid(0x80000002, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu, info, 16);
         __get_cpuid(0x80000003, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+16, info, 16);
         __get_cpuid(0x80000004, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+32, info, 16);
         return std::string(cpu);
+#endif
+        return std::string("Querying CPU Name is not supported on this platform");
     }
 
     static std::unordered_map<rgl::shader_use_t, rgl::shader_program_t> shader_cache;
@@ -332,6 +345,7 @@ namespace rgl {
             };
         }
 
+#ifdef ROCKETGE__Platform_Desktop
         if (glGenBuffers == nullptr) {
             rocket::log("OpenGL functions could not be loaded (RUNTIME FAILURE)", "rgl", "init_gl", "fatal");
             rocket::exit(1);
@@ -339,6 +353,7 @@ namespace rgl {
                 "?OpenGL functions could not be loaded (RUNTIME FAILURE)"
             };
         }
+#endif
 
         glViewport(0, 0, viewport_size.x, viewport_size.y);
         init_vo_all();
@@ -350,7 +365,9 @@ namespace rgl {
         bool gl_multisample = false;
         int gl_samples = 0;
         if (win->flags.msaa_samples > 0) {
+#ifdef ROCKETGE__Platform_Desktop
             glEnable(GL_MULTISAMPLE);
+#endif
             gl_multisample = true;
             glGetIntegerv(GL_SAMPLES, &gl_samples);
         }
@@ -361,7 +378,9 @@ namespace rgl {
         std::string gl_blendfunc = glutil::glenum_str(sfactor) + ", " + glutil::glenum_str(dfactor);
 
         // Enable SRGB framebuffer if supported
+#ifdef ROCKETGE__Platform_Desktop
         glEnable(GL_FRAMEBUFFER_SRGB);
+#endif
         std::string gl_framebuffer_mode = "sRGB";
 
         // Query max texture size
@@ -369,6 +388,7 @@ namespace rgl {
 
         int flags;
         glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+#ifdef ROCKETGE__Platform_Desktop
         if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
             glEnable(GL_DEBUG_OUTPUT);
             glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -453,6 +473,7 @@ namespace rgl {
         glDeleteTextures(1, &glid);
         glBindTexture(GL_TEXTURE_2D, 0);
 #endif
+#endif
 
         auto gl_get_integer = [](GLenum e) -> int {
             int val;
@@ -470,7 +491,7 @@ namespace rgl {
         int max_available_tx_units = gl_get_integer(GL_MAX_TEXTURE_IMAGE_UNITS);
 
         bool gpu_is_modern = true;
-        if (max_available_tx_units < 32 || max_tx_size < 16384) {
+        if (max_available_tx_units < 32 || max_tx_size < 8192) {
             gpu_is_modern = false;
         }
 
@@ -508,7 +529,7 @@ namespace rgl {
             logs.push_back("!MAX_TX_SIZE: " + std::to_string(max_tx_size));
         }
 
-        if (gpu_name.contains("llvmpipe")) {
+        if (gpu_name.contains("llvmpipe") || gpu_name.contains("soft")) {
             logs.push_back("!using software OpenGL renderer");
         }
 

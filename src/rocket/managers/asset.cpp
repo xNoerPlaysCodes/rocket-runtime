@@ -1,4 +1,10 @@
 #include "rocket/macros.hpp"
+#if defined(ROCKETGE__Platform_Android)
+    #include <GLES3/gl32.h>
+    #include <EGL/egl.h>
+#else
+    #include <GL/glew.h>
+#endif
 #include <rocket/threads.hpp>
 #ifdef ROCKETGE__Platform_Windows
 #define GL_STATIC_DRAW 0x88E4
@@ -535,7 +541,11 @@ namespace rocket {
             // Generate OpenGL texture
             glGenTextures(1, &font->glid);
             glBindTexture(GL_TEXTURE_2D, font->glid);
+#ifdef ROCKETGE__Platform_Android
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, font->sttex_size.x, font->sttex_size.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
+#else
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, font->sttex_size.x, font->sttex_size.y, 0, GL_RED, GL_UNSIGNED_BYTE, bitmap.data());
+#endif
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -571,7 +581,11 @@ namespace rocket {
             // Generate OpenGL texture
             glGenTextures(1, &font->glid);
             glBindTexture(GL_TEXTURE_2D, font->glid);
+#ifdef ROCKETGE__Platform_Android
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, font->sttex_size.x, font->sttex_size.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
+#else
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, font->sttex_size.x, font->sttex_size.y, 0, GL_RED, GL_UNSIGNED_BYTE, bitmap.data());
+#endif
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -607,7 +621,7 @@ namespace rocket {
         // Generate OpenGL texture
         glGenTextures(1, &font->glid);
         glBindTexture(GL_TEXTURE_2D, font->glid);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, font->sttex_size.x, font->sttex_size.y, 0, GL_RED, GL_UNSIGNED_BYTE, bitmap.data());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, font->sttex_size.x, font->sttex_size.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -654,7 +668,7 @@ namespace rocket {
         // Generate OpenGL texture
         glGenTextures(1, &font->glid);
         glBindTexture(GL_TEXTURE_2D, font->glid);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, font->sttex_size.x, font->sttex_size.y, 0, GL_RED, GL_UNSIGNED_BYTE, bitmap.data());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, font->sttex_size.x, font->sttex_size.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

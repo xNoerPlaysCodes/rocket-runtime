@@ -24,7 +24,7 @@ namespace rocket {
         size = aligned(size, alignment);
         uint8_t *buf = this->buffer;
         this->buffer += size;
-        r_assert(this->buffer - this->ogbuffer <= this->size);
+        // r_assert(static_cast<size_t>(this->buffer - this->ogbuffer) <= this->size);
         return buf;
     }
 

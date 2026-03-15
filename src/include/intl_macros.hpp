@@ -35,12 +35,35 @@ namespace r {
 
 #define r_Stringify(x) #x
 
+#ifdef ROCKETGE__Platform_Android
+#include <android/log.h>
+#include <android/native_window.h>
+#include <android_native_app_glue.h>
+#include <EGL/egl.h>
+#include <GLES3/gl32.h>
+
+#define LOG_TAG "RocketGE"
+
+extern android_app* g_android_app;
+
+// Log levels: ANDROID_LOG_DEBUG, ANDROID_LOG_INFO, ANDROID_LOG_WARN, ANDROID_LOG_ERROR
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define r_LOG(X) LOGI(X)
+#else
+#define LOGI(...) (void)0
+#define LOGE(...) (void)0
+#define LOGD(...) (void)0
+#define r_LOG(X) rocket::log(X, std::string(r::class_or_file(fn, __FILE__)), __func__, "fatal")
+#endif
+
 #ifdef ROCKETGE__DEBUG_BUILD
 #define r_assert(x) \
     do { \
         if (!(x)) { \
             constexpr std::string_view fn = r_FuncSig; \
-            rocket::log("Assertion Failed: " r_Stringify(x), std::string(r::class_or_file(fn, __FILE__)), __func__, "fatal"); \
+            r_LOG("Assertion Failed: " r_Stringify(x)); \
             rnative::exit_now(1); \
         } \
     } while (0)

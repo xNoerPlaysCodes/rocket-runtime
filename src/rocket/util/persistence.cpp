@@ -75,11 +75,11 @@ namespace rocket::storage {
         }
 
         if (!std::filesystem::exists(vars_path)) {
-            std::ofstream _ = vars_path;
+            std::ofstream _(vars_path.c_str());
             _.close();
         }
         {
-            std::ifstream f = vars_path;
+            std::ifstream f(vars_path.c_str());
             if (!f.is_open()) {
                 rocket::log("Persistent Storage couldn't be opened", "rocket::storage", "init", "error");
                 return;

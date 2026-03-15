@@ -11,6 +11,8 @@ namespace rocket {
         enum class mouse_button : int {
             first = 0,
 
+            finger = 0,
+
             left = 0,
             right = 1,
             middle = 2,

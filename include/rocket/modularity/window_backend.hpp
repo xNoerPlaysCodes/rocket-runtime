@@ -7,6 +7,7 @@
 #include "rocket/asset.hpp"
 #include <rocket/glfnldr.hpp>
 #include <string>
+#include <rocket/io.hpp>
 
 namespace rgl {
     std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t bkend);

@@ -1,5 +1,10 @@
-#include <GL/glew.h>
-#include <emmintrin.h>
+#include "rocket/macros.hpp"
+#if defined(ROCKETGE__Platform_Android)
+    #include <GLES3/gl32.h>
+    #include <EGL/egl.h>
+#else
+    #include <GL/glew.h>
+#endif
 #include <shader_provider.hpp>
 #include "rocket/rgl.hpp"
 #include "rgl.hpp"
@@ -307,14 +312,11 @@ namespace rocket {
         aud->play();
 
         while (window->is_running() && !splash_finished) {
-            if (window->get_size() != size) {
-                window->set_size(size);
-            }
             this->begin_frame();
-            this->clear({ 0, 0, 0, 255 });
+            this->clear(rgba_color::black());
             {
                 float alpha = tween.step((float) this->get_delta_time());
-                float center_x = get_viewport_size().x / 2 - window->get_size().y / 2;
+                float center_x = get_viewport_size().x / 2 - window->get_size().y / 2.f;
 
                 this->draw_texture(tx, { {center_x, 0}, { window->get_size().y * 1.f, window->get_size().y * 1.f } });
 
@@ -387,10 +389,39 @@ namespace rocket {
         if (texture != nullptr && texture->glid == 0) {
             glGenTextures(1, &texture->glid);
             glBindTexture(GL_TEXTURE_2D, texture->glid);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, texture->size.x, texture->size.y, 0,
+
+            // Use RGBA8 instead of SRGB8_ALPHA8 for universal compatibility
+            #ifdef ROCKETGE__Platform_Android
+                GLint internal_fmt = GL_RGBA8;
+            #else
+                GLint internal_fmt = GL_SRGB8_ALPHA8;
+            #endif
+
+#ifdef ROCKETGE__Platform_Android
+            std::vector<uint8_t> rgba_data;
+            const uint8_t* upload_data = texture->data.data();
+
+            if (texture->channels == 3) {
+                rgba_data.resize(texture->size.x * texture->size.y * 4);
+                for (size_t i = 0; i < (size_t)(texture->size.x * texture->size.y); i++) {
+                    rgba_data[i*4+0] = texture->data[i*3+0];
+                    rgba_data[i*4+1] = texture->data[i*3+1];
+                    rgba_data[i*4+2] = texture->data[i*3+2];
+                    rgba_data[i*4+3] = 255;
+                }
+                upload_data = rgba_data.data();
+            }
+
+            glTexImage2D(GL_TEXTURE_2D, 0, internal_fmt,
+                         texture->size.x, texture->size.y, 0,
+                         GL_RGBA,
+                         GL_UNSIGNED_BYTE, texture->channels == 3 ? rgba_data.data() : texture->data.data());
+#else
+            glTexImage2D(GL_TEXTURE_2D, 0, internal_fmt,
+                         texture->size.x, texture->size.y, 0,
                          texture->channels == 4 ? GL_RGBA : GL_RGB,
                          GL_UNSIGNED_BYTE, texture->data.data());
-
+#endif
 
             if (std::find(this->active_render_modes.begin(), this->active_render_modes.end(), render_mode_t::texture_filter_none) != this->active_render_modes.end()) {
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -399,6 +430,9 @@ namespace rocket {
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             }
+
+            GLenum err = glGetError();
+rocket::log("texture upload err: " + std::to_string(err) + " glid: " + std::to_string(texture->glid) + " size: " + std::to_string(texture->size.x) + "x" + std::to_string(texture->size.y) + " channels: " + std::to_string(texture->channels), "renderer", "make_ready_texture", "debug");
         }
     }
 
@@ -585,7 +619,11 @@ namespace rocket {
 
     void renderer_2d::set_wireframe(bool x) {
         this->wireframe = x;
+#ifdef ROCKETGE__Platform_Desktop
         glPolygonMode(GL_FRONT_AND_BACK, x ? GL_LINE : GL_FILL);
+#else
+        rocket::log("Wireframes are not supported on this platform", "renderer_2d", "set_wireframe", "error");
+#endif
     }
 
     void renderer_2d::set_vsync(bool x) {
@@ -742,6 +780,7 @@ namespace rocket {
         rocket::text_t frametime_text = { "FrameTime: " + double_to_str(ren->get_draw_metrics().avg_frametime * 1000) + "ms", text_size, rgb_color::white(), font };
         rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()), text_size, rgb_color::white(), font };
         rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(fmetrics.drawcalls) + " (" + std::to_string(fmetrics.skipped_drawcalls) + " skipped)", text_size, rgb_color::white(), font };
+
         rocket::text_t tricount_text = { "TriCount: " + std::to_string(fmetrics.tricount), text_size, rgb_color::white(), font };
 
         if (fmetrics.drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
@@ -801,11 +840,20 @@ namespace rocket {
         static std::string gl_version;
         if (!gl_version_set) {
             gl_version_set = true;
-            gl_version = glmajor + "." + glminor + " (core)";
+            gl_version = glmajor + "." + glminor + 
+#ifdef ROCKETGE__Platform_Android
+                " (ES)";
+#else
+                " (core)";
+#endif
 
             if (cli_args.glversion != GL_VERSION_UNK) {
                 gl_version = double_to_str(cli_args.glversion, 1);
+#ifdef ROCKETGE__Platform_Android
+                gl_version += " (ES)";
+#else
                 gl_version += " (core)";
+#endif
             }
         }
         rocket::text_t opengl_version_text = { "OpenGL Version: " + gl_version, text_size, rgb_color::white(), font };
@@ -964,18 +1012,18 @@ namespace rocket {
             // ~60 FPS on both Win32 and Unix
             // ~118 FPS while target is 120 FPS
             double sleep_time = frametime_limit - frame_duration;
-#ifdef ROCKETGE__Platform_Windows
+#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
             constexpr double spin_wait_time = 0.005;
 #else
             constexpr double spin_wait_time = 0.002;
 #endif
-#ifdef ROCKETGE__Platform_Windows
+#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
                 while
 #else
                 if
 #endif
                 (sleep_time > spin_wait_time && !cli_args.software_frame_timer) {
-#ifdef ROCKETGE__Platform_Windows
+#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
                 std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time / 10));
                 sleep_time /= 10;
 #else
@@ -985,7 +1033,6 @@ namespace rocket {
 
             // busy wait for the rest
             while (std::chrono::duration<double>(clock::now() - frame_start_time).count() < frametime_limit) {
-                _mm_pause();
             }
         }
 

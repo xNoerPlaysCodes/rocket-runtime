@@ -3,7 +3,24 @@
 #include "rocket/window.hpp"
 #include <rocket/runtime.hpp>
 
-int main(int argc, char **argv) {
+#include "rocket/macros.hpp"
+#ifdef ROCKETGE__Platform_Android
+#include <android/log.h>
+
+#define LOG_TAG "RocketGE"
+
+// Log levels: ANDROID_LOG_DEBUG, ANDROID_LOG_INFO, ANDROID_LOG_WARN, ANDROID_LOG_ERROR
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#else
+#define LOGI(...) (void)0
+#define LOGE(...) (void)0
+#define LOGD(...) (void)0
+#endif
+
+
+int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     rocket::init(argc, argv);
     bool test_mode = false;
     if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
@@ -16,7 +33,7 @@ int main(int argc, char **argv) {
     } };
 
     rocket::asset_manager_t am;
-    auto txid = am.load_texture("resources/atlas.png");
+    auto txid = am.load_texture(args.working_dir + "resources/atlas.png");
     std::shared_ptr<rocket::texture_t> tx = am.get_texture(txid);
 
     r.begin_render_mode(rocket::render_mode_t::texture_filter_none);
@@ -32,7 +49,7 @@ int main(int argc, char **argv) {
             r.draw_circle({ 120, 350 }, 100, { 0, 0, 0, 255 }, 4);
             r.draw_text({"The quick brown fox jumps over the lazy dog", 32, rocket::rgb_color::black()}, { 300, 240 });
             r.draw_text({"The quick brown fox jumps over the lazy dog", 32, rocket::rgb_color::black(), rGE__FONT_DEFAULT_MONOSPACED}, { 300, 240 + 32 });
-            r.draw_atlas_texture(tx, { {350, 350}, { 256, 256 } }, { 16*12, 16*12 }, { 16, 16 });
+            // r.draw_atlas_texture(tx, { {350, 350}, { 256, 256 } }, { 16*12, 16*12 }, { 16, 16 });
         }
         r.draw_fps();
         r.end_frame();
@@ -40,4 +57,8 @@ int main(int argc, char **argv) {
 
         if (test_mode) return 0;
     }
+
+    return 0;
 }
+
+DEFINE_PLATFORM_MAIN

@@ -2,6 +2,7 @@
 #define ROCKETGE__INTL_INTERNAL_TYPES_HPP
 
 #include "lib/stb/stb_truetype.h"
+#include <SDL2/SDL.h>
 #include <glm/glm.hpp>
 #include <rocket/io.hpp>
 #include <rocket/window.hpp>
@@ -9,6 +10,10 @@
 
 #define MkFuncPtr0(ret_type, name) ret_type (*name)()
 #define MkFuncPtr(ret_type, name, ...) ret_type (*name)(__VA_ARGS__)
+
+#ifdef ROCKETGE__Platform_Android
+#include <EGL/egl.h>
+#endif
 
 namespace rocket {
     struct internal_cdata {
@@ -55,6 +60,16 @@ namespace rocket {
 
     struct asset_manager_impl_t {
         asset_manager_t *obj;
+    };
+
+    struct android_app_impl_t {
+        android_app_t *obj;
+#ifdef ROCKETGE__Platform_Android
+        EGLDisplay display = EGL_NO_DISPLAY;
+        EGLSurface surface = EGL_NO_SURFACE;
+        EGLContext context = EGL_NO_CONTEXT;
+        EGLConfig config   = nullptr;
+#endif
     };
 }
 

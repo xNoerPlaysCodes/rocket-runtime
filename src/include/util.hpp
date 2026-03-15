@@ -5,7 +5,6 @@
 #include "../../include/rocket/io.hpp"
 #include "../../include/rocket/runtime.hpp"
 #include "rocket/renderer.hpp"
-#include <GLFW/glfw3.h>
 #include <functional>
 #include <sstream>
 #include <string>
@@ -72,6 +71,12 @@ namespace util {
     std::vector<rocket::io::mouse_event_t> get_simulated_mevents();
     std::vector<rocket::io::mouse_move_event_t> get_simulated_mmevents();
     std::vector<rocket::io::scroll_offset_event_t> get_simulated_sevents();
+
+    rocket::vec2d_t get_last_touch_pos();
+    void set_last_touch_pos(rocket::vec2d_t pos);
+
+    rocket::io::keystate_t get_last_touch_state();
+    void set_last_touch_state(rocket::io::keystate_t state);
 
     bool glinitialized();
     void glinit(bool);

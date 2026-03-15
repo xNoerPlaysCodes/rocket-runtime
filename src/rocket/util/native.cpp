@@ -1,4 +1,3 @@
-#include <GLFW/glfw3.h>
 #include <cstdio>
 #include <cstring>
 #include <filesystem>
@@ -6,6 +5,8 @@
 #include <exception>
 #include "../../include/rocket/macros.hpp"
 #include "rocket/runtime.hpp"
+
+#ifdef ROCKETGE__Platform_Desktop
 
 #ifdef ROCKETGE__Platform_Linux
 #define RNATIVE__INCLUDE_WAYLAND
@@ -21,7 +22,9 @@
 #endif
 
 #include "native.hpp"
+#include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
+#endif
 
 #ifdef ROCKETGE__Platform_Linux
 namespace linux_backend {
@@ -118,6 +121,7 @@ namespace windows_backend {
 #endif
 
 namespace rnative {
+#ifdef ROCKETGE__Platform_Desktop
     void wayland_set_window_icon(GLFWwindow *window, GLFWimage &image) {
 #ifndef ROCKETGE__Platform_Linux
         rocket::log("wayland_set_window_icon is only supported on linux_wayland", "rnative", "wayland_set_window_icon", "error");
@@ -143,6 +147,7 @@ namespace rnative {
         rocket::log("not implemented", "rnative", "wayland_set_window_icon", "error");
 #endif
     }
+#endif
 
     void windows_set_window_class_name_prewincreate(const wchar_t *str) {
 #ifndef ROCKETGE__Platform_Windows
@@ -174,7 +179,7 @@ namespace rnative {
         windows_backend::exit_now(code);
 #else
         (void) code;
-        std::terminate();
+        _exit(code);
 #endif
     }
 
@@ -194,6 +199,7 @@ namespace rnative {
 #endif
     }
 
+#ifdef ROCKETGE__Platform_Desktop
     proc_address_t load_proc_address(const char *name) {
 #ifdef ROCKETGE__Platform_Linux
         return reinterpret_cast<proc_address_t>(linux_backend::get_proc_address(name));
@@ -203,4 +209,5 @@ namespace rnative {
         return nullptr;
 #endif
     }
+#endif
 }

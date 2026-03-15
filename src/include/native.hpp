@@ -1,11 +1,15 @@
 #ifndef ROCKETGE__RNATIVE_HPP
 #define ROCKETGE__RNATIVE_HPP
 
-#include <GLFW/glfw3.h>
 #include <rocket/macros.hpp>
 #include <string>
+#ifdef ROCKETGE__Platform_Linux
+#include <GLFW/glfw3.h>
+#endif
 namespace rnative {
+#ifdef ROCKETGE__Platform_Linux
     void wayland_set_window_icon(GLFWwindow *window, GLFWimage &image);
+#endif
     /// @brief Pre window creation
     /// @param window Pass nullptr
     void windows_set_window_class_name_prewincreate(const wchar_t *str);
@@ -57,7 +61,7 @@ namespace rnative {
 
 #endif // RNATIVE__INCLUDE_WINDOWS
 
-#ifdef ROCKETGE__Platform_Linux
+#if defined(ROCKETGE__Platform_UnixCompatible) || defined(ROCKETGE__Platform_Android)
 #define native_gmtime(x, y) gmtime_r(x, y)
 #define native_localtime(x, y) localtime_r(x, y)
 #endif

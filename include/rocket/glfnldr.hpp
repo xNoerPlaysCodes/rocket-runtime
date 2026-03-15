@@ -12,7 +12,8 @@ namespace glfnldr {
         null = 0,
         glad,
         glew,
-        libepoxy
+        libepoxy,
+        android
     };
 
     std::vector<backend_t> get_backends();

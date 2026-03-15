@@ -1,12 +1,13 @@
 namespace rocket_resource {
     const char *shader_text_rlsl = R"(
-Version: 1.1
+Version: 1.2
 GL_MinimumVersion: 3.3
+GLES_MinimumVersion: 3.1
 Name: Text
 
 VertexStart
     #version 300 es
-    precision highp float;
+    precision mediump float;
     layout(location = 0) in vec2 aPos;
     layout(location = 1) in vec2 aTex;
     out vec2 TexCoord;
@@ -18,7 +19,7 @@ VertexEnd
 
 FragmentStart
     #version 300 es
-    precision highp float;
+    precision mediump float;
     in vec2 TexCoord;
     out vec4 FragColor;
     uniform vec3 u_color;

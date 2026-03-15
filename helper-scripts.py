@@ -43,19 +43,33 @@ def get_deps() -> None:
 
 def build_rnative() -> int:
     print("checking operating system... ", end="")
+
     if sys.platform.startswith("linux"):
         print("linux")
-        print("generate source and header for: xdg-toplevel-icon-v1")
-        gen_header = ["wayland-scanner", "client-header",
-                      "/usr/share/wayland-protocols/staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml",
-                      "src/include/rnative/xdg-toplevel-icon-v1-client-protocol.h"]  # How am i supposed to split a path???
-        gen_source = ["wayland-scanner", "private-code", "/usr/share/wayland-protocols/staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml", "src/rnative/xdg-toplevel-icon-v1-client-protocol.c"]
 
-        print("> command: " + " ".join(gen_header))
-        subprocess.run(gen_header)
+        commands = [
+            # xdg-shell
+            ["wayland-scanner", "client-header",
+             "/usr/share/wayland-protocols/stable/xdg-shell/xdg-shell.xml",
+             "src/include/rnative/xdg-shell-client-protocol.h"],
 
-        print("> command: " + " ".join(gen_source))
-        subprocess.run(gen_source)
+            ["wayland-scanner", "private-code",
+             "/usr/share/wayland-protocols/stable/xdg-shell/xdg-shell.xml",
+             "src/rnative/xdg-shell-client-protocol.c"],
+
+            # xdg-toplevel-icon-v1
+            ["wayland-scanner", "client-header",
+             "/usr/share/wayland-protocols/staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml",
+             "src/include/rnative/xdg-toplevel-icon-v1-client-protocol.h"],
+
+            ["wayland-scanner", "private-code",
+             "/usr/share/wayland-protocols/staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml",
+             "src/rnative/xdg-toplevel-icon-v1-client-protocol.c"],
+        ]
+
+        for cmd in commands:
+            print("> command:", " ".join(cmd))
+            subprocess.run(cmd, check=True)
 
         print("complete.")
     elif sys.platform == "darwin":
