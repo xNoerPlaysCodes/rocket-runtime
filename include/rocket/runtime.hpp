@@ -18,8 +18,8 @@
 #include "constants.hpp"
 #endif
 
-#define ROCKETGE__MAJOR_VERSION  2
-#define ROCKETGE__MINOR_VERSION  1
+#define ROCKETGE__MAJOR_VERSION  3
+#define ROCKETGE__MINOR_VERSION  0
 #define ROCKETGE__BUILD          "dev"
 #define ROCKETGE__STRX_(x)       #x
 #define ROCKETGE__STRX(x)        ROCKETGE__STRX_(x)
