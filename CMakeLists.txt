@@ -407,7 +407,7 @@ if (BUILD_EXAMPLES)
                 )
             else()
                 set_target_properties(${example_name} PROPERTIES
-                    RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/tests
+                    RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/examples
                 )
             endif()
 
