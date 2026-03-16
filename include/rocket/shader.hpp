@@ -37,6 +37,7 @@ namespace rocket {
         friend class renderer_3d;
         friend rgl::shader_program_t get_shader(shader_id_t shid);
         friend shader_t load_from_rlsl_source(shader_type type, std::string rlsl);
+        friend void shader_provider_reset();
     private:
         void shader_init();
         void parse(const std::vector<std::string> &lines, std::filesystem::path shader_workingdir);

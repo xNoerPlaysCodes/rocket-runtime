@@ -38,11 +38,21 @@ namespace rocket {
         fxaa,
 
         texture_filter_none,
-        camera
+        camera,
     };
 
     struct graphics_settings_t {
         bool viewport_visibility_checks = false;
+    };
+
+    class renderer_2d;
+    
+    struct render_cache_t {
+    private:
+        rgl::fbo_t fbo;
+        friend class renderer_2d;
+    public:
+        std::function<void(rocket::renderer_2d *ren)> draw = nullptr;
     };
 
     struct camera_2d;
@@ -259,6 +269,24 @@ namespace rocket {
     public:
         /// @brief Get Current FPS
         float get_current_fps();
+    public:
+        /// @brief Create a render cache to draw into
+        render_cache_t* create_render_cache(std::function<void(renderer_2d *ren)> draw_cb);
+        /// @brief Invalidate the render cache and force a redraw
+        void invalidate_render_cache(render_cache_t *c);
+        /// @brief Begins rendering to render_cache
+        void begin_render_cache(render_cache_t *c);
+        /// @brief Ends rendering to render_cache
+        void end_render_cache(render_cache_t *c);
+        /// @brief Draw contents of render_cache to screen
+        void draw_render_cache(render_cache_t *c, rocket::vec2f_t pos, rocket::vec2f_t sz);
+        /// @brief Draw contents of render_cache to screen
+        void draw_render_cache(render_cache_t *c, rocket::fbounding_box bbox);
+        /// @brief Destroy the render cache and free it's resources
+        /// @note Any operations on that cache after destruction
+        ///       is Undefined Behaviour
+        /// @note Is a reference, so modifies your ptr to nullptr
+        void destroy_render_cache(render_cache_t *&c);
     public:
         /// @brief Initialize the renderer
         /// @param window Window
