@@ -5,8 +5,10 @@
 #include <SDL2/SDL.h>
 #include <glm/glm.hpp>
 #include <rocket/io.hpp>
+#include <rocket/renderer.hpp>
 #include <rocket/rgl.hpp>
 #include <rocket/window.hpp>
+#include <stack>
 #include <util.hpp>
 
 #define MkFuncPtr0(ret_type, name) ret_type (*name)()
@@ -47,7 +49,8 @@ namespace rocket {
 
     struct renderer_2d_impl_t {
         renderer_2d *obj;
-        rgl::fbo_t render_cache_fbo = rGL_FBO_INVALID;
+        std::vector<std::unique_ptr<render_cache_t>> render_caches;
+        std::stack<render_cache_t*> render_cache_use_stack;
         glm::mat4 camera_transform = glm::mat4(1.0f);
     };
 

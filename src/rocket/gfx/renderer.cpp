@@ -364,7 +364,99 @@ namespace rocket {
 
             this->impl->camera_transform = projection * view;
         }
+
         active_render_modes.push_back(mode);
+    }
+
+    render_cache_t* renderer_2d::create_render_cache(std::function<void(renderer_2d*)> cb) {
+        auto c = std::make_unique<render_cache_t>();
+
+        c->fbo = rgl::create_fbo();
+        c->draw = cb;
+
+        begin_render_cache(c.get());
+        auto off = this->override_viewport_offset;
+        auto sz = this->override_viewport_size;
+        if (this->override_viewport_offset == rocket::vec2f_t(-1, -1)) {
+            off = {0,0};
+        }
+        if (this->override_viewport_size == rocket::vec2f_t(-1, -1)) {
+            sz = rgl::get_viewport_size();
+        }
+        glViewport(off.x, off.y, sz.x, sz.y);
+        cb(this);
+        end_render_cache(c.get());
+
+        this->impl->render_caches.emplace_back(std::move(c));
+
+        return this->impl->render_caches.back().get();
+    }
+
+    void renderer_2d::invalidate_render_cache(render_cache_t *c) {
+        r_assert(c != nullptr);
+        rgl::delete_fbo(c->fbo);
+        c->fbo = rgl::create_fbo();
+        bool _frame_started = this->frame_started;
+        this->frame_started = true;
+        begin_render_cache(c);
+        c->draw(this);
+        end_render_cache(c);
+        this->frame_started = _frame_started;
+    }
+
+    void renderer_2d::begin_render_cache(render_cache_t *c) {
+        r_assert(c != nullptr);
+        rgl::use_fbo(c->fbo);
+        this->impl->render_cache_use_stack.push(c);
+    }
+
+    void renderer_2d::draw_render_cache(render_cache_t *c, rocket::vec2f_t pos, rocket::vec2f_t sz) {
+        if (this->check_graphics_settings(pos, sz) == gfx_chk_result::not_drawable) {
+            rgl::add_frame_metrics_data_skipped_drawcalls(1);
+            return;
+        }
+        r_assert(c != nullptr);
+        r_assert(rgl::get_active_fbo() != c->fbo);
+
+        rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(pos, sz, 0, 0);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, c->fbo.color_tex);
+        glUniform1i(glGetUniformLocation(pg, "u_texture"), 0);
+        glUniform1f(glGetUniformLocation(pg, "u_flip_y"), 1.f);
+        rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
+    }
+    
+    void renderer_2d::draw_render_cache(render_cache_t *c, rocket::fbounding_box bbox) {
+        this->draw_render_cache(c, bbox.pos, bbox.size);
+    }
+
+    void renderer_2d::end_render_cache(render_cache_t *c) {
+        r_assert(c != nullptr);
+        r_assert(!this->impl->render_cache_use_stack.empty());
+        r_assert(this->impl->render_cache_use_stack.top() == c);
+
+        this->impl->render_cache_use_stack.pop();
+
+        if (this->impl->render_cache_use_stack.empty()) {
+            rgl::reset_to_default_fbo();
+        } else {
+            rgl::use_fbo(this->impl->render_cache_use_stack.top()->fbo);
+        }
+    }
+
+    void renderer_2d::destroy_render_cache(render_cache_t *&c) {
+        r_assert(c != nullptr);
+        for (auto it = this->impl->render_caches.begin(); it != this->impl->render_caches.end(); ++it) {
+            if (it->get() == c) {
+                this->impl->render_caches.erase(it);
+                if (rgl::get_active_fbo() == c->fbo) {
+                    rgl::reset_to_default_fbo();
+                }
+                rgl::delete_fbo(c->fbo);
+                c = nullptr;
+                break;
+            }
+        }
     }
 
     void renderer_2d::begin_batch() {
@@ -878,7 +970,7 @@ namespace rocket {
             }
         }
 
-        size.x = max_width + 24.f;
+        size.x = max_width + 32.f;
         size.y = texts[0].measure().y * len + 20.f + 24.f + (opengl_version_text.measure().y + rocket_version_text.measure().y);
         ren->draw_rectangle(position, size, rgba_color::black(), 0., 0.);
         ren->draw_rectangle(position, size, rgba_color::white(), 0., 0., true);
@@ -942,6 +1034,8 @@ namespace rocket {
         rocket::vec2f_t final_viewport_position = {  0,  0 };
         rocket::vec2f_t final_viewport_size     = { -1, -1 };
 
+        static rocket::vec2f_t last_frame_vp_size = final_viewport_size;
+
         // If override size is set, use that, otherwise fallback to window size
         if (this->override_viewport_size != rocket::vec2f_t{ -1, -1 }) {
             final_viewport_size = this->override_viewport_size;
@@ -951,6 +1045,13 @@ namespace rocket {
                 static_cast<float>(this->window->size.y)
             };
         }
+
+        if (last_frame_vp_size != final_viewport_size) {
+            for (auto &cache : this->impl->render_caches) {
+                this->invalidate_render_cache(cache.get());
+            }
+        }
+        last_frame_vp_size = final_viewport_size;
 
         // If override offset is set, use that
         if (this->override_viewport_offset != rocket::vec2f_t{ -1, -1 }) {
@@ -1173,7 +1274,6 @@ namespace rocket {
         }
         fxaa_shader = rGL_SHADER_INVALID;
         fxaa_fbo = rGL_FBO_INVALID;
-        this->impl->render_cache_fbo = rGL_FBO_INVALID;
         util::glinit(false);
     }
 

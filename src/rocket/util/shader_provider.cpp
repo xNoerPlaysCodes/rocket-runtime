@@ -101,11 +101,6 @@ namespace rocket {
     }
 
     void shader_provider_reset() {
-        for (auto &[k, v] : shader_map) {
-            if (v.glprogram != rGL_SHADER_INVALID) {
-                glDeleteShader(v.glprogram);
-            }
-        }
         shader_map.clear();
     }
 }

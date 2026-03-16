@@ -584,13 +584,12 @@ namespace rgl {
             return rGL_FBO_INVALID;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        rocket::log("FBO Created with ID: " + std::to_string(fbo.fbo), "rgl", "create_fbo", "debug");
         return fbo;
     }
 
     void use_fbo(fbo_t f) {
         glBindFramebuffer(GL_FRAMEBUFFER, f.fbo);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, f.color_tex);
 
         active_fbo = f;
     }
@@ -598,6 +597,7 @@ namespace rgl {
     void delete_fbo(fbo_t f) {
         glDeleteFramebuffers(1, &f.fbo);
         glDeleteTextures(1, &f.color_tex);
+        rocket::log("FBO Deleted with ID: " + std::to_string(f.fbo), "rgl", "delete_fbo", "debug");
     }
 
     void reset_to_default_fbo() {
