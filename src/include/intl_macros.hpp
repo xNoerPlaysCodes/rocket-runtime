@@ -37,20 +37,9 @@ namespace r {
 
 #ifdef ROCKETGE__Platform_Android
 #include <android/log.h>
-#include <android/native_window.h>
-#include <android_native_app_glue.h>
-#include <EGL/egl.h>
-#include <GLES3/gl32.h>
 
-#define LOG_TAG "RocketGE"
-
-extern android_app* g_android_app;
-
-// Log levels: ANDROID_LOG_DEBUG, ANDROID_LOG_INFO, ANDROID_LOG_WARN, ANDROID_LOG_ERROR
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
-#define r_LOG(X) LOGI(X)
+#define r_LOG_Impl(...) __android_log_print(ANDROID_LOG_INFO, "RocketGE", __VA_ARGS__)
+#define r_LOG(X) r_LOG_Impl(X)
 #else
 #define LOGI(...) (void)0
 #define LOGE(...) (void)0

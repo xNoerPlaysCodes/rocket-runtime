@@ -49,10 +49,12 @@ namespace rocket {
     }
 
     void android_app_t::set_vsync(bool vsync) {
+#ifdef ROCKETGE__Platform_Android
+        eglSwapInterval(this->impl->display, vsync ? 1 : 0);
+#endif
     }
 
     android_app_t::android_app_t(const rocket::vec2i_t &size, const std::string &title, windowflags_t flags) {
-        
         this->handle = new native_window_t;
         this->handle->backend = window_backend_t::android;
         this->wbi_impl = new window_backend_i_impl_t;
@@ -109,7 +111,6 @@ namespace rocket {
         }
 
         eglMakeCurrent(this->impl->display, this->impl->surface, this->impl->surface, this->impl->context);
-        LOGI("EGL context: %s", glGetString(GL_VERSION));
 
         SDL_Init(SDL_INIT_EVENTS | SDL_INIT_GAMECONTROLLER | SDL_INIT_HAPTIC);
         this->running = true;
@@ -177,6 +178,8 @@ namespace rocket {
                     break;
             }
         };
+
+        this->set_vsync(true);
 #endif
 
         rocket::log("Window created as [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "]: " + title, 

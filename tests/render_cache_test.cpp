@@ -26,6 +26,8 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
 
     r.end_frame();
 
+
+
     while (window.is_running()) {
         r.begin_frame();
         r.clear(rocket::rgba_color::white());

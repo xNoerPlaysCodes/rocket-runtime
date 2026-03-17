@@ -126,7 +126,7 @@ namespace rgl {
     void free_texture_unit(texture_unit_handle_t &dst) {
         std::lock_guard<std::mutex> _(texture_unit_pool.freelist_mutex);
         r_assert(texture_unit_pool.freelist[dst.unit - GL_TEXTURE0] == false);
-        texture_unit_pool.freelist[dst.unit - GL_TEXTURE0] = false;
+        texture_unit_pool.freelist[dst.unit - GL_TEXTURE0] = true;
         dst.unit = std::numeric_limits<unsigned int>::max();
     }
 
@@ -532,7 +532,7 @@ namespace rgl {
         std::fill(std::begin(texture_unit_pool.freelist), std::begin(texture_unit_pool.freelist) + max_available_tx_units, true);
 
         if (!gpu_is_modern) {
-            logs.push_back("!GPU In-use is not spec-compliant or new enough, performance may be impacted and bugs may occur");
+            logs.push_back("!GPU does not fully support required features. Expect reduced performance or glitches");
             logs.push_back("!MAX_TX_UNITS: " + std::to_string(max_available_tx_units));
             logs.push_back("!MAX_TX_SIZE: " + std::to_string(max_tx_size));
         }

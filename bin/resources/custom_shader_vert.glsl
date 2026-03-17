@@ -1,4 +1,5 @@
-#version 330 core
+#version 300 es
+precision highp float;
 layout(location = 0) in vec2 aPos;
 
 out vec2 fragPos;

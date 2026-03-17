@@ -10,14 +10,12 @@
 #include <utility>
 #include <string>
 #include <vector>
-#define rGL_TXID_INVALID (4294967295U)
-#define rGL_SHADERLOC_INVALID -1
-#define rGL_SHADER_INVALID 0
-#define rGL_VAO_INVALID 0
-#define rGL_VBO_INVALID 0
-#define rGL_FBO_INVALID rgl::fbo_t{ 0, 0 }
-
-#define rGL__FEATURE_SUPPORT_FBO
+#define rGL_TXID_INVALID (0xDEADBEEFU)
+#define rGL_SHADERLOC_INVALID -1 // OpenGL Specified do not change
+#define rGL_SHADER_INVALID (0xDEADBEEFU)
+#define rGL_VAO_INVALID (0xDEADBEEFU)
+#define rGL_VBO_INVALID (0xDEADBEEFU)
+#define rGL_FBO_INVALID rgl::fbo_t{ (0xDEADBEEFU), (0xDEADBEEFU) }
 
 #define rGL_MAX_RECOMMENDED_DRAWCALLS 5000
 #define rGL_MAX_RECOMMENDED_TRICOUNT 5000
@@ -39,7 +37,6 @@ namespace rgl {
     using blend_src_t = unsigned int;
     using blend_dst_t = unsigned int;
 
-#ifdef rGL__FEATURE_SUPPORT_FBO
     struct fbo_t {
         unsigned int fbo;
         unsigned int color_tex;
@@ -52,7 +49,6 @@ namespace rgl {
             return fbo != other.fbo;
         }
     };
-#endif
 
     struct blend_mode_t {
         blend_src_t src_rgb;

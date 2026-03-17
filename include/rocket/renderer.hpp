@@ -23,7 +23,6 @@ namespace rocket {
         rgba_color color = {0,0,0,0};
     };
     struct renderer_flags_t {
-        bool fxaa_simplified = false;
         bool share_renderer_as_global = true;
         /// @brief Show the splash screen
         bool show_splash = true;
@@ -32,17 +31,12 @@ namespace rocket {
         glfnldr::backend_t glfnldr_backend = ROCKETGE__GLFNLDR_BACKEND_ENUM;
     };
     enum class render_mode_t {
-        /// @brief Enables a preloaded simplified FXAA Shader
-        /// @note HEAVILY BROKEN, rendering with this is just
-        ///         all over the place... :(
-        fxaa,
-
         texture_filter_none,
         camera,
     };
 
     struct graphics_settings_t {
-        bool viewport_visibility_checks = false;
+        bool viewport_visibility_checks = true;
     };
 
     class renderer_2d;
@@ -53,6 +47,10 @@ namespace rocket {
         friend class renderer_2d;
     public:
         std::function<void(rocket::renderer_2d *ren)> draw = nullptr;
+    public:
+        /// @brief Get FB Color Texture
+        /// @note Call after end_render_cache ONLY
+        unsigned int get_texture();
     };
 
     struct camera_2d;
@@ -185,6 +183,7 @@ namespace rocket {
         void make_ready_texture(std::shared_ptr<rocket::texture_t> texture);
 
         /// @brief Draw text
+        /// @note Does text.length drawcalls, use render cache to reduce to 1 drawcall
         /// @param text Text
         /// @param position Position
         void draw_text(const rocket::text_t &text, vec2f_t position);
@@ -193,16 +192,6 @@ namespace rocket {
         /// @param pos Position
         /// @param color Color
         void draw_pixel(rocket::vec2f_t pos, rocket::rgba_color color);
-    public:
-        /// @brief All drawcalls will be redirected to an internal buffer
-        /// @brief and be drawn later
-        /// @note Unimplemented
-        ROCKETGE__NOT_IMPLEMENTED void begin_batch();
-
-        /// @brief All drawcalls that have been stored in the buffer will
-        /// @brief be drawn now
-        /// @note Unimplemented
-        ROCKETGE__NOT_IMPLEMENTED void end_batch(size_t max_batch_size = 2048);
     public:
         /// @brief Draw FPS at the top left
         void draw_fps(vec2f_t pos = { 10, 10 });
@@ -256,6 +245,9 @@ namespace rocket {
         /// @brief Get graphics settings
         const graphics_settings_t &get_graphics_settings();
         /// @brief Get the current framebuffer texture
+        /// @note Allocates a new texture and destroys every frame
+        /// @note Use render_cache_t::get_texture() to avoid performance
+        ///       degradation
         /// @brief Is stored on GPU only 
         /// @brief Lifetime managed automatically
         rgl::scoped_gl_texture_t get_framebuffer_texture();

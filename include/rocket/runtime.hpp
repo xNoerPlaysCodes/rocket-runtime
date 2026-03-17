@@ -228,8 +228,8 @@ int rocket_main(int argc, char **argv, rocket_arguments_t);
         app->activity->vm->DetachCurrentThread(); \
     } \
     extern "C" void android_main(android_app *app) { \
-        const char *argv[] = { "RocketGE", "--", nullptr }; \
-        int argc = 2; \
+        const char *argv[] = { "RocketGE_EmbeddedArgv0", "--debug-overlay", nullptr }; \
+        int argc = (sizeof(argv) / sizeof(argv[0])) - 1; \
         g_android_app = app; \
         app->onAppCmd = [](android_app *app, int32_t cmd) {}; \
         ANativeActivity_setWindowFlags(app->activity, \

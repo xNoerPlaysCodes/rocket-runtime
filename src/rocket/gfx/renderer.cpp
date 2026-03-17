@@ -51,6 +51,12 @@
 #include <intl_macros.hpp>
 
 namespace rocket {
+    unsigned int render_cache_t::get_texture() {
+        return this->fbo.color_tex;
+    }
+}
+
+namespace rocket {
     rgl::fbo_t fxaa_fbo = rGL_FBO_INVALID;
     rgl::shader_program_t fxaa_shader = rGL_SHADER_INVALID;
     
@@ -128,16 +134,18 @@ namespace rocket {
     
     renderer_2d::gfx_chk_result renderer_2d::check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t sz) {
         if (!this->frame_started) return gfx_chk_result::not_drawable;
+        if (this->graphics_settings.viewport_visibility_checks) {
+            if (pos == rocket::vec2f_t{-1,-1} || sz == rocket::vec2f_t{-1,-1})
+                return gfx_chk_result::drawable;
 
-        if (pos == rocket::vec2f_t{-1,-1} || sz == rocket::vec2f_t{-1,-1})
+            rocket::fbounding_box obj = {pos, sz};
+            rocket::fbounding_box vp = {{0,0}, this->get_viewport_size()};
+
+            if (!obj.intersects(vp))
+                return gfx_chk_result::not_drawable;
+
             return gfx_chk_result::drawable;
-
-        rocket::fbounding_box obj = {pos, sz};
-        rocket::fbounding_box vp = {{0,0}, this->get_viewport_size()};
-
-        if (!obj.intersects(vp))
-            return gfx_chk_result::not_drawable;
-
+        }
         return gfx_chk_result::drawable;
     }
 
@@ -384,6 +392,8 @@ namespace rocket {
             sz = rgl::get_viewport_size();
         }
         glViewport(off.x, off.y, sz.x, sz.y);
+        glClearColor(0,0,0,0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         cb(this);
         end_render_cache(c.get());
 
@@ -399,6 +409,8 @@ namespace rocket {
         bool _frame_started = this->frame_started;
         this->frame_started = true;
         begin_render_cache(c);
+        glClearColor(0,0,0,0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         c->draw(this);
         end_render_cache(c);
         this->frame_started = _frame_started;
@@ -419,11 +431,14 @@ namespace rocket {
         r_assert(rgl::get_active_fbo() != c->fbo);
 
         rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(pos, sz, 0, 0);
-        glActiveTexture(GL_TEXTURE0);
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
         glBindTexture(GL_TEXTURE_2D, c->fbo.color_tex);
-        glUniform1i(glGetUniformLocation(pg, "u_texture"), 0);
+        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
         glUniform1f(glGetUniformLocation(pg, "u_flip_y"), 1.f);
         rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
+        rgl::free_texture_unit(unit);
     }
     
     void renderer_2d::draw_render_cache(render_cache_t *c, rocket::fbounding_box bbox) {
@@ -534,11 +549,14 @@ namespace rocket {
         r_assert(texture != nullptr);
 
         rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(rect.pos, rect.size, rotation, roundedness);
-        glActiveTexture(GL_TEXTURE0);
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
         glBindTexture(GL_TEXTURE_2D, texture->glid);
         this->make_ready_texture(texture);
-        glUniform1i(glGetUniformLocation(pg, "u_texture"), 0);
+        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
         rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
+        rgl::free_texture_unit(unit);
     }
 
     void renderer_2d::draw_atlas_texture(
@@ -580,10 +598,12 @@ namespace rocket {
         glUniform2f(glGetUniformLocation(pg, "u_size"), size.x, size.y);
         glUniform1f(glGetUniformLocation(pg, "u_radius"), roundedness);
 
-        glActiveTexture(GL_TEXTURE0);
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
         glBindTexture(GL_TEXTURE_2D, atlas->glid);
         this->make_ready_texture(atlas);
-        glUniform1i(glGetUniformLocation(pg, "u_texture"), 0);
+        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
 
         rocket::vec2f_t atlas_size{ 1.f * atlas->size.x, 1.f * atlas->size.y };
         rocket::vec2f_t uv_tex_pos  = sprite_pos_in_atlas / atlas_size;
@@ -595,6 +615,7 @@ namespace rocket {
         static const auto vos = rgl::cache_compile_vo("atlas_texture");
         if (!vos.first || !vos.second) std::terminate();
         rgl::draw_shader(pg, vos.first, vos.second);
+        rgl::free_texture_unit(unit);
     }
 
     void renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
@@ -652,7 +673,9 @@ namespace rocket {
         rgl::shader_location_t tex_loc = glGetUniformLocation(shader_program, "u_texture");
         glUniform1i(tex_loc, 0); // Texture unit 0
         
-        glActiveTexture(GL_TEXTURE0);
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
         glBindTexture(GL_TEXTURE_2D, text.font->glid);
         auto text_vo = rgl::get_text_vos();
         glBindVertexArray(text_vo.first);
@@ -696,6 +719,7 @@ namespace rocket {
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quad), quad);
             rgl::draw_shader(shader_program, rgl::shader_use_t::text);
         }
+        rgl::free_texture_unit(unit);
     }
 
     void renderer_2d::draw_shader(shader_t shader) {
@@ -784,13 +808,16 @@ namespace rocket {
         std::vector<uint8_t> flat(framebuffer.size() * 4);
         std::memcpy(flat.data(), framebuffer.data(), framebuffer.size() * sizeof(rgba_color));
 
-        glActiveTexture(GL_TEXTURE0);
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
         glBindTexture(GL_TEXTURE_2D, framebuffer_tx);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, rgl::get_viewport_size().x, rgl::get_viewport_size().y, GL_RGBA, GL_UNSIGNED_BYTE, flat.data());
 
         static rgl::shader_program_t shader = rgl::get_paramaterized_textured_quad({0,0}, rgl::get_viewport_size(), 0.f, 0.f);
-        glUniform1i(glGetUniformLocation(shader, "u_texture"), 0);
+        glUniform1i(glGetUniformLocation(shader, "u_texture"), unit.unit - GL_TEXTURE0);
         rgl::draw_shader(shader, rgl::shader_use_t::textured_rect);
+        rgl::free_texture_unit(unit);
     }
 
     vec2f_t renderer_2d::get_viewport_size() {
@@ -1005,14 +1032,17 @@ namespace rocket {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glUseProgram(fxaa_shader);
-            glActiveTexture(GL_TEXTURE0);
+            rgl::texture_unit_handle_t unit;
+            rgl::alloc_texture_unit(unit);
+            glActiveTexture(unit.unit);
             glBindTexture(GL_TEXTURE_2D, fxaa_fbo.color_tex);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glUniform1i(rgl::get_shader_location(fxaa_shader, "uScene"), 0);
+            glUniform1i(rgl::get_shader_location(fxaa_shader, "uScene"), unit.unit - GL_TEXTURE0);
             glUniform2f(rgl::get_shader_location(fxaa_shader, "uResolution"), rgl::get_viewport_size().x, rgl::get_viewport_size().y);
 
             draw_fullscreen_quad();
+            rgl::free_texture_unit(unit);
         }
 
         draw_debug_overlay(util::get_clistate().debugoverlay, this);
@@ -1101,7 +1131,13 @@ namespace rocket {
 
         double frametime_limit = 1.0 / (fps + 0);
 
-        if (frame_duration < frametime_limit) {
+#ifdef ROCKETGE__Platform_Android
+        constexpr bool condition = false;
+#else
+        constexpr bool condition = true;
+#endif
+
+        if (frame_duration < frametime_limit && condition) {
             // Dynamically wait on Unix vs Win32
             // (Scheduler Differences)
             // Do not modify, took a very long time to tune it
@@ -1110,18 +1146,18 @@ namespace rocket {
             // ~60 FPS on both Win32 and Unix
             // ~118 FPS while target is 120 FPS
             double sleep_time = frametime_limit - frame_duration;
-#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
+#if defined(ROCKETGE__Platform_Windows)
             constexpr double spin_wait_time = 0.005;
 #else
             constexpr double spin_wait_time = 0.002;
 #endif
-#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
+#if defined(ROCKETGE__Platform_Windows)
                 while
 #else
                 if
 #endif
                 (sleep_time > spin_wait_time && !cli_args.software_frame_timer) {
-#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
+#if defined(ROCKETGE__Platform_Windows)
                 std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time / 10));
                 sleep_time /= 10;
 #else

@@ -4,7 +4,7 @@
 #include <rocket/asset.hpp>
 #include <rocket/audio.hpp>
 
-int rocket_main(int argc, char **argv, rocket_arguments_t) {
+int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     bool test_mode = false;
     if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
         rocket::set_log_level(rocket::log_level_t::none);
@@ -18,7 +18,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
 
     rocket::asset_manager_t am(std::chrono::seconds(1));
     rocket::log("Loading sound...", "main.cpp", "main", "info");
-    auto sound = am.get_sound(am.load_sound("resources/output.ogg"));
+    auto sound = am.get_sound(am.load_sound(args.working_dir + "resources/output.ogg"));
 
     rocket::audio::sound_engine_t se(rocket::audio::device_t::get_default());
     se.play(*sound);
