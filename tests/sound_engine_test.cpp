@@ -21,7 +21,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     auto sound = am.get_sound(am.load_sound(args.working_dir + "resources/output.ogg"));
 
     rocket::audio::sound_engine_t se(rocket::audio::device_t::get_default());
-    se.play(*sound);
+    se.play(*sound, false);
 
     // auto stream_sound = se.stream("/home/noerlol/C-Projects/RocketGE/bin/resources/output.ogg");
     // se.update_music_streams();

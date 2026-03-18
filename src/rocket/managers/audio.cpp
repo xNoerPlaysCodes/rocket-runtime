@@ -2,6 +2,8 @@
 #include <iostream>
 #include <memory>
 #include <rocket/audio.hpp>
+#include <audio.hpp>
+#include <rocket/threads.hpp>
 #include <thread>
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -44,7 +46,7 @@ namespace rocket::audio {
         }
     }
 
-    source_t *fetch_source(std::array<rocket::audio::source_t, 32> &sources) {
+    source_t* fetch_source(std::array<rocket::audio::source_t, 32> &sources) {
         for (auto &source : sources) {
             if (!source.in_use) {
                 source.in_use = true;
@@ -64,20 +66,17 @@ namespace rocket::audio {
             return dvcl;
         }
 
-        // get the double-null terminated list of device names
         const ALCchar* devices = alcGetString(nullptr, ALC_ALL_DEVICES_SPECIFIER);
         if (!devices) return dvcl;
 
-        // loop until we hit an empty string
         while (*devices) {
             device_t dvc;
             dvc.name = devices;
             dvc.capabilities = { capabilities_t::mono16, capabilities_t::stereo16 };
-            dvc.open();  // you’re opening each device here — that’s fine if you really need it open
+            dvc.open();
 
             dvcl.push_back(dvc);
 
-            // move to next device name
             devices += std::strlen(devices) + 1;
         }
 
@@ -114,41 +113,34 @@ namespace rocket::audio {
         alListenerfv(AL_ORIENTATION, orientation);
     }
 
-    void sound_engine_t::play(sound_t &sound, bool loop, sound_finish_callback_t cb) {
+    void sound_engine_t::play(sound_t &sound, bool loop, sound_finish_callback_t cb, float vol) {
         source_t *source = fetch_source(this->sources);
-        if (source == nullptr) {
-            rocket::log("sound sources exhausted", "sound_engine_t", "play", "error");
-            return;
-        }
+        if (source == nullptr) return;
 
         ALuint format = sound.buffer.format == format_t::mono16 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
 
         ALuint buffer;
         alGenBuffers(1, &buffer);
-
         alBufferData(buffer, format, sound.buffer.samples.data(),
                  sound.buffer.samples.size() * sizeof(int16_t), sound.buffer.sample_rate);
         alSourcei(source->source, AL_BUFFER, buffer);
         alSourcei(source->source, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
+        alSourcef(source->source, AL_GAIN, (vol / 100.f));
         alSourcePlay(source->source);
 
-        if (cb == nullptr) {
-            source->in_use = false;
-            return;
-        }
-        
-        std::thread t = std::thread([source, cb]() {
+        std::thread t = std::thread([source, buffer, cb]() {
             ALint state;
-            alGetSourcei(source->source, AL_SOURCE_STATE, &state);
-            while (state == AL_PLAYING) {
+            do {
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
                 alGetSourcei(source->source, AL_SOURCE_STATE, &state);
-            }
+            } while (state == AL_PLAYING);
 
-            source->in_use = false;
-            cb();
+            rocket::thread_t::schedule([buffer, source, cb]() {
+                alDeleteBuffers(1, &buffer); // cleanup
+                source->in_use = false;
+                if (cb) cb();
+            });
         });
-
         t.detach();
     }
 
@@ -367,10 +359,20 @@ namespace rocket::audio {
         }
     }
 
-    sound_engine_t::~sound_engine_t() {
-        alcMakeContextCurrent(nullptr);
+    bool sound_engine_no_destruction_cleanup_once = false;
 
-        alcCloseDevice(this->device->handle);
-        alcDestroyContext(this->ctx);
+    sound_engine_t::~sound_engine_t() {
+        if (!sound_engine_no_destruction_cleanup_once) {
+            alcMakeContextCurrent(nullptr);
+
+            alcCloseDevice(this->device->handle);
+            alcDestroyContext(this->ctx);
+        } else {
+            sound_engine_no_destruction_cleanup_once = false;
+        }
+    }
+
+    void __sound_engine_no_destruction_cleanup_once() {
+        sound_engine_no_destruction_cleanup_once = true;
     }
 }

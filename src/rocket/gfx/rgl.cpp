@@ -839,6 +839,16 @@ namespace rgl {
         glViewport(offset.x, flipped_y, size.x, size.y);
     }
 
+    void gl_viewport(const rocket::vec2f_t &offset, const rocket::vec2f_t &size) {
+        glViewport(offset.x, offset.y, size.x, size.y);
+    }
+
+    void gl_clear(unsigned int gl_flags, rocket::rgba_color clear_color) {
+        auto col = clear_color.normalize();
+        glClearColor(col.x, col.y, col.z, col.w);
+        glClear(gl_flags);
+    }
+
     rocket::vec2f_t get_viewport_size() {
         return viewport_size;
     }
@@ -999,5 +1009,55 @@ namespace rgl {
             std::lock_guard<std::mutex> _(scheduled_mutex);
             while (scheduled.size() != 0) scheduled.pop();
         }
+    }
+    
+    // --- Float uniforms ---
+    void gl_uniform1f(shader_program_t prog, GLint location, float v0) {
+        glUseProgram(prog);
+        glUniform1f(location, v0);
+    }
+
+    void gl_uniform2f(shader_program_t prog, GLint location, float v0, float v1) {
+        glUseProgram(prog);
+        glUniform2f(location, v0, v1);
+    }
+
+    void gl_uniform3f(shader_program_t prog, GLint location, float v0, float v1, float v2) {
+        glUseProgram(prog);
+        glUniform3f(location, v0, v1, v2);
+    }
+
+    void gl_uniform4f(shader_program_t prog, GLint location, float v0, float v1, float v2, float v3) {
+        glUseProgram(prog);
+        glUniform4f(location, v0, v1, v2, v3);
+    }
+
+    // --- Int uniforms ---
+    void gl_uniform1i(shader_program_t prog, GLint location, int v0) {
+        glUseProgram(prog);
+        glUniform1i(location, v0);
+    }
+
+    void gl_uniform2i(shader_program_t prog, GLint location, int v0, int v1) {
+        glUseProgram(prog);
+        glUniform2i(location, v0, v1);
+    }
+
+    void gl_uniform3i(shader_program_t prog, GLint location, int v0, int v1, int v2) {
+        glUseProgram(prog);
+        glUniform3i(location, v0, v1, v2);
+    }
+
+    void gl_uniform4i(shader_program_t prog, GLint location, int v0, int v1, int v2, int v3) {
+        glUseProgram(prog);
+        glUniform4i(location, v0, v1, v2, v3);
+    }
+
+    void bind_texture_unit(rgl::texture_unit_t unit) {
+        glActiveTexture(unit);
+    }
+
+    void bind_texture(rgl::texture_id_t tx) {
+        glBindTexture(GL_TEXTURE_2D, tx);
     }
 }

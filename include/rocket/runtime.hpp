@@ -165,6 +165,7 @@ namespace rocket {
 /// @brief Rocket Main Arguments
 struct rocket_arguments_t {
     std::string working_dir = "./";
+    std::string platform_main;
 };
 
 /// @brief Rocket Main function
@@ -228,7 +229,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t);
         app->activity->vm->DetachCurrentThread(); \
     } \
     extern "C" void android_main(android_app *app) { \
-        const char *argv[] = { "RocketGE_EmbeddedArgv0", "--debug-overlay", nullptr }; \
+        const char *argv[] = { "RocketGE_EmbeddedArgv0", "--", nullptr }; \
         int argc = (sizeof(argv) / sizeof(argv[0])) - 1; \
         g_android_app = app; \
         app->onAppCmd = [](android_app *app, int32_t cmd) {}; \
@@ -260,12 +261,17 @@ int rocket_main(int argc, char **argv, rocket_arguments_t);
             f.write((char*)buf.data(), size); \
         } \
         AAssetDir_close(dir); \
-        rocket_main(argc, (char**) argv, {std::string(g_android_app->activity->internalDataPath) + "/"}); \
+        rocket_main(argc, (char**) argv, { \
+            .working_dir = std::string(g_android_app->activity->internalDataPath) + "/", \
+            .platform_main = "android_main" \
+        }); \
     }
 #else
 #define DEFINE_PLATFORM_MAIN \
     int main(int argc, char **argv) { \
-        return rocket_main(argc, argv, {}); \
+        return rocket_main(argc, argv, { \
+            .platform_main = "main" \
+        }); \
     }
 #endif
 

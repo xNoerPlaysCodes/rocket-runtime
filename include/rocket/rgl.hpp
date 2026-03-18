@@ -26,7 +26,7 @@ namespace rgl {
     using vbo_t = unsigned int;
 
     using texture_id_t = unsigned int;
-    using texture_unit_t = int;
+    using texture_unit_t = unsigned int;
 
     using shader_location_t = int;
 
@@ -182,6 +182,11 @@ namespace rgl {
 
     void update_viewport(const rocket::vec2f_t &size);
     void update_viewport(const rocket::vec2f_t &offset, const rocket::vec2f_t &size);
+    void gl_viewport(const rocket::vec2f_t &offset, const rocket::vec2f_t &size);
+    constexpr unsigned int gl_color_buffer_bit = 0x00004000;
+    constexpr unsigned int gl_depth_buffer_bit = 0x00000100;
+    constexpr unsigned int gl_texture0 = 0x84C0;
+    void gl_clear(unsigned int gl_flags, rocket::rgba_color clear_color);
 
     shader_program_t cache_compile_shader(const char *vs, const char *fs);
     shader_program_t nocache_compile_shader(const char *vs, const char *fs);
@@ -237,6 +242,19 @@ namespace rgl {
     /// @brief Compiles all default shaders
     /// @note Can take a variable amount of time
     void compile_all_default_shaders();
+
+    void gl_uniform1f(shader_program_t prog, int location, float v0);
+    void gl_uniform2f(shader_program_t prog, int location, float v0, float v1);
+    void gl_uniform3f(shader_program_t prog, int location, float v0, float v1, float v2);
+    void gl_uniform4f(shader_program_t prog, int location, float v0, float v1, float v2, float v3);
+
+    void gl_uniform1i(shader_program_t prog, int location, int v0);
+    void gl_uniform2i(shader_program_t prog, int location, int v0, int v1);
+    void gl_uniform3i(shader_program_t prog, int location, int v0, int v1, int v2);
+    void gl_uniform4i(shader_program_t prog, int location, int v0, int v1, int v2, int v3);
+
+    void bind_texture_unit(rgl::texture_unit_t unit);
+    void bind_texture(rgl::texture_id_t tx);
 
     void reset();
 }

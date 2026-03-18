@@ -390,6 +390,7 @@ if (BUILD_EXAMPLES)
         moving_circle
         custom_shader
         software_renderer
+        ball_smasher
     )
 
     foreach(example_name IN LISTS EXAMPLE_NAMES)

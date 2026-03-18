@@ -102,7 +102,9 @@ namespace rocket::audio {
     public:
         void set_device(device_t *device);
     public:
-        void play(sound_t &sound, bool loop = false, sound_finish_callback_t = nullptr);
+        // @brief Play a Sound
+        // @note Volume is in %ge
+        void play(sound_t &sound, bool loop = false, sound_finish_callback_t = nullptr, float volume = 30.f);
         void play(std::shared_ptr<streaming_sound_t> sound, bool loop = false, sound_finish_callback_t = nullptr);
         std::shared_ptr<streaming_sound_t> stream(std::string file_path, bool loop = false, sound_finish_callback_t = nullptr);
 

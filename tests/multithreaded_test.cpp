@@ -28,6 +28,9 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     rocket::asset_manager_t am;
     std::shared_ptr<rocket::texture_t> tx = nullptr;
 
+    rocket::log(args.working_dir, "a", "a", "info");
+
+
     std::thread ([&] () {
         std::string thread_id = std::to_string(rocket::thread_t::get_thread_id());
         rocket::log("simulating real work...", "thread", thread_id, "info");

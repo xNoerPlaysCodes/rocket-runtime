@@ -6,24 +6,7 @@
 #include "rocket/window.hpp"
 #include <iostream>
 
-#include "rocket/macros.hpp"
-#ifdef ROCKETGE__Platform_Android
-#include <android/log.h>
-
-#define LOG_TAG "RocketGE"
-
-// Log levels: ANDROID_LOG_DEBUG, ANDROID_LOG_INFO, ANDROID_LOG_WARN, ANDROID_LOG_ERROR
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
-#else
-#define LOGI(...) (void)0
-#define LOGE(...) (void)0
-#define LOGD(...) (void)0
-#endif
-
-
-int main(int argc, char **argv) {
+int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     rocket::register_argument("do-something-impressive", []() {
         std::cout << "okay but how\n";
     }, "Do something really impressive");
@@ -52,22 +35,8 @@ int main(int argc, char **argv) {
 
     r.close();
     window.close();
+
+    return 0;
 }
 
-#include "rocket/macros.hpp"
-#ifdef ROCKETGE__Platform_Android
-#include <android_native_app_glue.h>
-#include <android/log.h>
-
-extern "C" android_app *g_android_app = nullptr;
-
-void android_main(android_app *app) {
-    // convert to fake argc/argv for rocket::init
-    const char* argv[] = { "rocketge", nullptr };
-    int argc = 1;
-
-    g_android_app = app;
-    
-    main(argc, (char**)argv);
-}
-#endif
+DEFINE_PLATFORM_MAIN

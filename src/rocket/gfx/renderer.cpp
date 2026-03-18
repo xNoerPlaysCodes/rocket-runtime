@@ -1,4 +1,6 @@
 #include "rocket/macros.hpp"
+#include <audio.hpp>
+#include <rocket/audio.hpp>
 #if defined(ROCKETGE__Platform_Android)
     #include <GLES3/gl32.h>
     #include <EGL/egl.h>
@@ -57,15 +59,11 @@ namespace rocket {
 }
 
 namespace rocket {
-    rgl::fbo_t fxaa_fbo = rGL_FBO_INVALID;
-    rgl::shader_program_t fxaa_shader = rGL_SHADER_INVALID;
-    
     util::global_state_cliargs_t ovr_clistate;
 
     renderer_2d::renderer_2d(window_backend_i *window, int fps, renderer_flags_t flags) {
         r_assert(window != nullptr);
         r_assert(fps != 0);
-        r_assert(flags.fxaa_simplified == false);
 
         this->impl = new renderer_2d_impl_t;
         this->impl->obj = this;
@@ -122,14 +120,14 @@ namespace rocket {
             rocket::log("OpenGL Initialized in " + std::to_string(gl_init_timer_ms) + unit, "renderer_2d", "constructor", "trace");
         }
         this->flags = flags;
-        if (flags.fxaa_simplified) {
-            fxaa_fbo = rgl::create_fbo();
-            fxaa_shader = rgl::get_fxaa_simplified_shader();
-        }
-
         glViewport(0, 0, window->size.x, window->size.y);
 
         ::rocket::ovr_clistate = util::get_clistate();
+
+
+        if (flags.show_splash && (!this->splash_shown)) {
+            this->show_splash();
+        }
     }
     
     renderer_2d::gfx_chk_result renderer_2d::check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t sz) {
@@ -160,7 +158,7 @@ namespace rocket {
         }
 
         if (thickness > 0) {
-    rgl::shader_program_t pg = rocket::get_shader(shader_id_t::circle_lines);
+            rgl::shader_program_t pg = rocket::get_shader(shader_id_t::circle_lines);
             rocket::vec2f_t viewport_size = rgl::get_viewport_size();
             glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
 
@@ -283,9 +281,6 @@ namespace rocket {
     }
 
     void renderer_2d::begin_frame() {
-        if (flags.show_splash && (!this->splash_shown)) {
-            this->show_splash();
-        }
         this->frame_started = true;
         frame_start_time = clock::now();
         delta_time = std::chrono::duration<double>(frame_start_time - last_time).count();
@@ -305,19 +300,19 @@ namespace rocket {
         auto tween = tweeny::from(0).to(0).during(duration / 2).via(tweeny::easing::cubicOut);
 
         asset_manager_t am;
+        audio::sound_engine_t engine(audio::device_t::get_default());
+        
         std::vector<uint8_t> splash_screen = std::vector<uint8_t>(splash_screen_png, splash_screen_png + splash_screen_png_len);
         auto tx = am.get_texture(am.load_texture(splash_screen));
 
         std::vector<uint8_t> splash_sfx = std::vector<uint8_t>(splash_sfx_ogg, splash_sfx_ogg + splash_sfx_ogg_len);
-        auto aud = am.get_audio(am.load_audio(splash_sfx));
+        auto aud = am.get_sound(am.load_sound(splash_sfx));
 
         bool final = false;
 
         bool splash_finished = false;
 
-        auto size = window->size;
-
-        aud->play();
+        engine.play(*aud);
 
         while (window->is_running() && !splash_finished) {
             this->begin_frame();
@@ -351,15 +346,6 @@ namespace rocket {
     rocket::rgba_color this_frame_clear_color = rgba_color::blank();
 
     void renderer_2d::begin_render_mode(render_mode_t mode) {
-        if (mode == render_mode_t::fxaa) {
-            if (!rgl::is_active_any_fbo()) {
-                rgl::use_fbo(fxaa_fbo);
-                auto color_nm = this_frame_clear_color.normalize();
-                glClearColor(color_nm.x, color_nm.y, color_nm.z, color_nm.w);
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            }
-        }
-
         if (mode == render_mode_t::camera && this->cam != nullptr) {
             vec2f_t viewport = get_viewport_size();
 
@@ -472,10 +458,6 @@ namespace rocket {
                 break;
             }
         }
-    }
-
-    void renderer_2d::begin_batch() {
-        rocket::log("Batching is not implemented yet", "renderer_2d", "begin_batch", "info");
     }
 
     void renderer_2d::clear(rocket::rgba_color color) {
@@ -774,7 +756,8 @@ namespace rocket {
 }
 
 namespace std {
-    template<> struct hash<std::pair<float, float>> {
+    template<>
+    struct hash<std::pair<float, float>> {
         size_t operator()(const std::pair<float, float> &p) const {
             return std::hash<float>()(p.first) ^ std::hash<float>()(p.second);
         }
@@ -856,12 +839,6 @@ namespace rocket {
     }
 
     void renderer_2d::end_render_mode(render_mode_t mode) {
-        if (mode == render_mode_t::fxaa) {
-            if (rgl::is_active_any_fbo()) {
-                rgl::reset_to_default_fbo();
-            }
-        }
-
         if (mode == render_mode_t::camera) {
             this->impl->camera_transform = glm::mat4(1.0f);
         }
@@ -1025,26 +1002,6 @@ namespace rocket {
         if (flags.share_renderer_as_global) {
             __rallframeend();
         }
-        bool fxaa_on = flags.fxaa_simplified && fxaa_shader != rGL_SHADER_INVALID && std::find(active_render_modes.begin(), active_render_modes.end(), render_mode_t::fxaa) != active_render_modes.end();
-        if (fxaa_on) { // [FIXME] Text drawing doesn't work
-            vec4f_t nm = this_frame_clear_color.normalize();
-            glClearColor(nm.x, nm.y, nm.z, nm.w);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-            glUseProgram(fxaa_shader);
-            rgl::texture_unit_handle_t unit;
-            rgl::alloc_texture_unit(unit);
-            glActiveTexture(unit.unit);
-            glBindTexture(GL_TEXTURE_2D, fxaa_fbo.color_tex);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glUniform1i(rgl::get_shader_location(fxaa_shader, "uScene"), unit.unit - GL_TEXTURE0);
-            glUniform2f(rgl::get_shader_location(fxaa_shader, "uResolution"), rgl::get_viewport_size().x, rgl::get_viewport_size().y);
-
-            draw_fullscreen_quad();
-            rgl::free_texture_unit(unit);
-        }
-
         draw_debug_overlay(util::get_clistate().debugoverlay, this);
         this->frame_started = false;
         auto frame_end_time = clock::now();
@@ -1090,11 +1047,8 @@ namespace rocket {
 
         static auto cli_args = util::get_clistate();
 
-        if (fxaa_fbo != rGL_FBO_INVALID) {
-            rgl::use_fbo(fxaa_fbo);
-            if (!cli_args.viewport_size_set) {
-                rgl::update_viewport(final_viewport_position, final_viewport_size);
-            }
+        if (!cli_args.viewport_size_set) {
+            rgl::update_viewport(final_viewport_position, final_viewport_size);
         }
         rgl::fbo_t fbo = rgl::get_active_fbo();
         rgl::reset_to_default_fbo();
@@ -1200,9 +1154,6 @@ namespace rocket {
     void init_batch_renderer(rgl::vao_t quadVAO, rgl::vbo_t quadVBO, rgl::vbo_t instanceVBO) {
     }
 
-    void renderer_2d::end_batch(size_t max_batch_size) {
-    }
-
     double renderer_2d::get_delta_time() {
         return delta_time;
     }
@@ -1292,7 +1243,7 @@ namespace rocket {
             }
         } else {
             rocket::log("window destructor ran before renderer_2d destructor, incorrect order of deletion",
-                    "renderer_2d", "close", "warn");
+                        "renderer_2d", "close", "warn");
         }
 
         window = nullptr; // unbind window
@@ -1308,8 +1259,6 @@ namespace rocket {
             delete this->impl;
             this->impl = nullptr;
         }
-        fxaa_shader = rGL_SHADER_INVALID;
-        fxaa_fbo = rGL_FBO_INVALID;
         util::glinit(false);
     }
 

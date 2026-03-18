@@ -179,7 +179,6 @@ namespace rocket {
             }
         };
 
-        this->set_vsync(true);
 #endif
 
         rocket::log("Window created as [" + std::to_string(size.x) + "x" + std::to_string(size.y) + "]: " + title, 
