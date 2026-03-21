@@ -250,14 +250,10 @@ void draw_game(rocket::window_t &window, rocket::renderer_2d &ren, rocket::asset
     }
 
     rocket::vec2f_t center = ball - radius;
-    rocket::fbounding_box ball_sz = { center, { radius * 2, radius * 2 } };
 
     if (center.y + radius * 2 > vp_size.y) {
         g_game_ended = true;
     }
-
-
-    // ball = ball + (ball_velocity) * 2;
 
     last_vp_size = vp_size;
 }
@@ -298,7 +294,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     rocket::shader_t shader(rocket::shader_type::vert_frag, args.working_dir + "resources/postprocess.rlsl");
     while (window.is_running()) {
         static rocket::vec2f_t last_vp_size = ren.get_viewport_size();
-        if (!fullscreen_set) { // TODO just remove &&false
+        if (!fullscreen_set) {
             ren.begin_frame();
             ren.clear();
             {

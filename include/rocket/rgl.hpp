@@ -64,6 +64,7 @@ namespace rgl {
         rgl::fbo_t bound_framebuffer;
         rgl::texture_unit_t bound_texture_unit;
         std::pair<rgl::vao_t, rgl::vbo_t> bound_vo;
+        fbo_t bound_fbo;
 
         rgl::shader_program_t active_shader;
 

@@ -25,6 +25,8 @@ namespace rnative {
 
     typedef void (*proc_address_t)(void);
 
+    void intrin_cpu_minfreq();
+
     proc_address_t load_proc_address(const char *name);
 }
 

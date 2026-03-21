@@ -890,7 +890,7 @@ namespace rgl {
         state.bound_framebuffer = rgl::get_active_fbo();
         GLint active_txunit;
         glGetIntegerv(GL_ACTIVE_TEXTURE, &active_txunit);
-        state.bound_texture_unit = active_txunit;
+        state.bound_texture_unit = active_txunit - GL_TEXTURE0;
 
         rgl::vao_t vao;
         glGetIntegerv(GL_VERTEX_ARRAY_BINDING, std::bit_cast<GLint*>(&vao));
@@ -904,6 +904,15 @@ namespace rgl {
         glGetIntegerv(GL_BLEND_DST_RGB, reinterpret_cast<GLint*>(&state.blend_mode.dst_rgb));
         glGetIntegerv(GL_BLEND_SRC_ALPHA, reinterpret_cast<GLint*>(&state.blend_mode.src_alpha));
         glGetIntegerv(GL_BLEND_DST_ALPHA, reinterpret_cast<GLint*>(&state.blend_mode.dst_alpha));
+
+        glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, reinterpret_cast<GLint*>(&state.bound_fbo.fbo));
+        glGetFramebufferAttachmentParameteriv(
+            GL_DRAW_FRAMEBUFFER,
+            GL_COLOR_ATTACHMENT0,
+            GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME,
+            reinterpret_cast<GLint*>(&state.bound_fbo.color_tex)
+        );
+
         GLboolean blend_enabled = glIsEnabled(GL_BLEND);
         state.blend_mode.enabled = blend_enabled;
         return state;
@@ -925,6 +934,9 @@ namespace rgl {
             glEnable(GL_BLEND);
             glBlendFuncSeparate(state.blend_mode.src_rgb, state.blend_mode.dst_rgb, state.blend_mode.src_alpha, state.blend_mode.dst_alpha);
         }
+
+        if (state.bound_fbo.fbo != 0)
+            glBindFramebuffer(GL_FRAMEBUFFER, state.bound_fbo.fbo);
     }
     void compile_all_default_shaders() {
         rocket::shader_provider_compile_all();

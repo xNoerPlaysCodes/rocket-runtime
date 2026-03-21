@@ -83,6 +83,7 @@ namespace rocket {
         linux_wayland,
         linux_x11,
         macos_cocoa,
+        android
     };
 
     struct platform_t {

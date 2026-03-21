@@ -24,7 +24,16 @@ FragmentStart
     uniform float u_time;
     uniform vec2 u_resolution;
     uniform float u_aberration;
+
+    float rand(vec2 uv, float time) {
+        return fract(sin(dot(uv + time, vec2(12.9898, 78.233))) * 43758.5453123);
+    }
+
     void main() {
+        if (rand(v_uv, u_time) > 0.5) {
+            frag_color = vec4(0.);
+            return;
+        }
         vec2 uv = v_uv - 0.5;
         float vignette = 1.0 - dot(uv, uv) * 1.5;
         float aberration = u_aberration * (1.0 - vignette);

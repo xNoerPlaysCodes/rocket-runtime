@@ -290,6 +290,7 @@ if (BUILD_TESTS)
         state_reset_test
         test_generator_test
         render_cache_test
+        custom_fbo_test
     )
 
     if (NOT __rge_ANDROID__)

@@ -98,7 +98,7 @@ namespace rocket {
 
         // Remove percentage
         vol = vol / 100.f;
-        alSourcei(source, AL_BUFFER, *buffer);
+        alSourcei(source, AL_BUFFER, buffer);
         alSourcef(source, AL_GAIN, vol);
 
         alSourcei(source, AL_LOOPING, AL_FALSE);
@@ -177,11 +177,11 @@ namespace rocket {
 
         // Rebuffer data
         ALenum format = (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-        alBufferData(*buffer, format, samples, actual_samples * sizeof(short) * channels, sample_rate);
+        alBufferData(buffer, format, samples, actual_samples * sizeof(short) * channels, sample_rate);
         delete[] samples;
 
         // Play again from new position
-        alSourcei(this->source, AL_BUFFER, *buffer);
+        alSourcei(this->source, AL_BUFFER, buffer);
         alSourcePlay(this->source);
     }
 
@@ -197,8 +197,7 @@ namespace rocket {
             alDeleteSources(1, &source);
         }
         if (buffer) {
-            alDeleteBuffers(1, buffer);
-            delete buffer;
+            alDeleteBuffers(1, &buffer);
         }
     }
 
@@ -386,15 +385,13 @@ namespace rocket {
         audio->id = id;
         audio->loaded = true;
 
-        audio->buffer = new ALuint;
         audio->loaded = true;
-        alGenBuffers(1, audio->buffer);
+        alGenBuffers(1, &audio->buffer);
 
         ALenum error = alGetError();
         if (error != AL_NO_ERROR) {
             rocket::log("failed to generate OpenAL buffer", "OpenAL", "alGenBuffers", "error");
-            delete audio->buffer;
-            audio->buffer = nullptr;
+            audio->buffer = 0;
             current_id--;
             return -1;
         }
@@ -406,8 +403,7 @@ namespace rocket {
         stb_vorbis* vorbis = stb_vorbis_open_filename(path.c_str(), nullptr, nullptr);
         if (!vorbis) {
             rocket::log("failed to load " + path, "stb_vorbis", "stb_vorbis_open_filename", "error");
-            delete audio->buffer;
-            audio->buffer = nullptr;
+            audio->buffer = 0;
             current_id--;
             return -1;
         }
@@ -424,15 +420,13 @@ namespace rocket {
 
         ALenum format = (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
 
-        alBufferData(*audio->buffer, format, output, numSamples * sizeof(short) * channels, samplerate);
+        alBufferData(audio->buffer, format, output, numSamples * sizeof(short) * channels, samplerate);
         delete[] output;
 
         error = alGetError();
         if (error != AL_NO_ERROR) {
             rocket::log("failed to load audio properly: " + path, "OpenAL", "alBufferData", "error");
-            alDeleteBuffers(1, audio->buffer);
-            delete audio->buffer;
-            audio->buffer = nullptr;
+            alDeleteBuffers(1, &audio->buffer);
             current_id--;
             return -1;
         }
@@ -450,14 +444,11 @@ namespace rocket {
         audio->id = id;
         audio->loaded = true;
 
-        audio->buffer = new ALuint;
-        alGenBuffers(1, audio->buffer);
+        alGenBuffers(1, &audio->buffer);
 
         ALenum error = alGetError();
         if (error != AL_NO_ERROR) {
             rocket::log("failed to generate OpenAL buffer", "OpenAL", "alGenBuffers", "error");
-            delete audio->buffer;
-            audio->buffer = nullptr;
             current_id--;
             return -1;
         }
@@ -469,8 +460,6 @@ namespace rocket {
         stb_vorbis* vorbis = stb_vorbis_open_memory(mem.data(), mem.size(), nullptr, nullptr);
         if (!vorbis) {
             rocket::log("failed to load audio from [memory]", "stb_vorbis", "stb_vorbis_open_memory", "error");
-            delete audio->buffer;
-            audio->buffer = nullptr;
             current_id--;
             return -1;
         }
@@ -487,15 +476,13 @@ namespace rocket {
 
         ALenum format = (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
 
-        alBufferData(*audio->buffer, format, output, numSamples * sizeof(short) * channels, samplerate);
+        alBufferData(audio->buffer, format, output, numSamples * sizeof(short) * channels, samplerate);
         delete[] output;
 
         error = alGetError();
         if (error != AL_NO_ERROR) {
             rocket::log("failed to load audio properly: [memory]", "OpenAL", "alBufferData", "error");
-            alDeleteBuffers(1, audio->buffer);
-            delete audio->buffer;
-            audio->buffer = nullptr;
+            alDeleteBuffers(1, &audio->buffer);
             current_id--;
             return -1;
         }
@@ -766,8 +753,7 @@ namespace rocket {
 
             for (auto &a : audio_removes) {
                 thread_t::schedule([a] () {
-                    alDeleteBuffers(1, a->buffer);
-                    delete a->buffer;
+                    alDeleteBuffers(1, &a->buffer);
                     alDeleteSources(1, &a->source);
                     a->set_unloaded();
                 });

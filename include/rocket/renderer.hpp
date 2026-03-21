@@ -128,7 +128,14 @@ namespace rocket {
         void clear(rocket::rgba_color color = { 255, 255, 255, 255 });
 
         /// @brief Draw a shader
+        /// @note Uniforms to be set in the shader by shader.set_uniform(...)
         void draw_shader(shader_t shader);
+
+        /// @brief Draw a FBO with a custom post-process shader
+        void draw_fbo(rgl::fbo_t fbo, vec2f_t pos, vec2f_t size, shader_t shader);
+
+        /// @brief Draw a FBO with regular textured rect
+        void draw_fbo(rgl::fbo_t fbo, vec2f_t pos, vec2f_t size);
 
         /// @brief Draw a rectangle
         /// @param rect Rectangle

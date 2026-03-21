@@ -45,6 +45,7 @@ namespace rocket {
         platform.name = "ANativeWindow";
         platform.rge_name = std::string("Android::Embedded");
         platform.os_name = "Android";
+        platform.type = platform_type_t::android;
         return platform;
     }
 

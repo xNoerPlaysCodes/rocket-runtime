@@ -67,7 +67,7 @@ namespace rocket {
     class audio_t {
     private:
         std::shared_ptr<audio_context_t> context;
-        unsigned int *buffer = nullptr;
+        unsigned int buffer = 0;
         unsigned int source = 0;
         std::string path;
 

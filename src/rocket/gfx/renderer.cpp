@@ -124,7 +124,6 @@ namespace rocket {
 
         ::rocket::ovr_clistate = util::get_clistate();
 
-
         if (flags.show_splash && (!this->splash_shown)) {
             this->show_splash();
         }
@@ -341,6 +340,7 @@ namespace rocket {
             this->end_frame();
             this->window->poll_events();
         }
+        rocket::audio::__sound_engine_no_destruction_cleanup_once();
     }
 
     rocket::rgba_color this_frame_clear_color = rgba_color::blank();
@@ -710,6 +710,57 @@ namespace rocket {
             return;
         }
         rgl::draw_shader(shader.glprogram, shader.vao, shader.vbo);
+    }
+
+    void renderer_2d::draw_fbo(rgl::fbo_t fbo, vec2f_t pos, vec2f_t size) {
+        auto prev = rgl::is_active_any_fbo() ? rgl::get_active_fbo() : rGL_FBO_INVALID;
+
+        if (prev == fbo) {
+            rgl::reset_to_default_fbo();
+        }
+
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+
+        rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(pos, size, 0, 0);
+        rgl::bind_texture_unit(unit.unit);
+        rgl::bind_texture(fbo.color_tex);
+        int u_texture = rgl::get_shader_location(pg, "u_texture");
+        int u_flip_y = rgl::get_shader_location(pg, "u_flip_y");
+        rgl::gl_uniform1i(pg, u_texture, unit.unit - rgl::gl_texture0);
+        rgl::gl_uniform1f(pg, u_flip_y, 1.f);
+        rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
+        rgl::free_texture_unit(unit);
+
+        if (prev != rGL_FBO_INVALID) {
+            rgl::use_fbo(prev);
+        } else {
+            rgl::reset_to_default_fbo();
+        }
+    }
+
+    void renderer_2d::draw_fbo(rgl::fbo_t fbo, vec2f_t pos, vec2f_t size, shader_t shader) {
+        auto prev = rgl::is_active_any_fbo() ? rgl::get_active_fbo() : rGL_FBO_INVALID;
+
+        if (prev == fbo) {
+            rgl::reset_to_default_fbo();
+        }
+
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+
+        rgl::bind_texture_unit(unit.unit);
+        rgl::bind_texture(fbo.color_tex);
+
+        this->draw_shader(shader);
+
+        rgl::free_texture_unit(unit);
+
+        if (prev != rGL_FBO_INVALID) {
+            rgl::use_fbo(prev);
+        } else {
+            rgl::reset_to_default_fbo();
+        }
     }
 
     void renderer_2d::set_wireframe(bool x) {
