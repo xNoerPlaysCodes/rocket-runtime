@@ -6,7 +6,6 @@ GLES_MinimumVersion: 3.1
 Name: FXAA
 
 VertexStart
-    #version 300 es
     layout(location = 0) in vec2 aPos;
     layout(location = 1) in vec2 aTexCoord;
 
@@ -19,7 +18,6 @@ VertexStart
 VertexEnd
 
 FragmentStart
-    #version 300 es
     in vec2 vTexCoord;
     out vec4 FragColor;
 

@@ -153,6 +153,20 @@ void main() {
         gl_check_errors(16);
     }
 
+    std::string to_hash_version_gl(std::string gl_ver) {
+        std::string s;
+        int count = 0;
+        for (char c : gl_ver) {
+            if (count == 4) break;
+            if (c >= '0' && c <= '9') {
+                s += c;
+            }
+            ++count;
+        }
+
+        return s;
+    }
+
     std::string trim(const std::string& s) {
         size_t start = s.find_first_not_of(" \t\n\r");
         if (start == std::string::npos) return ""; // all whitespace
@@ -185,6 +199,7 @@ void main() {
             std::string at_type = "";
             std::string insert_code = "";
         };
+        std::string gl_ver_string = reinterpret_cast<const char*>(glGetString(GL_VERSION));
         std::vector<inserted_header_t> inserted_headers;
         rlsl_shader_t rlsl_shader;
         mode_t curmode = mode_t::rlsl;
@@ -285,12 +300,23 @@ void main() {
                         rocket::log("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "vertex shader already defined, cannot redefine vertex shader", "shader_t", "constructor", "warn");
                         continue;
                     }
+
+                    if (gl_ver_string.starts_with("OpenGL ES")) {
+                        rlsl_shader.vcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gles_minimumversion)) + " es\n";
+                        rlsl_shader.vcode += "precision highp float;\n";
+                    } else
+                        rlsl_shader.vcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gl_minimumversion)) + "\n";
                     curmode = mode_t::vertex;
                 } else if (l.starts_with("FragmentStart")) {
                     if (!rlsl_shader.fcode.empty()) {
                         rocket::log("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "fragment shader already defined, cannot redefine fragment shader", "shader_t", "constructor", "warn");
                         continue;
                     }
+                    if (gl_ver_string.starts_with("OpenGL ES")) {
+                        rlsl_shader.fcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gles_minimumversion)) + " es\n";
+                        rlsl_shader.fcode += "precision highp float;\n";
+                    } else
+                        rlsl_shader.fcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gl_minimumversion)) + "\n";
                     curmode = mode_t::fragment;
                 }
 

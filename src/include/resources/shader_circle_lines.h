@@ -6,8 +6,6 @@ GLES_MinimumVersion: 3.1
 Name: Ring
 
 VertexStart
-    #version 300 es
-    precision highp float;
     layout(location = 0) in vec2 aPos;
     uniform mat4 u_transform;
     out vec2 v_local;
@@ -19,8 +17,6 @@ VertexStart
 VertexEnd
 
 FragmentStart
-    #version 300 es
-    precision highp float;
     in vec2 v_local;
     out vec4 FragColor;
 

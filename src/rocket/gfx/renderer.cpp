@@ -739,7 +739,7 @@ namespace rocket {
         }
     }
 
-    void renderer_2d::draw_fbo(rgl::fbo_t fbo, vec2f_t pos, vec2f_t size, shader_t shader) {
+    void renderer_2d::draw_fbo(rgl::fbo_t fbo, shader_t shader) {
         auto prev = rgl::is_active_any_fbo() ? rgl::get_active_fbo() : rGL_FBO_INVALID;
 
         if (prev == fbo) {
@@ -751,6 +751,11 @@ namespace rocket {
 
         rgl::bind_texture_unit(unit.unit);
         rgl::bind_texture(fbo.color_tex);
+
+        int loc = rgl::get_shader_location(shader.glprogram, "u_texture");
+        if (loc != -1) {
+            shader.set_uniform("u_texture", static_cast<int>(unit.unit - rgl::gl_texture0));
+        }
 
         this->draw_shader(shader);
 

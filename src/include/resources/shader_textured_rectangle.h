@@ -6,8 +6,6 @@ GLES_MinimumVersion: 3.1
 Name: Textured Rectangle
 
 VertexStart
-    #version 300 es
-    precision highp float;
     layout(location = 0) in vec2 aPos;
     out vec2 v_uv;
     uniform mat4 u_transform;
@@ -19,8 +17,6 @@ VertexStart
     }
 VertexEnd
 FragmentStart
-    #version 300 es
-    precision highp float;
     in vec2 v_uv;
     out vec4 FragColor;
     uniform sampler2D u_texture;

@@ -417,31 +417,12 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
             static float accumulator = 0.f;
             accumulator += ren.get_delta_time();
 
-            rgl::texture_unit_handle_t unit;
-            rgl::alloc_texture_unit(unit);
-
-            rgl::bind_texture_unit(unit.unit);
-            rgl::bind_texture(fbo.color_tex);
-
-            shader.set_uniform("u_texture", static_cast<int>(unit.unit - rgl::gl_texture0));
             shader.set_uniform("u_time", accumulator);
             shader.set_uniform("u_resolution", ren.get_viewport_size());
             shader.set_uniform("u_aberration", 0.005f);
-            ren.draw_shader(shader);
-            rgl::free_texture_unit(unit);
+            ren.draw_fbo(fbo, shader);
         } else {
-            rgl::texture_unit_handle_t unit;
-            rgl::alloc_texture_unit(unit);
-
-            rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad({0,0}, ren.get_viewport_size(), 0, 0);
-            rgl::bind_texture_unit(unit.unit);
-            rgl::bind_texture(fbo.color_tex);
-            int u_texture = rgl::get_shader_location(pg, "u_texture");
-            int u_flip_y = rgl::get_shader_location(pg, "u_flip_y");
-            rgl::gl_uniform1i(pg, u_texture, unit.unit - rgl::gl_texture0);
-            rgl::gl_uniform1f(pg, u_flip_y, 1.f);
-            rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
-            rgl::free_texture_unit(unit);
+            ren.draw_fbo(fbo, {0,0}, ren.get_viewport_size());
         }
         auto vp_size = ren.get_viewport_size();
         rocket::text_t text = { "Score: " + std::to_string(skip_positions.size()), 32, rocket::rgb_color::black() };

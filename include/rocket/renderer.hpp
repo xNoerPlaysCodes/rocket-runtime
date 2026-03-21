@@ -132,7 +132,8 @@ namespace rocket {
         void draw_shader(shader_t shader);
 
         /// @brief Draw a FBO with a custom post-process shader
-        void draw_fbo(rgl::fbo_t fbo, vec2f_t pos, vec2f_t size, shader_t shader);
+        /// @note Sets the uniform "u_texture" to texture unit if exists
+        void draw_fbo(rgl::fbo_t fbo, shader_t shader);
 
         /// @brief Draw a FBO with regular textured rect
         void draw_fbo(rgl::fbo_t fbo, vec2f_t pos, vec2f_t size);
