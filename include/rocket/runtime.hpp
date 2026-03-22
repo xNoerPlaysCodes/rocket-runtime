@@ -6,6 +6,7 @@
 #include <string>
 #ifdef ROCKETGE__Platform_Windows
 #define GL_STATIC_DRAW 0x88E4
+#include <windows.h>
 #endif
 
 #ifndef ROCKETGE__RUNTIME_SKIP_HEADER_INCLUSION
@@ -263,6 +264,20 @@ void __rocket_premain(int argc, char **argv);
             .platform_main = "android_main" \
         }); \
     }
+#elifdef ROCKETGE__Platform_Windows
+#define DEFINE_PLATFORM_MAIN \
+    int main(int argc, char **argv) { \
+        __rocket_premain(argc, argv); \
+        return rocket_main(argc, argv, { \
+            .platform_main = "main" \
+        }); \
+    } \
+    int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) { \
+        __rocket_premain(0, nullptr); \
+        return rocket_main(0, nullptr, { \
+            .platform_main = "WinMain" \
+        }); \
+    }
 #else
 #define DEFINE_PLATFORM_MAIN \
     int main(int argc, char **argv) { \
@@ -272,5 +287,4 @@ void __rocket_premain(int argc, char **argv);
         }); \
     }
 #endif
-
 #endif

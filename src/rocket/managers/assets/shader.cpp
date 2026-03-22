@@ -57,6 +57,7 @@ namespace rocket {
 
         const char *default_vcode = R"(
 #version 300 es
+precision highp float;
 
 layout(location = 0) in vec2 aPos;
 out vec2 fragPos;
@@ -68,12 +69,13 @@ void main() {
             )";
         const char *default_fcode = R"(
 #version 300 es
+precision highp float;
 
 in vec2 fragPos;
 out vec4 FragColor;
 
 void main() {
-    FragColor = vec4(1., 0., 1., 1.);
+    FragColor = vec4(0.);
 }
             )";
 
@@ -83,8 +85,6 @@ void main() {
         if (!check_shader_compile(glshaderv, "Vertex")) {
             rocket::log("Cannot continue with failed compilation", "shader_t", "constructor", "error");
             this->glprogram = rgl::nocache_compile_shader(default_vcode, default_fcode);
-            this->fcode = default_fcode;
-            this->vcode = default_vcode;
             return;
         }
         gl_check_errors(1);
@@ -94,8 +94,6 @@ void main() {
         if (!check_shader_compile(glshaderf, "Fragment")) {
             rocket::log("Cannot continue with failed compilation", "shader_t", "constructor", "error");
             this->glprogram = rgl::nocache_compile_shader(default_vcode, default_fcode);
-            this->fcode = default_fcode;
-            this->vcode = default_vcode;
             return;
         }
         gl_check_errors(2);
@@ -203,7 +201,7 @@ void main() {
         std::vector<inserted_header_t> inserted_headers;
         rlsl_shader_t rlsl_shader;
         mode_t curmode = mode_t::rlsl;
-        static auto load_file = [&shader_workingdir](std::string path) -> std::vector<std::string> {
+        auto load_file = [shader_workingdir](std::string path) -> std::vector<std::string> {
             std::ifstream file(shader_workingdir / path);
             if (!file.is_open()) {
                 rocket::log("failed to open file path: " + (shader_workingdir / path).string(), "shader_t", "constructor", "error");
@@ -219,7 +217,7 @@ void main() {
 
             return lines;
         };
-        static auto split = [](std::string str, char delim) -> std::vector<std::string> {
+        constexpr auto split = [](std::string str, char delim) -> std::vector<std::string> {
             std::stringstream ss(str);
             std::string token;
             std::vector<std::string> tokens;
@@ -228,7 +226,7 @@ void main() {
             }
             return tokens;
         };
-        static auto str_tolower = [](std::string str) -> std::string {
+        constexpr auto str_tolower = [](std::string str) -> std::string {
             std::transform(str.begin(), str.end(), str.begin(), ::tolower);
             return str;
         };

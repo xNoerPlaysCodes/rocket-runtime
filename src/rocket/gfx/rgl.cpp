@@ -323,7 +323,7 @@ namespace rgl {
 
     
     std::string get_cpu_name() {
-#ifdef ROCKETGE__Platform_Linux
+#if defined(ROCKETGE__Platform_Linux) || defined(ROCKETGE__Platform_Windows)
         char cpu[64] = {};
         unsigned int info[4];
         __get_cpuid(0x80000002, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu, info, 16);

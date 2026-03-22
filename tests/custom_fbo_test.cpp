@@ -9,12 +9,18 @@
 #include <astro/astroui.hpp>
 
 int rocket_main(int argc, char **argv, rocket_arguments_t args) {
+    bool test_mode = false;
+    if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
+        rocket::set_log_level(rocket::log_level_t::none);
+        test_mode = true;
+    }
+
     rocket::init(argc, argv);
     rocket::window_t window({1280, 720}, "RocketGE - Custom FBO Test", {
         .msaa_samples = 4,
     });
     rocket::renderer_2d ren(&window, 60, {
-        .show_splash = false
+        .show_splash = !test_mode
     });
     rocket::asset_manager_t am;
 
@@ -48,6 +54,8 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
             rgl::reset_to_default_fbo();
         }
         last_vp_size = ren.get_viewport_size();
+
+        if (test_mode) return fbo == rGL_FBO_INVALID ? 0 : 1;
     }
 
     return 0;

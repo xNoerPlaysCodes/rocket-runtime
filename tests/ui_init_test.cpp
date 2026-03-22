@@ -40,7 +40,6 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
-    rocket::init(argc, argv);
 
     rocket::windowflags_t flags;
     flags.resizable = true;

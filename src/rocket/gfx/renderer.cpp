@@ -1142,7 +1142,7 @@ namespace rocket {
         double frametime_limit = 1.0 / (fps + 0);
 
 #ifdef ROCKETGE__Platform_Android
-        constexpr bool _ContinueWithFrameTimer = false;
+        constexpr bool _ContinueWithFrameTimer = true;
 #else
         constexpr bool _ContinueWithFrameTimer = true;
 #endif
@@ -1156,18 +1156,18 @@ namespace rocket {
             // ~60 FPS on both Win32 and Unix
             // ~118 FPS while target is 120 FPS
             double sleep_time = frametime_limit - frame_duration;
-#if defined(ROCKETGE__Platform_Windows)
+#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
             constexpr double spin_wait_time = 0.005;
 #else
             constexpr double spin_wait_time = 0.002;
 #endif
-#if defined(ROCKETGE__Platform_Windows)
+#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
                 while
 #else
                 if
 #endif
                 (sleep_time > spin_wait_time && !cli_args.software_frame_timer) {
-#if defined(ROCKETGE__Platform_Windows)
+#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
                 std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time / 10));
                 sleep_time /= 10;
 #else

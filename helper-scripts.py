@@ -185,9 +185,9 @@ def init_cmake(args):
         if not shutil.which(command):
             print(f"{command} was not found in PATH.")
             return 1
-    linker = "ld.lld" # Preferred
-    if not shutil.which(linker):
-        print("[fallback] using ld instead of ld.lld")
+    linker = "mold" # Preferred
+    if not shutil.which(linker) and not (sys.platform == "win32" or os.path.exists("WinDeps")):
+        print("[fallback] using ld instead of mold")
         linker = "ld"
 
     os.makedirs("build", exist_ok=True)
@@ -218,7 +218,12 @@ def init_cmake(args):
     #                 shutil.move(s, d)
 
     backend = args.glfnldr_backend
-    cmake_args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build", "-DCMAKE_C_COMPILER_LAUNCHER=ccache", "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache", "-DCMAKE_LINKER=" + linker]
+    cmake_args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", "-DGLFNLDR_BACKEND=" + backend, "-B", "build", "-DCMAKE_C_COMPILER_LAUNCHER=ccache", "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache"]
+    for item in ["-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=" + linker, \
+                 "-DCMAKE_SHARED_LINKER_FLAGS=-fuse-ld=" + linker, \
+                 "-DCMAKE_MODULE_LINKER_FLAGS=-fuse-ld=" + linker]:
+        if not (sys.platform == "win32" or os.path.exists("WinDeps")):
+            cmake_args.append(item)
 
     if args.build_editor:
         cmake_args.append("-DBUILD_EDITOR=ON")
