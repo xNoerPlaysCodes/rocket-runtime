@@ -33,26 +33,18 @@
 
 /// @brief The minimum OpenGL version required for
 ///     operation
-/// @note Versions less than this do not operate
-///         stably and may result in crashes
-///         and/or unintended behavior
 #define ROCKETGE__FEATURE_MIN_GL_VERSION_MAJOR 3
 #define ROCKETGE__FEATURE_MIN_GL_VERSION_MINOR 3
 
 /// @brief The max RLSL version supported
 ///                ^^^^ -> RocketShaderLanguage
 #define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MAJOR 1
-#define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR 2
+#define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR 3
 
 #define ROCKETGE__FEATURE_GL_LOADER "GLfnldr"
 
 #define ROCKETGE__FEATURE_SHADER_SUPPORT_VERT_FRAG
 // #define ROCKETGE__FEATURE_SHADER_SUPPORT_COMPUTE_SHADER
-
-// #define ROCKETGE__NOT_IMPLEMENTED __attribute__((unavailable("Not Implemented")))
-#define ROCKETGE__NOT_IMPLEMENTED
-//  #define ROCKETGE__DEPRECATED [[deprecated]]
-#define ROCKETGE__DEPRECATED
 
 namespace rocket {
     /// @brief Log Level
@@ -173,6 +165,10 @@ struct rocket_arguments_t {
 /// @note Look at docs on how to use
 int rocket_main(int argc, char **argv, rocket_arguments_t);
 
+/// @brief Internal
+/// @note Do Not Define
+void __rocket_premain(int argc, char **argv);
+
 #ifdef ROCKETGE__Platform_Android
 #include <android_native_app_glue.h>
 #include <android/asset_manager.h>
@@ -231,6 +227,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t);
     extern "C" void android_main(android_app *app) { \
         const char *argv[] = { "RocketGE_EmbeddedArgv0", "--", nullptr }; \
         int argc = (sizeof(argv) / sizeof(argv[0])) - 1; \
+        __rocket_premain(argc, (char**) argv); \
         g_android_app = app; \
         app->onAppCmd = [](android_app *app, int32_t cmd) {}; \
         ANativeActivity_setWindowFlags(app->activity, \
@@ -269,6 +266,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t);
 #else
 #define DEFINE_PLATFORM_MAIN \
     int main(int argc, char **argv) { \
+        __rocket_premain(argc, argv); \
         return rocket_main(argc, argv, { \
             .platform_main = "main" \
         }); \

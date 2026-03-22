@@ -752,8 +752,8 @@ namespace rocket {
         rgl::bind_texture_unit(unit.unit);
         rgl::bind_texture(fbo.color_tex);
 
-        int loc = rgl::get_shader_location(shader.glprogram, "u_texture");
-        if (loc != -1) {
+        int u_texture = rgl::get_shader_location(shader.glprogram, "u_texture");
+        if (u_texture != -1) {
             shader.set_uniform("u_texture", static_cast<int>(unit.unit - rgl::gl_texture0));
         }
 
@@ -1142,12 +1142,12 @@ namespace rocket {
         double frametime_limit = 1.0 / (fps + 0);
 
 #ifdef ROCKETGE__Platform_Android
-        constexpr bool condition = false;
+        constexpr bool _ContinueWithFrameTimer = false;
 #else
-        constexpr bool condition = true;
+        constexpr bool _ContinueWithFrameTimer = true;
 #endif
 
-        if (frame_duration < frametime_limit && condition) {
+        if (frame_duration < frametime_limit && _ContinueWithFrameTimer) {
             // Dynamically wait on Unix vs Win32
             // (Scheduler Differences)
             // Do not modify, took a very long time to tune it
@@ -1206,9 +1206,6 @@ namespace rocket {
         vec4f_t color = { 0,0,0,0 };
         GLuint gltxid;
     };
-
-    void init_batch_renderer(rgl::vao_t quadVAO, rgl::vbo_t quadVBO, rgl::vbo_t instanceVBO) {
-    }
 
     double renderer_2d::get_delta_time() {
         return delta_time;

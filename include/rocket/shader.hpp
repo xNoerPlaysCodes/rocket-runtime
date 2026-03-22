@@ -21,9 +21,9 @@ namespace rocket {
 
     class shader_t {
     private:
-        unsigned int glshaderv = 0;
-        unsigned int glshaderf = 0;
-        unsigned int glprogram = 0;
+        unsigned int glshaderv = rGL_SHADER_INVALID;
+        unsigned int glshaderf = rGL_SHADER_INVALID;
+        unsigned int glprogram = rGL_SHADER_INVALID;
         shader_type type;
         std::string vcode = "";
         std::string fcode = "";
@@ -31,7 +31,8 @@ namespace rocket {
         std::string name = "NON_RLSL_SHADER";
         std::string rlsl_version = "NOT_COMPILED_BY_RLSL";
 
-        unsigned int vao{0}, vbo{0};
+        unsigned int vao { rGL_SHADER_INVALID },
+                     vbo { rGL_SHADER_INVALID };
         
         friend class renderer_2d;
         friend class renderer_3d;

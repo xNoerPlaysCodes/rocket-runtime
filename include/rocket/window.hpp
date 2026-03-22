@@ -177,6 +177,7 @@ namespace rocket {
         bool shown = false;
 
         bool running = false;
+        bool surface_alive = false;
 
         android_app_impl_t *impl = nullptr;
     protected:

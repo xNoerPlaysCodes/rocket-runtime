@@ -11,10 +11,16 @@
 #include <rocket/glfnldr.hpp>
 #include <cstdlib>
 #include <intl_macros.hpp>
+#include <thread>
 
 #ifdef ROCKETGE__Platform_Android
 #include <android/log.h>
 #endif
+
+namespace rocket::globals {
+    std::thread::id g_main_thread_id;
+    bool g_main_thread_id_set = false;
+}
 
 namespace callback {
     void bad_memory_access(void *mem_addr, int) {
@@ -739,4 +745,11 @@ namespace rocket {
     void register_libattribution(std::string lib, std::string license) {
         registered_libattributions.push_back({ lib, license });
     }
+}
+
+void __rocket_premain(int argc, char **argv) {
+    rocket::globals::g_main_thread_id = std::this_thread::get_id();
+    rocket::globals::g_main_thread_id_set = true;
+
+    (void) argc; (void) argv;
 }

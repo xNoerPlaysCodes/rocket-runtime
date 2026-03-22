@@ -1,10 +1,12 @@
 #include "glfnldr.hpp"
 #include "rocket/macros.hpp"
 
-bool BKEND_glew_init();
-bool BKEND_glad_init();
-bool BKEND_libepoxy_init();
-bool BKEND_android_init();
+namespace glfnldr {
+    namespace android { bool init(); }
+    namespace glew { bool init(); }
+    namespace glad { bool init(); }
+    namespace libepoxy { bool init(); }
+}
 
 namespace glfnldr {
     bool init(backend_t b) {
@@ -13,16 +15,16 @@ namespace glfnldr {
 
 #ifdef ROCKETGE__Platform_Desktop
         if (b == backend_t::glew)
-            return BKEND_glew_init();
+            return glew::init();
 
         if (b == backend_t::glad)
-            return BKEND_glad_init();
+            return glad::init();
 
         if (b == backend_t::libepoxy)
-            return BKEND_libepoxy_init();
+            return libepoxy::init();
 #else
         if (b == backend_t::android)
-            return BKEND_android_init();
+            return android::init();
 #endif
 
         return false;

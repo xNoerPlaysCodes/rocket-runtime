@@ -12,6 +12,7 @@
 #include <chrono>
 #include <memory>
 #include <vector>
+#include "glm/fwd.hpp"
 
 namespace rocket {
     constexpr int fps_uncapped = -1;
@@ -263,9 +264,8 @@ namespace rocket {
         /// @note may return nullptr
         camera_2d *get_camera();
         /// @brief Get the active camera (if any) matrix
-        /// @note Returned type is a glm::mat4*
         /// @note may return nullptr
-        void* get_camera_matrix();
+        glm::mat4 get_camera_matrix();
     public:
         /// @brief Get Current FPS
         float get_current_fps();

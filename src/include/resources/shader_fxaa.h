@@ -1,9 +1,9 @@
 namespace rocket_resource {
     const char *shader_fxaa_rlsl = R"(
-Version: 1.2
+Version: 1.3
 GL_MinimumVersion: 3.3
-GLES_MinimumVersion: 3.1
-Name: FXAA
+GLES_MinimumVersion: 3.0
+Name: FXAA (Simplified)
 
 VertexStart
     layout(location = 0) in vec2 aPos;

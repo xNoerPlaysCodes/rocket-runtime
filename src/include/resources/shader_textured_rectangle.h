@@ -1,8 +1,8 @@
 namespace rocket_resource {
     const char *shader_textured_rectangle_rlsl = R"(
-Version: 1.2
+Version: 1.3
 GL_MinimumVersion: 3.3
-GLES_MinimumVersion: 3.1
+GLES_MinimumVersion: 3.0
 Name: Textured Rectangle
 
 VertexStart

@@ -13,21 +13,24 @@
 using framebuffer_t = std::vector<rocket::rgba_color>;
 
 rocket::rgba_color &access_framebuffer_pixel(framebuffer_t *fb, int x, int y, int width) {
-    return fb->at(x + y * width);
+    return (*fb)[(x + y * width)];
 }
 
 /// @brief Chess Grid
 void render(framebuffer_t *fb, rocket::renderer_2d *r) {
-    int width = r->get_viewport_size().x;
-    int height = r->get_viewport_size().y;
+    const int width = r->get_viewport_size().x;
+    const int height = r->get_viewport_size().y;
 
     static float t = 0.f;  // animation timer
     t += 5.f * r->get_delta_time();
 
+    const float invert_w = (1.f / width);
+    const float invert_h = (1.f / height);
+
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            float nx = (float)x / width - 0.5f;
-            float ny = (float)y / height - 0.5f;
+            float nx = x * invert_w - 0.5f;
+            float ny = y * invert_h - 0.5f;
 
             float value = std::sin(nx*50 + t) * std::cos(ny*50 + t);
             value = (value > 0) ? 1.f : 0.f;
@@ -66,6 +69,8 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
         r.end_frame();
         window.poll_events();
     }
+
+    return 0;
 }
 
 DEFINE_PLATFORM_MAIN

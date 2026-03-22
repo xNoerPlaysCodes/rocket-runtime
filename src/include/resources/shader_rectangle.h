@@ -1,8 +1,8 @@
 namespace rocket_resource {
     const char *shader_rectangle_rlsl = R"(
-Version: 1.2
+Version: 1.3
 GL_MinimumVersion: 3.3
-GLES_MinimumVersion: 3.1
+GLES_MinimumVersion: 3.0
 Name: Rectangle
 
 VertexStart
@@ -40,10 +40,8 @@ FragmentStart
         float edge_thickness = 1.0; // in pixels
         float alpha = 1.0;
 
-
         float corner_mask = step(cornerDist.x, radius_px) * step(cornerDist.y, radius_px);
         alpha = mix(alpha, 1.0 - smoothstep(radius_px - edge_thickness, radius_px, dist), corner_mask);
-
 
         FragColor = vec4(u_color.rgb, u_color.a * alpha);
     }

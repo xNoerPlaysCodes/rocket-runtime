@@ -1,5 +1,4 @@
 #include <util.hpp>
-#define SDL_AUDIO_DRIVER_DUMMY 1
 #include "rocket/window.hpp"
 #include "window.hpp"
 #include <rocket/io.hpp>
@@ -10,6 +9,7 @@
 #include <intl_macros.hpp>
 #include "rocket/macros.hpp"
 #include "intl_macros.hpp"
+#include <shader_provider.hpp>
 
 #ifdef ROCKETGE__Platform_Android
 #include <android/log.h>
@@ -123,9 +123,6 @@ namespace rocket {
                 int32_t action = AMotionEvent_getAction(event) & AMOTION_EVENT_ACTION_MASK;
                 float x = AMotionEvent_getX(event, 0);
                 float y = AMotionEvent_getY(event, 0);
-                float nx = x;
-                float ny = y;
-
             if (action == AMOTION_EVENT_ACTION_DOWN) {
                 util::set_last_touch_state(rocket::io::keystate_t::make_down());
                 util::set_last_touch_pos({x, y});
@@ -309,27 +306,22 @@ namespace rocket {
 
     void android_app_t::destroy_surface() {
 #ifdef ROCKETGE__Platform_Android
-        if (!this->impl->surface)
+        if (this->impl->surface == EGL_NO_SURFACE)
             return;
 
         if (this->impl->display != EGL_NO_DISPLAY) {
-            if (!eglMakeCurrent(this->impl->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT)) {
-                int err = eglGetError();
-                rocket::log("eglMakeCurrent failed: " + std::to_string(err), "android_app_t", "destroy_surface", "error");
-            }
-
-            if (!eglDestroySurface(this->impl->display, this->impl->surface)) {
-                int err = eglGetError();
-                rocket::log("eglDestroySurface failed: " + std::to_string(err), "android_app_t", "destroy_surface", "error");
-            }
+            // if (!eglMakeCurrent(this->impl->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT)) {
+            //     int err = eglGetError();
+            //     rocket::log("eglMakeCurrent failed: " + std::to_string(err), "android_app_t", "destroy_surface", "error");
+            // }
+            //
+            // if (!eglDestroySurface(this->impl->display, this->impl->surface)) {
+            //     int err = eglGetError();
+            //     rocket::log("eglDestroySurface failed: " + std::to_string(err), "android_app_t", "destroy_surface", "error");
+            // }
         }
 
         this->impl->surface = EGL_NO_SURFACE;
-
-        if (g_android_app->window) {
-            ANativeWindow_release(g_android_app->window);
-            g_android_app->window = nullptr;
-        }
 #endif
     }
 
@@ -372,6 +364,8 @@ namespace rocket {
             this->impl->surface,
             this->impl->context
         );
+
+        shader_provider_reset();
 #endif
     }
 

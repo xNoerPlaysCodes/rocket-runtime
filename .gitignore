@@ -10,6 +10,7 @@ docs/*
 build/*
 bin/*
 !bin/resources/
+run.sh
 
 .idea
 .cache

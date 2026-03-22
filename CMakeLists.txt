@@ -228,9 +228,9 @@ if (__rge_WINDOWS__)
     message("RocketGE Platform: Desktop-GLFW-Win32")
 elseif (__rge_ANDROID__)
     target_link_libraries(${PROJECT_NAME} PRIVATE
-        ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libopenal.a
-        ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libSDL2.a
-        ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libminiz.a
+        ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libopenal.a
+        ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libSDL2.a
+        ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libminiz.a
         android
         log
         EGL
@@ -351,9 +351,9 @@ if (BUILD_TESTS)
                 )
             elseif (__rge_ANDROID__)
                 target_link_libraries(${test_name} PRIVATE
-                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libopenal.a
-                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libSDL2.a
-                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libminiz.a
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libopenal.a
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libSDL2.a
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libminiz.a
                     android
                     log
                     EGL
@@ -429,9 +429,9 @@ if (BUILD_EXAMPLES)
                 )
             elseif (__rge_ANDROID__)
                 target_link_libraries(${example_name} PRIVATE
-                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libopenal.a
-                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libSDL2.a
-                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/arm64-v8a/libminiz.a
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libopenal.a
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libSDL2.a
+                    ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libminiz.a
                     android
                     log
                     EGL

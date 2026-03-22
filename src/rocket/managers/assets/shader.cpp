@@ -56,7 +56,7 @@ namespace rocket {
         const char* fsrc = fcode.c_str();
 
         const char *default_vcode = R"(
-#version 330 core
+#version 300 es
 
 layout(location = 0) in vec2 aPos;
 out vec2 fragPos;
@@ -67,7 +67,7 @@ void main() {
 }
             )";
         const char *default_fcode = R"(
-            #version 330 core
+#version 300 es
 
 in vec2 fragPos;
 out vec4 FragColor;
@@ -470,8 +470,7 @@ void main() {
     GLint getloc(std::string name, GLuint glprogram) {
         GLint loc = glGetUniformLocation(glprogram, name.c_str());
         if (loc == -1) {
-            std::cerr << "Uniform " << name << " not found in shader" << std::endl;
-            rocket::exit(45);
+            return -1;
         }
         glUseProgram(glprogram);
         return loc;
@@ -584,5 +583,6 @@ void main() {
         return shader;
     }
 
-    shader_t::~shader_t() {}
+    shader_t::~shader_t() {
+    }
 }

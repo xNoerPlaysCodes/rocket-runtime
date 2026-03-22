@@ -1,3 +1,5 @@
-bool BKEND_libepoxy_init() {
-    return false;
+namespace glfnldr::libepoxy {
+    bool init() {
+        return false;
+    }
 }

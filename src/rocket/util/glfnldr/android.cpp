@@ -1,3 +1,5 @@
-bool BKEND_android_init() {
-    return true;
+namespace glfnldr::android {
+    bool init() {
+        return true;
+    }
 }
