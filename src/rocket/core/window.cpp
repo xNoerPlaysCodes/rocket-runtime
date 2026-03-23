@@ -12,7 +12,7 @@ namespace rocket {
             case rocket::window_backend_t::embedded:
                 window::cpl_init(window_backend_t::null); break; // [FIXME] Add Embedded or remove it entirely
             case rocket::window_backend_t::android:
-                rocket::window::android_cpl_init();
+                rocket::window::android_cpl_init(); break;
             default: if (cpl_init_callback != nullptr) cpl_init_callback(bk); break;
         }
     }

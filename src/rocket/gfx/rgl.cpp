@@ -1,4 +1,6 @@
 #include <chrono>
+#include <cstring>
+#include <thread>
 #include "rocket/macros.hpp"
 #if defined(ROCKETGE__Platform_Android)
     #include <GLES3/gl32.h>
@@ -107,6 +109,7 @@ namespace rgl {
         bool freelist[32] = {1};
         uint8_t max_idx = 0;
         std::mutex freelist_mutex;
+        std::jthread watchdog;
     } texture_unit_pool;
 
     bool alloc_texture_unit(texture_unit_handle_t &dst) {
@@ -127,7 +130,7 @@ namespace rgl {
         std::lock_guard<std::mutex> _(texture_unit_pool.freelist_mutex);
         r_assert(texture_unit_pool.freelist[dst.unit - GL_TEXTURE0] == false);
         texture_unit_pool.freelist[dst.unit - GL_TEXTURE0] = true;
-        dst.unit = std::numeric_limits<unsigned int>::max();
+        dst.unit = rGL_TXID_INVALID;
     }
 
     std::string float_str(float value) {
@@ -530,6 +533,35 @@ namespace rgl {
 
         texture_unit_pool.max_idx = max_available_tx_units;
         std::fill(std::begin(texture_unit_pool.freelist), std::begin(texture_unit_pool.freelist) + max_available_tx_units, true);
+        texture_unit_pool.watchdog = std::jthread([](std::stop_token st) {
+            while (!st.stop_requested()) {
+                bool quit = false;
+                for (int i = 0; i < 60 && !st.stop_requested(); ++i) {
+                    if (st.stop_requested()) {
+                        quit = true;
+                        break;
+                    }
+                    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                }
+                if (quit) break;
+
+                bool freelist_cpy[32] = {};
+                {
+                    std::lock_guard<std::mutex> _(texture_unit_pool.freelist_mutex);
+                    std::memcpy(freelist_cpy, texture_unit_pool.freelist, sizeof(freelist_cpy));
+                }
+
+                int used = 0;
+
+                for (int i = 0; i < 32; ++i) {
+                    if (freelist_cpy[i] == false) ++used;
+                }
+
+                if (used >= 8) {
+                    rocket::log("Texture units are running low, leak may exist", "texture_unit_pool", "watchdog", "warn");
+                }
+            }
+        });
 
         if (!gpu_is_modern) {
             logs.push_back("!GPU does not fully support required features. Expect reduced performance or glitches");
@@ -563,7 +595,7 @@ namespace rgl {
         GLint fbo = rGL_FBO_INVALID.fbo;
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
 
-        return fbo != rGL_FBO_INVALID.fbo;
+        return std::cmp_not_equal(fbo, rGL_FBO_INVALID.fbo);
     }
 
     fbo_t create_fbo() {
@@ -815,7 +847,7 @@ namespace rgl {
         gl_draw_arrays(GL_TRIANGLES, 0, 6);
     }
 
-    void draw_shader(rgl::shader_program_t pg, vao_t vao, vbo_t vbo) {
+    void draw_shader(rgl::shader_program_t pg, vao_t vao, vbo_t) {
         glUseProgram(pg);
 
         glBindVertexArray(vao);
@@ -994,6 +1026,11 @@ namespace rgl {
     }
 
     void reset() {
+        {
+            texture_unit_pool.watchdog.request_stop();
+            if (texture_unit_pool.watchdog.joinable())
+                texture_unit_pool.watchdog.join();
+        }
         gl_main_ctx = nullptr;
         fmetrics = {};
         metrics = {};

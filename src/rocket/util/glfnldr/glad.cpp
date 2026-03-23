@@ -6,7 +6,7 @@
 namespace glfnldr::glad {
     bool init() {
         int ver = gladLoadGL(rnative::load_proc_address);
-        rocket::log("glad initialized with exit code " + std::to_string(ver), "glfnldr", "BKEND_init", "debug");
+        rocket::log("glad initialized with exit code " + std::to_string(ver), "glfnldr::glad", "init", "debug");
         return ver != 0;
     }
 }

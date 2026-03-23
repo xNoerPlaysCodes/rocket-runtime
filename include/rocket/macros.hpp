@@ -14,10 +14,12 @@
 
 #if (defined(__linux__) || defined(__linux)) && !defined(__ANDROID__)
 #define ROCKETGE__Platform_Linux
+#define ROCKETGE__RAW_PLATFORM_STRING "Linux"
 #endif
 
 #if defined(__APPLE__) || defined(__MACH__)
 #define ROCKETGE__Platform_macOS
+#define ROCKETGE__RAW_PLATFORM_STRING "Mach"
 #endif
 
 #if defined(ROCKETGE__Platform_Linux) || defined(ROCKETGE__Platform_macOS)
@@ -26,10 +28,12 @@
 
 #if defined(__ANDROID__)
 #define ROCKETGE__Platform_Android
+#define ROCKETGE__RAW_PLATFORM_STRING "Android"
 #endif
 
 #if defined(__EMSCRIPTEN__)
 #define ROCKETGE__Platform_Web
+#define ROCKETGE__RAW_PLATFORM_STRING "Emscripten"
 #endif
 
 // Groups

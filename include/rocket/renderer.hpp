@@ -264,7 +264,6 @@ namespace rocket {
         /// @note may return nullptr
         camera_2d *get_camera();
         /// @brief Get the active camera (if any) matrix
-        /// @note may return nullptr
         glm::mat4 get_camera_matrix();
     public:
         /// @brief Get Current FPS

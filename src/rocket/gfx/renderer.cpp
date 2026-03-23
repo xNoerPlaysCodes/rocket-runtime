@@ -260,6 +260,9 @@ namespace rocket {
         glBindVertexArray(vo.first);
         glUseProgram(pg);
         rgl::gl_draw_arrays(GL_TRIANGLE_FAN, 0, vertex_count);
+
+        glDeleteVertexArrays(1, &vo.first);
+        glDeleteBuffers(1, &vo.second);
     }
 
     void renderer_2d::draw_pixel(rocket::vec2f_t pos, rocket::rgba_color color) {

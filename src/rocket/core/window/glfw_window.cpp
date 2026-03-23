@@ -22,7 +22,7 @@
 
 namespace callback {
     void glfw_error(int error, const char* description) {
-        rocket::log(description, "GLFW", "ErrorCallback", "warn");
+        rocket::log(std::to_string(error) + ": " + description, "GLFW", "ErrorCallback", "warn");
     }
 }
 
@@ -575,9 +575,9 @@ namespace rocket {
             this->shown = true;
         }
         glfwPollEvents();
-        int w, h;
-        glfwGetFramebufferSize((GLFWwindow*)glfw_window->w, &w, &h);
-        this->size = { w, h };
+        // int w, h;
+        // glfwGetFramebufferSize((GLFWwindow*)glfw_window->w, &w, &h);
+        // this->size = { w, h };
 
         for (int i = static_cast<int>(io::keyboard_key::first_key); i <= static_cast<int>(io::keyboard_key::last_key); ++i) {
             keys[i].previous = keys[i].current;

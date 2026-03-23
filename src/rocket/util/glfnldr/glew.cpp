@@ -6,7 +6,7 @@ namespace glfnldr::glew {
         glewExperimental = true;
         GLenum status = glewInit();
 
-        rocket::log("glew initialized with exit code " + std::to_string(status), "glfnldr", "BKEND_init", "debug");
+        rocket::log("glew initialized with exit code " + std::to_string(status), "glfnldr::glew", "init", "debug");
         return status == GLEW_OK;
     }
 }
