@@ -537,7 +537,7 @@ namespace rgl {
         texture_unit_pool.watchdog = std::thread([]() {
             while (!texture_unit_pool.watchdog_stop) {
                 bool quit = false;
-                for (int i = 0; i < 60 && texture_unit_pool.watchdog_stop; ++i) {
+                for (int i = 0; i < 60 && !texture_unit_pool.watchdog_stop; ++i) {
                     if (texture_unit_pool.watchdog_stop) {
                         quit = true;
                         break;

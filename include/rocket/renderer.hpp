@@ -37,7 +37,7 @@ namespace rocket {
     };
 
     struct graphics_settings_t {
-        bool viewport_visibility_checks = true;
+        bool viewport_culling = true;
     };
 
     class renderer_2d;

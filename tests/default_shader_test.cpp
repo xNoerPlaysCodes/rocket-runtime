@@ -31,13 +31,15 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
 
     float rotation = 0.f;
     rocket::rgba_color color = rocket::rgba_color::black();
+    int thickness = 1;
+    int multiplier = 1;
     while (window.is_running()) {
         r.begin_frame();
         r.clear();
         {
             r.draw_rectangle({ {20, 20}, {200, 200} });
-            r.draw_circle({ 120, 350 }, 100, { 0, 0, 0, 255 }, 4);
-            r.draw_circle({ 120, 350 }, 85, { 0, 0, 0, 255 });
+            r.draw_circle({ 120, 350 }, 100, { 0, 0, 0, 255 }, thickness += multiplier);
+            r.draw_circle({ 120, 350 }, 85 - thickness, { 0, 0, 0, 255 });
             r.draw_pixel({ 120 + 90, 350 }, rocket::rgba_color::red());
             r.draw_text({"The quick brown fox jumps over the lazy dog", 32, rocket::rgb_color::black()}, { 300, 240 });
             r.draw_text({"The quick brown fox jumps over the lazy dog", 32, rocket::rgb_color::black(), rGE__FONT_DEFAULT_MONOSPACED}, { 300, 240 + 32 });
@@ -51,6 +53,14 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
                 color.x = rand() % 255;
                 color.y = rand() % 255;
                 color.z = rand() % 255;
+            }
+            if (thickness > 33) {
+                multiplier = -1;
+                thickness -= 1;
+            }
+            if (thickness < 2) {
+                thickness = 1;
+                multiplier = +1;
             }
         }
         r.draw_fps();

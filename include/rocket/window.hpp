@@ -254,11 +254,10 @@ namespace rocket {
         ~android_app_t();
     };
 
-    /// @brief Alias to Native Platform Window
 #ifdef ROCKETGE__Platform_Desktop
-    using window_t = glfw_window_t;
+    using window_t = glfw_window_t; /// << Alias to Native Platform Window
 #else
-    using window_t = android_app_t;
+    using window_t = android_app_t; /// << Alias to Native Platform Window
 #endif
 }
 

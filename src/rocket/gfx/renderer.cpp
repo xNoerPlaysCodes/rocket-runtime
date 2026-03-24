@@ -131,7 +131,7 @@ namespace rocket {
     
     renderer_2d::gfx_chk_result renderer_2d::check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t sz) {
         if (!this->frame_started) return gfx_chk_result::not_drawable;
-        if (this->graphics_settings.viewport_visibility_checks) {
+        if (this->graphics_settings.viewport_culling) {
             if (pos == rocket::vec2f_t{-1,-1} || sz == rocket::vec2f_t{-1,-1})
                 return gfx_chk_result::drawable;
 
@@ -188,10 +188,15 @@ namespace rocket {
     }
 
     void renderer_2d::draw_polygon(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int segments, float rotation) {
-        if (this->check_graphics_settings(pos, {radius*2,radius*2}) == gfx_chk_result::not_drawable) {
+        rocket::vec2f_t center_pos = {
+            .x = pos.x - radius,
+            .y = pos.y - radius
+        };
+        if (this->check_graphics_settings(center_pos, {radius*2, radius*2}) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
+
         rocket::vec2f_t viewport = rgl::get_viewport_size();
         auto to_ndc = [&](float x, float y) {
             return rocket::vec2f_t{
