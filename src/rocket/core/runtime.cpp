@@ -125,7 +125,7 @@ void __init() {
     rocket::log("Hooked SIGBUS, SIGSEGV, SIGIOT, SIGABRT", "rocket", "init", "debug");
     
     util::init_memory_buffer();
-    rnative::set_thread_name("Main Thread");
+    rnative::set_thread_name("RocketGE");
 
     rocket::log("Emergency memory buffer initialized with size " + std::format("{} MiB", util::get_memory_buffer()->sz / 1024 / 1024), "rocket", "init", "debug");
 }
