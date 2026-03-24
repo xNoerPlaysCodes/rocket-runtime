@@ -12,7 +12,9 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
-    rocket::window_t window = { { 1280, 720 }, "RocketGE - Default Shader Test" };
+    rocket::window_t window = { { 1280, 720 }, "RocketGE - Default Shader Test", {
+        .msaa_samples = 4
+    } };
     rocket::renderer_2d r = { &window, 60, {
         .show_splash = !test_mode
     } };
