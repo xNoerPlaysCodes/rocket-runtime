@@ -3,6 +3,7 @@
 #include "shader_atlas_textured_rectangle.h"
 #include "shader_circle_lines.h"
 #include "shader_fxaa.h"
+#include "shader_polygon.h"
 #include "shader_rectangle.h"
 #include "shader_text.h"
 #include "shader_textured_rectangle.h"

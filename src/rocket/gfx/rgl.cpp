@@ -109,7 +109,8 @@ namespace rgl {
         bool freelist[32] = {1};
         uint8_t max_idx = 0;
         std::mutex freelist_mutex;
-        std::jthread watchdog;
+        std::thread watchdog;
+        std::atomic_bool watchdog_stop = false;
     } texture_unit_pool;
 
     bool alloc_texture_unit(texture_unit_handle_t &dst) {
@@ -533,11 +534,11 @@ namespace rgl {
 
         texture_unit_pool.max_idx = max_available_tx_units;
         std::fill(std::begin(texture_unit_pool.freelist), std::begin(texture_unit_pool.freelist) + max_available_tx_units, true);
-        texture_unit_pool.watchdog = std::jthread([](std::stop_token st) {
-            while (!st.stop_requested()) {
+        texture_unit_pool.watchdog = std::thread([]() {
+            while (!texture_unit_pool.watchdog_stop) {
                 bool quit = false;
-                for (int i = 0; i < 60 && !st.stop_requested(); ++i) {
-                    if (st.stop_requested()) {
+                for (int i = 0; i < 60 && texture_unit_pool.watchdog_stop; ++i) {
+                    if (texture_unit_pool.watchdog_stop) {
                         quit = true;
                         break;
                     }
@@ -1027,7 +1028,7 @@ namespace rgl {
 
     void reset() {
         {
-            texture_unit_pool.watchdog.request_stop();
+            texture_unit_pool.watchdog_stop = true;
             if (texture_unit_pool.watchdog.joinable())
                 texture_unit_pool.watchdog.join();
         }

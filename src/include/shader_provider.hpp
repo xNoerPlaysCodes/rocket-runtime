@@ -12,6 +12,7 @@ namespace rocket {
         atlas_textured_rectangle,
         circle_lines,
         text,
+        polygon,
 
         // Screen Space
         fxaa,

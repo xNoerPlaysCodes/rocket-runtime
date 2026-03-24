@@ -6,7 +6,7 @@
 #include <rocket/runtime.hpp>
 
 int rocket_main(int argc, char **argv, rocket_arguments_t args) {
-    rocket::init(argc, argv);
+    rocket::init(argc, (char**)argv);
     bool test_mode = false;
     if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
         rocket::set_log_level(rocket::log_level_t::none);

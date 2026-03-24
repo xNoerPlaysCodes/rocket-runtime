@@ -192,28 +192,6 @@ namespace rocket {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
-        constexpr const char *vsrc = R"(
-            #version 330 core
-            layout (location = 0) in vec2 aPos;
-
-            uniform vec4 uColor;
-            out vec4 vColor;
-
-            void main() {
-                gl_Position = vec4(aPos, 0.0, 1.0);
-                vColor = uColor;
-            }
-        )";
-
-        constexpr const char *fsrc = R"(
-            #version 330 core
-            in vec4 vColor;
-            out vec4 FragColor;
-            void main() {
-                FragColor = vColor;
-            }
-        )";
-
         rocket::vec2f_t viewport = rgl::get_viewport_size();
         auto to_ndc = [&](float x, float y) {
             return rocket::vec2f_t{
@@ -249,7 +227,7 @@ namespace rocket {
             
             vo = rgl::compile_vo(verts);
         }
-        rgl::shader_program_t pg = rgl::cache_compile_shader(vsrc, fsrc);
+        rgl::shader_program_t pg = rocket::get_shader(shader_id_t::polygon);
 
         auto color_nm = color.normalize();
         rgl::shader_location_t color_loc = rgl::get_shader_location(pg, "uColor");
@@ -628,61 +606,45 @@ namespace rocket {
         rgl::draw_shader(pg, rgl::shader_use_t::rect);
     }
    
-    void renderer_2d::draw_text(const rocket::text_t &text_, rocket::vec2f_t position) {
+    void renderer_2d::draw_text(const rocket::text_t& text_, rocket::vec2f_t position) {
         rocket::text_t text = text_;
-        if (this->check_graphics_settings(position, text.measure()) == gfx_chk_result::not_drawable) {
+        if (check_graphics_settings(position, text.measure()) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(text.text.size());
             return;
         }
         static auto cli_args = util::get_clistate();
-        if (cli_args.notext) {
-            return;
-        }
-        rgl::shader_program_t shader_program = rGL_SHADER_INVALID;
-        if (shader_program == rGL_SHADER_INVALID) {
-            shader_program = rgl::get_shader(rgl::shader_use_t::text);
-        }
+        if (cli_args.notext) return;
 
-        // Use shader
+        static rgl::shader_program_t shader_program = rgl::get_shader(rgl::shader_use_t::text);
         glUseProgram(shader_program);
 
-        // Set uniform color
         static const rgl::shader_location_t color_loc = glGetUniformLocation(shader_program, "u_color");
+        static const rgl::shader_location_t tex_loc   = glGetUniformLocation(shader_program, "u_texture");
+
         glUniform3f(color_loc,
             text.color.x / 255.0f,
             text.color.y / 255.0f,
-            text.color.z / 255.0f
-        );
+            text.color.z / 255.0f);
+        glUniform1i(tex_loc, 0);
 
-        // Set texture uniform
-        rgl::shader_location_t tex_loc = glGetUniformLocation(shader_program, "u_texture");
-        glUniform1i(tex_loc, 0); // Texture unit 0
-        
-        rgl::texture_unit_handle_t unit;
-        rgl::alloc_texture_unit(unit);
-        glActiveTexture(unit.unit);
-        glBindTexture(GL_TEXTURE_2D, text.font->glid);
-        auto text_vo = rgl::get_text_vos();
-        glBindVertexArray(text_vo.first);
-        glBindBuffer(GL_ARRAY_BUFFER, text_vo.second);
-
-        float screen_w = (float) window->get_size().x;
-        float screen_h = (float) window->get_size().y;
+        float screen_w = (float)window->get_size().x;
+        float screen_h = (float)window->get_size().y;
 
         stbtt_fontinfo info;
         stbtt_InitFont(&info, text.font->ttf_data.data(), 0);
         int ascent;
         stbtt_GetFontVMetrics(&info, &ascent, nullptr, nullptr);
-
-        float scale = stbtt_ScaleForPixelHeight(&info, text.size);
+        float scale    = stbtt_ScaleForPixelHeight(&info, text.size);
         float baseline = ascent * scale;
+
         float x = position.x;
         float y = position.y + baseline;
 
         std::vector<float> verts;
-        verts.reserve(text.text.size() * 6 * 4); // 6 vertices * 4 floats per vertex
+        verts.reserve(text.text.size() * 6 * 4);
 
         for (char c : text.text) {
+            if (c < 32) continue;
             stbtt_aligned_quad q;
             stbtt_GetBakedQuad(text.font->cdata->a, 512, 512, c - 32, &x, &y, &q, 1);
 
@@ -691,19 +653,36 @@ namespace rocket {
             float x1 = (q.x1 / screen_w) * 2.0f - 1.0f;
             float y1 = 1.0f - (q.y1 / screen_h) * 2.0f;
 
-            float quad[6][4] = {
+            float vq[6][4] = {
                 { x0, y0, q.s0, q.t0 },
                 { x0, y1, q.s0, q.t1 },
                 { x1, y1, q.s1, q.t1 },
-
                 { x0, y0, q.s0, q.t0 },
                 { x1, y1, q.s1, q.t1 },
-                { x1, y0, q.s1, q.t0 }
+                { x1, y0, q.s1, q.t0 },
             };
-
-            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quad), quad);
-            rgl::draw_shader(shader_program, rgl::shader_use_t::text);
+            for (auto& v : vq)
+                verts.insert(verts.end(), std::begin(v), std::end(v));
         }
+
+        if (verts.empty()) return;
+
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
+        glBindTexture(GL_TEXTURE_2D, text.font->glid);
+
+        auto text_vo = rgl::get_text_vos();
+        glBindVertexArray(text_vo.first);
+        glBindBuffer(GL_ARRAY_BUFFER, text_vo.second);
+
+        glBufferData(GL_ARRAY_BUFFER,
+                     verts.size() * sizeof(float),
+                     verts.data(),
+                     GL_DYNAMIC_DRAW);
+
+        rgl::gl_draw_arrays(GL_TRIANGLES, 0, (GLsizei)(verts.size() / 4));
+
         rgl::free_texture_unit(unit);
     }
 
@@ -951,6 +930,55 @@ namespace rocket {
             static_cast<int>(dmpos.y)
         };
         rocket::text_t mouse_pos_text = { "Cursor Pos: " + std::to_string(mpos.x) + ", " + std::to_string(mpos.y), text_size, rgb_color::white(), font };
+        rocket::text_t keyboard_keys_text = { "Keys: ", text_size, rgb_color::white(), font };
+        rocket::text_t mouse_buttons_text = { "Mouse: ", text_size, rgb_color::white(), font };
+
+#ifdef ROCKETGE__Platform_Desktop
+        if (io::key_down(io::keyboard_key::left_control) || io::key_down(io::keyboard_key::right_control)) {
+            keyboard_keys_text.text += "(CTRL) ";
+        }
+
+        if (io::key_down(io::keyboard_key::left_alt) || io::key_down(io::keyboard_key::right_alt)) {
+            keyboard_keys_text.text += "(ALT) ";
+        }
+
+        if (io::key_down(io::keyboard_key::left_super) || io::key_down(io::keyboard_key::right_super)) {
+#ifdef ROCKETGE__Platform_Windows
+            keyboard_keys_text.text += "(WIN) ";
+#else
+            keyboard_keys_text.text += "(SUPER) ";
+#endif
+        }
+
+        for (int i = 65; i <= 90; ++i) {
+            if (io::key_down(io::keyboard_key(i))) {
+                char key = static_cast<char>(i);
+                keyboard_keys_text.text += std::string(1, key);
+            }
+        }
+#endif
+
+        if (rocket::io::mouse_down(rocket::io::mouse_button::left)) {
+#ifdef ROCKETGE__Platform_Android
+            mouse_buttons_text.text += ("Finger ");
+#else
+            mouse_buttons_text.text += ("LMB ");
+#endif
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::right)) {
+            mouse_buttons_text.text += ("RMB ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::middle)) {
+            mouse_buttons_text.text += ("MMB ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_4)) {
+            mouse_buttons_text.text += ("B4 ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_5)) {
+            mouse_buttons_text.text += ("B5 ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_6)) {
+            mouse_buttons_text.text += ("B6 ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_7)) {
+            mouse_buttons_text.text += ("B7 ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_8)) {
+            mouse_buttons_text.text += ("B8 ");
+        }
 
         rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
         static std::string glmajor, glminor;
@@ -962,32 +990,9 @@ namespace rocket {
             glmajor = std::to_string(mj);
             glminor = std::to_string(mn);
         }
-        int versions[][2] = {
-            {4,6},
-            {4,5},
-            {4,4},
-            {4,3},
-            {4,2},
-            {4,1},
-            {4,0},
-
-            {3,3},
-        };
 
         static auto cli_args = util::get_clistate();
 
-        static bool may_use_gl_major_minor_version = false;
-        static std::string gl_rpt_version_string;
-        if (gl_rpt_version_string.empty()) {
-            gl_rpt_version_string = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-            gl_rpt_version_string = gl_rpt_version_string.substr(0, 3);
-        }
-        for (auto &v : versions) {
-            if (v[0] == mj && v[1] == mn) {
-                may_use_gl_major_minor_version = true;
-                break;
-            }
-        }
         static bool gl_version_set = false;
         static std::string gl_version;
         if (!gl_version_set) {
@@ -1011,7 +1016,6 @@ namespace rocket {
         rocket::text_t opengl_version_text = { "OpenGL Version: " + gl_version, text_size, rgb_color::white(), font };
 
         vec2f_t size = { 384, 262 };
-        auto last_text_position = zy + size.y - text_size - padding - margin;
 
         rocket::text_t texts[] = {
             fps_avg_text,
@@ -1021,9 +1025,12 @@ namespace rocket {
             tricount_text,
             framebuffer_active_text,
             mouse_pos_text,
+            keyboard_keys_text,
+            mouse_buttons_text
         };
 
         int len = sizeof(texts) / sizeof(rocket::text_t);
+        auto last_text_position = zy + (len * text_size) + text_size + padding + margin;
 
         float max_width = 0;
         if (max_width == 0) {
@@ -1034,7 +1041,7 @@ namespace rocket {
         }
 
         size.x = max_width + 32.f;
-        size.y = texts[0].measure().y * len + 20.f + 24.f + (opengl_version_text.measure().y + rocket_version_text.measure().y);
+        size.y = (len + 3) * (text_size) + padding;
         ren->draw_rectangle(position, size, rgba_color::black(), 0., 0.);
         ren->draw_rectangle(position, size, rgba_color::white(), 0., 0., true);
         ren->begin_scissor_mode(position, size);
