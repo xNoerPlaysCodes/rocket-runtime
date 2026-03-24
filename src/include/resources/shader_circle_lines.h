@@ -3,7 +3,7 @@ namespace rocket_resource {
 Version: 1.3
 GL_MinimumVersion: 3.3
 GLES_MinimumVersion: 3.0
-Name: Ring
+Name: Circle
 
 VertexStart
     layout(location = 0) in vec2 aPos;
