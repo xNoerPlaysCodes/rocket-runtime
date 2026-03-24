@@ -1194,8 +1194,8 @@ namespace rocket {
             while (std::chrono::duration<double>(clock::now() - frame_start_time).count() < frametime_limit) {
             }
         }
-
-        {
+        
+        if (this->fps < 2147483647) {
             double diff = frame_duration - frametime_limit;
 
             constexpr static auto double_to_str = [](double d, int decimal_places = 6) -> std::string {
@@ -1206,7 +1206,7 @@ namespace rocket {
 
             const double threshold = 0.003;
             if (diff > threshold) {
-                rocket::log("frame took " + double_to_str(diff * 1000., 2) + "ms more than expected", "renderer_2d", "end_frame", "debug");
+                rocket::log("Frame took too long! (" + double_to_str(frame_duration * 1000., 2) + "ms)", "renderer_2d", "end_frame", "debug");
             }
         }
 
