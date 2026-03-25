@@ -947,6 +947,10 @@ namespace rocket {
             keyboard_keys_text.text += "(ALT) ";
         }
 
+        if (io::key_down(io::keyboard_key::left_shift) || io::key_down(io::keyboard_key::right_shift)) {
+            keyboard_keys_text.text += "(SHIFT) ";
+        }
+
         if (io::key_down(io::keyboard_key::left_super) || io::key_down(io::keyboard_key::right_super)) {
 #ifdef ROCKETGE__Platform_Windows
             keyboard_keys_text.text += "(WIN) ";
