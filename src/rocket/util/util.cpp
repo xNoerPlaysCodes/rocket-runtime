@@ -1,50 +1,39 @@
 #include "util.hpp"
 #include "rocket/io.hpp"
 #include "rocket/runtime.hpp"
-#include <algorithm>
-#include <condition_variable>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/trigonometric.hpp>
 #include <internal_types.hpp>
 #include <iostream>
-#include <mutex>
-#include <queue>
 #include <sstream>
 #include <stack>
-#include <thread>
 #ifndef ROCKETGE__Platform_Android
 #include <GLFW/glfw3.h>
 #endif
-#include "intl_macros.hpp"
 #include <native.hpp>
 #include "rocket/macros.hpp"
 
-rocket::log_callback_t log_cb;
+static rocket::log_callback_t log_cb;
 
-std::vector<std::function<void()>> on_close_listeners = {};
+static std::vector<std::function<void()>> on_close_listeners = {};
 
-std::vector<std::function<void(rocket::io::key_event_t)>> _key_listeners = {};
-std::vector<std::function<void(rocket::io::mouse_event_t)>> _mouse_listeners = {};
-std::vector<std::function<void(rocket::io::mouse_move_event_t)>> _mouse_move_listeners = {};
-std::vector<std::function<void(rocket::io::scroll_offset_event_t)>> _scroll_offset_listeners = {};
+static std::vector<std::function<void(rocket::io::key_event_t)>> _key_listeners = {};
+static std::vector<std::function<void(rocket::io::mouse_event_t)>> _mouse_listeners = {};
+static std::vector<std::function<void(rocket::io::mouse_move_event_t)>> _mouse_move_listeners = {};
+static std::vector<std::function<void(rocket::io::scroll_offset_event_t)>> _scroll_offset_listeners = {};
 
-std::unordered_map<rocket::io::keyboard_key, rocket::io::keystate_t> kstates;
-std::unordered_map<rocket::io::mouse_button, rocket::io::keystate_t> mstates;
+static std::unordered_map<rocket::io::keyboard_key, rocket::io::keystate_t> kstates;
+static std::unordered_map<rocket::io::mouse_button, rocket::io::keystate_t> mstates;
 
-std::vector<rocket::io::key_event_t> simulated_kevents;
-std::vector<rocket::io::mouse_event_t> simulated_mevents;
-std::vector<rocket::io::mouse_move_event_t> simulated_mmevents;
-std::vector<rocket::io::scroll_offset_event_t> simulated_sevents;
+static std::vector<rocket::io::key_event_t> simulated_kevents;
+static std::vector<rocket::io::mouse_event_t> simulated_mevents;
+static std::vector<rocket::io::mouse_move_event_t> simulated_mmevents;
+static std::vector<rocket::io::scroll_offset_event_t> simulated_sevents;
 
-std::stack<char> chars_typed;
+static std::stack<char> chars_typed;
 
-util::membuf_t membuf;
-
-void* (*new_op)(std::size_t) = ::operator new;
-void* (*newarr_op)(std::size_t) = ::operator new[];
-void (*del_op)(void*) = ::operator delete;
-void (*delarr_op)(void*) = ::operator delete[];
+static util::membuf_t membuf;
 
 static rocket::vec2d_t last_touch_pos = {0, 0};
 static rocket::io::keystate_t last_touch_state = {false, false};
@@ -202,8 +191,6 @@ namespace util {
         }
         return { x, y };
 #endif
-        // bool sdl2_get_touch_position = false;
-        // r_assert(sdl2_get_touch_position);
         return {0, 0};
     }
 
@@ -468,75 +455,3 @@ cleanup:
         std::cout << *p;
     }
 }
-
-// struct alignas(std::max_align_t) memory_header_t {
-//     size_t size_bytes;
-// };
-//
-// std::atomic<int> allocations = 0;
-// std::atomic<int> allocated_bytes = 0;
-//
-// void *operator new(std::size_t sz) {
-//     memory_header_t *header = (memory_header_t*) malloc(sizeof(memory_header_t) + sz);
-//     header->size_bytes = sz;
-//
-//     allocations++;
-//     allocated_bytes += sz;
-//
-//     return header + 1;
-// }
-//
-// void *operator new[](std::size_t sz) {
-//     memory_header_t *header = (memory_header_t*) malloc(sizeof(memory_header_t) + sz);
-//     header->size_bytes = sz;
-//
-//     allocations++;
-//     allocated_bytes += sz;
-//
-//     return header + 1;
-// }
-//
-// void operator delete(void *mem) noexcept {
-//     if (mem == nullptr) return;
-//     memory_header_t *header = (memory_header_t*) (((uint8_t*)mem) - sizeof(memory_header_t));
-//
-//     allocated_bytes -= header->size_bytes;
-//     allocations--;
-//
-//     free(header);
-// }
-//
-// void operator delete[](void* mem) noexcept {
-//     if (mem == nullptr) return;
-//     memory_header_t *header = (memory_header_t*) (((uint8_t*)mem) - sizeof(memory_header_t));
-//
-//     allocated_bytes -= header->size_bytes;
-//     allocations--;
-//
-//     free(header);
-// }
-//
-// void operator delete(void* mem, std::size_t sz) noexcept {
-//     if (!mem) return;
-//     memory_header_t* header = (memory_header_t*)((uint8_t*)mem - sizeof(memory_header_t));
-//     allocated_bytes -= header->size_bytes;
-//     allocations--;
-//     free(header);
-// }
-//
-// void operator delete[](void* mem, std::size_t sz) noexcept {
-//     if (!mem) return;
-//     memory_header_t* header = (memory_header_t*)((uint8_t*)mem - sizeof(memory_header_t));
-//     allocated_bytes -= header->size_bytes;
-//     allocations--;
-//     free(header);
-// }
-//
-// void* operator new(std::size_t sz, const std::nothrow_t&) noexcept {
-//     try { return ::operator new(sz); }
-//     catch(...) { return nullptr; }
-// }
-//
-// void operator delete(void* mem, const std::nothrow_t&) noexcept {
-//     ::operator delete(mem);
-// }
