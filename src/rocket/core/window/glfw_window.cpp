@@ -1,9 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <rocket/window.hpp>
-#include <codecvt>
-#include <cstdlib>
 #include <iostream>
-#include <locale>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -642,7 +639,7 @@ namespace rocket {
     }
 
     double glfw_window_t::get_time() const {
-        return glfwGetTime();
+        return this->wbi_impl->init_timer.sec();
     }
 
     window_state_t glfw_window_t::get_window_state() const {

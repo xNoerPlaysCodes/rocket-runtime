@@ -16,7 +16,7 @@ namespace rocket {
         return platform;
     }
 
-    void null_window_t::set_vsync(bool vsync) {
+    void null_window_t::set_vsync(bool) {
     }
 
     null_window_t::null_window_t(const rocket::vec2i_t& size,
@@ -34,16 +34,16 @@ namespace rocket {
         this->flags = flags;
     }
 
-    void null_window_t::set_window_state(window_state_t state) const {
+    void null_window_t::set_window_state(window_state_t) const {
     }
 
-    void null_window_t::set_icon(std::shared_ptr<rocket::texture_t> texture) {
+    void null_window_t::set_icon(std::shared_ptr<rocket::texture_t>) {
     }
 
-    void null_window_t::set_cursor_mode(cursor_mode_t m) {
+    void null_window_t::set_cursor_mode(cursor_mode_t) {
     }
 
-    void null_window_t::set_cursor_position(const rocket::vec2d_t& pos) const {
+    void null_window_t::set_cursor_position(const rocket::vec2d_t&) const {
     }
 
     void null_window_t::swap_buffers() const {
@@ -58,6 +58,7 @@ namespace rocket {
     }
 
     void null_window_t::register_on_close(std::function<void()> listener) {
+        (void) listener;
     }
 
     void null_window_t::poll_events() {

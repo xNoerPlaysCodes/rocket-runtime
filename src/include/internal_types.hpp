@@ -61,6 +61,7 @@ namespace rocket {
     struct window_backend_i_impl_t {
         window_backend_i *obj;
         renderer_2d *bound_renderer2d = nullptr;
+        util::timer_t init_timer;
     };
 
     struct asset_manager_impl_t {
@@ -69,6 +70,7 @@ namespace rocket {
 
     struct android_app_impl_t {
         android_app_t *obj;
+        std::function<void()> on_close = nullptr;
 #ifdef ROCKETGE__Platform_Android
         EGLDisplay display = EGL_NO_DISPLAY;
         EGLSurface surface = EGL_NO_SURFACE;

@@ -7,8 +7,6 @@
 #include <internal_types.hpp>
 #include <rocket/window_helpers.hpp>
 #include <intl_macros.hpp>
-#include "rocket/macros.hpp"
-#include "intl_macros.hpp"
 #include <shader_provider.hpp>
 
 #ifdef ROCKETGE__Platform_Android
@@ -52,6 +50,8 @@ namespace rocket {
     void android_app_t::set_vsync(bool vsync) {
 #ifdef ROCKETGE__Platform_Android
         eglSwapInterval(this->impl->display, vsync ? 1 : 0);
+#else
+        (void) vsync;
 #endif
     }
 
@@ -198,15 +198,19 @@ namespace rocket {
     }
 
     void android_app_t::set_window_state(window_state_t state) const {
+        (void) state;
     }
 
     void android_app_t::set_icon(std::shared_ptr<rocket::texture_t> texture) {
+        (void) texture;
     }
 
     void android_app_t::set_cursor_mode(cursor_mode_t m) {
+        (void) m;
     }
 
     void android_app_t::set_cursor_position(const rocket::vec2d_t& pos) const {
+        (void) pos;
     }
 
     void android_app_t::swap_buffers() const {
@@ -225,6 +229,7 @@ namespace rocket {
     }
 
     void android_app_t::register_on_close(std::function<void()> listener) {
+        this->impl->on_close = listener;
     }
 
     void android_app_t::poll_events() {
@@ -273,7 +278,14 @@ namespace rocket {
     }
 
     window_state_t android_app_t::get_window_state() const {
-        return {};
+        return {
+            .focused = true,
+            .visible = true,
+            .iconified = false,
+            .maximized = true,
+            .floating = false,
+            .hovering = true,
+        };
     }
 
     std::shared_ptr<texture_t> android_app_t::get_icon() const {
@@ -285,6 +297,9 @@ namespace rocket {
     }
 
     void android_app_t::close() {
+        if (this->impl->on_close != nullptr)
+            this->impl->on_close();
+
         rocket::log("Window closed", "android_app_t", "destructor", "info");
 
         if (this->handle != nullptr) {
