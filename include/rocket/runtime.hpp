@@ -157,7 +157,10 @@ namespace rocket {
 
 /// @brief Rocket Main Arguments
 struct rocket_arguments_t {
+    /// @brief Working Directory of Application
+    /// @note Guranteed to end with '/'
     std::string working_dir = "./";
+    /// @brief Platform-Specific Main Function
     std::string platform_main;
 };
 

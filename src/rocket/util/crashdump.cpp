@@ -34,7 +34,7 @@ namespace rocket {
         char *buf = (char*) char_allocator->allocate(64);
         for (int i = 0; i < 64; ++i) buf[i] = 0;
 
-        int written = std::snprintf(
+        std::snprintf(
             buf, 64,
             "%04d-%02d-%02d %02d:%02d:%02d",
             tm.tm_year + 1900,

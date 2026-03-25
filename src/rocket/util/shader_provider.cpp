@@ -25,7 +25,7 @@ namespace rocket {
 #define CONCAT(x, y) CONCAT_IMPL(x, y)
 
     rgl::shader_program_t get_shader(shader_id_t shid) {
-        if (rocket::globals::g_main_thread_id_set) 
+        r_debug_if (rocket::globals::g_main_thread_id_set)
             r_assert(globals::g_main_thread_id == std::this_thread::get_id() && "rocket::get_shader called on worker thread");
         if (shader_map.find(shid) != shader_map.end())
             return shader_map[shid].glprogram;

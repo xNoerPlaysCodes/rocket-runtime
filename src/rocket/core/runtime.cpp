@@ -68,13 +68,13 @@ namespace callback {
 
     void aborted(void *mem_addr, int) {
 #ifdef ROCKETGE__Platform_Android
-        __android_log_print(ANDROID_LOG_INFO, "RocketGE", "%s", rocket::crash_signal(true, mem_addr, "aborted", "Unhandled Exception (or std::abort)"));
+        __android_log_print(ANDROID_LOG_INFO, "RocketGE", "%s", rocket::crash_signal(true, mem_addr, "aborted", "Unhandled Exception or std::terminate or std::abort"));
         rnative::exit_now(1);
 #endif
 
         std::endl(std::cout);
 
-        std::cout << rocket::crash_signal(true, mem_addr, "aborted", "Unhandled Exception (or std::abort)");
+        std::cout << rocket::crash_signal(true, mem_addr, "aborted", "Unhandled Exception or std::terminate or std::abort");
 
         std::endl(std::cout);
 

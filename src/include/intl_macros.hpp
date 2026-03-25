@@ -60,4 +60,10 @@ namespace r {
 #define r_assert(x) ((void)sizeof(x))
 #endif
 
+#ifdef ROCKETGE__DEBUG_BUILD
+#define r_debug_if(x) if (x)
+#else
+#define r_debug_if(x) if (false && sizeof(x))
+#endif
+
 #endif // INTL__MACROS_HPP
