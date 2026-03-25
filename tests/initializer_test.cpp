@@ -10,6 +10,9 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
+    // Initialize the RocketGE Library
+    // and get cross-platform logging,
+    // crash handling, and stack traces
     rocket::init(argc, argv);
     // Initialize a native window
     rocket::window_t window = { {1280, 720}, "RocketGE - Initializer Test" };
@@ -47,8 +50,8 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
         if (test_mode) return 0;
     }
 
-    window.close();
     r2d.close();
+    window.close();
 
     return 0;
 }

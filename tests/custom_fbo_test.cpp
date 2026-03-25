@@ -8,7 +8,7 @@
 #include <rocket/runtime.hpp>
 #include <astro/astroui.hpp>
 
-int rocket_main(int argc, char **argv, rocket_arguments_t args) {
+int rocket_main(int argc, char **argv, rocket_arguments_t) {
     bool test_mode = false;
     if (argc >= 3 && std::string(argv[2]) == "--unit-test") {
         rocket::set_log_level(rocket::log_level_t::none);
@@ -55,7 +55,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
         }
         last_vp_size = ren.get_viewport_size();
 
-        if (test_mode) return fbo == rGL_FBO_INVALID ? 0 : 1;
+        if (test_mode) return fbo != rGL_FBO_INVALID ? 0 : 1;
     }
 
     return 0;

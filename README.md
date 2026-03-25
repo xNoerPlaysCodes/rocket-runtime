@@ -57,8 +57,8 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
         window.poll_events();
     }
 
-    window.close();
     r2d.close();
+    window.close();
 
     return 0; // Very Important
 }
