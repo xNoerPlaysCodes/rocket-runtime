@@ -82,7 +82,8 @@ namespace rocket {
             std::string log_message, 
             std::string class_file_library_source, 
             std::string function_source,
-            std::string level)>;
+            std::string level
+    )>;
 
     /// @brief OpenGL::ContextVerifier Error Callback
     /// @param std::string type
