@@ -21,7 +21,7 @@ namespace rocket {
         /// @brief Get the data
         std::vector<uint8_t> get();
         /// @brief Get the data
-        uint8_t* get(size_t *size);
+        uint8_t* get(size_t &size);
     public:
         compressed_data_t();
         explicit compressed_data_t(const std::vector<uint8_t> &);

@@ -33,6 +33,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     rocket::rgba_color color = rocket::rgba_color::black();
     int thickness = 1;
     int multiplier = 1;
+
     while (window.is_running()) {
         r.begin_frame();
         r.clear();

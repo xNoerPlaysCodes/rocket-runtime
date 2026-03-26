@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cstdint>
 #include <data_structures.hpp>
 #include <rocket/runtime.hpp>
@@ -15,10 +16,10 @@ namespace rocket {
         this->set(buffer, sz);
     }
 
-    bool compressed_data_t::set(const std::vector<uint8_t> &) {
-        original_size = data.size();
-        this->data.resize(original_size * 2); // extra space
-        size_t written = lzf_compress(data.data(), data.size(), this->data.data(), this->data.size());
+    bool compressed_data_t::set(const std::vector<uint8_t> &set_data) {
+        original_size = set_data.size();
+        this->data.resize(std::max(original_size * 2, 32UL)); // extra space
+        size_t written = ::lzf_compress(set_data.data(), set_data.size(), this->data.data(), this->data.size());
 
         if (written == 0) {
             rocket::log("Compression failed", "compressed_data_t", "set", "error");
@@ -32,8 +33,8 @@ namespace rocket {
 
     bool compressed_data_t::set(uint8_t *buffer, size_t sz) {
         original_size = sz;
-        this->data.resize(original_size * 2); // extra space
-        size_t written = lzf_compress(buffer, sz, this->data.data(), this->data.size());
+        this->data.resize(std::max(original_size * 2, 32UL)); // extra space
+        size_t written = ::lzf_compress(buffer, sz, this->data.data(), this->data.size());
 
         if (written == 0) {
             rocket::log("Compression failed", "compressed_data_t", "set", "error");
@@ -46,12 +47,31 @@ namespace rocket {
     }
 
     std::vector<uint8_t> compressed_data_t::get() {
-        return this->data;
+        std::vector<uint8_t> decompressed_data;
+        decompressed_data.resize(this->original_size);
+        size_t written = ::lzf_decompress(this->data.data(), this->data.size(), decompressed_data.data(), decompressed_data.size());
+        if (written == 0) {
+            rocket::log("Decompression failed", "compressed_data_t", "get", "error");
+            return {};
+        }
+        decompressed_data.resize(written); // safety measure
+
+        return decompressed_data;
     }
 
-    uint8_t* compressed_data_t::get(size_t *sz) {
-        *sz = this->data.size();
-        return this->data.data();
+    uint8_t* compressed_data_t::get(size_t &sz) {
+        uint8_t *decompressed_data = new uint8_t[this->original_size];
+        size_t written = ::lzf_decompress(this->data.data(), this->data.size(), decompressed_data, this->original_size);
+        if (written == 0) {
+            rocket::log("Decompression failed", "compressed_data_t", "get", "error");
+            delete[] decompressed_data;
+            sz = 0;
+            return nullptr;
+        }
+
+        sz = written;
+
+        return decompressed_data;
     }
 
     compressed_data_t::~compressed_data_t() = default;
