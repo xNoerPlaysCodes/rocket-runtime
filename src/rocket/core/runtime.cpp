@@ -630,6 +630,9 @@ namespace rocket {
 #ifdef ROCKETGE__Platform_Linux
                 setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
 #endif
+            } else if (arg == "intentional-crash") {
+                int *mem = 0x0;
+                std::cout << *mem << '\n';
             }
             else {
                 bool found = false;
