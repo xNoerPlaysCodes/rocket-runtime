@@ -127,6 +127,9 @@ add_library(${PROJECT_NAME}
     # Special Cases
     src/special_cases.cpp
 
+    # Rust
+    src/rust/runtime.cpp
+
     # RNative
     ${RNATIVE_SOURCES}
 
