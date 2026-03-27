@@ -257,11 +257,11 @@ namespace rocket {
         }
         {
             {
-                std::lock_guard<std::mutex> _1(*mtx);
-                *out << util::format_log(log, class_file_library_source, function_source, level);
+                std::lock_guard<std::mutex> _(*mtx);
+                *out << util::format_log(log,class_file_library_source, function_source, level);
             }
             {
-                std::lock_guard<std::mutex> _2(logger_state_mutex);
+                std::lock_guard<std::mutex> _(logger_state_mutex);
                 if (std::find(logger_state.begin(), logger_state.end(), logger_state_t::flush_never) != logger_state.end()) return;
                 if (!log_to_stdouterr || std::find(logger_state.begin(), logger_state.end(), logger_state_t::flush_always) != logger_state.end()) {
                     out->flush();
