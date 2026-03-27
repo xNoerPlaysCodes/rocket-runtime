@@ -1199,7 +1199,7 @@ namespace rocket {
             }
         }
         
-        if (this->fps < 2147483646) {
+        if (this->fps < 2147483647) {
             double diff = frame_duration - frametime_limit;
 
             constexpr static auto double_to_str = [](double d, int decimal_places = 6) -> std::string {

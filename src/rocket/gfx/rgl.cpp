@@ -10,8 +10,7 @@
 #endif
 #include <glm/ext/vector_float2.hpp>
 #include <iostream>
-
-#include "../include/rgl.hpp"
+#include "rgl.hpp"
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>

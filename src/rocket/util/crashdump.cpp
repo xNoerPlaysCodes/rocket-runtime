@@ -25,7 +25,7 @@ namespace rocket {
         allocator_initialized = true;
     }
 
-    char* get_time_string() {
+    static char* get_time_string() {
         std::time_t t = std::time(nullptr);
         std::tm tm{};
 
