@@ -136,7 +136,7 @@ namespace rocket::io {
     }
 }
 
-namespace io {
+namespace rocket::io {
     bool key_pressed(keyboard_key key) {
 #ifdef ROCKETGE__Platform_Desktop
         return ::util::key_pressed(key);
@@ -254,7 +254,7 @@ namespace io {
     }
 }
 
-namespace gpad {
+namespace rocket::gpad {
     bool gpad_focused = true;
 
     bool is_available(int id) {
