@@ -230,7 +230,7 @@ void main() {
             std::transform(str.begin(), str.end(), str.begin(), ::tolower);
             return str;
         };
-        for (int i = 0; i < lines.size(); ++i) {
+        for (size_t i = 0; i < lines.size(); ++i) {
             const std::string &l = lines[i];
             int ln = i + 1;
             if (l.starts_with("//")) {
@@ -347,7 +347,7 @@ void main() {
 
         auto vcode_vec = split(rlsl_shader.vcode, '\n');
         std::string constructed_vcode;
-        for (int i = 0; i < vcode_vec.size(); i++) {
+        for (size_t i = 0; i < vcode_vec.size(); i++) {
             int linenum = i + 1;
             std::string &l = vcode_vec.at(i);
             bool insert = true;
@@ -369,7 +369,8 @@ void main() {
 
         auto fcode_vec = split(rlsl_shader.fcode, '\n');
         std::string constructed_fcode;
-        for (int i = 0; i < fcode_vec.size(); i++) {
+
+        for (size_t i = 0; i < fcode_vec.size(); i++) {
             int linenum = i + 1;
             std::string &l = fcode_vec.at(i);
             bool insert = true;

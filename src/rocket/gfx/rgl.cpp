@@ -69,6 +69,65 @@ namespace glutil {
 }
 
 namespace rgl {
+    std::vector<std::string> dump_gl_state();
+}
+
+namespace callback {
+    void gl_debug(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei, const GLchar* message, const void*) {
+        std::string srcStr;
+        switch (source) {
+            case GL_DEBUG_SOURCE_API:             srcStr = "API"; break;
+            case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   srcStr = "Window System"; break;
+            case GL_DEBUG_SOURCE_SHADER_COMPILER: srcStr = "Shader Compiler"; break;
+            case GL_DEBUG_SOURCE_THIRD_PARTY:     srcStr = "Third Party"; break;
+            case GL_DEBUG_SOURCE_APPLICATION:     srcStr = "Application"; break;
+            case GL_DEBUG_SOURCE_OTHER:           srcStr = "Other"; break;
+        }
+
+        std::string typeStr;
+        switch (type) {
+            case GL_DEBUG_TYPE_ERROR:               typeStr = "Error"; break;
+            case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: typeStr = "Deprecated Behavior"; break;
+            case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  typeStr = "Undefined Behavior"; break;
+            case GL_DEBUG_TYPE_PORTABILITY:         typeStr = "Portability"; break;
+            case GL_DEBUG_TYPE_PERFORMANCE:         typeStr = "Performance"; break;
+            case GL_DEBUG_TYPE_MARKER:              typeStr = "Marker"; break;
+            case GL_DEBUG_TYPE_PUSH_GROUP:          typeStr = "Push Group"; break;
+            case GL_DEBUG_TYPE_POP_GROUP:           typeStr = "Pop Group"; break;
+            case GL_DEBUG_TYPE_OTHER:               typeStr = "Other"; break;
+        }
+
+        std::string sevStr;
+        switch (severity) {
+            case GL_DEBUG_SEVERITY_HIGH:         sevStr = "High"; break;
+            case GL_DEBUG_SEVERITY_MEDIUM:       sevStr = "Medium"; break;
+            case GL_DEBUG_SEVERITY_LOW:          sevStr = "Low"; break;
+            case GL_DEBUG_SEVERITY_NOTIFICATION: sevStr = "Notification"; break;
+        }
+
+        std::vector<std::string> log_messages = {
+            "Error Caught at:",
+            "   Type: " + typeStr,
+            "   Severity: " + sevStr,
+            "   ID: " + std::to_string(id),
+            "   Message: " + std::string(message),
+            "   Source: " + srcStr,
+            "Dumping GL state:"
+        };
+
+        std::vector<std::string> log_messages2 = rgl::dump_gl_state();
+
+        rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
+        for (auto &l : log_messages) {
+            rocket::log(l, "OpenGL", "ContextVerifier", "error");
+        }
+        for (auto &l : log_messages2) {
+            rocket::log(l, "OpenGL", "ContextVerifier", "error");
+        }
+    }
+}
+
+namespace rgl {
     scoped_gl_texture_t::scoped_gl_texture_t() {
         glGenTextures(1, &id);
     }
@@ -105,12 +164,18 @@ namespace rgl {
         return gl_main_ctx;
     }
 
-    struct {
+    struct texture_unit_pool_t {
         bool freelist[32] = {1};
         uint8_t max_idx = 0;
         std::mutex freelist_mutex;
         std::thread watchdog;
         std::atomic_bool watchdog_stop = false;
+
+        ~texture_unit_pool_t() {
+            watchdog_stop = true;
+            if (watchdog.joinable())
+                watchdog.join();
+        }
     } texture_unit_pool;
 
     bool alloc_texture_unit(texture_unit_handle_t &dst) {
@@ -295,7 +360,7 @@ namespace rgl {
         return textureVO;
     }
 
-    std::string bool_to_str(bool b, bool caps = true) { 
+    std::string bool_to_str(bool b, bool = true) { 
         return b ? "[TRUE]" : "[FALSE]";
     }
 
@@ -412,58 +477,7 @@ namespace rgl {
                 nullptr,       // ids array
                 GL_TRUE       // GL_TRUE to enable, GL_FALSE to disable
             );
-            glDebugMessageCallback([](GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
-                std::string srcStr;
-                switch (source) {
-                    case GL_DEBUG_SOURCE_API:             srcStr = "API"; break;
-                    case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   srcStr = "Window System"; break;
-                    case GL_DEBUG_SOURCE_SHADER_COMPILER: srcStr = "Shader Compiler"; break;
-                    case GL_DEBUG_SOURCE_THIRD_PARTY:     srcStr = "Third Party"; break;
-                    case GL_DEBUG_SOURCE_APPLICATION:     srcStr = "Application"; break;
-                    case GL_DEBUG_SOURCE_OTHER:           srcStr = "Other"; break;
-                }
-
-                std::string typeStr;
-                switch (type) {
-                    case GL_DEBUG_TYPE_ERROR:               typeStr = "Error"; break;
-                    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: typeStr = "Deprecated Behavior"; break;
-                    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  typeStr = "Undefined Behavior"; break;
-                    case GL_DEBUG_TYPE_PORTABILITY:         typeStr = "Portability"; break;
-                    case GL_DEBUG_TYPE_PERFORMANCE:         typeStr = "Performance"; break;
-                    case GL_DEBUG_TYPE_MARKER:              typeStr = "Marker"; break;
-                    case GL_DEBUG_TYPE_PUSH_GROUP:          typeStr = "Push Group"; break;
-                    case GL_DEBUG_TYPE_POP_GROUP:           typeStr = "Pop Group"; break;
-                    case GL_DEBUG_TYPE_OTHER:               typeStr = "Other"; break;
-                }
-
-                std::string sevStr;
-                switch (severity) {
-                    case GL_DEBUG_SEVERITY_HIGH:         sevStr = "High"; break;
-                    case GL_DEBUG_SEVERITY_MEDIUM:       sevStr = "Medium"; break;
-                    case GL_DEBUG_SEVERITY_LOW:          sevStr = "Low"; break;
-                    case GL_DEBUG_SEVERITY_NOTIFICATION: sevStr = "Notification"; break;
-                }
-
-                std::vector<std::string> log_messages = {
-                    "Error Caught at:",
-                    "   Type: " + typeStr,
-                    "   Severity: " + sevStr,
-                    "   ID: " + std::to_string(id),
-                    "   Message: " + std::string(message),
-                    "   Source: " + srcStr,
-                    "Dumping GL state:"
-                };
-
-                std::vector<std::string> log_messages2 = dump_gl_state();
-
-                rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
-                for (auto &l : log_messages) {
-                    rocket::log(l, "OpenGL", "ContextVerifier", "error");
-                }
-                for (auto &l : log_messages2) {
-                    rocket::log(l, "OpenGL", "ContextVerifier", "error");
-                }
-            }, nullptr);
+            glDebugMessageCallback(callback::gl_debug, nullptr);
         }
 #ifdef RocketRuntime_VerifyShaderLoading
         shader_program_t prg = get_paramaterized_quad({0.f, 0.f}, {1.f, 1.f}, rocket::rgba_color::red(), 0.f, 0.f);
@@ -919,6 +933,13 @@ namespace rgl {
     }
 
     rgl::glstate_t save_state() {
+        int flags;
+        glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+
+#ifdef ROCKETGE__Platform_Desktop
+        if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+            glDebugMessageCallback(nullptr, nullptr);
+#endif
         rgl::glstate_t state;
         state.bound_framebuffer = rgl::get_active_fbo();
         GLint active_txunit;
@@ -948,6 +969,10 @@ namespace rgl {
 
         GLboolean blend_enabled = glIsEnabled(GL_BLEND);
         state.blend_mode.enabled = blend_enabled;
+#ifdef ROCKETGE__Platform_Desktop
+        if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+            glDebugMessageCallback(callback::gl_debug, nullptr);
+#endif
         return state;
     }
 

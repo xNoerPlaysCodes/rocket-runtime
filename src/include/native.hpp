@@ -6,6 +6,11 @@
 #ifdef ROCKETGE__Platform_Linux
 #include <GLFW/glfw3.h>
 #endif
+#if defined(ROCKETGE__Architecture_x64) || defined(ROCKETGE__Architecture_x86)
+#include <emmintrin.h>
+#elif defined(ROCKETGE__Architecture_arm64) || defined(ROCKETGE__Architecture_arm32)
+#include <arm_acle.h>
+#endif
 namespace rnative {
 #ifdef ROCKETGE__Platform_Linux
     void wayland_set_window_icon(GLFWwindow *window, GLFWimage &image);
@@ -25,7 +30,13 @@ namespace rnative {
 
     typedef void (*proc_address_t)(void);
 
-    void intrin_cpu_minfreq();
+    inline void intrin_cpu_minfreq() {
+#if defined(ROCKETGE__Architecture_x64) || defined(ROCKETGE__Architecture_x86)
+        _mm_pause();
+#elif defined(ROCKETGE__Architecture_arm64) || defined(ROCKETGE__Architecture_arm32)
+        __yield();
+#endif
+    }
 
     proc_address_t load_proc_address(const char *name);
 }

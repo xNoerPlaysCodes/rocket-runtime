@@ -540,10 +540,7 @@ namespace rocket {
             return;
         }
 
-        if (!atlas) {
-            rocket::log("texture is null", "renderer_2d", "draw_texture", "error");
-            return;
-        }
+        r_assert(atlas != nullptr);
 
         rgl::shader_program_t pg = rocket::get_shader(shader_id_t::atlas_textured_rectangle);
         rocket::vec2f_t viewport_size = this->get_viewport_size();
@@ -1180,15 +1177,17 @@ namespace rocket {
 #else
             constexpr double spin_wait_time = 0.002;
 #endif
-#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
+            int i = 0;
+#if defined(ROCKETGE__Platform_Windows)
                 while
 #else
                 if
 #endif
                 (sleep_time > spin_wait_time && !cli_args.software_frame_timer) {
-#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
+#if defined(ROCKETGE__Platform_Windows) 
                 std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time / 10));
                 sleep_time /= 10;
+                rocket::log("Sleep Iteration: " + std::to_string(i++ + 1), "a", "a", "info");
 #else
                 std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - spin_wait_time));
 #endif
@@ -1196,10 +1195,11 @@ namespace rocket {
 
             // busy wait for the rest
             while (std::chrono::duration<double>(clock::now() - frame_start_time).count() < frametime_limit) {
+                rnative::intrin_cpu_minfreq();
             }
         }
         
-        if (this->fps < 2147483647) {
+        if (this->fps < 2147483646) {
             double diff = frame_duration - frametime_limit;
 
             constexpr static auto double_to_str = [](double d, int decimal_places = 6) -> std::string {

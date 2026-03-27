@@ -11,7 +11,6 @@
 
 #include <miniz.h>
 
-// #error fix windows GetProcAddress returns FARPROC
 #ifdef ROCKETGE__Platform_Windows
 #include <windows.h>
 #define load_lib(name) LoadLibraryA(name)
@@ -30,8 +29,6 @@ constexpr std::string dll_extension = ".so";
 
 constexpr std::string api_version     = "0.0.2";
 
-#define CALL_FUN_NOARG(p, ret, nm) ((ret (*)())(p->get_function(nm)))();
-
 namespace rocket {
     std::vector<std::shared_ptr<plugin_t>> loaded_plugins;
 
@@ -41,7 +38,7 @@ namespace rocket {
             return nullptr;
         }
 
-        return get_func(this->handle, name.c_str());
+        return get_func(reinterpret_cast<lib_handle>(this->handle), name.c_str());
     }
 
     rapi::api_t *api = nullptr;

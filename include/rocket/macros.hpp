@@ -36,6 +36,22 @@
 #define ROCKETGE__RAW_PLATFORM_STRING "Emscripten"
 #endif
 
+#if defined(__x86_64__) || defined(_M_X64)
+#define ROCKETGE__Architecture_x64
+#endif
+
+#if defined(__i386__) || defined(_M_IX86)
+#define ROCKETGE__Architecture_x86
+#endif
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+#define ROCKETGE__Architecture_arm64
+#endif
+
+#if defined(__arm__) || defined(_M_ARM)
+#define ROCKETGE__Architecture_arm32
+#endif
+
 // Groups
 #if defined(ROCKETGE__Platform_Linux) || defined(ROCKETGE__Platform_macOS) || defined(ROCKETGE__Platform_Windows)
 #define ROCKETGE__Platform_Desktop

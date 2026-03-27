@@ -25,7 +25,6 @@
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 
-#include <emmintrin.h>
 #endif
 
 #ifdef ROCKETGE__Platform_Linux
@@ -212,12 +211,4 @@ namespace rnative {
 #endif
     }
 #endif
-
-    void intrin_cpu_minfreq() {
-#ifdef ROCKETGE__Platform_Desktop
-        _mm_pause();
-#else
-        {};
-#endif
-    }
 }

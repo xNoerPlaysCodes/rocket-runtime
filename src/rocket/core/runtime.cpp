@@ -20,6 +20,8 @@
 namespace rocket::globals {
     std::thread::id g_main_thread_id;
     bool g_main_thread_id_set = false;
+
+    bool g_rocket_entrypoint_used = false;
 }
 
 namespace callback {
@@ -106,19 +108,19 @@ void __hook(int signal, void(*func)(int, siginfo_t *, void *)) {
 }
 
 void __init() {
-    __hook(SIGSEGV, [](int sig, siginfo_t *info, void *ctx) {
+    __hook(SIGSEGV, [](int, siginfo_t *info, void *) {
         callback::bad_memory_access(info->si_addr, info->si_code);
     });
 
-    __hook(SIGBUS, [](int sig, siginfo_t *info, void *ctx) {
+    __hook(SIGBUS, [](int, siginfo_t *info, void *) {
         callback::invalid_memory_operation(info->si_addr, info->si_code);
     });
 
-    __hook(SIGIOT, [](int sig, siginfo_t *info, void *ctx) {
+    __hook(SIGIOT, [](int, siginfo_t *info, void *) {
         callback::aborted(info->si_addr, info->si_code);
     });
 
-    __hook(SIGABRT, [](int sig, siginfo_t *info, void *ctx) {
+    __hook(SIGABRT, [](int, siginfo_t *info, void *) {
         callback::aborted(info->si_addr, info->si_code);
     });
 
@@ -185,9 +187,9 @@ void __init() {
 namespace rocket {
     void set_log_level(log_level_t level) { util::set_log_level(level); }
 
-    gl_error_callback_t glerror_cb = [](std::string, std::string, int, std::string, std::string) {};
+    static gl_error_callback_t glerror_cb = [](std::string, std::string, int, std::string, std::string) {};
 
-    exit_callback_t exitcb = nullptr;
+    static exit_callback_t exitcb = nullptr;
 
     std::string log_level_to_str(log_level_t level) {
         switch (level) {
@@ -212,16 +214,16 @@ namespace rocket {
         util::set_log_callback(callback); 
     }
 
-    std::vector<logger_state_t> logger_state;
-    std::mutex logger_state_mutex;
+    static std::vector<logger_state_t> logger_state;
+    static std::mutex logger_state_mutex;
 
-    std::mutex cerr_mutex;
-    std::ofstream std_outstm;
+    static std::mutex cerr_mutex;
+    static std::ofstream std_outstm;
 
-    std::mutex cout_mutex;
-    std::ofstream std_errstm;
+    static std::mutex cout_mutex;
+    static std::ofstream std_errstm;
 
-    bool log_to_stdouterr = false;
+    static bool log_to_stdouterr = false;
 
     void log(const std::string &log, const std::string &class_file_library_source, const std::string &function_source, const std::string &level) {
 #ifdef ROCKETGE__Platform_Android
@@ -229,27 +231,41 @@ namespace rocket {
         __android_log_print(ANDROID_LOG_INFO, "RocketGE", "%s", formatted.c_str());
         return;
 #else
-        static bool cli_init = false;
-        if (!cli_init && !std_outstm.is_open() && !std_errstm.is_open()) {
+        static std::atomic_bool cli_init = false;
+        if (!cli_init && !std_outstm.is_open() && !std_errstm.is_open()) [[unlikely]] {
             cli_init = true;
             std_outstm.open(cst::std_out);
             std_errstm.open(cst::std_err);
-            rocket::log("rocket::init was not called, runtime features may be limited", "rocket", "log", "error");
+            if (!rocket::globals::g_rocket_entrypoint_used) {
+                rocket::log("rocket_main was not used, runtime features WILL be limited", "rocket", "log", "error");
+            }
+            rocket::log("rocket::init was not called, runtime features WILL be limited", "rocket", "log", "error");
         }
         static const auto cli_args = util::get_clistate();
         std::ofstream *out = &std_outstm;
         std::mutex *mtx = &cout_mutex;
-        if (level == "error" || level == "warn" || level == "fatal" || level == "fixme") {
-            out = &std_errstm;
-            mtx = &cerr_mutex;
+        // if (level == "error" || level == "warn" || level == "fatal" || level == "fixme") {
+        //     out = &std_errstm;
+        //     mtx = &cerr_mutex;
+        // }
+        switch (level[0]) {
+            case 'e':
+            case 'w':
+            case 'f':
+                out = &std_errstm;
+                mtx = &cerr_mutex;
         }
         {
-            std::lock_guard<std::mutex> _1(*mtx);
-            std::lock_guard<std::mutex> _2(logger_state_mutex);
-            *out << util::format_log(log, class_file_library_source, function_source, level);
-            if (std::find(logger_state.begin(), logger_state.end(), logger_state_t::flush_never) != logger_state.end()) return;
-            if (!log_to_stdouterr || std::find(logger_state.begin(), logger_state.end(), logger_state_t::flush_always) != logger_state.end()) {
-                out->flush();
+            {
+                std::lock_guard<std::mutex> _1(*mtx);
+                *out << util::format_log(log, class_file_library_source, function_source, level);
+            }
+            {
+                std::lock_guard<std::mutex> _2(logger_state_mutex);
+                if (std::find(logger_state.begin(), logger_state.end(), logger_state_t::flush_never) != logger_state.end()) return;
+                if (!log_to_stdouterr || std::find(logger_state.begin(), logger_state.end(), logger_state_t::flush_always) != logger_state.end()) {
+                    out->flush();
+                }
             }
         }
 #endif
@@ -586,7 +602,7 @@ namespace rocket {
 
                 std::vector<glfnldr::backend_t> backends = glfnldr::get_backends();
                 std::string backends_str;
-                for (int i = 0; i < backends.size(); ++i) {
+                for (size_t i = 0; i < backends.size(); ++i) {
                     std::string str;
                     if (backends[i] == glfnldr::backend_t::null) {
                         str = "null";
@@ -722,7 +738,7 @@ namespace rocket {
     void register_argument(std::string arg, std::function<void()> cb, std::string description) {
         custom_argument_t a;
         a.arg = arg;
-        a.cb = [cb](std::optional<std::string> v) {
+        a.cb = [cb](std::optional<std::string>) {
             cb();
         };
         a.description = description;
@@ -750,6 +766,8 @@ namespace rocket {
 void __rocket_premain(int argc, char **argv) {
     rocket::globals::g_main_thread_id = std::this_thread::get_id();
     rocket::globals::g_main_thread_id_set = true;
+
+    rocket::globals::g_rocket_entrypoint_used = true;
 
     (void) argc; (void) argv;
 }
