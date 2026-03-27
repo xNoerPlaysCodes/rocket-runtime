@@ -631,8 +631,7 @@ namespace rocket {
                 setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
 #endif
             } else if (arg == "intentional-crash") {
-                int *mem = 0x0;
-                std::cout << *mem << '\n';
+                util::segfault();
             }
             else {
                 bool found = false;

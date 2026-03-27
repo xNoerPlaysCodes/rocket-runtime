@@ -451,7 +451,8 @@ cleanup:
     }
 
     void segfault() {
-        volatile int *p = (int*) 0x1;
-        std::cout << *p;
+        volatile uint8_t *p = (uint8_t*) 0x1212ABCD34;
+        volatile uint8_t *dst = (uint8_t*) 0xDEADBEEF;
+        *dst = *p;
     }
 }
