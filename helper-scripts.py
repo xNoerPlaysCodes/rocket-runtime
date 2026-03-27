@@ -91,7 +91,7 @@ def print_loc():
     if not shutil.which(command):
         print(f"{command} was not found in PATH.")
         return 1
-    args = ["--include-ext=cpp,hpp", "--exclude-dir=rnative,glm", "src/", "include/"]
+    args = ["--include-ext=cpp,hpp,rs", "--exclude-dir=rnative,glm", "src/", "include/"]
 
     print("command: " + command + " " + " ".join(args))
     subprocess.run([command] + args)
