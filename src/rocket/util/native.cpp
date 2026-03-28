@@ -180,7 +180,7 @@ namespace rnative {
         windows_backend::exit_now(code);
 #else
         (void) code;
-        _exit(code);
+        __builtin_trap();
 #endif
     }
 

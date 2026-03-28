@@ -9,21 +9,44 @@ extern "C" {
 }
 
 #[repr(C)]
-pub struct RocketCliResult {
-    pub noplugins: bool, pub logall: bool, pub debugoverlay: bool,
-    pub nosplash: bool, pub notext: bool, pub forcewayland: bool,
-    pub software_frame_timer: bool, pub glversion: i32, pub framerate: i32,
-    pub viewport_size: [u8; 64], pub viewport_size_set: bool,
-    pub should_exit: bool, pub exit_code: i32,
+pub struct rs_RocketCliResult {
+    pub noplugins: bool,
+    pub debugoverlay: bool,
+    pub nosplash: bool,
+    pub notext: bool,
+
+    pub forcewayland: bool,
+    pub software_frame_timer: bool,
+    pub viewport_size_set: bool,
+    pub should_exit: bool,
+
+    pub glversion: i32,
+    pub framerate: i32,
+    pub exit_code: i32,
+
+    pub viewport_size: [u8; 64],
+    pub logfile: [u8; 256],
 }
 
 #[no_mangle]
-pub extern "C" fn parse_rocket_arguments(argc: c_int, argv: *const *const c_char) -> RocketCliResult {
-    let mut res = RocketCliResult {
-        noplugins: false, logall: false, debugoverlay: false, nosplash: false,
-        notext: false, forcewayland: false, software_frame_timer: false,
-        glversion: 0, framerate: -1, viewport_size: [0; 64],
-        viewport_size_set: false, should_exit: false, exit_code: 0,
+pub extern "C" fn rs_parse_rocket_arguments(argc: c_int, argv: *const *const c_char) -> rs_RocketCliResult {
+    let mut res = rs_RocketCliResult {
+        noplugins: false,
+        debugoverlay: false,
+        nosplash: false,
+        notext: false,
+
+        forcewayland: false,
+        software_frame_timer: false,
+        viewport_size_set: false,
+        should_exit: false,
+
+        glversion: 0,
+        framerate: -1,
+        exit_code: 0,
+
+        viewport_size: [0; 64],
+        logfile: [0; 256],
     };
 
     let args: Vec<String> = unsafe {
@@ -50,10 +73,43 @@ pub extern "C" fn parse_rocket_arguments(argc: c_int, argv: *const *const c_char
                 }
             }
             "help" => {
-                println!("Rocket-GE is a blazingly fast game framework, with some parts of it even written in rust!!!\n--nosplash\n--noplugins\n--framerate [fps]");
+                println!(r#"Usage: TODO:argv0 [options]
+
+Format: [--arg] or [-arg] or [/arg]
+
+Arguments:
+    no-plugins, noplugins
+    -> disable all plugins before startup
+
+*   logfile [file_path] -- TODO:IMPLEMENT
+    -> logs messages to specified file path
+
+    debug-overlay, debugoverlay, doverlay
+    -> shows a debug overlay with debugging information
+
+*   gl-version, glversion [3.3 -> 4.6]
+    -> forces an OpenGL version to be used
+
+    no-splash, nosplash
+    -> hides splash from being shown in the beginning
+
+*   viewport-size, viewportsize, vp-size, vpsize [width]x[height]
+    -> forces to use a initial viewport (and window) size
+
+*   framerate [fps]
+    -> force renderer to use a target framerate (if reachable)
+
+    version
+    -> show version and attribution
+
+* | Value Mandatory
+
+--> Powered by RocketGE
+"#);
                 res.should_exit = true;
             }
-            _ => {}
+            _ => {
+            }
         }
     }
 

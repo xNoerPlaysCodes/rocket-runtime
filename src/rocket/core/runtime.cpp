@@ -1,4 +1,5 @@
 #include <crashdump.hpp>
+#include <filesystem>
 #include <fstream>
 #include <limits>
 #include <native.hpp>
@@ -28,14 +29,14 @@ extern "C" {
 }
 
 namespace rocket {
+    void init_logging_to_logfile(std::string);
     void set_cli_arguments(int argc, char *argv[]) {
-        RocketCliResult r = parse_rocket_arguments(argc, (const char* const*)argv);
+        rs_RocketCliResult r = ::rs_parse_rocket_arguments(argc, (const char* const*)argv);
         if (r.should_exit) {
             rocket::exit(r.exit_code);
         }
         util::global_state_cliargs_t args = {};
         args.noplugins = r.noplugins;
-        args.logall = r.logall;
         args.debugoverlay = r.debugoverlay;
         args.nosplash = r.nosplash;
         args.notext = r.notext;
@@ -52,6 +53,16 @@ namespace rocket {
         args.dx11 = false;
         args.dx12 = false;
         args.lognone = false;
+        float gl_version_parsed = static_cast<float>(r.glversion) / 10;
+        int gl_version_int = r.glversion;
+        std::string gl_version_str = std::to_string(gl_version_int);
+        args.glversion = GL_VERSION_UNK;
+        if (util::validate_gl_version_string(std::format("{}.{}", gl_version_str[0], gl_version_str[1]))) {
+            args.glversion = gl_version_parsed;
+        }
+        if (r.logfile[0] && !std::filesystem::exists(r.logfile)) {
+            rocket::init_logging_to_logfile(r.logfile);
+        }
         util::init_clistate(args);
     }
 }
@@ -355,6 +366,7 @@ namespace rocket {
     void exit(int status_code) {
         if (exitcb != nullptr) {
             exitcb(status_code);
+            rnative::exit_now(status_code);
         } else {
             std::exit(status_code);
         }
@@ -492,6 +504,22 @@ namespace rocket {
 
     void register_libattribution(std::string lib, std::string license) {
         registered_libattributions.push_back({ lib, license });
+    }
+
+    void init_logging_to_logfile(std::string value) {
+        if (value == "stdnull" || value == "devnull" || value == "discard" || value == "NUL") {
+            set_logger_file_output(rocket::cst::stdnull);
+        } else {
+            if (value.starts_with('!')) value = value.substr(1);
+            rocket::set_logger_file_output(value);
+            {
+                std::lock_guard<std::mutex> _1(cout_mutex);
+                std::lock_guard<std::mutex> _2(cerr_mutex);
+                
+                std_outstm << "--- RocketGE Logger Output to File ---\n";
+                std_outstm.flush();
+            }
+        }
     }
 }
 
