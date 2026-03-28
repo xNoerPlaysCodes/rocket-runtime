@@ -13,7 +13,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY})
 
-#DebugMode
 project(${PROJECT_NAME} CXX C)
 
 set(CMAKE_BUILD_TYPE Debug)
@@ -84,27 +83,74 @@ if (__rge_ANDROID__)
     )
 endif()
 
-add_library(${PROJECT_NAME}
-    # Graphics
-    src/rocket/gfx/renderer.cpp
-    # src/rocket/gfx/renderer3d.cpp
-    src/rocket/gfx/rgl.cpp
 
-    # ManagedAssets
+# aight, here we have the rust bullshit 
+find_program(CARGO_EXECUTABLE cargo REQUIRED)
+set(RUST_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/rocket/core")
+
+if (__rge_WINDOWS__)
+    set(RUST_LIB_NAME "rocket_cli.lib")
+    set(RUST_BUILD_TARGET "") # what is this comment for
+elseif (__rge_ANDROID__)
+    set(RUST_LIB_NAME "librocket_cli.a")
+    if(ANDROID_ABI STREQUAL "arm64-v8a")
+        set(RUST_BUILD_TARGET "--target=aarch64-linux-android")
+    elseif(ANDROID_ABI STREQUAL "armeabi-v7a")
+        set(RUST_BUILD_TARGET "--target=armv7-linux-androideabi")
+    elseif(ANDROID_ABI STREQUAL "x86_64")
+        set(RUST_BUILD_TARGET "--target=x86_64-linux-android")
+    endif()
+else()
+    set(RUST_LIB_NAME "librocket_cli.a")
+    set(RUST_BUILD_TARGET "")
+endif()
+
+# if printing is your power what are you without it
+if (RUST_BUILD_TARGET STREQUAL "") # does something
+    set(RUST_LIB_PATH "${RUST_SRC_DIR}/target/release/${RUST_LIB_NAME}")
+else()
+    
+    string(REPLACE "--target=" "" TARGET_TRIPLE ${RUST_BUILD_TARGET})
+    set(RUST_LIB_PATH "${RUST_SRC_DIR}/target/${TARGET_TRIPLE}/release/${RUST_LIB_NAME}")
+endif()
+add_custom_command(
+    OUTPUT "${RUST_LIB_PATH}"
+    COMMAND ${CARGO_EXECUTABLE} build --release ${RUST_BUILD_TARGET}
+    WORKING_DIRECTORY "${RUST_SRC_DIR}"
+    COMMENT "Building Rust CLI Parser..."
+)
+
+add_library(RocketCliRust STATIC IMPORTED)
+set_target_properties(RocketCliRust PROPERTIES IMPORTED_LOCATION "${RUST_LIB_PATH}")
+add_dependencies(RocketCliRust "${RUST_LIB_PATH}") 
+
+
+add_library(${PROJECT_NAME}
+    src/rocket/gfx/renderer.cpp
+    src/rocket/gfx/rgl.cpp
     src/rocket/managers/assets/font.cpp
     src/rocket/managers/assets/shader.cpp
     src/rocket/managers/assets/text.cpp
-    # Managers
     src/rocket/managers/asset.cpp
     src/rocket/managers/audio.cpp
-
-    # Utilities
+    # dis some bullshit fr
     src/rocket/util/glfnldr/glfnldr.cpp
     ${GLFNLDR_SOURCES}
     src/rocket/util/io.cpp
     src/rocket/util/native.cpp
     src/rocket/util/threads.cpp
     src/rocket/util/types.cpp
+
+
+
+
+
+
+
+
+
+
+
     src/rocket/util/crashdump.cpp
     src/rocket/util/shader_provider.cpp
     src/rocket/util/persistence.cpp
@@ -112,28 +158,21 @@ add_library(${PROJECT_NAME}
     src/rocket/util/memory.cpp
     src/rocket/util/util.cpp
 
-    # Internal
     src/rocket/internal/internal_types.cpp
 
-    # Core
     ${WINDOWING_SOURCES}
     src/rocket/core/window/null.cpp
     src/rocket/core/window.cpp
     src/rocket/core/runtime.cpp
 
-    # Plugin Subsystem
     src/rocket/plugin/plugin.cpp
 
-    # Special Cases
     src/special_cases.cpp
 
-    # RNative
     ${RNATIVE_SOURCES}
 
-    # AstroUI
     ${ASTRO_SOURCES}
 
-    # Python Scripting
     ${SCRIPTING_SOURCES}
 )
 
@@ -192,7 +231,6 @@ file(GENERATE
     OUTPUT "${CMAKE_SOURCE_DIR}/src/include/resources/autogen_shader_dispatch.h"
     CONTENT "${SHADER_DISPATCH_ENTRIES}"
 )
-# Fetch Dependencies
 if (__rge_WINDOWS__)
     target_link_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
@@ -242,6 +280,7 @@ elseif (__rge_ANDROID__)
         ${ANDROID_NDK}/sources/android/native_app_glue
     )
     message("RocketGE Platform: Desktop-Embedded-Android")
+
 else()
     find_package(OpenGL REQUIRED)
     find_package(glfw3 REQUIRED)
@@ -252,26 +291,54 @@ else()
         pkg_check_modules(EPOXY REQUIRED epoxy)
     endif()
     find_package(OpenAL REQUIRED)
-    find_package(miniz REQUIRED) # miniz may not be installed
+    find_package(miniz REQUIRED) 
     find_package(SDL2 REQUIRED)
     find_package(pybind11 REQUIRED)
     find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
     pkg_check_modules(WAYLAND REQUIRED wayland-client)
 
-    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python stdc++exp ${WAYLAND_LIBRARIES})
-endif()
+    find_program(CARGO_EXECUTABLE cargo REQUIRED)
+    set(RUST_LIB_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src/rocket/core/target/release/librocket_cli.a")
+    
+    add_custom_command(
+        OUTPUT "${RUST_LIB_PATH}"
+        COMMAND ${CARGO_EXECUTABLE} build --release
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/rocket/core"
+        COMMENT "Building Rust CLI Parser..."
+    )
 
+    add_library(RocketCliRust STATIC IMPORTED)
+    set_target_properties(RocketCliRust PROPERTIES IMPORTED_LOCATION "${RUST_LIB_PATH}")
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE 
+        RocketCliRust
+        OpenGL::GL 
+        ${EPOXY_LIBRARIES} 
+        GLEW::GLEW 
+        glfw 
+        OpenAL::OpenAL 
+        miniz 
+        SDL2::SDL2 
+        Python3::Python 
+        stdc++exp 
+        ${WAYLAND_LIBRARIES}
+        pthread dl m  
+    )
+endif()
+// --------------------------------- COMPILER FLAG LOIXCG ---------------------------------------
+// this is a comment
+// COMPILER FLAGS RGE_COMPILER_FLAGS 
+// ----------------------------------COMPILER FLAG LOokay what am i doin gwith my life
 set(RGE_COMPILER_FLAGS -Wall -Wextra -Wpedantic -Werror=return-type -Werror=uninitialized -Werror=nonnull -Werror=null-dereference -Werror=strict-aliasing -Werror=implicit-function-declaration -Werror=undef -Werror=missing-declarations -Werror=sign-compare)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) # Legacy definition
+    target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) 
     target_compile_definitions(${PROJECT_NAME} PRIVATE ROCKETGE__DEBUG_BUILD)
     target_compile_options(${PROJECT_NAME} PRIVATE -O0 -g ${RGE_COMPILER_FLAGS})
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE ${RGE_COMPILER_FLAGS} -O3 -flto)
     set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
-
 target_link_options(${PROJECT_NAME} PRIVATE    -Wl,-z,max-page-size=16384)
 
 if (BUILD_TESTS)
