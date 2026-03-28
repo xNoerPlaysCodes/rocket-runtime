@@ -1,0 +1,12 @@
+[package]
+name = "rocket_cli"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "rocket_cli"
+path = "cli.rs"          
+crate-type = ["staticlib"]
+
+[dependencies]
+# zdill mptayyy slayyy

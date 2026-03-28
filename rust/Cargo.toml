@@ -1,0 +1,9 @@
+[package]
+name = "rocket_runtime_rs"
+version = "3.0.0"
+edition = "2024"
+
+[dependencies]
+
+[build-dependencies]
+bindgen = "0.72"
