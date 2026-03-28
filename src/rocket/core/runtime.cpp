@@ -12,7 +12,7 @@
 #include <cstdlib>
 #include <intl_macros.hpp>
 #include <thread>
-#include "rocket_cli.h"
+#include "rust/runtime.h"
 
 #ifdef ROCKETGE__Platform_Android
 #include <android/log.h>

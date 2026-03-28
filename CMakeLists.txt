@@ -69,7 +69,7 @@ if (__rge_ANDROID__)
     set(GLFNLDR_SOURCES src/rocket/util/glfnldr/android.cpp)
 endif()
 find_program(CARGO_EXECUTABLE cargo REQUIRED)
-set(RUST_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/rocket/core")
+set(RUST_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/rust")
 
 if (__rge_WINDOWS__)
     set(RUST_LIB_NAME "rocket_cli.lib")

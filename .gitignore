@@ -12,7 +12,7 @@ bin/*
 !bin/resources/
 run.sh
 
-rust/target/*
+src/rust/target/*
 
 .idea
 .cache
