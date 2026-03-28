@@ -72,8 +72,8 @@ find_program(CARGO_EXECUTABLE cargo REQUIRED)
 set(RUST_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/rust")
 
 if (__rge_WINDOWS__)
-    set(RUST_LIB_NAME "rocket_cli.lib")
-    set(RUST_BUILD_TARGET "")
+    set(RUST_LIB_NAME "librocket_cli.a")
+    set(RUST_BUILD_TARGET "--target=x86_64-pc-windows-gnu")
 elseif (__rge_ANDROID__)
     set(RUST_LIB_NAME "librocket_cli.a")
     if(ANDROID_ABI STREQUAL "arm64-v8a")
@@ -170,7 +170,7 @@ file(GENERATE OUTPUT "${CMAKE_SOURCE_DIR}/src/include/resources/autogen_shader_i
 file(GENERATE OUTPUT "${CMAKE_SOURCE_DIR}/src/include/resources/autogen_shader_dispatch.h" CONTENT "${SHADER_DISPATCH_ENTRIES}")
 
 if (__rge_WINDOWS__)
-    target_link_directories(${PROJECT_NAME} PRIVATE
+    target_link_directories(${PROJECT_NAME} PUBLIC
         ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
         ${CMAKE_SOURCE_DIR}/windeps/glfw/src
         ${CMAKE_SOURCE_DIR}/windeps/miniz
@@ -188,7 +188,7 @@ if (__rge_WINDOWS__)
         ${CMAKE_SOURCE_DIR}/windeps/nlohmann-json/include
         ${CMAKE_SOURCE_DIR}/windeps/glm
     )
-    target_link_libraries(${PROJECT_NAME} PRIVATE RocketCliRust opengl32 glew32 glfw3dll OpenAL32 miniz SDL2 python314 winmm stdc++exp)
+    target_link_libraries(${PROJECT_NAME} PRIVATE RocketCliRust opengl32 glew32 glfw3dll OpenAL32 miniz SDL2 python314 winmm stdc++exp ws2_32 ntdll bcrypt userenv synchronization)
 elseif (__rge_ANDROID__)
     target_link_libraries(${PROJECT_NAME} PRIVATE RocketCliRust ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libopenal.a ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libSDL2.a ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libminiz.a android log EGL GLESv3 OpenSLES)
     target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/androiddeps/include ${ANDROID_NDK}/sources/android/native_app_glue)
@@ -220,8 +220,6 @@ else()
     set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
 
-target_link_options(${PROJECT_NAME} PRIVATE -Wl,-z,max-page-size=16384)
-
 if (BUILD_TESTS)
     set(TEST_NAMES initializer_test text_test icon_test io_simulation_test io_test plugin_test multithreaded_test sound_engine_test triangle_drawcall_test default_shader_test persistence_test texture_atlas_test argument_test state_reset_test test_generator_test render_cache_test custom_fbo_test)
     if (NOT __rge_ANDROID__)
@@ -234,7 +232,20 @@ if (BUILD_TESTS)
         list(APPEND TEST_NAMES scripting_test)
     endif()
     foreach(test_name IN LISTS TEST_NAMES)
-        add_executable(${test_name} tests/${test_name}.cpp)
+        if (__rge_ANDROID__)
+            add_library(${test_name} SHARED tests/${test_name}.cpp)
+            target_link_options(${test_name} PRIVATE
+                -Wl,--whole-archive
+                $<TARGET_FILE:native_app_glue>
+                -Wl,--no-whole-archive
+                -Wl,--export-dynamic
+                -Wl,--defsym=stdout=0
+                -Wl,--defsym=stderr=0
+                -Wl,-z,max-page-size=16384
+            )
+        else()
+            add_executable(${test_name} tests/${test_name}.cpp)
+        endif()
         set_target_properties(${test_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/tests)
         target_include_directories(${test_name} PRIVATE include src/include)
         target_link_libraries(${test_name} PRIVATE RocketRuntime)
@@ -247,7 +258,20 @@ endif()
 if (BUILD_EXAMPLES)
     set(EXAMPLE_NAMES moving_circle custom_shader software_renderer ball_smasher)
     foreach(example_name IN LISTS EXAMPLE_NAMES)
-        add_executable(${example_name} examples/${example_name}.cpp)
+        if (__rge_ANDROID__)
+            add_library(${example_name} SHARED examples/${example_name}.cpp)
+            target_link_options(${example_name} PRIVATE
+                -Wl,--whole-archive
+                $<TARGET_FILE:native_app_glue>
+                -Wl,--no-whole-archive
+                -Wl,--export-dynamic
+                -Wl,--defsym=stdout=0
+                -Wl,--defsym=stderr=0
+                -Wl,-z,max-page-size=16384
+            )
+        else()
+            add_executable(${example_name} examples/${example_name}.cpp)
+        endif()
         set_target_properties(${example_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${BINARY_OUTPUT_DIRECTORY}/examples)
         target_include_directories(${example_name} PRIVATE include)
         target_link_libraries(${example_name} PRIVATE RocketRuntime)
