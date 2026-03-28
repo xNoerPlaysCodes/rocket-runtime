@@ -34,9 +34,9 @@ pub extern "C" fn parse_rocket_arguments(argc: c_int, argv: *const *const c_char
     };
 
     // LOGGING FROM RUST
-    let msg = CString::new("Rust CLI Parser Initialized").unwrap();
-    let src = CString::new("rocket-rust").unwrap();
-    let fun = CString::new("parse_rocket_arguments").unwrap();
+    let msg = CString::new("CLI Parser Initialized").unwrap();
+    let src = CString::new("cli").unwrap();
+    let fun = CString::new("parser").unwrap();
     let lvl = CString::new("debug").unwrap();
     unsafe { rs_rocket_log(msg.as_ptr(), src.as_ptr(), fun.as_ptr(), lvl.as_ptr()); }
 
