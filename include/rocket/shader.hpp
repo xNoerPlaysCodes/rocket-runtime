@@ -34,7 +34,9 @@ namespace rocket {
         unsigned int vao { rGL_SHADER_INVALID },
                      vbo { rGL_SHADER_INVALID };
         
-        friend class renderer_2d;
+        friend class renderer_2d_i;
+        friend class opengl_renderer_2d;
+        friend class vulkan_renderer_2d;
         friend class renderer_3d;
         friend rgl::shader_program_t get_shader(shader_id_t shid);
         friend shader_t load_from_rlsl_source(shader_type type, std::string rlsl);

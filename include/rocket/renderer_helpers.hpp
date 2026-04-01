@@ -22,15 +22,15 @@ namespace rocket {
         bool viewport_culling = true;
     };
 
-    class renderer_2d;
+    class renderer_2d_i;
 
     struct render_cache_t {
     private:
         void *fbo;
         // rgl::fbo_t fbo;
-        friend class renderer_2d;
+        friend class renderer_2d_i;
     public:
-        std::function<void(rocket::renderer_2d *ren)> draw = nullptr;
+        std::function<void(rocket::renderer_2d_i *ren)> draw = nullptr;
     public:
         /// @brief DO NOT USE
         /// @brief Get FB Color Texture

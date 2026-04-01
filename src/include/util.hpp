@@ -101,8 +101,8 @@ namespace util {
     char get_formatted_char_typed();
     void push_formatted_char_typed(char c);
 
-    void set_global_renderer_2d(rocket::renderer_2d *renderer);
-    rocket::renderer_2d *get_global_renderer_2d();
+    void set_global_renderer_2d(rocket::renderer_2d_i *renderer);
+    rocket::renderer_2d_i *get_global_renderer_2d();
 
     void init_clistate(global_state_cliargs_t);
     global_state_cliargs_t get_clistate();

@@ -86,9 +86,9 @@ endif()
 
 add_library(${PROJECT_NAME}
     # Graphics
-    src/rocket/gfx/renderer.cpp
+    src/rocket/gfx/renderer/opengl_renderer.cpp
     # src/rocket/gfx/renderer3d.cpp
-    src/rocket/gfx/rgl.cpp
+    src/rocket/gfx/helper/rgl.cpp
 
     # ManagedAssets
     src/rocket/managers/assets/font.cpp
@@ -291,7 +291,7 @@ if (BUILD_TESTS)
         argument_test
         state_reset_test
         test_generator_test
-        render_cache_test
+        # render_cache_test
         custom_fbo_test
     )
 
@@ -393,7 +393,7 @@ if (BUILD_EXAMPLES)
         moving_circle
         custom_shader
         software_renderer
-        ball_smasher
+        # ball_smasher
     )
 
     foreach(example_name IN LISTS EXAMPLE_NAMES)

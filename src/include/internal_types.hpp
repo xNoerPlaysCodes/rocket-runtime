@@ -43,12 +43,12 @@ namespace rocket {
         io::keystate_t  get_btn_state(native_window_t *win, io::mouse_button b);
     }
 
-    class renderer_2d;
+    class renderer_2d_i;
     class glfw_window_t;
     class asset_manager_t;
 
     struct renderer_2d_impl_t {
-        renderer_2d *obj;
+        renderer_2d_i *obj;
         std::vector<std::unique_ptr<render_cache_t>> render_caches;
         std::stack<render_cache_t*> render_cache_use_stack;
         glm::mat4 camera_transform = glm::mat4(1.0f);
@@ -60,7 +60,7 @@ namespace rocket {
 
     struct window_backend_i_impl_t {
         window_backend_i *obj;
-        renderer_2d *bound_renderer2d = nullptr;
+        renderer_2d_i *bound_renderer2d = nullptr;
         util::timer_t init_timer;
     };
 

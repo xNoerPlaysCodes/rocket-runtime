@@ -307,13 +307,13 @@ cleanup:
         return c;
     }
 
-    rocket::renderer_2d *global_renderer_2d = nullptr;
+    rocket::renderer_2d_i *global_renderer_2d = nullptr;
 
-    void set_global_renderer_2d(rocket::renderer_2d *renderer) {
+    void set_global_renderer_2d(rocket::renderer_2d_i *renderer) {
         global_renderer_2d = renderer;
     }
 
-    rocket::renderer_2d *get_global_renderer_2d() {
+    rocket::renderer_2d_i *get_global_renderer_2d() {
         return global_renderer_2d;
     }
 
