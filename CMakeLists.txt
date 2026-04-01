@@ -78,12 +78,63 @@ if (__rge_ANDROID__)
     set(WINDOWING_SOURCES
        src/rocket/core/window/android_app.cpp
     )
+<<<<<<< HEAD
 
     set(GLFNLDR_SOURCES
         src/rocket/util/glfnldr/android.cpp
     )
 endif()
 
+=======
+
+    set(GLFNLDR_SOURCES
+        src/rocket/util/glfnldr/android.cpp
+    )
+endif()
+
+
+# aight, here we have the rust bullshit 
+find_program(CARGO_EXECUTABLE cargo REQUIRED)
+set(RUST_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/rocket/core")
+
+if (__rge_WINDOWS__)
+    set(RUST_LIB_NAME "rocket_cli.lib")
+    set(RUST_BUILD_TARGET "") # what is this comment for
+elseif (__rge_ANDROID__)
+    set(RUST_LIB_NAME "librocket_cli.a")
+    if(ANDROID_ABI STREQUAL "arm64-v8a")
+        set(RUST_BUILD_TARGET "--target=aarch64-linux-android")
+    elseif(ANDROID_ABI STREQUAL "armeabi-v7a")
+        set(RUST_BUILD_TARGET "--target=armv7-linux-androideabi")
+    elseif(ANDROID_ABI STREQUAL "x86_64")
+        set(RUST_BUILD_TARGET "--target=x86_64-linux-android")
+    endif()
+else()
+    set(RUST_LIB_NAME "librocket_cli.a")
+    set(RUST_BUILD_TARGET "")
+endif()
+
+# if printing is your power what are you without it
+if (RUST_BUILD_TARGET STREQUAL "") # does something
+    set(RUST_LIB_PATH "${RUST_SRC_DIR}/target/release/${RUST_LIB_NAME}")
+else()
+    
+    string(REPLACE "--target=" "" TARGET_TRIPLE ${RUST_BUILD_TARGET})
+    set(RUST_LIB_PATH "${RUST_SRC_DIR}/target/${TARGET_TRIPLE}/release/${RUST_LIB_NAME}")
+endif()
+add_custom_command(
+    OUTPUT "${RUST_LIB_PATH}"
+    COMMAND ${CARGO_EXECUTABLE} build --release ${RUST_BUILD_TARGET}
+    WORKING_DIRECTORY "${RUST_SRC_DIR}"
+    COMMENT "Building Rust CLI Parser..."
+)
+
+add_library(RocketCliRust STATIC IMPORTED)
+set_target_properties(RocketCliRust PROPERTIES IMPORTED_LOCATION "${RUST_LIB_PATH}")
+add_dependencies(RocketCliRust "${RUST_LIB_PATH}") 
+
+
+>>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
 add_library(${PROJECT_NAME}
     # Graphics
     src/rocket/gfx/renderer.cpp
@@ -97,14 +148,29 @@ add_library(${PROJECT_NAME}
     # Managers
     src/rocket/managers/asset.cpp
     src/rocket/managers/audio.cpp
+<<<<<<< HEAD
 
     # Utilities
+=======
+    # dis some bullshit fr
+>>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
     src/rocket/util/glfnldr/glfnldr.cpp
     ${GLFNLDR_SOURCES}
     src/rocket/util/io.cpp
     src/rocket/util/native.cpp
     src/rocket/util/threads.cpp
     src/rocket/util/types.cpp
+
+
+
+
+
+
+
+
+
+
+
     src/rocket/util/crashdump.cpp
     src/rocket/util/shader_provider.cpp
     src/rocket/util/persistence.cpp
@@ -112,15 +178,21 @@ add_library(${PROJECT_NAME}
     src/rocket/util/memory.cpp
     src/rocket/util/util.cpp
 
+<<<<<<< HEAD
     # Internal
     src/rocket/internal/internal_types.cpp
 
     # Core
+=======
+    src/rocket/internal/internal_types.cpp
+
+>>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
     ${WINDOWING_SOURCES}
     src/rocket/core/window/null.cpp
     src/rocket/core/window.cpp
     src/rocket/core/runtime.cpp
 
+<<<<<<< HEAD
     # Plugin Subsystem
     src/rocket/plugin/plugin.cpp
 
@@ -134,6 +206,16 @@ add_library(${PROJECT_NAME}
     ${ASTRO_SOURCES}
 
     # Python Scripting
+=======
+    src/rocket/plugin/plugin.cpp
+
+    src/special_cases.cpp
+
+    ${RNATIVE_SOURCES}
+
+    ${ASTRO_SOURCES}
+
+>>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
     ${SCRIPTING_SOURCES}
 )
 
@@ -192,7 +274,10 @@ file(GENERATE
     OUTPUT "${CMAKE_SOURCE_DIR}/src/include/resources/autogen_shader_dispatch.h"
     CONTENT "${SHADER_DISPATCH_ENTRIES}"
 )
+<<<<<<< HEAD
 # Fetch Dependencies
+=======
+>>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
 if (__rge_WINDOWS__)
     target_link_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
@@ -242,6 +327,10 @@ elseif (__rge_ANDROID__)
         ${ANDROID_NDK}/sources/android/native_app_glue
     )
     message("RocketGE Platform: Desktop-Embedded-Android")
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
 else()
     find_package(OpenGL REQUIRED)
     find_package(glfw3 REQUIRED)
@@ -257,6 +346,7 @@ else()
     find_package(pybind11 REQUIRED)
     find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
     pkg_check_modules(WAYLAND REQUIRED wayland-client)
+<<<<<<< HEAD
 
     target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python stdc++exp ${WAYLAND_LIBRARIES})
 endif()
@@ -265,13 +355,55 @@ set(RGE_COMPILER_FLAGS -Wall -Wextra -Wpedantic -Werror=return-type -Werror=unin
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) # Legacy definition
+=======
+
+    find_program(CARGO_EXECUTABLE cargo REQUIRED)
+    set(RUST_LIB_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src/rocket/core/target/release/librocket_cli.a")
+    
+    add_custom_command(
+        OUTPUT "${RUST_LIB_PATH}"
+        COMMAND ${CARGO_EXECUTABLE} build --release
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/rocket/core"
+        COMMENT "Building Rust CLI Parser..."
+    )
+
+    add_library(RocketCliRust STATIC IMPORTED)
+    set_target_properties(RocketCliRust PROPERTIES IMPORTED_LOCATION "${RUST_LIB_PATH}")
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE 
+        RocketCliRust
+        OpenGL::GL 
+        ${EPOXY_LIBRARIES} 
+        GLEW::GLEW 
+        glfw 
+        OpenAL::OpenAL 
+        miniz 
+        SDL2::SDL2 
+        Python3::Python 
+        stdc++exp 
+        ${WAYLAND_LIBRARIES}
+        pthread dl m  
+    )
+endif()
+// --------------------------------- COMPILER FLAG LOIXCG ---------------------------------------
+// this is a comment
+// COMPILER FLAGS RGE_COMPILER_FLAGS 
+// ----------------------------------COMPILER FLAG LOokay what am i doin gwith my life
+set(RGE_COMPILER_FLAGS -Wall -Wextra -Wpedantic -Werror=return-type -Werror=uninitialized -Werror=nonnull -Werror=null-dereference -Werror=strict-aliasing -Werror=implicit-function-declaration -Werror=undef -Werror=missing-declarations -Werror=sign-compare)
+
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) 
+>>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
     target_compile_definitions(${PROJECT_NAME} PRIVATE ROCKETGE__DEBUG_BUILD)
     target_compile_options(${PROJECT_NAME} PRIVATE -O0 -g ${RGE_COMPILER_FLAGS})
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE ${RGE_COMPILER_FLAGS} -O3 -flto)
     set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
 target_link_options(${PROJECT_NAME} PRIVATE    -Wl,-z,max-page-size=16384)
 
 if (BUILD_TESTS)
