@@ -89,7 +89,6 @@ if (__rge_ANDROID__)
 endif()
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
     set(GLFNLDR_SOURCES
@@ -145,8 +144,6 @@ add_dependencies(RocketCliRust "${RUST_LIB_PATH}")
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
 =======
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
-=======
->>>>>>> parent of 45c21be (what the fuck is wrong with cmake)
 add_library(${PROJECT_NAME}
     # Graphics
     src/rocket/gfx/renderer.cpp
@@ -162,7 +159,6 @@ add_library(${PROJECT_NAME}
     src/rocket/managers/audio.cpp
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 
     # Utilities
 =======
@@ -171,16 +167,23 @@ add_library(${PROJECT_NAME}
 =======
     # dis some bullshit fr
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
-=======
-
-    # Utilities
->>>>>>> parent of 45c21be (what the fuck is wrong with cmake)
     src/rocket/util/glfnldr/glfnldr.cpp
     ${GLFNLDR_SOURCES}
     src/rocket/util/io.cpp
     src/rocket/util/native.cpp
     src/rocket/util/threads.cpp
     src/rocket/util/types.cpp
+
+
+
+
+
+
+
+
+
+
+
     src/rocket/util/crashdump.cpp
     src/rocket/util/shader_provider.cpp
     src/rocket/util/persistence.cpp
@@ -190,14 +193,10 @@ add_library(${PROJECT_NAME}
 
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 45c21be (what the fuck is wrong with cmake)
     # Internal
     src/rocket/internal/internal_types.cpp
 
     # Core
-<<<<<<< HEAD
 =======
     src/rocket/internal/internal_types.cpp
 
@@ -206,8 +205,6 @@ add_library(${PROJECT_NAME}
     src/rocket/internal/internal_types.cpp
 
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
-=======
->>>>>>> parent of 45c21be (what the fuck is wrong with cmake)
     ${WINDOWING_SOURCES}
     src/rocket/core/window/null.cpp
     src/rocket/core/window.cpp
@@ -215,7 +212,6 @@ add_library(${PROJECT_NAME}
 
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
     # Plugin Subsystem
     src/rocket/plugin/plugin.cpp
 
@@ -230,21 +226,14 @@ add_library(${PROJECT_NAME}
 
     # Python Scripting
 =======
-=======
-    # Plugin Subsystem
->>>>>>> parent of 45c21be (what the fuck is wrong with cmake)
     src/rocket/plugin/plugin.cpp
 
-    # Special Cases
     src/special_cases.cpp
 
-    # RNative
     ${RNATIVE_SOURCES}
 
-    # AstroUI
     ${ASTRO_SOURCES}
 
-<<<<<<< HEAD
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
 =======
     src/rocket/plugin/plugin.cpp
@@ -256,9 +245,6 @@ add_library(${PROJECT_NAME}
     ${ASTRO_SOURCES}
 
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
-=======
-    # Python Scripting
->>>>>>> parent of 45c21be (what the fuck is wrong with cmake)
     ${SCRIPTING_SOURCES}
 )
 
@@ -319,15 +305,11 @@ file(GENERATE
 )
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 # Fetch Dependencies
 =======
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
 =======
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
-=======
-# Fetch Dependencies
->>>>>>> parent of 45c21be (what the fuck is wrong with cmake)
 if (__rge_WINDOWS__)
     target_link_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
@@ -379,15 +361,12 @@ elseif (__rge_ANDROID__)
     message("RocketGE Platform: Desktop-Embedded-Android")
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
 =======
 
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
-=======
->>>>>>> parent of 45c21be (what the fuck is wrong with cmake)
 else()
     find_package(OpenGL REQUIRED)
     find_package(glfw3 REQUIRED)
@@ -415,13 +394,41 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) # Legacy definition
 =======
 
-    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python stdc++exp ${WAYLAND_LIBRARIES})
-endif()
+    find_program(CARGO_EXECUTABLE cargo REQUIRED)
+    set(RUST_LIB_PATH "${CMAKE_CURRENT_SOURCE_DIR}/src/rocket/core/target/release/librocket_cli.a")
+    
+    add_custom_command(
+        OUTPUT "${RUST_LIB_PATH}"
+        COMMAND ${CARGO_EXECUTABLE} build --release
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/rocket/core"
+        COMMENT "Building Rust CLI Parser..."
+    )
 
+    add_library(RocketCliRust STATIC IMPORTED)
+    set_target_properties(RocketCliRust PROPERTIES IMPORTED_LOCATION "${RUST_LIB_PATH}")
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE 
+        RocketCliRust
+        OpenGL::GL 
+        ${EPOXY_LIBRARIES} 
+        GLEW::GLEW 
+        glfw 
+        OpenAL::OpenAL 
+        miniz 
+        SDL2::SDL2 
+        Python3::Python 
+        stdc++exp 
+        ${WAYLAND_LIBRARIES}
+        pthread dl m  
+    )
+endif()
+// --------------------------------- COMPILER FLAG LOIXCG ---------------------------------------
+// this is a comment
+// COMPILER FLAGS RGE_COMPILER_FLAGS 
+// ----------------------------------COMPILER FLAG LOokay what am i doin gwith my life
 set(RGE_COMPILER_FLAGS -Wall -Wextra -Wpedantic -Werror=return-type -Werror=uninitialized -Werror=nonnull -Werror=null-dereference -Werror=strict-aliasing -Werror=implicit-function-declaration -Werror=undef -Werror=missing-declarations -Werror=sign-compare)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-<<<<<<< HEAD
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) 
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
 =======
@@ -463,9 +470,6 @@ set(RGE_COMPILER_FLAGS -Wall -Wextra -Wpedantic -Werror=return-type -Werror=unin
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) 
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
-=======
-    target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) # Legacy definition
->>>>>>> parent of 45c21be (what the fuck is wrong with cmake)
     target_compile_definitions(${PROJECT_NAME} PRIVATE ROCKETGE__DEBUG_BUILD)
     target_compile_options(${PROJECT_NAME} PRIVATE -O0 -g ${RGE_COMPILER_FLAGS})
 else()
@@ -474,15 +478,11 @@ else()
 endif()
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 
 =======
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
 =======
 >>>>>>> parent of 6faf48a (LITERALLY REWROTE THE DANGEROUS CLI BITS IN RUST I THINK I USED PRATT PARSER? WHO GAFgit add .git add .)
-=======
-
->>>>>>> parent of 45c21be (what the fuck is wrong with cmake)
 target_link_options(${PROJECT_NAME} PRIVATE    -Wl,-z,max-page-size=16384)
 
 if (BUILD_TESTS)
