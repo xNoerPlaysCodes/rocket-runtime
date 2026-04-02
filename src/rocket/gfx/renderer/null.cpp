@@ -156,7 +156,7 @@ namespace rocket {
         return this->graphics_settings;
     }
 
-    rgl::scoped_gl_texture_t null_renderer_2d::get_framebuffer_texture() {
+    api_object_t null_renderer_2d::get_framebuffer_texture() {
         return {};
     }
 

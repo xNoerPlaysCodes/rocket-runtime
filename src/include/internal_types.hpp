@@ -54,7 +54,6 @@ namespace rocket {
         glm::mat4 camera_transform = glm::mat4(1.0f);
     };
 
-    using api_object_t = uint32_t;
     using _GLuint = uint32_t;
     using _GLint = int32_t;
 

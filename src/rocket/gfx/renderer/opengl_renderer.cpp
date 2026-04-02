@@ -900,177 +900,6 @@ namespace rocket {
         }
     }
 
-    void draw_debug_overlay(bool draw, opengl_renderer_2d *ren) {
-        if (!draw) { return; }
-
-        const float margin = 8.f;
-        const float padding = 8.f;
-        vec2f_t position = { margin, margin };
-
-        const float zx = margin + padding;
-        const float zy = margin + padding;
-        const float text_size = 24;
-
-        auto double_to_str = [](double d, int decimal_places = 4) -> std::string {
-            std::stringstream ss;
-            ss << std::fixed << std::setprecision(decimal_places) << d;
-            return ss.str();
-        };
-        static std::shared_ptr<rocket::font_t> font = rGE__FONT_DEFAULT_MONOSPACED;
-        rgl::frame_metrics_t fmetrics = rgl::get_frame_metrics();
-        rocket::text_t fps_avg_text = { "FPS: " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
-        rocket::text_t frametime_text = { "FrameTime: " + double_to_str(ren->get_draw_metrics().avg_frametime * 1000) + "ms", text_size, rgb_color::white(), font };
-        rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()), text_size, rgb_color::white(), font };
-        rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(fmetrics.drawcalls) + " (" + std::to_string(fmetrics.skipped_drawcalls) + " skipped)", text_size, rgb_color::white(), font };
-
-        rocket::text_t tricount_text = { "TriCount: " + std::to_string(fmetrics.tricount), text_size, rgb_color::white(), font };
-
-        if (fmetrics.drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
-            drawcalls_text.text += " (danger)";
-        }
-
-        if (fmetrics.drawcalls > rGL_MAX_RECOMMENDED_TRICOUNT) {
-            tricount_text.text += " (danger)";
-        }
-
-        std::string fbo_active = rgl::is_active_any_fbo() ? "Yes" : "No";
-        rocket::text_t framebuffer_active_text = { "FBO Active: " + fbo_active, text_size, rgb_color::white(), font };
-        vec2d_t dmpos = io::mouse_pos();
-        vec2i_t mpos = {
-            static_cast<int>(dmpos.x),
-            static_cast<int>(dmpos.y)
-        };
-        rocket::text_t mouse_pos_text = { "Cursor Pos: " + std::to_string(mpos.x) + ", " + std::to_string(mpos.y), text_size, rgb_color::white(), font };
-        rocket::text_t keyboard_keys_text = { "Keys: ", text_size, rgb_color::white(), font };
-        rocket::text_t mouse_buttons_text = { "Mouse: ", text_size, rgb_color::white(), font };
-
-#ifdef ROCKETGE__Platform_Desktop
-        if (io::key_down(io::keyboard_key::left_control) || io::key_down(io::keyboard_key::right_control)) {
-            keyboard_keys_text.text += "(CTRL) ";
-        }
-
-        if (io::key_down(io::keyboard_key::left_alt) || io::key_down(io::keyboard_key::right_alt)) {
-            keyboard_keys_text.text += "(ALT) ";
-        }
-
-        if (io::key_down(io::keyboard_key::left_shift) || io::key_down(io::keyboard_key::right_shift)) {
-            keyboard_keys_text.text += "(SHIFT) ";
-        }
-
-        if (io::key_down(io::keyboard_key::left_super) || io::key_down(io::keyboard_key::right_super)) {
-#ifdef ROCKETGE__Platform_Windows
-            keyboard_keys_text.text += "(WIN) ";
-#else
-            keyboard_keys_text.text += "(SUPER) ";
-#endif
-        }
-
-        for (int i = 65; i <= 90; ++i) {
-            if (io::key_down(io::keyboard_key(i))) {
-                char key = static_cast<char>(i);
-                keyboard_keys_text.text += std::string(1, key);
-            }
-        }
-#endif
-
-        if (rocket::io::mouse_down(rocket::io::mouse_button::left)) {
-#ifdef ROCKETGE__Platform_Android
-            mouse_buttons_text.text += ("Finger ");
-#else
-            mouse_buttons_text.text += ("LMB ");
-#endif
-        } if (rocket::io::mouse_down(rocket::io::mouse_button::right)) {
-            mouse_buttons_text.text += ("RMB ");
-        } if (rocket::io::mouse_down(rocket::io::mouse_button::middle)) {
-            mouse_buttons_text.text += ("MMB ");
-        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_4)) {
-            mouse_buttons_text.text += ("B4 ");
-        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_5)) {
-            mouse_buttons_text.text += ("B5 ");
-        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_6)) {
-            mouse_buttons_text.text += ("B6 ");
-        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_7)) {
-            mouse_buttons_text.text += ("B7 ");
-        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_8)) {
-            mouse_buttons_text.text += ("B8 ");
-        }
-
-        rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
-        static std::string glmajor, glminor;
-        static int mj = -1, mn = -1;
-        if (mj == -1 || mn == -1) {
-            glGetIntegerv(GL_MAJOR_VERSION, &mj);
-            glGetIntegerv(GL_MINOR_VERSION, &mn);
-
-            glmajor = std::to_string(mj);
-            glminor = std::to_string(mn);
-        }
-
-        static auto cli_args = util::get_clistate();
-
-        static bool gl_version_set = false;
-        static std::string gl_version;
-        if (!gl_version_set) {
-            gl_version_set = true;
-            gl_version = glmajor + "." + glminor + 
-#ifdef ROCKETGE__Platform_Android
-                " (ES)";
-#else
-                " (core)";
-#endif
-
-            if (cli_args.glversion != GL_VERSION_UNK) {
-                gl_version = double_to_str(cli_args.glversion, 1);
-#ifdef ROCKETGE__Platform_Android
-                gl_version += " (ES)";
-#else
-                gl_version += " (core)";
-#endif
-            }
-        }
-        rocket::text_t opengl_version_text = { "OpenGL Version: " + gl_version, text_size, rgb_color::white(), font };
-
-        vec2f_t size = { 384, 262 };
-
-        rocket::text_t texts[] = {
-            fps_avg_text,
-            frametime_text,
-            deltatime_text,
-            drawcalls_text,
-            tricount_text,
-            framebuffer_active_text,
-            mouse_pos_text,
-            keyboard_keys_text,
-            mouse_buttons_text
-        };
-
-        int len = sizeof(texts) / sizeof(rocket::text_t);
-        auto last_text_position = zy + (len * text_size) + text_size + padding + margin;
-
-        float max_width = 0;
-        if (max_width == 0) {
-            for (auto &txt : texts) {
-                auto sz = txt.measure();
-                max_width = std::max(max_width, sz.x);
-            }
-        }
-
-        size.x = max_width + 32.f;
-        size.y = (len + 3) * (text_size) + padding;
-        ren->draw_rectangle(position, size, rgba_color::black(), 0., 0.);
-        ren->draw_rectangle(position, size, rgba_color::white(), 0., 0., true);
-        ren->begin_scissor_mode(position, size);
-
-        for (int i = 0; i < len; ++i) {
-            ren->draw_text(texts[i], { zx, zy + (i * text_size) });
-        }
-
-        ren->draw_text(rocket_version_text, { zx, last_text_position });
-        ren->draw_text(opengl_version_text, { zx, last_text_position - text_size });
-
-        ren->end_scissor_mode();
-    }
-
     bool opengl_renderer_2d::has_frame_began() {
         return this->frame_started;
     }
@@ -1083,7 +912,8 @@ namespace rocket {
         if (flags.share_renderer_as_global) {
             __rallframeend();
         }
-        draw_debug_overlay(util::get_clistate().debugoverlay, this);
+        if (util::get_clistate().debugoverlay)
+            util::draw_debug_overlay(this);
         this->frame_started = false;
         auto frame_end_time = clock::now();
         this->window->swap_buffers();
@@ -1271,21 +1101,23 @@ namespace rocket {
         return this->graphics_settings;
     }
 
-    rgl::scoped_gl_texture_t opengl_renderer_2d::get_framebuffer_texture() {
-        rgl::scoped_gl_texture_t t;
-        glBindTexture(GL_TEXTURE_2D, t.id);
-
-        int w = rgl::get_viewport_size().x;
-        int h = rgl::get_viewport_size().y;
-
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-        glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, w, h);
-
-        return t; // Implicit move
+    api_object_t opengl_renderer_2d::get_framebuffer_texture() {
+        r_assert(false && "TODO IMPL GET FRAMEBUFFER TEXTURE API OBJ");
+        return 0;
+        // rgl::scoped_gl_texture_t t;
+        // glBindTexture(GL_TEXTURE_2D, t.id);
+        //
+        // int w = rgl::get_viewport_size().x;
+        // int h = rgl::get_viewport_size().y;
+        //
+        // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+        //
+        // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        //
+        // glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, w, h);
+        //
+        // return t; // Implicit move
     }
 
     camera_2d* opengl_renderer_2d::get_camera() {

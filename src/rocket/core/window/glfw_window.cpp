@@ -283,39 +283,39 @@ namespace rocket {
         // override by cli args
         auto cliargs = util::get_clistate();
         if (cliargs.glversion == GL_VERSION_20) {
-            flags.gl_version = rocket::vec2i_t(2, 0);
+            flags.graphics_ctx.version = rocket::vec2i_t(2, 0);
         } else if (cliargs.glversion == GL_VERSION_21) {
-            flags.gl_version = rocket::vec2i_t(2, 1);
+            flags.graphics_ctx.version = rocket::vec2i_t(2, 1);
         } else if (cliargs.glversion == GL_VERSION_30) {
-            flags.gl_version = rocket::vec2i_t(3, 0);
+            flags.graphics_ctx.version = rocket::vec2i_t(3, 0);
         } else if (cliargs.glversion == GL_VERSION_31) {
-            flags.gl_version = rocket::vec2i_t(3, 1);
+            flags.graphics_ctx.version = rocket::vec2i_t(3, 1);
         } else if (cliargs.glversion == GL_VERSION_32) {
-            flags.gl_version = rocket::vec2i_t(3, 2);
+            flags.graphics_ctx.version = rocket::vec2i_t(3, 2);
         } else if (cliargs.glversion == GL_VERSION_33) {
-            flags.gl_version = rocket::vec2i_t(3, 3);
+            flags.graphics_ctx.version = rocket::vec2i_t(3, 3);
         } else if (cliargs.glversion == GL_VERSION_40) {
-            flags.gl_version = rocket::vec2i_t(4, 0);
+            flags.graphics_ctx.version = rocket::vec2i_t(4, 0);
         } else if (cliargs.glversion == GL_VERSION_41) {
-            flags.gl_version = rocket::vec2i_t(4, 1);
+            flags.graphics_ctx.version = rocket::vec2i_t(4, 1);
         } else if (cliargs.glversion == GL_VERSION_42) {
-            flags.gl_version = rocket::vec2i_t(4, 2);
+            flags.graphics_ctx.version = rocket::vec2i_t(4, 2);
         } else if (cliargs.glversion == GL_VERSION_43) {
-            flags.gl_version = rocket::vec2i_t(4, 3);
+            flags.graphics_ctx.version = rocket::vec2i_t(4, 3);
         } else if (cliargs.glversion == GL_VERSION_44) {
-            flags.gl_version = rocket::vec2i_t(4, 4);
+            flags.graphics_ctx.version = rocket::vec2i_t(4, 4);
         } else if (cliargs.glversion == GL_VERSION_45) {
-            flags.gl_version = rocket::vec2i_t(4, 5);
+            flags.graphics_ctx.version = rocket::vec2i_t(4, 5);
         } else if (cliargs.glversion == GL_VERSION_46) {
-            flags.gl_version = rocket::vec2i_t(4, 6);
+            flags.graphics_ctx.version = rocket::vec2i_t(4, 6);
         }
 
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, flags.gl_version.x);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, flags.gl_version.y);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, flags.graphics_ctx.version.x);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, flags.graphics_ctx.version.y);
         glfwWindowHint(GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_ANY_RELEASE_BEHAVIOR);
         float max_gl_ver = get_max_context_gl_version();
-        float glver = static_cast<float>(flags.gl_version.x) + static_cast<float>(0.1 * flags.gl_version.y);
-        if (flags.gl_version == rocket::vec2i_t{ 0, 0 }) {
+        float glver = static_cast<float>(flags.graphics_ctx.version.x) + static_cast<float>(0.1 * flags.graphics_ctx.version.y);
+        if (flags.graphics_ctx.version == rocket::vec2i_t{ 0, 0 }) {
             glver = max_gl_ver;
         }
 
@@ -352,7 +352,7 @@ namespace rocket {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         }
 
-        if (flags.gl_contextverifier) {
+        if (flags.graphics_ctx.debug_context) {
             if (glver >= 4.3f) {
                 glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
             } else {

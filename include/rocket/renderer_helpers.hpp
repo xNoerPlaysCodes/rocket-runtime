@@ -22,6 +22,12 @@ namespace rocket {
         bool viewport_culling = true;
     };
 
+    enum class renderer_backend_t {
+        null,
+        opengl,
+        vulkan // (maybe)?
+    };
+
     class renderer_2d_i;
 
     struct render_cache_t {

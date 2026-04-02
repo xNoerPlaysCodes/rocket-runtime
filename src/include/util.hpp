@@ -153,6 +153,8 @@ namespace util {
         std::string to_str(unit_flag_t flags = unit_flag_t::all);
     };
 
+    void draw_debug_overlay(rocket::renderer_2d_i *ren);
+
     void segfault();
 }
 

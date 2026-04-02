@@ -52,6 +52,7 @@ namespace rocket {
 
         renderer_2d_impl_t *impl = nullptr;
 
+        friend window_backend_i* __r2d_get_window(rocket::renderer_2d_i*);
         friend class renderer_3d;
         friend class font_t;
     protected:
@@ -212,7 +213,7 @@ namespace rocket {
         ///       degradation
         /// @brief Is stored on GPU only 
         /// @brief Lifetime managed automatically
-        virtual rgl::scoped_gl_texture_t get_framebuffer_texture() = 0;
+        virtual api_object_t get_framebuffer_texture() = 0;
         /// @brief Get the active camera
         /// @note may return nullptr
         virtual camera_2d *get_camera() = 0;
