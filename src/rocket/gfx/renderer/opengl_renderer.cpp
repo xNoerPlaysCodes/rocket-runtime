@@ -75,7 +75,7 @@ namespace rocket {
 
         auto cli_args = util::get_clistate();
         if (cli_args.dx11 || cli_args.dx12) {
-            rocket::log("D3D11/12 backend not supported", "opengl_opengl_renderer_2d", "constructor", "fatal");
+            rocket::log("D3D11/12 backend not supported", "opengl_renderer_2d", "constructor", "fatal");
             rocket::exit(1);
         }
 

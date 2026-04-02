@@ -87,6 +87,7 @@ endif()
 add_library(${PROJECT_NAME}
     # Graphics
     src/rocket/gfx/renderer/opengl_renderer.cpp
+    src/rocket/gfx/renderer/null_renderer.cpp
     # src/rocket/gfx/renderer3d.cpp
     src/rocket/gfx/helper/rgl.cpp
 

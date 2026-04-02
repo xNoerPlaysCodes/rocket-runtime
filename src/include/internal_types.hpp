@@ -54,6 +54,14 @@ namespace rocket {
         glm::mat4 camera_transform = glm::mat4(1.0f);
     };
 
+    using api_object_t = uint32_t;
+    using _GLuint = uint32_t;
+    using _GLint = int32_t;
+
+    struct opengl_renderer_2d_impl_t {
+        std::unordered_map<api_object_t, _GLuint> objects;
+    };
+
     struct glfw_window_impl_t {
         glfw_window_t *obj;
     };
