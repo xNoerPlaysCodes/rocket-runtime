@@ -4,6 +4,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <locale>
+#include <codecvt>
 #include "native.hpp"
 #include "rocket/asset.hpp"
 #include "rocket/io.hpp"
