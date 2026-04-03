@@ -25,6 +25,12 @@ option(BUILD_EDITOR "Build Editor" OFF)
 option(__rge_WINDOWS__ OFF)
 option(__rge_ANDROID__ OFF)
 
+if (WIN32)
+    set(__rge_WINDOWS__ ON)
+elseif (ANDROID)
+    set(__rge_ANDROID__ ON)
+endif()
+
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 option(BUILD_SCRIPTING "Build Scripting [py]" ON)
 option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
