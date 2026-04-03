@@ -200,38 +200,33 @@ file(GENERATE
 )
 # Fetch Dependencies
 if (__rge_WINDOWS__)
-    target_link_directories(${PROJECT_NAME} PRIVATE
-        ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
-        ${CMAKE_SOURCE_DIR}/windeps/glfw/src
-        ${CMAKE_SOURCE_DIR}/windeps/miniz
-        ${CMAKE_SOURCE_DIR}/windeps/openal-soft
-        ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
-    )
-    include_directories(
-        ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/include
-        ${CMAKE_SOURCE_DIR}/windeps/glfw/include
-        ${CMAKE_SOURCE_DIR}/windeps/miniz
-        ${CMAKE_SOURCE_DIR}/windeps/openal-soft/include
-        ${CMAKE_SOURCE_DIR}/windeps/SDL2/include
-        ${CMAKE_SOURCE_DIR}/windeps/python/install/include
-        ${CMAKE_SOURCE_DIR}/windeps/pybind11/include
-        ${CMAKE_SOURCE_DIR}/windeps/nlohmann-json/include
-        ${CMAKE_SOURCE_DIR}/windeps/glm
-    )
     message("Building for Win32")
-    
-    target_link_libraries(${PROJECT_NAME} PRIVATE
-        opengl32
-        glew32
-        glfw3dll
-        OpenAL32
-        miniz
-        SDL2
-        python314
-        winmm
-        stdc++exp
-    )
     message("RocketGE Platform: Desktop-GLFW-Win32")
+
+    find_package(OpenGL REQUIRED)
+    find_package(GLEW CONFIG REQUIRED)
+    find_package(glfw3 CONFIG REQUIRED)
+    find_package(SDL2 CONFIG REQUIRED)
+    find_package(OpenAL CONFIG REQUIRED)
+    find_package(Python3 COMPONENTS Development REQUIRED)
+    find_package(pybind11 CONFIG REQUIRED)
+    find_package(glm CONFIG REQUIRED)
+    find_package(nlohmann_json CONFIG REQUIRED)
+    find_package(miniz CONFIG REQUIRED)
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        OpenGL::GL
+        GLEW::GLEW
+        glfw
+        SDL2::SDL2
+        OpenAL::OpenAL
+        Python3::Python
+        pybind11::pybind11
+        glm::glm
+        nlohmann_json::nlohmann_json
+        miniz::miniz
+        winmm
+    )
 elseif (__rge_ANDROID__)
     target_link_libraries(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libopenal.a
