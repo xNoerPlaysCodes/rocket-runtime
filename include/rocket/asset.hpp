@@ -39,7 +39,7 @@ namespace rocket {
     public:
         /// @brief OpenGL Texture ID
         /// @modify Do not modify
-        unsigned int glid = 0;
+        api_object_t hdl = 0;
         friend class asset_manager_t;
         friend class renderer_2d_i;
         friend class renderer_3d;
@@ -118,7 +118,7 @@ namespace rocket {
     class font_t {
     private:
         /// INNER
-        unsigned int glid = 0;
+        api_object_t hdl = 0;
         rocket::vec2i_t sttex_size = { 512, 512 };
         internal_cdata *cdata;
         std::vector<uint8_t> ttf_data;

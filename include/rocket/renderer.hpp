@@ -38,6 +38,9 @@ namespace rocket {
         friend class font_t;
     protected:
         gfx_chk_result check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t sz) override;
+    private:
+        api_object_t upload_font_texture_to_gpu(rocket::vec2i_t size, const std::vector<uint8_t> &bitmap) override;
+        void clean_gpu_resource(api_object_t object) override;
     public:
         /// @brief Check if frame has begun
         bool has_frame_began() override;
@@ -232,6 +235,9 @@ namespace rocket {
         friend class font_t;
     protected:
         gfx_chk_result check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t sz) override;
+    private:
+        api_object_t upload_font_texture_to_gpu(rocket::vec2i_t size, const std::vector<uint8_t> &bitmap) override;
+        void clean_gpu_resource(api_object_t object) override;
     public:
         /// @brief Check if frame has begun
         bool has_frame_began() override;
@@ -421,12 +427,19 @@ namespace rocket {
         ~null_renderer_2d() override;
     };
 
+    struct vulkan_renderer_2d_impl_t;
+
     class vulkan_renderer_2d : public renderer_2d_i {
     protected:
+        vulkan_renderer_2d_impl_t *bk_impl;
+
         friend class renderer_3d;
         friend class font_t;
     protected:
         gfx_chk_result check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t sz) override;
+    private:
+        api_object_t upload_font_texture_to_gpu(rocket::vec2i_t size, const std::vector<uint8_t> &bitmap) override;
+        void clean_gpu_resource(api_object_t object) override;
     public:
         /// @brief Check if frame has begun
         bool has_frame_began() override;
@@ -619,10 +632,9 @@ namespace rocket {
     /// @note May return null backend
     std::unique_ptr<renderer_2d_i> create_renderer_2d(renderer_backend_t backend, window_backend_i *window, int fps = 60, renderer_flags_t = {});
 
-    template<typename Base, typename Derived>
+    template<typename Derived, typename Base>
     inline bool instance_of(Base *object) {
-        auto check = dynamic_cast<Derived*>(object);
-        return check == nullptr ? false : true;
+        return dynamic_cast<Derived*>(object) != nullptr;
     }
 
     /// @brief Legacy way to create renderer

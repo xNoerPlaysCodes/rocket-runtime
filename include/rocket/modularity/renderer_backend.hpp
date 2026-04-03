@@ -55,12 +55,16 @@ namespace rocket {
         friend window_backend_i* __r2d_get_window(rocket::renderer_2d_i*);
         friend class renderer_3d;
         friend class font_t;
+        friend class asset_manager_t;
     protected:
         enum class gfx_chk_result {
             not_drawable,
             drawable,
         };
         virtual gfx_chk_result check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t sz) = 0;
+    private:
+        virtual api_object_t upload_font_texture_to_gpu(rocket::vec2i_t size, const std::vector<uint8_t> &bitmap) = 0;
+        virtual void clean_gpu_resource(api_object_t object) = 0;
     public:
         /// @brief Check if frame has begun
         virtual bool has_frame_began() = 0;

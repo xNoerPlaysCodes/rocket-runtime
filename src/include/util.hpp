@@ -155,6 +155,14 @@ namespace util {
 
     void draw_debug_overlay(rocket::renderer_2d_i *ren);
 
+    void frame_timer_wait_for(
+        double frame_duration, 
+        double frametime_limit, 
+        bool software_frame_timer, 
+        int target_fps, 
+        std::chrono::time_point<std::chrono::steady_clock> frame_start_time
+    );
+
     void segfault();
 }
 

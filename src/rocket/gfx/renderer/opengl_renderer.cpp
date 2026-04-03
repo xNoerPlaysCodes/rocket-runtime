@@ -69,6 +69,7 @@ namespace rocket {
 
         this->impl = new renderer_2d_impl_t;
         this->impl->obj = this;
+        this->bk_impl = new opengl_renderer_2d_impl_t;
         window->wbi_impl->bound_renderer2d = this;
         this->window = window;
         this->fps = fps;
@@ -94,7 +95,7 @@ namespace rocket {
             util::glinit(true);
 
             if (window == nullptr) {
-                rocket::log("Invalid window ptr", "opengl_opengl_renderer_2d", "constructor", "error");
+                rocket::log("Invalid window ptr", "opengl_renderer_2d", "constructor", "error");
                 return;
             }
             std::vector<std::string> log_messages = rgl::init_gl({ static_cast<float>(window->size.x), static_cast<float>(window->size.y) }, ROCKETGE__GLFNLDR_BACKEND_ENUM, this->window);
@@ -119,7 +120,7 @@ namespace rocket {
                 gl_init_timer_ms = static_cast<int>(gl_init_timer.us());
                 unit = "us";
             }
-            rocket::log("OpenGL Initialized in " + std::to_string(gl_init_timer_ms) + unit, "opengl_opengl_renderer_2d", "constructor", "trace");
+            rocket::log("OpenGL Initialized in " + std::to_string(gl_init_timer_ms) + unit, "opengl_renderer_2d", "constructor", "trace");
         }
         this->flags = flags;
         glViewport(0, 0, window->size.x, window->size.y);
@@ -147,6 +148,40 @@ namespace rocket {
         }
         return gfx_chk_result::drawable;
     }
+
+    api_object_t opengl_renderer_2d::upload_font_texture_to_gpu(const rocket::vec2i_t sz, const std::vector<uint8_t> &bitmap) {
+        api_object_t handle = ++this->impl->current_object_handle;
+        gl_object_t obj = {};
+        obj.type = gl_object_type_t::texture;
+
+        glGenTextures(1, &obj.value);
+        glBindTexture(GL_TEXTURE_2D, obj.value);
+#ifdef ROCKETGE__Platform_Android
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, sz.x, sz.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
+#else
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, sz.x, sz.y, 0, GL_RED, GL_UNSIGNED_BYTE, bitmap.data());
+#endif
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        this->bk_impl->objects[handle] = obj;
+
+        return handle;
+    }
+
+    void opengl_renderer_2d::clean_gpu_resource(api_object_t obj) {
+        for (auto &[k, v] : bk_impl->objects) {
+            if (k == obj) {
+                if (v.type == gl_object_type_t::texture) {
+                    glDeleteTextures(1, &v.value);
+                }
+                bk_impl->objects.erase(obj);
+                break;
+            }
+        }
+    }
+
 
     void opengl_renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int thickness) {
         rocket::vec2f_t center_pos = {
@@ -469,9 +504,14 @@ namespace rocket {
     }
 
     void opengl_renderer_2d::make_ready_texture(std::shared_ptr<rocket::texture_t> texture) {
-        if (texture != nullptr && texture->glid == 0) {
-            glGenTextures(1, &texture->glid);
-            glBindTexture(GL_TEXTURE_2D, texture->glid);
+        r_assert(texture != nullptr);
+        if (texture->hdl == 0) {
+            gl_object_t texture_object;
+            texture_object.type = gl_object_type_t::texture;
+            glGenTextures(1, &texture_object.value);
+            glBindTexture(GL_TEXTURE_2D, texture_object.value);
+            texture->hdl = ++this->impl->current_object_handle;
+            this->bk_impl->objects[texture->hdl] = texture_object;
 
             // Use RGBA8 instead of SRGB8_ALPHA8 for universal compatibility
             #ifdef ROCKETGE__Platform_Android
@@ -528,8 +568,9 @@ namespace rocket {
         rgl::texture_unit_handle_t unit;
         rgl::alloc_texture_unit(unit);
         glActiveTexture(unit.unit);
-        glBindTexture(GL_TEXTURE_2D, texture->glid);
         this->make_ready_texture(texture);
+        gl_object_t obj = this->bk_impl->objects[texture->hdl];
+        glBindTexture(GL_TEXTURE_2D, obj.value);
         glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
         rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
         rgl::free_texture_unit(unit);
@@ -574,8 +615,9 @@ namespace rocket {
         rgl::texture_unit_handle_t unit;
         rgl::alloc_texture_unit(unit);
         glActiveTexture(unit.unit);
-        glBindTexture(GL_TEXTURE_2D, atlas->glid);
         this->make_ready_texture(atlas);
+        gl_object_t obj = this->bk_impl->objects[atlas->hdl];
+        glBindTexture(GL_TEXTURE_2D, obj.value);
         glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
 
         rocket::vec2f_t atlas_size{ 1.f * atlas->size.x, 1.f * atlas->size.y };
@@ -680,7 +722,7 @@ namespace rocket {
         rgl::texture_unit_handle_t unit;
         rgl::alloc_texture_unit(unit);
         glActiveTexture(unit.unit);
-        glBindTexture(GL_TEXTURE_2D, text.font->glid);
+        glBindTexture(GL_TEXTURE_2D, this->bk_impl->objects[text.font->hdl].value);
 
         auto text_vo = rgl::get_text_vos();
         glBindVertexArray(text_vo.first);
@@ -766,7 +808,7 @@ namespace rocket {
 #ifdef ROCKETGE__Platform_Desktop
         glPolygonMode(GL_FRONT_AND_BACK, x ? GL_LINE : GL_FILL);
 #else
-        rocket::log("Wireframes are not supported on this platform", "opengl_opengl_renderer_2d", "set_wireframe", "error");
+        rocket::log("Wireframes are not supported on this platform", "opengl_renderer_2d", "set_wireframe", "error");
 #endif
     }
 
@@ -792,7 +834,7 @@ namespace rocket {
     }
 
     void opengl_renderer_2d::set_camera(camera_2d *cam) {
-        rocket::log("cameras are not implemented", "opengl_opengl_renderer_2d", "set_camera", "fixme");
+        rocket::log("cameras are not implemented", "opengl_renderer_2d", "set_camera", "fixme");
         this->cam = cam;
     }
 
@@ -920,11 +962,11 @@ namespace rocket {
         rgl::frame_metrics_t fmetrics = rgl::get_frame_metrics();
         int drawcalls = fmetrics.drawcalls;
         if (drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
-            rocket::log("Too many drawcalls! (" + std::to_string(drawcalls) + ") Frames may suffer", "opengl_opengl_renderer_2d", "end_frame", "warning");
+            rocket::log("Too many drawcalls! (" + std::to_string(drawcalls) + ") Frames may suffer", "opengl_renderer_2d", "end_frame", "warning");
         }
         int tricount = fmetrics.tricount;
         if (tricount > rGL_MAX_RECOMMENDED_TRICOUNT) {
-            rocket::log("Too many triangles! (" + std::to_string(tricount) + ") Frames may suffer", "opengl_opengl_renderer_2d", "end_frame", "warning");
+            rocket::log("Too many triangles! (" + std::to_string(tricount) + ") Frames may suffer", "opengl_renderer_2d", "end_frame", "warning");
         }
 
         rgl::reset_frame_metrics();
@@ -990,68 +1032,14 @@ namespace rocket {
         double frame_duration = std::chrono::duration<double>(frame_end_time - frame_start_time).count();
 
         if (fps == 0) {
-            rocket::log("Target FPS 0 is too low", "opengl_opengl_renderer_2d", "end_frame", "fatal");
+            rocket::log("Target FPS 0 is too low", "opengl_renderer_2d", "end_frame", "fatal");
             rocket::exit(1);
         }
 
         double frametime_limit = 1.0 / (fps + 0);
 
-#ifdef ROCKETGE__Platform_Android
-        constexpr bool _ContinueWithFrameTimer = true;
-#else
-        constexpr bool _ContinueWithFrameTimer = true;
-#endif
-
-        if (frame_duration < frametime_limit && _ContinueWithFrameTimer) {
-            // Dynamically wait on Unix vs Win32
-            // (Scheduler Differences)
-            // Do not modify, took a very long time to tune it
-            // and it works good enough
-            //
-            // ~60 FPS on both Win32 and Unix
-            // ~118 FPS while target is 120 FPS
-            double sleep_time = frametime_limit - frame_duration;
-#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
-            constexpr double spin_wait_time = 0.005;
-#else
-            constexpr double spin_wait_time = 0.002;
-#endif
-            int i = 0;
-#if defined(ROCKETGE__Platform_Windows)
-                while
-#else
-                if
-#endif
-                (sleep_time > spin_wait_time && !cli_args.software_frame_timer) {
-#if defined(ROCKETGE__Platform_Windows) 
-                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time / 10));
-                sleep_time /= 10;
-                rocket::log("Sleep Iteration: " + std::to_string(i++ + 1), "a", "a", "info");
-#else
-                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - spin_wait_time));
-#endif
-            }
-
-            // busy wait for the rest
-            while (std::chrono::duration<double>(clock::now() - frame_start_time).count() < frametime_limit) {
-                rnative::intrin_cpu_minfreq();
-            }
-        }
-        
-        if (this->fps < 2147483647) {
-            double diff = frame_duration - frametime_limit;
-
-            constexpr static auto double_to_str = [](double d, int decimal_places = 6) -> std::string {
-                std::stringstream ss;
-                ss << std::fixed << std::setprecision(decimal_places) << d;
-                return ss.str();
-            };
-
-            const double threshold = 0.003;
-            if (diff > threshold) {
-                rocket::log("Frame took too long! (" + double_to_str(frame_duration * 1000., 2) + "ms)", "opengl_opengl_renderer_2d", "end_frame", "debug");
-            }
-        }
+        // Perfect Frame Timer
+        util::frame_timer_wait_for(frame_duration, frametime_limit, cli_args.software_frame_timer, this->fps, this->frame_start_time);
 
         rgl::update_draw_metrics_data(frame_duration + std::chrono::duration<double>(clock::now() - frame_end_time).count(), 1 / this->delta_time);
 
@@ -1121,7 +1109,7 @@ namespace rocket {
     }
 
     camera_2d* opengl_renderer_2d::get_camera() {
-        rocket::log("cameras are not implemented", "opengl_opengl_renderer_2d", "get_camera", "fixme");
+        rocket::log("cameras are not implemented", "opengl_renderer_2d", "get_camera", "fixme");
         return this->cam;
     }
 
@@ -1160,7 +1148,7 @@ namespace rocket {
             }
         } else {
             rocket::log("window destructor ran before opengl_renderer_2d destructor, incorrect order of deletion",
-                        "opengl_opengl_renderer_2d", "close", "warn");
+                        "opengl_renderer_2d", "close", "warn");
         }
 
         window = nullptr; // unbind window
@@ -1172,10 +1160,11 @@ namespace rocket {
         rgl::cleanup_all();
         rgl::reset();
         shader_provider_reset();
-        if (this->impl != nullptr) {
-            delete this->impl;
-            this->impl = nullptr;
-        }
+        delete this->impl;
+        this->impl = nullptr;
+
+        delete this->bk_impl;
+        this->bk_impl = nullptr;
         util::glinit(false);
     }
 

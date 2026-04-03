@@ -52,13 +52,40 @@ namespace rocket {
         std::vector<std::unique_ptr<render_cache_t>> render_caches;
         std::stack<render_cache_t*> render_cache_use_stack;
         glm::mat4 camera_transform = glm::mat4(1.0f);
+        std::atomic<api_object_t> current_object_handle = 0;
     };
 
     using _GLuint = uint32_t;
     using _GLint = int32_t;
 
+    enum class gl_object_type_t {
+        texture,
+    };
+
+    struct gl_object_t { // 8 bytes
+        gl_object_type_t type;
+        _GLuint value;
+    };
+
     struct opengl_renderer_2d_impl_t {
-        std::unordered_map<api_object_t, _GLuint> objects;
+        std::unordered_map<api_object_t, gl_object_t> objects;
+    };
+
+    enum class vk_object_type_t {
+        texture,
+        // anything here
+    };
+
+    struct vk_object_t { // 24 bytes
+        vk_object_type_t type;
+        void *value;
+        void *additional; // Idk is this fine?
+                          // it could be struct vk_texture_t,
+                          // with all the necessary stuffs
+    };
+
+    struct vulkan_renderer_2d_impl_t {
+        std::unordered_map<api_object_t, vk_object_t> objects;
     };
 
     struct glfw_window_impl_t {

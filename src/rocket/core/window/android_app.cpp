@@ -55,6 +55,13 @@ namespace rocket {
 #endif
     }
 
+    bool android_app_t::create_vk_surface(void *vk_instance, const void *allocator, void *surface) const {
+        (void) vk_instance;
+        (void) allocator;
+        (void) surface;
+        return false;
+    };
+
     android_app_t::android_app_t(const rocket::vec2i_t &size, const std::string &title, windowflags_t flags) {
         this->handle = new native_window_t;
         this->handle->backend = window_backend_t::android;

@@ -2,12 +2,20 @@
 #include <rocket/types.hpp>
 
 namespace rocket {
-    vulkan_renderer_2d::vulkan_renderer_2d(window_backend_i *, int, renderer_flags_t)
+    vulkan_renderer_2d::vulkan_renderer_2d(window_backend_i *win, int target_fps, renderer_flags_t flags)
     {
     }
     
-    vulkan_renderer_2d::gfx_chk_result vulkan_renderer_2d::check_graphics_settings(rocket::vec2f_t, rocket::vec2f_t) {
+    vulkan_renderer_2d::gfx_chk_result vulkan_renderer_2d::check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t size) {
         return gfx_chk_result::drawable;
+    }
+
+    api_object_t vulkan_renderer_2d::upload_font_texture_to_gpu(rocket::vec2i_t sz, const std::vector<uint8_t> &bitmap) {
+        return 0; // TODO
+    }
+
+    void vulkan_renderer_2d::clean_gpu_resource(api_object_t obj) {
+        return; // TODO
     }
 
     void vulkan_renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int thickness) {}

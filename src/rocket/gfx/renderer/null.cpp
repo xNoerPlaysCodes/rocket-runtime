@@ -1,4 +1,5 @@
 #include "rocket/renderer.hpp"
+#include "internal_types.hpp"
 
 namespace rocket {
     null_renderer_2d::null_renderer_2d(window_backend_i *, int, renderer_flags_t)
@@ -20,6 +21,14 @@ namespace rocket {
     void null_renderer_2d::begin_frame() {}
 
     void null_renderer_2d::show_splash() {}
+
+    api_object_t null_renderer_2d::upload_font_texture_to_gpu(rocket::vec2i_t, const std::vector<uint8_t> &) {
+        return ++this->impl->current_object_handle;
+    }
+
+    void null_renderer_2d::clean_gpu_resource(api_object_t obj) {
+        (void) obj;
+    }
 
     void null_renderer_2d::begin_render_mode(render_mode_t mode) {
     }

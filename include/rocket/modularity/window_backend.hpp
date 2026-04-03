@@ -34,6 +34,8 @@ namespace rocket {
         friend class vulkan_renderer_2d;
         friend class renderer_3d;
         friend std::vector<std::string> rgl::init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t);
+    private:
+        virtual bool create_vk_surface(void *vk_instance, const void *allocator, void *surface) const = 0;
     protected:
         virtual void swap_buffers() const = 0;
     public:

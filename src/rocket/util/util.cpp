@@ -465,6 +465,65 @@ cleanup:
     void draw_debug_overlay(rocket::renderer_2d_i *ren) {
         rocket::draw_debug_overlay(ren);
     }
+
+    void frame_timer_wait_for(
+        double frame_duration, 
+        double frametime_limit, 
+        bool software_frame_timer, 
+        int target_fps, 
+        std::chrono::time_point<std::chrono::steady_clock> frame_start_time
+    ) {
+        if (frame_duration < frametime_limit && true /* << Continue with Frametimer */) {
+            // Dynamically wait on Unix vs Win32
+            // (Scheduler Differences)
+            // Do not modify, took a very long time to tune it
+            // and it works good enough
+            //
+            // ~60 FPS on both Win32 and Unix
+            // ~118 FPS while target is 120 FPS
+            double sleep_time = frametime_limit - frame_duration;
+#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
+            constexpr double spin_wait_time = 0.005;
+#else
+            constexpr double spin_wait_time = 0.002;
+#endif
+            int i = 0;
+#if defined(ROCKETGE__Platform_Windows)
+                while
+#else
+                if
+#endif
+                (sleep_time > spin_wait_time && !software_frame_timer) {
+#if defined(ROCKETGE__Platform_Windows) 
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time / 10));
+                sleep_time /= 10;
+                rocket::log("Sleep Iteration: " + std::to_string(i++ + 1), "a", "a", "info");
+#else
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - spin_wait_time));
+#endif
+            }
+
+            // busy wait for the rest
+            while (std::chrono::duration<double>(std::chrono::steady_clock::now() - frame_start_time).count() < frametime_limit) {
+                rnative::intrin_cpu_minfreq();
+            }
+        }
+        
+        if (target_fps < 2147483647) {
+            double diff = frame_duration - frametime_limit;
+
+            constexpr static auto double_to_str = [](double d, int decimal_places = 6) -> std::string {
+                std::stringstream ss;
+                ss << std::fixed << std::setprecision(decimal_places) << d;
+                return ss.str();
+            };
+
+            const double threshold = 0.003;
+            if (diff > threshold) {
+                rocket::log("Frame took too long! (" + double_to_str(frame_duration * 1000., 2) + "ms)", "opengl_opengl_renderer_2d", "end_frame", "debug");
+            }
+        }
+    }
 }
 
 namespace rocket {
