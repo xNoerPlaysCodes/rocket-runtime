@@ -1,6 +1,15 @@
 #ifndef ROCKETGE__CONSTANTS_HPP
 #define ROCKETGE__CONSTANTS_HPP
 
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#endif
+
+#undef max
+#undef min
+
 #include <filesystem>
 #include <limits>
 #include <rocket/macros.hpp>
