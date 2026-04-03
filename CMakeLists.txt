@@ -390,7 +390,15 @@ if (BUILD_TESTS)
                 target_link_libraries(${test_name} PRIVATE Python3::Python)
             endif()
 
-            target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic)
+            if (MSVC)
+                target_compile_options(${PROJECT_NAME} PRIVATE
+                    /W4
+                    /permissive-
+                )
+            else()
+                target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic)
+            endif()
+
             set_target_properties(${test_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
         else()
             message("Test skipped: ${test_name}")
@@ -467,7 +475,15 @@ if (BUILD_EXAMPLES)
 
             endif()
 
-            target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3)
+            if (MSVC)
+                target_compile_options(${PROJECT_NAME} PRIVATE
+                    /W4
+                    /permissive-
+                )
+            else()
+                target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3)
+            endif()
+
             set_target_properties(${example_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
         else()
             message("Skip example: ${example_name}")
