@@ -1,6 +1,10 @@
 #ifndef ROCKETGE__IMPL__UTIL_HPP
 #define ROCKETGE__IMPL__UTIL_HPP
 
+#ifdef _WIN32
+#define NOMINMAX
+#endif
+
 #include "../../include/rocket/types.hpp"
 #include "../../include/rocket/io.hpp"
 #include "../../include/rocket/runtime.hpp"
