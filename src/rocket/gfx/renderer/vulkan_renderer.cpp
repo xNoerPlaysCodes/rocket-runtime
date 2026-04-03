@@ -2,8 +2,7 @@
 #include <rocket/types.hpp>
 
 namespace rocket {
-    vulkan_renderer_2d::vulkan_renderer_2d(window_backend_i *win, int target_fps, renderer_flags_t flags)
-    {
+    vulkan_renderer_2d::vulkan_renderer_2d(window_backend_i *win, int target_fps, renderer_flags_t flags) {
     }
     
     vulkan_renderer_2d::gfx_chk_result vulkan_renderer_2d::check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t size) {
