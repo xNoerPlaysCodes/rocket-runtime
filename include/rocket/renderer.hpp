@@ -71,7 +71,7 @@ namespace rocket {
 
         /// @brief Draw a shader
         /// @note Uniforms to be pre-set in the shader by shader.set_uniform(...)
-        void draw_shader(shader_t shader) override;
+        void draw_shader(const shader_i &shader) override;
 
         /// @brief Draw a rectangle
         /// @param rect Rectangle
@@ -268,7 +268,7 @@ namespace rocket {
 
         /// @brief Draw a shader
         /// @note Uniforms to be pre-set in the shader by shader.set_uniform(...)
-        void draw_shader(shader_t shader) override;
+        void draw_shader(const shader_i &shader) override;
 
         /// @brief Draw a rectangle
         /// @param rect Rectangle
@@ -470,7 +470,7 @@ namespace rocket {
 
         /// @brief Draw a shader
         /// @note Uniforms to be pre-set in the shader by shader.set_uniform(...)
-        void draw_shader(shader_t shader) override;
+        void draw_shader(const shader_i &shader) override;
 
         /// @brief Draw a rectangle
         /// @param rect Rectangle

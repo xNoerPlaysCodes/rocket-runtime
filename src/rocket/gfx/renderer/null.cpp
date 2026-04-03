@@ -77,7 +77,7 @@ namespace rocket {
     void null_renderer_2d::draw_text(const rocket::text_t& text_, rocket::vec2f_t position) {
     }
 
-    void null_renderer_2d::draw_shader(shader_t shader) {
+    void null_renderer_2d::draw_shader(const shader_i &shader) {
     }
 
     void null_renderer_2d::set_wireframe(bool x) {

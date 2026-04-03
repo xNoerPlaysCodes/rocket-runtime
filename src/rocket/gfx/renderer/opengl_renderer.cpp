@@ -738,12 +738,13 @@ namespace rocket {
         rgl::free_texture_unit(unit);
     }
 
-    void opengl_renderer_2d::draw_shader(shader_t shader) {
+    void opengl_renderer_2d::draw_shader(const shader_i &abs_shader) {
+        const opengl_shader_t *shader = dynamic_cast<const opengl_shader_t*>(&abs_shader);
         if (this->check_graphics_settings({-1,-1}, {-1,-1}) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
-        rgl::draw_shader(shader.glprogram, shader.vao, shader.vbo);
+        rgl::draw_shader(shader->glprogram, shader->vao, shader->vbo);
     }
 
     // void opengl_renderer_2d::draw_fbo(rgl::fbo_t fbo, vec2f_t pos, vec2f_t size) {
@@ -774,7 +775,7 @@ namespace rocket {
     //     // }
     // }
     //
-    // void opengl_renderer_2d::draw_fbo(rgl::fbo_t fbo, shader_t shader) {
+    // void opengl_renderer_2d::draw_fbo(rgl::fbo_t fbo, const shader_i &shader) {
     //     auto prev = rgl::is_active_any_fbo() ? rgl::get_active_fbo() : rGL_FBO_INVALID;
     //
     //     if (prev == fbo) {

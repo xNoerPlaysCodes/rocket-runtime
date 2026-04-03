@@ -10,6 +10,7 @@
 #include <rocket/io.hpp>
 #include <rocket/renderer_helpers.hpp>
 #include <glm/mat4x2.hpp>
+#include <rocket/rgl.hpp>
 
 namespace rgl {
     std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t bkend);
@@ -95,7 +96,7 @@ namespace rocket {
 
         /// @brief Draw a shader
         /// @note Uniforms to be pre-set in the shader by shader.set_uniform(...)
-        virtual void draw_shader(shader_t shader) = 0;
+        virtual void draw_shader(const shader_i &shader) = 0;
 
         /// @brief Draw a rectangle
         /// @param rect Rectangle
