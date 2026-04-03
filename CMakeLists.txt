@@ -243,6 +243,8 @@ elseif (__rge_ANDROID__)
     )
     message("RocketGE Platform: Desktop-Embedded-Android")
 else()
+    message("Building for Other")
+
     find_package(OpenGL REQUIRED)
     find_package(glfw3 REQUIRED)
     find_package(PkgConfig REQUIRED)
