@@ -221,11 +221,14 @@ if (__rge_WINDOWS__)
         SDL2::SDL2
         OpenAL::OpenAL
         Python3::Python
-        pybind11::pybind11
         glm::glm
         nlohmann_json::nlohmann_json
         miniz::miniz
         winmm
+    )
+    target_link_libraries(${PROJECT_NAME}
+        PUBLIC
+        pybind11::pybind11
     )
 elseif (__rge_ANDROID__)
     target_link_libraries(${PROJECT_NAME} PRIVATE
