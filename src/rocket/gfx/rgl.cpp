@@ -31,6 +31,10 @@
 #else
 #ifdef ROCKETGE__Platform_Android
 #include <sys/system_properties.h>
+#else
+#ifdef ROCKETGE__Platform_Windows
+#include <intrin.h>
+#endif
 #endif
 #endif
 #include "internal_types.hpp"
@@ -394,9 +398,15 @@ namespace rgl {
 #if defined(ROCKETGE__Platform_Linux) || defined(ROCKETGE__Platform_Windows)
         char cpu[64] = {};
         unsigned int info[4];
+        #if defined(ROCKETGE__Platform_Linux)
         __get_cpuid(0x80000002, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu, info, 16);
         __get_cpuid(0x80000003, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+16, info, 16);
         __get_cpuid(0x80000004, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+32, info, 16);
+        #elif defined(ROCKETGE__Platform_Windows)
+        __cpuid((int*)info, 0x80000002); memcpy(cpu, info, 16);
+        __cpuid((int*)info, 0x80000003); memcpy(cpu+16, info, 16);
+        __cpuid((int*)info, 0x80000004); memcpy(cpu+32, info, 16); 
+        #endif
         return std::string(cpu);
 #elifdef ROCKETGE__Platform_Android
         char value[PROP_VALUE_MAX];
