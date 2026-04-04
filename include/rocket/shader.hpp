@@ -33,7 +33,6 @@ namespace rocket {
         friend class opengl_renderer_2d;
         friend class vulkan_renderer_2d;
         friend class renderer_3d;
-        friend rgl::shader_program_t get_shader(shader_id_t shid);
         friend void shader_provider_reset();
     protected:
         virtual void shader_init() = 0;
@@ -49,13 +48,7 @@ namespace rocket {
     public:
         virtual bool operator==(const shader_i &other) const = 0;
     public:
-        shader_i(shader_type type, std::string vcode, std::string fcode, std::string name = "NON_RLSL_SHADER");
-        /// @brief Loads a shader from a file (.rlsl)
-        shader_i(shader_type type, std::filesystem::path rlsl_shader_path);
-        shader_i(shader_type type, const std::string &rlsl_source);
-        shader_i();
-    public:
-        virtual ~shader_i();
+        virtual ~shader_i() = default;
     };
 
     class opengl_shader_t : public shader_i {
@@ -67,6 +60,7 @@ namespace rocket {
         uint32_t vao = 0xDEADBEEFU;
         uint32_t vbo = 0xDEADBEEFU;
 
+        friend rgl::shader_program_t get_shader(shader_id_t shid);
         friend class opengl_renderer_2d;
     private:
         void shader_init() override;

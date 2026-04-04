@@ -6,6 +6,8 @@
 #include "../../include/rocket/runtime.hpp"
 #include "rocket/renderer.hpp"
 #include <functional>
+#include <rocket/modularity/renderer_backend.hpp>
+#include <rocket/renderer_helpers.hpp>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -162,6 +164,8 @@ namespace util {
         int target_fps, 
         std::chrono::time_point<std::chrono::steady_clock> frame_start_time
     );
+
+    rocket::renderer_backend_t get_renderer_backend(rocket::renderer_2d_i *ren);
 
     void segfault();
 }

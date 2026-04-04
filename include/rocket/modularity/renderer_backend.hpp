@@ -54,6 +54,7 @@ namespace rocket {
         renderer_2d_impl_t *impl = nullptr;
 
         friend window_backend_i* __r2d_get_window(rocket::renderer_2d_i*);
+        friend class shader_i;
         friend class renderer_3d;
         friend class font_t;
         friend class asset_manager_t;

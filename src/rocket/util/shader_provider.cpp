@@ -19,7 +19,7 @@ namespace rocket::globals {
 }
 
 namespace rocket {
-    static std::unordered_map<shader_id_t, shader_t> shader_map;
+    static std::unordered_map<shader_id_t, opengl_shader_t> shader_map;
 
 #define CONCAT_IMPL(x, y) x##y
 #define CONCAT(x, y) CONCAT_IMPL(x, y)
@@ -32,9 +32,9 @@ namespace rocket {
 
 #define SHADER_DISPATCH_ENTRY(name)                                      \
         if (shid == shader_id_t::name) {                                 \
-            shader_map[shid] = shader_t::load_from_rlsl_source(          \
+            shader_map[shid] = opengl_shader_t(          \
                 shader_type::vert_frag,                                  \
-                rocket_resource::CONCAT(shader_, CONCAT(name, _rlsl)));  \
+                std::string(rocket_resource::CONCAT(shader_, CONCAT(name, _rlsl))));  \
             return shader_map[shid].glprogram;                           \
         }
 #include <resources/autogen_shader_dispatch.h>

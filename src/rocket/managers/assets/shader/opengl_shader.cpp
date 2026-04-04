@@ -13,6 +13,7 @@
 #include "../../include/rocket/runtime.hpp"
 #include "rgl.hpp"
 #include "util.hpp"
+#include <shader.hpp>
 
 namespace rocket {
     void gl_check_errors(int step) {
@@ -151,20 +152,26 @@ void main() {
         gl_check_errors(16);
     }
 
-    opengl_shader_t::opengl_shader_t(shader_type type, std::string vcode, std::string fcode, std::string name) : type(type), vcode(vcode), fcode(fcode), name(name) {
+    opengl_shader_t::opengl_shader_t(shader_type type, std::string vcode, std::string fcode, std::string name) {
+        this->type = type;
+        this->vcode = vcode;
+        this->fcode = fcode;
+        this->name = name;
+
         this->shader_init();
     }
 
     void opengl_shader_t::parse(const std::vector<std::string> &lines, std::filesystem::path shader_workingdir) {
+        rlsl_parsed_result_t res = rocket::rlsl_parse(lines, shader_workingdir, util::get_renderer_backend(util::get_global_renderer_2d()), nullptr);
 
-        this->vcode = rlsl_shader.vcode;
-        this->fcode = rlsl_shader.fcode;
-        this->name = rlsl_shader.name;
-        this->rlsl_version = rlsl_shader.version;
+        this->vcode = res.gl_vert_code;
+        this->fcode = res.gl_frag_code;
+        this->name = res.name;
+        this->rlsl_version = res.rlsl_version;
 
         this->shader_init();
 
-        rocket::log("Loaded RLSL Shader: " + rlsl_shader.name, "opengl_shader_t", "constructor", "info");
+        rocket::log("Loaded RLSL Shader: " + res.name, "opengl_shader_t", "constructor", "info");
     }
 
     opengl_shader_t::opengl_shader_t(shader_type type, std::filesystem::path rlsl_shader_path) {
@@ -284,11 +291,18 @@ void main() {
             case GL_INT_VEC4:
                 glUniform4iv(location, count / 4, (const GLint*)data);
                 break;
-            // Add other types as needed
             default:
-                // unsupported type
+                rocket::log("unsupported shader parameter type", "opengl_shader_t", "set_parameter_raw", "error");
                 break;
         }
+    }
+
+    bool opengl_shader_t::operator==(const shader_i &other) const {
+        if (!rocket::instance_of<const opengl_shader_t>(&other)) {
+            rocket::log("Objects are of unequal type", "opengl_shader_t", "operator==", "error");
+            return false;
+        }
+        return this->glprogram == dynamic_cast<const opengl_shader_t*>(&other)->glprogram;
     }
 
     opengl_shader_t::~opengl_shader_t() {

@@ -94,7 +94,8 @@ add_library(${PROJECT_NAME}
 
     # ManagedAssets
     src/rocket/managers/assets/font.cpp
-    src/rocket/managers/assets/shader.cpp
+    src/rocket/managers/assets/shader/opengl_shader.cpp
+    src/rocket/managers/assets/shader/rlsl_parser.cpp
     src/rocket/managers/assets/text.cpp
     # Managers
     src/rocket/managers/asset.cpp

@@ -466,6 +466,18 @@ cleanup:
         rocket::draw_debug_overlay(ren);
     }
 
+    rocket::renderer_backend_t get_renderer_backend(rocket::renderer_2d_i *ren) {
+        if (rocket::instance_of<rocket::opengl_renderer_2d>(ren)) {
+            return rocket::renderer_backend_t::opengl;
+        } else if (rocket::instance_of<rocket::vulkan_renderer_2d>(ren)) {
+            return rocket::renderer_backend_t::vulkan;
+        } else if (rocket::instance_of<rocket::null_renderer_2d>(ren)) {
+            return rocket::renderer_backend_t::null;
+        } else {
+            return rocket::renderer_backend_t::null;
+        }
+    }
+
     void frame_timer_wait_for(
         double frame_duration, 
         double frametime_limit, 
