@@ -17,7 +17,7 @@ namespace rgl {
 }
 
 namespace rocket {
-    struct window_backend_i;
+    class window_backend_i;
     struct renderer_2d_impl_t;
     struct camera_2d;
     class renderer_2d_i {
