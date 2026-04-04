@@ -359,7 +359,7 @@ if (BUILD_TESTS)
             target_link_libraries(${test_name} PRIVATE RocketRuntime)
 
             if (__rge_WINDOWS__)
-                target_link_libraries(${test_name} PRIVATE python314)
+                target_link_libraries(${test_name} PRIVATE Python3::Python)
                 target_link_directories(${test_name} PRIVATE
                     ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
                     ${CMAKE_SOURCE_DIR}/windeps/glfw/src
