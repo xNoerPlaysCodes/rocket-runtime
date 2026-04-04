@@ -730,13 +730,13 @@ namespace rgl {
     rgl::shader_program_t init_shader(rgl::shader_use_t use) {
         switch (use) {
             case rgl::shader_use_t::rect:
-                shader_cache[use] = rocket::get_shader(rocket::shader_id_t::rectangle);
+                shader_cache[use] = rocket::gl_get_shader(rocket::shader_id_t::rectangle);
                 break;
             case rgl::shader_use_t::text:
-                shader_cache[use] = rocket::get_shader(rocket::shader_id_t::text);
+                shader_cache[use] = rocket::gl_get_shader(rocket::shader_id_t::text);
                 break;
             case rgl::shader_use_t::textured_rect:
-                shader_cache[use] = rocket::get_shader(rocket::shader_id_t::textured_rectangle);
+                shader_cache[use] = rocket::gl_get_shader(rocket::shader_id_t::textured_rectangle);
                 break;
             default:
                 rocket::log("unknown shader use", "rgl", "init_shader", "error");
@@ -928,7 +928,7 @@ namespace rgl {
     }
 
     rgl::shader_program_t get_fxaa_simplified_shader() {
-        return rocket::get_shader(rocket::shader_id_t::fxaa);
+        return rocket::gl_get_shader(rocket::shader_id_t::fxaa);
     }
 
     rgl::glstate_t save_state() {
@@ -996,7 +996,7 @@ namespace rgl {
             glBindFramebuffer(GL_FRAMEBUFFER, state.bound_fbo.fbo);
     }
     void compile_all_default_shaders() {
-        rocket::shader_provider_compile_all();
+        rocket::shader_provider_compile_all_gl();
     }
 
     draw_metrics_t metrics;

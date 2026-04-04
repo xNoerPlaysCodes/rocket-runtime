@@ -3,6 +3,7 @@
 
 #include <rgl.hpp>
 #include <rocket/rgl.hpp>
+#include <internal_types.hpp>
 
 namespace rocket {
     enum class shader_id_t : int {
@@ -19,8 +20,10 @@ namespace rocket {
         zoom,
     };
 
-    rgl::shader_program_t get_shader(shader_id_t shid);
-    void shader_provider_compile_all();
+    rgl::shader_program_t gl_get_shader(shader_id_t shid);
+    vk_shader_t vk_get_shader(shader_id_t shid);
+    void shader_provider_compile_all_gl();
+    void shader_provider_compile_all_vk();
     void shader_provider_reset();
 }
 

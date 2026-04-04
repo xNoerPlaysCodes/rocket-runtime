@@ -8,11 +8,14 @@
 
 namespace rocket {
     enum class shader_id_t;
+    struct vk_shader_t;
+    uint32_t gl_get_shader(rocket::shader_id_t shid);
+    vk_shader_t vk_get_shader(rocket::shader_id_t shid);
 }
 
 namespace rgl {
     typedef unsigned int shader_program_t;
-    rgl::shader_program_t get_shader(rocket::shader_id_t shid);
+    rgl::shader_program_t gl_get_shader(rocket::shader_id_t shid);
 }
 
 namespace rocket {
@@ -61,6 +64,7 @@ namespace rocket {
         uint32_t vbo = 0xDEADBEEFU;
 
         friend rgl::shader_program_t get_shader(shader_id_t shid);
+        friend uint32_t rocket::gl_get_shader(shader_id_t shid);
         friend class opengl_renderer_2d;
     private:
         void shader_init() override;
@@ -87,10 +91,14 @@ namespace rocket {
 
     struct vulkan_shader_t : public shader_i {
     private:
+        api_object_t hdl;
         friend class vulkan_renderer_2d;
     private:
         void shader_init() override;
         void parse(const std::vector<std::string> &lines, std::filesystem::path shader_workingdir) override;
+
+        friend vk_shader_t vk_get_shader(shader_id_t shader);
+        friend vk_shader_t rocket::vk_get_shader(shader_id_t shid);
     public:
         void set_parameter(std::string name, float value) override;
         void set_parameter(std::string name, int value) override;

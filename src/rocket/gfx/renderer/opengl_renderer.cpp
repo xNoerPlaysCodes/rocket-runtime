@@ -194,7 +194,7 @@ namespace rocket {
         }
 
         if (thickness > 0) {
-            rgl::shader_program_t pg = rocket::get_shader(shader_id_t::circle_lines);
+            rgl::shader_program_t pg = rocket::gl_get_shader(shader_id_t::circle_lines);
             rocket::vec2f_t viewport_size = rgl::get_viewport_size();
             glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
 
@@ -269,7 +269,7 @@ namespace rocket {
             
             vo = rgl::compile_vo(verts);
         }
-        rgl::shader_program_t pg = rocket::get_shader(shader_id_t::polygon);
+        rgl::shader_program_t pg = rocket::gl_get_shader(shader_id_t::polygon);
 
         auto color_nm = color.normalize();
         rgl::shader_location_t color_loc = rgl::get_shader_location(pg, "uColor");
@@ -591,7 +591,7 @@ namespace rocket {
 
         r_assert(atlas != nullptr);
 
-        rgl::shader_program_t pg = rocket::get_shader(shader_id_t::atlas_textured_rectangle);
+        rgl::shader_program_t pg = rocket::gl_get_shader(shader_id_t::atlas_textured_rectangle);
         rocket::vec2f_t viewport_size = this->get_viewport_size();
 
         glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);

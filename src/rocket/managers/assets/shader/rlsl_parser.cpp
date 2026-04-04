@@ -83,7 +83,32 @@ namespace rocket {
 
             bytes = std::move(decoded);
             return true;
-        };
+        }
+
+        std::vector<std::string> split_delim_str(const std::string &s, std::string_view delim) {
+            std::vector<std::string> out;
+
+            if (delim.empty()) {
+                out.push_back(s);
+                return out;
+            }
+
+            size_t start = 0;
+
+            while (true) {
+                size_t pos = s.find(delim, start);
+
+                if (pos == std::string::npos) {
+                    out.emplace_back(s.substr(start));
+                    break;
+                }
+
+                out.emplace_back(s.substr(start, pos - start));
+                start = pos + delim.size();
+            }
+
+            return out;
+        }
     }
 
     rlsl_parsed_result_t rlsl_parse(std::vector<std::string> lines, std::filesystem::path shader_workingdir, rocket::renderer_backend_t backend, void *vk_phys_device) {
@@ -183,7 +208,18 @@ FragmentEnd
                 } else if (l.starts_with("VK_MinimumVersion:")) {
                     rlsl_shader.vk_minimumversion = std::stof(trim(l.substr(18)));
                 } else if (l.starts_with("VK_RequiredExtensions:")) {
-                    rlsl_shader.vk_required_extensions.push_back(trim(l.substr(22)));
+                    for (std::string s : split_delim_str(trim(l.substr(22)), ", ")) {
+                        if (s == "[Core]") {
+                            rlsl_shader.vk_required_extensions.push_back("VK_KHR_surface");
+                            rlsl_shader.vk_required_extensions.push_back("VK_KHR_swapchain");
+                        } else if (s == "[Debug]") {
+                            rlsl_shader.vk_required_extensions.push_back("VK_EXT_debug_utils");
+                            rlsl_shader.vk_required_extensions.push_back("VK_EXT_debug_report");
+                        }
+                        else {
+                            rlsl_shader.vk_required_extensions.push_back(s);
+                        }
+                    }
                 } else if (l.starts_with("VK_VertexModuleB64: ")) {
                     bool success = parse_formatted_b64_blob(l.substr(20), rlsl_shader.vdata);
                     if (!success) {

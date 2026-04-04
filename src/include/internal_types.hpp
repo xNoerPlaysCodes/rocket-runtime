@@ -73,15 +73,26 @@ namespace rocket {
 
     enum class vk_object_type_t {
         texture,
+        shader,
         // anything here
     };
 
-    struct vk_object_t { // 24 bytes
+#define subclass(x)
+
+    struct vk_texture_t subclass(vk_object_t) {
+        // dah tah
+    };
+
+    struct vk_shader_t subclass(vk_object_t) {
+        // dah tah
+    };
+
+    struct vk_object_t {
         vk_object_type_t type;
-        void *value;
-        void *additional; // Idk is this fine?
-                          // it could be struct vk_texture_t,
-                          // with all the necessary stuffs
+        std::variant<
+            vk_texture_t, vk_shader_t
+        > value;
+        void *additional = nullptr;
     };
 
     struct vulkan_renderer_2d_impl_t {

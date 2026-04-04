@@ -428,11 +428,15 @@ namespace rocket {
     };
 
     struct vulkan_renderer_2d_impl_t;
+    struct vk_shader_t;
+
+    vk_shader_t vk_get_shader(shader_id_t shad);
 
     class vulkan_renderer_2d : public renderer_2d_i {
     protected:
         vulkan_renderer_2d_impl_t *bk_impl;
 
+        friend vk_shader_t vk_get_shader(shader_id_t);
         friend class renderer_3d;
         friend class font_t;
     protected:
