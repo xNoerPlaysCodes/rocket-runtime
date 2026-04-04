@@ -17,6 +17,7 @@
 ## `basic window`
 ```cpp
 #include <rocket/runtime.hpp>
+#include <memory>
 
 // Make sure to use rocket_main instead of main
 // with extra rocket_arguments_t argument
@@ -27,17 +28,18 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
     rocket::window_t window = { {1280, 720}, "Basic Window" };
 
     // Initialize default 2D renderer
-    rocket::renderer_2d r2d(&window);
+    // And use OpenGL or Vulkan!
+    std::unique_ptr<rocket::renderer_2d_i> r2d = rocket::create_renderer_2d(rocket::renderer_backend_t::opengl, &window);
 
     // The main loop
     while (window.is_running()) {
         // Begin a new frame
-        r2d.begin_frame();
+        r2d->begin_frame();
         // Clear the screen with default color
-        r2d.clear();
+        r2d->clear();
         {
             // Create and draw a basic rectangle
-            r2d.draw_rectangle({
+            r2d->draw_rectangle({
                 // Set the position
                 .pos = {
                     .x = 100,
@@ -52,12 +54,12 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
             }, rocket::rgba_color::red());
         }
         // End the frame
-        r2d.end_frame();
+        r2d->end_frame();
         // Poll window events
         window.poll_events();
     }
 
-    r2d.close();
+    r2d->close();
     window.close();
 
     return 0; // Very Important
@@ -74,6 +76,13 @@ DEFINE_PLATFORM_MAIN
 
 ## `custom shader`
 ```cpp
+/*
+        This example does not work,
+        please do not use this example
+        code as it is outdated.
+*/
+
+
 #include "rocket/runtime.hpp"
 #include "rocket/shader.hpp"
 #include "rocket/types.hpp"
@@ -85,7 +94,7 @@ DEFINE_PLATFORM_MAIN
 int rocket_main(int argc, char **argv, rocket_arguments_t) {
     rocket::init(argc, argv);
     rocket::window_t window({1280, 720}, "rgeExample - Custom Shader");
-    rocket::renderer_2d r(&window, 60);
+    std::unique_ptr<rocket::renderer_2d_i> r = rocket::create_renderer_2d(rocket::renderer_backend_t::opengl, &window);
 
     const char *vcode = R"(#version 300 es
         precision mediump float;
@@ -120,7 +129,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
         }
     )";
 
-    rocket::shader_t shader = {rocket::shader_type::vert_frag, vcode, fcode};
+    rocket::opengl_shader_t shader = {rocket::shader_type::vert_frag, vcode, fcode};
 
     while (window.is_running()) {
         r.begin_frame();
