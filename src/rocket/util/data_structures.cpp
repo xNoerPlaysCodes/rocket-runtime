@@ -3,7 +3,10 @@
 #include <data_structures.hpp>
 #include <rocket/runtime.hpp>
 #include <vector>
-#include <lib/lzf/lzf.h>
+
+extern "C" {
+    #include <lib/lzf/lzf.h>
+}
 
 namespace rocket {
     compressed_data_t::compressed_data_t() = default;
