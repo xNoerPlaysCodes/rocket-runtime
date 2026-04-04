@@ -130,6 +130,10 @@ add_library(${PROJECT_NAME}
     # Plugin Subsystem
     src/rocket/plugin/plugin.cpp
 
+    # Libraries
+    src/lib/lzf/lzf_c.c
+    src/lib/lzf/lzf_d.c
+
     # Special Cases
     src/special_cases.cpp
 
