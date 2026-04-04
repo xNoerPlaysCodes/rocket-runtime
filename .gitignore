@@ -16,3 +16,6 @@ run.sh
 .cache
 
 .gitwindeps
+/out
+/.vs
+CMakeSettings.json

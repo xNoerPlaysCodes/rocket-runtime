@@ -3,7 +3,10 @@
 #include <data_structures.hpp>
 #include <rocket/runtime.hpp>
 #include <vector>
-#include <lib/lzf/lzf.h>
+
+extern "C" {
+    #include <lib/lzf/lzf.h>
+}
 
 namespace rocket {
     compressed_data_t::compressed_data_t() = default;
@@ -18,7 +21,7 @@ namespace rocket {
 
     bool compressed_data_t::set(const std::vector<uint8_t> &set_data) {
         original_size = set_data.size();
-        this->data.resize(std::max(original_size * 2, 32UL)); // extra space
+        this->data.resize(std::max(original_size * 2, 32ULL)); // extra space
         size_t written = ::lzf_compress(set_data.data(), set_data.size(), this->data.data(), this->data.size());
 
         if (written == 0) {
@@ -33,7 +36,7 @@ namespace rocket {
 
     bool compressed_data_t::set(uint8_t *buffer, size_t sz) {
         original_size = sz;
-        this->data.resize(std::max(original_size * 2, 32UL)); // extra space
+        this->data.resize(std::max(original_size * 2, 32ULL)); // extra space
         size_t written = ::lzf_compress(buffer, sz, this->data.data(), this->data.size());
 
         if (written == 0) {

@@ -17,7 +17,7 @@
 #define get_func(handle, func) ((void*) GetProcAddress(handle, func))
 #define close_lib(handle) FreeLibrary(handle)
 
-constexpr std::string dll_extension = ".dll";
+constexpr const char* dll_extension = ".dll";
 #else
 #include <dlfcn.h>
 #define load_lib(name) dlopen(name, RTLD_LAZY)
@@ -27,7 +27,7 @@ constexpr std::string dll_extension = ".dll";
 constexpr std::string dll_extension = ".so";
 #endif
 
-constexpr std::string api_version     = "0.0.2";
+constexpr const char* api_version = "0.0.2";
 
 namespace rocket {
     std::vector<std::shared_ptr<plugin_t>> loaded_plugins;
@@ -153,7 +153,7 @@ namespace rocket {
             std::string filename = stat.m_filename;
             if (filename == "plugin.json") {
                 rocket::log("[fixme] read plugin.json", "plugin.cpp", "load_plugin", "info");
-            } else if (filename == ("entrypoint" + dll_extension)) {
+            } else if (filename == (std::string("entrypoint") + dll_extension)) {
                 size_t lib_size = static_cast<size_t>(stat.m_uncomp_size);
                 std::vector<uint8_t> buffer(lib_size);
 
