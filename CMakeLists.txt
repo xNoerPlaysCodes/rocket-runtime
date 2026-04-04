@@ -25,6 +25,12 @@ option(BUILD_EDITOR "Build Editor" OFF)
 option(__rge_WINDOWS__ OFF)
 option(__rge_ANDROID__ OFF)
 
+if (WIN32)
+    set(__rge_WINDOWS__ ON)
+elseif (ANDROID)
+    set(__rge_ANDROID__ ON)
+endif()
+
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 option(BUILD_SCRIPTING "Build Scripting [py]" ON)
 option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
@@ -84,58 +90,123 @@ if (__rge_ANDROID__)
     )
 endif()
 
-add_library(${PROJECT_NAME}
-    # Graphics
-    src/rocket/gfx/renderer.cpp
-    # src/rocket/gfx/renderer3d.cpp
-    src/rocket/gfx/rgl.cpp
+if (WIN32)
+    # Force static on Windows to avoid declspec headaches
+    add_library(${PROJECT_NAME} STATIC
+        # Graphics
+        src/rocket/gfx/renderer.cpp
+        # src/rocket/gfx/renderer3d.cpp
+        src/rocket/gfx/rgl.cpp
 
-    # ManagedAssets
-    src/rocket/managers/assets/font.cpp
-    src/rocket/managers/assets/shader.cpp
-    src/rocket/managers/assets/text.cpp
-    # Managers
-    src/rocket/managers/asset.cpp
-    src/rocket/managers/audio.cpp
+        # ManagedAssets
+        src/rocket/managers/assets/font.cpp
+        src/rocket/managers/assets/shader.cpp
+        src/rocket/managers/assets/text.cpp
+        # Managers
+        src/rocket/managers/asset.cpp
+        src/rocket/managers/audio.cpp
 
-    # Utilities
-    src/rocket/util/glfnldr/glfnldr.cpp
-    ${GLFNLDR_SOURCES}
-    src/rocket/util/io.cpp
-    src/rocket/util/native.cpp
-    src/rocket/util/threads.cpp
-    src/rocket/util/types.cpp
-    src/rocket/util/crashdump.cpp
-    src/rocket/util/shader_provider.cpp
-    src/rocket/util/persistence.cpp
-    src/rocket/util/data_structures.cpp
-    src/rocket/util/memory.cpp
-    src/rocket/util/util.cpp
+        # Utilities
+        src/rocket/util/glfnldr/glfnldr.cpp
+        ${GLFNLDR_SOURCES}
+        src/rocket/util/io.cpp
+        src/rocket/util/native.cpp
+        src/rocket/util/threads.cpp
+        src/rocket/util/types.cpp
+        src/rocket/util/crashdump.cpp
+        src/rocket/util/shader_provider.cpp
+        src/rocket/util/persistence.cpp
+        src/rocket/util/data_structures.cpp
+        src/rocket/util/memory.cpp
+        src/rocket/util/util.cpp
 
-    # Internal
-    src/rocket/internal/internal_types.cpp
+        # Internal
+        src/rocket/internal/internal_types.cpp
 
-    # Core
-    ${WINDOWING_SOURCES}
-    src/rocket/core/window/null.cpp
-    src/rocket/core/window.cpp
-    src/rocket/core/runtime.cpp
+        # Core
+        ${WINDOWING_SOURCES}
+        src/rocket/core/window/null.cpp
+        src/rocket/core/window.cpp
+        src/rocket/core/runtime.cpp
 
-    # Plugin Subsystem
-    src/rocket/plugin/plugin.cpp
+        # Plugin Subsystem
+        src/rocket/plugin/plugin.cpp
 
-    # Special Cases
-    src/special_cases.cpp
+        # Libraries
+        src/lib/lzf/lzf_c.c
+        src/lib/lzf/lzf_d.c
 
-    # RNative
-    ${RNATIVE_SOURCES}
+        # Special Cases
+        src/special_cases.cpp
 
-    # AstroUI
-    ${ASTRO_SOURCES}
+        # RNative
+        ${RNATIVE_SOURCES}
 
-    # Python Scripting
-    ${SCRIPTING_SOURCES}
-)
+        # AstroUI
+        ${ASTRO_SOURCES}
+
+        # Python Scripting
+        ${SCRIPTING_SOURCES}
+    )
+
+else()
+    add_library(${PROJECT_NAME}
+        # Graphics
+        src/rocket/gfx/renderer.cpp
+        # src/rocket/gfx/renderer3d.cpp
+        src/rocket/gfx/rgl.cpp
+
+        # ManagedAssets
+        src/rocket/managers/assets/font.cpp
+        src/rocket/managers/assets/shader.cpp
+        src/rocket/managers/assets/text.cpp
+        # Managers
+        src/rocket/managers/asset.cpp
+        src/rocket/managers/audio.cpp
+
+        # Utilities
+        src/rocket/util/glfnldr/glfnldr.cpp
+        ${GLFNLDR_SOURCES}
+        src/rocket/util/io.cpp
+        src/rocket/util/native.cpp
+        src/rocket/util/threads.cpp
+        src/rocket/util/types.cpp
+        src/rocket/util/crashdump.cpp
+        src/rocket/util/shader_provider.cpp
+        src/rocket/util/persistence.cpp
+        src/rocket/util/data_structures.cpp
+        src/rocket/util/memory.cpp
+        src/rocket/util/util.cpp
+
+        # Internal
+        src/rocket/internal/internal_types.cpp
+
+        # Core
+        ${WINDOWING_SOURCES}
+        src/rocket/core/window/null.cpp
+        src/rocket/core/window.cpp
+        src/rocket/core/runtime.cpp
+
+        # Plugin Subsystem
+        src/rocket/plugin/plugin.cpp
+
+        # Libraries
+        src/lib/lzf/lzf_c.c
+        src/lib/lzf/lzf_d.c
+
+        # Special Cases
+        src/special_cases.cpp
+
+        # RNative
+        ${RNATIVE_SOURCES}
+
+        # AstroUI
+        ${ASTRO_SOURCES}
+
+        # Python Scripting
+        ${SCRIPTING_SOURCES}
+    )
+endif()
 
 if (__rge_ANDROID__)
     add_library(native_app_glue STATIC
@@ -194,38 +265,36 @@ file(GENERATE
 )
 # Fetch Dependencies
 if (__rge_WINDOWS__)
-    target_link_directories(${PROJECT_NAME} PRIVATE
-        ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
-        ${CMAKE_SOURCE_DIR}/windeps/glfw/src
-        ${CMAKE_SOURCE_DIR}/windeps/miniz
-        ${CMAKE_SOURCE_DIR}/windeps/openal-soft
-        ${CMAKE_SOURCE_DIR}/windeps/SDL2/build
-    )
-    include_directories(
-        ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/include
-        ${CMAKE_SOURCE_DIR}/windeps/glfw/include
-        ${CMAKE_SOURCE_DIR}/windeps/miniz
-        ${CMAKE_SOURCE_DIR}/windeps/openal-soft/include
-        ${CMAKE_SOURCE_DIR}/windeps/SDL2/include
-        ${CMAKE_SOURCE_DIR}/windeps/python/install/include
-        ${CMAKE_SOURCE_DIR}/windeps/pybind11/include
-        ${CMAKE_SOURCE_DIR}/windeps/nlohmann-json/include
-        ${CMAKE_SOURCE_DIR}/windeps/glm
-    )
     message("Building for Win32")
-    
-    target_link_libraries(${PROJECT_NAME} PRIVATE
-        opengl32
-        glew32
-        glfw3dll
-        OpenAL32
-        miniz
-        SDL2
-        python314
-        winmm
-        stdc++exp
-    )
     message("RocketGE Platform: Desktop-GLFW-Win32")
+
+    find_package(OpenGL REQUIRED)
+    find_package(GLEW CONFIG REQUIRED)
+    find_package(glfw3 CONFIG REQUIRED)
+    find_package(SDL2 CONFIG REQUIRED)
+    find_package(OpenAL CONFIG REQUIRED)
+    find_package(Python3 COMPONENTS Development REQUIRED)
+    find_package(pybind11 CONFIG REQUIRED)
+    find_package(glm CONFIG REQUIRED)
+    find_package(nlohmann_json CONFIG REQUIRED)
+    find_package(miniz CONFIG REQUIRED)
+
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        OpenGL::GL
+        GLEW::GLEW
+        glfw
+        SDL2::SDL2
+        OpenAL::OpenAL
+        Python3::Python
+        glm::glm
+        nlohmann_json::nlohmann_json
+        miniz::miniz
+        winmm
+    )
+    target_link_libraries(${PROJECT_NAME}
+        PUBLIC
+        pybind11::pybind11
+    )
 elseif (__rge_ANDROID__)
     target_link_libraries(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libopenal.a
@@ -243,6 +312,8 @@ elseif (__rge_ANDROID__)
     )
     message("RocketGE Platform: Desktop-Embedded-Android")
 else()
+    message("Building for Other")
+
     find_package(OpenGL REQUIRED)
     find_package(glfw3 REQUIRED)
     find_package(PkgConfig REQUIRED)
@@ -261,7 +332,14 @@ else()
     target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python stdc++exp ${WAYLAND_LIBRARIES})
 endif()
 
-set(RGE_COMPILER_FLAGS -Wall -Wextra -Wpedantic -Werror=return-type -Werror=uninitialized -Werror=nonnull -Werror=null-dereference -Werror=strict-aliasing -Werror=implicit-function-declaration -Werror=undef -Werror=missing-declarations -Werror=sign-compare)
+if (MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        /W4
+        /permissive-
+    )
+else()
+    set(RGE_COMPILER_FLAGS -Wall -Wextra -Wpedantic -Werror=return-type -Werror=uninitialized -Werror=nonnull -Werror=null-dereference -Werror=strict-aliasing -Werror=implicit-function-declaration -Werror=undef -Werror=missing-declarations -Werror=sign-compare)
+endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) # Legacy definition
@@ -342,7 +420,7 @@ if (BUILD_TESTS)
             target_link_libraries(${test_name} PRIVATE RocketRuntime)
 
             if (__rge_WINDOWS__)
-                target_link_libraries(${test_name} PRIVATE python314)
+                target_link_libraries(${test_name} PRIVATE Python3::Python)
                 target_link_directories(${test_name} PRIVATE
                     ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
                     ${CMAKE_SOURCE_DIR}/windeps/glfw/src
@@ -380,7 +458,15 @@ if (BUILD_TESTS)
                 target_link_libraries(${test_name} PRIVATE Python3::Python)
             endif()
 
-            target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic)
+            if (MSVC)
+                target_compile_options(${PROJECT_NAME} PRIVATE
+                    /W4
+                    /permissive-
+                )
+            else()
+                target_compile_options(${test_name} PRIVATE -Wall -Wextra -Wpedantic)
+            endif()
+
             set_target_properties(${test_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
         else()
             message("Test skipped: ${test_name}")
@@ -457,7 +543,15 @@ if (BUILD_EXAMPLES)
 
             endif()
 
-            target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3)
+            if (MSVC)
+                target_compile_options(${PROJECT_NAME} PRIVATE
+                    /W4
+                    /permissive-
+                )
+            else()
+                target_compile_options(${example_name} PRIVATE -Wall -Wextra -Wpedantic -O3)
+            endif()
+
             set_target_properties(${example_name} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
         else()
             message("Skip example: ${example_name}")
