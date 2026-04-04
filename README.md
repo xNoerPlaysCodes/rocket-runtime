@@ -180,4 +180,5 @@ After compilation if no errors occur, `libRocketRuntime.so` will be in `bin/`
 ## Windows
 ### Building from source (recommended)
 
-👀 Coming Soon...
+dont use windows.
+(coming soon)
