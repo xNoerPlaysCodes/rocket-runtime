@@ -95,7 +95,6 @@ add_library(${PROJECT_NAME}
     # ManagedAssets
     src/rocket/managers/assets/font.cpp
     src/rocket/managers/assets/shader/opengl_shader.cpp
-    src/rocket/managers/assets/shader/rlsl_parser.cpp
     src/rocket/managers/assets/text.cpp
     # Managers
     src/rocket/managers/asset.cpp
@@ -113,6 +112,7 @@ add_library(${PROJECT_NAME}
     src/rocket/util/persistence.cpp
     src/rocket/util/data_structures.cpp
     src/rocket/util/memory.cpp
+    src/rocket/util/rlsl_parser.cpp
     src/rocket/util/util.cpp
 
     # Internal
