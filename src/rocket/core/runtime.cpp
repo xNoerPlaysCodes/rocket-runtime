@@ -497,7 +497,8 @@ namespace rocket {
 #ifdef ROCKETGE__GLFNLDR_BACKEND_LIBEPOXY
                     "> libepoxy     (MIT)",
 #endif
-                    "> OpenGL      (RYLF)",
+                    "> OpenGL       (SGI)",
+                    "> Vulkan    (APACHE)",
                     "> glm          (MIT)",
                     "> GLFW        (ZLIB)",
                     "> SDL2        (ZLIB)",

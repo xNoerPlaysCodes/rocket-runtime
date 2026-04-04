@@ -29,7 +29,7 @@ namespace rapi {
         /// @note Return value and the function itself may be nullptr
         /// @note Only callable AFTER on_load()
         /// @note Only defined if plugin_capabilities_t::needs_expo_renderer2d is true
-        std::function<rocket::renderer_2d*()> get_renderer2d;
+        std::function<rocket::renderer_2d_i*()> get_renderer2d;
 
         std::function<std::vector<std::shared_ptr<rocket::plugin_t>>()> get_plugins;
         std::function<void(std::function<void()>)> schedule_gl;

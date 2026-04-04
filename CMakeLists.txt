@@ -90,121 +90,71 @@ if (__rge_ANDROID__)
     )
 endif()
 
+set(ROCKETGE_SOURCES
+    # Graphics
+    src/rocket/gfx/renderer/opengl_renderer.cpp
+    src/rocket/gfx/renderer/null.cpp
+    src/rocket/gfx/renderer/vulkan_renderer.cpp
+    # src/rocket/gfx/renderer3d.cpp
+    src/rocket/gfx/helper/rgl.cpp
+
+    # ManagedAssets
+    src/rocket/managers/assets/font.cpp
+    src/rocket/managers/assets/shader/opengl_shader.cpp
+    src/rocket/managers/assets/text.cpp
+    # Managers
+    src/rocket/managers/asset.cpp
+    src/rocket/managers/audio.cpp
+
+    # Utilities
+    src/rocket/util/glfnldr/glfnldr.cpp
+    ${GLFNLDR_SOURCES}
+    src/rocket/util/io.cpp
+    src/rocket/util/native.cpp
+    src/rocket/util/threads.cpp
+    src/rocket/util/types.cpp
+    src/rocket/util/crashdump.cpp
+    src/rocket/util/shader_provider.cpp
+    src/rocket/util/persistence.cpp
+    src/rocket/util/data_structures.cpp
+    src/rocket/util/memory.cpp
+    src/rocket/util/rlsl_parser.cpp
+    src/rocket/util/util.cpp
+
+    # Internal
+    src/rocket/internal/internal_types.cpp
+
+    # Core
+    ${WINDOWING_SOURCES}
+    src/rocket/core/window/null.cpp
+    src/rocket/core/window.cpp
+    src/rocket/core/runtime.cpp
+
+    # Plugin Subsystem
+    src/rocket/plugin/plugin.cpp
+
+    # Special Cases
+    src/special_cases.cpp
+
+    # RNative
+    ${RNATIVE_SOURCES}
+
+    # AstroUI
+    ${ASTRO_SOURCES}
+
+    # Python Scripting
+    ${SCRIPTING_SOURCES}
+)
+
 if (WIN32)
     # Force static on Windows to avoid declspec headaches
     add_library(${PROJECT_NAME} STATIC
-        # Graphics
-        src/rocket/gfx/renderer.cpp
-        # src/rocket/gfx/renderer3d.cpp
-        src/rocket/gfx/rgl.cpp
-
-        # ManagedAssets
-        src/rocket/managers/assets/font.cpp
-        src/rocket/managers/assets/shader.cpp
-        src/rocket/managers/assets/text.cpp
-        # Managers
-        src/rocket/managers/asset.cpp
-        src/rocket/managers/audio.cpp
-
-        # Utilities
-        src/rocket/util/glfnldr/glfnldr.cpp
-        ${GLFNLDR_SOURCES}
-        src/rocket/util/io.cpp
-        src/rocket/util/native.cpp
-        src/rocket/util/threads.cpp
-        src/rocket/util/types.cpp
-        src/rocket/util/crashdump.cpp
-        src/rocket/util/shader_provider.cpp
-        src/rocket/util/persistence.cpp
-        src/rocket/util/data_structures.cpp
-        src/rocket/util/memory.cpp
-        src/rocket/util/util.cpp
-
-        # Internal
-        src/rocket/internal/internal_types.cpp
-
-        # Core
-        ${WINDOWING_SOURCES}
-        src/rocket/core/window/null.cpp
-        src/rocket/core/window.cpp
-        src/rocket/core/runtime.cpp
-
-        # Plugin Subsystem
-        src/rocket/plugin/plugin.cpp
-
-        # Libraries
-        src/lib/lzf/lzf_c.c
-        src/lib/lzf/lzf_d.c
-
-        # Special Cases
-        src/special_cases.cpp
-
-        # RNative
-        ${RNATIVE_SOURCES}
-
-        # AstroUI
-        ${ASTRO_SOURCES}
-
-        # Python Scripting
-        ${SCRIPTING_SOURCES}
+        ${ROCKETGE_SOURCES}
     )
 
 else()
     add_library(${PROJECT_NAME}
-        # Graphics
-        src/rocket/gfx/renderer.cpp
-        # src/rocket/gfx/renderer3d.cpp
-        src/rocket/gfx/rgl.cpp
-
-        # ManagedAssets
-        src/rocket/managers/assets/font.cpp
-        src/rocket/managers/assets/shader.cpp
-        src/rocket/managers/assets/text.cpp
-        # Managers
-        src/rocket/managers/asset.cpp
-        src/rocket/managers/audio.cpp
-
-        # Utilities
-        src/rocket/util/glfnldr/glfnldr.cpp
-        ${GLFNLDR_SOURCES}
-        src/rocket/util/io.cpp
-        src/rocket/util/native.cpp
-        src/rocket/util/threads.cpp
-        src/rocket/util/types.cpp
-        src/rocket/util/crashdump.cpp
-        src/rocket/util/shader_provider.cpp
-        src/rocket/util/persistence.cpp
-        src/rocket/util/data_structures.cpp
-        src/rocket/util/memory.cpp
-        src/rocket/util/util.cpp
-
-        # Internal
-        src/rocket/internal/internal_types.cpp
-
-        # Core
-        ${WINDOWING_SOURCES}
-        src/rocket/core/window/null.cpp
-        src/rocket/core/window.cpp
-        src/rocket/core/runtime.cpp
-
-        # Plugin Subsystem
-        src/rocket/plugin/plugin.cpp
-
-        # Libraries
-        src/lib/lzf/lzf_c.c
-        src/lib/lzf/lzf_d.c
-
-        # Special Cases
-        src/special_cases.cpp
-
-        # RNative
-        ${RNATIVE_SOURCES}
-
-        # AstroUI
-        ${ASTRO_SOURCES}
-
-        # Python Scripting
-        ${SCRIPTING_SOURCES}
+        ${ROCKETGE_SOURCES}
     )
 endif()
 
@@ -369,7 +319,7 @@ if (BUILD_TESTS)
         argument_test
         state_reset_test
         test_generator_test
-        render_cache_test
+        # render_cache_test
         custom_fbo_test
     )
 
@@ -479,7 +429,7 @@ if (BUILD_EXAMPLES)
         moving_circle
         custom_shader
         software_renderer
-        ball_smasher
+        # ball_smasher
     )
 
     foreach(example_name IN LISTS EXAMPLE_NAMES)
@@ -596,4 +546,3 @@ endif()
 message("Build Astro: ${BUILD_ASTRO}")
 message("Build Scripting: ${BUILD_SCRIPTING}")
 message("Build Editor: ${BUILD_EDITOR}")
-

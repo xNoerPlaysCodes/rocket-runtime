@@ -19,6 +19,8 @@
 #include "constants.hpp"
 #endif
 
+#include <functional>
+
 #define ROCKETGE__MAJOR_VERSION  3
 #define ROCKETGE__MINOR_VERSION  0
 #define ROCKETGE__BUILD          "beta"

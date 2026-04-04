@@ -1,6 +1,8 @@
+#define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 #include <rocket/window.hpp>
 #include <iostream>
+#include <rocket/window_helpers.hpp>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -248,76 +250,45 @@ namespace rocket {
         return 4.6f;
     }
 
-    glfw_window_t::glfw_window_t(const rocket::vec2i_t& size,
-            const std::string& title,
-            windowflags_t flags) {
-        this->impl = new glfw_window_impl_t;
-        this->impl->obj = this;
-        this->wbi_impl = new window_backend_i_impl_t;
-        this->wbi_impl->obj = this;
+    static GLFWwindow* create_vk_glfw_window(
+        const rocket::vec2i_t &size,
+        const std::string &title,
+        GLFWmonitor *monitor,
+        GLFWwindow *share
+    ) {
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        return glfwCreateWindow(size.x, size.y, title.c_str(), monitor, share);
+    }
 
-        this->handle = new native_window_t;
-        this->handle->backend = window_backend_t::glfw;
-        native_window_t::set_instance(this->handle);
-        this->glfw_window = this->handle;
-        this->size = size;
-        auto cli_args = util::get_clistate();
-        int cli_w, cli_h;
-        bool cli_args_w_h_set = false;
-        if (cli_args.viewport_size_set) {
-            auto parts = util::split(cli_args.viewport_size, 'x');
-            cli_w = std::stoi(parts.at(0));
-            cli_h = std::stoi(parts.at(1));
-            cli_args_w_h_set = true;
+    bool glfw_window_t::create_vk_surface(void *vk_instance, const void *allocator, void *surface) const {
+        VkInstance instance = reinterpret_cast<VkInstance>(vk_instance);
+        const VkAllocationCallbacks* alloc =
+            reinterpret_cast<const VkAllocationCallbacks*>(allocator);
+        VkSurfaceKHR* out_surface =
+            reinterpret_cast<VkSurfaceKHR*>(surface);
+
+        VkResult result = glfwCreateWindowSurface(
+            instance,
+            (GLFWwindow*)this->glfw_window->w,
+            alloc,
+            out_surface
+        );
+
+        return result == VK_SUCCESS;
+    };
+
+    void create_gl_glfw_window(util::global_state_cliargs_t cliargs, rocket::windowflags_t flags) {
+        if (cliargs.glversion != GL_VERSION_UNK) {
+            int v = static_cast<int>(cliargs.glversion * 10.f);
+            flags.graphics_ctx.version = rocket::vec2i_t(v / 10, v % 10);
         }
 
-        if (cli_args_w_h_set) {
-            this->size = { cli_w, cli_h };
-        }
-        this->title = title;
-        window::glfw_cpl_init();
-        GLFWmonitor *monitor = glfwGetPrimaryMonitor();
-        if (monitor == nullptr && flags.fullscreen) {
-            rocket::log("failed to get primary monitor", "GLFW", "glfwGetPrimaryMonitor", "fatal");
-            rocket::exit(1);
-        }
-
-        // override by cli args
-        auto cliargs = util::get_clistate();
-        if (cliargs.glversion == GL_VERSION_20) {
-            flags.gl_version = rocket::vec2i_t(2, 0);
-        } else if (cliargs.glversion == GL_VERSION_21) {
-            flags.gl_version = rocket::vec2i_t(2, 1);
-        } else if (cliargs.glversion == GL_VERSION_30) {
-            flags.gl_version = rocket::vec2i_t(3, 0);
-        } else if (cliargs.glversion == GL_VERSION_31) {
-            flags.gl_version = rocket::vec2i_t(3, 1);
-        } else if (cliargs.glversion == GL_VERSION_32) {
-            flags.gl_version = rocket::vec2i_t(3, 2);
-        } else if (cliargs.glversion == GL_VERSION_33) {
-            flags.gl_version = rocket::vec2i_t(3, 3);
-        } else if (cliargs.glversion == GL_VERSION_40) {
-            flags.gl_version = rocket::vec2i_t(4, 0);
-        } else if (cliargs.glversion == GL_VERSION_41) {
-            flags.gl_version = rocket::vec2i_t(4, 1);
-        } else if (cliargs.glversion == GL_VERSION_42) {
-            flags.gl_version = rocket::vec2i_t(4, 2);
-        } else if (cliargs.glversion == GL_VERSION_43) {
-            flags.gl_version = rocket::vec2i_t(4, 3);
-        } else if (cliargs.glversion == GL_VERSION_44) {
-            flags.gl_version = rocket::vec2i_t(4, 4);
-        } else if (cliargs.glversion == GL_VERSION_45) {
-            flags.gl_version = rocket::vec2i_t(4, 5);
-        } else if (cliargs.glversion == GL_VERSION_46) {
-            flags.gl_version = rocket::vec2i_t(4, 6);
-        }
-
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, flags.gl_version.x);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, flags.gl_version.y);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, flags.graphics_ctx.version.x);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, flags.graphics_ctx.version.y);
         glfwWindowHint(GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_ANY_RELEASE_BEHAVIOR);
         float max_gl_ver = get_max_context_gl_version();
-        float glver = static_cast<float>(flags.gl_version.x) + static_cast<float>(0.1 * flags.gl_version.y);
-        if (flags.gl_version == rocket::vec2i_t{ 0, 0 }) {
+        float glver = static_cast<float>(flags.graphics_ctx.version.x) + static_cast<float>(0.1 * flags.graphics_ctx.version.y);
+        if (flags.graphics_ctx.version == rocket::vec2i_t{ 0, 0 }) {
             glver = max_gl_ver;
         }
 
@@ -354,7 +325,7 @@ namespace rocket {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         }
 
-        if (flags.gl_contextverifier) {
+        if (flags.graphics_ctx.debug_context) {
             if (glver >= 4.3f) {
                 glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
             } else {
@@ -365,6 +336,49 @@ namespace rocket {
         if (glver >= 3.0f) {
             glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
         }
+
+        glfwWindowHint(GLFW_SAMPLES, flags.msaa_samples);
+    }
+
+    glfw_window_t::glfw_window_t(const rocket::vec2i_t& size,
+            const std::string& title,
+            windowflags_t flags) {
+        this->impl = new glfw_window_impl_t;
+        this->impl->obj = this;
+        this->wbi_impl = new window_backend_i_impl_t;
+        this->wbi_impl->obj = this;
+
+        this->handle = new native_window_t;
+        this->handle->backend = window_backend_t::glfw;
+        native_window_t::set_instance(this->handle);
+        this->glfw_window = this->handle;
+        this->size = size;
+        auto cli_args = util::get_clistate();
+        int cli_w, cli_h;
+        bool cli_args_w_h_set = false;
+        if (cli_args.viewport_size_set) {
+            auto parts = util::split(cli_args.viewport_size, 'x');
+            cli_w = std::stoi(parts.at(0));
+            cli_h = std::stoi(parts.at(1));
+            cli_args_w_h_set = true;
+        }
+
+        if (cli_args_w_h_set) {
+            this->size = { cli_w, cli_h };
+        }
+        this->title = title;
+        window::glfw_cpl_init();
+        GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+        if (monitor == nullptr && flags.fullscreen) {
+            rocket::log("failed to get primary monitor", "GLFW", "glfwGetPrimaryMonitor", "fatal");
+            rocket::exit(1);
+        }
+
+        // override by cli args
+        auto cliargs = util::get_clistate();
+
+        create_gl_glfw_window(cliargs, this->flags);
+
         glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
@@ -420,19 +434,24 @@ namespace rocket {
         glfwWindowHint(GLFW_RESIZABLE, glfwaltGetBoolean(flags.resizable));
         // We set Swap Interval at poll_events() -> first_init
         this->flags = flags;
-        glfwWindowHint(GLFW_SAMPLES, flags.msaa_samples);
         GLFWwindow *share = nullptr;
-        this->glfw_window->w = (GLFWwindow*) glfwCreateWindow(this->size.x, this->size.y, title.c_str(), nullptr, share);
-        if (this->glfw_window == nullptr) {
-            rocket::log("failed to create window", "glfw_window_t", "constructor", "fatal");
-            platform_t platform = this->get_platform();
-            std::vector<std::string> log_messages = {
-                "Error String: " + std::string("glfwCreateWindow resulted in a nullptr")
-            };
-            rocket::exit(1);
+        if (this->flags.graphics_ctx.backend == renderer_backend_t::opengl) {
+            this->glfw_window->w = (GLFWwindow*) glfwCreateWindow(this->size.x, this->size.y, title.c_str(), nullptr, share);
+            if (this->glfw_window == nullptr) {
+                rocket::log("failed to create window", "glfw_window_t", "constructor", "fatal");
+                platform_t platform = this->get_platform();
+                std::vector<std::string> log_messages = {
+                    "Error String: " + std::string("glfwCreateWindow resulted in a nullptr")
+                };
+                rocket::exit(1);
+            }
+            glfwMakeContextCurrent((GLFWwindow*)glfw_window->w);
+        } else if (this->flags.graphics_ctx.backend == renderer_backend_t::vulkan) {
+            this->glfw_window->w = (GLFWwindow*) create_vk_glfw_window(size, title, nullptr, share);
+        } else if (this->flags.graphics_ctx.backend == renderer_backend_t::null) {
+        } else {
+            r_assert(false && "TODO IMPLEMENT CONTEXT CREATION FOR RENDERER BACKEND");
         }
-        glfwMakeContextCurrent((GLFWwindow*)glfw_window->w);
-
         monitor = glfwaltGetMonitorWithCursor();
 
         glfwSetCharModsCallback((GLFWwindow*)this->glfw_window->w, [](GLFWwindow*, unsigned int codepoint, int /* mods */) {

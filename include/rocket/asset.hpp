@@ -39,9 +39,9 @@ namespace rocket {
     public:
         /// @brief OpenGL Texture ID
         /// @modify Do not modify
-        unsigned int glid = 0;
+        api_object_t hdl = 0;
         friend class asset_manager_t;
-        friend class renderer_2d;
+        friend class renderer_2d_i;
         friend class renderer_3d;
     private:
         bool loaded = false;
@@ -110,7 +110,7 @@ namespace rocket {
     };
 
     class text_t;
-    class renderer_2d;
+    class renderer_2d_i;
 
     struct internal_cdata;
     struct asset_manager_impl_t;
@@ -118,7 +118,7 @@ namespace rocket {
     class font_t {
     private:
         /// INNER
-        unsigned int glid = 0;
+        api_object_t hdl = 0;
         rocket::vec2i_t sttex_size = { 512, 512 };
         internal_cdata *cdata;
         std::vector<uint8_t> ttf_data;
@@ -127,7 +127,9 @@ namespace rocket {
         
         bool loaded = false;
 
-        friend class renderer_2d;
+        friend class renderer_2d_i;
+        friend class opengl_renderer_2d;
+        friend class vulkan_renderer_2d;
         friend class asset_manager_t;
         friend class text_t;
     private:
@@ -160,7 +162,7 @@ namespace rocket {
 
     class text_t {
     private:
-        friend class renderer_2d;
+        friend class renderer_2d_i;
     public:
         /// @brief The font to use
         std::shared_ptr<font_t> font;

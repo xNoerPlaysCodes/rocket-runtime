@@ -6,8 +6,10 @@
 #include <glm/trigonometric.hpp>
 #include <internal_types.hpp>
 #include <iostream>
+#include <rocket/renderer_helpers.hpp>
 #include <sstream>
 #include <stack>
+#include <intl_macros.hpp>
 #ifndef ROCKETGE__Platform_Android
 #include <GLFW/glfw3.h>
 #endif
@@ -37,6 +39,10 @@ static util::membuf_t membuf;
 
 static rocket::vec2d_t last_touch_pos = {0, 0};
 static rocket::io::keystate_t last_touch_state = {false, false};
+
+namespace rocket {
+    static void draw_debug_overlay(rocket::renderer_2d_i *ren);
+}
 
 namespace util {
     bool is_glinit = false;
@@ -307,13 +313,13 @@ cleanup:
         return c;
     }
 
-    rocket::renderer_2d *global_renderer_2d = nullptr;
+    rocket::renderer_2d_i *global_renderer_2d = nullptr;
 
-    void set_global_renderer_2d(rocket::renderer_2d *renderer) {
+    void set_global_renderer_2d(rocket::renderer_2d_i *renderer) {
         global_renderer_2d = renderer;
     }
 
-    rocket::renderer_2d *get_global_renderer_2d() {
+    rocket::renderer_2d_i *get_global_renderer_2d() {
         return global_renderer_2d;
     }
 
@@ -454,5 +460,267 @@ cleanup:
         volatile uint8_t *p = (uint8_t*) 0x1212ABCD34;
         volatile uint8_t *dst = (uint8_t*) 0xDEADBEEF;
         *dst = *p;
+    }
+
+    void draw_debug_overlay(rocket::renderer_2d_i *ren) {
+        rocket::draw_debug_overlay(ren);
+    }
+
+    rocket::renderer_backend_t get_renderer_backend(rocket::renderer_2d_i *ren) {
+        if (rocket::instance_of<rocket::opengl_renderer_2d>(ren)) {
+            return rocket::renderer_backend_t::opengl;
+        } else if (rocket::instance_of<rocket::vulkan_renderer_2d>(ren)) {
+            return rocket::renderer_backend_t::vulkan;
+        } else if (rocket::instance_of<rocket::null_renderer_2d>(ren)) {
+            return rocket::renderer_backend_t::null;
+        } else {
+            return rocket::renderer_backend_t::null;
+        }
+    }
+
+    void frame_timer_wait_for(
+        double frame_duration, 
+        double frametime_limit, 
+        bool software_frame_timer, 
+        int target_fps, 
+        std::chrono::time_point<std::chrono::steady_clock> frame_start_time
+    ) {
+        if (frame_duration < frametime_limit && true /* << Continue with Frametimer */) {
+            // Dynamically wait on Unix vs Win32
+            // (Scheduler Differences)
+            // Do not modify, took a very long time to tune it
+            // and it works good enough
+            //
+            // ~60 FPS on both Win32 and Unix
+            // ~118 FPS while target is 120 FPS
+            double sleep_time = frametime_limit - frame_duration;
+#if defined(ROCKETGE__Platform_Windows) || defined(ROCKETGE__Platform_Android)
+            constexpr double spin_wait_time = 0.005;
+#else
+            constexpr double spin_wait_time = 0.002;
+#endif
+            int i = 0;
+#if defined(ROCKETGE__Platform_Windows)
+                while
+#else
+                if
+#endif
+                (sleep_time > spin_wait_time && !software_frame_timer) {
+#if defined(ROCKETGE__Platform_Windows) 
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time / 10));
+                sleep_time /= 10;
+                rocket::log("Sleep Iteration: " + std::to_string(i++ + 1), "a", "a", "info");
+#else
+                std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - spin_wait_time));
+#endif
+            }
+
+            // busy wait for the rest
+            while (std::chrono::duration<double>(std::chrono::steady_clock::now() - frame_start_time).count() < frametime_limit) {
+                rnative::intrin_cpu_minfreq();
+            }
+        }
+        
+        if (target_fps < 2147483647) {
+            double diff = frame_duration - frametime_limit;
+
+            constexpr static auto double_to_str = [](double d, int decimal_places = 6) -> std::string {
+                std::stringstream ss;
+                ss << std::fixed << std::setprecision(decimal_places) << d;
+                return ss.str();
+            };
+
+            const double threshold = 0.003;
+            if (diff > threshold) {
+                rocket::log("Frame took too long! (" + double_to_str(frame_duration * 1000., 2) + "ms)", "opengl_opengl_renderer_2d", "end_frame", "debug");
+            }
+        }
+    }
+}
+
+namespace rocket {
+    window_backend_i* __r2d_get_window(rocket::renderer_2d_i *ren) {
+        return ren->window;
+    }
+
+    static void draw_debug_overlay(renderer_2d_i *ren) {
+        const float margin = 8.f;
+        const float padding = 8.f;
+        vec2f_t position = { margin, margin };
+
+        const float zx = margin + padding;
+        const float zy = margin + padding;
+        const float text_size = 24;
+
+        auto double_to_str = [](double d, int decimal_places = 4) -> std::string {
+            std::stringstream ss;
+            ss << std::fixed << std::setprecision(decimal_places) << d;
+            return ss.str();
+        };
+        static std::shared_ptr<rocket::font_t> font = rGE__FONT_DEFAULT_MONOSPACED;
+        rgl::frame_metrics_t fmetrics = rgl::get_frame_metrics();
+        rocket::text_t fps_avg_text = { "FPS: " + std::to_string(ren->get_current_fps()), text_size, rgb_color::white(), font };
+        rocket::text_t frametime_text = { "FrameTime: " + double_to_str(ren->get_draw_metrics().avg_frametime * 1000) + "ms", text_size, rgb_color::white(), font };
+        rocket::text_t deltatime_text = { "DeltaTime: " + std::to_string(ren->get_delta_time()), text_size, rgb_color::white(), font };
+        rocket::text_t drawcalls_text = { "Drawcalls: " + std::to_string(fmetrics.drawcalls) + " (" + std::to_string(fmetrics.skipped_drawcalls) + " skipped)", text_size, rgb_color::white(), font };
+
+        rocket::text_t tricount_text = { "TriCount: " + std::to_string(fmetrics.tricount), text_size, rgb_color::white(), font };
+
+        if (fmetrics.drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
+            drawcalls_text.text += " (danger)";
+        }
+
+        if (fmetrics.drawcalls > rGL_MAX_RECOMMENDED_TRICOUNT) {
+            tricount_text.text += " (danger)";
+        }
+
+        std::string fbo_active = rgl::is_active_any_fbo() ? "Yes" : "No";
+        rocket::text_t framebuffer_active_text = { "FBO Active: " + fbo_active, text_size, rgb_color::white(), font };
+        vec2d_t dmpos = io::mouse_pos();
+        vec2i_t mpos = {
+            static_cast<int>(dmpos.x),
+            static_cast<int>(dmpos.y)
+        };
+        rocket::text_t mouse_pos_text = { "Cursor Pos: " + std::to_string(mpos.x) + ", " + std::to_string(mpos.y), text_size, rgb_color::white(), font };
+        rocket::text_t keyboard_keys_text = { "Keys: ", text_size, rgb_color::white(), font };
+        rocket::text_t mouse_buttons_text = { "Mouse: ", text_size, rgb_color::white(), font };
+
+#ifdef ROCKETGE__Platform_Desktop
+        if (io::key_down(io::keyboard_key::left_control) || io::key_down(io::keyboard_key::right_control)) {
+            keyboard_keys_text.text += "(CTRL) ";
+        }
+
+        if (io::key_down(io::keyboard_key::left_alt) || io::key_down(io::keyboard_key::right_alt)) {
+            keyboard_keys_text.text += "(ALT) ";
+        }
+
+        if (io::key_down(io::keyboard_key::left_shift) || io::key_down(io::keyboard_key::right_shift)) {
+            keyboard_keys_text.text += "(SHIFT) ";
+        }
+
+        if (io::key_down(io::keyboard_key::left_super) || io::key_down(io::keyboard_key::right_super)) {
+#ifdef ROCKETGE__Platform_Windows
+            keyboard_keys_text.text += "(WIN) ";
+#else
+            keyboard_keys_text.text += "(SUPER) ";
+#endif
+        }
+
+        for (int i = 65; i <= 90; ++i) {
+            if (io::key_down(io::keyboard_key(i))) {
+                char key = static_cast<char>(i);
+                keyboard_keys_text.text += std::string(1, key);
+            }
+        }
+#endif
+
+        if (rocket::io::mouse_down(rocket::io::mouse_button::left)) {
+#ifdef ROCKETGE__Platform_Android
+            mouse_buttons_text.text += ("Finger ");
+#else
+            mouse_buttons_text.text += ("LMB ");
+#endif
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::right)) {
+            mouse_buttons_text.text += ("RMB ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::middle)) {
+            mouse_buttons_text.text += ("MMB ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_4)) {
+            mouse_buttons_text.text += ("B4 ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_5)) {
+            mouse_buttons_text.text += ("B5 ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_6)) {
+            mouse_buttons_text.text += ("B6 ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_7)) {
+            mouse_buttons_text.text += ("B7 ");
+        } if (rocket::io::mouse_down(rocket::io::mouse_button::button_8)) {
+            mouse_buttons_text.text += ("B8 ");
+        }
+
+        rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
+
+        std::string api_str;
+        renderer_backend_t backend = __r2d_get_window(ren)->flags.graphics_ctx.backend;
+        if (backend == renderer_backend_t::opengl) {
+            static std::string glmajor, glminor;
+            static int mj = -1, mn = -1;
+            if (mj == -1 || mn == -1) {
+                glGetIntegerv(GL_MAJOR_VERSION, &mj);
+                glGetIntegerv(GL_MINOR_VERSION, &mn);
+
+                glmajor = std::to_string(mj);
+                glminor = std::to_string(mn);
+            }
+
+            static auto cli_args = util::get_clistate();
+
+            static bool gl_version_set = false;
+            static std::string gl_version;
+            if (!gl_version_set) {
+                gl_version_set = true;
+                gl_version = glmajor + "." + glminor + 
+#ifdef ROCKETGE__Platform_Android
+                    " (ES)";
+#else
+                    " (core)";
+#endif
+
+                if (cli_args.glversion != GL_VERSION_UNK) {
+                    gl_version = double_to_str(cli_args.glversion, 1);
+#ifdef ROCKETGE__Platform_Android
+                    gl_version += " (ES)";
+#else
+                    gl_version += " (core)";
+#endif
+                }
+            }
+
+            api_str = "OpenGL " + gl_version;
+        } else if (backend == renderer_backend_t::vulkan) {
+            api_str = "Vulkan " "6.7"; // TODO Implement Vk version checking
+        } else {
+            r_assert(false && "TODO IMPL OTHER API??");
+        }
+
+        rocket::text_t api_version_text = { "API: " + api_str, text_size, rgb_color::white(), font };
+
+        vec2f_t size = { 384, 262 };
+
+        rocket::text_t texts[] = {
+            fps_avg_text,
+            frametime_text,
+            deltatime_text,
+            drawcalls_text,
+            tricount_text,
+            framebuffer_active_text,
+            mouse_pos_text,
+            keyboard_keys_text,
+            mouse_buttons_text
+        };
+
+        int len = sizeof(texts) / sizeof(rocket::text_t);
+        auto last_text_position = zy + (len * text_size) + text_size + padding + margin;
+
+        float max_width = 0;
+        if (max_width == 0) {
+            for (auto &txt : texts) {
+                auto sz = txt.measure();
+                max_width = std::max(max_width, sz.x);
+            }
+        }
+
+        size.x = max_width + 32.f;
+        size.y = (len + 3) * (text_size) + padding;
+        ren->draw_rectangle(position, size, rgba_color::black(), 0., 0.);
+        ren->draw_rectangle(position, size, rgba_color::white(), 0., 0., true);
+        ren->begin_scissor_mode(position, size);
+
+        for (int i = 0; i < len; ++i) {
+            ren->draw_text(texts[i], { zx, zy + (i * text_size) });
+        }
+
+        ren->draw_text(rocket_version_text, { zx, last_text_position });
+        ren->draw_text(api_version_text, { zx, last_text_position - text_size });
+
+        ren->end_scissor_mode();
     }
 }
