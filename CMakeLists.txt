@@ -33,7 +33,9 @@ endif()
 
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 option(BUILD_SCRIPTING "Build Scripting [py]" ON)
-option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
+set(BUILD_SCRIPTING OFF)
+# option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
+set(GLFNLDR_BACKEND "GLEW")
 
 if (BUILD_ASTRO)
     set(ASTRO_SOURCES
@@ -223,11 +225,18 @@ if (__rge_WINDOWS__)
     find_package(glfw3 CONFIG REQUIRED)
     find_package(SDL2 CONFIG REQUIRED)
     find_package(OpenAL CONFIG REQUIRED)
-    find_package(Python3 COMPONENTS Development REQUIRED)
-    find_package(pybind11 CONFIG REQUIRED)
+    if (BUILD_SCRIPTING)
+        find_package(Python3 COMPONENTS Development REQUIRED)
+        find_package(pybind11 CONFIG REQUIRED)
+    endif()
     find_package(glm CONFIG REQUIRED)
     find_package(nlohmann_json CONFIG REQUIRED)
     find_package(miniz CONFIG REQUIRED)
+
+    if (BUILD_SCRIPTING)
+        set(PYTHON_LIB Python3::Python)
+        set(PYBIND11_LIB pybind11::pybind11)
+    endif()
 
     target_link_libraries(${PROJECT_NAME} PRIVATE
         OpenGL::GL
@@ -235,15 +244,14 @@ if (__rge_WINDOWS__)
         glfw
         SDL2::SDL2
         OpenAL::OpenAL
-        Python3::Python
-        glm::glm
+        ${PYTHON_LIB}
         nlohmann_json::nlohmann_json
         miniz::miniz
         winmm
     )
     target_link_libraries(${PROJECT_NAME}
         PUBLIC
-        pybind11::pybind11
+        ${PYBIND11_LIB}
     )
 elseif (__rge_ANDROID__)
     target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -276,10 +284,12 @@ else()
     find_package(miniz REQUIRED) # miniz may not be installed
     find_package(SDL2 REQUIRED)
     find_package(pybind11 REQUIRED)
-    find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+    if (BUILD_SCRIPTING)
+        find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+    endif()
     pkg_check_modules(WAYLAND REQUIRED wayland-client)
 
-    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 Python3::Python stdc++exp ${WAYLAND_LIBRARIES})
+    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 ${PYTHON_LIB} stdc++exp ${WAYLAND_LIBRARIES})
 endif()
 
 if (MSVC)
@@ -370,7 +380,9 @@ if (BUILD_TESTS)
             target_link_libraries(${test_name} PRIVATE RocketRuntime)
 
             if (__rge_WINDOWS__)
-                target_link_libraries(${test_name} PRIVATE Python3::Python)
+                if (BUILD_SCRIPTING)
+                    target_link_libraries(${test_name} PRIVATE Python3::Python)
+                endif()
                 target_link_directories(${test_name} PRIVATE
                     ${CMAKE_SOURCE_DIR}/windeps/glew-2.3.1/lib/Release/x64
                     ${CMAKE_SOURCE_DIR}/windeps/glfw/src
