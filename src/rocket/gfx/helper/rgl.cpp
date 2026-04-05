@@ -121,10 +121,10 @@ namespace callback {
         std::vector<std::string> log_messages2 = rgl::dump_gl_state();
 
         rocket::get_opengl_error_callback()(typeStr, sevStr, id, message, srcStr);
-        for (auto &l : log_messages) {
+        for (const auto &l : log_messages) {
             rocket::log(l, "OpenGL", "ContextVerifier", "error");
         }
-        for (auto &l : log_messages2) {
+        for (const auto &l : log_messages2) {
             rocket::log(l, "OpenGL", "ContextVerifier", "error");
         }
     }
