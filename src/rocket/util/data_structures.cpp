@@ -21,14 +21,7 @@ namespace rocket {
 
     bool compressed_data_t::set(const std::vector<uint8_t> &set_data) {
         original_size = set_data.size();
-        // we have to do this because:
-        // long win32 x86_64: 32 bit
-        // long unix  x86_64: 64 bit
-#ifdef ROCKETGE__Platform_Windows
-        this->data.resize(std::max(original_size * 2, 32ULL)); // extra space
-#else
-        this->data.resize(std::max(original_size * 2, 32UL)); // extra space
-#endif
+        this->data.resize(std::max(original_size * 2, (size_t)32)); // extra space
         size_t written = ::lzf_compress(set_data.data(), set_data.size(), this->data.data(), this->data.size());
 
         if (written == 0) {
@@ -46,11 +39,7 @@ namespace rocket {
         // we have to do this because:
         // long win32 x86_64: 32 bit
         // long unix  x86_64: 64 bit
-#ifdef ROCKETGE__Platform_Windows
-        this->data.resize(std::max(original_size * 2, 32ULL)); // extra space
-#else
-        this->data.resize(std::max(original_size * 2, 32UL)); // extra space
-#endif
+        this->data.resize(std::max(original_size * 2, (size_t)32)); // extra space
         size_t written = ::lzf_compress(buffer, sz, this->data.data(), this->data.size());
 
         if (written == 0) {
