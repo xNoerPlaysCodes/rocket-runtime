@@ -21,7 +21,7 @@ namespace rocket {
 
     bool compressed_data_t::set(const std::vector<uint8_t> &set_data) {
         original_size = set_data.size();
-        this->data.resize(std::max(original_size * 2, 32ULL)); // extra space
+        this->data.resize(std::max(original_size * 2, (size_t)32)); // extra space
         size_t written = ::lzf_compress(set_data.data(), set_data.size(), this->data.data(), this->data.size());
 
         if (written == 0) {
