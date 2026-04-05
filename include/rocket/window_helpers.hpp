@@ -1,6 +1,7 @@
 #ifndef ROCKETGE__WINDOW_HELPERS_HPP
 #define ROCKETGE__WINDOW_HELPERS_HPP
 
+#include <rocket/renderer_helpers.hpp>
 #include <rocket/types.hpp>
 #include <rocket/macros.hpp>
 #include <string>
@@ -28,6 +29,12 @@ namespace rocket {
         static int get_count();
     };
 
+    struct graphics_api_context_t {
+        rocket::vec2i_t version = {};
+        bool debug_context = false;
+        renderer_backend_t backend = renderer_backend_t::opengl;
+    };
+
     struct windowflags_t {
         bool fullscreen = false;
         bool vsync = false;
@@ -48,9 +55,8 @@ namespace rocket {
         bool hidpi = false;
         bool interlacing = false;
 
-        /// --- OpenGL Context ---
-        rocket::vec2i_t gl_version = {};
-        bool gl_contextverifier = true;
+        /// --- Graphics Context ---
+        graphics_api_context_t graphics_ctx;
 
         /// --- Advanced ---
         std::string window_class_name = ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID;

@@ -61,7 +61,7 @@ using namespace std::chrono_literals;
 
 namespace rocket {
     bool texture_t::is_ready() {
-        return this->glid != 0;
+        return this->hdl != 0;
     }
     texture_t::texture_t() {}
     void texture_t::set_unloaded() {
@@ -541,18 +541,18 @@ namespace rocket {
             float scale = stbtt_ScaleForPixelHeight(&info, fsize);
             float line_height = (ascent - descent + line_gap) * scale;
 
-            // Generate OpenGL texture
-            glGenTextures(1, &font->glid);
-            glBindTexture(GL_TEXTURE_2D, font->glid);
-#ifdef ROCKETGE__Platform_Android
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, font->sttex_size.x, font->sttex_size.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
-#else
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, font->sttex_size.x, font->sttex_size.y, 0, GL_RED, GL_UNSIGNED_BYTE, bitmap.data());
-#endif
+            rocket::renderer_2d_i *ren = util::get_global_renderer_2d();
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            api_object_t handle = ren->upload_font_texture_to_gpu(font->sttex_size, bitmap);
 
+            // Handle that on the renderer side
+// #ifdef ROCKETGE__Platform_Android
+//             glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, font->sttex_size.x, font->sttex_size.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
+// #else
+//             glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, font->sttex_size.x, font->sttex_size.y, 0, GL_RED, GL_UNSIGNED_BYTE, bitmap.data());
+// #endif
+
+            font->hdl = handle;
             font->line_height = line_height;
             fonts_default[fsize] = font;
         }
@@ -581,18 +581,10 @@ namespace rocket {
             float scale = stbtt_ScaleForPixelHeight(&info, fsize);
             float line_height = (ascent - descent + line_gap) * scale;
 
-            // Generate OpenGL texture
-            glGenTextures(1, &font->glid);
-            glBindTexture(GL_TEXTURE_2D, font->glid);
-#ifdef ROCKETGE__Platform_Android
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, font->sttex_size.x, font->sttex_size.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
-#else
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, font->sttex_size.x, font->sttex_size.y, 0, GL_RED, GL_UNSIGNED_BYTE, bitmap.data());
-#endif
+            rocket::renderer_2d_i *ren = util::get_global_renderer_2d();
+            api_object_t handle = ren->upload_font_texture_to_gpu(font->sttex_size, bitmap);
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+            font->hdl = handle;
             font->line_height = line_height;
             fonts_monospaced[fsize] = font;
         }
@@ -621,13 +613,10 @@ namespace rocket {
         float scale = stbtt_ScaleForPixelHeight(&info, fsize);
         float line_height = (ascent - descent + line_gap) * scale;
 
-        // Generate OpenGL texture
-        glGenTextures(1, &font->glid);
-        glBindTexture(GL_TEXTURE_2D, font->glid);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, font->sttex_size.x, font->sttex_size.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
+        rocket::renderer_2d_i *ren = util::get_global_renderer_2d();
+        api_object_t handle = ren->upload_font_texture_to_gpu(font->sttex_size, bitmap);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        font->hdl = handle;
 
         font->line_height = line_height;
 
@@ -668,13 +657,10 @@ namespace rocket {
         float scale = stbtt_ScaleForPixelHeight(&info, fsize);
         float line_height = (ascent - descent + line_gap) * scale;
 
-        // Generate OpenGL texture
-        glGenTextures(1, &font->glid);
-        glBindTexture(GL_TEXTURE_2D, font->glid);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, font->sttex_size.x, font->sttex_size.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
+        rocket::renderer_2d_i *ren = util::get_global_renderer_2d();
+        api_object_t handle = ren->upload_font_texture_to_gpu(font->sttex_size, bitmap);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        font->hdl = handle;
 
         font->line_height = line_height;
         fonts.insert({font, std::chrono::high_resolution_clock::now()});
@@ -713,8 +699,9 @@ namespace rocket {
 
             for (auto &tx : texture_removes) {
                 thread_t::schedule([tx]() {
-                    glDeleteTextures(1, &tx->glid);
-                    tx->glid = 0;
+                    auto *ren = util::get_global_renderer_2d();
+                    ren->clean_gpu_resource(tx->hdl);
+                    tx->hdl = 0;
                     tx->data.clear();
                     tx->set_unloaded();
                 });
@@ -734,7 +721,8 @@ namespace rocket {
 
             for (auto &fnt : font_removes) {
                 thread_t::schedule([fnt] () {
-                    glDeleteTextures(1, &fnt->glid);
+                    auto *ren = util::get_global_renderer_2d();
+                    ren->clean_gpu_resource(fnt->hdl);
                     fnt->set_unloaded();
                 });
             }

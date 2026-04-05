@@ -3,6 +3,8 @@ namespace rocket_resource {
 Version: 1.3
 GL_MinimumVersion: 3.3
 GLES_MinimumVersion: 3.0
+VK_MinimumVersion: 1.1
+VK_RequiredExtension: [Core], [Debug]
 Name: Texture Atlas
 
 VertexStart

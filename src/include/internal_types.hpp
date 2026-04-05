@@ -43,15 +43,60 @@ namespace rocket {
         io::keystate_t  get_btn_state(native_window_t *win, io::mouse_button b);
     }
 
-    class renderer_2d;
+    class renderer_2d_i;
     class glfw_window_t;
     class asset_manager_t;
 
     struct renderer_2d_impl_t {
-        renderer_2d *obj;
+        renderer_2d_i *obj;
         std::vector<std::unique_ptr<render_cache_t>> render_caches;
         std::stack<render_cache_t*> render_cache_use_stack;
         glm::mat4 camera_transform = glm::mat4(1.0f);
+        std::atomic<api_object_t> current_object_handle = 0;
+    };
+
+    using _GLuint = uint32_t;
+    using _GLint = int32_t;
+
+    enum class gl_object_type_t {
+        texture,
+    };
+
+    struct gl_object_t { // 8 bytes
+        gl_object_type_t type;
+        _GLuint value;
+    };
+
+    struct opengl_renderer_2d_impl_t {
+        std::unordered_map<api_object_t, gl_object_t> objects;
+    };
+
+    enum class vk_object_type_t {
+        texture,
+        shader,
+        // anything here
+    };
+
+#define subclass(x)
+
+    struct vk_texture_t subclass(vk_object_t) {
+        // dah tah
+    };
+
+    struct vk_shader_t subclass(vk_object_t) {
+        // dah tah
+    };
+
+    struct vk_object_t {
+        vk_object_type_t type;
+        std::variant<
+            vk_texture_t, vk_shader_t
+        > value;
+        void *additional = nullptr;
+    };
+
+    struct vulkan_renderer_2d_impl_t {
+        std::unordered_map<api_object_t, vk_object_t> objects;
     };
 
     struct glfw_window_impl_t {
@@ -60,7 +105,7 @@ namespace rocket {
 
     struct window_backend_i_impl_t {
         window_backend_i *obj;
-        renderer_2d *bound_renderer2d = nullptr;
+        renderer_2d_i *bound_renderer2d = nullptr;
         util::timer_t init_timer;
     };
 

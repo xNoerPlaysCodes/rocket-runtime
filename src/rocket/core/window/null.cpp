@@ -19,6 +19,10 @@ namespace rocket {
     void null_window_t::set_vsync(bool) {
     }
 
+    bool null_window_t::create_vk_surface(void*, const void*, void*) const {
+        return false;
+    }
+
     null_window_t::null_window_t(const rocket::vec2i_t& size,
             const std::string& title,
             windowflags_t flags) {

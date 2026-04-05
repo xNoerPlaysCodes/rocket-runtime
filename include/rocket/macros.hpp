@@ -65,4 +65,6 @@
 #define ROCKETGE__Platform_Mobile
 #endif
 
+#define ROCKETGE__InvalidNumber (0xDEADBEEFU)
+
 #endif // ROCKETGE__MACROS_HPP

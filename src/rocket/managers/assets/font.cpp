@@ -24,8 +24,7 @@ namespace rocket {
     // font_default_monospaced() impl in asset.cpp
 
     void font_t::unload() {
-        glDeleteTextures(1, &this->glid);
-        this->glid = 0;
+        this->hdl = 0;
     }
 
     void font_t::set_unloaded() {

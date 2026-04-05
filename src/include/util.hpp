@@ -10,6 +10,8 @@
 #include "../../include/rocket/runtime.hpp"
 #include "rocket/renderer.hpp"
 #include <functional>
+#include <rocket/modularity/renderer_backend.hpp>
+#include <rocket/renderer_helpers.hpp>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -105,8 +107,8 @@ namespace util {
     char get_formatted_char_typed();
     void push_formatted_char_typed(char c);
 
-    void set_global_renderer_2d(rocket::renderer_2d *renderer);
-    rocket::renderer_2d *get_global_renderer_2d();
+    void set_global_renderer_2d(rocket::renderer_2d_i *renderer);
+    rocket::renderer_2d_i *get_global_renderer_2d();
 
     void init_clistate(global_state_cliargs_t);
     global_state_cliargs_t get_clistate();
@@ -156,6 +158,18 @@ namespace util {
         };
         std::string to_str(unit_flag_t flags = unit_flag_t::all);
     };
+
+    void draw_debug_overlay(rocket::renderer_2d_i *ren);
+
+    void frame_timer_wait_for(
+        double frame_duration, 
+        double frametime_limit, 
+        bool software_frame_timer, 
+        int target_fps, 
+        std::chrono::time_point<std::chrono::steady_clock> frame_start_time
+    );
+
+    rocket::renderer_backend_t get_renderer_backend(rocket::renderer_2d_i *ren);
 
     void segfault();
 }

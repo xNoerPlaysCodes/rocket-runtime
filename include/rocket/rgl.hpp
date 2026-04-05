@@ -10,12 +10,13 @@
 #include <utility>
 #include <string>
 #include <vector>
-#define rGL_TXID_INVALID (0xDEADBEEFU)
+#include <rocket/macros.hpp>
+#define rGL_TXID_INVALID ROCKETGE__InvalidNumber
 #define rGL_SHADERLOC_INVALID -1 // OpenGL Specified do not change
-#define rGL_SHADER_INVALID (0xDEADBEEFU)
-#define rGL_VAO_INVALID (0xDEADBEEFU)
-#define rGL_VBO_INVALID (0xDEADBEEFU)
-#define rGL_FBO_INVALID rgl::fbo_t{ (0xDEADBEEFU), (0xDEADBEEFU) }
+#define rGL_SHADER_INVALID ROCKETGE__InvalidNumber
+#define rGL_VAO_INVALID ROCKETGE__InvalidNumber
+#define rGL_VBO_INVALID ROCKETGE__InvalidNumber
+#define rGL_FBO_INVALID rgl::fbo_t{ ROCKETGE__InvalidNumber, ROCKETGE__InvalidNumber }
 
 #define rGL_MAX_RECOMMENDED_DRAWCALLS 5000
 #define rGL_MAX_RECOMMENDED_TRICOUNT 5000

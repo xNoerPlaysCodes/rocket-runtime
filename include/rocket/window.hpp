@@ -54,6 +54,8 @@ namespace rocket {
         glfw_window_impl_t *impl = nullptr;
     protected:
         void swap_buffers() const override;
+    private:
+        bool create_vk_surface(void *vk_instance, const void *allocator, void *surface) const override;
     public:
         /// @brief Sets the size of the window
         void set_size(const rocket::vec2i_t& size) override;
@@ -135,6 +137,8 @@ namespace rocket {
         void set_cursor_position(const rocket::vec2d_t& pos) const override;
 
         void poll_events() override;
+    private:
+        bool create_vk_surface(void *vk_instance, const void *allocator, void *surface) const override;
     public:
         std::string get_title() const override;
         rocket::vec2i_t get_size() const override;
@@ -182,6 +186,8 @@ namespace rocket {
         android_app_impl_t *impl = nullptr;
     protected:
         void swap_buffers() const override;
+    private:
+        bool create_vk_surface(void *vk_instance, const void *allocator, void *surface) const override;
     private:
         void create_surface();
         void destroy_surface();
