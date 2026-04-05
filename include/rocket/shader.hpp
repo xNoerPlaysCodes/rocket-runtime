@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <string>
 #include <vector>
+#include <rocket/macros.hpp>
 
 namespace rocket {
     enum class shader_id_t;
@@ -56,12 +57,12 @@ namespace rocket {
 
     class opengl_shader_t : public shader_i {
     private:
-        uint32_t glshaderv = 0xDEADBEEFU;
-        uint32_t glshaderf = 0xDEADBEEFU;
-        uint32_t glprogram = 0xDEADBEEFU;
+        uint32_t glshaderv = ROCKETGE__InvalidNumber;
+        uint32_t glshaderf = ROCKETGE__InvalidNumber;
+        uint32_t glprogram = ROCKETGE__InvalidNumber;
 
-        uint32_t vao = 0xDEADBEEFU;
-        uint32_t vbo = 0xDEADBEEFU;
+        uint32_t vao = ROCKETGE__InvalidNumber;
+        uint32_t vbo = ROCKETGE__InvalidNumber;
 
         friend rgl::shader_program_t get_shader(shader_id_t shid);
         friend uint32_t rocket::gl_get_shader(shader_id_t shid);

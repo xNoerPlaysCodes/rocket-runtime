@@ -12,7 +12,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
 
     rocket::opengl_shader_t shader(
         rocket::shader_type::vert_frag,
-        args.working_dir + "resources/custom_shader.rlsl"
+        std::filesystem::path(args.working_dir + "resources/custom_shader.rlsl")
     );
 
     while (window.is_running()) {
