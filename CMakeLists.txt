@@ -33,7 +33,6 @@ endif()
 
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 option(BUILD_SCRIPTING "Build Scripting [py]" ON)
-set(BUILD_SCRIPTING OFF)
 # option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
 set(GLFNLDR_BACKEND "GLEW")
 
@@ -215,6 +214,12 @@ file(GENERATE
     OUTPUT "${CMAKE_SOURCE_DIR}/src/include/resources/autogen_shader_dispatch.h"
     CONTENT "${SHADER_DISPATCH_ENTRIES}"
 )
+
+if (BUILD_SCRIPTING)
+    set(PYTHON_LIB Python3::Python)
+    set(PYBIND11_LIB pybind11::pybind11)
+endif()
+
 # Fetch Dependencies
 if (__rge_WINDOWS__)
     message("Building for Win32")
@@ -232,11 +237,6 @@ if (__rge_WINDOWS__)
     find_package(glm CONFIG REQUIRED)
     find_package(nlohmann_json CONFIG REQUIRED)
     find_package(miniz CONFIG REQUIRED)
-
-    if (BUILD_SCRIPTING)
-        set(PYTHON_LIB Python3::Python)
-        set(PYBIND11_LIB pybind11::pybind11)
-    endif()
 
     target_link_libraries(${PROJECT_NAME} PRIVATE
         OpenGL::GL

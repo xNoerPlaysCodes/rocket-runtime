@@ -532,7 +532,7 @@ cleanup:
 
             const double threshold = 0.003;
             if (diff > threshold) {
-                rocket::log("Frame took too long! (" + double_to_str(frame_duration * 1000., 2) + "ms)", "opengl_opengl_renderer_2d", "end_frame", "debug");
+                rocket::log("Frame took too long! (" + double_to_str(frame_duration * 1000., 2) + "ms)", "util", "frame_timer", "debug");
             }
         }
     }
