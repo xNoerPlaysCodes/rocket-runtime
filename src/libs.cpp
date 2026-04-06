@@ -31,3 +31,9 @@
 // Author: mobius3
 // License: MIT
 // -- Already included in renderer.cpp --
+
+// [External Library]
+// Name: Base64
+// Author: Thomas Cumming
+// License: MIT
+#include "./lib/base64/base64.c"

@@ -1,6 +1,6 @@
 #include "lib/base64/base64.h"
 
-uint8_t char_table[64] =
+uint8_t char_table[] =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 size_t b64_encodedLength(size_t length) { return (length + 2) / 3 * 4; }

@@ -10,6 +10,7 @@
 #include <rocket/window.hpp>
 #include <stack>
 #include <util.hpp>
+#include <variant>
 
 #define MkFuncPtr0(ret_type, name) ret_type (*name)()
 #define MkFuncPtr(ret_type, name, ...) ret_type (*name)(__VA_ARGS__)

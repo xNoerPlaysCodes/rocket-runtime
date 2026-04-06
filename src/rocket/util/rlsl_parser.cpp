@@ -1,5 +1,4 @@
 #include "rocket/macros.hpp"
-#include "lib/base64/base64.h"
 #include <rocket/renderer_helpers.hpp>
 #if defined(ROCKETGE__Platform_Android)
     #include <GLES3/gl32.h>
@@ -15,6 +14,7 @@
 #include <fstream>
 #include <shader.hpp>
 #include <util.hpp>
+#include "lib/base64/base64.h"
 
 namespace rocket {
     namespace {
@@ -394,8 +394,14 @@ FragmentEnd
         int major{}, minor{};
         float glver{};
         if (backend == renderer_backend_t::opengl) {
+#if defined(__ANDROID__)
+            const char* ver = (const char*)glGetString(GL_VERSION);
+            if (ver)
+                sscanf(ver, "OpenGL ES %d.%d", &major, &minor);
+#else
             glGetIntegerv(GL_MAJOR_VERSION, &major);
             glGetIntegerv(GL_MINOR_VERSION, &minor);
+#endif
         }
         glver = major + minor / 10.f;
         int rlmajor = rlsl_shader.gl_minimumversion;

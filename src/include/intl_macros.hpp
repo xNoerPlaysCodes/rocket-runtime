@@ -44,14 +44,14 @@ namespace r {
 #define LOGI(...) (void)0
 #define LOGE(...) (void)0
 #define LOGD(...) (void)0
-#define r_LOG(X) rocket::log(X, std::string(r::class_or_file(fn, __FILE__)), __func__, "fatal")
+#define r_LOG(X) rocket::log(X, std::string(r::class_or_file(_, __FILE__)), __func__, "fatal")
 #endif
 
 #ifdef ROCKETGE__DEBUG_BUILD
 #define r_assert(x) \
     do { \
         if (!(x)) { \
-            constexpr std::string_view fn = r_FuncSig; \
+            constexpr std::string_view _ = r_FuncSig; \
             r_LOG("Assertion Failed: " r_Stringify(x)); \
             rnative::exit_now(1); \
         } \

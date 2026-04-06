@@ -128,9 +128,9 @@ namespace rocket {
     void logger_pop(logger_state_t state);
 
     /// @brief Exit using RocketExit or callback
-    /// @note Treat as if it does NOT exit
+    /// @note Always exits regardless
     /// @note Overridable
-    void exit(int status_code = 1);
+    [[noreturn]] void exit(int status_code = 1);
 
     /// @brief Set OpenGL Error callback
     void set_opengl_error_callback(gl_error_callback_t);

@@ -290,9 +290,9 @@ namespace rocket {
     void exit(int status_code) {
         if (exitcb != nullptr) {
             exitcb(status_code);
-        } else {
-            std::exit(status_code);
         }
+
+        rnative::exit_now(status_code);
     }
 
     gl_error_callback_t get_opengl_error_callback() {

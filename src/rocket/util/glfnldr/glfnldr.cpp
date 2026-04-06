@@ -1,5 +1,7 @@
 #include "glfnldr.hpp"
 #include "rocket/macros.hpp"
+#include <iostream>
+#include <rocket/runtime.hpp>
 
 namespace glfnldr {
     namespace android { bool init(); }

@@ -34,7 +34,6 @@ endif()
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 option(BUILD_SCRIPTING "Build Scripting [py]" ON)
 # option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
-set(GLFNLDR_BACKEND "GLEW")
 
 if (BUILD_ASTRO)
     set(ASTRO_SOURCES
@@ -60,7 +59,9 @@ elseif(GLFNLDR_BACKEND STREQUAL "ANDROID")
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ANDROID)
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::android)
 else()
-    message(FATAL_ERROR "Unknown GLfnldr backend: ${GLFNLDR_BACKEND}, you must compile with 1 valid backend")
+    message(WARNING "Unknown GLfnldr backend: ${GLFNLDR_BACKEND}, compiling with GLEW")
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_GLEW)
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew)
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
@@ -102,6 +103,7 @@ set(ROCKETGE_SOURCES
     # ManagedAssets
     src/rocket/managers/assets/font.cpp
     src/rocket/managers/assets/shader/opengl_shader.cpp
+    src/rocket/managers/assets/shader/vulkan_shader.cpp
     src/rocket/managers/assets/text.cpp
     # Managers
     src/rocket/managers/asset.cpp
@@ -135,7 +137,7 @@ set(ROCKETGE_SOURCES
     src/rocket/plugin/plugin.cpp
 
     # Special Cases
-    src/special_cases.cpp
+    src/libs.cpp
 
     # RNative
     ${RNATIVE_SOURCES}
@@ -237,6 +239,7 @@ if (__rge_WINDOWS__)
     find_package(glm CONFIG REQUIRED)
     find_package(nlohmann_json CONFIG REQUIRED)
     find_package(miniz CONFIG REQUIRED)
+    find_package(Vulkan REQUIRED)
 
     target_link_libraries(${PROJECT_NAME} PRIVATE
         OpenGL::GL
@@ -247,6 +250,7 @@ if (__rge_WINDOWS__)
         ${PYTHON_LIB}
         nlohmann_json::nlohmann_json
         miniz::miniz
+        Vulkan::Vulkan
         winmm
     )
     target_link_libraries(${PROJECT_NAME}
@@ -263,12 +267,13 @@ elseif (__rge_ANDROID__)
         EGL
         GLESv3
         OpenSLES
+        vulkan
     )
     target_include_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/androiddeps/include
         ${ANDROID_NDK}/sources/android/native_app_glue
     )
-    message("RocketGE Platform: Desktop-Embedded-Android")
+    message("RocketGE Platform: Mobile-Embedded-Android")
 else()
     message("Building for Other")
 
@@ -284,19 +289,29 @@ else()
     find_package(miniz REQUIRED) # miniz may not be installed
     find_package(SDL2 REQUIRED)
     find_package(pybind11 REQUIRED)
+    find_package(Vulkan REQUIRED)
     if (BUILD_SCRIPTING)
         find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
     endif()
     pkg_check_modules(WAYLAND REQUIRED wayland-client)
 
-    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL ${EPOXY_LIBRARIES} GLEW::GLEW glfw OpenAL::OpenAL miniz SDL2::SDL2 ${PYTHON_LIB} stdc++exp ${WAYLAND_LIBRARIES})
+    target_link_libraries(${PROJECT_NAME} PRIVATE 
+        OpenGL::GL 
+        ${EPOXY_LIBRARIES} 
+        GLEW::GLEW 
+        glfw 
+        OpenAL::OpenAL 
+        miniz 
+        SDL2::SDL2 
+        ${PYTHON_LIB} 
+        stdc++exp 
+        ${WAYLAND_LIBRARIES} 
+        Vulkan::Vulkan
+    )
 endif()
 
 if (MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE
-        /W4
-        /permissive-
-    )
+    set(RGE_COMPILER_FLAGS /W4 /permissive-)
 else()
     set(RGE_COMPILER_FLAGS -Wall -Wextra -Wpedantic -Werror=return-type -Werror=uninitialized -Werror=nonnull -Werror=null-dereference -Werror=strict-aliasing -Werror=implicit-function-declaration -Werror=undef -Werror=missing-declarations -Werror=sign-compare)
 endif()

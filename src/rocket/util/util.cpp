@@ -1,3 +1,11 @@
+#include "rocket/macros.hpp"
+#if defined(ROCKETGE__Platform_Android)
+    #include <GLES3/gl32.h>
+    #include <EGL/egl.h>
+#else
+    #include <GL/glew.h>
+#endif
+
 #include "util.hpp"
 #include "rocket/io.hpp"
 #include "rocket/runtime.hpp"
@@ -644,8 +652,14 @@ namespace rocket {
             static std::string glmajor, glminor;
             static int mj = -1, mn = -1;
             if (mj == -1 || mn == -1) {
+#if defined(__ANDROID__)
+                const char* ver = (const char*)glGetString(GL_VERSION);
+                if (ver)
+                    sscanf(ver, "OpenGL ES %d.%d", &mj, &mn);
+#else
                 glGetIntegerv(GL_MAJOR_VERSION, &mj);
                 glGetIntegerv(GL_MINOR_VERSION, &mn);
+#endif
 
                 glmajor = std::to_string(mj);
                 glminor = std::to_string(mn);
@@ -657,24 +671,18 @@ namespace rocket {
             static std::string gl_version;
             if (!gl_version_set) {
                 gl_version_set = true;
-                gl_version = glmajor + "." + glminor + 
-#ifdef ROCKETGE__Platform_Android
-                    " (ES)";
-#else
-                    " (core)";
-#endif
+                gl_version = glmajor + "." + glminor;
 
                 if (cli_args.glversion != GL_VERSION_UNK) {
                     gl_version = double_to_str(cli_args.glversion, 1);
-#ifdef ROCKETGE__Platform_Android
-                    gl_version += " (ES)";
-#else
-                    gl_version += " (core)";
-#endif
                 }
             }
 
-            api_str = "OpenGL " + gl_version;
+            api_str = "OpenGL " 
+#ifdef ROCKETGE__Platform_Android
+                "ES "
+#endif
+                + gl_version;
         } else if (backend == renderer_backend_t::vulkan) {
             api_str = "Vulkan " "6.7"; // TODO Implement Vk version checking
         } else {
