@@ -97,6 +97,7 @@ set(ROCKETGE_SOURCES
     src/rocket/gfx/renderer/opengl_renderer.cpp
     src/rocket/gfx/renderer/null.cpp
     src/rocket/gfx/renderer/vulkan_renderer.cpp
+    src/rocket/gfx/renderer.cpp
     # src/rocket/gfx/renderer3d.cpp
     src/rocket/gfx/helper/rgl.cpp
 

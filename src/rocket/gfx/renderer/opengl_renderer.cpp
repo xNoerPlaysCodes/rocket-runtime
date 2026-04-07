@@ -75,13 +75,11 @@ namespace rocket {
         this->fps = fps;
 
         auto cli_args = util::get_clistate();
-        if (cli_args.dx11 || cli_args.dx12) {
-            rocket::log("D3D11/12 backend not supported", "opengl_renderer_2d", "constructor", "fatal");
-            rocket::exit(1);
-        }
 
         if (cli_args.framerate != -1) {
             this->fps = cli_args.framerate;
+        } else {
+            this->fps = 2147483647;
         }
 
         if (flags.share_renderer_as_global) {

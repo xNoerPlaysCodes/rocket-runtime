@@ -1,5 +1,6 @@
 #include "rocket/renderer.hpp"
 #include <rocket/renderer_helpers.hpp>
+#include <util.hpp>
 #include <stack>
 
 #define MAJOR(x) ((x) / 10)
@@ -61,6 +62,9 @@ namespace rocket {
             if (caps.max_vk_version != 0 && choice & renderer_choice::vulkan)
                 stk.push(renderer_backend_t::vulkan);
             stk.push(requested);
+            auto cli_args = util::get_clistate();
+            if (cli_args.renderer_backend_version > 0)
+                stk.push(cli_args.renderer_backend);
 
             return stk;
         }

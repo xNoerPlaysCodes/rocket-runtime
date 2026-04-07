@@ -34,6 +34,8 @@
 #define GL_VERSION_45 4.5f
 #define GL_VERSION_46 4.6f
 
+#define API_VERSION_ANY 2147483647
+
 namespace util {
     struct global_state_cliargs_t {
         bool noplugins = false;
@@ -41,9 +43,6 @@ namespace util {
         bool lognone = false;
         bool debugoverlay = false;
         bool nosplash = false;
-        bool dx11 = false;
-        bool dx12 = false;
-        bool opengl = true;
 
         [[deprecated]] float glversion = GL_VERSION_UNK;
         rocket::renderer_backend_t renderer_backend = rocket::renderer_backend_t::null;

@@ -430,6 +430,8 @@ namespace rocket {
                 };
 
                 constexpr auto version_to_int = [](std::string str) -> int {
+                    if (str == "any")
+                        return API_VERSION_ANY;
                     std::string accum;
                     for (char c : str) {
                         if (c >= '0' && c <= '9')
@@ -583,7 +585,7 @@ namespace rocket {
                     "   debug-overlay, debugoverlay, doverlay",
                     "   -> shows a debug overlay with rendering information",
                     "",
-                    "*  renderer-backend, [name:version] (version fmt: Major.Minor)",
+                    "*  renderer-backend, [name:version] (version fmt: Major.Minor OR any)",
                     "   -> forces a specific renderer backend to be used (if available)",
                     "",
                     "   no-splash, nosplash",
