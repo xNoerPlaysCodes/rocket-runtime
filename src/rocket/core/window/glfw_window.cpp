@@ -277,7 +277,7 @@ namespace rocket {
         return result == VK_SUCCESS;
     };
 
-    void create_gl_glfw_window(util::global_state_cliargs_t cliargs, rocket::windowflags_t flags) {
+    void create_gl_glfw_window(util::global_state_cliargs_t cliargs, rocket::windowflags_t &flags) {
         if (cliargs.glversion != GL_VERSION_UNK) {
             int v = static_cast<int>(cliargs.glversion * 10.f);
             flags.graphics_ctx.version = rocket::vec2i_t(v / 10, v % 10);
@@ -324,6 +324,10 @@ namespace rocket {
         if (glver > 3.1f) {
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         }
+
+        int mj = (int) max_gl_ver;
+        int mn = (int)((max_gl_ver - mj) * 10);
+        flags.graphics_ctx.version = { mj, mn };
 
         if (flags.graphics_ctx.debug_context) {
             if (glver >= 4.3f) {

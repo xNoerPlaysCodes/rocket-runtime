@@ -450,7 +450,7 @@ namespace rgl {
 
         bool gl_multisample = false;
         int gl_samples = 0;
-        if (win->flags.msaa_samples > 0) {
+        if (win->get_flags().msaa_samples > 0) {
 #ifdef ROCKETGE__Platform_Desktop
             glEnable(GL_MULTISAMPLE);
 #endif
@@ -535,7 +535,7 @@ namespace rgl {
         std::string gpu_name = std::string(reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
         std::string gpu_vendor = std::string(reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
 
-        gl_main_ctx = win->handle;
+        gl_main_ctx = win->get_native_handle();
 
         // Collect init logs
         std::vector<std::string> logs = {

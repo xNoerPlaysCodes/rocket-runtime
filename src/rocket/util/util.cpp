@@ -647,7 +647,7 @@ namespace rocket {
         rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
 
         std::string api_str;
-        renderer_backend_t backend = __r2d_get_window(ren)->flags.graphics_ctx.backend;
+        renderer_backend_t backend = __r2d_get_window(ren)->get_flags().graphics_ctx.backend;
         if (backend == renderer_backend_t::opengl) {
             static std::string glmajor, glminor;
             static int mj = -1, mn = -1;

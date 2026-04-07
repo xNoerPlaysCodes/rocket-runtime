@@ -17,7 +17,7 @@ namespace rocket {
     struct window_backend_i_impl_t;
     struct native_window_t;
     class window_backend_i {
-    public:
+    protected:
         native_window_t *handle = nullptr;
         window_backend_i_impl_t *wbi_impl = nullptr;
         rocket::vec2i_t size = { 0, 0 };
@@ -34,6 +34,9 @@ namespace rocket {
         friend class vulkan_renderer_2d;
         friend class renderer_3d;
         friend std::vector<std::string> rgl::init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t);
+    public:
+        windowflags_t get_flags() const { return this->flags; }
+        native_window_t *get_native_handle() const { return this->handle; };
     private:
         virtual bool create_vk_surface(void *vk_instance, const void *allocator, void *surface) const = 0;
     protected:

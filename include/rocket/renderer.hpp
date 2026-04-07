@@ -632,9 +632,21 @@ namespace rocket {
         ~vulkan_renderer_2d() override;
     };
 
+    namespace renderer_choice {
+        constexpr uint8_t vulkan  = 0b100000;
+        constexpr uint8_t opengl  = 0b010000;
+        constexpr uint8_t try_all = 0b111111;
+    }
+
     /// @brief Creates a Renderer2D Interface with selected backend
     /// @note May return null backend
-    std::unique_ptr<renderer_2d_i> create_renderer_2d(renderer_backend_t backend, window_backend_i *window, int fps = 60, renderer_flags_t = {});
+    std::unique_ptr<renderer_2d_i> create_renderer_2d(
+        renderer_backend_t backend, 
+        window_backend_i *window,
+        int fps = 60,
+        renderer_flags_t = {}, 
+        uint8_t renderer_choice_bitmask = renderer_choice::try_all
+    );
 
     template<typename Derived, typename Base>
     inline bool instance_of(Base *object) {

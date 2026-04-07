@@ -48,7 +48,7 @@ namespace linux_backend {
         return "unknown";
     }
 
-    void wayland_set_class_name(const char *str) {
+    void wayland_set_class_name(const char *) {
         rocket::log("wayland_set_class_name is not implemented", "rnative", "[linux_backend]", "fixme");
     }
 
@@ -123,7 +123,7 @@ namespace windows_backend {
 
 namespace rnative {
 #ifdef ROCKETGE__Platform_Desktop
-    void wayland_set_window_icon(GLFWwindow *window, GLFWimage &image) {
+    void wayland_set_window_icon(GLFWwindow *window, GLFWimage &) {
 #ifndef ROCKETGE__Platform_Linux
         rocket::log("wayland_set_window_icon is only supported on linux_wayland", "rnative", "wayland_set_window_icon", "error");
         return;
@@ -150,7 +150,7 @@ namespace rnative {
     }
 #endif
 
-    void windows_set_window_class_name_prewincreate(const wchar_t *str) {
+    void windows_set_window_class_name_prewincreate(const wchar_t *) {
 #ifndef ROCKETGE__Platform_Windows
         rocket::log("windows_set_window_class_name is only supported on windows", "rnative", "windows_set_window_class_name", "error");
         return;
