@@ -44,7 +44,10 @@ namespace util {
         bool dx11 = false;
         bool dx12 = false;
         bool opengl = true;
-        float glversion = GL_VERSION_UNK;
+
+        [[deprecated]] float glversion = GL_VERSION_UNK;
+        rocket::renderer_backend_t renderer_backend = rocket::renderer_backend_t::null;
+        int renderer_backend_version = 0;
 
         std::string viewport_size;
         bool viewport_size_set = false;

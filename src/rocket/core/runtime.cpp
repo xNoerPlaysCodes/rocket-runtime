@@ -418,23 +418,61 @@ namespace rocket {
                 args.logall = true;
             } else if (arg == "debugoverlay" || arg == "doverlay" || arg == "debug-overlay") {
                 args.debugoverlay = true;
-            } else if (arg == "glversion" || arg == "gl-version") {
-#ifdef ROCKETGE__Platform_Desktop
-                auto res = std::from_chars(value.data(), value.data() + value.size(), args.glversion);
-                if (res.ec == std::errc::invalid_argument) {
-                    rocket::log("invalid value for argument: " + arg, "rocket", "argparse", "error");
-                    args.glversion = GL_VERSION_UNK;
-                } else {
-                    if (!util::validate_gl_version_string(value)) {
-                        rocket::log("invalid gl version: " + value, "rocket", "argparse", "fatal");
-                        error = true;
-                        exit = true;
-                        args.glversion = GL_VERSION_UNK;
+            } else if (arg == "renderer-backend") {
+                constexpr auto split = [](std::string str, char delim) -> std::vector<std::string> {
+                    std::stringstream ss(str);
+                    std::string token;
+                    std::vector<std::string> tokens;
+                    while (std::getline(ss, token, delim)) {
+                        tokens.push_back(token);
                     }
+                    return tokens;
+                };
+
+                constexpr auto version_to_int = [](std::string str) -> int {
+                    std::string accum;
+                    for (char c : str) {
+                        if (c >= '0' && c <= '9')
+                            accum += c;
+                    }
+
+                    return std::stoi(accum);
+                };
+
+                std::vector<std::string> parts = split(value, ':');
+                if (parts.size() != 2) {
+                    rocket::log("invalid format: " + value, "rocket", "argparse", "fatal");
+                    error = true;
+                    exit = true;
                 }
+
+                const std::string &backend = parts.at(0);
+                const std::string &version = parts.at(1);
+
+                if (backend == "opengl") {
+#ifdef ROCKETGE__Platform_Desktop
+                    auto res = std::from_chars(version.data(), version.data() + version.size(), args.glversion);
+                    if (res.ec == std::errc::invalid_argument) {
+                        rocket::log("invalid value for argument: " + arg, "rocket", "argparse", "error");
+                        args.glversion = GL_VERSION_UNK;
+                    } else {
+                        if (!util::validate_gl_version_string(version)) {
+                            rocket::log("invalid gl version: " + value, "rocket", "argparse", "fatal");
+                            error = true;
+                            exit = true;
+                            args.glversion = GL_VERSION_UNK;
+                        }
+                    }
 #else
-                args.glversion = std::stof(std::string(value));
+                    args.glversion = std::stof(std::string(value));
 #endif
+                } else if (backend == "vulkan") {
+                    args.renderer_backend = renderer_backend_t::vulkan;
+                } else {
+                    rocket::log("invalid renderer backend: " + backend, "rocket", "argparse", "fatal");
+                }
+
+                args.renderer_backend_version = version_to_int(version);
             } else if (arg == "nosplash" || arg == "no-splash") {
                 args.nosplash = true;
             } else if (arg == "vp-size" || arg == "vpsize" || arg == "viewport-size" || arg == "viewportsize") {
@@ -545,8 +583,8 @@ namespace rocket {
                     "   debug-overlay, debugoverlay, doverlay",
                     "   -> shows a debug overlay with rendering information",
                     "",
-                    "*  gl-version, glversion [3.3 -> 4.6]",
-                    "   -> forces an OpenGL version to be used",
+                    "*  renderer-backend, [name:version] (version fmt: Major.Minor)",
+                    "   -> forces a specific renderer backend to be used (if available)",
                     "",
                     "   no-splash, nosplash",
                     "   -> hides splash from being shown in the beginning",
