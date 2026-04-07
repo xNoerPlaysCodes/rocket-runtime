@@ -6,7 +6,7 @@
 #include <memory>
 
 namespace astro {
-    void set_renderer(rocket::renderer_2d *renderer);
+    void set_renderer(rocket::renderer_2d_i *renderer);
 
     /// @brief Does NOT call rocket::renderer_2d::begin_frame()
     void begin_ui();

@@ -3,10 +3,10 @@
 #include <unordered_map>
 
 namespace astro {
-    rocket::renderer_2d *r;
+    rocket::renderer_2d_i *r;
     std::unordered_map<int, std::shared_ptr<rocket::font_t>> fonts;
 
-    void set_renderer(rocket::renderer_2d *renderer) {
+    void set_renderer(rocket::renderer_2d_i *renderer) {
         r = renderer;
         fonts[24] = rocket::font_t::font_default(24);
         fonts[48] = rocket::font_t::font_default(48);
