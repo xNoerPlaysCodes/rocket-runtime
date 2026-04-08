@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
     {
         rocket::window_t w2 = {};
         rocket::renderer_2d r2 = &w2;
-        while (w2.is_running()) {
+        while (w2.is_running() && (!test_mode || i < 2)) {
             r2.begin_frame();
             r2.clear();
             {
@@ -70,6 +70,8 @@ int main(int argc, char **argv) {
             ++i;
         }
     }
+
+    return error ? 1 : 0;
 }
 #include "rocket/macros.hpp"
 #ifdef ROCKETGE__Platform_Android

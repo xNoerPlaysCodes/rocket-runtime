@@ -36,6 +36,7 @@ namespace rocket {
 
         friend class renderer_3d;
         friend class font_t;
+        friend class vulkan_renderer_2d;
     protected:
         gfx_chk_result check_graphics_settings(rocket::vec2f_t pos, rocket::vec2f_t sz) override;
     private:
@@ -444,6 +445,9 @@ namespace rocket {
     private:
         api_object_t upload_font_texture_to_gpu(rocket::vec2i_t size, const std::vector<uint8_t> &bitmap) override;
         void clean_gpu_resource(api_object_t object) override;
+    public:
+        vulkan_renderer_2d_impl_t *get_backend_impl() const { return this->bk_impl; }
+        api_object_t allocate_object_handle();
     public:
         /// @brief Check if frame has begun
         bool has_frame_began() override;

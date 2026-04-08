@@ -62,6 +62,11 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
             r.draw_text(text, { 10, 10 });
             r.draw_fps({ 10, 15 + 24 });
             
+            if (test_mode && r.get_framecount() >= 10) {
+                r.end_frame();
+                window.poll_events();
+                return 0;
+            }
             if (fin && test_mode) {
                 r.end_frame();
                 window.poll_events();

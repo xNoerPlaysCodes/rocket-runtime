@@ -37,6 +37,9 @@ namespace rocket {
     public:
         windowflags_t get_flags() const { return this->flags; }
         native_window_t *get_native_handle() const { return this->handle; };
+        bool create_vulkan_surface(void *vk_instance, const void *allocator, void *surface) const {
+            return this->create_vk_surface(vk_instance, allocator, surface);
+        }
     private:
         virtual bool create_vk_surface(void *vk_instance, const void *allocator, void *surface) const = 0;
     protected:

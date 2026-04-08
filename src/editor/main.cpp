@@ -88,9 +88,9 @@ public:
         platform.rge_name = "Qt::Desktop";
 #ifdef ROCKETGE__Platform_Linux
         platform.os_name = "Linux";
-#elifdef ROCKETGE__Platform_macOS
+#elif defined(ROCKETGE__Platform_macOS)
         platform.os_name = "macOS";
-#elifdef ROCKETGE__Platform_Windows
+#elif defined(ROCKETGE__Platform_Windows)
         platform.os_name = "Windows";
 #else
         platform.os_name = "Unknown";

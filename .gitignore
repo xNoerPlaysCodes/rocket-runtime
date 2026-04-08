@@ -19,3 +19,4 @@ run.sh
 /out
 /.vs
 CMakeSettings.json
+windeps/

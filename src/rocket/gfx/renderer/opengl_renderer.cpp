@@ -1,11 +1,9 @@
 #include "rocket/macros.hpp"
-#include <audio.hpp>
-#include <rocket/audio.hpp>
 #if defined(ROCKETGE__Platform_Android)
     #include <GLES3/gl32.h>
     #include <EGL/egl.h>
 #else
-    #include <GL/glew.h>
+    #include <lib/glad/glad.h>
 #endif
 #include <shader_provider.hpp>
 #include "rocket/rgl.hpp"
@@ -44,8 +42,7 @@
 #include "lib/tweeny/tweeny.h"
 
 #include "binary_stuff/splash_screen.h"
-#include "binary_stuff/splash_sfx.h"
-
+#include "lib/stb/stb_image.h"
 #include "lib/stb/stb_truetype.h"
 #include "internal_types.hpp"
 
@@ -96,7 +93,11 @@ namespace rocket {
                 rocket::log("Invalid window ptr", "opengl_renderer_2d", "constructor", "error");
                 return;
             }
-            std::vector<std::string> log_messages = rgl::init_gl({ static_cast<float>(window->size.x), static_cast<float>(window->size.y) }, ROCKETGE__GLFNLDR_BACKEND_ENUM, this->window);
+            std::vector<std::string> log_messages = rgl::init_gl(
+                { static_cast<float>(window->size.x), static_cast<float>(window->size.y) },
+                flags.glfnldr_backend,
+                this->window
+            );
 
             for (auto &l : log_messages) {
                 if (l.starts_with('!')) 
@@ -319,20 +320,31 @@ namespace rocket {
 
         auto tween = tweeny::from(0).to(0).during(duration / 2).via(tweeny::easing::cubicOut);
 
-        asset_manager_t am;
-        audio::sound_engine_t engine(audio::device_t::get_default());
-        
         std::vector<uint8_t> splash_screen = std::vector<uint8_t>(splash_screen_png, splash_screen_png + splash_screen_png_len);
-        auto tx = am.get_texture(am.load_texture(splash_screen));
-
-        std::vector<uint8_t> splash_sfx = std::vector<uint8_t>(splash_sfx_ogg, splash_sfx_ogg + splash_sfx_ogg_len);
-        auto aud = am.get_sound(am.load_sound(splash_sfx));
+        auto tx = std::make_shared<texture_t>();
+        int width = 0;
+        int height = 0;
+        int channels = 0;
+        stbi_uc *img_data = stbi_load_from_memory(
+            splash_screen.data(),
+            static_cast<int>(splash_screen.size()),
+            &width,
+            &height,
+            &channels,
+            4
+        );
+        if (img_data == nullptr) {
+            rocket::log("failed to load embedded splash texture", "opengl_renderer_2d", "show_splash", "error");
+            return;
+        }
+        tx->size = { width, height };
+        tx->channels = 4;
+        tx->data.assign(img_data, img_data + (width * height * 4));
+        stbi_image_free(img_data);
 
         bool final = false;
 
         bool splash_finished = false;
-
-        engine.play(*aud);
 
         while (window->is_running() && !splash_finished) {
             this->begin_frame();
@@ -361,7 +373,6 @@ namespace rocket {
             this->end_frame();
             this->window->poll_events();
         }
-        rocket::audio::__sound_engine_no_destruction_cleanup_once();
     }
 
     rocket::rgba_color this_frame_clear_color = rgba_color::blank();
@@ -897,7 +908,7 @@ namespace rocket {
         return rgl::get_viewport_size();
     }
 
-    void draw_fullscreen_quad() {
+    static void draw_fullscreen_quad() {
         static rgl::vao_t vao = 0;
         if (vao == rGL_VAO_INVALID) {
             unsigned int vbo;

@@ -103,7 +103,17 @@ namespace windows_backend {
     void set_thread_name(const char *name) {
         std::wstring wide(name, name + strlen(name));
         HANDLE thread = GetCurrentThread();
-        HRESULT hr = SetThreadDescription(thread, wide.c_str());
+        using set_thread_description_t = HRESULT (WINAPI*)(HANDLE, PCWSTR);
+        static auto set_thread_description =
+            reinterpret_cast<set_thread_description_t>(
+                GetProcAddress(GetModuleHandleW(L"Kernel32.dll"), "SetThreadDescription")
+            );
+
+        if (set_thread_description == nullptr) {
+            return;
+        }
+
+        HRESULT hr = set_thread_description(thread, wide.c_str());
         if (FAILED(hr)) {
             rocket::log("SetThreadDescription failed", "rnative", "[windows_backend]", "error");
         }
@@ -150,7 +160,7 @@ namespace rnative {
     }
 #endif
 
-    void windows_set_window_class_name_prewincreate(const wchar_t *) {
+    void windows_set_window_class_name_prewincreate(const wchar_t *str) {
 #ifndef ROCKETGE__Platform_Windows
         rocket::log("windows_set_window_class_name is only supported on windows", "rnative", "windows_set_window_class_name", "error");
         return;
@@ -176,7 +186,7 @@ namespace rnative {
     void exit_now(int code) {
 #ifdef ROCKETGE__Platform_UnixCompatible
         unix_backend::exit_now(code);
-#elifdef ROCKETGE__Platform_Windows
+#elif defined(ROCKETGE__Platform_Windows)
         windows_backend::exit_now(code);
 #else
         (void) code;
@@ -186,8 +196,8 @@ namespace rnative {
 
     void init() {
 #ifdef ROCKETGE__Platform_Linux
-#elifdef ROCKETGE__Platform_macOS
-#elifdef ROCKETGE__Platform_Windows
+#elif defined(ROCKETGE__Platform_macOS)
+#elif defined(ROCKETGE__Platform_Windows)
         windows_backend::init();
 #endif
     }
@@ -195,7 +205,7 @@ namespace rnative {
     void set_thread_name(const char *name) {
 #ifdef ROCKETGE__Platform_UnixCompatible
         unix_backend::set_thread_name(name);
-#elifdef ROCKETGE__Platform_Windows
+#elif defined(ROCKETGE__Platform_Windows)
         windows_backend::set_thread_name(name);
 #endif
     }
@@ -204,7 +214,7 @@ namespace rnative {
     proc_address_t load_proc_address(const char *name) {
 #ifdef ROCKETGE__Platform_Linux
         return reinterpret_cast<proc_address_t>(linux_backend::get_proc_address(name));
-#elifdef ROCKETGE__Platform_Windows
+#elif defined(ROCKETGE__Platform_Windows)
         return reinterpret_cast<proc_address_t>(windows_backend::get_proc_address(name));
 #else
         return nullptr;

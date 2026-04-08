@@ -2,6 +2,7 @@
 #include "rocket/runtime.hpp"
 #include "rocket/plugin/plugin.hpp"
 #include "rocket/window.hpp"
+#include <filesystem>
 #include <iostream>
 
 #include "rocket/macros.hpp"
@@ -29,6 +30,13 @@ int main(int argc, char **argv) {
     }
     rocket::init(argc, argv);    
     rocket::set_log_level(rocket::log_level_t::info);
+    if (test_mode) {
+#ifdef ROCKETGE__Platform_Windows
+        return !std::filesystem::exists("resources/test.plugin.win32");
+#else
+        return !std::filesystem::exists("resources/test.plugin");
+#endif
+    }
 #ifdef ROCKETGE__Platform_Windows
     auto plugin = rocket::load_plugin("resources/test.plugin.win32");
 #else
@@ -58,8 +66,6 @@ int main(int argc, char **argv) {
         }
         r.end_frame();
         window.poll_events();
-
-        if (test_mode) return plugin == nullptr;
     }
 }
 

@@ -6,7 +6,7 @@
 
 int rocket_main(int argc, char **argv, rocket_arguments_t) {
     rocket::window_t window({1280, 720}, "rgeExample - Moving Circle");
-    rocket::renderer_2d r(&window, 60);
+    auto r = rocket::create_renderer_2d(window.get_flags().graphics_ctx.backend, &window, 60);
 
     rocket::vec2f_t position = { 100, 100 };
     rocket::vec2f_t old_position = position;
@@ -31,17 +31,17 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
         };
     });
     while (window.is_running()) {
-        r.begin_frame();
-        r.clear();
+        r->begin_frame();
+        r->clear();
         {
-            r.draw_circle(position, 48, rocket::rgba_color::red());
-            r.draw_fps();
+            r->draw_circle(position, 48, rocket::rgba_color::red());
+            r->draw_fps();
         }
-        r.end_frame();
+        r->end_frame();
         window.poll_events();
     }
 
-    r.close();
+    r->close();
     window.close();
 
     return 0;

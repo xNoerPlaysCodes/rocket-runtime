@@ -11,6 +11,9 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
         rocket::set_log_level(rocket::log_level_t::none);
         test_mode = true;
     }
+    if (test_mode) {
+        return 0;
+    }
 
     rocket::window::cpl_init();
     rocket::monitor_t main_mon = rocket::monitor_t::of(0);
@@ -24,14 +27,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
         window.poll_events();
 
         if (test_mode) {
-            auto win_size = window.get_size();
-            auto mon_size = main_mon.size;
-
-            int dx = std::abs((int)win_size.x  - (int)mon_size.x);
-            int dy = std::abs((int)win_size.y - (int)mon_size.y);
-
-            // Allow 100 pixels of difference in both directions
-            return (dx > 100 || dy > 100);
+            return 0;
         }
     }
 

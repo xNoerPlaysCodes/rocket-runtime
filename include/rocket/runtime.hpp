@@ -154,6 +154,10 @@ namespace rocket {
     /// @brief Initializes Rocket Runtime
     void init(int argc = 0, char **argv = nullptr);
 
+    /// @brief Resolve the default application working directory.
+    /// @note On desktop builds this prefers the nearest ancestor of the executable that contains `resources/`.
+    std::string default_working_dir(int argc = 0, char **argv = nullptr);
+
     /// @brief Set the file output (if any) for RocketLogger
     void set_logger_file_output(const std::filesystem::path &path);
 }
@@ -270,17 +274,19 @@ void __rocket_premain(int argc, char **argv);
             .platform_main = "android_main" \
         }); \
     }
-#elifdef ROCKETGE__Platform_Windows
+#elif defined(ROCKETGE__Platform_Windows)
 #define DEFINE_PLATFORM_MAIN \
     int main(int argc, char **argv) { \
         __rocket_premain(argc, argv); \
         return rocket_main(argc, argv, { \
+            .working_dir = rocket::default_working_dir(argc, argv), \
             .platform_main = "main" \
         }); \
     } \
     int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) { \
         __rocket_premain(0, nullptr); \
         return rocket_main(0, nullptr, { \
+            .working_dir = rocket::default_working_dir(), \
             .platform_main = "WinMain" \
         }); \
     }
@@ -289,6 +295,7 @@ void __rocket_premain(int argc, char **argv);
     int main(int argc, char **argv) { \
         __rocket_premain(argc, argv); \
         return rocket_main(argc, argv, { \
+            .working_dir = rocket::default_working_dir(argc, argv), \
             .platform_main = "main" \
         }); \
     }

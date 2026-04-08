@@ -33,8 +33,12 @@ namespace rocket {
     GLFWmonitor* glfwaltGetMonitorWithCursor() {
         int count;
         GLFWmonitor** monitors = glfwGetMonitors(&count);
+        GLFWwindow *context = glfwGetCurrentContext();
+        if (context == nullptr) {
+            return glfwGetPrimaryMonitor();
+        }
         double cursor_x, cursor_y;
-        glfwGetCursorPos(glfwGetCurrentContext(), &cursor_x, &cursor_y);
+        glfwGetCursorPos(context, &cursor_x, &cursor_y);
 
         for (int i = 0; i < count; ++i) {
             int x, y;
@@ -144,7 +148,10 @@ namespace rocket {
     }
 
     void glfw_window_t::set_vsync(bool vsync) {
-        glfwSwapInterval(vsync ? 1 : 0);
+        this->flags.vsync = vsync;
+        if (this->flags.graphics_ctx.backend == renderer_backend_t::opengl) {
+            glfwSwapInterval(vsync ? 1 : 0);
+        }
     }
 
     void window::set_forced_platform(platform_type_t type) {
@@ -283,6 +290,8 @@ namespace rocket {
             flags.graphics_ctx.version = rocket::vec2i_t(v / 10, v % 10);
         }
 
+        glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_NATIVE_CONTEXT_API);
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, flags.graphics_ctx.version.x);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, flags.graphics_ctx.version.y);
         glfwWindowHint(GLFW_CONTEXT_RELEASE_BEHAVIOR, GLFW_ANY_RELEASE_BEHAVIOR);
@@ -371,6 +380,12 @@ namespace rocket {
             this->size = { cli_w, cli_h };
         }
         this->title = title;
+
+        if (cli_args.renderer_backend_version > 0 &&
+            cli_args.renderer_backend != renderer_backend_t::null) {
+            flags.graphics_ctx.backend = cli_args.renderer_backend;
+        }
+
         window::glfw_cpl_init();
         GLFWmonitor *monitor = glfwGetPrimaryMonitor();
         if (monitor == nullptr && flags.fullscreen) {
@@ -381,7 +396,11 @@ namespace rocket {
         // override by cli args
         auto cliargs = util::get_clistate();
 
-        create_gl_glfw_window(cliargs, this->flags);
+        this->flags = flags;
+
+        if (this->flags.graphics_ctx.backend == renderer_backend_t::opengl) {
+            create_gl_glfw_window(cliargs, this->flags);
+        }
 
         glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -437,7 +456,6 @@ namespace rocket {
         }
         glfwWindowHint(GLFW_RESIZABLE, glfwaltGetBoolean(flags.resizable));
         // We set Swap Interval at poll_events() -> first_init
-        this->flags = flags;
         GLFWwindow *share = nullptr;
         if (this->flags.graphics_ctx.backend == renderer_backend_t::opengl) {
             this->glfw_window->w = (GLFWwindow*) glfwCreateWindow(this->size.x, this->size.y, title.c_str(), nullptr, share);
@@ -451,7 +469,11 @@ namespace rocket {
             }
             glfwMakeContextCurrent((GLFWwindow*)glfw_window->w);
         } else if (this->flags.graphics_ctx.backend == renderer_backend_t::vulkan) {
-            this->glfw_window->w = (GLFWwindow*) create_vk_glfw_window(size, title, nullptr, share);
+            this->glfw_window->w = (GLFWwindow*) create_vk_glfw_window(this->size, title, nullptr, share);
+            if (this->glfw_window == nullptr) {
+                rocket::log("failed to create native Vulkan window", "glfw_window_t", "constructor", "fatal");
+                rocket::exit(1);
+            }
         } else if (this->flags.graphics_ctx.backend == renderer_backend_t::null) {
         } else {
             r_assert(false && "TODO IMPLEMENT CONTEXT CREATION FOR RENDERER BACKEND");
@@ -498,7 +520,9 @@ namespace rocket {
             rocket::log(l, "glfw_window_t", "constructor", "info");
         }
 
-        glfwMakeContextCurrent((GLFWwindow*)this->glfw_window->w);
+        if (this->flags.graphics_ctx.backend == renderer_backend_t::opengl) {
+            glfwMakeContextCurrent((GLFWwindow*)this->glfw_window->w);
+        }
     }
 
     void glfw_window_t::set_window_state(window_state_t state) const {
@@ -583,10 +607,12 @@ namespace rocket {
     void glfw_window_t::poll_events() {
         static bool first_init = false;
         if (!first_init) {
-            if (flags.vsync) {
-                glfwSwapInterval(1);
-            } else {
-                glfwSwapInterval(0);
+            if (this->flags.graphics_ctx.backend == renderer_backend_t::opengl) {
+                if (flags.vsync) {
+                    glfwSwapInterval(1);
+                } else {
+                    glfwSwapInterval(0);
+                }
             }
             first_init = true;
         }

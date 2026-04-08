@@ -3,7 +3,7 @@
     #include <GLES3/gl32.h>
     #include <EGL/egl.h>
 #else
-    #include <GL/glew.h>
+    #include <lib/glad/glad.h>
 #endif
 #include <rocket/threads.hpp>
 #ifdef ROCKETGE__Platform_Windows

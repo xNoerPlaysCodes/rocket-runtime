@@ -4,7 +4,7 @@
     #include <GLES3/gl32.h>
     #include <EGL/egl.h>
 #else
-    #include <GL/glew.h>
+    #include <lib/glad/glad.h>
 #endif
 
 #include <vulkan/vulkan.h>
@@ -287,24 +287,40 @@ FragmentEnd
                         continue;
                     }
 
-                    std::string gl_ver_string = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-                    if (gl_ver_string.starts_with("OpenGL ES")) {
-                        rlsl_shader.vcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gles_minimumversion)) + " es\n";
-                        rlsl_shader.vcode += "precision highp float;\n";
-                    } else
-                        rlsl_shader.vcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gl_minimumversion)) + "\n";
+                    if (backend == renderer_backend_t::vulkan) {
+                        rlsl_shader.vcode += "#version 450\n";
+                    } else {
+                        std::string gl_ver_string;
+                        if (const auto *gl_version = reinterpret_cast<const char*>(glGetString(GL_VERSION)); gl_version != nullptr) {
+                            gl_ver_string = gl_version;
+                        }
+                        if (gl_ver_string.starts_with("OpenGL ES")) {
+                            rlsl_shader.vcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gles_minimumversion)) + " es\n";
+                            rlsl_shader.vcode += "precision highp float;\n";
+                        } else {
+                            rlsl_shader.vcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gl_minimumversion)) + "\n";
+                        }
+                    }
                     curmode = mode_t::vertex;
                 } else if (l.starts_with("FragmentStart") || l.starts_with("FragmentBegin")) {
                     if (!rlsl_shader.fcode.empty()) {
                         rocket::log("issue while parsing RLSL Shader: invalid syntax at line " + std::to_string(ln) + ": " + "fragment shader already defined, cannot redefine fragment shader", "shader_i", "rlsl_parser", "warn");
                         continue;
                     }
-                    std::string gl_ver_string = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-                    if (gl_ver_string.starts_with("OpenGL ES")) {
-                        rlsl_shader.fcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gles_minimumversion)) + " es\n";
-                        rlsl_shader.fcode += "precision highp float;\n";
-                    } else
-                        rlsl_shader.fcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gl_minimumversion)) + "\n";
+                    if (backend == renderer_backend_t::vulkan) {
+                        rlsl_shader.fcode += "#version 450\n";
+                    } else {
+                        std::string gl_ver_string;
+                        if (const auto *gl_version = reinterpret_cast<const char*>(glGetString(GL_VERSION)); gl_version != nullptr) {
+                            gl_ver_string = gl_version;
+                        }
+                        if (gl_ver_string.starts_with("OpenGL ES")) {
+                            rlsl_shader.fcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gles_minimumversion)) + " es\n";
+                            rlsl_shader.fcode += "precision highp float;\n";
+                        } else {
+                            rlsl_shader.fcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gl_minimumversion)) + "\n";
+                        }
+                    }
                     curmode = mode_t::fragment;
                 } // SPIRVBegin() or somthing But thats binary???? idfk
 
@@ -331,7 +347,7 @@ FragmentEnd
         }
 
         // TODO Maybe do better job at genericizing or smth
-        if ((rlsl_shader.vcode.empty() || rlsl_shader.fcode.empty()) && util::get_renderer_backend(util::get_global_renderer_2d()) == renderer_backend_t::opengl) {
+        if ((rlsl_shader.vcode.empty() || rlsl_shader.fcode.empty()) && backend == renderer_backend_t::opengl) {
             rocket::log("failed to parse RLSL Shader: critical shader code missing", "shader_i", "rlsl_parser", "error");
             return {};
         }
@@ -411,14 +427,16 @@ FragmentEnd
         int vk_major{};
         int vk_minor{};
         if (backend == renderer_backend_t::vulkan) {
-            VkPhysicalDeviceProperties props;
-            VkPhysicalDevice dvc = (VkPhysicalDevice) vk_phys_device;
-            vkGetPhysicalDeviceProperties(dvc, &props);
+            if (vk_phys_device != nullptr) {
+                VkPhysicalDeviceProperties props;
+                VkPhysicalDevice dvc = (VkPhysicalDevice) vk_phys_device;
+                vkGetPhysicalDeviceProperties(dvc, &props);
 
-            uint32_t ver = props.apiVersion;
-            vk_major = VK_VERSION_MAJOR(ver);
-            vk_minor = VK_VERSION_MINOR(ver);
-            vkver = vk_major + (vk_minor / 10.f);
+                uint32_t ver = props.apiVersion;
+                vk_major = VK_VERSION_MAJOR(ver);
+                vk_minor = VK_VERSION_MINOR(ver);
+                vkver = vk_major + (vk_minor / 10.f);
+            }
         }
 
         rlsl_parsed_result_t res;
@@ -432,7 +450,7 @@ FragmentEnd
                 rocket::log("issue while parsing RLSL Shader: Loaded OpenGL Version lower than Minimum OpenGL Version (" + std::to_string(major) + "." + std::to_string(minor) + " < " + std::to_string(rlmajor) + "." + std::to_string(rlminor) + + ")", "shader_i", "rlsl_parser", "warn");
             }
         } else if (backend == renderer_backend_t::vulkan) {
-            if (vkver < rlsl_shader.vk_minimumversion) {
+            if (vkver > 0.f && vkver < rlsl_shader.vk_minimumversion) {
                 rocket::log("issue while parsing RLSL Shader: Loaded Vulkan Version lower than Minimum Vulkan Version (" + std::to_string(vk_major) + "." + std::to_string(vk_minor) + ")", "shader_i", "rlsl_parser", "warn");
             }
         } else if (backend == renderer_backend_t::null) {
