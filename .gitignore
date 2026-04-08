@@ -20,3 +20,6 @@ run.sh
 /.vs
 CMakeSettings.json
 windeps/
+
+# Junk stuff
+ignore_dir/*
