@@ -190,12 +190,18 @@ FragmentEnd
         */
 
         for (size_t i = 0; i < lines.size(); ++i) {
-            const std::string &line_ref = lines[i];
+            const std::string &raw_line = lines[i];
             int ln = i + 1;
-            if (line_ref.starts_with("//")) {
+            if (raw_line.starts_with("//")) {
                 continue;
             }
-            std::string l = line_ref;
+            std::string l;
+            for (size_t i = 0; i < raw_line.size(); ++i) {
+                if (i != 0)
+                    if (raw_line[i] == '/' && raw_line[i - 1] == '/')
+                        break;
+                l += raw_line[i];
+            }
             if (curmode == mode_t::rlsl) {
                 if (l.starts_with("Version:")) {
                     rlsl_shader.version = trim(l.substr(8));
@@ -306,8 +312,7 @@ FragmentEnd
                     } else
                         rlsl_shader.fcode += "#version " + to_hash_version_gl(std::to_string(rlsl_shader.gl_minimumversion)) + "\n";
                     curmode = mode_t::fragment;
-                } // SPIRVBegin() or somthing But thats binary???? idfk
-
+                }
                 else if (l.empty()) {
                     continue;
                 }

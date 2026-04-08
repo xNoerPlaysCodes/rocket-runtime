@@ -19,3 +19,6 @@ run.sh
 /out
 /.vs
 CMakeSettings.json
+
+# Junk stuff
+ignore_dir/*
