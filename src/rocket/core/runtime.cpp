@@ -452,22 +452,7 @@ namespace rocket {
                 const std::string &version = parts.at(1);
 
                 if (backend == "opengl") {
-#ifdef ROCKETGE__Platform_Desktop
-                    auto res = std::from_chars(version.data(), version.data() + version.size(), args.glversion);
-                    if (res.ec == std::errc::invalid_argument) {
-                        rocket::log("invalid value for argument: " + arg, "rocket", "argparse", "error");
-                        args.glversion = GL_VERSION_UNK;
-                    } else {
-                        if (!util::validate_gl_version_string(version)) {
-                            rocket::log("invalid gl version: " + value, "rocket", "argparse", "fatal");
-                            error = true;
-                            exit = true;
-                            args.glversion = GL_VERSION_UNK;
-                        }
-                    }
-#else
-                    args.glversion = std::stof(std::string(value));
-#endif
+                    args.renderer_backend = renderer_backend_t::opengl;
                 } else if (backend == "vulkan") {
                     args.renderer_backend = renderer_backend_t::vulkan;
                 } else {

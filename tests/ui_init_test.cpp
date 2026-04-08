@@ -47,11 +47,11 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
 
     flags.msaa_samples = 4;
     rocket::window_t window({ 1280, 720 }, "RocketGE - UI Init Test", flags);
-    rocket::renderer_2d r(&window, 60, {
+    auto r = rocket::create_renderer_2d(rocket::renderer_backend_t::opengl, &window, 60, {
         .show_splash = !test_mode,
     });
 
-    astro::set_renderer(&r);
+    astro::set_renderer(r.get());
 
     astro::button_t b1 = {"Yes", { 200 + 16, 200 + 400 - 16 - 75 }, { 150, 75 }};
     astro::button_t b2 = {"No", b1.pos + rocket::vec2f_t{ 200 + 20, 0 }, b1.size};
@@ -63,8 +63,8 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     astro::dialog_t dialog("Do you agree?", text_pos, { 200, 200 }, { 400, 400 }, &b1, &b2);
 
     while (window.is_running()) {
-        r.begin_frame();
-        r.clear(rocket::rgba_color::black());
+        r->begin_frame();
+        r->clear(rocket::rgba_color::black());
         astro::begin_ui();
         {
             astro::draw_info_t info = {
@@ -93,14 +93,14 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
             }
         }
         astro::end_ui();
-        r.draw_fps();
-        r.end_frame();
+        r->draw_fps();
+        r->end_frame();
         window.poll_events();
 
         if (test_mode) return 0;
     }
 
-    r.close();
+    r->close();
     window.close();
 
     return 0;
