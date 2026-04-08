@@ -78,7 +78,9 @@ namespace rocket {
 
         if (cli_args.framerate != -1) {
             this->fps = cli_args.framerate;
-        } else {
+        } 
+
+        if (this->fps == -1) {
             this->fps = 2147483647;
         }
 
