@@ -195,13 +195,7 @@ FragmentEnd
             if (raw_line.starts_with("//")) {
                 continue;
             }
-            std::string l;
-            for (size_t i = 0; i < raw_line.size(); ++i) {
-                if (i != 0)
-                    if (raw_line[i] == '/' && raw_line[i - 1] == '/')
-                        break;
-                l += raw_line[i];
-            }
+            std::string l = raw_line;
             if (curmode == mode_t::rlsl) {
                 if (l.starts_with("Version:")) {
                     rlsl_shader.version = trim(l.substr(8));
