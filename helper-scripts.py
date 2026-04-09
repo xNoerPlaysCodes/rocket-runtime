@@ -402,11 +402,15 @@ def init_cmake(args):
 
 
 def build(args):
-    init_code = init_cmake(args)
+    init_code = 0
+    if not os.path.exists("build"):
+        init_code = init_cmake(args)
     if init_code != 0:
         return init_code
 
-    rnative_code = build_rnative()
+    rnative_code = 0
+    if not os.path.exists("build"):
+        rnative_code = build_rnative()
     if rnative_code != 0:
         return rnative_code
 
@@ -460,3 +464,4 @@ _  _, _// /_/ / /__ _  ,<  /  __/ /_ / /_/ / _  /___
 
 if __name__ == "__main__":
     exit(main())
+

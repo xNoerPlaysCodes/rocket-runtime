@@ -1,3 +1,4 @@
+
 #!/bin/cmake .
 
 cmake_minimum_required(VERSION 3.30)
@@ -413,6 +414,7 @@ else()
     elseif(GLFNLDR_BACKEND STREQUAL "LIBEPOXY")
         pkg_check_modules(EPOXY REQUIRED epoxy)
     endif()
+    find_package(GLEW REQUIRED)
     find_package(OpenAL REQUIRED)
     find_package(miniz REQUIRED) # miniz may not be installed
     find_package(SDL2 REQUIRED)
@@ -426,7 +428,7 @@ else()
     target_link_libraries(${PROJECT_NAME} PRIVATE 
         OpenGL::GL 
         ${EPOXY_LIBRARIES} 
-        GLEW::GLEW 
+        GLEW::GLEW
         glfw 
         OpenAL::OpenAL 
         miniz 
@@ -746,3 +748,4 @@ endif()
 message("Build Astro: ${BUILD_ASTRO}")
 message("Build Scripting: ${BUILD_SCRIPTING}")
 message("Build Editor: ${BUILD_EDITOR}")
+

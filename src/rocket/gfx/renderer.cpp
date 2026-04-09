@@ -57,10 +57,10 @@ namespace rocket {
             device_capability_t caps = get_capabilities(win);
             std::stack<renderer_backend_t> stk;
             stk.push(renderer_backend_t::null);
-            if (caps.max_gl_version != 0 && choice & renderer_choice::opengl)
-                stk.push(renderer_backend_t::opengl);
             if (caps.max_vk_version != 0 && choice & renderer_choice::vulkan)
                 stk.push(renderer_backend_t::vulkan);
+            if (caps.max_gl_version != 0 && choice & renderer_choice::opengl)
+                stk.push(renderer_backend_t::opengl);
             stk.push(requested);
             auto cli_args = util::get_clistate();
             if (cli_args.renderer_backend_version > 0)
