@@ -6,7 +6,7 @@
     #include <GLES3/gl32.h>
     #include <EGL/egl.h>
 #else
-    #include <GL/glew.h>
+    #include <lib/glad/glad.h>
 #endif
 #include <glm/ext/vector_float2.hpp>
 #include <iostream>
@@ -41,7 +41,7 @@
 #include "intl_macros.hpp"
 
 namespace glutil {
-    std::string glenum_str(GLenum e) {
+    static std::string glenum_str(GLenum e) {
         switch (e) {
             default: {
                 rocket::log("case not handled", "glutil", "glenum_str", "fatal");
@@ -76,7 +76,7 @@ namespace rgl {
 }
 
 namespace callback {
-    void gl_debug(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei, const GLchar* message, const void*) {
+    static void gl_debug(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei, const GLchar* message, const void*) {
         std::string srcStr;
         switch (source) {
             case GL_DEBUG_SOURCE_API:             srcStr = "API"; break;
@@ -202,7 +202,7 @@ namespace rgl {
         dst.unit = rGL_TXID_INVALID;
     }
 
-    std::string float_str(float value) {
+    static std::string float_str(float value) {
         std::ostringstream oss;
         oss << std::fixed << std::setprecision(6) << value; // control precision
         std::string s = oss.str();
@@ -213,7 +213,7 @@ namespace rgl {
         return s;
     }
 
-    void init_vo_all() {
+    static void init_vo_all() {
         // rect quad
         glGenVertexArrays(1, &rectVO.first);
         glGenBuffers(1, &rectVO.second);
@@ -363,7 +363,7 @@ namespace rgl {
         return textureVO;
     }
 
-    std::string bool_to_str(bool b, bool = true) { 
+    static std::string bool_to_str(bool b, bool = true) { 
         return b ? "[TRUE]" : "[FALSE]";
     }
 
@@ -388,13 +388,13 @@ namespace rgl {
     }
 
     void init_gl_wtd() {
-        glfnldr::init(glfnldr::backend_t::glew);
+        glfnldr::init(ROCKETGE__GLFNLDR_BACKEND_ENUM);
         glViewport(0, 0, viewport_size.x, viewport_size.y);
         init_vo_all();
     }
 
     
-    std::string get_cpu_name() {
+    static std::string get_cpu_name() {
 #if defined(ROCKETGE__Platform_Linux) || defined(ROCKETGE__Platform_Windows)
         char cpu[64] = {};
         unsigned int info[4];
@@ -408,7 +408,7 @@ namespace rgl {
         __cpuid((int*)info, 0x80000004); memcpy(cpu+32, info, 16); 
         #endif
         return std::string(cpu);
-#elifdef ROCKETGE__Platform_Android
+#elif defined(ROCKETGE__Platform_Android)
         char value[PROP_VALUE_MAX];
         __system_property_get("ro.soc.model", value);
         return std::string(value);
@@ -665,7 +665,7 @@ namespace rgl {
         return active_fbo;
     }
 
-    rgl::shader_program_t load_shader_generic(const char *vsrc, const char *fsrc) {
+    static rgl::shader_program_t load_shader_generic(const char *vsrc, const char *fsrc) {
         GLuint vs = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(vs, 1, &vsrc, nullptr);
         glCompileShader(vs);
@@ -733,11 +733,11 @@ namespace rgl {
         return load_shader_generic(vsrc, fsrc);
     }
 
-    void log_default_shader_compiled(std::string shader_name) {
+    static void log_default_shader_compiled(std::string shader_name) {
         rocket::log("Shader '" + shader_name + "' compiled successfully", "rgl", "lazyshader", "info");
     }
 
-    rgl::shader_program_t init_shader(rgl::shader_use_t use) {
+    static rgl::shader_program_t init_shader(rgl::shader_use_t use) {
         switch (use) {
             case rgl::shader_use_t::rect:
                 shader_cache[use] = rocket::gl_get_shader(rocket::shader_id_t::rectangle);
@@ -818,7 +818,7 @@ namespace rgl {
         return pg;
     }
 
-    std::pair<glm::vec2, glm::vec2> get_rect_uv_bounds(const glm::vec2& pos, const glm::vec2& size, const glm::mat4& mvp) {
+    static std::pair<glm::vec2, glm::vec2> get_rect_uv_bounds(const glm::vec2& pos, const glm::vec2& size, const glm::mat4& mvp) {
         // Local corners in world-space
         std::array<glm::vec2, 4> corners = {
             pos,
@@ -913,7 +913,7 @@ namespace rgl {
         return glGetUniformLocation(sp, name);
     }
 
-    shader_location_t get_shader_location(shader_program_t sp, const std::string &name) {
+    shader_location_t get_shader_location(shader_program_t sp, std::string name) {
         return get_shader_location(sp, name.c_str());
     }
 

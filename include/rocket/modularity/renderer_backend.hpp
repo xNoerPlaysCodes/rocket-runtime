@@ -68,6 +68,12 @@ namespace rocket {
         virtual api_object_t upload_font_texture_to_gpu(rocket::vec2i_t size, const std::vector<uint8_t> &bitmap) = 0;
         virtual void clean_gpu_resource(api_object_t object) = 0;
     public:
+        window_backend_i *get_window_backend() const { return this->window; }
+        bool get_vsync_state() const { return this->vsync; }
+        const rocket::vec2f_t &get_override_viewport_size_state() const { return this->override_viewport_size; }
+        const rocket::vec2f_t &get_override_viewport_offset_state() const { return this->override_viewport_offset; }
+        const renderer_flags_t &get_renderer_flags_state() const { return this->flags; }
+    public:
         /// @brief Check if frame has begun
         virtual bool has_frame_began() = 0;
         /// @brief Begin frame

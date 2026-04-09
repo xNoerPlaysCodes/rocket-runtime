@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <intl_macros.hpp>
 #include <thread>
+#include <array>
 
 #ifdef ROCKETGE__Platform_Android
 #include <android/log.h>
@@ -22,6 +23,89 @@ namespace rocket::globals {
     bool g_main_thread_id_set = false;
 
     bool g_rocket_entrypoint_used = false;
+}
+
+namespace {
+    std::string normalize_working_dir(std::filesystem::path dir) {
+        std::error_code ec;
+        dir = std::filesystem::weakly_canonical(dir, ec);
+        if (ec) {
+            ec.clear();
+            dir = std::filesystem::absolute(dir, ec);
+        }
+
+        std::string value = dir.lexically_normal().generic_string();
+        if (value.empty()) {
+            return "./";
+        }
+
+        if (!value.ends_with('/')) {
+            value.push_back('/');
+        }
+
+        return value;
+    }
+
+    std::filesystem::path select_working_dir_root(const std::filesystem::path &exe_dir) {
+        std::error_code ec;
+        std::filesystem::path candidate = exe_dir;
+
+        for (int depth = 0; depth < 6 && !candidate.empty(); ++depth) {
+            ec.clear();
+            if (std::filesystem::is_directory(candidate / "resources", ec) && !ec) {
+                return candidate;
+            }
+
+            std::filesystem::path parent = candidate.parent_path();
+            if (parent.empty() || parent == candidate) {
+                break;
+            }
+            candidate = parent;
+        }
+
+        ec.clear();
+        const std::filesystem::path cwd = std::filesystem::current_path(ec);
+        if (!ec) {
+            ec.clear();
+            if (std::filesystem::is_directory(cwd / "resources", ec) && !ec) {
+                return cwd;
+            }
+        }
+
+        return exe_dir;
+    }
+}
+
+namespace rocket {
+    std::string default_working_dir(int argc, char **argv) {
+#ifdef ROCKETGE__Platform_Windows
+        std::array<wchar_t, 32768> buffer = {};
+        DWORD len = GetModuleFileNameW(nullptr, buffer.data(), static_cast<DWORD>(buffer.size()));
+        if (len > 0 && len < buffer.size()) {
+            return normalize_working_dir(
+                select_working_dir_root(std::filesystem::path(buffer.data()).parent_path())
+            );
+        }
+#endif
+
+        if (argc > 0 && argv != nullptr && argv[0] != nullptr && argv[0][0] != '\0') {
+            std::error_code ec;
+            std::filesystem::path exe_path = std::filesystem::absolute(argv[0], ec);
+            if (!ec) {
+                return normalize_working_dir(
+                    select_working_dir_root(exe_path.parent_path())
+                );
+            }
+        }
+
+        std::error_code ec;
+        const std::filesystem::path cwd = std::filesystem::current_path(ec);
+        if (!ec) {
+            return normalize_working_dir(select_working_dir_root(cwd));
+        }
+
+        return "./";
+    }
 }
 
 namespace callback {

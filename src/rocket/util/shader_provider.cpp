@@ -8,7 +8,7 @@
     #include <GLES3/gl32.h>
     #include <EGL/egl.h>
 #else
-    #include <GL/glew.h>
+    #include <lib/glad/glad.h>
 #endif
 #include "intl_macros.hpp"
 // NOTE: no autogen_shader_dispatch.h up here

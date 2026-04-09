@@ -189,4 +189,43 @@ After compilation if no errors occur, `libRocketRuntime.so` will be in `bin/`
 ## Windows
 ### Building from source (recommended)
 
-👀 Coming Soon...
+Requirements:
+- `cmake` 3.30+
+- `python` 3.12+
+- A MinGW-w64 toolchain. The current helper script auto-detects `C:\Qt\Tools\mingw1310_64\bin`.
+- `ninja` or `mingw32-make`. The current helper script prefers `C:\Qt\Tools\Ninja\ninja.exe`.
+- The local dependency bundle at `windeps/windeps`
+
+Compilation Process:
+- `python ./helper-scripts.py --build`
+
+Build Output:
+- Engine library and runtime files are staged into `bin/`
+- Examples are staged into `bin/examples/`
+- Tests are staged into `bin/tests/`
+- Shared resources are staged into `bin/resources/`
+
+### Testing on Windows
+
+Standard test suite:
+- `python ./helper-scripts.py --run-tests`
+
+Vulkan-specific smoke test:
+- `python ./helper-scripts.py --smoke-vulkan`
+
+Manual Vulkan launch:
+- `bin\\tests\\default_shader_test.exe --renderer-backend vulkan:any`
+- `bin\\examples\\moving_circle.exe --renderer-backend vulkan:any`
+- `bin\\examples\\custom_shader.exe --renderer-backend vulkan:any`
+
+Runtime layout:
+- The default desktop `working_dir` is resolved from the executable location.
+- RocketGE walks up from the executable and picks the nearest parent directory that contains `resources/`.
+- In this repo that means binaries under `bin/tests/` and `bin/examples/` resolve assets from `bin/resources/`.
+
+Renderer backend setup:
+- `--renderer-backend opengl:any` uses the regular desktop OpenGL path.
+- `--renderer-backend vulkan:any` selects the native Vulkan backend.
+- On Windows that path creates a `GLFW_NO_API` window, a Vulkan instance/device/swapchain, and renders through `vulkan_renderer_2d`.
+- The current 2D implementation rasterizes the engine's built-in 2D primitives on the CPU into a framebuffer image, uploads that image to Vulkan, and presents it through a native Vulkan render pass.
+- Custom shaders created with `rocket::vulkan_shader_t` are compiled to SPIR-V with `glslc` and executed as native Vulkan fullscreen pipelines.

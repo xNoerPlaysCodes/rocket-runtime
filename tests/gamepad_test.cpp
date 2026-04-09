@@ -27,6 +27,9 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     }
 
     if (!rocket::gpad::is_available(hd)) {
+        if (test_mode) {
+            return 0;
+        }
         rocket::log("Gamepad is not available", "main.cpp", "main", "fatal");
         return 1;
     }

@@ -3,7 +3,7 @@
     #include <GLES3/gl32.h>
     #include <EGL/egl.h>
 #else
-    #include <GL/glew.h>
+    #include <lib/glad/glad.h>
 #endif
 
 #include "util.hpp"
@@ -19,6 +19,7 @@
 #include <stack>
 #include <intl_macros.hpp>
 #ifndef ROCKETGE__Platform_Android
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #endif
 #include <native.hpp>
@@ -582,9 +583,13 @@ namespace rocket {
             tricount_text.text += " (danger)";
         }
 
-        std::string fbo_active = rgl::is_active_any_fbo() ? "Yes" : "No";
+        renderer_backend_t backend = __r2d_get_window(ren)->get_flags().graphics_ctx.backend;
+        std::string fbo_active = "N/A";
+        if (backend == renderer_backend_t::opengl) {
+            fbo_active = rgl::is_active_any_fbo() ? "Yes" : "No";
+        }
         rocket::text_t framebuffer_active_text = { "FBO Active: " + fbo_active, text_size, rgb_color::white(), font };
-        vec2d_t dmpos = io::mouse_pos();
+        vec2d_t dmpos = __r2d_get_window(ren)->get_cursor_position();
         vec2i_t mpos = {
             static_cast<int>(dmpos.x),
             static_cast<int>(dmpos.y)
@@ -647,7 +652,6 @@ namespace rocket {
         rocket::text_t rocket_version_text = { "Engine Version: " + std::string(ROCKETGE__VERSION), text_size, rgb_color::white(), font };
 
         std::string api_str;
-        renderer_backend_t backend = __r2d_get_window(ren)->get_flags().graphics_ctx.backend;
         if (backend == renderer_backend_t::opengl) {
             static std::string glmajor, glminor;
             static int mj = -1, mn = -1;

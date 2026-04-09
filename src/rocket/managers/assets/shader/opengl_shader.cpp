@@ -3,7 +3,7 @@
     #include <GLES3/gl32.h>
     #include <EGL/egl.h>
 #else
-    #include <GL/glew.h>
+    #include <lib/glad/glad.h>
 #endif
 #include <filesystem>
 #include <fstream>
@@ -16,14 +16,14 @@
 #include <shader.hpp>
 
 namespace rocket {
-    void gl_check_errors(int step) {
+    static void gl_check_errors(int step) {
         GLenum err;
         while ((err = glGetError()) != GL_NO_ERROR) {
             rocket::log("OpenGL error at step " + std::to_string(step), "OpenGL", "glGetError", "warning");
         }
     }
 
-    bool check_shader_compile(GLuint shader, const char* shader_type) {
+    static bool check_shader_compile(GLuint shader, const char* shader_type) {
         GLint success;
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (!success) {
@@ -36,7 +36,7 @@ namespace rocket {
         return true;
     }
 
-    bool check_program_link(GLuint program) {
+    static bool check_program_link(GLuint program) {
         GLint success;
         glGetProgramiv(program, GL_LINK_STATUS, &success);
         if (!success) {
@@ -214,7 +214,7 @@ void main() {
         this->parse(split(rlsl, '\n'), shader_workingdir);
     }
 
-    GLint getloc(std::string name, GLuint glprogram) {
+    static GLint getloc(std::string name, GLuint glprogram) {
         GLint loc = glGetUniformLocation(glprogram, name.c_str());
         if (loc == -1) {
             return -1;

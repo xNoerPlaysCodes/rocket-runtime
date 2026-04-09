@@ -13,6 +13,7 @@ namespace glfnldr {
         android
     };
 
+    bool init(backend_t backend);
     std::vector<backend_t> get_backends();
 }
 

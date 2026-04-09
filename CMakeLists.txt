@@ -33,7 +33,15 @@ endif()
 
 option(BUILD_ASTRO "Build Astro [ui]" ON)
 option(BUILD_SCRIPTING "Build Scripting [py]" ON)
-# option(GLFNLDR_BACKEND "GLfnldr backend [GLEW/LIBEPOXY]" "GLEW")
+
+if (__rge_ANDROID__)
+    set(_rge_default_glfnldr_backend "ANDROID")
+else()
+    set(_rge_default_glfnldr_backend "GLAD")
+endif()
+set(GLFNLDR_BACKEND "${_rge_default_glfnldr_backend}" CACHE STRING "GLfnldr backend [GLAD/GLEW/LIBEPOXY/ANDROID]")
+set_property(CACHE GLFNLDR_BACKEND PROPERTY STRINGS GLAD GLEW LIBEPOXY ANDROID)
+unset(_rge_default_glfnldr_backend)
 
 if (BUILD_ASTRO)
     set(ASTRO_SOURCES
@@ -49,7 +57,9 @@ if (BUILD_SCRIPTING)
     add_compile_definitions(ROCKETGE__BUILD_SCRIPTING)
 endif()
 
-if (GLFNLDR_BACKEND STREQUAL "GLEW")
+if (GLFNLDR_BACKEND STREQUAL "GLAD")
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glad)
+elseif (GLFNLDR_BACKEND STREQUAL "GLEW")
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_GLEW)
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew)
 elseif(GLFNLDR_BACKEND STREQUAL "LIBEPOXY")
@@ -59,9 +69,8 @@ elseif(GLFNLDR_BACKEND STREQUAL "ANDROID")
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ANDROID)
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::android)
 else()
-    message(WARNING "Unknown GLfnldr backend: ${GLFNLDR_BACKEND}, compiling with GLEW")
-    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_GLEW)
-    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew)
+    message(WARNING "Unknown GLfnldr backend: ${GLFNLDR_BACKEND}, compiling with GLAD")
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glad)
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
@@ -223,28 +232,146 @@ if (BUILD_SCRIPTING)
     set(PYBIND11_LIB pybind11::pybind11)
 endif()
 
+if (__rge_WINDOWS__)
+    set(RGE_WINDEPS_ROOT "${CMAKE_SOURCE_DIR}/windeps/windeps")
+    set(RGE_WINDOWS_RUNTIME_DLLS "")
+    if (EXISTS "${RGE_WINDEPS_ROOT}")
+        set(RGE_USE_LOCAL_WINDEPS ON)
+    else()
+        set(RGE_USE_LOCAL_WINDEPS OFF)
+    endif()
+endif()
+
 # Fetch Dependencies
 if (__rge_WINDOWS__)
     message("Building for Win32")
     message("RocketGE Platform: Desktop-GLFW-Win32")
 
     find_package(OpenGL REQUIRED)
-    find_package(GLEW CONFIG REQUIRED)
-    find_package(glfw3 CONFIG REQUIRED)
-    find_package(SDL2 CONFIG REQUIRED)
-    find_package(OpenAL CONFIG REQUIRED)
-    if (BUILD_SCRIPTING)
-        find_package(Python3 COMPONENTS Development REQUIRED)
-        find_package(pybind11 CONFIG REQUIRED)
-    endif()
-    find_package(glm CONFIG REQUIRED)
-    find_package(nlohmann_json CONFIG REQUIRED)
-    find_package(miniz CONFIG REQUIRED)
     find_package(Vulkan REQUIRED)
 
-    target_link_libraries(${PROJECT_NAME} PRIVATE
+    if (RGE_USE_LOCAL_WINDEPS)
+        message(STATUS "Using local Windows dependencies from ${RGE_WINDEPS_ROOT}")
+
+        if (GLFNLDR_BACKEND STREQUAL "GLEW")
+            add_library(GLEW::GLEW SHARED IMPORTED GLOBAL)
+            set_target_properties(GLEW::GLEW PROPERTIES
+                INTERFACE_INCLUDE_DIRECTORIES "${RGE_WINDEPS_ROOT}/glew-2.3.1/include"
+                IMPORTED_IMPLIB "${RGE_WINDEPS_ROOT}/glew-2.3.1/lib/Release/x64/glew32.lib"
+                IMPORTED_LOCATION "${RGE_WINDEPS_ROOT}/glew-2.3.1/bin/Release/x64/glew32.dll"
+            )
+            list(APPEND RGE_WINDOWS_RUNTIME_DLLS "${RGE_WINDEPS_ROOT}/glew-2.3.1/bin/Release/x64/glew32.dll")
+        endif()
+
+        if (EXISTS "${RGE_WINDEPS_ROOT}/glfw/src/libglfw3dll.a")
+            add_library(glfw SHARED IMPORTED GLOBAL)
+            set_target_properties(glfw PROPERTIES
+                INTERFACE_COMPILE_DEFINITIONS "GLFW_DLL"
+                INTERFACE_INCLUDE_DIRECTORIES "${RGE_WINDEPS_ROOT}/glfw/include"
+                IMPORTED_IMPLIB "${RGE_WINDEPS_ROOT}/glfw/src/libglfw3dll.a"
+                IMPORTED_LOCATION "${RGE_WINDEPS_ROOT}/glfw/src/glfw3.dll"
+            )
+            list(APPEND RGE_WINDOWS_RUNTIME_DLLS "${RGE_WINDEPS_ROOT}/glfw/src/glfw3.dll")
+        else()
+            message(FATAL_ERROR "Local glfw import library was not found in ${RGE_WINDEPS_ROOT}/glfw/src")
+        endif()
+
+        if (EXISTS "${RGE_WINDEPS_ROOT}/SDL2/build/libSDL2.dll.a")
+            add_library(SDL2::SDL2 SHARED IMPORTED GLOBAL)
+            set_target_properties(SDL2::SDL2 PROPERTIES
+                INTERFACE_INCLUDE_DIRECTORIES "${RGE_WINDEPS_ROOT}/SDL2/include"
+                IMPORTED_IMPLIB "${RGE_WINDEPS_ROOT}/SDL2/build/libSDL2.dll.a"
+                IMPORTED_LOCATION "${RGE_WINDEPS_ROOT}/SDL2/build/SDL2.dll"
+            )
+            list(APPEND RGE_WINDOWS_RUNTIME_DLLS "${RGE_WINDEPS_ROOT}/SDL2/build/SDL2.dll")
+        else()
+            message(FATAL_ERROR "Local SDL2 import library was not found in ${RGE_WINDEPS_ROOT}/SDL2/build")
+        endif()
+
+        if (EXISTS "${RGE_WINDEPS_ROOT}/openal-soft/include/AL/al.h")
+            add_library(openal_stub STATIC
+                "${CMAKE_SOURCE_DIR}/src/rocket/util/openal_stub.cpp"
+            )
+            target_compile_definitions(openal_stub PUBLIC AL_LIBTYPE_STATIC)
+            target_include_directories(openal_stub PUBLIC
+                "${RGE_WINDEPS_ROOT}/openal-soft/include"
+            )
+            if (NOT TARGET OpenAL::OpenAL)
+                add_library(OpenAL::OpenAL ALIAS openal_stub)
+            endif()
+        else()
+            message(FATAL_ERROR "Local OpenAL headers were not found in ${RGE_WINDEPS_ROOT}/openal-soft/include/AL")
+        endif()
+
+        if (EXISTS "${RGE_WINDEPS_ROOT}/miniz/miniz.c")
+            add_library(miniz STATIC
+                "${RGE_WINDEPS_ROOT}/miniz/miniz.c"
+                "${RGE_WINDEPS_ROOT}/miniz/miniz_tdef.c"
+                "${RGE_WINDEPS_ROOT}/miniz/miniz_tinfl.c"
+                "${RGE_WINDEPS_ROOT}/miniz/miniz_zip.c"
+            )
+            target_include_directories(miniz PUBLIC "${RGE_WINDEPS_ROOT}/miniz")
+            target_compile_definitions(miniz PUBLIC MINIZ_STATIC_DEFINE)
+            if (NOT TARGET miniz::miniz)
+                add_library(miniz::miniz ALIAS miniz)
+            endif()
+        else()
+            add_library(miniz::miniz SHARED IMPORTED GLOBAL)
+            set_target_properties(miniz::miniz PROPERTIES
+                INTERFACE_INCLUDE_DIRECTORIES "${RGE_WINDEPS_ROOT}/miniz"
+                IMPORTED_IMPLIB "${RGE_WINDEPS_ROOT}/miniz/libminiz.dll.a"
+                IMPORTED_LOCATION "${RGE_WINDEPS_ROOT}/miniz/bin/libminiz.dll"
+            )
+            list(APPEND RGE_WINDOWS_RUNTIME_DLLS "${RGE_WINDEPS_ROOT}/miniz/bin/libminiz.dll")
+        endif()
+
+        if (EXISTS "${RGE_WINDEPS_ROOT}/nlohmann-json/include")
+            add_library(nlohmann_json::nlohmann_json INTERFACE IMPORTED GLOBAL)
+            set_target_properties(nlohmann_json::nlohmann_json PROPERTIES
+                INTERFACE_INCLUDE_DIRECTORIES "${RGE_WINDEPS_ROOT}/nlohmann-json/include"
+            )
+        else()
+            message(FATAL_ERROR "Local nlohmann-json headers were not found in ${RGE_WINDEPS_ROOT}/nlohmann-json/include")
+        endif()
+
+        if (BUILD_SCRIPTING)
+            find_package(Python3 COMPONENTS Development REQUIRED)
+            if (EXISTS "${RGE_WINDEPS_ROOT}/pybind11/CMakeLists.txt")
+                set(PYBIND11_FINDPYTHON ON)
+                add_subdirectory("${RGE_WINDEPS_ROOT}/pybind11" "${CMAKE_BINARY_DIR}/vendor/pybind11" EXCLUDE_FROM_ALL)
+            else()
+                find_package(pybind11 CONFIG REQUIRED)
+            endif()
+        endif()
+
+        file(GLOB RGE_ANGLE_DLLS "${RGE_WINDEPS_ROOT}/angle/bin/*.dll")
+        list(APPEND RGE_WINDOWS_RUNTIME_DLLS ${RGE_ANGLE_DLLS})
+
+        get_filename_component(RGE_MINGW_BIN_DIR "${CMAKE_CXX_COMPILER}" DIRECTORY)
+        foreach(RGE_MINGW_RUNTIME_DLL IN ITEMS libstdc++-6.dll libgcc_s_seh-1.dll libwinpthread-1.dll)
+            if (EXISTS "${RGE_MINGW_BIN_DIR}/${RGE_MINGW_RUNTIME_DLL}")
+                list(APPEND RGE_WINDOWS_RUNTIME_DLLS "${RGE_MINGW_BIN_DIR}/${RGE_MINGW_RUNTIME_DLL}")
+            endif()
+        endforeach()
+        list(REMOVE_DUPLICATES RGE_WINDOWS_RUNTIME_DLLS)
+    else()
+        if (GLFNLDR_BACKEND STREQUAL "GLEW")
+            find_package(GLEW CONFIG REQUIRED)
+        endif()
+        find_package(glfw3 CONFIG REQUIRED)
+        find_package(SDL2 CONFIG REQUIRED)
+        find_package(OpenAL CONFIG REQUIRED)
+        if (BUILD_SCRIPTING)
+            find_package(Python3 COMPONENTS Development REQUIRED)
+            find_package(pybind11 CONFIG REQUIRED)
+        endif()
+        find_package(glm CONFIG REQUIRED)
+        find_package(nlohmann_json CONFIG REQUIRED)
+        find_package(miniz CONFIG REQUIRED)
+    endif()
+
+    target_link_libraries(${PROJECT_NAME} PUBLIC
         OpenGL::GL
-        GLEW::GLEW
         glfw
         SDL2::SDL2
         OpenAL::OpenAL
@@ -254,10 +381,10 @@ if (__rge_WINDOWS__)
         Vulkan::Vulkan
         winmm
     )
-    target_link_libraries(${PROJECT_NAME}
-        PUBLIC
-        ${PYBIND11_LIB}
-    )
+    if (GLFNLDR_BACKEND STREQUAL "GLEW")
+        target_link_libraries(${PROJECT_NAME} PUBLIC GLEW::GLEW)
+    endif()
+    target_link_libraries(${PROJECT_NAME} PUBLIC ${PYBIND11_LIB})
 elseif (__rge_ANDROID__)
     target_link_libraries(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/androiddeps/libs/${ANDROID_ABI}/libopenal.a
@@ -311,22 +438,58 @@ else()
     )
 endif()
 
+if (__rge_WINDOWS__)
+    function(rge_stage_windows_runtime target_name)
+        if (TARGET OpenAL)
+            add_custom_command(TARGET ${target_name} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "$<TARGET_FILE:OpenAL>"
+                    "$<TARGET_FILE_DIR:${target_name}>"
+            )
+        endif()
+        foreach(RGE_RUNTIME_DLL IN LISTS RGE_WINDOWS_RUNTIME_DLLS)
+            if (EXISTS "${RGE_RUNTIME_DLL}")
+                add_custom_command(TARGET ${target_name} POST_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                        "${RGE_RUNTIME_DLL}"
+                        "$<TARGET_FILE_DIR:${target_name}>"
+                )
+            endif()
+        endforeach()
+    endfunction()
+endif()
+
 if (MSVC)
     set(RGE_COMPILER_FLAGS /W4 /permissive-)
+    set(RGE_C_ONLY_COMPILER_FLAGS)
 else()
-    set(RGE_COMPILER_FLAGS -Wall -Wextra -Wpedantic -Werror=return-type -Werror=uninitialized -Werror=nonnull -Werror=null-dereference -Werror=strict-aliasing -Werror=implicit-function-declaration -Werror=undef -Werror=missing-declarations -Werror=sign-compare)
+    set(RGE_COMPILER_FLAGS -Wall -Wextra -Wpedantic -Werror=return-type -Werror=uninitialized -Werror=nonnull -Werror=null-dereference -Werror=strict-aliasing -Werror=undef -Werror=sign-compare)
+    set(RGE_C_ONLY_COMPILER_FLAGS
+        $<$<COMPILE_LANGUAGE:C>:-Werror=implicit-function-declaration>
+        $<$<COMPILE_LANGUAGE:C>:-Werror=missing-declarations>
+    )
 endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE RocketRuntime_DEBUG=1) # Legacy definition
     target_compile_definitions(${PROJECT_NAME} PRIVATE ROCKETGE__DEBUG_BUILD)
-    target_compile_options(${PROJECT_NAME} PRIVATE -O0 -g ${RGE_COMPILER_FLAGS})
+    if (MSVC)
+        target_compile_options(${PROJECT_NAME} PRIVATE /Od /Zi ${RGE_COMPILER_FLAGS})
+    else()
+        target_compile_options(${PROJECT_NAME} PRIVATE -O0 -g ${RGE_COMPILER_FLAGS} ${RGE_C_ONLY_COMPILER_FLAGS})
+    endif()
 else()
-    target_compile_options(${PROJECT_NAME} PRIVATE ${RGE_COMPILER_FLAGS} -O3 -flto)
-    set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+    if (MSVC)
+        target_compile_options(${PROJECT_NAME} PRIVATE /O2 ${RGE_COMPILER_FLAGS})
+    else()
+        target_compile_options(${PROJECT_NAME} PRIVATE ${RGE_COMPILER_FLAGS} ${RGE_C_ONLY_COMPILER_FLAGS} -O3 -flto)
+        set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+    endif()
 endif()
 
-target_link_options(${PROJECT_NAME} PRIVATE    -Wl,-z,max-page-size=16384)
+if (NOT WIN32)
+    target_link_options(${PROJECT_NAME} PRIVATE -Wl,-z,max-page-size=16384)
+endif()
 
 if (BUILD_TESTS)
     set(TEST_NAMES
@@ -394,6 +557,9 @@ if (BUILD_TESTS)
             target_include_directories(${test_name} PRIVATE src/include)
 
             target_link_libraries(${test_name} PRIVATE RocketRuntime)
+            if (__rge_WINDOWS__)
+                rge_stage_windows_runtime(${test_name})
+            endif()
 
             if (__rge_WINDOWS__)
                 if (BUILD_SCRIPTING)
@@ -437,7 +603,7 @@ if (BUILD_TESTS)
             endif()
 
             if (MSVC)
-                target_compile_options(${PROJECT_NAME} PRIVATE
+                target_compile_options(${test_name} PRIVATE
                     /W4
                     /permissive-
                 )
@@ -483,6 +649,9 @@ if (BUILD_EXAMPLES)
             target_include_directories(${example_name} PRIVATE include)
 
             target_link_libraries(${example_name} PRIVATE RocketRuntime)
+            if (__rge_WINDOWS__)
+                rge_stage_windows_runtime(${example_name})
+            endif()
 
             if (__rge_WINDOWS__)
                 target_link_directories(${example_name} PRIVATE
@@ -522,7 +691,7 @@ if (BUILD_EXAMPLES)
             endif()
 
             if (MSVC)
-                target_compile_options(${PROJECT_NAME} PRIVATE
+                target_compile_options(${example_name} PRIVATE
                     /W4
                     /permissive-
                 )
@@ -547,6 +716,9 @@ if (BUILD_EDITOR)
     target_link_directories(RGEditor PRIVATE ${CMAKE_SOURCE_DIR}/bin)
     target_include_directories(RGEditor PRIVATE src/include include)
     target_link_libraries(RGEditor PRIVATE RocketRuntime Qt6::Widgets Qt6OpenGL Qt6OpenGLWidgets Qt6::Svg)
+    if (__rge_WINDOWS__)
+        rge_stage_windows_runtime(RGEditor)
+    endif()
 
     set_target_properties(RGEditor PROPERTIES
         AUTOMOC ON

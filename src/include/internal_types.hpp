@@ -11,6 +11,7 @@
 #include <stack>
 #include <util.hpp>
 #include <variant>
+#include <string>
 
 #define MkFuncPtr0(ret_type, name) ret_type (*name)()
 #define MkFuncPtr(ret_type, name, ...) ret_type (*name)(__VA_ARGS__)
@@ -81,11 +82,18 @@ namespace rocket {
 #define subclass(x)
 
     struct vk_texture_t subclass(vk_object_t) {
-        // dah tah
+        rocket::vec2i_t size = { 0, 0 };
+        int channels = 4;
+        bool alpha_mask = false;
+        std::vector<uint8_t> pixels;
     };
 
     struct vk_shader_t subclass(vk_object_t) {
-        // dah tah
+        std::string name;
+        std::string vertex_source;
+        std::string fragment_source;
+        std::vector<uint32_t> vertex_spirv;
+        std::vector<uint32_t> fragment_spirv;
     };
 
     struct vk_object_t {
@@ -98,6 +106,7 @@ namespace rocket {
 
     struct vulkan_renderer_2d_impl_t {
         std::unordered_map<api_object_t, vk_object_t> objects;
+        void *native_state = nullptr;
     };
 
     struct glfw_window_impl_t {
