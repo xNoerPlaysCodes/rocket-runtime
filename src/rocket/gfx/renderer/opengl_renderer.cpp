@@ -59,8 +59,7 @@ namespace rocket {
 namespace rocket {
     util::global_state_cliargs_t ovr_clistate;
 
-    opengl_renderer_2d::opengl_renderer_2d(window_backend_i *window, int fps, renderer_flags_t flags)
-    {
+    opengl_renderer_2d::opengl_renderer_2d(window_backend_i *window, int fps, renderer_flags_t flags) {
         r_assert(window != nullptr);
         r_assert(fps != 0);
 
