@@ -1,11 +1,21 @@
 namespace rocket_resource {
     const char *shader_textured_rectangle_rlsl = R"(
-Version: 1.3
-GL_MinimumVersion: 3.3
-GLES_MinimumVersion: 3.0
-Name: Textured Rectangle
-
-VertexStart
+=LangProperty NoPropertyOverride true
+=Set Name "Textured Rectangle"
+=Set Version 1.4
+=EnterNamespace API
+    =Add SupportedAPIs GL
+    =Add SupportedAPIs GLES
+=ExitNamespace
+=EnterNamespace API
+    =EnterNamespace GLES
+        =Set MinimumVersion 3.0
+    =ExitNamespace
+    =EnterNamespace GL
+        =Set MinimumVersion 3.3
+    =ExitNamespace
+=ExitNamespace
+=Begin VertexShader
     layout(location = 0) in vec2 aPos;
     out vec2 v_uv;
     uniform mat4 u_transform;
@@ -15,8 +25,8 @@ VertexStart
         v_uv = vec2(aPos.x, uv_y);
         gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
     }
-VertexEnd
-FragmentStart
+=End
+=Begin FragmentShader
     in vec2 v_uv;
     out vec4 FragColor;
     uniform sampler2D u_texture;
@@ -34,5 +44,5 @@ FragmentStart
         vec4 texColor = texture(u_texture, v_uv);
         FragColor = vec4(texColor.rgb, texColor.a * alpha);
     }
-FragmentEnd)";
+=End)";
 }

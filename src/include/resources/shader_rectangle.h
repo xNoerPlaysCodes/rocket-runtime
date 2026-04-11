@@ -1,11 +1,28 @@
 namespace rocket_resource {
     const char *shader_rectangle_rlsl = R"(
-Version: 1.3
-GL_MinimumVersion: 3.3
-GLES_MinimumVersion: 3.0
-Name: Rectangle
+=LangProperty NoPropertyOverride true 
+=Set Name "Rectangle"
+=Set Version 1.4
 
-VertexStart
+=EnterNamespace API 
+    =Add SupportedAPIs GL 
+    =Add SupportedAPIs GLES
+//  =Add SupportedAPIs VK
+=ExitNamespace
+
+=EnterNamespace API
+    =EnterNamespace VK
+        =Set MinimumVersion 1.1
+    =ExitNamespace
+    =EnterNamespace GLES
+        =Set MinimumVersion 3.0
+    =ExitNamespace
+    =EnterNamespace GL
+        =Set MinimumVersion 3.3
+    =ExitNamespace
+=ExitNamespace
+
+=Begin VertexShader
     layout(location = 0) in vec2 aPos; // 0→1 quad coords
     uniform mat4 u_transform;
     out vec2 v_local;
@@ -14,9 +31,9 @@ VertexStart
         v_local = aPos; // normalized quad coordinates
         gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
     }
-VertexEnd
+=End
 
-FragmentStart
+=Begin FragmentShader
     in vec2 v_local;
     out vec4 FragColor;
 
@@ -45,5 +62,5 @@ FragmentStart
 
         FragColor = vec4(u_color.rgb, u_color.a * alpha);
     }
-FragmentEnd)";
+=End)";
 }

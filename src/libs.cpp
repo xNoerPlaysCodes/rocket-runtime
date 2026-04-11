@@ -2,9 +2,12 @@
 // Name: LZF
 // Author: Marc Alexander Lehmann
 // License: BSD
+extern "C" {
 #include "lib/lzf/lzf.h"
 #include "lib/lzf/lzfP.h"
 #include "./lib/lzf/lzf_c.c"
+#include "./lib/lzf/lzf_d.c"
+}
 
 // [External Library]
 // Name: stb_image

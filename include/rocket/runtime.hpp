@@ -42,7 +42,7 @@
 /// @brief The max RLSL version supported
 ///                ^^^^ -> RocketShaderLanguage
 #define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MAJOR 1
-#define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR 3
+#define ROCKETGE__FEATURE_MAX_RLSL_VERSION_MINOR 4
 
 #define ROCKETGE__FEATURE_GL_LOADER "GLfnldr"
 

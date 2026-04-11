@@ -1,11 +1,21 @@
 namespace rocket_resource {
     const char *shader_text_rlsl = R"(
-Version: 1.3
-GL_MinimumVersion: 3.3
-GLES_MinimumVersion: 3.0
-Name: Text
-
-VertexStart
+=LangProperty NoPropertyOverride true
+=Set Name "Text"
+=Set Version 1.4
+=EnterNamespace API
+    =Add SupportedAPIs GL
+    =Add SupportedAPIs GLES
+=ExitNamespace
+=EnterNamespace API
+    =EnterNamespace GLES
+        =Set MinimumVersion 3.0
+    =ExitNamespace
+    =EnterNamespace GL
+        =Set MinimumVersion 3.3
+    =ExitNamespace
+=ExitNamespace
+=Begin VertexShader
     layout(location = 0) in vec2 aPos;
     layout(location = 1) in vec2 aTex;
     out vec2 TexCoord;
@@ -13,9 +23,8 @@ VertexStart
         gl_Position = vec4(aPos.xy, 0.0, 1.0);
         TexCoord = aTex;
     }
-VertexEnd
-
-FragmentStart
+=End
+=Begin FragmentShader
     in vec2 TexCoord;
     out vec4 FragColor;
     uniform vec3 u_color;
@@ -31,5 +40,6 @@ FragmentStart
         vec3 rgb = u_color * alpha;
         FragColor = vec4(rgb, alpha);
     }
-FragmentEnd)";
+=End)";
 }
+
