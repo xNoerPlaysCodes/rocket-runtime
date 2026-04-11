@@ -508,7 +508,6 @@ cleanup:
 #else
             constexpr double spin_wait_time = 0.002;
 #endif
-            int i = 0;
 #if defined(ROCKETGE__Platform_Windows)
                 while
 #else
@@ -517,8 +516,7 @@ cleanup:
                 (sleep_time > spin_wait_time && !software_frame_timer) {
 #if defined(ROCKETGE__Platform_Windows) 
                 std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time / 10));
-                sleep_time /= 10;
-                rocket::log("Sleep Iteration: " + std::to_string(i++ + 1), "a", "a", "info");
+                sleep_time /= 2;
 #else
                 std::this_thread::sleep_for(std::chrono::duration<double>(sleep_time - spin_wait_time));
 #endif

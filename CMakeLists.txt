@@ -40,8 +40,8 @@ if (__rge_ANDROID__)
 else()
     set(_rge_default_glfnldr_backend "GLAD")
 endif()
-set(GLFNLDR_BACKEND "${_rge_default_glfnldr_backend}" CACHE STRING "GLfnldr backend [GLAD/GLEW/LIBEPOXY/ANDROID]")
-set_property(CACHE GLFNLDR_BACKEND PROPERTY STRINGS GLAD GLEW LIBEPOXY ANDROID)
+set(GLFNLDR_BACKEND "${_rge_default_glfnldr_backend}" CACHE STRING "GLfnldr backend [GLAD/LIBEPOXY/ANDROID]")
+set_property(CACHE GLFNLDR_BACKEND PROPERTY STRINGS GLAD LIBEPOXY ANDROID)
 unset(_rge_default_glfnldr_backend)
 
 if (BUILD_ASTRO)
@@ -59,10 +59,11 @@ if (BUILD_SCRIPTING)
 endif()
 
 if (GLFNLDR_BACKEND STREQUAL "GLAD")
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_GLAD)
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glad)
 elseif (GLFNLDR_BACKEND STREQUAL "GLEW")
-    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_GLEW)
-    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glew)
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_GLAD)
+    add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::glad) # << GLEW?
 elseif(GLFNLDR_BACKEND STREQUAL "LIBEPOXY")
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_LIBEPOXY)
     add_compile_definitions(ROCKETGE__GLFNLDR_BACKEND_ENUM=::glfnldr::backend_t::libepoxy)
@@ -185,7 +186,9 @@ if (__rge_ANDROID__)
 endif()
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE include)
-target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE /usr/include/miniz)
+if (LINUX)
+    target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE /usr/include/miniz)
+endif()
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE src/include)
 
 file(GLOB SHADER_HEADERS
@@ -234,7 +237,7 @@ if (BUILD_SCRIPTING)
 endif()
 
 if (__rge_WINDOWS__)
-    set(RGE_WINDEPS_ROOT "${CMAKE_SOURCE_DIR}/windeps/windeps")
+    set(RGE_WINDEPS_ROOT "${CMAKE_SOURCE_DIR}/windeps")
     set(RGE_WINDOWS_RUNTIME_DLLS "")
     if (EXISTS "${RGE_WINDEPS_ROOT}")
         set(RGE_USE_LOCAL_WINDEPS ON)
@@ -289,21 +292,6 @@ if (__rge_WINDOWS__)
             message(FATAL_ERROR "Local SDL2 import library was not found in ${RGE_WINDEPS_ROOT}/SDL2/build")
         endif()
 
-        if (EXISTS "${RGE_WINDEPS_ROOT}/openal-soft/include/AL/al.h")
-            add_library(openal_stub STATIC
-                "${CMAKE_SOURCE_DIR}/src/rocket/util/openal_stub.cpp"
-            )
-            target_compile_definitions(openal_stub PUBLIC AL_LIBTYPE_STATIC)
-            target_include_directories(openal_stub PUBLIC
-                "${RGE_WINDEPS_ROOT}/openal-soft/include"
-            )
-            if (NOT TARGET OpenAL::OpenAL)
-                add_library(OpenAL::OpenAL ALIAS openal_stub)
-            endif()
-        else()
-            message(FATAL_ERROR "Local OpenAL headers were not found in ${RGE_WINDEPS_ROOT}/openal-soft/include/AL")
-        endif()
-
         if (EXISTS "${RGE_WINDEPS_ROOT}/miniz/miniz.c")
             add_library(miniz STATIC
                 "${RGE_WINDEPS_ROOT}/miniz/miniz.c"
@@ -355,10 +343,12 @@ if (__rge_WINDOWS__)
             endif()
         endforeach()
         list(REMOVE_DUPLICATES RGE_WINDOWS_RUNTIME_DLLS)
+
+        find_package(OpenAL REQUIRED)
     else()
-        if (GLFNLDR_BACKEND STREQUAL "GLEW")
-            find_package(GLEW CONFIG REQUIRED)
-        endif()
+        # if (GLFNLDR_BACKEND STREQUAL "GLEW")
+        #     find_package(GLEW CONFIG REQUIRED)
+        # endif()
         find_package(glfw3 CONFIG REQUIRED)
         find_package(SDL2 CONFIG REQUIRED)
         find_package(OpenAL CONFIG REQUIRED)
@@ -373,6 +363,7 @@ if (__rge_WINDOWS__)
 
     target_link_libraries(${PROJECT_NAME} PUBLIC
         OpenGL::GL
+        OpenAL::OpenAL
         glfw
         SDL2::SDL2
         OpenAL::OpenAL
@@ -382,9 +373,9 @@ if (__rge_WINDOWS__)
         Vulkan::Vulkan
         winmm
     )
-    if (GLFNLDR_BACKEND STREQUAL "GLEW")
-        target_link_libraries(${PROJECT_NAME} PUBLIC GLEW::GLEW)
-    endif()
+    # if (GLFNLDR_BACKEND STREQUAL "GLEW")
+    #     target_link_libraries(${PROJECT_NAME} PUBLIC GLEW::GLEW)
+    # endif()
     target_link_libraries(${PROJECT_NAME} PUBLIC ${PYBIND11_LIB})
 elseif (__rge_ANDROID__)
     target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -410,11 +401,11 @@ else()
     find_package(glfw3 REQUIRED)
     find_package(PkgConfig REQUIRED)
     if (GLFNLDR_BACKEND STREQUAL "GLEW")
-        find_package(GLEW REQUIRED)
+        # find_package(GLEW REQUIRED)
     elseif(GLFNLDR_BACKEND STREQUAL "LIBEPOXY")
         pkg_check_modules(EPOXY REQUIRED epoxy)
     endif()
-    find_package(GLEW REQUIRED)
+    # find_package(GLEW REQUIRED)
     find_package(OpenAL REQUIRED)
     find_package(miniz REQUIRED) # miniz may not be installed
     find_package(SDL2 REQUIRED)
@@ -428,7 +419,7 @@ else()
     target_link_libraries(${PROJECT_NAME} PRIVATE 
         OpenGL::GL 
         ${EPOXY_LIBRARIES} 
-        GLEW::GLEW
+        # GLEW::GLEW
         glfw 
         OpenAL::OpenAL 
         miniz 

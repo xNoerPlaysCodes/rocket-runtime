@@ -2,7 +2,7 @@
 #define ROCKETGE__RENDERER_HPP
 
 #include "macros.hpp"
-#include <cstdint>
+#include <stdint.h>
 #include "glfnldr.hpp"
 #include "asset.hpp"
 #include "rocket/rgl.hpp"

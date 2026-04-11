@@ -42,6 +42,7 @@
 #include "lib/tweeny/tweeny.h"
 
 #include "binary_stuff/splash_screen.h"
+#include "binary_stuff/splash_sfx.h"
 #include "lib/stb/stb_image.h"
 #include "lib/stb/stb_truetype.h"
 #include "internal_types.hpp"
@@ -321,31 +322,20 @@ namespace rocket {
 
         auto tween = tweeny::from(0).to(0).during(duration / 2).via(tweeny::easing::cubicOut);
 
+        asset_manager_t am;
+        audio::sound_engine_t engine(audio::device_t::get_default());
+        
         std::vector<uint8_t> splash_screen = std::vector<uint8_t>(splash_screen_png, splash_screen_png + splash_screen_png_len);
-        auto tx = std::make_shared<texture_t>();
-        int width = 0;
-        int height = 0;
-        int channels = 0;
-        stbi_uc *img_data = stbi_load_from_memory(
-            splash_screen.data(),
-            static_cast<int>(splash_screen.size()),
-            &width,
-            &height,
-            &channels,
-            4
-        );
-        if (img_data == nullptr) {
-            rocket::log("failed to load embedded splash texture", "opengl_renderer_2d", "show_splash", "error");
-            return;
-        }
-        tx->size = { width, height };
-        tx->channels = 4;
-        tx->data.assign(img_data, img_data + (width * height * 4));
-        stbi_image_free(img_data);
+        auto tx = am.get_texture(am.load_texture(splash_screen));
+
+        std::vector<uint8_t> splash_sfx = std::vector<uint8_t>(splash_sfx_ogg, splash_sfx_ogg + splash_sfx_ogg_len);
+        auto aud = am.get_sound(am.load_sound(splash_sfx));
 
         bool final = false;
 
         bool splash_finished = false;
+
+        engine.play(*aud);
 
         while (window->is_running() && !splash_finished) {
             this->begin_frame();

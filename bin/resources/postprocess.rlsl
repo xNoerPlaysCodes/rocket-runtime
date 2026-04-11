@@ -1,8 +1,19 @@
-Version: 1.2
-GL_MinimumVersion: 3.3
-GLES_MinimumVersion: 3.1
-Name: Post Process
-VertexStart
+=LangProperty NoPropertyOverride true
+=Set Name "Post Process"
+=Set Version 1.4
+=EnterNamespace API
+    =Add SupportedAPIs GL
+    =Add SupportedAPIs GLES
+=ExitNamespace
+=EnterNamespace API
+    =EnterNamespace GLES
+        =Set MinimumVersion 3.0
+    =ExitNamespace
+    =EnterNamespace GL
+        =Set MinimumVersion 3.3
+    =ExitNamespace
+=ExitNamespace
+=Begin VertexShader
     layout(location = 0) in vec2 aPos;
     out vec2 v_uv;
     uniform float u_flip_y;
@@ -12,15 +23,14 @@ VertexStart
         v_uv = vec2(v_uv.x, uv_y);
         gl_Position = vec4(aPos, 0.0, 1.0);
     }
-VertexEnd
-FragmentStart
+=End
+=Begin FragmentShader
     in vec2 v_uv;
     out vec4 frag_color;
     uniform sampler2D u_texture;
     uniform float u_time;
     uniform vec2 u_resolution;
     uniform float u_aberration;
-
     void main() {
         vec2 uv = v_uv - 0.5;
         float vignette = 1.0 - dot(uv, uv) * 1.5;
@@ -35,4 +45,4 @@ FragmentStart
         color *= vignette;
         frag_color = vec4(color, 1.0);
     }
-FragmentEnd
+=End

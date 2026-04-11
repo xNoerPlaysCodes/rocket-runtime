@@ -2053,6 +2053,7 @@ namespace rocket {
     }
 
     vulkan_renderer_2d::vulkan_renderer_2d(window_backend_i *window, int fps, renderer_flags_t flags) {
+        // r_assert(false);
         r_assert(window != nullptr);
         r_assert(fps != 0);
 
