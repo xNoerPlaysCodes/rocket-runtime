@@ -82,6 +82,8 @@ namespace rocket::audio {
     private:
         stb_vorbis *vorbis = nullptr;
         std::array<unsigned int, 4> buffers;
+        uint8_t cpu_buffer[1024];
+        int32_t cpu_buffer_len = 0;
         friend class sound_engine_t;
     public:
         bool loop = false;
@@ -103,11 +105,12 @@ namespace rocket::audio {
         void set_device(device_t *device);
     public:
         // @brief Play a Sound
-        // @note Volume is in %ge
+        // @note Volume is in percentage
         void play(sound_t &sound, bool loop = false, sound_finish_callback_t = nullptr, float volume = 30.f);
         void play(std::shared_ptr<streaming_sound_t> sound, bool loop = false, sound_finish_callback_t = nullptr);
         std::shared_ptr<streaming_sound_t> stream(std::string file_path, bool loop = false, sound_finish_callback_t = nullptr);
 
+        /// @brief Updates and plays music streams
         void update_music_streams();
     public:
         sound_engine_t(device_t *device);

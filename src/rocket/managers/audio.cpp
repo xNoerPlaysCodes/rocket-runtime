@@ -3,6 +3,7 @@
 #include <memory>
 #include <rocket/audio.hpp>
 #include <audio.hpp>
+#include <rocket/memory.hpp>
 #include <rocket/threads.hpp>
 #include <thread>
 #include <AL/al.h>
@@ -144,17 +145,6 @@ namespace rocket::audio {
         t.detach();
     }
 
-    std::shared_ptr<streaming_sound_t> sound_engine_t::stream(std::string file_path, bool loop, sound_finish_callback_t cb) {
-        auto strsound = std::make_shared<streaming_sound_t>();
-        strsound->file_path = file_path;
-        strsound->loop = loop;
-        strsound->cb = cb;
-
-        this->streaming_sounds.push_back(strsound);
-
-        return strsound;
-    }
-
     void sound_t::set_unloaded() {
         this->loaded = false;
     }
@@ -241,6 +231,46 @@ namespace rocket::audio {
     //     source->in_use = false;
     // }
 
+    std::shared_ptr<streaming_sound_t> sound_engine_t::stream(std::string file_path, bool loop, sound_finish_callback_t cb) {
+        std::shared_ptr<streaming_sound_t> ss = std::make_shared<streaming_sound_t>();
+        ss->file_path = file_path;
+        ss->loop = loop;
+        ss->cb = cb;
+
+        int error;
+        ss->vorbis = stb_vorbis_open_filename(file_path.c_str(), &error, nullptr);
+        stb_vorbis_info info = stb_vorbis_get_info(ss->vorbis);
+
+        const int BUFFER_SAMPLES = 1024;
+        short pcm[BUFFER_SAMPLES * 2];
+
+        for (int i = 0; i < 4; i++) {
+            int samples = stb_vorbis_get_samples_short_interleaved(
+                ss->vorbis,
+                info.channels,
+                pcm,
+                BUFFER_SAMPLES * info.channels
+            );
+
+            if (samples <= 0) break;
+
+            ALuint buffer;
+            alGenBuffers(1, &buffer);
+
+            alBufferData(
+                buffer,
+                info.channels == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16,
+                pcm,
+                samples * info.channels * sizeof(short),
+                info.sample_rate
+            );
+
+            alSourceQueueBuffers(ss->source->source, 1, &buffer);
+        }
+
+        return ss;
+    }
+
     void sound_engine_t::play(std::shared_ptr<streaming_sound_t> sound, bool loop, sound_finish_callback_t cb) {
         sound->loop = loop;
         sound->cb = cb;
@@ -322,42 +352,78 @@ namespace rocket::audio {
     }
 
     void sound_engine_t::update_music_streams() {
-        for (std::shared_ptr<streaming_sound_t> ssound : this->streaming_sounds) {
-            if (!ssound->vorbis) continue;
-
-            stb_vorbis_info info = stb_vorbis_get_info(ssound->vorbis);
-            int channels = info.channels;
-            int frames = 1024;
-
-            std::vector<int16_t> buffer(frames * channels);
-
-            int frames_decoded = stb_vorbis_get_samples_short_interleaved(ssound->vorbis, channels, buffer.data(), frames * channels);
-
-            if (frames_decoded == 0) {
-                stb_vorbis_close(ssound->vorbis);
-                ssound->vorbis = nullptr;
-                rocket::log("EOF reached at frame " + std::to_string(ssound->frames_loaded), "sound_engine_t", "update_music_streams", "trace");
-                continue;
-            }
-
-            // Keep track of how many "chunks" (frames) we’ve streamed
-            ssound->frames_loaded++;
-
-            if (frames_decoded < frames) {
-                // Partial final frame
-                buffer.resize(frames_decoded * channels);
-                stb_vorbis_close(ssound->vorbis);
-                ssound->vorbis = nullptr;
-                rocket::log("File ended early at chunk " + std::to_string(ssound->frames_loaded), "sound_engine_t", "update_music_streams", "trace");
-            }
-
-            ssound->current_buffer_to_play.samples = std::move(buffer);
-            ssound->current_buffer_to_play.sample_rate = info.sample_rate;
-            ssound->current_buffer_to_play.format = channels == 1 ? audio::format_t::mono16 : audio::format_t::stereo16;
-
-            alSourceQueueBuffers(ssound->source->source, 1, ssound->buffers.data());
-        }
+        r_assert("implement it");
+        // for (const auto &ss : this->streaming_sounds) {
+        //     int channels;
+        //     float **output;
+        //     int samples;
+        //
+        //     stb_vorbis_get_frame_short
+        //
+        //     int consumed = stb_vorbis_decode_frame_pushdata(
+        //         ss->vorbis,
+        //         ss->cpu_buffer,
+        //         ss->cpu_buffer_len,
+        //         &channels,
+        //         &output,
+        //         &samples
+        //     );
+        //
+        //     if (samples > 0) {
+        //         int16_t *buf = new int16_t[samples * channels];
+        //
+        //         for (int i = 0; i < samples; i++) {
+        //             for (int c = 0; c < channels; c++) {
+        //                 float s = output[c][i]; // note layout
+        //                 s = std::max(-1.0f, std::min(1.0f, s));
+        //                 buf[i * channels + c] = (int16_t)(s * 32767.0f);
+        //             }
+        //         }
+        //
+        //         // send buf to AL
+        //
+        //         delete[] buf;
+        //     }
+        // }
     }
+
+    // void sound_engine_t::update_music_streams() {
+    //     for (std::shared_ptr<streaming_sound_t> ssound : this->streaming_sounds) {
+    //         if (!ssound->vorbis) continue;
+    //
+    //         stb_vorbis_info info = stb_vorbis_get_info(ssound->vorbis);
+    //         int channels = info.channels;
+    //         int frames = 1024;
+    //
+    //         std::vector<int16_t> buffer(frames * channels);
+    //
+    //         int frames_decoded = stb_vorbis_get_samples_short_interleaved(ssound->vorbis, channels, buffer.data(), frames * channels);
+    //
+    //         if (frames_decoded == 0) {
+    //             stb_vorbis_close(ssound->vorbis);
+    //             ssound->vorbis = nullptr;
+    //             rocket::log("EOF reached at frame " + std::to_string(ssound->frames_loaded), "sound_engine_t", "update_music_streams", "trace");
+    //             continue;
+    //         }
+    //
+    //         // Keep track of how many "chunks" (frames) we’ve streamed
+    //         ssound->frames_loaded++;
+    //
+    //         if (frames_decoded < frames) {
+    //             // Partial final frame
+    //             buffer.resize(frames_decoded * channels);
+    //             stb_vorbis_close(ssound->vorbis);
+    //             ssound->vorbis = nullptr;
+    //             rocket::log("File ended early at chunk " + std::to_string(ssound->frames_loaded), "sound_engine_t", "update_music_streams", "trace");
+    //         }
+    //
+    //         ssound->current_buffer_to_play.samples = std::move(buffer);
+    //         ssound->current_buffer_to_play.sample_rate = info.sample_rate;
+    //         ssound->current_buffer_to_play.format = channels == 1 ? audio::format_t::mono16 : audio::format_t::stereo16;
+    //
+    //         alSourceQueueBuffers(ssound->source->source, 1, ssound->buffers.data());
+    //     }
+    // }
 
     bool sound_engine_no_destruction_cleanup_once = false;
 

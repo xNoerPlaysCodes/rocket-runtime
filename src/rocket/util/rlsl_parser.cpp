@@ -367,6 +367,9 @@ namespace rocket {
                         PS_UNKNOWN_VALUE(mode);
                     }
                 }
+                else {
+                    PS_UNKNOWN_KW(kw);
+                }
             } else if (state.parser_mode == mode_t::vertex) {
                 if (kw == "End") {
                     state.parser_mode = mode_t::rlsl;
@@ -382,7 +385,6 @@ namespace rocket {
             }
         }
 
-        // TODO Maybe do better job at genericizing or smth
         if ((rlsl_shader.vcode.empty() || rlsl_shader.fcode.empty()) && backend == renderer_backend_t::opengl) {
             rocket::log("failed to parse RLSL Shader: critical shader code missing", "shader_i", "rlsl_parser", "error");
             return {};

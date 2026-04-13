@@ -1,3 +1,4 @@
+#include <iostream>
 #include <rocket/macros.hpp>
 #if defined(ROCKETGE__Platform_Android)
     #include <GLES3/gl32.h>
@@ -12,8 +13,6 @@
 #include "binary_stuff/default_fonts.h"
 #include "rocket/audio.hpp"
 #include "rocket/asset.hpp"
-#include <algorithm>
-#include <chrono>
 #include <cstdint>
 #include <functional>
 #include <memory>
@@ -22,7 +21,6 @@
 #include <string>
 #include <thread>
 #include <vector>
-#include <iostream>
 #include "rgl.hpp"
 
 // should i add this?

@@ -1,5 +1,4 @@
 #include <fstream>
-#include <iostream>
 #include <rocket/runtime.hpp>
 #include <rocket/scripting.hpp>
 

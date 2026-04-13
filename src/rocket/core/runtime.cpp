@@ -12,7 +12,6 @@
 #include <cstdlib>
 #include <intl_macros.hpp>
 #include <thread>
-#include <array>
 
 #ifdef ROCKETGE__Platform_Android
 #include <android/log.h>
