@@ -6,12 +6,13 @@
 #include <glm/glm.hpp>
 #include <rocket/io.hpp>
 #include <rocket/renderer.hpp>
+#include <rocket/renderer_helpers.hpp>
 #include <rocket/rgl.hpp>
 #include <rocket/window.hpp>
-#include <stack>
 #include <util.hpp>
 #include <variant>
 #include <string>
+#include <stack>
 
 #define MkFuncPtr0(ret_type, name) ret_type (*name)()
 #define MkFuncPtr(ret_type, name, ...) ret_type (*name)(__VA_ARGS__)
@@ -62,11 +63,15 @@ namespace rocket {
 
     enum class gl_object_type_t {
         texture,
+        fbo
     };
 
-    struct gl_object_t { // 8 bytes
+    struct gl_object_t {
         gl_object_type_t type;
-        _GLuint value;
+        std::variant<
+            _GLuint,
+            rgl::fbo_t
+        > value;
     };
 
     struct opengl_renderer_2d_impl_t {
@@ -96,10 +101,16 @@ namespace rocket {
         std::vector<uint32_t> fragment_spirv;
     };
 
+    struct vk_fbo_t subclass(vk_object_t) {
+        // ...
+    };
+
     struct vk_object_t {
         vk_object_type_t type;
         std::variant<
-            vk_texture_t, vk_shader_t
+            vk_texture_t,
+            vk_shader_t,
+            vk_fbo_t
         > value;
         void *additional = nullptr;
     };

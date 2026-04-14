@@ -2,6 +2,7 @@
 #include "rocket/io.hpp"
 #include "rocket/renderer.hpp"
 #include "rocket/types.hpp"
+#include <iostream>
 #include <rocket/window.hpp>
 #include <rocket/runtime.hpp>
 #include <string>
@@ -17,7 +18,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
     rocket::renderer_2d r(&window, 60, {.show_splash = !test_mode});
 
     r.begin_frame();
-    auto cache = r.create_render_cache([](rocket::renderer_2d *ren) {
+    auto cache = r.create_render_cache([](rocket::renderer_2d_i *ren) {
         ren->clear(rocket::rgba_color(200,200,200));
         ren->draw_rectangle({{300, 20}, { 240, 240 }}, rocket::rgba_color::red());
         rocket::text_t text = {"Hello, world!", 32, rocket::rgb_color::black()};
@@ -25,8 +26,6 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
     });
 
     r.end_frame();
-
-
 
     while (window.is_running()) {
         r.begin_frame();

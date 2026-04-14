@@ -33,7 +33,7 @@ namespace rocket {
     class opengl_renderer_2d : public renderer_2d_i {
     protected:
         opengl_renderer_2d_impl_t *bk_impl = nullptr;
-
+        friend api_object_t render_cache_t::get_texture() const;
         friend class renderer_3d;
         friend class font_t;
         friend class vulkan_renderer_2d;

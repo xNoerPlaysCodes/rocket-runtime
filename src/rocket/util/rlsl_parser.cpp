@@ -551,6 +551,8 @@ namespace rocket {
         res.vk_frag_data = std::move(rlsl_shader.fdata);
         res.name = rlsl_shader.name;
         res.rlsl_version = rlsl_shader.version;
+        res.properties = std::move(state.properties);
+        res.properties_list = std::move(state.properties_list);
         return res;
     }
 }

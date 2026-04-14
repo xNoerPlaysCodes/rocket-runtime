@@ -51,9 +51,15 @@
 #include <intl_macros.hpp>
 
 namespace rocket {
-    unsigned int render_cache_t::get_texture() {
-        return rGL_TXID_INVALID; // FIXME real fbo color tex
-        // return this->fbo.color_tex;
+    api_object_t render_cache_t::get_texture() const {
+        if (this->fbo == ROCKETGE__InvalidNumber) {
+            return ROCKETGE__InvalidNumber;
+        }
+
+        auto r2d = util::get_global_renderer_2d();
+        auto opengl_r2d = static_cast<opengl_renderer_2d*>(r2d);
+        auto fbo = std::get<rgl::fbo_t>(opengl_r2d->bk_impl->objects[this->fbo].value);
+        return fbo.fbo;
     }
 }
 
@@ -155,8 +161,8 @@ namespace rocket {
         gl_object_t obj = {};
         obj.type = gl_object_type_t::texture;
 
-        glGenTextures(1, &obj.value);
-        glBindTexture(GL_TEXTURE_2D, obj.value);
+        glGenTextures(1, &std::get<_GLuint>(obj.value));
+        glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(obj.value));
 #ifdef ROCKETGE__Platform_Android
         glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, sz.x, sz.y, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, bitmap.data());
 #else
@@ -175,7 +181,7 @@ namespace rocket {
         for (auto &[k, v] : bk_impl->objects) {
             if (k == obj) {
                 if (v.type == gl_object_type_t::texture) {
-                    glDeleteTextures(1, &v.value);
+                    glDeleteTextures(1, &std::get<_GLuint>(v.value));
                 }
                 bk_impl->objects.erase(obj);
                 break;
@@ -386,67 +392,78 @@ namespace rocket {
     }
 
     render_cache_t* opengl_renderer_2d::create_render_cache(std::function<void(renderer_2d_i*)> cb) {
-        r_assert(false && "TODO IMPLEMENT CROSS API RENDER CACHE");
-        auto c = std::make_unique<render_cache_t>();
+        std::unique_ptr<render_cache_t> c = std::make_unique<render_cache_t>();
+        rgl::fbo_t fbo = rgl::create_fbo();
+        api_object_t hdl = ++this->impl->current_object_handle;
+        gl_object_t obj = this->bk_impl->objects[hdl];
+        obj.value = fbo;
+        obj.type = gl_object_type_t::fbo;
+        c->fbo = hdl;
+        c->draw = cb;
 
-        // // c->fbo = rgl::create_fbo();
-        // c->draw = cb;
-        //
-        // begin_render_cache(c.get());
-        // auto off = this->override_viewport_offset;
-        // auto sz = this->override_viewport_size;
-        // if (this->override_viewport_offset == rocket::vec2f_t(-1, -1)) {
-        //     off = {0,0};
-        // }
-        // if (this->override_viewport_size == rocket::vec2f_t(-1, -1)) {
-        //     sz = rgl::get_viewport_size();
-        // }
-        // glViewport(off.x, off.y, sz.x, sz.y);
-        // glClearColor(0,0,0,0);
-        // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        // cb(this);
-        // end_render_cache(c.get());
-        //
-        // this->impl->render_caches.emplace_back(std::move(c));
-        //
-        // return this->impl->render_caches.back().get();
+        this->bk_impl->objects[hdl] = obj;
+
+        begin_render_cache(c.get());
+        auto off = this->override_viewport_offset;
+        auto sz = this->override_viewport_size;
+        if (this->override_viewport_offset == rocket::vec2f_t(-1, -1)) {
+            off = {0,0};
+        }
+        if (this->override_viewport_size == rocket::vec2f_t(-1, -1)) {
+            sz = rgl::get_viewport_size();
+        }
+        glViewport(off.x, off.y, sz.x, sz.y);
+        glClearColor(0,0,0,0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        cb(this);
+        end_render_cache(c.get());
+
+        this->impl->render_caches.emplace_back(std::move(c));
+
+        return this->impl->render_caches.back().get();
     }
 
     void opengl_renderer_2d::invalidate_render_cache(render_cache_t *c) {
-        r_assert(false && "TODO IMPLEMENT CROSS API RENDER CACHE");
-        r_assert(c != nullptr);
-        // rgl::delete_fbo(c->fbo);
-        // c->fbo = rgl::create_fbo();
-        // bool _frame_started = this->frame_started;
-        // this->frame_started = true;
-        // begin_render_cache(c);
-        // glClearColor(0,0,0,0);
-        // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        // c->draw(this);
-        // end_render_cache(c);
-        // this->frame_started = _frame_started;
+        if (c->fbo == ROCKETGE__InvalidNumber)
+            return;
+        rgl::delete_fbo(std::get<rgl::fbo_t>(this->bk_impl->objects[c->fbo].value));
+        rgl::fbo_t fbo = rgl::create_fbo();
+        api_object_t hdl = ++this->impl->current_object_handle;
+        gl_object_t obj = this->bk_impl->objects[hdl];
+        obj.value = fbo;
+        obj.type = gl_object_type_t::fbo;
+        c->fbo = hdl;
+        this->bk_impl->objects[hdl] = obj;
+        bool _frame_started = this->frame_started;
+        this->frame_started = true;
+        begin_render_cache(c);
+        glClearColor(0,0,0,0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        c->draw(this);
+        end_render_cache(c);
+        this->frame_started = _frame_started;
     }
 
     void opengl_renderer_2d::begin_render_cache(render_cache_t *c) {
-        r_assert(c != nullptr);
-        // rgl::use_fbo(c->fbo);
+        if (c->fbo == ROCKETGE__InvalidNumber)
+            return;
+        rgl::use_fbo(std::get<rgl::fbo_t>(this->bk_impl->objects[c->fbo].value));
         this->impl->render_cache_use_stack.push(c);
     }
 
     void opengl_renderer_2d::draw_render_cache(render_cache_t *c, rocket::vec2f_t pos, rocket::vec2f_t sz) {
-        r_assert(false && "TODO IMPLEMENT CROSS API RENDER CACHE");
         if (this->check_graphics_settings(pos, sz) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
         r_assert(c != nullptr);
-        // r_assert(rgl::get_active_fbo() != c->fbo);
+        r_assert(rgl::get_active_fbo() != std::get<rgl::fbo_t>(this->bk_impl->objects[c->fbo].value));
 
         rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(pos, sz, 0, 0);
         rgl::texture_unit_handle_t unit;
         rgl::alloc_texture_unit(unit);
         glActiveTexture(unit.unit);
-        // glBindTexture(GL_TEXTURE_2D, c->fbo.color_tex);
+        glBindTexture(GL_TEXTURE_2D, std::get<rgl::fbo_t>(this->bk_impl->objects[c->fbo].value).color_tex);
         glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
         glUniform1f(glGetUniformLocation(pg, "u_flip_y"), 1.f);
         rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
@@ -454,12 +471,10 @@ namespace rocket {
     }
     
     void opengl_renderer_2d::draw_render_cache(render_cache_t *c, rocket::fbounding_box bbox) {
-        r_assert(false && "TODO IMPLEMENT CROSS API RENDER CACHE");
         this->draw_render_cache(c, bbox.pos, bbox.size);
     }
 
     void opengl_renderer_2d::end_render_cache(render_cache_t *c) {
-        r_assert(false && "TODO IMPLEMENT CROSS API RENDER CACHE");
         r_assert(c != nullptr);
         r_assert(!this->impl->render_cache_use_stack.empty());
         r_assert(this->impl->render_cache_use_stack.top() == c);
@@ -469,20 +484,19 @@ namespace rocket {
         if (this->impl->render_cache_use_stack.empty()) {
             rgl::reset_to_default_fbo();
         } else {
-            // rgl::use_fbo(this->impl->render_cache_use_stack.top()->fbo);
+            rgl::use_fbo(std::get<rgl::fbo_t>(this->bk_impl->objects[this->impl->render_cache_use_stack.top()->fbo].value));
         }
     }
 
     void opengl_renderer_2d::destroy_render_cache(render_cache_t *&c) {
-        r_assert(false && "TODO IMPLEMENT CROSS API RENDER CACHE");
         r_assert(c != nullptr);
         for (auto it = this->impl->render_caches.begin(); it != this->impl->render_caches.end(); ++it) {
             if (it->get() == c) {
                 this->impl->render_caches.erase(it);
-                // if (rgl::get_active_fbo() == c->fbo) {
-                //     rgl::reset_to_default_fbo();
-                // }
-                // rgl::delete_fbo(c->fbo);
+                if (rgl::get_active_fbo() != std::get<rgl::fbo_t>(this->bk_impl->objects[c->fbo].value)) {
+                    rgl::reset_to_default_fbo();
+                }
+                rgl::delete_fbo(std::get<rgl::fbo_t>(this->bk_impl->objects[c->fbo].value));
                 c = nullptr;
                 break;
             }
@@ -508,8 +522,8 @@ namespace rocket {
         if (texture->hdl == 0) {
             gl_object_t texture_object;
             texture_object.type = gl_object_type_t::texture;
-            glGenTextures(1, &texture_object.value);
-            glBindTexture(GL_TEXTURE_2D, texture_object.value);
+            glGenTextures(1, &std::get<_GLuint>(texture_object.value));
+            glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(texture_object.value));
             texture->hdl = ++this->impl->current_object_handle;
             this->bk_impl->objects[texture->hdl] = texture_object;
 
@@ -570,7 +584,7 @@ namespace rocket {
         glActiveTexture(unit.unit);
         this->make_ready_texture(texture);
         gl_object_t obj = this->bk_impl->objects[texture->hdl];
-        glBindTexture(GL_TEXTURE_2D, obj.value);
+        glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(obj.value));
         glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
         rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
         rgl::free_texture_unit(unit);
@@ -617,7 +631,7 @@ namespace rocket {
         glActiveTexture(unit.unit);
         this->make_ready_texture(atlas);
         gl_object_t obj = this->bk_impl->objects[atlas->hdl];
-        glBindTexture(GL_TEXTURE_2D, obj.value);
+        glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(obj.value));
         glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
 
         rocket::vec2f_t atlas_size{ 1.f * atlas->size.x, 1.f * atlas->size.y };
@@ -722,7 +736,7 @@ namespace rocket {
         rgl::texture_unit_handle_t unit;
         rgl::alloc_texture_unit(unit);
         glActiveTexture(unit.unit);
-        glBindTexture(GL_TEXTURE_2D, this->bk_impl->objects[text.font->hdl].value);
+        glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(this->bk_impl->objects[text.font->hdl].value));
 
         auto text_vo = rgl::get_text_vos();
         glBindVertexArray(text_vo.first);

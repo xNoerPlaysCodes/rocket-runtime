@@ -501,7 +501,7 @@ if (BUILD_TESTS)
         argument_test
         state_reset_test
         test_generator_test
-        # render_cache_test
+        render_cache_test
         custom_fbo_test
     )
 

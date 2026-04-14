@@ -1,7 +1,8 @@
 #pragma once
 
-#include <functional>
 #include <rocket/glfnldr.hpp>
+#include <rocket/types.hpp>
+#include <functional>
 
 namespace rocket {
     constexpr int fps_uncapped = -1; // [[TODO]] Put this in rocket::cst
@@ -32,15 +33,12 @@ namespace rocket {
 
     struct render_cache_t {
     private:
-        void *fbo;
-        // rgl::fbo_t fbo;
-        friend class renderer_2d_i;
-    public:
+        api_object_t fbo = ROCKETGE__InvalidNumber;
         std::function<void(rocket::renderer_2d_i *ren)> draw = nullptr;
+        friend class renderer_2d_i;
+        friend class opengl_renderer_2d;
+        friend class vulkan_renderer_2d;
     public:
-        /// @brief DO NOT USE
-        /// @brief Get FB Color Texture
-        /// @note Call after end_render_cache ONLY
-        unsigned int get_texture();
+        api_object_t get_texture() const;
     };
 }

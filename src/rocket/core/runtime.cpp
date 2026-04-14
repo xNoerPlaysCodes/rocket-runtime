@@ -5,6 +5,7 @@
 #include <rocket/runtime.hpp>
 #include "util.hpp"
 #include <iostream>
+#include <shader.hpp>
 #include <string>
 #include <mutex>
 #include <rocket/macros.hpp>
@@ -293,6 +294,26 @@ namespace rocket {
         }
     }
 
+    log_level_t str_to_log_level(const std::string& level) {
+        if (level == "trace") {
+            return log_level_t::trace;
+        } else if (level == "debug") {
+            return log_level_t::debug;
+        } else if (level == "info") {
+            return log_level_t::info;
+        } else if (level == "warn") {
+            return log_level_t::warn;
+        } else if (level == "error") {
+            return log_level_t::error;
+        } else if (level == "fatal") {
+            return log_level_t::fatal;
+        } else if (level == "all") {
+            return log_level_t::all;
+        }
+
+        return log_level_t::none;
+    }
+
     void set_log_callback(log_callback_t callback) { 
         util::set_log_callback(callback); 
     }
@@ -433,7 +454,7 @@ namespace rocket {
             "logfile",
         };
 
-        util::global_state_cliargs_t args = {};
+        auto args = util::get_clistate();
         bool exit = false;
         bool error = false;
         bool logfile_overwrite = false;
@@ -795,7 +816,7 @@ namespace rocket {
         set_cli_arguments(args.size(), strbuf.data());
     }
 
-    void init(std::vector<std::string> args) {
+    void ordered_init() {
 #ifdef ROCKETGE__Platform_Android
         __init();
         global_init();
@@ -804,7 +825,53 @@ namespace rocket {
         global_init();
         rnative::init();
         __init();
+
+        std::filesystem::path path;
+
+        if (char *home = getenv("USERPROFILE"); home != nullptr) {
+            path = std::filesystem::path(home) / "AppData" / "Roaming";
+        } else if (char *home = getenv("HOME"); home != nullptr) {
+            path = std::filesystem::path(home) / ".config";
+        } else {
+            rocket::log("Could not determine data storage path", "rocket::storage", "get_data_storage_path", "error");
+            path = std::filesystem::current_path();
+        }
+
+        path /= "rocket.cfg";
+
+        if (!std::filesystem::exists(path)) {
+            return;
+        }
+
+        std::ifstream f(path);
+        std::string line;
+        std::vector<std::string> lines;
+        while (std::getline(f, line)) {
+            lines.push_back(line);
+        }
+        f.close();
+
+        rlsl_parsed_result_t res = rlsl_parse(lines, path.parent_path(), renderer_backend_t::null, nullptr);
+        auto state = util::get_clistate();
+        const auto do_if_exists = [&res] (std::string key, std::function<void(std::string value)> cb) {
+            if (res.properties.find(key) != res.properties.end()) {
+                cb(res.properties[key]);
+            }
+        };
+        do_if_exists("Core.ShowSplash", [&state](std::string value){
+            bool bool_value = value == "true" ? true : false;
+            state.nosplash = !bool_value;
+        });
+        do_if_exists("Core.LogLevel", [](std::string value) {
+            util::set_log_level(str_to_log_level(value));
+        });
+        rocket::log("Rest of the rocket.cfg keys are ignored", "rocket", "init", "debug");
+        util::init_clistate(state);
 #endif
+    }
+
+    void init(std::vector<std::string> args) {
+        ordered_init();
 
         set_cli_arguments(args);
     }
@@ -820,15 +887,7 @@ namespace rocket {
 #pragma GCC diagnostic pop
 
     void init(int argc, char **argv) {
-#ifdef ROCKETGE__Platform_Android
-        __init();
-        global_init();
-        rnative::init();
-#else
-        global_init();
-        rnative::init();
-        __init();
-#endif
+        ordered_init();
 
         set_cli_arguments(argc, argv);
     }
