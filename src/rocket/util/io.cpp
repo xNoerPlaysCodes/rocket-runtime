@@ -16,6 +16,7 @@
 #include <utility>
 
 #include <SDL2/SDL.h>
+#include <intl_macros.hpp>
 
 #ifdef ROCKETGE__Platform_Desktop
 #include <GLFW/glfw3.h>
@@ -41,6 +42,24 @@ namespace std {
             return h1 ^ (h2 << 1);
         }
     };
+}
+
+namespace rocket::io {
+    enum class native_key_fmt_t {
+        glfw,
+        sdl
+    };
+
+    int translate_rocket_to_native_key(int id, native_key_fmt_t fmt) {
+        if (fmt == native_key_fmt_t::glfw) {
+            return id; // id is already in glfw fmt
+        } else if (fmt == native_key_fmt_t::sdl) {
+            r_assert(false && "SDL is not supported");
+            return 0;
+        }
+
+        return 0;
+    }
 }
 
 namespace rocket::io {

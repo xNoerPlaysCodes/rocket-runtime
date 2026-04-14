@@ -27,7 +27,7 @@ namespace rocket {
         };
 
         enum class keyboard_key : int {
-            unknown = -1,
+            unknown = 0,
 
             first_key = 32,
 
