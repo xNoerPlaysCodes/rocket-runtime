@@ -26,8 +26,9 @@
 #include <windows.h>
 #endif
 
-#define GLFW_INCLUDE_VULKAN
+#ifdef ROCKETGE__Platform_Desktop
 #include <GLFW/glfw3.h>
+#endif
 #include <vulkan/vulkan.h>
 
 #include "binary_stuff/splash_screen.h"
@@ -1221,8 +1222,10 @@ namespace {
 
     static void create_instance(rge_vk_native_state_t &state, bool debug_context) {
         uint32_t extension_count = 0;
+#ifdef ROCKETGE__Platform_Desktop
         const char **required_extensions = glfwGetRequiredInstanceExtensions(&extension_count);
         std::vector<const char*> extensions(required_extensions, required_extensions + extension_count);
+#endif
 
         (void) debug_context;
 
@@ -1235,8 +1238,10 @@ namespace {
 
         VkInstanceCreateInfo create_info { VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO };
         create_info.pApplicationInfo = &app_info;
+#ifdef ROCKETGE__Platform_Desktop
         create_info.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
         create_info.ppEnabledExtensionNames = extensions.data();
+#endif
 
         vk_expect(vkCreateInstance(&create_info, nullptr, &state.instance), "vkCreateInstance");
     }

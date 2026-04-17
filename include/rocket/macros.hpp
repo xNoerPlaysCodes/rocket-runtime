@@ -66,5 +66,6 @@
 #endif
 
 #define ROCKETGE__InvalidNumber (0xDEADBEEFU)
+#define ROCKETGE__InvalidNumber_s (0xBADF00D)
 
 #endif // ROCKETGE__MACROS_HPP

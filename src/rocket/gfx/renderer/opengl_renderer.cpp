@@ -59,7 +59,30 @@ namespace rocket {
         auto r2d = util::get_global_renderer_2d();
         auto opengl_r2d = static_cast<opengl_renderer_2d*>(r2d);
         auto fbo = std::get<rgl::fbo_t>(opengl_r2d->bk_impl->objects[this->fbo].value);
-        return fbo.fbo;
+        return fbo.color_tex;
+    }
+
+    framebuffer_t::framebuffer_t(rocket::vec2f_t size) {
+        this->size = size;
+    }
+
+    int framebuffer_t::bind() {
+        r_assert(this->binding == ROCKETGE__InvalidNumber_s);
+        rgl::texture_unit_handle_t hdl;
+        if (!rgl::alloc_texture_unit(hdl)) {
+            return ROCKETGE__InvalidNumber;
+        }
+        this->binding = hdl.raw_unit_no_enum;
+        return this->binding;
+    }
+
+    void framebuffer_t::free_binding() {
+        r_assert(this->binding != ROCKETGE__InvalidNumber_s);
+    }
+
+    framebuffer_t::~framebuffer_t() {
+        if (this->binding != ROCKETGE__InvalidNumber_s)
+            this->free_binding();
     }
 }
 

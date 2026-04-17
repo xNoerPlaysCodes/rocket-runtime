@@ -186,8 +186,10 @@ namespace rgl {
         for (uint8_t i = 0; i < texture_unit_pool.max_idx; ++i) {
             if (texture_unit_pool.freelist[i]) {
                 texture_unit_pool.freelist[i] = false;
-                dst = texture_unit_handle_t { static_cast<unsigned int>(GL_TEXTURE0) + i };
-                
+                dst = texture_unit_handle_t {
+                    .unit = static_cast<unsigned int>(GL_TEXTURE0) + i,
+                    .raw_unit_no_enum = i
+                };
                 return true;
             }
         }

@@ -479,10 +479,10 @@ namespace rocket {
                 api.gles = true;
 
                 rlsl_shader.vcode = "precision highp float;" "\n" + rlsl_shader.vcode;
-                rlsl_shader.vcode = "#version " + to_hash_version_gl(std::to_string(std::stof(get_property("API.GLES.MinimumVersion")))) + "es\n" + rlsl_shader.vcode;
+                rlsl_shader.vcode = "#version " + to_hash_version_gl(std::to_string(std::stof(get_property("API.GLES.MinimumVersion")))) + " es\n" + rlsl_shader.vcode;
 
                 rlsl_shader.fcode = "precision highp float;" "\n" + rlsl_shader.fcode;
-                rlsl_shader.fcode = "#version " + to_hash_version_gl(std::to_string(std::stof(get_property("API.GLES.MinimumVersion")))) + "es\n" + rlsl_shader.fcode;
+                rlsl_shader.fcode = "#version " + to_hash_version_gl(std::to_string(std::stof(get_property("API.GLES.MinimumVersion")))) + " es\n" + rlsl_shader.fcode;
             }
 #else
             if (vec_exists(supported_backends, "GL")) {

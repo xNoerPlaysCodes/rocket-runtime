@@ -73,7 +73,9 @@ namespace rgl {
     };
 
     struct texture_unit_handle_t {
+        /// @brief GL_TEXTURE[n]
         unsigned int unit = -1;
+        unsigned int raw_unit_no_enum = -1;
     };
 
     struct scoped_gl_texture_t {

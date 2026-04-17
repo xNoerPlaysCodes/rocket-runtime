@@ -26,7 +26,26 @@ namespace rocket {
     enum class renderer_backend_t {
         null,
         opengl,
-        vulkan // (maybe)?
+        vulkan,
+    };
+
+    /// @brief API-agnostic Framebuffer Object
+    struct framebuffer_t {
+    private:
+        api_object_t fbo = ROCKETGE__InvalidNumber;
+        rocket::vec2f_t size = {};
+        int binding = -1;
+    public:
+        /// @brief Binds and returns a texture unit
+        /// @note between [0-32]
+        int bind();
+
+        /// @brief Frees binding
+        /// @note Called automatically on destructor
+        void free_binding();
+    public:
+        framebuffer_t(rocket::vec2f_t size);
+        ~framebuffer_t();
     };
 
     class renderer_2d_i;

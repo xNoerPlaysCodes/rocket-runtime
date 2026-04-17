@@ -391,6 +391,7 @@ elseif (__rge_ANDROID__)
     )
     target_include_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/androiddeps/include
+        ${CMAKE_SOURCE_DIR}/androiddeps/include/miniz
         ${ANDROID_NDK}/sources/android/native_app_glue
     )
     message("RocketGE Platform: Mobile-Embedded-Android")
