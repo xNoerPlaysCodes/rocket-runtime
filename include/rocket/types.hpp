@@ -553,12 +553,18 @@ namespace rocket {
     using vec4f_t       =       vec4<float>;
     using vec4d_t       =       vec4<double>;
 
-    using vec2_t = vec2f_t;
-    using vec3_t = vec3f_t;
-    using vec4_t = vec4f_t;
+    using vec2_t        =       vec2f_t;
+    using vec3_t        =       vec3f_t;
+    using vec4_t        =       vec4f_t;
 
     using assetid_t     =       uint32_t;
     using api_object_t  =       uint32_t;
+
+    static_assert(sizeof(float) == 4);
+    using float32_t     =       float;
+
+    static_assert(sizeof(double) == 8);
+    using float64_t     =       double;
 }
 
 #endif
