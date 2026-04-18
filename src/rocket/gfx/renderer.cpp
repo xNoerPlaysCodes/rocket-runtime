@@ -32,7 +32,7 @@ namespace rocket {
                 auto ver = win->get_flags().graphics_ctx.version;
                 return VERSION(ver.x, ver.y);
             };
-            constexpr auto test_vk = [](rocket::window_backend_i *win) -> int {
+            constexpr auto test_vk = [](rocket::window_backend_i *) -> int {
                 return 0;
             };
             switch (backend) {
@@ -77,6 +77,13 @@ namespace rocket {
         renderer_flags_t flags, 
         uint8_t renderer_choice_bitmask
     ) {
-        return get_renderer(get_preferred_backend_list(backend, window, renderer_choice_bitmask).top(), window, fps, flags);
+        return get_renderer(
+            get_preferred_backend_list(
+                backend, 
+                window, 
+                renderer_choice_bitmask
+            ).top(), 
+            window, fps, flags
+        );
     }
 }
