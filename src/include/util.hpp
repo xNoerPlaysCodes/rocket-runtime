@@ -56,6 +56,8 @@ namespace util {
         bool notext = false;
         bool forcewayland = false;
         bool software_frame_timer = false;
+
+        std::vector<rocket::renderer_backend_t> blacklisted_apis;
     };
 
     std::string format_log(std::string log, std::string class_file_library_source, std::string function_source, std::string level);

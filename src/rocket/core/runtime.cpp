@@ -760,8 +760,10 @@ namespace rocket {
 #ifdef ROCKETGE__Platform_Linux
                 setenv("LIBGL_ALWAYS_SOFTWARE", "1", 1);
 #endif
-            } else if (arg == "intentional-crash") {
+            } else if (arg == "intentional-segfault") {
                 util::segfault();
+            } else if (arg == "intentional-exception") {
+                throw std::runtime_error("Intentional Exception");
             }
             else {
                 bool found = false;
@@ -826,6 +828,8 @@ namespace rocket {
         rnative::init();
         __init();
 
+        std::set_terminate(rocket::crash_with_stacktrace);
+
         std::filesystem::path path;
 
         if (char *home = getenv("USERPROFILE"); home != nullptr) {
@@ -833,7 +837,7 @@ namespace rocket {
         } else if (char *home = getenv("HOME"); home != nullptr) {
             path = std::filesystem::path(home) / ".config";
         } else {
-            rocket::log("Could not determine data storage path", "rocket::storage", "get_data_storage_path", "error");
+            rocket::log("Could not determine data storage path", "rocket::init", "get_data_storage_path", "error");
             path = std::filesystem::current_path();
         }
 
@@ -853,11 +857,21 @@ namespace rocket {
 
         rlsl_parsed_result_t res = rlsl_parse(lines, path.parent_path(), renderer_backend_t::null, nullptr);
         auto state = util::get_clistate();
+
         const auto do_if_exists = [&res] (std::string key, std::function<void(std::string value)> cb) {
             if (res.properties.find(key) != res.properties.end()) {
+                rocket::log("config key named '" + key + "'" + " was found with value '" + res.properties[key] + "'", "rocket", "init", "debug");
                 cb(res.properties[key]);
             }
         };
+
+        const auto do_if_exists_l = [&res] (std::string key, std::function<void(const std::vector<std::string> &value)> cb) {
+            if (res.properties_list.find(key) != res.properties_list.end()) {
+                rocket::log("config key named '" + key + "'" + " was found with value " + "[rlsl::list]", "rocket", "init", "debug");
+                cb(res.properties_list[key]);
+            }
+        };
+
         do_if_exists("Core.ShowSplash", [&state](std::string value){
             bool bool_value = value == "true" ? true : false;
             state.nosplash = !bool_value;
@@ -865,7 +879,26 @@ namespace rocket {
         do_if_exists("Core.LogLevel", [](std::string value) {
             util::set_log_level(str_to_log_level(value));
         });
-        rocket::log("Rest of the rocket.cfg keys are ignored", "rocket", "init", "debug");
+        do_if_exists("Graphics.PreferredAPI", [&state](std::string value) {
+            if (value == "OpenGL") {
+                state.renderer_backend = renderer_backend_t::opengl;
+            } else if (value == "Vulkan") {
+                state.renderer_backend = renderer_backend_t::vulkan;
+            }
+        });
+        do_if_exists_l("Graphics.BlacklistedAPIs", [&state](const std::vector<std::string> &value) {
+            for (const auto &item : value) {
+                if (item == "OpenGL") {
+                    state.blacklisted_apis.push_back(renderer_backend_t::opengl);
+                } else if (item == "Vulkan") {
+                    state.blacklisted_apis.push_back(renderer_backend_t::vulkan);
+                }
+            }
+        });
+        do_if_exists("Window.InitialResolution", [&state](std::string value) {
+            state.viewport_size = value;
+            state.viewport_size_set = true;
+        });
         util::init_clistate(state);
 #endif
     }

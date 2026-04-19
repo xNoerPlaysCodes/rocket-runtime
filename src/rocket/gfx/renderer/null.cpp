@@ -2,11 +2,13 @@
 #include "internal_types.hpp"
 
 namespace rocket {
-    null_renderer_2d::null_renderer_2d(window_backend_i *, int, renderer_flags_t)
-    {
+    null_renderer_2d::null_renderer_2d(window_backend_i *, int, renderer_flags_t) {
+        util::set_global_renderer_2d(this);
     }
 
-    null_renderer_2d::null_renderer_2d() {}
+    null_renderer_2d::null_renderer_2d() {
+        util::set_global_renderer_2d(this);
+    }
     
     null_renderer_2d::gfx_chk_result null_renderer_2d::check_graphics_settings(rocket::vec2f_t, rocket::vec2f_t) {
         return gfx_chk_result::drawable;
@@ -192,6 +194,8 @@ namespace rocket {
     }
 
     void null_renderer_2d::close() {
+        if (util::get_global_renderer_2d() == this)
+            util::set_global_renderer_2d(nullptr);
     }
 
     null_renderer_2d::~null_renderer_2d() {

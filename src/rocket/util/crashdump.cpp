@@ -1,7 +1,9 @@
 #include <crashdump.hpp>
 #include <cstdio>
 #include <cstring>
+#include <exception>
 #include <filesystem>
+#include <iostream>
 #include <rocket/memory.hpp>
 #include <util.hpp>
 #include <native.hpp>
@@ -47,7 +49,7 @@ namespace rocket {
         return buf;
     }
 
-    int construct_stack_trace(char* buf, size_t len) {
+    int construct_stack_trace(char* buf, size_t len, std::exception_ptr eptr = nullptr) {
 #if defined(ROCKETGE__Platform_UnixCompatible) && defined(ROCKETGE__Platform_Desktop)
         if (len == 0) return 0;
 
@@ -67,6 +69,26 @@ namespace rocket {
         size_t remaining = len;
         char* out = buf;
         int total_written = 0;
+
+        const char *exception_info = nullptr;
+
+        if (eptr != nullptr) {
+            try {
+                std::rethrow_exception(eptr);
+            } catch (const std::exception &e) {
+                exception_info = e.what();
+            } catch (...) {
+                exception_info = "not a subclass of std::exception";
+            }
+        }
+
+        if (exception_info != nullptr) {
+            int written = std::snprintf(out, remaining, "uncaught exception\nwhat(): %s\n\n", exception_info);
+
+            out += written;
+            remaining -= written;
+            total_written += written;
+        }
 
         for (size_t i = 0; i < st_size; ++i) {
             const auto& frame = st[i];
@@ -174,9 +196,18 @@ namespace rocket {
             "The program will now dump the stack trace"
         );
 
-        written += construct_stack_trace(buf + written, size - written);
+        written += construct_stack_trace(buf + written, size - written, std::current_exception());
         written += std::snprintf(buf + written, size - written, 
             "\n>- Please report with all details to the RocketGE Github Maintainer -<");
         return buf;
+    }
+
+    [[noreturn]] void crash_with_stacktrace() noexcept {
+        init_allocator();
+        constexpr size_t sz = 1 * 1024 * 1024;
+        char *buf = (char*) char_allocator->allocate(sz);
+        construct_stack_trace(buf, sz, std::current_exception());
+        std::cerr << '\n' << buf << '\n' << std::flush;
+        rnative::exit_now(134);
     }
 }

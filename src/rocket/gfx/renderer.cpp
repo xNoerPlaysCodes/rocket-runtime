@@ -1,4 +1,5 @@
 #include "rocket/renderer.hpp"
+#include <iostream>
 #include <rocket/renderer_helpers.hpp>
 #include <util.hpp>
 #include <stack>
@@ -57,12 +58,38 @@ namespace rocket {
             device_capability_t caps = get_capabilities(win);
             std::stack<renderer_backend_t> stk;
             stk.push(renderer_backend_t::null);
-            if (caps.max_vk_version != 0 && choice & renderer_choice::vulkan)
-                stk.push(renderer_backend_t::vulkan);
-            if (caps.max_gl_version != 0 && choice & renderer_choice::opengl)
-                stk.push(renderer_backend_t::opengl);
-            stk.push(requested);
             auto cli_args = util::get_clistate();
+            if (
+                caps.max_vk_version != 0 
+                && choice & renderer_choice::vulkan
+                && std::find(
+                    cli_args.blacklisted_apis.begin(), 
+                    cli_args.blacklisted_apis.end(), 
+                    renderer_backend_t::vulkan
+                ) == cli_args.blacklisted_apis.end()
+            ) {
+                stk.push(renderer_backend_t::vulkan);
+            }
+            if (
+                caps.max_gl_version != 0 
+                && choice & renderer_choice::opengl
+                && std::find(
+                    cli_args.blacklisted_apis.begin(), 
+                    cli_args.blacklisted_apis.end(), 
+                    renderer_backend_t::opengl
+                ) == cli_args.blacklisted_apis.end()
+            ) {
+                stk.push(renderer_backend_t::opengl);
+            }
+            if (
+                std::find(
+                    cli_args.blacklisted_apis.begin(), 
+                    cli_args.blacklisted_apis.end(), 
+                    requested
+                ) == cli_args.blacklisted_apis.end()
+            ) {
+                stk.push(requested);
+            }
             if (cli_args.renderer_backend_version > 0)
                 stk.push(cli_args.renderer_backend);
 

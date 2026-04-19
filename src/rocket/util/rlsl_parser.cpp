@@ -337,7 +337,9 @@ namespace rocket {
                 }
                 else if (kw == "Add") {
                     const std::string &given_property = trim(parts.at(1));
-                    const std::string &value = trim(parts.at(2));
+                    const std::string &given_value = trim(parts.at(2));
+
+                    std::string value = parse_str(given_value);
 
                     std::string property = namespace_to_str();
                     if (!property.empty())
