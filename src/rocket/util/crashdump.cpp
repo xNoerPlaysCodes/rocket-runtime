@@ -49,7 +49,7 @@ namespace rocket {
         return buf;
     }
 
-    int construct_stack_trace(char* buf, size_t len, std::exception_ptr eptr = nullptr) {
+    int construct_stack_trace(char* buf, size_t len, std::exception_ptr eptr) {
 #if defined(ROCKETGE__Platform_UnixCompatible) && defined(ROCKETGE__Platform_Desktop)
         if (len == 0) return 0;
 
