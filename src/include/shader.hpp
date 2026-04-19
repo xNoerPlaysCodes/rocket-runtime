@@ -17,5 +17,6 @@ namespace rocket {
         std::unordered_map<std::string, std::string> properties;
         std::unordered_map<std::string, std::vector<std::string>> properties_list;
     };
-    rlsl_parsed_result_t rlsl_parse(std::vector<std::string> lines, std::filesystem::path shader_workingdir, rocket::renderer_backend_t backend, void *vk_phys_device);
+
+    rlsl_parsed_result_t rlsl_parse(std::vector<std::string> lines, std::filesystem::path working_dir, rocket::renderer_backend_t backend, void *vk_phys_device);
 }
