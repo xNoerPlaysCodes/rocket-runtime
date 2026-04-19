@@ -44,15 +44,15 @@ namespace r {
 #define LOGI(...) (void)0
 #define LOGE(...) (void)0
 #define LOGD(...) (void)0
-#define r_LOG(X) rocket::log(X, std::string(r::class_or_file(_, __FILE__)), __func__, "fatal")
+#define r_LOG(X) rocket::log(X, std::string(r::class_or_file(__fsig, __FILE__)), __func__, "fatal")
 #endif
 
 #ifdef ROCKETGE__DEBUG_BUILD
-#define r_assert(x) \
+#define r_assert(condition) \
     do { \
-        if (!(x)) { \
-            constexpr std::string_view _ = r_FuncSig; \
-            r_LOG("Assertion Failed: " r_Stringify(x)); \
+        if (!(condition)) { \
+            constexpr std::string_view __fsig = r_FuncSig; \
+            r_LOG("Assertion Failed: " r_Stringify(condition)); \
             rnative::exit_now(1); \
         } \
     } while (0)
@@ -60,10 +60,12 @@ namespace r {
 #define r_assert(x) ((void)sizeof(x))
 #endif
 
+#define r_quicklog(msg) rocket::log("QuickLog Message: ", std::string(r::class_or_file(r_FuncSig, __FILE__)), __func__, "debug")
+
 #ifdef ROCKETGE__DEBUG_BUILD
-#define r_debug_if(x) if (x)
+#define r_debug_if(condition) if ((condition))
 #else
-#define r_debug_if(x) if (false && sizeof(x))
+#define r_debug_if(condition) if (false && ((condition) && false))
 #endif
 
 #endif // INTL__MACROS_HPP

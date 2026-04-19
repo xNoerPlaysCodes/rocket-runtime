@@ -920,7 +920,10 @@ namespace rocket {
         custom_argument_t a;
         a.arg = arg;
         a.cb = [cb](std::optional<std::string> v) {
-            cb(*v);
+            if (v.has_value())
+                cb(*v);
+            else
+                rocket::log("std::optional does not have value", "rocket", "register_argument::lambda", "warn");
         };
         a.description = description;
         a.value_type = value_type;
