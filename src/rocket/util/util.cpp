@@ -371,7 +371,7 @@ cleanup:
         membuf.sz = sz;
     }
 
-    membuf_t *get_memory_buffer() {
+    membuf_t* get_memory_buffer() {
         return &membuf;
     }
 

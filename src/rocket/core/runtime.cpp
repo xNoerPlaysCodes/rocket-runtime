@@ -2,6 +2,7 @@
 #include <fstream>
 #include <limits>
 #include <native.hpp>
+#include <random>
 #include <rocket/runtime.hpp>
 #include "util.hpp"
 #include <iostream>
@@ -184,34 +185,59 @@ namespace callback {
 #include <cstdlib>
 #include <unistd.h>
 
-void __hook(int signal, void(*func)(int, siginfo_t *, void *)) {
+static void hook_sig(int signal, void(*func)(int, siginfo_t *, void *)) {
     struct sigaction sa = {};
     sa.sa_flags = SA_SIGINFO;
     sa.sa_sigaction = func;
     sigaction(signal, &sa, nullptr);
 }
 
-void __init() {
-    __hook(SIGSEGV, [](int, siginfo_t *info, void *) {
+static std::string generate_thread_name_hash() {
+    static constexpr std::array<char, 36> chars = {
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+    };
+    constexpr size_t len = sizeof(chars);
+ 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution distrib(0, static_cast<int>(chars.size()));
+
+    const int random_numbers[4] = { distrib(gen), distrib(gen), distrib(gen), distrib(gen) };
+    std::string s;
+    s.reserve(4);
+    for (auto n : random_numbers) {
+        s += chars[n];
+    }
+
+    volatile char *c = new char;
+    *c = chars[55];
+
+    return s;
+}
+
+static void __init() {
+    hook_sig(SIGSEGV, [](int, siginfo_t *info, void *) {
         callback::bad_memory_access(info->si_addr, info->si_code);
     });
 
-    __hook(SIGBUS, [](int, siginfo_t *info, void *) {
+    hook_sig(SIGBUS, [](int, siginfo_t *info, void *) {
         callback::invalid_memory_operation(info->si_addr, info->si_code);
     });
 
-    __hook(SIGIOT, [](int, siginfo_t *info, void *) {
+    hook_sig(SIGIOT, [](int, siginfo_t *info, void *) {
         callback::aborted(info->si_addr, info->si_code);
     });
 
-    __hook(SIGABRT, [](int, siginfo_t *info, void *) {
+    hook_sig(SIGABRT, [](int, siginfo_t *info, void *) {
         callback::aborted(info->si_addr, info->si_code);
     });
 
     rocket::log("Hooked SIGBUS, SIGSEGV, SIGIOT, SIGABRT", "rocket", "init", "debug");
     
     util::init_memory_buffer();
-    rnative::set_thread_name("RocketGE");
+    std::string thread_name = "RocketGE [" + generate_thread_name_hash() + "]";
+    rnative::set_thread_name(thread_name.c_str());
 
     rocket::log("Emergency memory buffer initialized with size " + std::format("{} MiB", util::get_memory_buffer()->sz / 1024 / 1024), "rocket", "init", "debug");
 }
