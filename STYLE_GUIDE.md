@@ -8,7 +8,12 @@ The legacy `util` namespace is an exception and new functions may not be added o
 
 ### 2. Names
 Use names that are meaningful and readable. \
-Names of classes, functions and variables should be `snake_case` in general. \
+Names of classes, functions and variables should be `snake_case` in all cases. \
+Reference or Pointer Variables should be declared like the following:
+```cpp
+T &reference;
+T *reference;
+```
 Member Variables also follow the same pattern, no extra prefix or suffix \
 **NOTE:** Global variables should be prefixed with `g_`
 
@@ -43,6 +48,21 @@ int get_size();
 
 bool is_active();
 ```
+
+**NOTE:** If a function returns a pointer or a reference, they should be declared like the following: \
+
+```cpp
+T& get_reference();
+T* get_pointer();
+```
+
+and **NOT**
+
+```cpp
+T &get_reference();
+T *get_pointer();
+```
+^^^ Don't do that for functions!
 
 
 ### 2.3. File Names
