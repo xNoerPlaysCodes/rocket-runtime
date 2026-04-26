@@ -19,6 +19,25 @@
 #include <intl_macros.hpp>
 #include "lib/base64/base64.h"
 
+struct cpu {
+    union {
+        struct {
+            uint8_t r0, r1, r2, r3,
+                    r4, r5, r6, r7;
+        };
+
+        uint8_t r[8];
+        uint64_t raw;
+    } reg_data;
+};
+
+void x() {
+    cpu repr;
+    repr.reg_data.r0 = 42;
+    repr.reg_data.r[1] = 43;
+    repr.reg_data.raw = 0xDEADBEEF;
+}
+
 namespace rocket {
     namespace {
         std::string trim(const std::string& s) {

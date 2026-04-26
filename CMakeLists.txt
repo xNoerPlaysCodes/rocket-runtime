@@ -1,4 +1,3 @@
-
 #!/bin/cmake .
 
 cmake_minimum_required(VERSION 3.30)
@@ -150,6 +149,9 @@ set(ROCKETGE_SOURCES
 
     # Special Cases
     src/libs.cpp
+
+    # SGFX
+    src/sgfx/sgfx.cpp
 
     # RNative
     ${RNATIVE_SOURCES}

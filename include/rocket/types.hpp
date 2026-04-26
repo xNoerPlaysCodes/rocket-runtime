@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <stdexcept>
+
 namespace rocket {
     template<typename T>
     struct vec2 {
