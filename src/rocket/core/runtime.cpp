@@ -198,6 +198,9 @@ static std::string generate_thread_name_hash() {
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
     };
     constexpr size_t len = sizeof(chars);
+
+    return "TODO";
+    // FIXME: OOB access
  
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -209,9 +212,6 @@ static std::string generate_thread_name_hash() {
     for (auto n : random_numbers) {
         s += chars[n];
     }
-
-    volatile char *c = new char;
-    *c = chars[55];
 
     return s;
 }

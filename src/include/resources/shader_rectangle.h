@@ -22,14 +22,43 @@ namespace rocket_resource {
     =ExitNamespace
 =ExitNamespace
 
+// =Begin VertexShader
+//     layout(location = 0) in vec3 a_pos;
+//     layout(location = 1) in vec2 a_uv;
+//
+//     uniform mat4 u_sgfx_model;
+//
+//     out vec2 v_uv;
+//
+//     void main() {
+//         v_uv = a_uv;
+//         gl_Position = u_sgfx_model * vec4(a_pos, 1.0);
+//     }
+// =End
+//
+// =Begin FragmentShader
+//     in vec2 v_uv;
+//
+//     uniform vec4 u_color;
+//
+//     out vec4 FragColor;
+//
+//     void main() {
+//         // FragColor = vec4(v_uv, 0.0, 1.0); // gradient
+//         FragColor = u_color;
+//     }
+// =End
+
 =Begin VertexShader
-    layout(location = 0) in vec2 aPos; // 0→1 quad coords
-    uniform mat4 u_transform;
+    layout(location = 0) in vec3 a_pos; // 0→1 quad coords
+    layout(location = 1) in vec2 a_uv;
+
+    uniform mat4 u_sgfx_model;
     out vec2 v_local;
 
     void main() {
-        v_local = aPos; // normalized quad coordinates
-        gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
+        v_local = a_pos.xy; // normalized quad coordinates
+        gl_Position = u_sgfx_model * vec4(a_pos, 1.0);
     }
 =End
 

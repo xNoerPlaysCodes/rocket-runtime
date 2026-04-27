@@ -2,7 +2,9 @@
 
 #include <cstdint>
 #include <functional>
+#include <glm/matrix.hpp>
 #include <sgfx/types.hpp>
+#include <string>
 #include <unordered_map>
 #include <variant>
 #include <vector>
@@ -62,7 +64,7 @@ namespace sgfx::gl {
             shader_t,
             texture_t
         > data;
-    };
+    }; 
 }
 
 namespace sgfx::vk {
@@ -83,11 +85,19 @@ namespace sgfx {
             gpu_object_t shader;
         };
     }
+
     struct context_t {
         gpu_object_t id;
         std::unordered_map<gpu_object_t, gl::object_t> gl_objects;
         std::unordered_map<gpu_object_t, vk::object_t> vk_objects;
         std::unordered_map<unique_object_id_t, internal::compiled_object_t> unique_objects;
+        glm::mat4 proj;
+    };
+
+    enum class backend_e {
+        null = 0,
+        opengl,
+        vulkan
     };
 
     namespace internal {
@@ -114,12 +124,28 @@ namespace sgfx {
 
     sgfx::context_t create_context(const sgfx::context_options_t &);
 
+    std::vector<std::string> get_context_creation_log_messages(
+        backend_e bk,
+        std::string driver_string,
+        std::string api_version,
+        int loaded_extensions,
+        std::vector<std::pair<std::string, std::string>> features,
+        bool debug,
+        std::string gpu_name,
+        std::string gpu_vendor
+    ) noexcept;
+
     class shader_t {
     public:
+        gpu_object_t obj = 0;
         std::string vertex_src;
         std::string fragment_src;
     public:
         shader_t(std::string v, std::string f) : vertex_src(v), fragment_src(f) {}
+        shader_t() {}
+        static shader_t from(context_t &ctx, unsigned int gl_program) noexcept;
+        bool compile(context_t &ctx, std::string *output_log = nullptr) noexcept;
+        void gl_provide_precompiled(context_t &ctx, unsigned int gl_program) noexcept;
     };
 
     uint32_t allocate_id();
@@ -158,12 +184,10 @@ namespace sgfx {
 
     struct visual_effects_t {
         rgba_color color = rgba_color::black();
-        texture_t texture;
     };
 
     struct draw_instructions_t {
         bool wireframe = false;
-        bool fill = true;
     };
 
     struct shader_parameter_t {
@@ -191,10 +215,10 @@ namespace sgfx {
     };
 
     class renderer_t {
-    private:
+    public:
         sgfx::fbounding_box viewport;
         std::function<vec2i_t()> framebuffer_size_poller;
-        sgfx::context_t &ctx;
+        sgfx::context_t *ctx = nullptr;
         std::vector<drawcall_t> drawcalls;
     public:
         void enqueue(
@@ -212,12 +236,14 @@ namespace sgfx {
         void clear(rgba_color color) noexcept;
         void end_frame() noexcept;
 
+        void flush_queue() noexcept;
+
         render_stats_t get_stats() const noexcept;
     public:
-        renderer_t(sgfx::context_t &ctx, std::function<vec2i_t()> framebuffer_size_poller);
+        renderer_t(sgfx::context_t *ctx, std::function<vec2i_t()> framebuffer_size_poller);
     };
 
-    void tx_allocator_init();
+    void tx_allocator_init(int max_units);
 
     /// @brief Allocate Texture Unit
     /// @param dst Unit to write to

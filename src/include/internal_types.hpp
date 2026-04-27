@@ -9,6 +9,7 @@
 #include <rocket/renderer_helpers.hpp>
 #include <rocket/rgl.hpp>
 #include <rocket/window.hpp>
+#include <sgfx/sgfx.hpp>
 #include <util.hpp>
 #include <variant>
 #include <string>
@@ -76,6 +77,10 @@ namespace rocket {
 
     struct opengl_renderer_2d_impl_t {
         std::unordered_map<api_object_t, gl_object_t> objects;
+        sgfx::context_t ctx;
+        sgfx::renderer_t sgren;
+
+        opengl_renderer_2d_impl_t(sgfx::renderer_t sgren) : sgren(sgren) {}
     };
 
     enum class vk_object_type_t {

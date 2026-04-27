@@ -60,7 +60,7 @@ namespace r {
 #define r_assert(x) ((void)sizeof(x))
 #endif
 
-#define r_quicklog(msg) rocket::log("QuickLog Message: ", std::string(r::class_or_file(r_FuncSig, __FILE__)), __func__, "debug")
+#define r_quicklog(msg) rocket::log(std::string("QuickLog Message: ") + msg, std::string(r::class_or_file(r_FuncSig, __FILE__)), __func__, "debug")
 
 #ifdef ROCKETGE__DEBUG_BUILD
 #define r_debug_if(condition) if ((condition))

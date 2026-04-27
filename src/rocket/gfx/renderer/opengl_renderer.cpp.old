@@ -1,6 +1,4 @@
 #include "rocket/macros.hpp"
-#include <iostream>
-#include <sgfx/sgfx.hpp>
 #if defined(ROCKETGE__Platform_Android)
     #include <GLES3/gl32.h>
     #include <EGL/egl.h>
@@ -11,6 +9,7 @@
 #include "rocket/rgl.hpp"
 #include "rgl.hpp"
 #include "rocket/asset.hpp"
+#include "rocket/io.hpp"
 #include "rocket/plugin/plugin.hpp"
 #include "rocket/runtime.hpp"
 #include "rocket/types.hpp"
@@ -19,6 +18,7 @@
 #include <cstring>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
+#include <iostream>
 #include <unordered_map>
 #include <utility>
 #include "rgl.hpp"
@@ -27,6 +27,7 @@
 #include <glm/detail/qualifier.hpp>
 #include <glm/ext/vector_float3.hpp>
 #include <string>
+#include <thread>
 #include <vector>
 #include <glm/detail/qualifier.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
@@ -67,11 +68,11 @@ namespace rocket {
 
     int framebuffer_t::bind() {
         r_assert(this->binding == ROCKETGE__InvalidNumber_s);
-        int unit;
-        if (!sgfx::tx_alloc(unit)) {
+        rgl::texture_unit_handle_t hdl;
+        if (!rgl::alloc_texture_unit(hdl)) {
             return ROCKETGE__InvalidNumber;
         }
-        this->binding = unit;
+        this->binding = hdl.raw_unit_no_enum;
         return this->binding;
     }
 
@@ -94,45 +95,10 @@ namespace rocket {
 
         this->impl = new renderer_2d_impl_t;
         this->impl->obj = this;
-
+        this->bk_impl = new opengl_renderer_2d_impl_t;
         window->wbi_impl->bound_renderer2d = this;
         this->window = window;
         this->fps = fps;
-        
-        glfnldr::init(glfnldr::backend_t::glad);
-
-        // Create SGFX Context & Create GL Renderer Impl after 
-        // as sgfx::renderer_t doesn't have a default constructor
-        sgfx::context_t ctx = sgfx::create_context({
-            .multisampling = (window->flags.msaa_samples > 0),
-            .double_buffer = true,
-            .depth_buffer = false,
-            .debug = window->flags.graphics_ctx.debug_context || true,
-            .preferred_colorspace = sgfx::colorspace_e::srgb,
-        });
-
-        sgfx::context_t filler;
-        this->bk_impl = new opengl_renderer_2d_impl_t(sgfx::renderer_t(nullptr, [this]() -> sgfx::vec2i_t {
-            return this->window->get_size();
-        }));
-        this->bk_impl->ctx = std::move(ctx);
-        this->bk_impl->sgren.ctx = &this->bk_impl->ctx;
-
-        // this->bk_impl->ctx = std::move(ctx);
-
-        this->bk_impl->ctx.proj = glm::ortho(
-            0.0f, 1.0f,
-            1.f, 0.0f,
-            -1.0f, 1.0f
-        );
-
-        constexpr auto gl_get_integer = [](GLenum e) -> int {
-            int val;
-            glGetIntegerv(e, &val);
-            return val;
-        };
-
-        sgfx::tx_allocator_init(gl_get_integer(GL_MAX_TEXTURE_IMAGE_UNITS));
 
         auto cli_args = util::get_clistate();
 
@@ -158,33 +124,19 @@ namespace rocket {
                 rocket::log("Invalid window ptr", "opengl_renderer_2d", "constructor", "error");
                 return;
             }
-
-            auto _ = rgl::init_gl(
+            std::vector<std::string> log_messages = rgl::init_gl(
                 { static_cast<float>(window->size.x), static_cast<float>(window->size.y) },
                 flags.glfnldr_backend,
                 this->window
-            ); // TODO: Don't use rgl::init_gl
-
-            auto log_messages = sgfx::get_context_creation_log_messages(
-                sgfx::backend_e::opengl,
-                "PLACEHOLDER Mesa",
-                "PLACEHOLDER 4.6 (Core)",
-                420,
-                {
-                    {"Multisampling", std::to_string(this->window->flags.msaa_samples) + " samples"}
-                },
-                this->window->flags.graphics_ctx.debug_context,
-                "PLACEHOLDER AMD Radeon RX 550",
-                "PLACEHOLDER ATI Incorporated"
             );
 
             for (auto &l : log_messages) {
                 if (l.starts_with('!')) 
-                    rocket::log(l.substr(1), "sgfx", "init", "warn");
+                    rocket::log(l.substr(1), "rgl", "init_gl", "warn");
                 else if (l.starts_with('?'))
-                    rocket::log(l.substr(1), "sgfx", "init", "error");
+                    rocket::log(l.substr(1), "rgl", "init_gl", "error");
                 else
-                    rocket::log(l, "sgfx", "init", "info");
+                    rocket::log(l, "rgl", "init_gl", "info");
             }
 
             rocket::logger_flush();
@@ -385,8 +337,6 @@ namespace rocket {
         frame_start_time = clock::now();
         delta_time = std::chrono::duration<double>(frame_start_time - last_time).count();
         last_time = frame_start_time;
-        
-        this->bk_impl->sgren.begin_frame();
     }
 
     void opengl_renderer_2d::show_splash() {
@@ -533,14 +483,14 @@ namespace rocket {
         r_assert(rgl::get_active_fbo() != std::get<rgl::fbo_t>(this->bk_impl->objects[c->fbo].value));
 
         rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(pos, sz, 0, 0);
-        int unit;
-        sgfx::tx_alloc(unit);
-        glActiveTexture(unit + GL_TEXTURE0);
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
         glBindTexture(GL_TEXTURE_2D, std::get<rgl::fbo_t>(this->bk_impl->objects[c->fbo].value).color_tex);
-        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit);
+        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
         glUniform1f(glGetUniformLocation(pg, "u_flip_y"), 1.f);
         rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
-        sgfx::tx_free(unit);
+        rgl::free_texture_unit(unit);
     }
     
     void opengl_renderer_2d::draw_render_cache(render_cache_t *c, rocket::fbounding_box bbox) {
@@ -577,13 +527,12 @@ namespace rocket {
     }
 
     void opengl_renderer_2d::clear(rocket::rgba_color color) {
-        this->bk_impl->sgren.clear(color);
         this_frame_clear_color = color;
-        //
-        // vec4f_t clr = color.normalize();
-        // glClearColor(clr.x, clr.y, clr.z, clr.w);
-        //
-        // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        vec4f_t clr = color.normalize();
+        glClearColor(clr.x, clr.y, clr.z, clr.w);
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // you probably want plugins to start rendering AFTER clearing
         if (flags.share_renderer_as_global) {
@@ -653,15 +602,15 @@ namespace rocket {
         r_assert(texture != nullptr);
 
         rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(rect.pos, rect.size, rotation, roundedness);
-        int unit = -1;
-        sgfx::tx_alloc(unit);
-        glActiveTexture(unit + GL_TEXTURE0);
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
         this->make_ready_texture(texture);
         gl_object_t obj = this->bk_impl->objects[texture->hdl];
         glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(obj.value));
-        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit);
+        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
         rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
-        sgfx::tx_free(unit);
+        rgl::free_texture_unit(unit);
     }
 
     void opengl_renderer_2d::draw_atlas_texture(
@@ -700,13 +649,13 @@ namespace rocket {
         glUniform2f(glGetUniformLocation(pg, "u_size"), size.x, size.y);
         glUniform1f(glGetUniformLocation(pg, "u_radius"), roundedness);
 
-        int unit = -1;
-        sgfx::tx_alloc(unit);
-        glActiveTexture(unit + GL_TEXTURE0);
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
         this->make_ready_texture(atlas);
         gl_object_t obj = this->bk_impl->objects[atlas->hdl];
         glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(obj.value));
-        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit);
+        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit.unit - GL_TEXTURE0);
 
         rocket::vec2f_t atlas_size{ 1.f * atlas->size.x, 1.f * atlas->size.y };
         rocket::vec2f_t uv_tex_pos  = sprite_pos_in_atlas / atlas_size;
@@ -718,7 +667,7 @@ namespace rocket {
         static const auto vos = rgl::cache_compile_vo("atlas_texture");
         if (!vos.first || !vos.second) std::terminate();
         rgl::draw_shader(pg, vos.first, vos.second);
-        sgfx::tx_free(unit);
+        rgl::free_texture_unit(unit);
     }
 
     void opengl_renderer_2d::draw_rectangle(rocket::fbounding_box rect, rocket::rgba_color color, float rotation, float roundedness, bool lines) {
@@ -726,7 +675,7 @@ namespace rocket {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
-
+        rgl::shader_program_t pg = rgl::get_paramaterized_quad(rect.pos, rect.size, color, rotation, roundedness);
         if (lines) {
             rocket::vec2f_t pos = rect.pos;
             rocket::vec2f_t size = rect.size;
@@ -742,69 +691,11 @@ namespace rocket {
 
             return;
         }
-
-        static const sgfx::draw_object_t rectangle_obj = {
-            .shader = sgfx::shader_t::from(
-                this->bk_impl->ctx,
-                rocket::gl_get_shader(shader_id_t::rectangle)
-            ),
-            .draw_data = {
-                .vertices = {
-                    {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f}}, // top-left
-                    {{1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}}, // top-right
-                    {{1.0f, 1.0f, 0.0f}, {1.0f, 1.0f}}, // bottom-right
-                    {{0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}}  // bottom-left
-                },
-
-                .indices = {
-                    0, 1, 2,  // first triangle
-                    2, 3, 0   // second triangle
-                }
-            }
-        };
-
-        vec2f_t pos = rect.pos / this->get_viewport_size();
-        vec2f_t size = rect.size / this->get_viewport_size();
-
-        sgfx::transform_t transform = {
-            .position = { pos.x, pos.y, 1 },
-            .rotation = glm::radians(rotation),
-            .scale = { size.x, size.y, 1 }
-        };
-
-        // r_quicklog("Pos: rocket::vec2f_t(" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ")");
-        // r_quicklog("Size: rocket::vec2f_t(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ")");
-
-        static const sgfx::unique_object_id_t obj_uuid = sgfx::allocate_id();
-
-        vec4f_t nm = {
-            color.x / 255.f,
-            color.y / 255.f,
-            color.z / 255.f,
-            color.w / 255.f,
-        };
-
-        this->bk_impl->sgren.enqueue(
-            obj_uuid,
-            rectangle_obj,
-            transform,
-            sgfx::visual_effects_t { color },
-            sgfx::draw_instructions_t {
-                .wireframe = this->get_wireframe()
-            },
-            {
-                {"u_radius", roundedness}, 
-                {"u_size", std::array<float, 2>{rect.size.x, rect.size.y}},
-                {"u_color", std::array<float, 4>{
-                    nm.x, nm.y, nm.z, nm.w
-                }}
-            }
-        );
-
-        this->bk_impl->sgren.flush_queue(); // TODO: SGFX NO FLUSH QUEUE
+        
+        rgl::draw_shader(pg, rgl::shader_use_t::rect);
     }
    
-    void opengl_renderer_2d::draw_text(const rocket::text_t& text_, rocket::vec2f_t position) { // TODO: Make this use SGFX
+    void opengl_renderer_2d::draw_text(const rocket::text_t& text_, rocket::vec2f_t position) {
         rocket::text_t text = text_;
         if (check_graphics_settings(position, text.measure()) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(text.text.size());
@@ -865,9 +756,9 @@ namespace rocket {
 
         if (verts.empty()) return;
 
-        int unit = -1;
-        sgfx::tx_alloc(unit);
-        glActiveTexture(unit + GL_TEXTURE0);
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
         glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(this->bk_impl->objects[text.font->hdl].value));
 
         auto text_vo = rgl::get_text_vos();
@@ -881,7 +772,7 @@ namespace rocket {
 
         rgl::gl_draw_arrays(GL_TRIANGLES, 0, (GLsizei)(verts.size() / 4));
 
-        sgfx::tx_free(unit);
+        rgl::free_texture_unit(unit);
     }
 
     void opengl_renderer_2d::draw_shader(const shader_i &abs_shader) {
@@ -902,7 +793,7 @@ namespace rocket {
     //     // }
     //
     //     rgl::texture_unit_handle_t unit;
-    //     sgfx::tx_alloc(unit);
+    //     rgl::alloc_texture_unit(unit);
     //
     //     rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(pos, size, 0, 0);
     //     rgl::bind_texture_unit(unit.unit);
@@ -912,7 +803,7 @@ namespace rocket {
     //     rgl::gl_uniform1i(pg, u_texture, unit.unit - rgl::gl_texture0);
     //     rgl::gl_uniform1f(pg, u_flip_y, 1.f);
     //     rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
-    //     sgfx::tx_free(unit);
+    //     rgl::free_texture_unit(unit);
     //
     //     // if (prev != rGL_FBO_INVALID) {
     //     //     rgl::use_fbo(prev);
@@ -929,7 +820,7 @@ namespace rocket {
     //     }
     //
     //     rgl::texture_unit_handle_t unit;
-    //     sgfx::tx_alloc(unit);
+    //     rgl::alloc_texture_unit(unit);
     //
     //     rgl::bind_texture_unit(unit.unit);
     //     rgl::bind_texture(fbo.color_tex);
@@ -941,7 +832,7 @@ namespace rocket {
     //
     //     this->draw_shader(shader);
     //
-    //     sgfx::tx_free(unit);
+    //     rgl::free_texture_unit(unit);
     //
     //     if (prev != rGL_FBO_INVALID) {
     //         rgl::use_fbo(prev);
@@ -1029,16 +920,16 @@ namespace rocket {
         std::vector<uint8_t> flat(framebuffer.size() * 4);
         std::memcpy(flat.data(), framebuffer.data(), framebuffer.size() * sizeof(rgba_color));
 
-        int unit = -1;
-        sgfx::tx_alloc(unit);
-        glActiveTexture(unit + GL_TEXTURE0);
+        rgl::texture_unit_handle_t unit;
+        rgl::alloc_texture_unit(unit);
+        glActiveTexture(unit.unit);
         glBindTexture(GL_TEXTURE_2D, framebuffer_tx);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, rgl::get_viewport_size().x, rgl::get_viewport_size().y, GL_RGBA, GL_UNSIGNED_BYTE, flat.data());
 
         static rgl::shader_program_t shader = rgl::get_paramaterized_textured_quad({0,0}, rgl::get_viewport_size(), 0.f, 0.f);
-        glUniform1i(glGetUniformLocation(shader, "u_texture"), unit);
+        glUniform1i(glGetUniformLocation(shader, "u_texture"), unit.unit - GL_TEXTURE0);
         rgl::draw_shader(shader, rgl::shader_use_t::textured_rect);
-        sgfx::tx_free(unit);
+        rgl::free_texture_unit(unit);
     }
 
     vec2f_t opengl_renderer_2d::get_viewport_size() {
@@ -1105,6 +996,7 @@ namespace rocket {
             util::draw_debug_overlay(this);
         this->frame_started = false;
         auto frame_end_time = clock::now();
+        this->window->swap_buffers();
         rgl::frame_metrics_t fmetrics = rgl::get_frame_metrics();
         int drawcalls = fmetrics.drawcalls;
         if (drawcalls > rGL_MAX_RECOMMENDED_DRAWCALLS) {
@@ -1114,9 +1006,6 @@ namespace rocket {
         if (tricount > rGL_MAX_RECOMMENDED_TRICOUNT) {
             rocket::log("Too many triangles! (" + std::to_string(tricount) + ") Frames may suffer", "opengl_renderer_2d", "end_frame", "warning");
         }
-
-        this->bk_impl->sgren.end_frame();
-        this->window->swap_buffers();
 
         rgl::reset_frame_metrics();
 
@@ -1320,4 +1209,4 @@ namespace rocket {
     opengl_renderer_2d::~opengl_renderer_2d() {
         close();
     }
- }
+}
