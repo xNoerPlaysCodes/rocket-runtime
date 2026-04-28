@@ -212,6 +212,7 @@ namespace sgfx {
         visual_effects_t visual_effects;
         draw_instructions_t draw_instructions;
         std::vector<shader_parameter_t> shader_params;
+        std::function<void(unsigned int vao)> _post_bind_vao = nullptr;
     };
 
     class renderer_t {

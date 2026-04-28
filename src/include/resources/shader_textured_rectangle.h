@@ -18,12 +18,12 @@ namespace rocket_resource {
 =Begin VertexShader
     layout(location = 0) in vec2 aPos;
     out vec2 v_uv;
-    uniform mat4 u_transform;
+    uniform mat4 u_sgfx_model;
     uniform float u_flip_y;
     void main() {
         float uv_y = mix(aPos.y, 1.0 - aPos.y, u_flip_y);
         v_uv = vec2(aPos.x, uv_y);
-        gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
+        gl_Position = u_sgfx_model * vec4(aPos, 0.0, 1.0);
     }
 =End
 =Begin FragmentShader

@@ -48,6 +48,7 @@
 
 #include "plugin.hpp"
 #include <intl_macros.hpp>
+#include <unordered_map>
 
 namespace rocket {
     api_object_t render_cache_t::get_texture() const {
@@ -262,44 +263,69 @@ namespace rocket {
 
 
     void opengl_renderer_2d::draw_circle(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int thickness) {
-        rocket::vec2f_t center_pos = {
+        rocket::vec2f_t top_left_pos = {
             .x = pos.x - radius,
             .y = pos.y - radius
         };
-        if (this->check_graphics_settings(center_pos, {radius*2, radius*2}) == gfx_chk_result::not_drawable) {
+        if (this->check_graphics_settings(top_left_pos, {radius*2, radius*2}) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
 
         if (thickness > 0) {
-            rgl::shader_program_t pg = rocket::gl_get_shader(shader_id_t::circle_lines);
-            rocket::vec2f_t viewport_size = rgl::get_viewport_size();
-            glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
+            static const sgfx::draw_object_t circle_obj = {
+                .shader = sgfx::shader_t::from(
+                    this->bk_impl->ctx,
+                    rocket::gl_get_shader(shader_id_t::circle_lines)
+                ),
+                .draw_data = {
+                    .vertices = {
+                        {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f}}, // top-left
+                        {{1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}}, // top-right
+                        {{1.0f, 1.0f, 0.0f}, {1.0f, 1.0f}}, // bottom-right
+                        {{0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}}  // bottom-left
+                    },
 
-            float cx = center_pos.x + radius * 2 * 0.5f;
-            float cy = center_pos.y + radius * 2 * 0.5f;
+                    .indices = {
+                        0, 1, 2,  // first triangle
+                        2, 3, 0   // second triangle
+                    }
+                }
+            };
 
-            glm::mat4 transform = projection
-                * glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
-                * glm::rotate(glm::mat4(1.0f), glm::radians(0.f), glm::vec3(0.0f, 0.0f, 1.0f))
-                * glm::translate(glm::mat4(1.0f), glm::vec3(-radius * 2 * 0.5f, -radius * 2 * 0.5f, 0.0f))
-                * glm::scale(glm::mat4(1.0f), glm::vec3(radius * 2, radius * 2, 1.0f));
+            vec2f_t pos = top_left_pos / this->get_viewport_size();
+            vec2f_t size = vec2f_t {radius*2, radius*2} / this->get_viewport_size();
 
-            auto nm = color.normalize();
+            sgfx::transform_t transform = {
+                .position = { pos.x, pos.y, 1 },
+                .rotation = 0,
+                .scale = { size.x, size.y, 1 }
+            };
 
-            glUseProgram(pg);
-            glUniformMatrix4fv(glGetUniformLocation(pg, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
-            glUniform4f(glGetUniformLocation(pg, "u_color"), nm.x, nm.y, nm.z, nm.w);
-            glUniform2f(glGetUniformLocation(pg, "u_size"), radius * 2, radius * 2);
-            glUniform1f(glGetUniformLocation(pg, "u_radius"), 1);
-            glUniform1f(glGetUniformLocation(pg, "u_thickness"), thickness);
+            static const sgfx::unique_object_id_t obj_uuid = sgfx::allocate_id();
 
-            auto vos = rgl::cache_compile_vo("circle");
-            rgl::draw_shader(pg, vos.first, vos.second);
-            return;
+            vec4f_t nm = color.normalize();
+
+            this->bk_impl->sgren.enqueue(
+                obj_uuid,
+                circle_obj,
+                transform,
+                {},
+                {
+                    .wireframe = this->get_wireframe()
+                },
+                {
+                    {"u_color", std::array<float, 4> {nm.x, nm.y, nm.z, nm.w}},
+                    {"u_size", std::array<float, 2> {radius * 2, radius * 2}},
+                    {"u_radius", 1.f},
+                    {"u_thickness", thickness * 1.f}
+                }
+            ); 
+
+            this->bk_impl->sgren.flush_queue(); // TODO: SGFX NO FLUSH QUEUE
+        } else {
+            this->draw_rectangle({ top_left_pos, { radius * 2, radius * 2 } }, color, 0, 1);
         }
-
-        this->draw_rectangle({ center_pos, { radius * 2, radius * 2 } }, color, 0, 1);
     }
 
     void opengl_renderer_2d::draw_polygon(rocket::vec2f_t pos, float radius, rocket::rgba_color color, int segments, float rotation) {
@@ -368,6 +394,7 @@ namespace rocket {
             rgl::add_frame_metrics_data_skipped_drawcalls(1);
             return;
         }
+
         this->draw_rectangle({ pos, { 1, 1 } }, color, 0, 0, 0);
     }
 
@@ -652,15 +679,63 @@ namespace rocket {
 
         r_assert(texture != nullptr);
 
-        rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(rect.pos, rect.size, rotation, roundedness);
+        static const sgfx::draw_object_t rectangle_obj = {
+            .shader = sgfx::shader_t::from(
+                this->bk_impl->ctx,
+                rocket::gl_get_shader(shader_id_t::textured_rectangle)
+            ),
+            .draw_data = {
+                .vertices = {
+                    {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f}}, // top-left
+                    {{1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}}, // top-right
+                    {{1.0f, 1.0f, 0.0f}, {1.0f, 1.0f}}, // bottom-right
+                    {{0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}}  // bottom-left
+                },
+
+                .indices = {
+                    0, 1, 2,  // first triangle
+                    2, 3, 0   // second triangle
+                }
+            }
+        };
+
+        vec2f_t pos = rect.pos / this->get_viewport_size();
+        vec2f_t size = rect.size / this->get_viewport_size();
+
+        sgfx::transform_t transform = {
+            .position = { pos.x, pos.y, 1 },
+            .rotation = glm::radians(rotation),
+            .scale = { size.x, size.y, 1 }
+        };
+
+        static const sgfx::unique_object_id_t obj_uuid = sgfx::allocate_id();
+
         int unit = -1;
         sgfx::tx_alloc(unit);
+
         glActiveTexture(unit + GL_TEXTURE0);
         this->make_ready_texture(texture);
         gl_object_t obj = this->bk_impl->objects[texture->hdl];
         glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(obj.value));
-        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit);
-        rgl::draw_shader(pg, rgl::shader_use_t::textured_rect);
+
+        this->bk_impl->sgren.enqueue(
+            obj_uuid,
+            rectangle_obj,
+            transform,
+            {},
+            sgfx::draw_instructions_t {
+                .wireframe = this->get_wireframe()
+            },
+            {
+                {"u_radius", roundedness},
+                {"u_size", std::array<float, 2>{rect.size.x, rect.size.y}},
+                {"u_texture", unit},
+                // {"u_flip_y", 0.f}
+            }
+        );
+
+        this->bk_impl->sgren.flush_queue(); // TODO: SGFX NO FLUSH QUEUE && SOMEHOW TEXTRE MAPPING
+
         sgfx::tx_free(unit);
     }
 
@@ -679,45 +754,66 @@ namespace rocket {
 
         r_assert(atlas != nullptr);
 
-        rgl::shader_program_t pg = rocket::gl_get_shader(shader_id_t::atlas_textured_rectangle);
-        rocket::vec2f_t viewport_size = this->get_viewport_size();
+        static const sgfx::draw_object_t rectangle_obj = {
+            .shader = sgfx::shader_t::from(
+                this->bk_impl->ctx,
+                rocket::gl_get_shader(shader_id_t::atlas_textured_rectangle)
+            ),
+            .draw_data = {
+                .vertices = {
+                    {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f}}, // top-left
+                    {{1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}}, // top-right
+                    {{1.0f, 1.0f, 0.0f}, {1.0f, 1.0f}}, // bottom-right
+                    {{0.0f, 1.0f, 0.0f}, {0.0f, 1.0f}}  // bottom-left
+                },
 
-        glm::mat4 projection = glm::ortho(0.f, viewport_size.x, viewport_size.y, 0.f, -1.f, 1.f);
+                .indices = {
+                    0, 1, 2,  // first triangle
+                    2, 3, 0   // second triangle
+                }
+            }
+        };
 
-        rocket::vec2f_t size = rect.size;
-        rocket::vec2f_t pos  = rect.pos;
-        float cx = pos.x + size.x * 0.5f;
-        float cy = pos.y + size.y * 0.5f;
+        vec2f_t pos = rect.pos / this->get_viewport_size();
+        vec2f_t size = rect.size / this->get_viewport_size();
 
-        glm::mat4 transform = projection
-            * glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
-            * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
-            * glm::translate(glm::mat4(1.0f), glm::vec3(-size.x * 0.5f, -size.y * 0.5f, 0.0f))
-            * glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
+        vec2f_t atlas_size{ 1.f * atlas->size.x, 1.f * atlas->size.y };
+        vec2f_t uv_tex_pos  = sprite_pos_in_atlas / atlas_size;
+        vec2f_t uv_tex_size = sprite_size_in_atlas / atlas_size;
 
-        glUseProgram(pg);
-        glUniformMatrix4fv(glGetUniformLocation(pg, "u_transform"), 1, GL_FALSE, glm::value_ptr(transform));
-        glUniform2f(glGetUniformLocation(pg, "u_size"), size.x, size.y);
-        glUniform1f(glGetUniformLocation(pg, "u_radius"), roundedness);
+        sgfx::transform_t transform = {
+            .position = { pos.x, pos.y, 1 },
+            .rotation = glm::radians(rotation),
+            .scale = { size.x, size.y, 1 }
+        };
+
+        static const sgfx::unique_object_id_t obj_uuid = sgfx::allocate_id();
 
         int unit = -1;
-        sgfx::tx_alloc(unit);
+        r_assert(sgfx::tx_alloc(unit));
         glActiveTexture(unit + GL_TEXTURE0);
         this->make_ready_texture(atlas);
         gl_object_t obj = this->bk_impl->objects[atlas->hdl];
         glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(obj.value));
-        glUniform1i(glGetUniformLocation(pg, "u_texture"), unit);
 
-        rocket::vec2f_t atlas_size{ 1.f * atlas->size.x, 1.f * atlas->size.y };
-        rocket::vec2f_t uv_tex_pos  = sprite_pos_in_atlas / atlas_size;
-        rocket::vec2f_t uv_tex_size = sprite_size_in_atlas / atlas_size;
+        this->bk_impl->sgren.enqueue(
+            obj_uuid,
+            rectangle_obj,
+            transform,
+            {},
+            {
+                .wireframe = this->get_wireframe()
+            },
+            {
+                {"u_size", std::array<float, 2> {rect.size.x, rect.size.y}},
+                {"u_radius", roundedness},
+                {"u_texture", unit},
+                {"u_texSize", std::array<float, 2> {uv_tex_size.x, uv_tex_size.y}},
+                {"u_texPos", std::array<float, 2> {uv_tex_pos.x, uv_tex_pos.y}}
+            }
+        );
+        this->bk_impl->sgren.flush_queue(); // TODO: SGFX NO FLUSH QUEUE
 
-        glUniform2f(glGetUniformLocation(pg, "u_texPos"), uv_tex_pos.x, uv_tex_pos.y);
-        glUniform2f(glGetUniformLocation(pg, "u_texSize"), uv_tex_size.x, uv_tex_size.y);
-
-        static const auto vos = rgl::cache_compile_vo("atlas_texture");
-        if (!vos.first || !vos.second) std::terminate();
-        rgl::draw_shader(pg, vos.first, vos.second);
         sgfx::tx_free(unit);
     }
 
@@ -772,9 +868,6 @@ namespace rocket {
             .scale = { size.x, size.y, 1 }
         };
 
-        // r_quicklog("Pos: rocket::vec2f_t(" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ")");
-        // r_quicklog("Size: rocket::vec2f_t(" + std::to_string(size.x) + ", " + std::to_string(size.y) + ")");
-
         static const sgfx::unique_object_id_t obj_uuid = sgfx::allocate_id();
 
         vec4f_t nm = {
@@ -804,7 +897,7 @@ namespace rocket {
         this->bk_impl->sgren.flush_queue(); // TODO: SGFX NO FLUSH QUEUE
     }
    
-    void opengl_renderer_2d::draw_text(const rocket::text_t& text_, rocket::vec2f_t position) { // TODO: Make this use SGFX
+    void opengl_renderer_2d::draw_text(const rocket::text_t& text_, rocket::vec2f_t position) {
         rocket::text_t text = text_;
         if (check_graphics_settings(position, text.measure()) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(text.text.size());
@@ -813,20 +906,7 @@ namespace rocket {
         static auto cli_args = util::get_clistate();
         if (cli_args.notext) return;
 
-        static rgl::shader_program_t shader_program = rgl::get_shader(rgl::shader_use_t::text);
-        glUseProgram(shader_program);
-
-        static const rgl::shader_location_t color_loc = glGetUniformLocation(shader_program, "u_color");
-        static const rgl::shader_location_t tex_loc   = glGetUniformLocation(shader_program, "u_texture");
-
-        glUniform3f(color_loc,
-            text.color.x / 255.0f,
-            text.color.y / 255.0f,
-            text.color.z / 255.0f);
-        glUniform1i(tex_loc, 0);
-
-        float screen_w = (float)window->get_size().x;
-        float screen_h = (float)window->get_size().y;
+        auto vp_size = this->get_viewport_size();
 
         stbtt_fontinfo info;
         stbtt_InitFont(&info, text.font->ttf_data.data(), 0);
@@ -838,30 +918,68 @@ namespace rocket {
         float x = position.x;
         float y = position.y + baseline;
 
-        std::vector<float> verts;
-        verts.reserve(text.text.size() * 6 * 4);
+        std::vector<sgfx::vertex_t> verts;
+        verts.reserve(text.text.size() * 4);
+
+        std::vector<uint32_t> indices;
+        indices.reserve(text.text.size() * 6);
+
+        uint32_t offset = 0;
+
+        for (char c : text.text) {
+            if (c < 32)
+                continue;
+
+            indices.push_back(offset + 0);
+            indices.push_back(offset + 1);
+            indices.push_back(offset + 2);
+
+            indices.push_back(offset + 2);
+            indices.push_back(offset + 3);
+            indices.push_back(offset + 0);
+
+            offset += 4;
+        }
 
         for (char c : text.text) {
             if (c < 32) continue;
             stbtt_aligned_quad q;
             stbtt_GetBakedQuad(text.font->cdata->a, 512, 512, c - 32, &x, &y, &q, 1);
 
-            float x0 = (q.x0 / screen_w) * 2.0f - 1.0f;
-            float y0 = 1.0f - (q.y0 / screen_h) * 2.0f;
-            float x1 = (q.x1 / screen_w) * 2.0f - 1.0f;
-            float y1 = 1.0f - (q.y1 / screen_h) * 2.0f;
+            float x0 = q.x0 / vp_size.x;
+            float y0 = 1 - q.y0 / vp_size.y;
+            float x1 = q.x1 / vp_size.x;
+            float y1 = 1 - q.y1 / vp_size.y;
 
-            float vq[6][4] = {
-                { x0, y0, q.s0, q.t0 },
-                { x0, y1, q.s0, q.t1 },
-                { x1, y1, q.s1, q.t1 },
-                { x0, y0, q.s0, q.t0 },
-                { x1, y1, q.s1, q.t1 },
-                { x1, y0, q.s1, q.t0 },
+            sgfx::vertex_t vq[4] = {
+                { {x0, y0, 0}, {q.s0, q.t0} }, // 0
+                { {x1, y0, 0}, {q.s1, q.t0} }, // 1
+                { {x1, y1, 0}, {q.s1, q.t1} }, // 2
+                { {x0, y1, 0}, {q.s0, q.t1} }, // 3
+                // { {x0, y0, 0}, {q.s0, q.t0} },
+                // { {x0, y1, 0}, {q.s0, q.t1} },
+                // { {x1, y1, 0}, {q.s1, q.t1} },
+                // { {x0, y0, 0}, {q.s0, q.t0} },
+                // { {x1, y1, 0}, {q.s1, q.t1} },
+                // { {x1, y0, 0}, {q.s1, q.t0} },
             };
+
             for (auto& v : vq)
-                verts.insert(verts.end(), std::begin(v), std::end(v));
+                verts.push_back(v);
         }
+
+        const sgfx::draw_object_t text_obj = {
+            .shader = sgfx::shader_t::from(
+                this->bk_impl->ctx,
+                rocket::gl_get_shader(shader_id_t::text)
+            ),
+            .draw_data = {
+                .vertices = (verts),
+                .indices = std::move(indices)
+            }
+        };
+
+        uint32_t obj_uuid = sgfx::allocate_id();
 
         if (verts.empty()) return;
 
@@ -871,16 +989,48 @@ namespace rocket {
         glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(this->bk_impl->objects[text.font->hdl].value));
 
         auto text_vo = rgl::get_text_vos();
-        glBindVertexArray(text_vo.first);
-        glBindBuffer(GL_ARRAY_BUFFER, text_vo.second);
+       
+        sgfx::transform_t transform = {
+            .position = { 0, 0, 1 },
+            .rotation = 0,
+            .scale = { 1, 1, 1 }
+        };
 
-        glBufferData(GL_ARRAY_BUFFER,
-                     verts.size() * sizeof(float),
+        this->bk_impl->sgren.enqueue({
+            obj_uuid,
+            text_obj,
+            transform,
+            {},
+            {
+                .wireframe = this->get_wireframe()
+            },
+            {
+                {"u_color", std::array<float, 3> {
+                    text.color.x / 255.0f,
+                    text.color.y / 255.0f,
+                    text.color.z / 255.0f
+                }},
+                {"u_texture", unit}
+            },
+            [verts, text_vo](unsigned int vao) {
+               glBindBuffer(GL_ARRAY_BUFFER, text_vo.second);
+
+               glBufferData(GL_ARRAY_BUFFER,
+                     verts.size() * sizeof(sgfx::vertex_t),
                      verts.data(),
                      GL_DYNAMIC_DRAW);
 
-        rgl::gl_draw_arrays(GL_TRIANGLES, 0, (GLsizei)(verts.size() / 4));
+               rgl::schedule_gl([vao]() { glDeleteVertexArrays(1, &vao); });
+            }
+        });
 
+        this->bk_impl->sgren.flush_queue();
+
+        // rgl::gl_draw_arrays(GL_TRIANGLES, 0, (GLsizei)(verts.size() / 4));
+
+        auto &ctx = this->bk_impl->ctx;
+        std::cout << "gl_objects: " << ctx.gl_objects.size() 
+          << " unique_objects: " << ctx.unique_objects.size() << "\n";
         sgfx::tx_free(unit);
     }
 

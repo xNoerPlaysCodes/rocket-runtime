@@ -17,11 +17,11 @@ namespace rocket_resource {
 =ExitNamespace
 =Begin VertexShader
     layout(location = 0) in vec2 aPos;
-    uniform mat4 u_transform;
+    uniform mat4 u_sgfx_model;
     out vec2 v_local;
     void main() {
         v_local = aPos; // normalized quad coordinates
-        gl_Position = u_transform * vec4(aPos, 0.0, 1.0);
+        gl_Position = u_sgfx_model * vec4(aPos, 0.0, 1.0);
     }
 =End
 =Begin FragmentShader

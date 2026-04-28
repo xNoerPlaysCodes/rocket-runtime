@@ -19,8 +19,11 @@ namespace rocket_resource {
     layout(location = 0) in vec2 aPos;
     layout(location = 1) in vec2 aTex;
     out vec2 TexCoord;
+    uniform mat4 u_sgfx_model;
     void main() {
-        gl_Position = vec4(aPos.xy, 0.0, 1.0);
+        vec2 ndc = aPos.xy * 2.0 - 1.0;
+        gl_Position = vec4(ndc, 0.0, 1.0);
+        // gl_Position = u_sgfx_model * vec4(aPos.xy, 0.0, 1.0);
         TexCoord = aTex;
     }
 =End
@@ -31,6 +34,7 @@ namespace rocket_resource {
     uniform sampler2D u_texture;
     void main() {
         float alpha = texture(u_texture, TexCoord).r;
+        // FragColor = vec4(u_color, alpha);
         // gamma correct to linear
         alpha = pow(alpha, 2.2);
         // sharpen edges

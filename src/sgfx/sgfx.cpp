@@ -259,6 +259,11 @@ namespace sgfx {
     glm::mat4 build_model(const transform_t &t) {
         glm::mat4 model = glm::mat4(1.0f);
 
+        // model = glm::translate(glm::mat4(1.0f), glm::vec3(cx, cy, 0.0f))
+        //     * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
+        //     * glm::translate(glm::mat4(1.0f), glm::vec3(-size.x * 0.5f, -size.y * 0.5f, 0.0f))
+        //     * glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
+
         model = glm::translate(model, glm::vec3(t.position.x, t.position.y, t.position.z));
         model = glm::translate(model, glm::vec3(0.5f * t.scale.x, 0.5f * t.scale.y, 0.0f));
         model = glm::rotate(model, t.rotation, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -422,14 +427,17 @@ namespace sgfx {
             GLint u_model = glGetUniformLocation(shader, "u_sgfx_model");
             GLint u_color = glGetUniformLocation(shader, "u_sgfx_color");
 
-            // r_assert(u_model != -1);
-
-            glUniformMatrix4fv(u_model, 1, GL_FALSE, &transform[0][0]);
+            if (u_model != -1)
+                glUniformMatrix4fv(u_model, 1, GL_FALSE, &transform[0][0]);
             auto color_nm = obj.visual_effects.color.normalize();
             if (u_color != -1)
                 glUniform4f(u_color, color_nm.x, color_nm.y, color_nm.z, color_nm.w);
 
             glBindVertexArray(draw_data.vao);
+
+            if (obj._post_bind_vao) {
+                obj._post_bind_vao(draw_data.vao);
+            }
 
             glDrawElementsInstanced(
                 GL_TRIANGLES, 
