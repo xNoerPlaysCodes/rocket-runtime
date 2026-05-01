@@ -423,6 +423,9 @@ namespace rgl {
     std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t backend, rocket::window_backend_i *win) {
         ::rgl::viewport_size = viewport_size;
         std::unordered_map<rgl::shader_use_t, rgl::shader_program_t>().swap(shader_cache);
+        init_vo_all();
+
+        return {};
 
         auto cli_args = util::get_clistate();
 

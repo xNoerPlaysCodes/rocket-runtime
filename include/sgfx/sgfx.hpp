@@ -149,6 +149,7 @@ namespace sgfx {
     };
 
     uint32_t allocate_id();
+    void free_id(uint32_t);
 
     struct vertex_t {
         vec3f_t pos;
@@ -158,6 +159,10 @@ namespace sgfx {
     struct draw_data_t {
         std::vector<vertex_t> vertices;
         std::vector<uint32_t> indices;
+
+        bool compile(context_t &ctx);
+
+        gpu_object_t compiled = 0;
     };
 
     struct draw_object_t {
@@ -212,7 +217,7 @@ namespace sgfx {
         visual_effects_t visual_effects;
         draw_instructions_t draw_instructions;
         std::vector<shader_parameter_t> shader_params;
-        std::function<void(unsigned int vao)> _post_bind_vao = nullptr;
+        std::function<void(unsigned int vao, unsigned int vbo, unsigned int ebo)> _post_bind_vao = nullptr;
     };
 
     class renderer_t {

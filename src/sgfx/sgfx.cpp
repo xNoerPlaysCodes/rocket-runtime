@@ -101,9 +101,22 @@ namespace callback {
 }
 
 namespace sgfx {
+    static uint32_t g_next_id = 1;
+    static std::vector<uint32_t> g_free_ids;
+
     uint32_t allocate_id() {
-        static uint32_t accum = 0;
-        return ++accum;
+        if (!g_free_ids.empty()) {
+            uint32_t id = g_free_ids.back();
+            g_free_ids.pop_back();
+            return id;
+        }
+
+        return g_next_id++;
+    }
+
+    void free_id(uint32_t id) {
+        if (id != 0)
+            g_free_ids.push_back(id);
     }
 
     sgfx::context_t create_context(const sgfx::context_options_t &options) {
@@ -349,7 +362,13 @@ namespace sgfx {
     }
 
     void shader_t::gl_provide_precompiled(context_t &ctx, unsigned int gl_program) noexcept {
-        this->obj = allocate_id();
+        static std::unordered_map<unsigned int, uint32_t> seen_shaders;
+        if (seen_shaders.find(gl_program) == seen_shaders.end()) {
+            this->obj = allocate_id();
+            seen_shaders[this->obj] = gl_program;
+        } else {
+            this->obj = seen_shaders[gl_program];
+        }
         ctx.gl_objects[obj] = gl::object_t {
             .type = gl::obj_type_e::shader,
             .data = gl::shader_t { gl_program }
@@ -362,28 +381,40 @@ namespace sgfx {
         return s;
     }
 
+    bool draw_data_t::compile(context_t &ctx) {
+        gpu_object_t draw_data_obj = allocate_id();
+        gl::draw_data_t draw_data = compile_draw_data(
+            vertices, 
+            indices
+        );
+        ctx.gl_objects[draw_data_obj] = gl::object_t {
+            .type = gl::obj_type_e::draw_data,
+            .data = draw_data
+        };
+
+        this->compiled = draw_data_obj;
+
+        return true;
+    }
+
     void renderer_t::flush_queue() noexcept {
-        for (const auto &obj : this->drawcalls) {
+        for (auto &obj : this->drawcalls) {
             gl::draw_data_t draw_data;
             glm::mat4 transform = this->ctx->proj * build_model(obj.transform);
 
             GLuint shader = 0;
 
             if (this->ctx->unique_objects.find(obj.id) == this->ctx->unique_objects.end()) {
-                gpu_object_t draw_data_obj = allocate_id();
-                draw_data = compile_draw_data(
-                    obj.draw_obj.draw_data.vertices, 
-                    obj.draw_obj.draw_data.indices
-                );
-                this->ctx->gl_objects[draw_data_obj] = gl::object_t {
-                    .type = gl::obj_type_e::draw_data,
-                    .data = draw_data
-                };
+                if (obj.draw_obj.draw_data.compiled == 0) {
+                    obj.draw_obj.draw_data.compile(*this->ctx);
+                }
+
                 this->ctx->unique_objects[obj.id] = {
-                    .draw_data = draw_data_obj,
+                    .draw_data = obj.draw_obj.draw_data.compiled,
                     .shader = obj.draw_obj.shader.obj
                 };
 
+                draw_data = std::get<gl::draw_data_t>(this->ctx->gl_objects[obj.draw_obj.draw_data.compiled].data);
                 shader = std::get<gl::shader_t>(this->ctx->gl_objects[this->ctx->unique_objects[obj.id].shader].data);
             } else {
                 shader = std::get<gl::shader_t>(this->ctx->gl_objects[this->ctx->unique_objects[obj.id].shader].data);
@@ -436,7 +467,7 @@ namespace sgfx {
             glBindVertexArray(draw_data.vao);
 
             if (obj._post_bind_vao) {
-                obj._post_bind_vao(draw_data.vao);
+                obj._post_bind_vao(draw_data.vao, draw_data.vbo, draw_data.ebo);
             }
 
             glDrawElementsInstanced(

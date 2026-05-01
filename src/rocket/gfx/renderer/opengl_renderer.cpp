@@ -142,7 +142,7 @@ namespace rocket {
         } 
 
         if (this->fps == -1) {
-            this->fps = 2147483647;
+            this->fps = 2147483647; // i know right :D
         }
 
         if (flags.share_renderer_as_global) {
@@ -349,44 +349,104 @@ namespace rocket {
         std::pair<rgl::vao_t, rgl::vbo_t> vo = {0, 0};
         int vertex_count = 0;
 
-        if (vo.first == 0) {
-            std::vector<float> verts;
-            verts.reserve((segments + 2) * 2);
+        std::vector<sgfx::vertex_t> verts;
+        std::vector<uint32_t> indices;
 
-            // center
-            auto center = to_ndc(pos.x, pos.y);
-            verts.push_back(center.x);
-            verts.push_back(center.y);
+        verts.reserve(segments + 2);
+        indices.reserve(segments * 3);
 
-            for (int i = 0; i <= segments; i++) {
-                float angle = ((float)i / (float)segments) * 2.0f * M_PI;
-                angle += rotation * (M_PI / 180.0f); // apply rotation in radians
+        // center
+        auto center = to_ndc(pos.x, pos.y);
 
-                float px = pos.x + cosf(angle) * radius;
-                float py = pos.y + sinf(angle) * radius;
-                auto ndc = to_ndc(px, py);
-                verts.push_back(ndc.x);
-                verts.push_back(ndc.y);
-            }
+        verts.push_back({
+            { center.x, center.y, 0.0f },
+            { 0.5f, 0.5f }
+        });
 
-            vertex_count = (int)(verts.size() / 2);
-            
-            vo = rgl::compile_vo(verts);
+        // outer ring
+        for (int i = 0; i <= segments; i++) {
+            float angle = ((float)i / (float)segments) * 2.0f * M_PI;
+            angle += rotation * (M_PI / 180.0f);
+
+            float px = pos.x + cosf(angle) * radius;
+            float py = pos.y + sinf(angle) * radius;
+
+            auto ndc = to_ndc(px, py);
+
+            float u = (cosf(angle) + 1.0f) * 0.5f;
+            float v = (sinf(angle) + 1.0f) * 0.5f;
+
+            verts.push_back({
+                { ndc.x, ndc.y, 0.0f },
+                { u, v }
+            });
         }
-        rgl::shader_program_t pg = rocket::gl_get_shader(shader_id_t::polygon);
+
+        // build triangle fan indices
+        for (uint32_t i = 1; i <= (uint32_t)segments; i++) {
+            indices.push_back(0);
+            indices.push_back(i);
+            indices.push_back(i + 1);
+        }
+
+        sgfx::draw_object_t obj = {
+            .shader = sgfx::shader_t::from(
+                this->bk_impl->ctx,
+                rocket::gl_get_shader(rocket::shader_id_t::polygon)
+            ),
+            .draw_data = {
+                .vertices = std::move(verts),
+                .indices = std::move(indices),
+            }
+        };
+
+        const auto obj_uuid = sgfx::allocate_id();
+
+        obj.draw_data.compile(this->bk_impl->ctx);
+
+        auto nm_pos = pos / this->get_viewport_size();
+        auto nm_size = rocket::vec2f_t { radius * 2, radius * 2 } / this->get_viewport_size();
+
+        sgfx::transform_t transform = {
+            .position = { nm_pos.x, nm_pos.y, 1 },
+            .rotation = glm::radians(rotation),
+            .scale = { nm_size.x, nm_size.y, 1 }
+        };
+
 
         auto color_nm = color.normalize();
-        rgl::shader_location_t color_loc = rgl::get_shader_location(pg, "uColor");
 
-        glUseProgram(pg);
-        glUniform4f(color_loc, color_nm.x, color_nm.y, color_nm.z, color_nm.w);
+        this->bk_impl->sgren.enqueue({
+            obj_uuid,
+            obj,
+            transform,
+            {},
+            {
+                .wireframe = this->get_wireframe(),
+            },
+            {
+                {"uColor", std::array<float, 4> {
+                    color_nm.x,
+                    color_nm.y,
+                    color_nm.z,
+                    color_nm.w
+                }}
+            },
+            [obj, obj_uuid, this](unsigned int vao, unsigned int vbo, unsigned int ebo) {
+                rgl::schedule_gl([obj = std::move(obj), &ctx = this->bk_impl->ctx, obj_uuid, vao, vbo, ebo]() {
+                    glDeleteVertexArrays(1, &vao);
+                    glDeleteBuffers(1, &vbo);
+                    glDeleteBuffers(1, &ebo);
+                    ctx.unique_objects.erase(obj_uuid);
+                    ctx.gl_objects.erase(obj.draw_data.compiled);
+                    sgfx::free_id(obj.draw_data.compiled);
+                    sgfx::free_id(obj.draw_data.compiled);
+                    sgfx::free_id(obj_uuid);
+                });
+            }
+        });
 
-        glBindVertexArray(vo.first);
-        glUseProgram(pg);
-        rgl::gl_draw_arrays(GL_TRIANGLE_FAN, 0, vertex_count);
-
-        glDeleteVertexArrays(1, &vo.first);
-        glDeleteBuffers(1, &vo.second);
+        this->bk_impl->sgren.flush_queue();
     }
 
     void opengl_renderer_2d::draw_pixel(rocket::vec2f_t pos, rocket::rgba_color color) {
@@ -457,7 +517,6 @@ namespace rocket {
                 this->draw_rectangle({ 0, 0 }, this->get_viewport_size(), { 0, 0, 0, (uint8_t) alpha });
 
                 this->draw_text(version_text, { 0, get_viewport_size().y - version_text.measure().y });
-
 
                 if (tween.progress() >= 1.f) {
                     if (final) {
@@ -561,7 +620,7 @@ namespace rocket {
 
         rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(pos, sz, 0, 0);
         int unit;
-        sgfx::tx_alloc(unit);
+        r_assert(sgfx::tx_alloc(unit));
         glActiveTexture(unit + GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, std::get<rgl::fbo_t>(this->bk_impl->objects[c->fbo].value).color_tex);
         glUniform1i(glGetUniformLocation(pg, "u_texture"), unit);
@@ -711,7 +770,7 @@ namespace rocket {
         static const sgfx::unique_object_id_t obj_uuid = sgfx::allocate_id();
 
         int unit = -1;
-        sgfx::tx_alloc(unit);
+        r_assert(sgfx::tx_alloc(unit));
 
         glActiveTexture(unit + GL_TEXTURE0);
         this->make_ready_texture(texture);
@@ -968,7 +1027,7 @@ namespace rocket {
                 verts.push_back(v);
         }
 
-        const sgfx::draw_object_t text_obj = {
+        sgfx::draw_object_t text_obj = {
             .shader = sgfx::shader_t::from(
                 this->bk_impl->ctx,
                 rocket::gl_get_shader(shader_id_t::text)
@@ -984,7 +1043,7 @@ namespace rocket {
         if (verts.empty()) return;
 
         int unit = -1;
-        sgfx::tx_alloc(unit);
+        r_assert(sgfx::tx_alloc(unit));
         glActiveTexture(unit + GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, std::get<_GLuint>(this->bk_impl->objects[text.font->hdl].value));
 
@@ -995,6 +1054,8 @@ namespace rocket {
             .rotation = 0,
             .scale = { 1, 1, 1 }
         };
+
+        text_obj.draw_data.compile(this->bk_impl->ctx);
 
         this->bk_impl->sgren.enqueue({
             obj_uuid,
@@ -1012,7 +1073,7 @@ namespace rocket {
                 }},
                 {"u_texture", unit}
             },
-            [verts, text_vo](unsigned int vao) {
+            [verts, text_vo, this, obj_uuid, text_obj](unsigned int vao, unsigned int vbo, unsigned int ebo) {
                glBindBuffer(GL_ARRAY_BUFFER, text_vo.second);
 
                glBufferData(GL_ARRAY_BUFFER,
@@ -1020,17 +1081,20 @@ namespace rocket {
                      verts.data(),
                      GL_DYNAMIC_DRAW);
 
-               rgl::schedule_gl([vao]() { glDeleteVertexArrays(1, &vao); });
+               rgl::schedule_gl([vao, vbo, ebo, text_obj, obj_uuid, &ctx = this->bk_impl->ctx]() { 
+                   glDeleteVertexArrays(1, &vao);
+                   glDeleteBuffers(1, &vbo);
+                   glDeleteBuffers(1, &ebo);
+
+                   ctx.unique_objects.erase(obj_uuid);
+                   ctx.gl_objects.erase(text_obj.draw_data.compiled);
+                   sgfx::free_id(text_obj.draw_data.compiled);
+                   sgfx::free_id(obj_uuid);
+               });
             }
         });
 
         this->bk_impl->sgren.flush_queue();
-
-        // rgl::gl_draw_arrays(GL_TRIANGLES, 0, (GLsizei)(verts.size() / 4));
-
-        auto &ctx = this->bk_impl->ctx;
-        std::cout << "gl_objects: " << ctx.gl_objects.size() 
-          << " unique_objects: " << ctx.unique_objects.size() << "\n";
         sgfx::tx_free(unit);
     }
 
@@ -1052,7 +1116,7 @@ namespace rocket {
     //     // }
     //
     //     rgl::texture_unit_handle_t unit;
-    //     sgfx::tx_alloc(unit);
+    //     r_assert(sgfx::tx_alloc(unit));
     //
     //     rgl::shader_program_t pg = rgl::get_paramaterized_textured_quad(pos, size, 0, 0);
     //     rgl::bind_texture_unit(unit.unit);
@@ -1079,7 +1143,7 @@ namespace rocket {
     //     }
     //
     //     rgl::texture_unit_handle_t unit;
-    //     sgfx::tx_alloc(unit);
+    //     r_assert(sgfx::tx_alloc(unit));
     //
     //     rgl::bind_texture_unit(unit.unit);
     //     rgl::bind_texture(fbo.color_tex);
@@ -1180,7 +1244,7 @@ namespace rocket {
         std::memcpy(flat.data(), framebuffer.data(), framebuffer.size() * sizeof(rgba_color));
 
         int unit = -1;
-        sgfx::tx_alloc(unit);
+        r_assert(sgfx::tx_alloc(unit));
         glActiveTexture(unit + GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, framebuffer_tx);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, rgl::get_viewport_size().x, rgl::get_viewport_size().y, GL_RGBA, GL_UNSIGNED_BYTE, flat.data());
