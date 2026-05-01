@@ -249,19 +249,40 @@ namespace rgl {
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        // text quads (dynamic VBO)
-        glGenVertexArrays(1, &textVO.first);
-        glGenBuffers(1, &textVO.second);
-
         glBindVertexArray(textVO.first);
         glBindBuffer(GL_ARRAY_BUFFER, textVO.second);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
-        glEnableVertexAttribArray(0); // aPos
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
-        glEnableVertexAttribArray(1); // aTex
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-        glBindVertexArray(0);
+
+        glBufferData(
+            GL_ARRAY_BUFFER,
+            sizeof(sgfx::vertex_t) * 4,
+            nullptr,
+            GL_DYNAMIC_DRAW
+        );
+
+        // position
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(
+            0,
+            3,
+            GL_FLOAT,
+            GL_FALSE,
+            sizeof(sgfx::vertex_t),
+            (void*)offsetof(sgfx::vertex_t, pos)
+        );
+
+        // uv
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(
+            1,
+            2,
+            GL_FLOAT,
+            GL_FALSE,
+            sizeof(sgfx::vertex_t),
+            (void*)offsetof(sgfx::vertex_t, uv)
+        );
+
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
     }
 
     std::pair<vao_t, vbo_t> compile_vo(

@@ -160,7 +160,7 @@ namespace sgfx {
         std::vector<vertex_t> vertices;
         std::vector<uint32_t> indices;
 
-        bool compile(context_t &ctx);
+        bool compile(context_t &ctx, bool static_draw = true);
 
         gpu_object_t compiled = 0;
     };

@@ -245,7 +245,7 @@ namespace sgfx {
         glClear(bits);
     }
 
-    gl::draw_data_t compile_draw_data(const std::vector<vertex_t> &vertices, const std::vector<uint32_t> &indices) {
+    gl::draw_data_t compile_draw_data(const std::vector<vertex_t> &vertices, const std::vector<uint32_t> &indices, bool static_draw) {
         GLuint vao, vbo, ebo;
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
@@ -256,7 +256,7 @@ namespace sgfx {
 
         glGenBuffers(1, &ebo);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), indices.data(), static_draw ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, pos));
         glEnableVertexAttribArray(0);
@@ -381,11 +381,12 @@ namespace sgfx {
         return s;
     }
 
-    bool draw_data_t::compile(context_t &ctx) {
+    bool draw_data_t::compile(context_t &ctx, bool static_draw) {
         gpu_object_t draw_data_obj = allocate_id();
         gl::draw_data_t draw_data = compile_draw_data(
             vertices, 
-            indices
+            indices,
+            static_draw
         );
         ctx.gl_objects[draw_data_obj] = gl::object_t {
             .type = gl::obj_type_e::draw_data,

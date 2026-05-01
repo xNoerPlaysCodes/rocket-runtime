@@ -441,6 +441,10 @@ namespace rocket {
                     ctx.gl_objects.erase(obj.draw_data.compiled);
                     sgfx::free_id(obj.draw_data.compiled);
                     sgfx::free_id(obj.draw_data.compiled);
+                    // std::cout << "{\n" 
+                    //           << "  gl_objects.size(): " << ctx.gl_objects.size() << ",\n"
+                    //           << "  unique_objects.size(): " << ctx.unique_objects.size() << '\n'
+                    //           << "}\n";
                     sgfx::free_id(obj_uuid);
                 });
             }
@@ -1055,7 +1059,7 @@ namespace rocket {
             .scale = { 1, 1, 1 }
         };
 
-        text_obj.draw_data.compile(this->bk_impl->ctx);
+        text_obj.draw_data.compile(this->bk_impl->ctx, true);
 
         this->bk_impl->sgren.enqueue({
             obj_uuid,
