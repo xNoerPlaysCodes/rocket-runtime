@@ -113,4 +113,18 @@ if (condition) {
 ```
 <br/>
 
+## Additional Notes
+- DO NOT USE `using namespace std` ANYWHERE!
+- Use `nullptr` instead of `NULL`
+- Use `size_t`, `uint32_t`, `uint8_t` instead of `std::` equivalents
+- Avoid C-style casts at all costs!
+- Don't put `using` directives in header files
+- No `nullptr` checks in hot paths or drawcalls: use `r_assert(ptr != nullptr)` instead
+- Try reserving `std::vector` capacity via `.reserve()` when possible in hot paths
+- Use `bk_impl->objects` for your objects
+- Don't use C unions. Use `std::variant`
+- Write clear code (vague)
+- Prefer `while (true);` instead of `for (;;);` (Not sure why you would need this tho)
+- Make code that needs to be optimized, easier for the compiler to optimize
+
 If anywhere in the codebase you see code not conforming to this style guide you may submit a PR to fix it.
