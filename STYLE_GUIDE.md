@@ -126,5 +126,6 @@ if (condition) {
 - Write clear code (vague)
 - Prefer `while (true);` instead of `for (;;);` (Not sure why you would need this tho)
 - Make code that needs to be optimized, easier for the compiler to optimize
+- No compiler-specific code
 
 If anywhere in the codebase you see code not conforming to this style guide you may submit a PR to fix it.
