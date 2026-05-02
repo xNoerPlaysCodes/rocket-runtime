@@ -1,4 +1,4 @@
-#include <GL/glew.h>
+#include <lib/glad/glad.h>
 #include <atomic>
 #include <glm/ext/matrix_float4x4.hpp>
 #include <glm/ext/vector_float3.hpp>
@@ -108,7 +108,7 @@ namespace sgfx {
     sgfx::context_t create_context(const sgfx::context_options_t &options) {
         sgfx::context_t ctx;
         ctx.id = allocate_id();
-        glewInit();
+        // glewInit();
 
         glViewport(0, 0, 1, 1);
 

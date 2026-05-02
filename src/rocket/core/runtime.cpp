@@ -210,9 +210,6 @@ static std::string generate_thread_name_hash() {
         s += chars[n];
     }
 
-    volatile char *c = new char;
-    *c = chars[55];
-
     return s;
 }
 
