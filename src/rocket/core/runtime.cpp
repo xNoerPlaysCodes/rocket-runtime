@@ -211,7 +211,7 @@ static std::string generate_thread_name_hash() {
     return s;
 }
 
-static void __init() {
+static void platform_hooks_init() {
     hook_sig(SIGSEGV, [](int, siginfo_t *info, void *) {
         callback::bad_memory_access(info->si_addr, info->si_code);
     });
@@ -274,7 +274,7 @@ LONG CALLBACK crash_handler(EXCEPTION_POINTERS *info) {
     return EXCEPTION_CONTINUE_SEARCH;
 }
 
-void __init() {
+void platform_hooks_init() {
     // AddVectoredExceptionHandler(1, &crash_handler);
     // SEH Handler
     SetUnhandledExceptionFilter(&crash_handler);
@@ -839,13 +839,13 @@ namespace rocket {
 
     void ordered_init() {
 #ifdef ROCKETGE__Platform_Android
-        __init();
+        platform_hooks_init();
         global_init();
         rnative::init();
 #else
         global_init();
         rnative::init();
-        __init();
+        platform_hooks_init();
 
         std::set_terminate(rocket::crash_with_stacktrace);
 
