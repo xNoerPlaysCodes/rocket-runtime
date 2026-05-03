@@ -17,8 +17,7 @@
 #endif
 
 namespace r {
-    constexpr std::string_view class_or_file(std::string_view sig, std::string_view file)
-    {
+    constexpr std::string_view class_or_file(std::string_view sig, std::string_view file) {
         auto end = sig.find('(');
         auto before = sig.substr(0, end);
 
