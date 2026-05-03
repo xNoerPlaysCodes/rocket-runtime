@@ -27,19 +27,15 @@ namespace rocket {
         }).detach();
     }
 
-    struct thread_pool_t {
-        bool init = false;
-
-        uint8_t count = 0;
-        uint8_t in_use = 0;
-
-        std::vector<std::thread> threads;
-    };
-
-    std::mutex pool_mutex;
-    thread_pool_t pool;
-
     r_static void thread_t::run(std::function<void()> fn) {
+        // static struct {
+        //     bool init = false;
+        //     uint16_t count = 0;
+        //     uint16_t in_use = 0;
+        //
+        //     std::vector<std::thread> threads;
+        //     std::mutex mutex;
+        // } pool;
         // {
         //     std::lock_guard<std::mutex> _(pool_mutex);
         //     if (!pool.init) {
