@@ -197,17 +197,15 @@ static std::string generate_thread_name_hash() {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
     };
-    constexpr size_t len = sizeof(chars);
  
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution distrib(0, static_cast<int>(chars.size()));
+    std::uniform_int_distribution distrib(0, static_cast<int>(chars.size()) - 1);
 
     const int random_numbers[4] = { distrib(gen), distrib(gen), distrib(gen), distrib(gen) };
-    std::string s;
-    s.reserve(4);
-    for (auto n : random_numbers) {
-        s += chars[n];
+    std::string s(4, '\0');
+    for (size_t i = 0; i < 4; ++i) {
+        s[i] = chars[random_numbers[i]];
     }
 
     return s;
@@ -233,8 +231,6 @@ static void __init() {
     rocket::log("Hooked SIGBUS, SIGSEGV, SIGIOT, SIGABRT", "rocket", "init", "debug");
     
     util::init_memory_buffer();
-    std::string thread_name = "RocketGE [" + generate_thread_name_hash() + "]";
-    rnative::set_thread_name(thread_name.c_str());
 
     rocket::log("Emergency memory buffer initialized with size " + std::format("{} MiB", util::get_memory_buffer()->sz / 1024 / 1024), "rocket", "init", "debug");
 }
@@ -854,6 +850,8 @@ namespace rocket {
         std::set_terminate(rocket::crash_with_stacktrace);
 
         std::filesystem::path path;
+        std::string thread_name = "RocketGE [" + generate_thread_name_hash() + "]";
+        rnative::set_thread_name(thread_name.c_str());
 
         if (char *home = getenv("USERPROFILE"); home != nullptr) {
             path = std::filesystem::path(home) / "AppData" / "Roaming";

@@ -16,19 +16,6 @@
 #include "internal_types.hpp"
 
 namespace rocket {
-    uint64_t thread_id_gen() {
-        static uint64_t thread_id = 1;
-        return thread_id++;
-    }
-
-    thread_t::thread_t(std::function<void()> fn) {
-        if (fn == nullptr) {
-            rocket::log("native thread must be valid ptr", "thread_t", "thread_t", "error");
-            return;
-        }
-        this->fn = fn;
-    }
-
     r_static void thread_t::schedule(std::function<void()> fn) {
         rgl::schedule_gl(fn);
     }
@@ -76,48 +63,9 @@ namespace rocket {
         rnative::set_thread_name(name.c_str());
     }
 
-    void thread_t::start() {
-        uint64_t thread_id = thread_id_gen();
-        auto main_ctx = rgl::get_main_context();
-
-#ifdef ROCKETGE__Platform_Linux
-
-        if (this->ctx != nullptr) {
-            if (this->ctx->w != nullptr && this->ctx->backend == window_backend_t::glfw) {
-                glfwDestroyWindow((GLFWwindow*) this->ctx->w);
-            }
-        }
-        this->ctx = new native_window_t;
-        if (this->ctx->backend != window_backend_t::glfw && main_ctx->backend != window_backend_t::glfw) {
-            rocket::log("only GLFW backend can have GL threads", "thread_t", "start", "fixme");
-            return;
-        }
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-        this->ctx->w = (GLFWwindow*) glfwCreateWindow(1, 1, ("rgthread_" + std::to_string(thread_id)).c_str(), nullptr, (GLFWwindow*) main_ctx->w);
-        std::thread t([ctx=this->ctx, fn=this->fn]() {
-            glfwMakeContextCurrent((GLFWwindow*) ctx->w);
-            rgl::init_gl_wtd();
-
-            fn();
-
-            glFlush();
-            glFinish();
-            glfwMakeContextCurrent(nullptr);
-        });
-
-        t.detach();
-#endif
-    }
-
     r_static uint64_t thread_t::get_thread_id() {
         std::stringstream ss;
         ss << std::this_thread::get_id();
         return std::stoull(ss.str());
-    }
-
-    thread_t::~thread_t() {
-        if (this->ctx != nullptr) {
-            this->ctx = nullptr;
-        }
     }
 }
