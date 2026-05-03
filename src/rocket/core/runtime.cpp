@@ -693,7 +693,7 @@ namespace rocket {
                     "   debug-overlay, debugoverlay, doverlay",
                     "   -> shows a debug overlay with rendering information",
                     "",
-                    "*  renderer-backend, [name:version] (version fmt: Major.Minor OR any)",
+                    "*  renderer-backend, [name:version] (version fmt: Major.Minor OR 'any')",
                     "   -> forces a specific renderer backend to be used (if available)",
                     "",
                     "   no-splash, nosplash",
@@ -739,11 +739,11 @@ namespace rocket {
                 args.forcewayland = true;
             }
             else if (arg == "build-info" || arg == "buildinfo") {
-#if defined(__clang__)
+#ifdef __clang__
                 const std::string compiler_name = "Clang";
 #elif defined(__GNUC__) || defined(__GNUG__)
                 const std::string compiler_name = "GCC";
-#elif defined(_MSC_VER)
+#elifdef _MSC_VER
                 const std::string compiler_name = "MSVC";
 #else
                 const std::string compiler_name = "Unknown";
@@ -759,6 +759,10 @@ namespace rocket {
                         str = "glad";
                     } else if (backends[i] == glfnldr::backend_t::glew) {
                         str = "glew";
+                    } else if (backends[i] == glfnldr::backend_t::libepoxy) {
+                        str = "libepoxy";
+                    } else if (backends[i] == glfnldr::backend_t::android) {
+                        str = "android";
                     }
                     backends_str += str + " ";
                 }
@@ -888,7 +892,14 @@ namespace rocket {
 
         const auto do_if_exists_l = [&res] (std::string key, std::function<void(const std::vector<std::string> &value)> cb) {
             if (res.properties_list.find(key) != res.properties_list.end()) {
-                rocket::log("config key named '" + key + "'" + " was found with value " + "[rlsl::list]", "rocket", "init", "debug");
+                std::string list_as_str;
+                for (auto &elm : res.properties_list[key]) {
+                    list_as_str += "'" + elm + "'" + ", ";
+                }
+                if (list_as_str.size() > 0) {
+                    list_as_str = list_as_str.substr(0, list_as_str.size() - 2);
+                }
+                rocket::log("config key named '" + key + "'" + " was found with value " + "[" + list_as_str + "]", "rocket", "init", "debug");
                 cb(res.properties_list[key]);
             }
         };
