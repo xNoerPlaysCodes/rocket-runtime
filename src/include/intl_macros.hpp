@@ -41,9 +41,6 @@ namespace r {
 #define r_LOG_Impl(...) __android_log_print(ANDROID_LOG_INFO, "RocketGE", __VA_ARGS__)
 #define r_LOG(X) r_LOG_Impl(X)
 #else
-#define LOGI(...) (void)0
-#define LOGE(...) (void)0
-#define LOGD(...) (void)0
 #define r_LOG(X) rocket::log(X, std::string(r::class_or_file(__fsig, __FILE__)), __func__, "fatal")
 #endif
 
