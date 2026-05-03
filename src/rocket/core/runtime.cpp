@@ -75,6 +75,25 @@ namespace {
 
         return exe_dir;
     }
+
+    std::string generate_thread_name_hash() {
+        static constexpr std::array<char, 36> chars = {
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        };
+     
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution distrib(0, static_cast<int>(chars.size()) - 1);
+
+        const int random_numbers[4] = { distrib(gen), distrib(gen), distrib(gen), distrib(gen) };
+        std::string s(4, '\0');
+        for (size_t i = 0; i < 4; ++i) {
+            s[i] = chars[random_numbers[i]];
+        }
+
+        return s;
+    }
 }
 
 namespace rocket {
@@ -190,25 +209,6 @@ static void hook_sig(int signal, void(*func)(int, siginfo_t *, void *)) {
     sa.sa_flags = SA_SIGINFO;
     sa.sa_sigaction = func;
     sigaction(signal, &sa, nullptr);
-}
-
-static std::string generate_thread_name_hash() {
-    static constexpr std::array<char, 36> chars = {
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-    };
- 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution distrib(0, static_cast<int>(chars.size()) - 1);
-
-    const int random_numbers[4] = { distrib(gen), distrib(gen), distrib(gen), distrib(gen) };
-    std::string s(4, '\0');
-    for (size_t i = 0; i < 4; ++i) {
-        s[i] = chars[random_numbers[i]];
-    }
-
-    return s;
 }
 
 static void platform_hooks_init() {
