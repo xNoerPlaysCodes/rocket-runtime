@@ -98,17 +98,18 @@ namespace rocket {
                 written = std::snprintf(
                     out,
                     remaining,
-                    "%*zu. %s:%u\n",
+                    "%*zu. %s:%u -> %s\n",
 
                     index_width, i,
-                    std::filesystem::path(frame.source_file()).filename().string().c_str(),
-                    static_cast<unsigned>(frame.source_line())
+                    std::filesystem::path(frame.source_file()).filename().c_str(),
+                    static_cast<unsigned>(frame.source_line()),
+                    frame.description().c_str()
                 );
             } else {
                 written = std::snprintf(
                     out,
                     remaining,
-                    "%*zu. ???\n",
+                    "%*zu. (no symbol)\n",
 
                     index_width, i
                 );

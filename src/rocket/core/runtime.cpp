@@ -872,13 +872,15 @@ namespace rocket {
             return;
         }
 
-        std::ifstream f(path);
-        std::string line;
         std::vector<std::string> lines;
-        while (std::getline(f, line)) {
-            lines.push_back(line);
+
+        {
+            std::ifstream file(path);
+            std::string line;
+            while (std::getline(file, line)) {
+                lines.push_back(line);
+            }
         }
-        f.close();
 
         rlsl_parsed_result_t res = rlsl_parse(lines, path.parent_path(), renderer_backend_t::null, nullptr);
         auto state = util::get_clistate();
