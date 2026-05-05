@@ -112,9 +112,30 @@ if (condition) {
 }
 ```
 <br/>
+#### 3.3 Mathematical Expressions & Operators
+```cpp
+int _ = x + y*3 - z/4;
+int _ = 3 + 3;
+int _ = 3 * 3; // Spacing between only if there's no +- along with */
+```
+and for operators
+```cpp
+int _ = a | b;
+int _ = a & b;
+int _ = a & b | c ^ d; // WRONG!
+int _ = a | ((b & c) ^ d); // CORRECT!
+```
+and
+```cpp
+int _=5;   // WRONG!
+int _= 5;  // WRONG!
+int _ =5;  // WRONG!
+int _ = 5; // CORRECT!
+```
 
 ## Additional Notes
-- DO NOT USE `using namespace std` ANYWHERE!
+- DO NOT USE `using namespace std` or `using namespace ANYTHING` ANYWHERE!
+- Regarding previous note, namespace aliases are allowed, but NOT in headers
 - Use `nullptr` instead of `NULL`
 - Use `size_t`, `uint32_t`, `uint8_t` instead of `std::` equivalents
 - Avoid C-style casts at all costs!

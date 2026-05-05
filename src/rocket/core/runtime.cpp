@@ -846,7 +846,7 @@ namespace rocket {
         platform_hooks_init();
         global_init();
         rnative::init();
-#else
+#else // Desktop Path
         global_init();
         rnative::init();
         platform_hooks_init();
