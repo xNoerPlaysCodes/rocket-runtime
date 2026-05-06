@@ -410,7 +410,11 @@ namespace rocket {
         exitcb = cb;
     }
 
-    void exit(int status_code) {
+    [[noreturn]] void crash(std::string message) {
+        rocket::fatal(message.c_str());
+    }
+
+    [[noreturn]] void exit(int status_code) {
         if (exitcb != nullptr) {
             exitcb(status_code);
         }

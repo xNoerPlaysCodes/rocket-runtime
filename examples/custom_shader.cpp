@@ -17,11 +17,14 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
             rocket::shader_type::vert_frag,
             std::filesystem::path(args.working_dir + "resources/custom_shader.rlsl")
         );
-    } else {
+    } else if (window.get_flags().graphics_ctx.backend == rocket::renderer_backend_t::opengl) {
         shader = std::make_unique<rocket::opengl_shader_t>(
             rocket::shader_type::vert_frag,
             std::filesystem::path(args.working_dir + "resources/custom_shader.rlsl")
         );
+    } else {
+        rocket::crash("Unhandled Renderer Backend");
+        // after this won't run if ^^ is executed
     }
 
     while (window.is_running()) {

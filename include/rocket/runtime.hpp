@@ -127,6 +127,9 @@ namespace rocket {
     /// @brief Pop Logger State
     void logger_pop(logger_state_t state);
 
+    /// @brief A fatal crash
+    [[noreturn]] void crash(std::string message = "Fatal Crash");
+
     /// @brief Exit using RocketExit or callback
     /// @note Always exits regardless
     /// @note Overridable

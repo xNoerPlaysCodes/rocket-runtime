@@ -203,6 +203,20 @@ namespace rocket {
         return buf;
     }
 
+    [[noreturn]] void fatal(const char *msg) {
+        init_allocator();
+        constexpr size_t sz = 1 * 1024 * 1024;
+        char *buf = (char*) char_allocator->allocate(sz);
+        int written = 0;
+        written += std::snprintf(buf, sz,
+            "%s",
+            msg
+        );
+        written += construct_stack_trace(buf + written, sz - written, nullptr);
+        std::cerr << '\n' << buf << '\n' << std::flush;
+        rnative::exit_now(1);
+    }
+
     [[noreturn]] void crash_with_stacktrace() noexcept {
         init_allocator();
         constexpr size_t sz = 1 * 1024 * 1024;
