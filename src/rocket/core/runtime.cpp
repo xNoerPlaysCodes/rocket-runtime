@@ -150,7 +150,9 @@ namespace callback {
 #endif
         std::endl(std::cout);
 
-        std::cout << "FATAL! Stack Overflow\n";
+        std::cout << "FATAL! Stack Overflow\n"; // we're cooked
+                                                // how did you get this far
+                                                // i don't think it's gonna recover man
 
         std::endl(std::cout);
 
@@ -573,6 +575,7 @@ namespace rocket {
                     rocket::log("invalid format: " + value, "rocket", "argparse", "fatal");
                     error = true;
                     exit = true;
+                    continue;
                 }
 
                 const std::string &backend = parts.at(0);
@@ -584,6 +587,9 @@ namespace rocket {
                     args.renderer_backend = renderer_backend_t::vulkan;
                 } else {
                     rocket::log("invalid renderer backend: " + backend, "rocket", "argparse", "fatal");
+                    exit = true;
+                    error = true;
+                    continue;
                 }
 
                 args.renderer_backend_version = version_to_int(version);
@@ -791,6 +797,9 @@ namespace rocket {
                 util::segfault();
             } else if (arg == "intentional-exception") {
                 throw std::runtime_error("Intentional Exception");
+            } else if (arg == "headless-renderer") {
+                args.renderer_backend = renderer_backend_t::null;
+                args.renderer_backend_version = 1;
             }
             else {
                 bool found = false;

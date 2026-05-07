@@ -28,6 +28,8 @@ namespace rnative {
     /// @brief On Posix Systems name may only be 15 bytes and 1 NULL long
     void set_thread_name(const char *name);
 
+    void get_thread_name(char *dst, size_t sz);
+
     typedef void (*proc_address_t)(void);
 
     inline void intrin_cpu_minfreq() {
@@ -39,6 +41,17 @@ namespace rnative {
     }
 
     proc_address_t load_proc_address(const char *name);
+
+    /// @brief Get the platform name
+    /// @note Possible Values:
+    ///       Linux
+    ///       Windows
+    ///       macOS
+    ///       Android
+    ///       Unknown
+    const char* get_platform_name();
+
+    void get_platform_version(char *buf, size_t sz);
 }
 
 #ifdef RNATIVE__INCLUDE_WAYLAND
@@ -59,6 +72,7 @@ namespace rnative {
 #if defined(RNATIVE__INCLUDE_X11) || defined(RNATIVE__INCLUDE_WAYLAND)
 
 #include <linux/input.h>
+#include <sys/utsname.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <GL/glx.h>
@@ -71,6 +85,7 @@ namespace rnative {
 #include <windows.h>
 #include <timeapi.h>
 #include <shobjidl.h>
+#include <winternl.h>
 
 #endif // RNATIVE__INCLUDE_WINDOWS
 

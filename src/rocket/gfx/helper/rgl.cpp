@@ -395,29 +395,6 @@ namespace rgl {
         init_vo_all();
     }
 
-    
-    static std::string get_cpu_name() {
-#if defined(ROCKETGE__Platform_Linux) || defined(ROCKETGE__Platform_Windows)
-        char cpu[64] = {};
-        unsigned int info[4];
-        #if defined(ROCKETGE__Platform_Linux)
-        __get_cpuid(0x80000002, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu, info, 16);
-        __get_cpuid(0x80000003, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+16, info, 16);
-        __get_cpuid(0x80000004, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+32, info, 16);
-        #elif defined(ROCKETGE__Platform_Windows)
-        __cpuid((int*)info, 0x80000002); memcpy(cpu, info, 16);
-        __cpuid((int*)info, 0x80000003); memcpy(cpu+16, info, 16);
-        __cpuid((int*)info, 0x80000004); memcpy(cpu+32, info, 16); 
-        #endif
-        return std::string(cpu);
-#elif defined(ROCKETGE__Platform_Android)
-        char value[PROP_VALUE_MAX];
-        __system_property_get("ro.soc.model", value);
-        return std::string(value);
-#endif
-        return std::string("Querying CPU Name is not supported on this platform");
-    }
-
     static std::unordered_map<rgl::shader_use_t, rgl::shader_program_t> shader_cache;
     std::vector<std::string> init_gl(rocket::vec2f_t viewport_size, glfnldr::backend_t backend, rocket::window_backend_i *win) {
         ::rgl::viewport_size = viewport_size;
@@ -550,8 +527,7 @@ namespace rgl {
             "Context Verifier: " + bool_to_str(flags & GL_CONTEXT_FLAG_DEBUG_BIT),
             "GPU:",
             "  Name: " + gpu_name,
-            "  Vendor: "  + gpu_vendor,
-            "CPU: " + get_cpu_name() + " " + "(" + std::to_string(std::thread::hardware_concurrency()) + ")"
+            "  Vendor: "  + gpu_vendor
         };
 
         // !LogMessage: Warning

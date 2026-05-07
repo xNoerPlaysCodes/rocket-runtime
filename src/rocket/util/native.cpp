@@ -66,6 +66,22 @@ namespace linux_backend {
         if (libGL == nullptr) return nullptr;
         return dlsym(libGL, name);
     }
+
+    void get_platform_version(char *buf, size_t sz) {
+        utsname u = {};
+        uname(&u);
+        std::snprintf(buf, sz, "%s", u.release);
+    }
+}
+#endif
+
+#ifdef ROCKETGE__Platform_Android
+namespace android_backend {
+    void get_platform_version(char *buf, size_t sz) {
+        char value[PROP_VALUE_MAX];
+        __system_property_get("ro.build.version.release", value);
+        std::snprintf(buf, sz, "%s", value);
+    }
 }
 #endif
 
@@ -80,6 +96,10 @@ namespace unix_backend {
         strncpy(name, _name, 15);
         name[15] = '\0';
         pthread_setname_np(pthread_self(), name);
+    }
+
+    void get_thread_name(char *buf, size_t sz) {
+        pthread_getname_np(pthread_self(), buf, sz);
     }
 }
 #endif
@@ -119,6 +139,34 @@ namespace windows_backend {
         }
     }
 
+    void get_thread_name(char *buf, size_t sz) {
+        HANDLE thread = GetCurrentThread();
+
+        using get_thread_description_t = HRESULT (WINAPI*)(HANDLE, PWSTR*);
+        static auto get_thread_description =
+            reinterpret_cast<get_thread_description_t>(
+                GetProcAddress(GetModuleHandleW(L"Kernel32.dll"), "GetThreadDescription")
+            );
+
+        if (!get_thread_description) {
+            return "unknown";
+        }
+
+        PWSTR wide = nullptr;
+        HRESULT hr = get_thread_description(thread, &wide);
+        if (FAILED(hr) || !wide) {
+            return "unknown";
+        }
+
+        // convert UTF-16 → UTF-8 / std::string
+        int len = WideCharToMultiByte(CP_UTF8, 0, wide, -1, nullptr, 0, nullptr, nullptr);
+        WideCharToMultiByte(CP_UTF8, 0, wide, -1, buf, sz, nullptr, nullptr);
+
+        LocalFree(wide);
+
+        return result;
+    }
+
     void *get_proc_address(const char *name) {
         void *ptr = (void*) wglGetProcAddress(name);
         if (ptr != nullptr) return ptr;
@@ -127,6 +175,15 @@ namespace windows_backend {
         static HMODULE module = LoadLibraryA("opengl32.dll");
         if (module == nullptr) return nullptr;
         return (void*) GetProcAddress(module, name);
+    }
+
+    void get_platform_version(char *buf, size_t sz) {
+        RTL_OSVERSIONINFOW v = {};
+        v.dwOSVersionInfoSize = sizeof(v);
+
+        RtlGetVersion(&v);
+
+        std::snprintf(buf, sz, "%d.%d.%d", v.dwMajorVersion, v.dwMinorVersion, v.dwBuildNumber);
     }
 }
 #endif
@@ -210,6 +267,14 @@ namespace rnative {
 #endif
     }
 
+    void get_thread_name(char *buf, size_t sz) {
+#ifdef ROCKETGE__Platform_UnixCompatible
+        unix_backend::get_thread_name(buf, sz);
+#elif defined(ROCKETGE__Platform_Windows)
+        windows_backend::get_thread_name(buf, sz);
+#endif
+    }
+
 #ifdef ROCKETGE__Platform_Desktop
     proc_address_t load_proc_address(const char *name) {
 #ifdef ROCKETGE__Platform_Linux
@@ -221,4 +286,32 @@ namespace rnative {
 #endif
     }
 #endif
+
+    const char* get_platform_name() {
+#ifdef ROCKETGE__Platform_Windows
+        return "Windows";
+#elifdef ROCKETGE__Platform_Linux
+        return "Linux";
+#elifdef ROCKETGE__Platform_macOS
+        return "macOS";
+#elifdef ROCKETGE__Platform_Android
+        return "Android";
+#else
+        return "Unknown";
+#endif
+    }
+
+    void get_platform_version(char *buf, size_t sz) {
+#ifdef ROCKETGE__Platform_Windows
+        windows_backend::get_platform_version(buf, sz);
+#elifdef ROCKETGE__Platform_Linux
+        linux_backend::get_platform_version(buf, sz);
+#elifdef ROCKETGE__Platform_macOS
+        static_assert(false && "TODO: Implement");
+#elifdef ROCKETGE__Platform_Android
+        android_backend::get_platform_version(buf, sz);
+#else
+        if (sz > 0) buf[0] = '\0';
+#endif
+    }
 }

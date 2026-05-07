@@ -10,6 +10,18 @@
 #include <rocket/macros.hpp>
 #include <native.hpp>
 
+#ifdef ROCKETGE__Platform_Linux
+#include <cpuid.h>
+#else
+#ifdef ROCKETGE__Platform_Android
+#include <sys/system_properties.h>
+#else
+#ifdef ROCKETGE__Platform_Windows
+#include <intrin.h>
+#endif
+#endif
+#endif
+
 #ifdef ROCKETGE__Platform_Desktop
 #include <stacktrace>
 #endif
@@ -135,6 +147,32 @@ namespace rocket {
 #endif
     }
 
+    namespace globals {
+        extern std::thread::id g_main_thread_id;
+    }
+
+    static char* get_cpu_name() {
+#if defined(ROCKETGE__Platform_Linux) || defined(ROCKETGE__Platform_Windows)
+        char *cpu = (char*) char_allocator->allocate(64);
+        unsigned int info[4];
+        #if defined(ROCKETGE__Platform_Linux)
+        __get_cpuid(0x80000002, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu, info, 16);
+        __get_cpuid(0x80000003, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+16, info, 16);
+        __get_cpuid(0x80000004, &info[0], &info[1], &info[2], &info[3]); memcpy(cpu+32, info, 16);
+        #elif defined(ROCKETGE__Platform_Windows)
+        __cpuid((int*)info, 0x80000002); memcpy(cpu, info, 16);
+        __cpuid((int*)info, 0x80000003); memcpy(cpu+16, info, 16);
+        __cpuid((int*)info, 0x80000004); memcpy(cpu+32, info, 16); 
+        #endif
+        return cpu;
+#elif defined(ROCKETGE__Platform_Android)
+        char *value = (char*) char_allocator->allocate(PROP_VALUE_MAX);
+        __system_property_get("ro.soc.model", value);
+        return std::string(value);
+#endif
+        return (char*) "Querying CPU Name is not supported on this platform";
+    }
+
     char* crash_signal(bool fatal, void *mem_addr, const char *signal, const char *message) {
         init_allocator();
         // Go back to buf[0]
@@ -179,10 +217,36 @@ namespace rocket {
             ? ">- RocketGE has crashed! -<\n"
             : ">- RocketGE has encountered a non-fatal crash -<\n";
 
+        char *thread_name = (char*) char_allocator->allocate(256);
+        char buffer[256];
+        rnative::get_thread_name(thread_name, 256);
+        std::snprintf(buffer, 256, "%s %s", thread_name,
+            (std::this_thread::get_id() == rocket::globals::g_main_thread_id)
+            ? "(Main Thread)"
+            : "");
+        std::memcpy(thread_name, buffer, 256);
+        buffer[255] = '\0'; // security null byte
+                            // might still read garbage tho
+
+        const char *platform_str = rnative::get_platform_name();
+        char *platform_version_str = (char*) char_allocator->allocate(128);
+        rnative::get_platform_version(platform_version_str, 128);
+        char *processor_str = get_cpu_name();
+
         int written = std::snprintf(buf, size,
             "%s"
             "Generated on %s\n"
             "%s occurred.\n"
+            "Thread Name: %s\n"
+#ifdef ROCKETGE__DEBUG_BUILD
+            "Build: Debug\n"
+#else
+            "Build: Release (Optimized)\n"
+#endif
+            "\n"
+            "System Information:\n"
+            "  Platform: %s (Version: %s)\n"
+            "  Processor: %s\n"
             "\n"
             "%s @ [%s]\n"
             "%s\n"
@@ -192,6 +256,9 @@ namespace rocket {
             header,
             get_time_string(),
             fatal ? "A fatal exception" : "An exception",
+            thread_name,
+            platform_str, platform_version_str,
+            processor_str,
             signal, mem_addr_str,
             message,
             "The program will now dump the stack trace"
@@ -209,7 +276,8 @@ namespace rocket {
         char *buf = (char*) char_allocator->allocate(sz);
         int written = 0;
         written += std::snprintf(buf, sz,
-            "%s",
+            "Execution has been terminated\n"
+            "Message: %s\n\n",
             msg
         );
         written += construct_stack_trace(buf + written, sz - written, nullptr);
@@ -221,7 +289,51 @@ namespace rocket {
         init_allocator();
         constexpr size_t sz = 1 * 1024 * 1024;
         char *buf = (char*) char_allocator->allocate(sz);
-        construct_stack_trace(buf, sz, std::current_exception());
+        const char* header = ">- RocketGE has crashed! -<\n";
+
+        char *thread_name = (char*) char_allocator->allocate(256);
+        char buffer[256];
+        rnative::get_thread_name(thread_name, 256);
+        std::snprintf(buffer, 256, "%s %s", thread_name,
+            (std::this_thread::get_id() == rocket::globals::g_main_thread_id)
+            ? "(Main Thread)"
+            : "");
+        std::memcpy(thread_name, buffer, 256);
+        buffer[255] = '\0'; // security null byte
+                            // might still read garbage tho
+
+        const char *platform_str = rnative::get_platform_name();
+        char *platform_version_str = (char*) char_allocator->allocate(128);
+        rnative::get_platform_version(platform_version_str, 128);
+        char *processor_str = get_cpu_name();
+        int written = std::snprintf(buf, sz,
+            "%s"
+            "Generated on %s\n"
+            "%s occurred.\n"
+            "Thread Name: %s\n"
+#ifdef ROCKETGE__DEBUG_BUILD
+            "Build: Debug\n"
+#else
+            "Build: Release (Optimized)\n"
+#endif
+            "\n"
+            "System Information:\n"
+            "  Platform: %s (Version: %s)\n"
+            "  Processor: %s\n"
+            "\n"
+            "%s\n\n",
+
+            header,
+            get_time_string(),
+            "A fatal exception",
+            thread_name,
+            platform_str, platform_version_str,
+            processor_str,
+            "The program will now dump the stack trace & exception info"
+        );
+        written += construct_stack_trace(buf + written, sz - written, std::current_exception());
+        written += std::snprintf(buf + written, sz - written, 
+            "\n>- Please report with all details to the RocketGE Github Maintainer -<");
         std::cerr << '\n' << buf << '\n' << std::flush;
         rnative::exit_now(134);
     }
