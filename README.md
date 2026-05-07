@@ -1,6 +1,8 @@
 # 🚀 RocketGE
 ![RocketGE Splash Gif](https://github.com/xNoerPlaysCodes/rocket-runtime/raw/refs/heads/master/res/splash.gif)
 
+**NOTICE: RocketGE is has entered the release-candidate part of it's cycle, for further information see CONTRIBUTING.md**
+
 **A lightweight and powerful 2D Game Engine**
 - Make Games with OpenGL / OpenGL ES / Vulkan (in progress)
 - Make beautiful UIs with Astro

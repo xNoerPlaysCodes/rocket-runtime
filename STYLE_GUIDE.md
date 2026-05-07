@@ -1,4 +1,5 @@
-# RocketGE Coding Style Guide
+# 🚀 RocketGE — Style Guide
+![RocketGE Splash Gif](https://github.com/xNoerPlaysCodes/rocket-runtime/raw/refs/heads/master/res/splash.gif)
 
 This document includes our basic coding style guides for RocketGE to make code easier to read and maintain.
 
