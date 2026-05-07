@@ -78,13 +78,6 @@ DEFINE_PLATFORM_MAIN
 
 ## `custom shader`
 ```cpp
-/*
-        This example does not work,
-        please do not use this example
-        code as it is outdated.
-*/
-
-
 #include "rocket/runtime.hpp"
 #include "rocket/shader.hpp"
 #include "rocket/types.hpp"
@@ -98,8 +91,9 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
     rocket::window_t window({1280, 720}, "rgeExample - Custom Shader");
     std::unique_ptr<rocket::renderer_2d_i> r = rocket::create_renderer_2d(rocket::renderer_backend_t::opengl, &window);
 
-    const char *vcode = R"(#version 300 es
-        precision mediump float;
+    // No need to put #version and precision; directives
+    // RocketGE handles that for you.
+    const char *vcode = R"(
         layout(location = 0) in vec2 aPos;
     
         out vec2 fragPos;
@@ -109,8 +103,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
             gl_Position = vec4(aPos, 0.0, 1.0);
         }
     )";
-    const char *fcode = R"(#version 300 es
-        precision mediump float;
+    const char *fcode = R"(
         out vec4 FragColor;
         in vec2 fragPos;
 
@@ -134,17 +127,17 @@ int rocket_main(int argc, char **argv, rocket_arguments_t) {
     rocket::opengl_shader_t shader = {rocket::shader_type::vert_frag, vcode, fcode};
 
     while (window.is_running()) {
-        r.begin_frame();
-        r.clear();
+        r->begin_frame();
+        r->clear();
         {
-            r.draw_shader(shader);
-            r.draw_fps();
+            r->draw_shader(shader);
+            r->draw_fps();
         }
-        r.end_frame();
+        r->end_frame();
         window.poll_events();
     }
 
-    r.close();
+    r->close();
     window.close();
 
     return 0; // Very Important
