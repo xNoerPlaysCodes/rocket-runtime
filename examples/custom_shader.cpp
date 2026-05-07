@@ -12,12 +12,12 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
     auto r = rocket::create_renderer_2d(window.get_flags().graphics_ctx.backend, &window, 60);
 
     std::unique_ptr<rocket::shader_i> shader;
-    if (window.get_flags().graphics_ctx.backend == rocket::renderer_backend_t::vulkan && false) {
+    if (window.get_flags().graphics_ctx.backend == rocket::renderer_backend_t::vulkan) {
         shader = std::make_unique<rocket::vulkan_shader_t>(
             rocket::shader_type::vert_frag,
             std::filesystem::path(args.working_dir + "resources/custom_shader.rlsl")
         );
-    } else if (window.get_flags().graphics_ctx.backend == rocket::renderer_backend_t::opengl && false) {
+    } else if (window.get_flags().graphics_ctx.backend == rocket::renderer_backend_t::opengl) {
         shader = std::make_unique<rocket::opengl_shader_t>(
             rocket::shader_type::vert_frag,
             std::filesystem::path(args.working_dir + "resources/custom_shader.rlsl")

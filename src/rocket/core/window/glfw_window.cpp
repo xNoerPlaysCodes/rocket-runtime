@@ -476,7 +476,7 @@ namespace rocket {
             }
         } else if (this->flags.graphics_ctx.backend == renderer_backend_t::null) {
         } else {
-            r_assert(false && "TODO IMPLEMENT CONTEXT CREATION FOR RENDERER BACKEND");
+            rocket::crash("Unhandled renderer backend for context creation!");
         }
         monitor = glfwaltGetMonitorWithCursor();
 

@@ -686,9 +686,11 @@ namespace rocket {
 #endif
                 + gl_version;
         } else if (backend == renderer_backend_t::vulkan) {
-            api_str = "Vulkan " "6.7"; // TODO Implement Vk version checking
+            api_str = "Vulkan " "6.7"; // TODO: Implement Vk version checking
+        } else if (backend == renderer_backend_t::null) {
+            api_str = "Null 1";
         } else {
-            r_assert(false && "TODO IMPL OTHER API??");
+            rocket::crash("Unhandled renderer backend for debug overlay");
         }
 
         rocket::text_t api_version_text = { "API: " + api_str, text_size, rgb_color::white(), font };

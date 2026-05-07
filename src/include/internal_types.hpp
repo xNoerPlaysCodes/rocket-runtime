@@ -39,7 +39,6 @@ namespace rocket {
         static native_window_t *get_instance();
     };
 
-    // [TODO] Implement
     namespace native_io {
         void            get_cursor_position(native_window_t *win, double *x, double *y);
         io::keystate_t  get_key_state(native_window_t *win, io::keyboard_key k);

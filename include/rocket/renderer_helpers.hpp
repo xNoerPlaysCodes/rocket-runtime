@@ -2,10 +2,10 @@
 
 #include <rocket/glfnldr.hpp>
 #include <rocket/types.hpp>
+#include <rocket/constants.hpp>
 #include <functional>
 
 namespace rocket {
-    constexpr int fps_uncapped = -1; // [[TODO]] Put this in rocket::cst
     struct renderer_flags_t {
         bool share_renderer_as_global = true;
         /// @brief Show the splash screen

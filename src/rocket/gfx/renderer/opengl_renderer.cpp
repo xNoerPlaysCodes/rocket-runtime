@@ -1055,7 +1055,7 @@ namespace rocket {
 
         frame_counter++;
 
-        if (this->fps == rocket::fps_uncapped) {
+        if (this->fps == rocket::cst::fps_uncapped) {
             delta_time = std::chrono::duration<double>(frame_start_time - last_time).count();
             return;
         }
@@ -1128,7 +1128,7 @@ namespace rocket {
     }
 
     api_object_t opengl_renderer_2d::get_framebuffer_texture() {
-        r_assert(false && "TODO IMPL GET FRAMEBUFFER TEXTURE API OBJ");
+        rocket::crash("TODO: Implement 'get_framebuffer_texture'");
         return 0;
         // rgl::scoped_gl_texture_t t;
         // glBindTexture(GL_TEXTURE_2D, t.id);

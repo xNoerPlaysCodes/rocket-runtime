@@ -100,7 +100,7 @@ namespace astro {
             r->draw_rectangle(rect, info.color, 0, info.border.radius);
         }
 
-        rocket::text_t text(this->text, 24, { info.text_color.x, info.text_color.y, info.text_color.z }, fonts[24]); // TODO font
+        rocket::text_t text(this->text, 24, { info.text_color.x, info.text_color.y, info.text_color.z }, fonts[24]); // TODO: Dynamically pick font or sum
         float text_offset_y = 0;
         r->draw_text(text, {pos.x + (size.x / 2) - (float) text.measure().x / 2 + text_offset, pos.y - text.font->get_line_height() / 2 + size.y / 2 + text_offset_y});
     }

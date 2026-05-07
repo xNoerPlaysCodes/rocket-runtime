@@ -419,7 +419,7 @@ namespace rocket {
         m.bluebits = 8;
         m.redbits = 8;
         m.greenbits = 8;
-        m.refreshrate = 60; // TODO Get from Choreographer Callback?
+        m.refreshrate = 60; // TODO: Get from Choreographer Callback?
         return m;
     }
 #endif

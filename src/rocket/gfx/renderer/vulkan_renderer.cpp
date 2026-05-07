@@ -2609,7 +2609,7 @@ namespace rocket {
 
         rgl::reset_frame_metrics();
 
-        if (this->fps != rocket::fps_uncapped && !this->vsync) {
+        if (this->fps != rocket::cst::fps_uncapped && !this->vsync) {
             const double frame_duration = std::chrono::duration<double>(frame_end_time - frame_start_time).count();
             if (this->fps == 0) {
                 rocket::log("Target FPS 0 is too low", "vulkan_renderer_2d", "end_frame", "fatal");

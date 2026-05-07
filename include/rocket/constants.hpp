@@ -27,6 +27,8 @@ namespace rocket::cst {
     constexpr int32_t   unknown_i32 = std::numeric_limits<int32_t>::max();
     constexpr int64_t   unknown_i64 = std::numeric_limits<int64_t>::max();
 
+    constexpr int      fps_uncapped = -1;
+
     /// @brief rocket::io::simulate magic number to set [var: vec2] to
     ///         current mouse position
     constexpr float io_mn_set_to_current_mpos = std::numeric_limits<float>::infinity();
