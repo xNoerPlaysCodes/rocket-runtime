@@ -56,9 +56,9 @@ namespace rocket {
 namespace util {
     bool is_glinit = false;
 #ifdef ROCKETGE__DEBUG_BUILD
-    rocket::log_level_t log_level = rocket::log_level_t::all;
+    rocket::log_level_t g_log_level = rocket::log_level_t::all;
 #else
-    rocket::log_level_t log_level = rocket::log_level_t::info;
+    rocket::log_level_t g_log_level = rocket::log_level_t::info;
 #endif
 
     bool is_wayland() {
@@ -120,7 +120,7 @@ namespace util {
             elvl = rocket::log_level_t::warn;
         }
         if (!get_clistate().logall) {
-            if (elvl < log_level) {
+            if (g_log_level > elvl) {
                 return "";
             }
         }
@@ -280,7 +280,7 @@ namespace util {
     }
 
     void set_log_level(rocket::log_level_t level) {
-        log_level = level;
+        g_log_level = level;
     }
 
     void io_update_end_frame() {
