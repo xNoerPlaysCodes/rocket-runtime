@@ -33,6 +33,18 @@ Example:
 class renderer_2d_i { ... };
 ```
 
+**NOTE: public/private/protected access specifiers should be declared as following:**
+```cpp
+class some_class_t {
+private:
+    int some_private = 0;
+public:
+    int some_public = 0;
+protected:
+    int some_protected = 0;
+};
+```
+
 Enum names should follow `_t` suffixing. \
 **NOTE:** Enums should always be of `enum class` not C-style enums.
 
