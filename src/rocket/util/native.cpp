@@ -126,7 +126,7 @@ namespace windows_backend {
         using set_thread_description_t = HRESULT (WINAPI*)(HANDLE, PCWSTR);
         static auto set_thread_description =
             reinterpret_cast<set_thread_description_t>(
-                GetProcAddress(GetModuleHandleW(L"Kernel32.dll"), "SetThreadDescription")
+                (void*) GetProcAddress(GetModuleHandleW(L"Kernel32.dll"), "SetThreadDescription")
             );
 
         if (set_thread_description == nullptr) {
@@ -145,17 +145,17 @@ namespace windows_backend {
         using get_thread_description_t = HRESULT (WINAPI*)(HANDLE, PWSTR*);
         static auto get_thread_description =
             reinterpret_cast<get_thread_description_t>(
-                GetProcAddress(GetModuleHandleW(L"Kernel32.dll"), "GetThreadDescription")
+                (void*) GetProcAddress(GetModuleHandleW(L"Kernel32.dll"), "GetThreadDescription")
             );
 
         if (!get_thread_description) {
-            return "unknown";
+            rocket::crash("GetThreadDescription failed");
         }
 
         PWSTR wide = nullptr;
         HRESULT hr = get_thread_description(thread, &wide);
         if (FAILED(hr) || !wide) {
-            return "unknown";
+            rocket::crash("GetThreadDescription failed");
         }
 
         // convert UTF-16 → UTF-8 / std::string
@@ -163,8 +163,6 @@ namespace windows_backend {
         WideCharToMultiByte(CP_UTF8, 0, wide, -1, buf, sz, nullptr, nullptr);
 
         LocalFree(wide);
-
-        return result;
     }
 
     void *get_proc_address(const char *name) {
@@ -177,13 +175,24 @@ namespace windows_backend {
         return (void*) GetProcAddress(module, name);
     }
 
+    typedef LONG (WINAPI *fn_RtlGetVersion_t)(PRTL_OSVERSIONINFOW);
+
     void get_platform_version(char *buf, size_t sz) {
         RTL_OSVERSIONINFOW v = {};
         v.dwOSVersionInfoSize = sizeof(v);
 
-        RtlGetVersion(&v);
+        HMODULE ntdll = GetModuleHandleW(L"ntdll.dll");
+        auto fn_RtlGetVersion = reinterpret_cast<fn_RtlGetVersion_t>(
+            (void*) GetProcAddress(ntdll, "RtlGetVersion")
+        );
 
-        std::snprintf(buf, sz, "%d.%d.%d", v.dwMajorVersion, v.dwMinorVersion, v.dwBuildNumber);
+        if (fn_RtlGetVersion) {
+            rocket::crash("GetProcAddress(ntdll, \"RtlGetVersion\") failed");
+        }
+
+        fn_RtlGetVersion(&v);
+
+        std::snprintf(buf, sz, "%lu.%lu.%lu", v.dwMajorVersion, v.dwMinorVersion, v.dwBuildNumber);
     }
 }
 #endif
