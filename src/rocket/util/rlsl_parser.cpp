@@ -1,7 +1,9 @@
 #include "rocket/macros.hpp"
 #include <algorithm>
+#include <expected>
 #include <iostream>
 #include <rocket/renderer_helpers.hpp>
+#include <variant>
 #if defined(ROCKETGE__Platform_Android)
     #include <GLES3/gl32.h>
     #include <EGL/egl.h>
@@ -132,13 +134,22 @@ namespace rocket {
             return out;
         }
 
-        std::string parse_str(const std::string &raw) {
+        std::expected<std::string, std::string> parse_str(const std::string &raw) {
             std::string s;
             s.reserve(raw.size());
             bool escape = false;
             // if (raw.size() >= 2 && raw.front() == '"' && raw.back() == '"') {
             //     s = raw.substr(1, raw.size() - 2);
             // }
+            if (raw.size() >= 2) {
+                if (raw.at(0) == '"') {
+                    if (raw.at(raw.size() - 1) != '"') {
+                        return std::unexpected("unterminated string literal");
+                    }
+                } else {
+                    return raw;
+                }
+            }
             for (size_t i = 0; i < raw.size(); ++i) {
                 if ((i == 0 || i == raw.size() - 1) && raw[i] == '"')
                     continue;
@@ -308,6 +319,7 @@ namespace rocket {
             std::vector<std::string> parts = split(l, ' ');
 #define PS_ERROR(LOG) rocket::log(LOG, "util", "rlsl_parser", "error"); state.errors++; continue
 #define PS_WARN(LOG) rocket::log(LOG, "util", "rlsl_parser", "warn"); state.warnings++ 
+#define PS_INVALID_ARG_COUNT(kw) PS_ERROR("invalid argument count to kw: " + kw);
 #define PS_UNKNOWN_KW(kw) PS_ERROR(std::string("unknown keyword ") + kw)
 #define PS_UNKNOWN_VALUE(vl) PS_ERROR(std::string("unknown value ") + vl)
             if (parts.size() == 0) {
@@ -316,6 +328,9 @@ namespace rocket {
             const std::string &kw = parts.at(0).substr(1);
             if (state.parser_mode == mode_t::rlsl) {
                 if (kw == "LangProperty") {
+                    if (parts.size() < 3) {
+                        PS_INVALID_ARG_COUNT(kw);
+                    }
                     const std::string &property = trim(parts.at(1));
                     const std::string &value = trim(parts.at(2));
                     if (property == "NoPropertyOverride") {
@@ -329,10 +344,20 @@ namespace rocket {
                     }
                 }
                 else if (kw == "Set") {
+                    if (parts.size() < 3) {
+                        PS_INVALID_ARG_COUNT(kw);
+                    }
                     const std::string &given_property = trim(parts.at(1));
-                    const std::string &given_value = trim(parts.at(2));
+                    std::string given_value;
+                    for (size_t i = 2; i < parts.size(); ++i) {
+                        given_value += parts.at(i) + ' ';
+                    }
+                    given_value = trim(given_value);
 
-                    std::string value = parse_str(given_value);
+                    auto value = parse_str(given_value);
+                    if (!value.has_value()) {
+                        PS_ERROR(value.error());
+                    }
 
                     std::string property = namespace_to_str();
                     if (!property.empty())
@@ -348,30 +373,42 @@ namespace rocket {
                         }
                     }
 
-                    set_property(property, value);
+                    set_property(property, *value);
                 }
                 else if (kw == "EnterNamespace") {
+                    if (parts.size() != 2) {
+                        PS_INVALID_ARG_COUNT(kw);
+                    }
                     const std::string &given_namespace = trim(parts.at(1));
                     state.namespaces.push_back(given_namespace);
                 }
                 else if (kw == "Add") {
+                    if (parts.size() < 3) {
+                        PS_INVALID_ARG_COUNT(kw);
+                    }
                     const std::string &given_property = trim(parts.at(1));
-                    const std::string &given_value = trim(parts.at(2));
+                    std::string given_value;
+                    for (size_t i = 2; i < parts.size(); ++i) {
+                        given_value += parts.at(i) + ' ';
+                    }
+                    given_value = trim(given_value);
 
-                    std::string value = parse_str(given_value);
+                    auto value = parse_str(given_value);
+                    if (!value.has_value()) {
+                        PS_ERROR(value.error());
+                    }
 
                     std::string property = namespace_to_str();
                     if (!property.empty())
                         property += ".";
                     property += given_property;
 
-                    add_property(property, value);
-                }
-                else if (kw == "EnterNamespace") {
-                    const std::string &given_namespace = trim(parts.at(1));
-                    state.namespaces.push_back(given_namespace);
+                    add_property(property, *value);
                 }
                 else if (kw == "ExitNamespace") {
+                    if (parts.size() != 1) {
+                        PS_INVALID_ARG_COUNT(kw);
+                    }
                     if (state.namespaces.size() == 0) {
                         PS_ERROR("extraneous 'Exit' statement");
                     } else {
@@ -379,6 +416,9 @@ namespace rocket {
                     }
                 }
                 else if (kw == "Begin") {
+                    if (parts.size() != 2) {
+                        PS_INVALID_ARG_COUNT(kw);
+                    }
                     const std::string &mode = trim(parts.at(1));
                     if (mode == "VertexShader") {
                         state.parser_mode = mode_t::vertex;
