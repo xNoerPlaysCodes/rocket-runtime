@@ -64,7 +64,7 @@ int rocket_main(int argc, char **argv, rocket_arguments_t args) {
                 r.draw_texture(tx, { {250, 250}, {256,256} });
             }
             r.draw_rectangle({ 100, 100 }, { 256, 256 }, rocket::rgba_color::red());
-            r.draw_fps(); // [FIXME] not rendering text when calling GL functions from another thread directly
+            r.draw_fps();
         }
         r.end_frame();
         window.poll_events();

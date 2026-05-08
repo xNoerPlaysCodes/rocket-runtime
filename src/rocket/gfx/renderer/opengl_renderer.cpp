@@ -1152,7 +1152,7 @@ namespace rocket {
     }
 
     glm::mat4 opengl_renderer_2d::get_camera_matrix() {
-        return {}; // FIXME return 
+        return this->impl->camera_transform;
     };
 
     void opengl_renderer_2d::begin_scissor_mode(rocket::fbounding_box rect) {
