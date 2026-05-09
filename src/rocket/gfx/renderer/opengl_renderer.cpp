@@ -696,7 +696,7 @@ namespace rocket {
     }
    
     void opengl_renderer_2d::draw_text(const rocket::text_t& text_, rocket::vec2f_t position) {
-        rocket::text_t text = text_;
+        rocket::text_t &text = const_cast<rocket::text_t&>(text_); // TODO: Make text_t::measure() const;
         if (check_graphics_settings(position, text.measure()) == gfx_chk_result::not_drawable) {
             rgl::add_frame_metrics_data_skipped_drawcalls(text.text.size());
             return;
@@ -736,22 +736,22 @@ namespace rocket {
             if (c < 32) continue;
             stbtt_aligned_quad q;
             stbtt_GetBakedQuad(text.font->cdata->a, 512, 512, c - 32, &x, &y, &q, 1);
+            // TODO: ^^ Optimize this function call
 
             float x0 = (q.x0 / screen_w) * 2.0f - 1.0f;
             float y0 = 1.0f - (q.y0 / screen_h) * 2.0f;
             float x1 = (q.x1 / screen_w) * 2.0f - 1.0f;
             float y1 = 1.0f - (q.y1 / screen_h) * 2.0f;
 
-            float vq[6][4] = {
-                { x0, y0, q.s0, q.t0 },
-                { x0, y1, q.s0, q.t1 },
-                { x1, y1, q.s1, q.t1 },
-                { x0, y0, q.s0, q.t0 },
-                { x1, y1, q.s1, q.t1 },
-                { x1, y0, q.s1, q.t0 },
+            float vq[] = {
+                x0, y0, q.s0, q.t0,
+                x0, y1, q.s0, q.t1,
+                x1, y1, q.s1, q.t1,
+                x0, y0, q.s0, q.t0,
+                x1, y1, q.s1, q.t1,
+                x1, y0, q.s1, q.t0,
             };
-            for (auto& v : vq)
-                verts.insert(verts.end(), std::begin(v), std::end(v));
+            verts.insert(verts.end(), std::begin(vq), std::end(vq));
         }
 
         if (verts.empty()) return;
