@@ -1,8 +1,8 @@
-#include "../include/rocket/runtime.hpp"
-#include "../include/rocket/asset.hpp"
-#include "../include/rocket/renderer.hpp"
-#include "../include/rocket/types.hpp"
-#include "../include/rocket/window.hpp"
+#include "rocket/runtime.hpp"
+#include "rocket/asset.hpp"
+#include "rocket/renderer.hpp"
+#include "rocket/types.hpp"
+#include "rocket/window.hpp"
 
 int rocket_main(int argc, char **argv, rocket_arguments_t) {
     bool test_mode = false;
