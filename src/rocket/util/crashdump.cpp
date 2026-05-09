@@ -166,9 +166,9 @@ namespace rocket {
         #endif
         return cpu;
 #elif defined(ROCKETGE__Platform_Android)
-        char *value = (char*) char_allocator->allocate(PROP_VALUE_MAX);
+        char *value = (char*) char_allocator->allocate(92 /* PROP_VALUE_MAX as defined by sys/system_properties.h */);
         __system_property_get("ro.soc.model", value);
-        return std::string(value);
+        return value;
 #endif
         return (char*) "Querying CPU Name is not supported on this platform";
     }

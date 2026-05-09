@@ -89,6 +89,12 @@ namespace rnative {
 
 #endif // RNATIVE__INCLUDE_WINDOWS
 
+#ifdef RNATIVE__INCLUDE_ANDROID
+
+#include <sys/system_properties.h>
+
+#endif // RNATIVE__INCLUDE_ANDROID
+
 #if defined(ROCKETGE__Platform_UnixCompatible) || defined(ROCKETGE__Platform_Android)
 #define native_gmtime(x, y) gmtime_r(x, y)
 #define native_localtime(x, y) localtime_r(x, y)

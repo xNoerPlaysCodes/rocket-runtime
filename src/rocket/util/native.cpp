@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <fstream>
 #include <exception>
-#include "../../include/rocket/macros.hpp"
+#include "rocket/macros.hpp"
 #include "rocket/runtime.hpp"
 
 #ifdef ROCKETGE__Platform_Desktop
@@ -21,11 +21,16 @@
 #define GLFW_EXPOSE_NATIVE_WIN32
 #endif
 
-#include "native.hpp"
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 
 #endif
+
+#ifdef ROCKETGE__Platform_Android
+#define RNATIVE__INCLUDE_ANDROID
+#endif
+
+#include "native.hpp"
 
 #ifdef ROCKETGE__Platform_Linux
 namespace linux_backend {
@@ -78,7 +83,7 @@ namespace linux_backend {
 #ifdef ROCKETGE__Platform_Android
 namespace android_backend {
     void get_platform_version(char *buf, size_t sz) {
-        char value[PROP_VALUE_MAX];
+        char value[92 /* PROP_VALUE_MAX as defined by sys/system_properties.h */];
         __system_property_get("ro.build.version.release", value);
         std::snprintf(buf, sz, "%s", value);
     }
