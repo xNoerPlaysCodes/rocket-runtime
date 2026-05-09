@@ -239,8 +239,8 @@ void __rocket_premain(int argc, char **argv);
         app->activity->vm->DetachCurrentThread(); \
     } \
     extern "C" void android_main(android_app *app) { \
-        const char *argv[] = { "RocketGE_EmbeddedArgv0", "--debug-overlay", "--", nullptr }; \
-        int argc = (sizeof(argv) / sizeof(argv[0])) - 1; \
+        const char *argv[] = { "RocketGE_EmbeddedArgv0", nullptr }; \
+        int argc = 1; \
         __rocket_premain(argc, (char**) argv); \
         g_android_app = app; \
         app->onAppCmd = [](android_app *app, int32_t cmd) {}; \
