@@ -11,4 +11,5 @@ Fully automated AI-generated PRs/issues may be rejected.<br>
 If AI tools are used, contributors are responsible for verifying correctness, ensuring no hallucinated bugs/issues exist, and following `STYLE_GUIDE.md`.
 
 ## Contributing
+See the [STYLE_GUIDE](https://github.com/xNoerPlaysCodes/rocket-runtime/blob/master/STYLE_GUIDE.md) on how to format your code.
 Pull Requests (PRs) and Issues are welcome and appreciated.
