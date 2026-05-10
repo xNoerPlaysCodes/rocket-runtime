@@ -146,6 +146,29 @@ int _ =5;  // WRONG!
 int _ = 5; // CORRECT!
 ```
 
+Spacing between control blocks
+```cpp
+for (...) {
+   ^     ^
+   spacing
+}
+
+if (...) {
+  ^     ^
+  spacing
+}
+```
+and
+```cpp
+some_code();
+
+for (...) {
+    ...
+} // or any block
+
+some_code();
+```
+
 ## Additional Notes
 - DO NOT USE `using namespace std` or `using namespace ANYTHING` ANYWHERE!
 - Regarding previous note, namespace aliases are allowed, but NOT in headers
@@ -160,6 +183,6 @@ int _ = 5; // CORRECT!
 - Write clear code (vague)
 - Prefer `while (true);` instead of `for (;;);` (Not sure why you would need this tho)
 - Make code that needs to be optimized, easier for the compiler to optimize
-- No compiler-specific code
+- No compiler-specific code, aim to be compatible with all 3: GCC, Clang & MSVC
 
 If anywhere in the codebase you see code not conforming to this style guide you may submit a PR to fix it.
