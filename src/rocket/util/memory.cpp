@@ -20,12 +20,16 @@ namespace rocket {
         return (sz + (A - 1)) & ~(A - 1);
     }
 
-    uint8_t *frame_allocator_t::allocate(size_t size, size_t alignment) {
-        size = aligned(size, alignment);
-        uint8_t *buf = this->buffer;
-        this->buffer += size;
-        // r_assert(static_cast<size_t>(this->buffer - this->ogbuffer) <= this->size);
-        return buf;
+    uint8_t* frame_allocator_t::allocate(size_t size, size_t alignment) {
+        uintptr_t current = reinterpret_cast<uintptr_t>(this->buffer);
+        uintptr_t aligned_ptr = aligned(current, alignment);
+        uintptr_t new_ptr = aligned_ptr + size;
+
+        r_assert(new_ptr - reinterpret_cast<uintptr_t>(this->ogbuffer) <= this->size);
+
+        this->buffer = reinterpret_cast<uint8_t*>(new_ptr);
+
+        return reinterpret_cast<uint8_t*>(aligned_ptr);
     }
 
     void frame_allocator_t::clear() {

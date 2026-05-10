@@ -15,7 +15,7 @@ Reference or Pointer Variables should be declared like the following:
 T &reference;
 T *reference;
 ```
-Member Variables also follow the same pattern, no extra prefix or suffix \
+Member Variables **& File Names** also follow the same pattern (i.e. 'some_thing_name'), no extra prefix or suffix \
 **NOTE:** Global variables should be prefixed with `g_`
 
 #### 2.1 Class/Interface/Enum Names
