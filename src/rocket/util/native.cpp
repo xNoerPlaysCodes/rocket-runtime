@@ -261,7 +261,7 @@ namespace rnative {
         windows_backend::exit_now(code);
 #else
         (void) code;
-        _exit(code);
+        _Exit(code);
 #endif
     }
 
