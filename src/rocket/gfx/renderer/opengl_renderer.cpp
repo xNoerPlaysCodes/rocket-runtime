@@ -120,10 +120,6 @@ namespace rocket {
             util::timer_t gl_init_timer;
             util::glinit(true);
 
-            if (window == nullptr) {
-                rocket::log("Invalid window ptr", "opengl_renderer_2d", "constructor", "error");
-                return;
-            }
             std::vector<std::string> log_messages = rgl::init_gl(
                 { static_cast<float>(window->size.x), static_cast<float>(window->size.y) },
                 flags.glfnldr_backend,
