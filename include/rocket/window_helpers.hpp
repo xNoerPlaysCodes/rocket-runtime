@@ -56,7 +56,7 @@ namespace rocket {
         bool interlacing = false;
 
         /// --- Graphics Context ---
-        graphics_api_context_t graphics_ctx;
+        graphics_api_context_t graphics_ctx = {};
 
         /// --- Advanced ---
         std::string window_class_name = ROCKETGE__PlatformSpecific_Linux_AppClassNameOrID;

@@ -339,8 +339,7 @@ namespace rocket {
         util::set_log_callback(callback); 
     }
 
-    static std::vector<logger_state_t> logger_state;
-    static std::mutex logger_state_mutex;
+    static std::atomic<uint8_t> logger_state_bitmask = 0;
 
     static std::mutex cerr_mutex;
     static std::ofstream std_outstm;
@@ -381,16 +380,19 @@ namespace rocket {
                 mtx = &cerr_mutex;
         }
         {
-            {
-                std::lock_guard<std::mutex> _(*mtx);
-                *out << util::format_log(log,class_file_library_source, function_source, level);
+            const std::string formatted_output = util::format_log(log,class_file_library_source, function_source, level);
+            if (formatted_output.empty()) {
+                return;
             }
             {
-                std::lock_guard<std::mutex> _(logger_state_mutex);
-                if (std::find(logger_state.begin(), logger_state.end(), logger_state_t::flush_never) != logger_state.end()) return;
-                if (!log_to_stdouterr || std::find(logger_state.begin(), logger_state.end(), logger_state_t::flush_always) != logger_state.end()) {
-                    out->flush();
-                }
+                std::lock_guard<std::mutex> _(*mtx);
+                *out << formatted_output;
+            }
+            if (logger_state_bitmask & (1 << 1)) {
+                return;
+            }
+            if (!log_to_stdouterr || logger_state_bitmask & (1 << 0)) {
+                out->flush();
             }
         }
 #endif
@@ -441,17 +443,25 @@ namespace rocket {
     }
 
     void logger_push(logger_state_t state) {
-        std::lock_guard<std::mutex> _(logger_state_mutex);
-        if (std::find(logger_state.begin(), logger_state.end(), state) != logger_state.end()) return;
-        logger_state.push_back(state);
+        if (state == logger_state_t::flush_always) {
+            logger_state_bitmask |= 1 << 0;
+        } else if (state == logger_state_t::flush_never) {
+            logger_state_bitmask |= 1 << 1;
+        } else {
+            r_debug_if(true) {
+                rocket::log("unknown logger_state", "rocket", "logger_push", "warn");
+            }
+        }
     }
 
     void logger_pop(logger_state_t state) {
-        std::lock_guard<std::mutex> _(logger_state_mutex);
-        for (auto it = logger_state.begin(); it != logger_state.end(); ++it) {
-            if (*it == state) {
-                logger_state.erase(it);
-                break;
+        if (state == logger_state_t::flush_always) {
+            logger_state_bitmask |= ~(1 << 0);
+        } else if (state == logger_state_t::flush_never) {
+            logger_state_bitmask |= ~(1 << 1);
+        } else {
+            r_debug_if(true) {
+                rocket::log("unknown logger_state", "rocket", "logger_pop", "warn");
             }
         }
     }
