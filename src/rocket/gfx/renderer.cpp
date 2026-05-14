@@ -59,6 +59,15 @@ namespace rocket {
             std::stack<renderer_backend_t> stk;
             stk.push(renderer_backend_t::null);
             auto cli_args = util::get_clistate();
+            // Render Backend Picker
+            //
+            // Order of picking:
+            // ---
+            // Vulkan
+            // OpenGL
+            // <Requested>
+            // <CLI Override>
+            // ---
             if (
                 caps.max_vk_version != 0 
                 && choice & renderer_choice::vulkan
