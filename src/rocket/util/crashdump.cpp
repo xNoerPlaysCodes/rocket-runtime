@@ -72,6 +72,11 @@ namespace rocket {
             return std::snprintf(buf, len, "Stack trace too big (%zu > 1000) (Stack overflow?)\n", st_size);
         }
 
+        // Trim trailing consecutive missing symbols
+        while (st_size > 0 && st[st_size - 1].source_file().size() == 0) {
+            st_size--;
+        }
+
         // compute width for index column
         int index_width = 1;
         if (st_size >= 10)   index_width = 2;
