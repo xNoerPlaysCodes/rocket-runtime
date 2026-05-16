@@ -98,7 +98,7 @@ namespace rocket::script {
     }
 
     void initialize_file_watcher(std::function<void()> callback, std::filesystem::path file) {
-        std::thread t = std::thread([file, &callback]() {
+        std::thread t = std::thread([file, callback = std::move(callback)]() {
             auto last_write = std::filesystem::last_write_time(file);
             while (true) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
