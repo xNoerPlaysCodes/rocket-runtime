@@ -1,7 +1,7 @@
 # 🚀 RocketGE
 
 # Estimated `3.0-rc#1` release date:
-**16th May, 2026**
+**17th May, 2026**
 
 # Notice: Deprecated
 |Release Type           |Cadence      |
